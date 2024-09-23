@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Slime : Monster
+public class Slime : Monster, IDamageAlbe
 {
-    private enum State
+    public enum State
     {
         Idle,
         Move,
@@ -15,13 +16,14 @@ public class Slime : Monster
         Return,
         Die,
     }
-    private State _curState;
+    public State _curState;
     //NavMeshAgent nav; //여기서 안쓸듯?
     private MonsterFSM _monFSM;
     //MonsterStat _mStat;
     //GameObject _player;
-    Vector3 _originPos;
-
+    public Vector3 _originPos;
+    public float _timer = 0f;
+    public float _attackDelay = 3f;
     Dictionary<State, MonsterBaseState> States = new Dictionary<State, MonsterBaseState>();
 
     // Start is called before the first frame update
@@ -33,18 +35,22 @@ public class Slime : Monster
         _originPos = transform.position;
         #region 상태딕셔너리 초기화
         States.Add(State.Idle, new SlimeIdleState(this));
-        States.Add(State.Move, new MoveState(this));
-        States.Add(State.Attack, new AttackState(this));
-        States.Add(State.Damage, new DamagedState(this));
-        States.Add(State.Return, new ReturnState(this));
-        States.Add(State.Die, new DieState(this));
+        States.Add(State.Move, new SlimeMoveState(this));
+        States.Add(State.Attack, new SlimeAttackState(this));
+        States.Add(State.Damage, new SlimeDamagedState(this));
+        States.Add(State.Return, new SlimeReturnState(this));
+        States.Add(State.Die, new SlimeDieState(this));
         #endregion
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (TimerChack())
+        {
+            InvokeRepeating("AttackTimer", 1f, 1f);
+        }
+        ReturnHeal();
     }
     public void SlimeState()
     {
@@ -94,29 +100,91 @@ public class Slime : Monster
         }
     }
 
-    private void ChangeState(State nextState)
+    public void ChangeState(State nextState)
     {
         _curState = nextState;
         _monFSM.ChangeState(States[_curState]);
         States[_curState].OnStateEnter();
     }
 
-    private bool DamageToPlayer()
+    public bool DamageToPlayer()
     {
         return _mStat.ReturnRange < (_player.transform.position - transform.position).magnitude;
     }
-
-    private bool CanAttackPlayer()
+    public bool CanAttackPlayer()
     {
         //사정거리 체크 구현
         return _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
     }
-    private bool ReturnOrigin()
+    public bool ReturnOrigin()
     {
         return _mStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
-    private void DropItem()
+    public void DropItem()
     {
 
+    }
+
+    public void Damaged(int amount)
+    {
+        if(_curState != State.Return)
+        {
+            if (DamageToPlayer())
+            {
+                _mStat.Hp -= amount;
+                ChangeState(State.Damage);
+            }
+        }
+        else
+        {
+
+        }
+        
+    }
+    public IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
+    {
+        yield return new WaitForSeconds(delay);
+
+        try//이걸 실행해보고 문제가 없다면 실행
+        {
+
+            Vector3 diff = playerPosition - transform.position;
+            diff = diff / diff.sqrMagnitude;
+            GetComponent<Rigidbody>().
+            AddForce((transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
+           
+        }
+        catch (MissingReferenceException e)// 문제가 있다면 에러메세지 출력
+        {
+            Debug.Log(e.ToString());
+        }
+        //예외처리문
+    }
+    public void AttackTimer()
+    {
+        _timer++;
+        if (_timer > _attackDelay)
+        {
+            States[_curState].OnStateUpdate();
+        }
+    }
+    public bool TimerChack()
+    {
+        return _curState == State.Attack;
+    }
+    public bool ReturnChack()
+    {
+        return _curState == State.Return;
+    }
+    public void ReturnHeal()
+    {
+        if (ReturnChack())
+        {
+            _mStat.Hp = _mStat.MaxHp;
+        }
+    }
+    public void SlimeDie()
+    {
+        Destroy(gameObject, 2f);
     }
 }
