@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // 상태 열거형
+    // 상태
     public enum PlayerState
     {
         Idle,
@@ -19,12 +20,39 @@ public class Player : MonoBehaviour
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
     PlayerFSM _pFsm;
+    Dictionary<PlayerState, PlayerBaseState> States = new Dictionary<PlayerState, PlayerBaseState>();
+
+    // 컴포넌트
+    [HideInInspector]
+    public CharacterController _cc;
+    [HideInInspector]
+    public PlayerStat _playerStat;
+    [HideInInspector]
+    public PlayerInput _playerInput;
 
     protected void Start()
     {
+        #region 컴포넌트 초기화
+        _cc = GetComponent<CharacterController>();
+        _playerStat = GetComponent<PlayerStat>();
+        _playerInput = GetComponent<PlayerInput>();
+        #endregion
+
+        #region 딕셔너리 초기화
+        States.Add(PlayerState.Idle, new PlayerIdleState(this));
+        States.Add(PlayerState.Move, new PlayerMoveState(this));
+        States.Add(PlayerState.Attack, new PlayerAttackState(this));
+        States.Add(PlayerState.Skill, new PlayerSkillState(this));
+        States.Add(PlayerState.Damaged, new PlayerDamagedState(this));
+        States.Add(PlayerState.Dead, new PlayerDeadState(this));
+        #endregion
+
+        #region 변수 초기화
         // 초기 상태
         _curState = PlayerState.Idle;
-        _pFsm = new PlayerFSM(new PlayerIdleState(this));
+        _pFsm = new PlayerFSM(States[PlayerState.Idle]);
+        #endregion
+
     }
 
     protected void Update()
@@ -36,22 +64,36 @@ public class Player : MonoBehaviour
         _pFsm.UpdateState();
     }
 
+    protected void FixedUpdate()
+    {
+        _pFsm.FixedUpdateState();
+    }
+
     // 플레이어 상태 전환 조건을 담당하는 메서드
     protected void ChangeStateCondition()
     {
         switch (_curState)
         {
             case PlayerState.Idle:
-                // Idle에서 다른 상태로 이동하기 위한 조건
+                // Idle -> Move
+                if (_playerInput._moveDir != Vector3.zero)
+                {
+                    ChangeState(PlayerState.Move);
+                }
                 break;
             case PlayerState.Move:
-                // Move에서 다른 상태로 이동하기 위한 조건
+                // Move -> Idle
+                if (_playerInput._moveDir == Vector3.zero)
+                {
+                    ChangeState(PlayerState.Idle);
+                }
                 break;
             case PlayerState.Attack:
                 // Attack에서 다른 상태로 이동하기 위한 조건
                 break;
             case PlayerState.Skill:
                 // Skill에서 다른 상태로 이동하기 위한 조건
+                // if KeyUp -> 딜레이 -> 상태 전환
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
@@ -65,28 +107,9 @@ public class Player : MonoBehaviour
     // 실제 상태 전환을 해주는 메서드
     protected void ChangeState(PlayerState nextState)
     {
-        _curState= nextState;
-        switch(_curState)
-        {
-            case PlayerState.Idle:
-                _pFsm.ChangeState(new PlayerIdleState(this));
-                break;
-            case PlayerState.Move:
-                _pFsm.ChangeState(new PlayerMoveState(this));
-                break;
-            case PlayerState.Attack:
-                _pFsm.ChangeState(new PlayerAttackState(this));
-                break;
-            case PlayerState.Skill:
-                _pFsm.ChangeState(new PlayerSkillState(this));
-                break;
-            case PlayerState.Damaged:
-                _pFsm.ChangeState(new PlayerDamagedState(this));
-                break;
-            case PlayerState.Dead:
-                _pFsm.ChangeState(new PlayerDeadState(this));
-                break;
-        }
+        _curState = nextState;
+
+        _pFsm.ChangeState(States[_curState]);
     }
 
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )

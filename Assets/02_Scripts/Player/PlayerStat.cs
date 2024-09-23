@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStat
+public class PlayerStat : MonoBehaviour
 {
     public float _moveSpeed = 5;
 }

@@ -28,4 +28,10 @@ public class PlayerFSM
         if (_curState != null)
             _curState.OnStateUpdate();
     }
+
+    public void FixedUpdateState()
+    {
+        if (_curState != null)
+            _curState.OnStateFixedUpdate();
+    }
 }
