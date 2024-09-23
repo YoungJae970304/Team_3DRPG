@@ -55,6 +55,4 @@ namespace SkillModule {//Àü·«
     {
         public void Passive(Stat stat);
     }
-
-
 }
