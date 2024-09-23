@@ -56,7 +56,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
+            _player.ChangeState(Player.PlayerState.Dodge);
         }
     }
 

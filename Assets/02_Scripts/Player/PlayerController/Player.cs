@@ -24,6 +24,10 @@ public class Player : MonoBehaviour
     public bool _isMoving = false;
     public float _rotSpeed = 0.2f;
 
+    // 회피 관련 변수
+    public bool _dodgeing = false;
+    public float _dodgeTime = 0.5f;
+
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
     PlayerFSM _pFsm;
@@ -93,6 +97,17 @@ public class Player : MonoBehaviour
                 }
                 break;
             case PlayerState.Dodge:
+                if (!_dodgeing)
+                {
+                    if (!_isMoving)
+                    {
+                        ChangeState(PlayerState.Idle);
+                    }
+                    else
+                    {
+                        ChangeState(PlayerState.Move);
+                    }
+                }
                 break;
             case PlayerState.Attack:
                 // Attack에서 다른 상태로 이동하기 위한 조건
@@ -119,7 +134,7 @@ public class Player : MonoBehaviour
     }
 
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
-    protected virtual void Attack()
+    public virtual void Attack()
     {
         
     }

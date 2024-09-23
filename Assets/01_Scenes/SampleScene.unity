@@ -831,7 +831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180ce674026e125428ff5496aabcc9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDir: {x: 0, y: 0, z: 0}
 --- !u!114 &2022806372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,9 +843,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d43ecadc6b57a41b542f8120875f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveDir: {x: 0, y: 0, z: 0}
+  _rotDir: {x: 0, y: 0, z: 0}
+  _isMoving: 0
+  _rotSpeed: 0.2
+  _dodgeing: 0
   _cc: {fileID: 0}
   _playerStat: {fileID: 0}
-  _playerInput: {fileID: 0}
 --- !u!114 &2022806373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -860,6 +863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+  _dodgeSpeed: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
