@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CountableItem : Item
+public abstract class CountableItem : Item
 {
     //수량이 있는 아이템에 적용
     //수량 있는 아이템 데이터 프로퍼티
