@@ -11,6 +11,8 @@ public class MonsterStat : Stat
     [SerializeField]
     protected float _attackRange; // 필요성 확실치 않음
     [SerializeField]
+    protected float _awayRange;
+    [SerializeField]
     protected int _level;
     [SerializeField]
     protected int _hp;
@@ -42,4 +44,5 @@ public class MonsterStat : Stat
     public float ChaseRange { get { return _chaseRange; } set { _chaseRange = value; } }
     public float ReturnRange { get { return _returnRange; } set { _returnRange = value; } }
     public float AttackRange {  get { return _attackRange; } set { _attackRange = value; } }
+    public float AwayRange { get { return _awayRange; } set { _awayRange = value; } }
 }
