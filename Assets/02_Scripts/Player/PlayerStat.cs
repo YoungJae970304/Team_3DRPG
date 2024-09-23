@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    public float _moveSpeed = 5;
+    public float _moveSpeed = 10;
 }

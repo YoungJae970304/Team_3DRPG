@@ -846,6 +846,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cc: {fileID: 0}
   _playerStat: {fileID: 0}
+  _playerInput: {fileID: 0}
 --- !u!114 &2022806373
 MonoBehaviour:
   m_ObjectHideFlags: 0

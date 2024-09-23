@@ -11,11 +11,18 @@ public class Player : MonoBehaviour
     {
         Idle,
         Move,
+        Dodge,
         Attack,
         Skill,
         Damaged,
         Dead
     }
+
+    // 이동 관련 변수
+    public Vector3 _moveDir;
+    public Vector3 _rotDir;
+    public bool _isMoving = false;
+    public float _rotSpeed = 0.2f;
 
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
@@ -27,20 +34,18 @@ public class Player : MonoBehaviour
     public CharacterController _cc;
     [HideInInspector]
     public PlayerStat _playerStat;
-    [HideInInspector]
-    public PlayerInput _playerInput;
 
     protected void Start()
     {
         #region 컴포넌트 초기화
         _cc = GetComponent<CharacterController>();
         _playerStat = GetComponent<PlayerStat>();
-        _playerInput = GetComponent<PlayerInput>();
         #endregion
 
         #region 딕셔너리 초기화
         States.Add(PlayerState.Idle, new PlayerIdleState(this));
         States.Add(PlayerState.Move, new PlayerMoveState(this));
+        States.Add(PlayerState.Dodge, new PlayerDodgeState(this));
         States.Add(PlayerState.Attack, new PlayerAttackState(this));
         States.Add(PlayerState.Skill, new PlayerSkillState(this));
         States.Add(PlayerState.Damaged, new PlayerDamagedState(this));
@@ -52,7 +57,6 @@ public class Player : MonoBehaviour
         _curState = PlayerState.Idle;
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
         #endregion
-
     }
 
     protected void Update()
@@ -76,17 +80,19 @@ public class Player : MonoBehaviour
         {
             case PlayerState.Idle:
                 // Idle -> Move
-                if (_playerInput._moveDir != Vector3.zero)
+                if (_isMoving)
                 {
                     ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Move:
                 // Move -> Idle
-                if (_playerInput._moveDir == Vector3.zero)
+                if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
                 }
+                break;
+            case PlayerState.Dodge:
                 break;
             case PlayerState.Attack:
                 // Attack에서 다른 상태로 이동하기 위한 조건

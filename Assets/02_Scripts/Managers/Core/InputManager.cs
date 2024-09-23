@@ -9,7 +9,7 @@ public class InputManager
 {
     public Action KeyAction = null;
 
-    bool _isPress = false;
+    //bool _isPress = false;
 
 
     // 대표로 입력을 체크한 다음 실제로 입력이 있으면 그것을 이벤트로 전파하는 형식으로 구현 ( 리스너 패턴 )
@@ -18,7 +18,7 @@ public class InputManager
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-
+        /*
         if (Input.anyKey && KeyAction != null)
         {
             if (_isPress && !Input.anyKey)
@@ -31,7 +31,11 @@ public class InputManager
             }
             _isPress = Input.anyKey;
         }
-
+        */
+        if (KeyAction != null)
+        {
+            KeyAction.Invoke();
+        }
     }
 
     public void Clear()

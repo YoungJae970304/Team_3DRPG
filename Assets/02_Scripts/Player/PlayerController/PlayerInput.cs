@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public Vector3 _moveDir;
-
     Player _player;
 
     void Start()
@@ -22,37 +20,32 @@ public class PlayerInput : MonoBehaviour
         Managers.Input.KeyAction += SkillInput;
     }
 
-    // 이동과 관련된 입력을 받으면 이동 상태로 전환
+    // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근
     void MoveInput()
     {
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
-        {
-            _moveDir = Vector3.zero;
-        }
+        _player._rotDir = Vector3.zero;
+        _player._isMoving = false;
 
         if (Input.GetKey(KeyCode.W))
         {
-            // 회전 보간
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
+            _player._rotDir += Vector3.forward;
+            _player._isMoving = true;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            // 회전 보간
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
+            _player._rotDir += Vector3.left;
+            _player._isMoving = true;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            // 회전 보간
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
+            _player._rotDir += Vector3.back;
+            _player._isMoving = true;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            // 회전 보간
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
+            _player._rotDir += Vector3.right;
+            _player._isMoving = true;
         }
-
-        _moveDir = transform.forward * Time.deltaTime * _player._playerStat._moveSpeed;
-        //_player._cc.Move(_moveDir);
     }
 
     void AttackInput()
