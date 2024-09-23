@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Jobs;
 
 public class Slime : Monster, IDamageAlbe
 {
@@ -33,6 +34,7 @@ public class Slime : Monster, IDamageAlbe
         _curState = State.Idle;
         _monFSM = new MonsterFSM(new SlimeIdleState(this));
         _originPos = transform.position;
+        _nav = GetComponent<NavMeshAgent>();
         #region ªÛ≈¬µÒº≈≥ ∏Æ √ ±‚»≠
         States.Add(State.Idle, new SlimeIdleState(this));
         States.Add(State.Move, new SlimeMoveState(this));
@@ -51,6 +53,7 @@ public class Slime : Monster, IDamageAlbe
             InvokeRepeating("AttackTimer", 1f, 1f);
         }
         ReturnHeal();
+        SlimeState();
     }
     public void SlimeState()
     {
@@ -60,6 +63,10 @@ public class Slime : Monster, IDamageAlbe
                 if (DamageToPlayer())
                 {
                     ChangeState(State.Damage);  
+                }
+                else
+                {
+                    States[State.Idle].OnStateEnter();
                 }
                 break;
             case State.Damage:
