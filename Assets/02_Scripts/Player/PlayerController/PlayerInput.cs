@@ -13,11 +13,15 @@ public class PlayerInput : MonoBehaviour
         Managers.Input.KeyAction -= MoveInput;
         Managers.Input.KeyAction += MoveInput;
 
+        Managers.Input.KeyAction -= DodgeInput;
+        Managers.Input.KeyAction += DodgeInput;
+
         Managers.Input.KeyAction -= AttackInput;
         Managers.Input.KeyAction += AttackInput;
 
         Managers.Input.KeyAction -= SkillInput;
         Managers.Input.KeyAction += SkillInput;
+
     }
 
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근
@@ -45,6 +49,14 @@ public class PlayerInput : MonoBehaviour
         {
             _player._rotDir += Vector3.right;
             _player._isMoving = true;
+        }
+    }
+
+    void DodgeInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
         }
     }
 

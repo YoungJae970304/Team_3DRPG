@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
     }
 
     // 실제 상태 전환을 해주는 메서드
-    protected void ChangeState(PlayerState nextState)
+    public void ChangeState(PlayerState nextState)
     {
         _curState = nextState;
 
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
     }
 
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
-    public virtual void Attack()
+    protected virtual void Attack()
     {
         
     }
