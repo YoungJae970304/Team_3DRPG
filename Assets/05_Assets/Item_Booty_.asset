@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3ee0385ce86a243a0960ca02ee7625, type: 3}
   m_Name: Item_Booty_
   m_EditorClassIdentifier: 
-  _id: 0
-  _name: 
-  _tooltip: 
+  _id: 3
+  _name: "\uACE0\uBE14\uB9B0 \uBABD\uB465\uC774"
+  _tooltip: "\uD06C\uB2E4"
   _iconSprite: {fileID: 0}
   _maxAmount: 99
   _coolTime: 0
