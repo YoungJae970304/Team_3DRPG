@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     Player _player;
+    Camera _cam;
+    Vector3 _dir;
 
     void Start()
     {
         _player = GetComponent<Player>();
+        _cam = Camera.main;
 
         Managers.Input.KeyAction -= MoveInput;
         Managers.Input.KeyAction += MoveInput;
@@ -32,25 +35,40 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            _player._rotDir += Vector3.forward;
+            //_player._rotDir += Vector3.forward;
+            _dir = _cam.transform.forward;
+            _dir.y = 0;
+            _player._rotDir += _dir;
+
             _player._isMoving = true;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            _player._rotDir += Vector3.left;
+            //_player._rotDir += Vector3.left;
+            _dir = -_cam.transform.right;
+            _dir.y = 0;
+            _player._rotDir += _dir;
+
             _player._isMoving = true;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
-            _player._rotDir += Vector3.back;
+            //_player._rotDir += Vector3.back;
+            _dir = -_cam.transform.forward;
+            _dir.y = 0;
+            _player._rotDir += _dir;
+
             _player._isMoving = true;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            _player._rotDir += Vector3.right;
+            //_player._rotDir += Vector3.right;
+            _dir = _cam.transform.right;
+            _dir.y = 0;
+            _player._rotDir += _dir;
             _player._isMoving = true;
         }
     }

@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
         Dead
     }
 
+    //
+    public Transform _cameraArm;
+    public Transform _playerModel;
+
     // 이동 관련 변수
     public Vector3 _moveDir;
     public Vector3 _rotDir;
