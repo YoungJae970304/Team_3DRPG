@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoblemSkillState : MonoBehaviour
+public class GoblemSkillState : MonsterBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public GoblemSkillState(Goblem goblem) : base(goblem)
     {
-        
+        _goblem = goblem;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnStateEnter()
     {
-        
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnStateExit()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnStateUpdate()
+    {
+        throw new System.NotImplementedException();
     }
 }

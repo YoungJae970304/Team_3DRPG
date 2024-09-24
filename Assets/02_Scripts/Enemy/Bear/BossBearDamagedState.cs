@@ -2,17 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBearDamagedState : MonoBehaviour
+public class BossBearDamagedState : MonsterBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public BossBearDamagedState(BossBear bossBear) : base(bossBear)
     {
-        
+        _bossBear = bossBear;
+    }
+    PlayerStat _pStat;
+    public override void OnStateEnter()
+    {
+        //넉백, 데미지 받기
+        //임시로 몬스터의 데미지를 넣어놓음 추후 플레이어 데미지 값 받아오게 설정
+        _bossBear._nav.enabled = false;
+        _bossBear.GetComponent<Rigidbody>().isKinematic = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnStateExit()
     {
-        
+        //코루틴 멈추기?
+        //상태는 냅둿다가 나중에 슬라임 스위치 데미지파트랑 비교하기
+        _bossBear._nav.enabled = true;
+        _bossBear.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+    public override void OnStateUpdate()
+    {
+        _bossBear.StartCoroutine(StartDamege(_bossBear._bStat.Attack, _bossBear.transform.position, 0.5f, 0.5f)); //오크 스텟은 플레이어 공격력으로 교체 예정
+    }
+    public IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
+    {
+        yield return new WaitForSeconds(delay);
+
+        try//이걸 실행해보고 문제가 없다면 실행
+        {
+
+            Vector3 diff = playerPosition - _bossBear.transform.position;
+            diff = diff / diff.sqrMagnitude;
+            _bossBear._nav.isStopped = true;
+            _bossBear.GetComponent<Rigidbody>().
+            AddForce((_bossBear.transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
+
+        }
+        catch (MissingReferenceException e)// 문제가 있다면 에러메세지 출력
+        {
+            Debug.Log(e.ToString());
+        }
+        //예외처리문
     }
 }
