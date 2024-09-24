@@ -18,7 +18,9 @@ public class Player : MonoBehaviour
         Dead
     }
 
-    //
+    // 기타 변수
+    [HideInInspector]
+    public Camera _camera;
     public Transform _cameraArm;
     public Transform _playerModel;
 
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour
         // 초기 상태
         _curState = PlayerState.Idle;
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
+        _camera = Camera.main;
         #endregion
     }
 
