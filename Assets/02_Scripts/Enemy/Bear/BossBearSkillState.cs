@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBearSkillState : MonoBehaviour
+public class BossBearSkillState : MonsterBaseState
 {
-    // Start is called before the first frame update
-    void Start()
+    public BossBearSkillState(BossBear bossBear) : base(bossBear)
     {
-        
+        _bossBear = bossBear;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnStateEnter()
     {
-        
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnStateExit()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnStateUpdate()
+    {
+        throw new System.NotImplementedException();
     }
 }
