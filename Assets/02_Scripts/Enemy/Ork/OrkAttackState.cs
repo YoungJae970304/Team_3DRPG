@@ -1,35 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
-public class SlimeAttackState : MonsterBaseState
+public class OrkAttackState : MonsterBaseState
 {
-    public SlimeAttackState(Slime slime) : base(slime) 
+    public OrkAttackState(Ork ork) : base(ork) 
     {
-        _slime = slime;
+        _ork = ork;
     }
     float _timer = 0f;
-
     public override void OnStateEnter()
     {
-        //플레이어 공격
         
-        //_slime._player.Damaged(_slime._mStat.Attack);
-        //애니메이션 실행
-       
     }
 
     public override void OnStateExit()
     {
-        //공격 관련 변수 초기화 이건 만들고 생각해야할듯
+       
     }
 
     public override void OnStateUpdate()
     {
         AttackTimer();
         //딜레이 후 플레이어 공격
-        if(_timer > _slime._attackDelay)
+        if (_timer > _ork._attackDelay)
         {
             _timer = 0f;
             //여기에 에너미 공격 넣기

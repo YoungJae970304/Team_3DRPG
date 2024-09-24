@@ -1,12 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using Data;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.AI;
-using UnityEngine.Jobs;
 
-public class Slime : Monster, IDamageAlbe
+public class Ork : Monster, IDamageAlbe
 {
     public enum State
     {
@@ -15,6 +14,7 @@ public class Slime : Monster, IDamageAlbe
         Attack,
         Damage,
         Return,
+        Skill,
         Die,
     }
     public State _curState;
@@ -25,27 +25,27 @@ public class Slime : Monster, IDamageAlbe
     public Vector3 _originPos;
     public float _attackDelay = 3f;
     Dictionary<State, MonsterBaseState> States = new Dictionary<State, MonsterBaseState>();
-    public SlimeStat _sStat;
+    public OrkStat _oStat;
     private void Awake()
     {
-        _sStat = GetComponent<SlimeStat>();
+        _oStat = GetComponent<OrkStat>();
     }
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _curState = State.Idle;
-        _monFSM = new MonsterFSM(new SlimeIdleState(this));
+        _monFSM = new MonsterFSM(new OrkIdleState(this));
         _originPos = transform.position;
         _nav = GetComponent<NavMeshAgent>();
-        
+
         #region 상태딕셔너리 초기화
-        States.Add(State.Idle, new SlimeIdleState(this));
-        States.Add(State.Move, new SlimeMoveState(this));
-        States.Add(State.Attack, new SlimeAttackState(this));
-        States.Add(State.Damage, new SlimeDamagedState(this));
-        States.Add(State.Return, new SlimeReturnState(this));
-        States.Add(State.Die, new SlimeDieState(this));
+        States.Add(State.Idle, new OrkIdleState(this));
+        States.Add(State.Move, new OrkMoveState(this));
+        States.Add(State.Attack, new OrkAttackState(this));
+        States.Add(State.Damage, new OrkDamagedState(this));
+        States.Add(State.Return, new OrkReturnState(this));
+        States.Add(State.Die, new OrkDieState(this));
         #endregion
         States[State.Idle].OnStateEnter();
     }
@@ -53,14 +53,17 @@ public class Slime : Monster, IDamageAlbe
     // Update is called once per frame
     void Update()
     {
-        SlimeState();
+        OrkState();
         States[_curState].OnStateUpdate();
+        Logger.Log(CanSeePlayer().ToString());
     }
-    public void SlimeState()
+    public void OrkState()
     {
         switch (_curState)
         {
             case State.Idle:
+                if (CanSeePlayer())
+                    ChangeState(State.Move);
                 break;
             case State.Damage:
                 if (CanAttackPlayer())
@@ -107,16 +110,20 @@ public class Slime : Monster, IDamageAlbe
 
     public bool DamageToPlayer()
     {
-        return _sStat.ReturnRange > _player.transform.position.magnitude;
+        return _oStat.ReturnRange > _player.transform.position.magnitude;
     }
     public bool CanAttackPlayer()
     {
         //사정거리 체크 구현
-        return _sStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        return _oStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+    }
+    public bool CanSeePlayer()
+    {
+        return _oStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool ReturnOrigin()
     {
-        return _sStat.ReturnRange < (_originPos - transform.position).magnitude;
+        return _oStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
     public void DropItem()
     {
@@ -125,11 +132,11 @@ public class Slime : Monster, IDamageAlbe
 
     public void Damaged(int amount)
     {
-        if(_curState != State.Return)
+        if (_curState != State.Return)
         {
             if (DamageToPlayer())
             {
-                _sStat.Hp -= amount;
+                _oStat.Hp -= amount;
                 ChangeState(State.Damage);
             }
         }
@@ -137,10 +144,10 @@ public class Slime : Monster, IDamageAlbe
     #region return으로 옮길 함수
     public void ReturnHeal()
     {
-        _sStat.Hp = _sStat.MaxHp;
+        _oStat.Hp = _oStat.MaxHp;
     }
     #endregion
-    public void SlimeDie()
+    public void OrkDie()
     {
         Destroy(gameObject, 2f);
     }
