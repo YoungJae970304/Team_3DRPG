@@ -33,9 +33,6 @@ public abstract class SkillBase//전략 패턴 사용
 
 }
 
-public class Stat { 
-
-}
 
 namespace SkillModule {//전략
     public interface SkillEnter {
