@@ -10,7 +10,7 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void OnStateEnter()
     {
-        Debug.Log("회피 진입");
+        Logger.Log("회피 진입");
 
         _player._dodgeing = true;
         _player._cc.enabled = false;
@@ -18,7 +18,7 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void OnStateUpdate()
     {
-        Debug.Log("회피 업데이트");
+        Logger.Log("회피 업데이트");
 
         Dodge();
         DodgeTimer();
@@ -26,7 +26,7 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void OnStateExit()
     {
-        Debug.Log("회피 탈출");
+        Logger.Log("회피 탈출");
 
         _player._cc.enabled = true;
     }
