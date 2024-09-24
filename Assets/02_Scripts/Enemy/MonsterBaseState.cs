@@ -6,6 +6,9 @@ public abstract class MonsterBaseState
 {
     protected Monster _monster;
     protected Slime _slime;
+    protected Ork _ork;
+    protected Goblem _goblem;
+    protected BossBear _bossbear;
     protected MonsterBaseState(Monster monster)
     {
         _monster = monster;
