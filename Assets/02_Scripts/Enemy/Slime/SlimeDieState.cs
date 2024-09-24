@@ -9,7 +9,8 @@ public class SlimeDieState : MonsterBaseState
     public override void OnStateEnter()
     {
         //죽는 모션
-        OnStateUpdate();
+        _slime.DropItem();
+        OnStateExit();
     }
 
     public override void OnStateExit()
@@ -19,9 +20,7 @@ public class SlimeDieState : MonsterBaseState
     }
 
     public override void OnStateUpdate()
-    {
-        //아이템 떨구기
-        _slime.DropItem();
-        OnStateExit();
+    {    
+        //엑시트 위치 생각하기
     }
 }

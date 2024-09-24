@@ -6,8 +6,8 @@ using UnityEngine;
 public class SlimeAttackState : MonsterBaseState
 {
     public SlimeAttackState(Slime slime) : base(slime) { }
-    
-    
+    public float _timer = 0f;
+
     public override void OnStateEnter()
     {
         //플레이어 공격
@@ -19,25 +19,21 @@ public class SlimeAttackState : MonsterBaseState
 
     public override void OnStateExit()
     {
-        if(_slime._mStat.Hp <= 0)
-        {
-            _slime.ChangeState(Slime.State.Die);
-        }
-        else
-        {
-            _slime.ChangeState(Slime.State.Move);
-        }
+        //공격 관련 변수 초기화 이건 만들고 생각해야할듯
     }
 
     public override void OnStateUpdate()
     {
+        AttackTimer();
         //딜레이 후 플레이어 공격
-        if(_slime._timer > _slime._attackDelay)
+        if(_timer > _slime._attackDelay)
         {
-            _slime._timer = 0f;
-            //_slime._player.Damaged(_slime._mStat.Attack);
-            //애니메이션 실행
-            OnStateExit();
+            _timer = 0f;
+            //여기에 에너미 공격 넣기
         }
+    }
+    public void AttackTimer()
+    {
+        _timer += Time.deltaTime;
     }
 }

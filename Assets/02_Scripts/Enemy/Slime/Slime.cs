@@ -23,10 +23,13 @@ public class Slime : Monster, IDamageAlbe
     //MonsterStat _mStat;
     //GameObject _player;
     public Vector3 _originPos;
-    public float _timer = 0f;
     public float _attackDelay = 3f;
     Dictionary<State, MonsterBaseState> States = new Dictionary<State, MonsterBaseState>();
-
+    public SlimeStat _sStat;
+    private void Awake()
+    {
+        _sStat = GetComponent<SlimeStat>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,7 @@ public class Slime : Monster, IDamageAlbe
         _monFSM = new MonsterFSM(new SlimeIdleState(this));
         _originPos = transform.position;
         _nav = GetComponent<NavMeshAgent>();
+        
         #region 상태딕셔너리 초기화
         States.Add(State.Idle, new SlimeIdleState(this));
         States.Add(State.Move, new SlimeMoveState(this));
@@ -43,31 +47,20 @@ public class Slime : Monster, IDamageAlbe
         States.Add(State.Return, new SlimeReturnState(this));
         States.Add(State.Die, new SlimeDieState(this));
         #endregion
+        States[State.Idle].OnStateEnter();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TimerChack())
-        {
-            InvokeRepeating("AttackTimer", 1f, 1f);
-        }
-        ReturnHeal();
         SlimeState();
+        States[_curState].OnStateUpdate();
     }
     public void SlimeState()
     {
         switch (_curState)
         {
             case State.Idle:
-                if (DamageToPlayer())
-                {
-                    ChangeState(State.Damage);  
-                }
-                else
-                {
-                    States[State.Idle].OnStateEnter();
-                }
                 break;
             case State.Damage:
                 if (CanAttackPlayer())
@@ -95,12 +88,10 @@ public class Slime : Monster, IDamageAlbe
                 }
                 break;
             case State.Return:
-                if ((_originPos - transform.position).magnitude <= 0.1f)
+                if ((_originPos - transform.position).magnitude <= 1f)
                     ChangeState(State.Idle);
                 break;
             case State.Die:
-                DropItem();
-                Destroy(gameObject, 1.5f);
                 break;
 
 
@@ -116,16 +107,16 @@ public class Slime : Monster, IDamageAlbe
 
     public bool DamageToPlayer()
     {
-        return _mStat.ReturnRange < (_player.transform.position - transform.position).magnitude;
+        return _sStat.ReturnRange > _player.transform.position.magnitude;
     }
     public bool CanAttackPlayer()
     {
         //사정거리 체크 구현
-        return _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        return _sStat.AttackRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool ReturnOrigin()
     {
-        return _mStat.ReturnRange < (_originPos - transform.position).magnitude;
+        return _sStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
     public void DropItem()
     {
@@ -138,58 +129,21 @@ public class Slime : Monster, IDamageAlbe
         {
             if (DamageToPlayer())
             {
-                _mStat.Hp -= amount;
+                _sStat.Hp -= amount;
                 ChangeState(State.Damage);
             }
         }
-        else
-        {
+    }
+    #region attack으로 옮길 함수
 
-        }
-        
-    }
-    public IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
-    {
-        yield return new WaitForSeconds(delay);
 
-        try//이걸 실행해보고 문제가 없다면 실행
-        {
-
-            Vector3 diff = playerPosition - transform.position;
-            diff = diff / diff.sqrMagnitude;
-            GetComponent<Rigidbody>().
-            AddForce((transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
-           
-        }
-        catch (MissingReferenceException e)// 문제가 있다면 에러메세지 출력
-        {
-            Debug.Log(e.ToString());
-        }
-        //예외처리문
-    }
-    public void AttackTimer()
-    {
-        _timer++;
-        if (_timer > _attackDelay)
-        {
-            States[_curState].OnStateUpdate();
-        }
-    }
-    public bool TimerChack()
-    {
-        return _curState == State.Attack;
-    }
-    public bool ReturnChack()
-    {
-        return _curState == State.Return;
-    }
+    #endregion
+    #region return으로 옮길 함수
     public void ReturnHeal()
     {
-        if (ReturnChack())
-        {
-            _mStat.Hp = _mStat.MaxHp;
-        }
+        _sStat.Hp = _sStat.MaxHp;
     }
+    #endregion
     public void SlimeDie()
     {
         Destroy(gameObject, 2f);
