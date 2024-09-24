@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager 
+public class Stat : MonoBehaviour
 {
-    public GameObject _player;
+    
 }

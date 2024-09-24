@@ -31,9 +31,18 @@ public class Managers : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static DataManager Data { get { return Instance._data; } }
     #endregion
+
+    private void Awake()
+    {
+        if (s_instance != null)
+        {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
         Init();
+        
     }
 
     void Update()
@@ -44,11 +53,11 @@ public class Managers : MonoBehaviour
 
     static void Init()
     {
-        if(s_instance == null)
+        if (s_instance == null)
         {
             GameObject go = GameObject.Find("@Managers");
 
-            if(go == null)  // go가 없으면
+            if (go == null)  // go가 없으면
             {
                 go = new GameObject { name = "@Managers" }; // 코드상으로 오브젝트를 만들어줌
                 go.AddComponent<Managers>();
