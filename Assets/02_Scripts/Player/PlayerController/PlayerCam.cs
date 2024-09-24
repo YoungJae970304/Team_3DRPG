@@ -8,7 +8,7 @@ public class PlayerCam : MonoBehaviour
     // 타겟 (플레이어)으로 부터의 거리
     [SerializeField]
     [Header("카메라의 초기 위치값")]
-    Vector3 _delta = new Vector3(0f, 6f, -5f);
+    Vector3 _delta = new Vector3(0f, 3f, -4f);
 
     // 장애물 감지를 위한 레이어
     [SerializeField]
@@ -32,9 +32,6 @@ public class PlayerCam : MonoBehaviour
     private void Start()
     {
         _player = GetComponent<Player>();
-
-        _player._camera.transform.localPosition = _delta;
-        _player._camera.transform.LookAt(_player._cameraArm.position);
     }
 
     void Update()
