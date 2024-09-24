@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeReturnState : MonsterBaseState
+public class OrkReturnState : MonsterBaseState
 {
-    public SlimeReturnState(Slime slime) : base(slime) { }
+    public OrkReturnState(Ork ork) : base(ork) { }
+
 
     public override void OnStateEnter()
     {
         //origin포스 찾아서 이동하기
-        _slime._nav.destination = _slime._originPos;
+        _ork._nav.destination = _ork._originPos;
     }
 
     public override void OnStateExit()
@@ -26,7 +27,7 @@ public class SlimeReturnState : MonsterBaseState
         //이걸 좀 고민해야할듯
         //리턴을 계속 진행하는게 맞다하니 지속적으로 체력회복 + 리턴장소까지 계속 복귀 // 
         //이러면 데미지 함수를 호출할 때 return상태이면 스테이트 변환을 안하게 조건걸어야됨 // 조건 걸려있음
-        _slime._nav.SetDestination(_slime._originPos);
-        //_slime.ReturnHeal(); //구현은 되어있으나 스텟이 없어서 작동이 안됨
+        _ork._nav.SetDestination(_ork._originPos);
+        //_ork.ReturnHeal(); //구현은 되어있으나 스텟이 없어서 작동이 안됨
     }
 }

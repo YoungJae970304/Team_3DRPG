@@ -18,14 +18,27 @@ public class Player : MonoBehaviour
         Dead
     }
 
+    // 기타 변수
+    [HideInInspector]
+    public Camera _camera;
+    [Header("오브젝트 참조")]
+    public Transform _cameraArm;
+    public Transform _playerModel;
+
     // 이동 관련 변수
+    [HideInInspector]
     public Vector3 _moveDir;
+    [HideInInspector]
     public Vector3 _rotDir;
+    [HideInInspector]
     public bool _isMoving = false;
+    [Header("회전 속도")]
     public float _rotSpeed = 0.2f;
 
     // 회피 관련 변수
+    [HideInInspector]
     public bool _dodgeing = false;
+    [Header("회피 시간")]
     public float _dodgeTime = 0.5f;
 
     // 상태전환 관련 변수
@@ -60,6 +73,7 @@ public class Player : MonoBehaviour
         // 초기 상태
         _curState = PlayerState.Idle;
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
+        _camera = Camera.main;
         #endregion
     }
 
