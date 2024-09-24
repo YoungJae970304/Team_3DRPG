@@ -34,4 +34,9 @@ public class Define
     {
         QuarterView
     }
+
+    public enum SkillType { 
+        KeyDown,
+        Normal,
+    }
 }
