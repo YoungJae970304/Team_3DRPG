@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Item_Weapon_Sword
   m_EditorClassIdentifier: 
   _itemType: 0
+  _maxAmount: 99
   _id: 1
   _name: "\uAC80"
   _iconSprite: {fileID: 0}

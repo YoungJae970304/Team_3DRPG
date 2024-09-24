@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Item_Accessories_Ring
   m_EditorClassIdentifier: 
   _itemType: 0
+  _maxAmount: 99
   _id: 3
   _name: "\uAC1C\uBAA9\uAC78\uC774"
   _iconSprite: {fileID: 0}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Item_Armor_dd
   m_EditorClassIdentifier: 
   _itemType: 0
+  _maxAmount: 99
   _id: 2
   _name: "\uCC9C\uAC11\uC637"
   _iconSprite: {fileID: 0}
