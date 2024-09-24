@@ -15,8 +15,11 @@ public abstract class ItemData : ScriptableObject
     public int ID => _id;
     public string Name => _name;
     public Sprite IconSprite => _iconSprite;
+    public int MaxAmount => _maxAmount;
 
     [SerializeField] ItemType _itemType;
+    //최대 소지 갯수
+    [SerializeField] int _maxAmount = 99;
     //아이템 번호(type)
     [SerializeField] int _id;
     //아이템 이름
