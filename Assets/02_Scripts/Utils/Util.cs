@@ -70,13 +70,12 @@ public class Util
 
         // 시야각이 90도일 때, 45도
         Vector3 rightDir = AngleToDir(angle * 0.5f);
-
+        
         // 시야각이 90도일 때, -45도
         Vector3 leftDir = AngleToDir(angle * -1 * 0.5f);
 
         // 연산을 빠르게 처리하기 위해 제곱된 값을 구한다.
         float sqrDistance = Vector3.SqrMagnitude(target.position - player.position);
-
         if (sqrDistance < radius * radius &&
             GetAngle(player.position, target.position) < angle * 0.5f)
         {

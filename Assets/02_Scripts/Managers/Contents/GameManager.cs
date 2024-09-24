@@ -5,5 +5,7 @@ using UnityEngine;
 
 public class GameManager 
 {
-    public GameObject _player;
+    public Player _player;
+
+    
 }
