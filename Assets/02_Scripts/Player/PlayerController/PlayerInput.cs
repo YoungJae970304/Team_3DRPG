@@ -35,16 +35,19 @@ public class PlayerInput : MonoBehaviour
             _player._rotDir += Vector3.forward;
             _player._isMoving = true;
         }
+
         if (Input.GetKey(KeyCode.A))
         {
             _player._rotDir += Vector3.left;
             _player._isMoving = true;
         }
+
         if (Input.GetKey(KeyCode.S))
         {
             _player._rotDir += Vector3.back;
             _player._isMoving = true;
         }
+
         if (Input.GetKey(KeyCode.D))
         {
             _player._rotDir += Vector3.right;

@@ -9,7 +9,7 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void OnStateEnter()
     {
-        Debug.Log("무브상태 진입");
+        Logger.Log("무브상태 진입");
     }
 
     public override void OnStateUpdate()
@@ -19,13 +19,14 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void OnStateFixedUpdate()
     {
-        Debug.Log("무브상태 진행중(Fixed)");
+        Logger.Log("무브상태 진행중(Fixed)");
         Move();
     }
 
     public override void OnStateExit()
     {
-        Debug.Log("무브상태 끝");
+        Logger.Log("무브상태 끝");
+        MoveStop();
     }
 
     void Move()
@@ -50,5 +51,10 @@ public class PlayerMoveState : PlayerBaseState
 
         // 실제 최종 이동
         _player._cc.Move(_player._moveDir);
+    }
+
+    void MoveStop()
+    {
+        _player._moveDir = Vector3.zero ;
     }
 }
