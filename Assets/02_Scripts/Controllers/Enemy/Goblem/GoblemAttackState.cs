@@ -8,10 +8,12 @@ public class GoblemAttackState : MonsterBaseState
     public GoblemAttackState(Goblem goblem) : base(goblem)
     {
         _goblem = goblem;
-        _player = _ork._player.GetComponent<Player>();
+        _gStat = _goblem._gStat;
+        _player = _goblem._player.GetComponent<Player>();
         _pStat = _player._playerStat;
     }
     PlayerStat _pStat;
+    GoblemStat _gStat;
     public override void OnStateEnter()
     {
         _timer = 0;
@@ -39,6 +41,6 @@ public class GoblemAttackState : MonsterBaseState
     }
     public void AttackPlayer()
     {
-        _pStat.PlayerHP -= _ork._oStat.Attack;
+        _player.Damaged(_gStat.Attack);
     }
 }
