@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IInterectable : MonoBehaviour
+public class Interectable : MonoBehaviour
 {
-    [SerializeField] GameObject UI;
+    [SerializeField] public GameObject UI;
     public virtual void Interection(GameObject gameObject)
     {
         Debug.Log(name);

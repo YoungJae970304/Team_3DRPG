@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,13 +10,14 @@ public class InterectController : MonoBehaviour
     [SerializeField] int _interectRange;
     [SerializeField] Camera _main;
 
-    [SerializeField] List<IInterectable> _target = new List<IInterectable>();
-    IInterectable _current;
+    [SerializeField] List<Interectable> _target = new List<Interectable>();
+    public Interectable _current;
     private float _currentDis = 100;
     int i = 0;
     private void Start()
     {
         _currentDis = 100;
+        _target=GameObject.FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
     }
 
     private void LateUpdate()
@@ -35,27 +37,29 @@ public class InterectController : MonoBehaviour
         }
         */
         _currentDis = _interectRange;
+        Interectable a=null;
         for (i = 0; i < _target.Count; i++) {
             if (!CheckInCamera(_target[i].transform)) { continue; }
             
             float distance = Vector3.Distance(Managers.Game._player.transform.position, _target[i].transform.position);
-            Logger.Log(distance.ToString());
             if (distance < _currentDis) {
                 _currentDis = distance;
-                if (_current != _target[i]) {
-                    _current.UIPopUp(false);
-                    _current = _target[i];
-                    _current.UIPopUp(true);
-                }
-                
+                a = _target[i];
             }
         }
-        
-        if (_current != null) {
-            Logger.Log(_current.name);
-            _current = null;
-        }
-        
+        if (_current != a)
+        {
+            if (_current != null)
+            {
+                _current.UIPopUp(false);
+                Logger.Log("test");
+            }
+            _current = a;
+            if (_current != null)
+            {
+                _current.UIPopUp(true);
+            }
+        }          
     }
     public void Interection() {
         if (_current == null) { return; }
@@ -66,7 +70,6 @@ public class InterectController : MonoBehaviour
     public bool CheckInCamera(Transform t) {
 
         Vector3 pos = _main.WorldToViewportPoint(t.position);
-        Logger.Log(pos.z.ToString());
         if (0 <= pos.x && pos.x <= 1 && 0 <= pos.y && pos.y <= 1 && 0 <= pos.z&& _interectRange>= pos.z) {
            return true;
         }
