@@ -11,16 +11,18 @@ public class PlayerAttackState : PlayerBaseState
 
     public override void OnStateEnter()
     {
-        
+        Logger.Log("공격 상태 진입");
+        _player._attacking = true;
     }
 
     public override void OnStateUpdate()
     {
+        Logger.Log("공격 상태 업데이트");
         _player.Attack();
     }
 
     public override void OnStateExit()
     {
-        
+        Logger.Log("공격 상태 Exit");
     }
 }
