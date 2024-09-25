@@ -22,8 +22,10 @@ public abstract class EquipmentItem : Item
     //개수 1개를 최대 개수로 장비에 지정
     public int SetAmount(int amount)
     {
-        _amount = Mathf.Clamp(amount,0, _itemData.MaxAmount);
+        _amount = _itemData.MaxAmount;
 
-        return _amount;
+        amount = Mathf.Clamp(amount,0, _amount);
+
+        return amount;
     }
 }
