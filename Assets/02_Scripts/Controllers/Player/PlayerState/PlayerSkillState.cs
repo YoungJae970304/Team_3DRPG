@@ -18,6 +18,6 @@ public class PlayerSkillState : PlayerBaseState
 
     public override void OnStateExit()
     {
-        Logger.Log("½ºÅ³»óÅÂ Exit");
+        Logger.Log("ìŠ¤í‚¬ìƒíƒœ Exit");
     }
 }

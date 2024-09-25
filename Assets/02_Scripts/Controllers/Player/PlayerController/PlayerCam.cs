@@ -5,28 +5,28 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class PlayerCam : MonoBehaviour
 {
-    // Å¸°Ù (ÇÃ·¹ÀÌ¾î)À¸·Î ºÎÅÍÀÇ °Å¸®
+    // íƒ€ê²Ÿ (í”Œë ˆì´ì–´)ìœ¼ë¡œ ë¶€í„°ì˜ ê±°ë¦¬ 
     [SerializeField]
-    [Header("Ä«¸Ş¶óÀÇ ÃÊ±â À§Ä¡°ª")]
+    [Header("ì¹´ë©”ë¼ì˜ ì´ˆê¸° ìœ„ì¹˜ê°’")]
     Vector3 _delta = new Vector3(0f, 3f, -4f);
 
-    // Àå¾Ö¹° °¨Áö¸¦ À§ÇÑ ·¹ÀÌ¾î
+    // ì¥ì• ë¬¼ ê°ì§€ë¥¼ ìœ„í•œ ë ˆì´ì–´
     [SerializeField]
-    [Header("Àå¾Ö¹° ·¹ÀÌ¾î")]
+    [Header("ì¥ì• ë¬¼ ë ˆì´ì–´")]
     LayerMask _obstacle;
 
-    // Áß¿ä º¯¼ö
+    // ì¤‘ìš” ë³€ìˆ˜
     Player _player;
 
-    // FOV°ü·Ã º¯¼ö
+    // FOVê´€ë ¨ ë³€ìˆ˜
     [SerializeField]
-    [Header("FOV ÃÖ¼Ò°ª")]
+    [Header("FOV ìµœì†Œê°’")]
     float _minFOV = 30f;
     [SerializeField]
-    [Header("FOV ÃÖ´ë°ª")]
+    [Header("FOV ìµœëŒ€ê°’")]
     float _maxFOV = 90f;
     [SerializeField]
-    [Header("FOV Á¶Àı ¼Óµµ")]
+    [Header("FOV ì¡°ì ˆ ì†ë„")]
     float _fovChangeSpeed = 5f;
 
     private void Start()
@@ -45,7 +45,7 @@ public class PlayerCam : MonoBehaviour
         CamControl();
     }
 
-    // ¸¶¿ì½º ÀÌµ¿¿¡ µû¸¥ È¸Àü ¸Ş¼­µå
+    // ë§ˆìš°ìŠ¤ ì´ë™ì— ë”°ë¥¸ íšŒì „ ë©”ì„œë“œ
     void LookAround()
     {
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -66,18 +66,18 @@ public class PlayerCam : MonoBehaviour
         _player._cameraArm.rotation = Quaternion.Euler(x, y, camAngle.z);
     }
 
-    // Ä«¸Ş¶ó Á¦¾î¿¡ °ü·ÃµÈ ¸Ş¼­µå ( À§Ä¡, º¸´Â ¹æÇâ, Àå¾Ö¹° Ã¼Å© µî )
+    // ì¹´ë©”ë¼ ì œì–´ì— ê´€ë ¨ëœ ë©”ì„œë“œ ( ìœ„ì¹˜, ë³´ëŠ” ë°©í–¥, ì¥ì• ë¬¼ ì²´í¬ ë“± )
     void CamControl()
     {
         RaycastHit hit;
         Vector3 camPos = _player._cameraArm.position + _player._cameraArm.rotation * _delta;
         Vector3 camDir = camPos - _player._cameraArm.position;
 
-        // ÇÃ·¹ÀÌ¾î¿¡¼­ Ä«¸Ş¶ó ¹æÇâÀ¸·Î ·¹ÀÌ¸¦ ¹ß»ç (ÇÃ·¹ÀÌ¾î À§Ä¡, Ä«¸Ş¶ó À§Ä¡, out hit, ¹æÇâ, Ãæµ¹ °¡´ÉÇÑ ·¹ÀÌ¾î )
+        // í”Œë ˆì´ì–´ì—ì„œ ì¹´ë©”ë¼ ë°©í–¥ìœ¼ë¡œ ë ˆì´ë¥¼ ë°œì‚¬ (í”Œë ˆì´ì–´ ìœ„ì¹˜, ì¹´ë©”ë¼ ìœ„ì¹˜, out hit, ë°©í–¥, ì¶©ëŒ ê°€ëŠ¥í•œ ë ˆì´ì–´ )
         if (Physics.Raycast(_player.transform.position, camDir, out hit, camDir.magnitude, _obstacle))
         {
-            float dist = (hit.point - _player.transform.position).magnitude * 0.8f; // °Å¸®¸¦ 0.8 °öÇØÁà¼­ ÁÙ¿©ÁÜ
-            _player._camera.transform.position = _player._cameraArm.position + _player._cameraArm.rotation * _delta.normalized * dist; // Ä«¸Ş¶óÀÇ À§Ä¡ º¯°æ
+            float dist = (hit.point - _player.transform.position).magnitude * 0.8f; // ê±°ë¦¬ë¥¼ 0.8 ê³±í•´ì¤˜ì„œ ì¤„ì—¬ì¤Œ
+            _player._camera.transform.position = _player._cameraArm.position + _player._cameraArm.rotation * _delta.normalized * dist; // ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ ë³€ê²½
         }
         else
         {
@@ -87,7 +87,7 @@ public class PlayerCam : MonoBehaviour
         _player._camera.transform.LookAt(_player._cameraArm.position);
     }
 
-    // FOVÁ¶Àı ¸Ş¼­µå
+    // FOVì¡°ì ˆ ë©”ì„œë“œ
     void FOVControl()
     {
         float fovDelta = Input.GetAxis("Mouse ScrollWheel") * _fovChangeSpeed;

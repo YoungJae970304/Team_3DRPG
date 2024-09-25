@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// »óÅÂ
+// ìƒíƒœ 
 public enum PlayerState
 {
     Idle,
@@ -18,30 +18,30 @@ public enum PlayerState
 
 public class Player : MonoBehaviour, IDamageAlbe
 {
-    // ±âÅ¸ º¯¼ö
+    // ê¸°íƒ€ ë³€ìˆ˜
     [HideInInspector]
     public Camera _camera;
-    [Header("¿ÀºêÁ§Æ® ÂüÁ¶")]
+    [Header("ì˜¤ë¸Œì íŠ¸ ì°¸ì¡°")]
     public Transform _cameraArm;
     public Transform _playerModel;
 
-    // ÀÌµ¿ °ü·Ã º¯¼ö
+    // ì´ë™ ê´€ë ¨ ë³€ìˆ˜
     [HideInInspector]
     public Vector3 _moveDir;
     [HideInInspector]
     public Vector3 _rotDir;
     [HideInInspector]
     public bool _isMoving = false;
-    [Header("È¸Àü ¼Óµµ")]
+    [Header("íšŒì „ ì†ë„")]
     public float _rotSpeed = 0.2f;
 
-    // È¸ÇÇ °ü·Ã º¯¼ö
+    // íšŒí”¼ ê´€ë ¨ ë³€ìˆ˜
     [HideInInspector]
     public bool _dodgeing = false;
-    [Header("È¸ÇÇ ½Ã°£")]
+    [Header("íšŒí”¼ ì‹œê°„")]
     public float _dodgeTime = 0.5f;
 
-    // °ø°İ °ü·Ã º¯¼ö
+    // ê³µê²© ê´€ë ¨ ë³€ìˆ˜
     [HideInInspector]
     public bool _attacking = false;
     [HideInInspector]
@@ -66,13 +66,15 @@ public class Player : MonoBehaviour, IDamageAlbe
             }
         }
     }
+    [HideInInspector]
+    public int _curAtkCount;
 
-    // »óÅÂÀüÈ¯ °ü·Ã º¯¼ö
-    PlayerState _curState;  // ÇöÀç »óÅÂ
+    // ìƒíƒœì „í™˜ ê´€ë ¨ ë³€ìˆ˜
+    PlayerState _curState;  // í˜„ì¬ ìƒíƒœ
     PlayerFSM _pFsm;
     Dictionary<PlayerState, PlayerBaseState> States = new Dictionary<PlayerState, PlayerBaseState>();
 
-    // ÄÄÆ÷³ÍÆ®
+    // ì»´í¬ë„ŒíŠ¸
     [HideInInspector]
     public CharacterController _cc;
     [HideInInspector]
@@ -81,13 +83,13 @@ public class Player : MonoBehaviour, IDamageAlbe
 
     protected void Start()
     {
-        #region ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        #region ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
         _cc = gameObject.GetOrAddComponent<CharacterController>();
         _playerStat = gameObject.GetOrAddComponent<PlayerStat>();
         _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
         #endregion
 
-        #region µñ¼Å³Ê¸® ÃÊ±âÈ­
+        #region ë”•ì…”ë„ˆë¦¬ ì´ˆê¸°í™”
         States.Add(PlayerState.Idle, new PlayerIdleState(this));
         States.Add(PlayerState.Move, new PlayerMoveState(this));
         States.Add(PlayerState.Dodge, new PlayerDodgeState(this));
@@ -97,8 +99,8 @@ public class Player : MonoBehaviour, IDamageAlbe
         States.Add(PlayerState.Dead, new PlayerDeadState(this));
         #endregion
 
-        #region º¯¼ö ÃÊ±âÈ­
-        // ÃÊ±â »óÅÂ
+        #region ë³€ìˆ˜ ì´ˆê¸°í™”
+        // ì´ˆê¸° ìƒíƒœ
         _curState = PlayerState.Idle;
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
         _camera = Camera.main;
@@ -108,13 +110,11 @@ public class Player : MonoBehaviour, IDamageAlbe
 
     protected void Update()
     {
-        // »óÅÂ ÀüÈ¯
+        // ìƒíƒœ ì „í™˜
         ChangeStateCondition();
 
-        // »óÅÂ ³»ºÎÀÇ ¾÷µ¥ÀÌÆ® ½ÇÇà
+        // ìƒíƒœ ë‚´ë¶€ì˜ ì—…ë°ì´íŠ¸ ì‹¤í–‰
         _pFsm.UpdateState();
-
-        Logger.Log(_playerInput._atkInput.Count.ToString());
     }
 
     protected void FixedUpdate()
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour, IDamageAlbe
         _pFsm.FixedUpdateState();
     }
 
-    // ÇÃ·¹ÀÌ¾î »óÅÂ ÀüÈ¯ Á¶°ÇÀ» ´ã´çÇÏ´Â ¸Ş¼­µå
+    // í”Œë ˆì´ì–´ ìƒíƒœ ì „í™˜ ì¡°ê±´ì„ ë‹´ë‹¹í•˜ëŠ” ë©”ì„œë“œ
     protected void ChangeStateCondition()
     {
         switch (_curState)
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Attack:
-                // Attack¿¡¼­ ´Ù¸¥ »óÅÂ·Î ÀÌµ¿ÇÏ±â À§ÇÑ Á¶°Ç
+                // Attackì—ì„œ ë‹¤ë¥¸ ìƒíƒœë¡œ ì´ë™í•˜ê¸° ìœ„í•œ ì¡°ê±´
                 if (!_attacking)
                 {
                     if (!_isMoving)
@@ -169,19 +169,19 @@ public class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Skill:
-                // Skill¿¡¼­ ´Ù¸¥ »óÅÂ·Î ÀÌµ¿ÇÏ±â À§ÇÑ Á¶°Ç
-                // if KeyUp -> µô·¹ÀÌ -> »óÅÂ ÀüÈ¯
+                // Skillì—ì„œ ë‹¤ë¥¸ ìƒíƒœë¡œ ì´ë™í•˜ê¸° ìœ„í•œ ì¡°ê±´
+                // if KeyUp -> ë”œë ˆì´ -> ìƒíƒœ ì „í™˜
                 break;
             case PlayerState.Damaged:
-                // Damaged¿¡¼­ ´Ù¸¥ »óÅÂ·Î ÀÌµ¿ÇÏ±â À§ÇÑ Á¶°Ç
+                // Damagedì—ì„œ ë‹¤ë¥¸ ìƒíƒœë¡œ ì´ë™í•˜ê¸° ìœ„í•œ ì¡°ê±´
                 break;
             case PlayerState.Dead:
-                // Dead¿¡¼­ ´Ù¸¥ »óÅÂ·Î ÀÌµ¿ÇÏ±â À§ÇÑ Á¶°Ç
+                // Deadì—ì„œ ë‹¤ë¥¸ ìƒíƒœë¡œ ì´ë™í•˜ê¸° ìœ„í•œ ì¡°ê±´
                 break;
         }
     }
 
-    // ½ÇÁ¦ »óÅÂ ÀüÈ¯À» ÇØÁÖ´Â ¸Ş¼­µå
+    // ì‹¤ì œ ìƒíƒœ ì „í™˜ì„ í•´ì£¼ëŠ” ë©”ì„œë“œ
     public void ChangeState(PlayerState nextState)
     {
         _curState = nextState;
@@ -189,7 +189,7 @@ public class Player : MonoBehaviour, IDamageAlbe
         _pFsm.ChangeState(States[_curState]);
     }
 
-    // ÀÚ½Ä(Melee, Ranged Player)ÀÇ °ø°İ ºÎºĞ ±¸Çö ( AttackState¿¡¼­ »ç¿ë )
+    // ìì‹(Melee, Ranged Player)ì˜ ê³µê²© ë¶€ë¶„ êµ¬í˜„ ( AttackStateì—ì„œ ì‚¬ìš© )
     public virtual void Attack()
     {
 

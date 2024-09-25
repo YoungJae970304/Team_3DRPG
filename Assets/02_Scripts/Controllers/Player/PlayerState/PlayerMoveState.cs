@@ -23,7 +23,7 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void OnStateExit()
     {
-        Logger.Log("ÀÌµ¿»óÅÂ Exit");
+        Logger.Log("Move Exit");
         MoveStop();
     }
 
@@ -31,23 +31,23 @@ public class PlayerMoveState : PlayerBaseState
     {
         if (_player._rotDir != Vector3.zero)
         {
-            // È¸Àü ¹æÇâ Á¤±ÔÈ­
+            // íšŒì „ ë°©í–¥ ì •ê·œí™”  
             _player._rotDir.Normalize();
 
-            // ½ÇÁ¦ È¸Àü
+            // ì‹¤ì œ íšŒì „
             Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
             _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
 
-            // ÀÌµ¿ ¹æÇâ
+            // ì´ë™ ë°©í–¥
             _player._moveDir = _player._playerModel.forward * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
         }
         else
         {
-            // ¸ØÃß´Â Á¶°Ç
+            // ë©ˆì¶”ëŠ” ì¡°ê±´
             _player._moveDir = Vector3.zero;
         }
 
-        // ½ÇÁ¦ ÃÖÁ¾ ÀÌµ¿
+        // ì‹¤ì œ ìµœì¢… ì´ë™
         _player._cc.Move(_player._moveDir);
     }
 

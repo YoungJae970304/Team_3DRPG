@@ -28,7 +28,7 @@ public class PlayerInput : MonoBehaviour
 
     }
 
-    // ÀÌµ¿ °ü·Ã ÀÔ·Â ¹Þ°í »óÅÂÀüÈ¯À» À§ÇÑ boolº¯¼öÀÎ _isMoving¿¡ Á¢±Ù
+    // ì´ë™ ê´€ë ¨ ìž…ë ¥ ë°›ê³  ìƒíƒœì „í™˜ì„ ìœ„í•œ boolë³€ìˆ˜ì¸ _isMovingì— ì ‘ê·¼ 
     void MoveInput()
     {
         _player._rotDir = Vector3.zero;
@@ -110,8 +110,9 @@ public class PlayerInput : MonoBehaviour
 
     public void InputBufferInsert(int action)
     {
-        if(_atkInput.Count > 3) { return; }
-        Logger.Log("231");
+        if(_atkInput.Count > 1) { return; }
         _atkInput.Enqueue(action);
+
+        Logger.Log(action.ToString());
     }
 }
