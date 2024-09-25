@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 19513035d7eac67498b270cde23846e7, type: 2}
 --- !u!1 &109840486
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 109840489}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,8 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d8331f3bfb48d448c949b2a263e3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
-  _dodgeSpeed: 10
 --- !u!114 &109840490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d43ecadc6b57a41b542f8120875f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
   _cameraArm: {fileID: 498344114}
   _playerModel: {fileID: 2022806367}
   _moveDir: {x: 0, y: 0, z: 0}
@@ -213,8 +212,12 @@ MonoBehaviour:
   _rotSpeed: 0.2
   _dodgeing: 0
   _dodgeTime: 0.5
+  _attacking: 0
+  _canAtkInput: 1
+  _curAtkCount: 0
   _cc: {fileID: 0}
   _playerStat: {fileID: 0}
+  _playerInput: {fileID: 0}
 --- !u!114 &109840491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,7 +782,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!64 &1888901474
 MeshCollider:
