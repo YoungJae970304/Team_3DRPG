@@ -74,6 +74,8 @@ public class Goblem : Monster, IDamageAlbe
             case State.Move:
                 if (CanAttackPlayer())
                     ChangeState(State.Attack);
+                else if (ReturnOrigin())
+                    ChangeState(State.Return);
                 break;
             case State.Attack:
                 if (!CanAttackPlayer())
@@ -89,7 +91,7 @@ public class Goblem : Monster, IDamageAlbe
                 }
                 break;
             case State.Return:
-                if ((_originPos - transform.position).magnitude <= 1f)
+                if ((_originPos - transform.position).magnitude <= 3f)
                     ChangeState(State.Idle);
                 break;
             case State.Die:

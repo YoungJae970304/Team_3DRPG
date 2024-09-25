@@ -7,6 +7,7 @@ public class GoblemIdleState : MonsterBaseState
     public GoblemIdleState(Goblem goblem) : base(goblem)
     {
         _goblem = goblem;
+        _gStat = _goblem._gStat;
     }
     GoblemStat _gStat;
     float awayRangeX;

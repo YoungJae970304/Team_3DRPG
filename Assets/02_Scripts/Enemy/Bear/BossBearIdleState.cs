@@ -7,6 +7,7 @@ public class BossBearIdleState : MonsterBaseState
     public BossBearIdleState(BossBear bossBear) : base(bossBear)
     {
         _bossBear = bossBear;
+        _bStat = _bossBear._bStat;
     }
     BearStat _bStat;
     float awayRangeX;

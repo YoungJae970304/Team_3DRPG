@@ -9,6 +9,7 @@ public abstract class MonsterBaseState
     protected Ork _ork;
     protected Goblem _goblem;
     protected BossBear _bossBear;
+    protected Player _player;
     protected MonsterBaseState(Monster monster)
     {
         _monster = monster;

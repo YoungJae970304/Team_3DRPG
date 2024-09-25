@@ -20,7 +20,7 @@ public class GoblemMoveState : MonsterBaseState
 
     public override void OnStateExit()
     {
-
+        _goblem._nav.stoppingDistance = 0;
     }
 
     public override void OnStateUpdate()

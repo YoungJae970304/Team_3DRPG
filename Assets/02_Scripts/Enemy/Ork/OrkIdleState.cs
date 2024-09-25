@@ -7,6 +7,7 @@ public class OrkIdleState : MonsterBaseState
     public OrkIdleState(Ork ork) : base(ork)
     {
         _ork = ork;
+        _oStat = _ork._oStat;
     }
     OrkStat _oStat;
     float awayRangeX;
@@ -17,7 +18,7 @@ public class OrkIdleState : MonsterBaseState
         _oStat = _ork.GetComponent<OrkStat>();
         if (_oStat == null)
         {
-            Debug.LogError("SlimeStat 컴포넌트를 찾을 수 없습니다.");
+            Debug.LogError("OrkStat 컴포넌트를 찾을 수 없습니다.");
         }
         awayRangeX = Random.Range(-_oStat.AwayRange, _oStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
@@ -60,5 +61,6 @@ public class OrkIdleState : MonsterBaseState
             //오리진 포스에서 일정 범위 이상으로 벗어났다면 return하기 - 근데 얜 slime에서 변경되야함
             _ork._nav.destination = _ork._originPos;
         }
+        Logger.Log(_ork._nav.destination.ToString());
     }
 }

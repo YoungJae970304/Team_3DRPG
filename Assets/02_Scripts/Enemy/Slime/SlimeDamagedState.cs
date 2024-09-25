@@ -7,6 +7,7 @@ public class SlimeDamagedState : MonsterBaseState
     public SlimeDamagedState(Slime slime) : base(slime) 
     {
         _slime = slime;
+        _pStat = _player._playerStat;
     }
     PlayerStat _pStat;
     public override void OnStateEnter()

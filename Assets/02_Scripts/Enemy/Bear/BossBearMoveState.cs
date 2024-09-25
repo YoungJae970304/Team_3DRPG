@@ -20,7 +20,7 @@ public class BossBearMoveState : MonsterBaseState
 
     public override void OnStateExit()
     {
-
+        _bossBear._nav.stoppingDistance = 0f;
     }
 
     public override void OnStateUpdate()

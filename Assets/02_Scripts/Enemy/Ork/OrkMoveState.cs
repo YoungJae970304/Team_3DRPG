@@ -20,7 +20,7 @@ public class OrkMoveState : MonsterBaseState
 
     public override void OnStateExit()
     {
-
+        _ork._nav.stoppingDistance = 0;
     }
 
     public override void OnStateUpdate()

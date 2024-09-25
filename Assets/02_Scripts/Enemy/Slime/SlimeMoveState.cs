@@ -19,7 +19,7 @@ public class SlimeMoveState : MonsterBaseState
 
     public override void OnStateExit()
     {
-
+        _slime._nav.stoppingDistance = 0;
     }
 
     public override void OnStateUpdate()

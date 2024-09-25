@@ -33,4 +33,26 @@ public class BossBearAttackState : MonsterBaseState
     {
         _timer += Time.deltaTime;
     }
+
+    public void LeftHandAttack()
+    {
+        //이걸 클래스 상태로 한번 더 정리할까?
+        //아니면 함수로 사용을 할까
+    }
+    public void RightHandAttack()
+    {
+
+    }
+    public void LeftBiteAttack()
+    {
+
+    }
+    public void RightBiteAttack()
+    {
+
+    }
+    public void EarthquakeAttack()
+    {
+
+    }
 }

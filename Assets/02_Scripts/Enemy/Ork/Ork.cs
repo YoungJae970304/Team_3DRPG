@@ -76,7 +76,7 @@ public class Ork : Monster, IDamageAlbe
             case State.Move:
                 if (CanAttackPlayer())
                     ChangeState(State.Attack);
-                if (ReturnOrigin())
+                else if (ReturnOrigin())
                     ChangeState(State.Return);
                 break;
             case State.Attack:
