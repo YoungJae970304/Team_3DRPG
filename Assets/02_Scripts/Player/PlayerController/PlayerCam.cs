@@ -31,7 +31,7 @@ public class PlayerCam : MonoBehaviour
 
     private void Start()
     {
-        _player = GetComponent<Player>();
+        _player = gameObject.GetOrAddComponent<Player>();
     }
 
     void Update()
