@@ -7,7 +7,7 @@ public class PlayerInput : MonoBehaviour
     Player _player;
     Vector3 _dir;
 
-    Queue<Vector3> _atkInput = new Queue<Vector3>();
+    Queue<int> _atkInput = new Queue<int>();
 
     void Start()
     {
@@ -77,15 +77,25 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _player.ChangeState(Player.PlayerState.Dodge);
+            _player.ChangeState(PlayerState.Dodge);
         }
     }
 
     void AttackInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !_player._attacking)
         {
-
+            _player.AtkCount++;
+            // 플레이어의 현재 정면을 queue에 저장
+            InputBufferInsert(_player.AtkCount);
+            _player.ChangeState(PlayerState.Attack);
+        }
+        else if (Input.GetMouseButtonDown(1) && !_player._attacking)
+        {
+            _player.AtkCount = 0;
+            // 플레이어의 현재 정면을 queue에 저장
+            InputBufferInsert(_player.AtkCount);
+            _player.ChangeState(PlayerState.Attack);
         }
     }
 
@@ -95,5 +105,12 @@ public class PlayerInput : MonoBehaviour
         {
 
         }
+    }
+
+    public void InputBufferInsert(int action)
+    {
+        if(_atkInput.Count > 1) { return; }
+
+        _atkInput.Enqueue(action);
     }
 }

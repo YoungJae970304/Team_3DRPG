@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+// 상태
+public enum PlayerState
 {
-    // 상태
-    public enum PlayerState
-    {
-        Idle,
-        Move,
-        Dodge,
-        Attack,
-        Skill,
-        Damaged,
-        Dead
-    }
+    Idle,
+    Move,
+    Dodge,
+    Attack,
+    Skill,
+    Damaged,
+    Dead
+}
 
+public class Player : MonoBehaviour, IDamageAlbe
+{
     // 기타 변수
     [HideInInspector]
     public Camera _camera;
@@ -40,6 +40,30 @@ public class Player : MonoBehaviour
     public bool _dodgeing = false;
     [Header("회피 시간")]
     public float _dodgeTime = 0.5f;
+
+    // 공격 관련 변수
+    [HideInInspector]
+    public bool _attacking = false;
+    int _atkCount = 0;
+    [HideInInspector]
+    public int AtkCount
+    {
+        get
+        {
+            return _atkCount;
+        }
+        set
+        {
+            _atkCount = value;
+
+            _atkCount = Mathf.Clamp(_atkCount, 0, 4);
+
+            if (_atkCount > 3)
+            {
+                _atkCount = 1;
+            }
+        }
+    }
 
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
@@ -125,6 +149,17 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.Attack:
                 // Attack에서 다른 상태로 이동하기 위한 조건
+                if (!_attacking)
+                {
+                    if (!_isMoving)
+                    {
+                        ChangeState(PlayerState.Idle);
+                    }
+                    else
+                    {
+                        ChangeState(PlayerState.Move);
+                    }
+                }
                 break;
             case PlayerState.Skill:
                 // Skill에서 다른 상태로 이동하기 위한 조건
@@ -148,8 +183,13 @@ public class Player : MonoBehaviour
     }
 
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
-    public virtual void Attack()
+    public virtual IEnumerator Attack()
     {
-        
+        yield return null;
+    }
+
+    public void Damaged(int amount)
+    {
+        ChangeState(PlayerState.Damaged);
     }
 }
