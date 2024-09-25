@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Slime : Monster, IDamageAlbe
+public class Goblem : Monster, IDamageAlbe
 {
     public enum State
     {
@@ -14,6 +12,7 @@ public class Slime : Monster, IDamageAlbe
         Attack,
         Damage,
         Return,
+        Skill,
         Die,
     }
     public State _curState;
@@ -22,45 +21,47 @@ public class Slime : Monster, IDamageAlbe
     //MonsterStat _mStat;
     //GameObject _player;
     public Vector3 _originPos;
-    public float _timer = 0f;
     public float _attackDelay = 3f;
     Dictionary<State, MonsterBaseState> States = new Dictionary<State, MonsterBaseState>();
-
+    public GoblemStat _gStat;
+    private void Awake()
+    {
+        _gStat = GetComponent<GoblemStat>();
+    }
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player");
         _curState = State.Idle;
-        _monFSM = new MonsterFSM(new SlimeIdleState(this));
+        _monFSM = new MonsterFSM(new GoblemIdleState(this));
         _originPos = transform.position;
+        _nav = GetComponent<NavMeshAgent>();
+
         #region 상태딕셔너리 초기화
-        States.Add(State.Idle, new SlimeIdleState(this));
-        States.Add(State.Move, new SlimeMoveState(this));
-        States.Add(State.Attack, new SlimeAttackState(this));
-        States.Add(State.Damage, new SlimeDamagedState(this));
-        States.Add(State.Return, new SlimeReturnState(this));
-        States.Add(State.Die, new SlimeDieState(this));
+        States.Add(State.Idle, new GoblemIdleState(this));
+        States.Add(State.Move, new GoblemMoveState(this));
+        States.Add(State.Attack, new GoblemAttackState(this));
+        States.Add(State.Damage, new GoblemDamagedState(this));
+        States.Add(State.Return, new GoblemReturnState(this));
+        States.Add(State.Die, new GoblemDieState(this));
         #endregion
+        States[State.Idle].OnStateEnter();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TimerChack())
-        {
-            InvokeRepeating("AttackTimer", 1f, 1f);
-        }
-        ReturnHeal();
+        GoblemState();
+        States[_curState].OnStateUpdate();
+        Logger.Log(CanSeePlayer().ToString());
     }
-    public void SlimeState()
+    public void GoblemState()
     {
         switch (_curState)
         {
             case State.Idle:
-                if (DamageToPlayer())
-                {
-                    ChangeState(State.Damage);  
-                }
+                if (CanSeePlayer())
+                    ChangeState(State.Move);
                 break;
             case State.Damage:
                 if (CanAttackPlayer())
@@ -88,12 +89,10 @@ public class Slime : Monster, IDamageAlbe
                 }
                 break;
             case State.Return:
-                if ((_originPos - transform.position).magnitude <= 0.1f)
+                if ((_originPos - transform.position).magnitude <= 1f)
                     ChangeState(State.Idle);
                 break;
             case State.Die:
-                DropItem();
-                Destroy(gameObject, 1.5f);
                 break;
 
 
@@ -109,16 +108,20 @@ public class Slime : Monster, IDamageAlbe
 
     public bool DamageToPlayer()
     {
-        return _mStat.ReturnRange < (_player.transform.position - transform.position).magnitude;
+        return _gStat.ReturnRange > _player.transform.position.magnitude;
     }
     public bool CanAttackPlayer()
     {
         //사정거리 체크 구현
-        return _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        return _gStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+    }
+    public bool CanSeePlayer()
+    {
+        return _gStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool ReturnOrigin()
     {
-        return _mStat.ReturnRange < (_originPos - transform.position).magnitude;
+        return _gStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
     public void DropItem()
     {
@@ -127,63 +130,22 @@ public class Slime : Monster, IDamageAlbe
 
     public void Damaged(int amount)
     {
-        if(_curState != State.Return)
+        if (_curState != State.Return)
         {
             if (DamageToPlayer())
             {
-                _mStat.Hp -= amount;
+                _gStat.Hp -= amount;
                 ChangeState(State.Damage);
             }
         }
-        else
-        {
-
-        }
-        
     }
-    public IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
-    {
-        yield return new WaitForSeconds(delay);
-
-        try//이걸 실행해보고 문제가 없다면 실행
-        {
-
-            Vector3 diff = playerPosition - transform.position;
-            diff = diff / diff.sqrMagnitude;
-            GetComponent<Rigidbody>().
-            AddForce((transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
-           
-        }
-        catch (MissingReferenceException e)// 문제가 있다면 에러메세지 출력
-        {
-            Debug.Log(e.ToString());
-        }
-        //예외처리문
-    }
-    public void AttackTimer()
-    {
-        _timer++;
-        if (_timer > _attackDelay)
-        {
-            States[_curState].OnStateUpdate();
-        }
-    }
-    public bool TimerChack()
-    {
-        return _curState == State.Attack;
-    }
-    public bool ReturnChack()
-    {
-        return _curState == State.Return;
-    }
+    #region return으로 옮길 함수
     public void ReturnHeal()
     {
-        if (ReturnChack())
-        {
-            _mStat.Hp = _mStat.MaxHp;
-        }
+        _gStat.Hp = _gStat.MaxHp;
     }
-    public void SlimeDie()
+    #endregion
+    public void GoblemDie()
     {
         Destroy(gameObject, 2f);
     }

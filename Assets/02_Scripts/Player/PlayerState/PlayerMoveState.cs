@@ -38,10 +38,10 @@ public class PlayerMoveState : PlayerBaseState
 
             // 실제 회전
             Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
-            _player.transform.rotation = Quaternion.Slerp(_player.transform.rotation, targetRot, _player._rotSpeed);
+            _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
 
             // 이동 방향
-            _player._moveDir = _player.transform.forward * _player._playerStat._moveSpeed * Time.fixedDeltaTime;
+            _player._moveDir = _player._playerModel.forward * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
         }
         else
         {

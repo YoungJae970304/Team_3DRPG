@@ -34,7 +34,7 @@ public class PlayerDodgeState : PlayerBaseState
     void Dodge()
     {
         // 회피 방향
-        _player._moveDir = _player.transform.forward * _player._playerStat._dodgeSpeed * Time.deltaTime;
+        _player._moveDir = _player.transform.forward * _player._playerStat.DodgeSpeed * Time.deltaTime;
         // 회피
         _player.transform.position += _player._moveDir;
     }
