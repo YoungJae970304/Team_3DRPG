@@ -14,6 +14,7 @@ public class GoblemAttackState : MonsterBaseState
     }
     PlayerStat _pStat;
     GoblemStat _gStat;
+    int _randomAttack;
     public override void OnStateEnter()
     {
         _timer = 0;
@@ -27,12 +28,14 @@ public class GoblemAttackState : MonsterBaseState
     public override void OnStateUpdate()
     {
         AttackTimer();
-        //µô·¹ÀÌ ÈÄ ÇÃ·¹ÀÌ¾î °ø°İ
+        _randomAttack = Random.Range(1, 99);
+        //ë”œë ˆì´ í›„ í”Œë ˆì´ì–´ ê³µê²©
         if (_timer > _goblem._attackDelay)
         {
             _timer = 0f;
-            //¿©±â¿¡ ¿¡³Ê¹Ì °ø°İ ³Ö±â
-            AttackPlayer();
+            //ì—¬ê¸°ì— ì—ë„ˆë¯¸ ê³µê²© ë„£ê¸°
+           
+            AttackStateSwitch();
         }
     }
     public void AttackTimer()
@@ -43,4 +46,28 @@ public class GoblemAttackState : MonsterBaseState
     {
         _player.Damaged(_gStat.Attack);
     }
+    public void AttackStateSwitch()
+    {
+
+        if (_randomAttack <= 66)
+        {
+            NomalAttack();
+        }
+        else
+        {
+            SkillAttack();
+        }
+        
+    }
+    public void NomalAttack()
+    {
+        Logger.Log("NomalAttack");
+        AttackPlayer();
+    }
+    public void SkillAttack()
+    {
+        Logger.Log("SkillAttack");
+        AttackPlayer();
+    }
+    
 }
