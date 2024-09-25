@@ -10,36 +10,32 @@ public class PlayerDodgeState : PlayerBaseState
 
     public override void OnStateEnter()
     {
-        Logger.Log("È¸ÇÇ ÁøÀÔ");
-
         _player._dodgeing = true;
         _player._cc.enabled = false;
     }
 
     public override void OnStateUpdate()
     {
-        Logger.Log("È¸ÇÇ ¾÷µ¥ÀÌÆ®");
-
         Dodge();
         DodgeTimer();
     }
 
     public override void OnStateExit()
     {
-        Logger.Log("È¸ÇÇ Å»Ãâ");
+        Logger.Log("íšŒí”¼ Exit");
 
         _player._cc.enabled = true;
     }
 
     void Dodge()
     {
-        // È¸ÇÇ ¹æÇâ
+        // íšŒí”¼ ë°©í–¥
         _player._moveDir = _player._playerModel.transform.forward * _player._playerStat.DodgeSpeed * Time.deltaTime;
-        // È¸ÇÇ
+        // íšŒí”¼
         _player.transform.position += _player._moveDir;
     }
 
-    // ÀÏÁ¤ ½Ã°£ ÈÄ È¸ÇÇ »óÅÂ ÇØÁ¦
+    // ì¼ì • ì‹œê°„ í›„ íšŒí”¼ ìƒíƒœ í•´ì œ
     void DodgeTimer()
     {
         _curTime += Time.deltaTime;

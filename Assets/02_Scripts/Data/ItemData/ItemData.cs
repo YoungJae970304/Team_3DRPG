@@ -18,6 +18,7 @@ public abstract class ItemData : ScriptableObject
     public int BuyingPrice => _buyingPrice;
     public int SellingPrice => _sellingPrice;
     public virtual int MaxAmount => _maxAmount;
+    public ItemType Type => _itemType;
 
     [SerializeField] ItemType _itemType;
     //최대 소지 갯수
