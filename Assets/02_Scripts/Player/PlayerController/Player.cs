@@ -55,8 +55,8 @@ public class Player : MonoBehaviour
     protected void Start()
     {
         #region 컴포넌트 초기화
-        _cc = GetComponent<CharacterController>();
-        _playerStat = GetComponent<PlayerStat>();
+        _cc = gameObject.GetOrAddComponent<CharacterController>();
+        _playerStat = gameObject.GetOrAddComponent<PlayerStat>();
         #endregion
 
         #region 딕셔너리 초기화
