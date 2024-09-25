@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BossBearDamagedState : MonsterBaseState
 {
-    //»ı°¢ÇØº¸´Ï º¸½ºÀÌ°Å ¾È¹Ğ¸®Àİ¾Æ ½Ï´Ù ¹Ù²ã¾ßÇÏ³×
+    //ìƒê°í•´ë³´ë‹ˆ ë³´ìŠ¤ì´ê±° ì•ˆë°€ë¦¬ì–ì•„ ì‹¹ë‹¤ ë°”ê¿”ì•¼í•˜ë„¤
     public BossBearDamagedState(BossBear bossBear) : base(bossBear)
     {
-        _bossBear = bossBear; 
+        _bossBear = bossBear;
+        _player = _bossBear._player.GetComponent<Player>();
         _pStat = _player._playerStat;
     }
     PlayerStat _pStat;

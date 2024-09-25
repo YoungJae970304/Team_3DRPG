@@ -22,7 +22,7 @@ public class BossBearAttackState : MonsterBaseState
         _player = _bossBear._player.GetComponent<Player>();
         _pStat = _player._playerStat;
         _curState = BearAttackSTATE.Idle;
-        #region °õ °ø°İ »óÅÂ ÃÊ±âÈ­
+        #region ê³° ê³µê²© ìƒíƒœ ì´ˆê¸°í™”
         #endregion
     }
     float _timer;
@@ -48,65 +48,72 @@ public class BossBearAttackState : MonsterBaseState
         AttackTimer();
         
         _randomAttack = UnityEngine.Random.Range(1, 101);
-        //µô·¹ÀÌ ÈÄ ÇÃ·¹ÀÌ¾î °ø°İ
+        //ë”œë ˆì´ í›„ í”Œë ˆì´ì–´ ê³µê²©
         if (_timer > _bossBear._attackDelay)
         {
             _timer = 0f;
-            //¿©±â¿¡ ¿¡³Ê¹Ì °ø°İ ³Ö±â
-            AttackPlayer();
+            //ì—¬ê¸°ì— ì—ë„ˆë¯¸ ê³µê²© ë„£ê¸°
+            
             AttackStateSwitch();
+            Logger.Log(11.ToString());
         }
     }
     public void AttackTimer()
     {
         _timer += Time.deltaTime;
     }
-    public void AttackPlayer() // ÀÏ´Ü ¿©±â¿¡ ³Ö¾î³ù´Âµ¥ ¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ È£ÃâÇÏ´Â ÀÌº¥Æ®¹æ½ÄÀ¸·Î ¾µµí
+    public void AttackPlayer() // ì¼ë‹¨ ì—¬ê¸°ì— ë„£ì–´ë†¨ëŠ”ë° ì• ë‹ˆë©”ì´ì…˜ì—ì„œ í˜¸ì¶œí•˜ëŠ” ì´ë²¤íŠ¸ë°©ì‹ìœ¼ë¡œ ì“¸ë“¯
     {
         _player.Damaged(_bStat.Attack);
         
     }
     public void AttackStateSwitch()
     {
+        
         if(_randomAttack <= 15)
         {
-            //ChangeState(BearAttackSTATE.LBite);
+            LeftBiteAttack();
         }
         else if(_randomAttack <= 30)
         {
-            //ChangeState(BearAttackSTATE.RBite);
+            RightBiteAttack();
         }
         else if(_randomAttack <= 60)
         {
-           // ChangeState(BearAttackSTATE.LHand);
+            LeftHandAttack();
         }
-        else if(_randomAttack <= 90)
+        else if (_randomAttack <= 90)
         {
-           // ChangeState(BearAttackSTATE.RHand);
+            RightHandAttack();
         }
-        else
+        else 
         {
-           // ChangeState(BearAttackSTATE.Earthqauke);
+            EarthquakeAttack();
         }
     }
     public void EarthquakeAttack()
     {
         Logger.Log("EarthquakeAttack");
+        AttackPlayer();
     }
     public void LeftBiteAttack()
     {
         Logger.Log("LeftBiteAttack");
+        AttackPlayer();
     }
     public void RightBiteAttack()
     {
         Logger.Log("RightBiteAttack");
+        AttackPlayer();
     }
     public void LeftHandAttack()
     {
         Logger.Log("LeftHandAttack");
+        AttackPlayer();
     }
     public void RightHandAttack()
     {
         Logger.Log("RightHandAttack");
+        AttackPlayer();
     }
 }

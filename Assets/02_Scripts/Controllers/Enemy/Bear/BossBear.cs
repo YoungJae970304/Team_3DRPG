@@ -16,7 +16,7 @@ public class BossBear : Monster, IDamageAlbe
         Die,
     }
     public State _curState;
-    //NavMeshAgent nav; //¿©±â¼­ ¾È¾µµí?
+    //NavMeshAgent nav; //ì—¬ê¸°ì„œ ì•ˆì“¸ë“¯?
     private MonsterFSM _monFSM;
     //MonsterStat _mStat;
     //GameObject _player;
@@ -37,7 +37,7 @@ public class BossBear : Monster, IDamageAlbe
         _originPos = transform.position;
         _nav = GetComponent<NavMeshAgent>();
 
-        #region »óÅÂµñ¼Å³Ê¸® ÃÊ±âÈ­
+        #region ìƒíƒœë”•ì…”ë„ˆë¦¬ ì´ˆê¸°í™”
         States.Add(State.Idle, new BossBearIdleState(this));
         States.Add(State.Move, new BossBearMoveState(this));
         States.Add(State.Attack, new BossBearAttackState(this));
@@ -54,7 +54,7 @@ public class BossBear : Monster, IDamageAlbe
     {
         BossBearState();
         States[_curState].OnStateUpdate();
-        Logger.Log(CanSeePlayer().ToString());
+        //Logger.Log(CanSeePlayer().ToString());
     }
     public void BossBearState()
     {
@@ -123,7 +123,7 @@ public class BossBear : Monster, IDamageAlbe
     }
     public bool CanAttackPlayer()
     {
-        //»çÁ¤°Å¸® Ã¼Å© ±¸Çö
+        //ì‚¬ì •ê±°ë¦¬ ì²´í¬ êµ¬í˜„
         return _bStat.AttackRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool CanSeePlayer()
@@ -150,12 +150,7 @@ public class BossBear : Monster, IDamageAlbe
             }
         }
     }
-    #region returnÀ¸·Î ¿Å±æ ÇÔ¼ö
-    public void ReturnHeal()
-    {
-        _bStat.Hp = _bStat.MaxHp;
-    }
-    #endregion
+   
     public void BossBearDie()
     {
         Destroy(gameObject, 2f);

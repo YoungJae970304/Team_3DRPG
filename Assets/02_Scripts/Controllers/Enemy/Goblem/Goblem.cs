@@ -16,7 +16,7 @@ public class Goblem : Monster, IDamageAlbe
         Die,
     }
     public State _curState;
-    //NavMeshAgent nav; //¿©±â¼­ ¾È¾µµí?
+    //NavMeshAgent nav; //ì—¬ê¸°ì„œ ì•ˆì“¸ë“¯?
     private MonsterFSM _monFSM;
     //MonsterStat _mStat;
     //GameObject _player;
@@ -37,7 +37,7 @@ public class Goblem : Monster, IDamageAlbe
         _originPos = transform.position;
         _nav = GetComponent<NavMeshAgent>();
 
-        #region »óÅÂµñ¼Å³Ê¸® ÃÊ±âÈ­
+        #region ìƒíƒœë”•ì…”ë„ˆë¦¬ ì´ˆê¸°í™”
         States.Add(State.Idle, new GoblemIdleState(this));
         States.Add(State.Move, new GoblemMoveState(this));
         States.Add(State.Attack, new GoblemAttackState(this));
@@ -114,7 +114,7 @@ public class Goblem : Monster, IDamageAlbe
     }
     public bool CanAttackPlayer()
     {
-        //»çÁ¤°Å¸® Ã¼Å© ±¸Çö
+        //ì‚¬ì •ê±°ë¦¬ ì²´í¬ êµ¬í˜„
         return _gStat.AttackRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool CanSeePlayer()
@@ -141,12 +141,7 @@ public class Goblem : Monster, IDamageAlbe
             }
         }
     }
-    #region returnÀ¸·Î ¿Å±æ ÇÔ¼ö
-    public void ReturnHeal()
-    {
-        _gStat.Hp = _gStat.MaxHp;
-    }
-    #endregion
+ 
     public void GoblemDie()
     {
         Destroy(gameObject, 2f);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using UnityEngine;
 
 public class OrkReturnState : MonsterBaseState
@@ -7,30 +8,36 @@ public class OrkReturnState : MonsterBaseState
     public OrkReturnState(Ork ork) : base(ork) 
     {
         _ork = ork;
+        _oStat = _ork._oStat;
     }
 
-
+    OrkStat _oStat;
     public override void OnStateEnter()
     {
-        //originÆ÷½º Ã£¾Æ¼­ ÀÌµ¿ÇÏ±â
+        //originí¬ìŠ¤ ì°¾ì•„ì„œ ì´ë™í•˜ê¸°
         _ork._nav.destination = _ork._originPos;
     }
 
     public override void OnStateExit()
     {
-        //originPos¶ó¸é Idle·Î »óÅÂ º¯È¯
-        //¾Æ´Ï¶ó¸é ÇÃ·¹ÀÌ¾î Ãß°İ(Move·Î »óÅÂ º¯È¯) // ÀÌÁ¶°ÇÀº ÇÊ¿ä¾ø´Âµí Idle·Î¸¸ º¯ÇÏ¸éµÊ
-        //¾êµµ Á¶°ÇÈ®ÀÎÇÏ±â
-        //¹¹ ³ÖÀ»°Ô ¾ø¾î¼­ ÀÏ´Ü ºñ¿öµÎ±â
-        //¾Æ¸¶ ¾Ö´Ï¸ŞÀÌ¼Ç Á¾·á µé¾î°¥µí
+        //originPosë¼ë©´ Idleë¡œ ìƒíƒœ ë³€í™˜
+        //ì•„ë‹ˆë¼ë©´ í”Œë ˆì´ì–´ ì¶”ê²©(Moveë¡œ ìƒíƒœ ë³€í™˜) // ì´ì¡°ê±´ì€ í•„ìš”ì—†ëŠ”ë“¯ Idleë¡œë§Œ ë³€í•˜ë©´ë¨
+        //ì–˜ë„ ì¡°ê±´í™•ì¸í•˜ê¸°
+        //ë­ ë„£ì„ê²Œ ì—†ì–´ì„œ ì¼ë‹¨ ë¹„ì›Œë‘ê¸°
+        //ì•„ë§ˆ ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œ ë“¤ì–´ê°ˆë“¯
     }
 
     public override void OnStateUpdate()
     {
-        //ÀÌ°É Á» °í¹ÎÇØ¾ßÇÒµí
-        //¸®ÅÏÀ» °è¼Ó ÁøÇàÇÏ´Â°Ô ¸Â´ÙÇÏ´Ï Áö¼ÓÀûÀ¸·Î Ã¼·ÂÈ¸º¹ + ¸®ÅÏÀå¼Ò±îÁö °è¼Ó º¹±Í // 
-        //ÀÌ·¯¸é µ¥¹ÌÁö ÇÔ¼ö¸¦ È£ÃâÇÒ ¶§ return»óÅÂÀÌ¸é ½ºÅ×ÀÌÆ® º¯È¯À» ¾ÈÇÏ°Ô Á¶°Ç°É¾î¾ßµÊ // Á¶°Ç °É·ÁÀÖÀ½
+        //ì´ê±¸ ì¢€ ê³ ë¯¼í•´ì•¼í• ë“¯
+        //ë¦¬í„´ì„ ê³„ì† ì§„í–‰í•˜ëŠ”ê²Œ ë§ë‹¤í•˜ë‹ˆ ì§€ì†ì ìœ¼ë¡œ ì²´ë ¥íšŒë³µ + ë¦¬í„´ì¥ì†Œê¹Œì§€ ê³„ì† ë³µê·€ // 
+        //ì´ëŸ¬ë©´ ë°ë¯¸ì§€ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•  ë•Œ returnìƒíƒœì´ë©´ ìŠ¤í…Œì´íŠ¸ ë³€í™˜ì„ ì•ˆí•˜ê²Œ ì¡°ê±´ê±¸ì–´ì•¼ë¨ // ì¡°ê±´ ê±¸ë ¤ìˆìŒ
         _ork._nav.SetDestination(_ork._originPos);
-        //_ork.ReturnHeal(); //±¸ÇöÀº µÇ¾îÀÖÀ¸³ª ½ºÅİÀÌ ¾ø¾î¼­ ÀÛµ¿ÀÌ ¾ÈµÊ
+        //_ork.ReturnHeal(); //êµ¬í˜„ì€ ë˜ì–´ìˆìœ¼ë‚˜ ìŠ¤í…Ÿì´ ì—†ì–´ì„œ ì‘ë™ì´ ì•ˆë¨
+        ReturnHeal();
+    }
+    public void ReturnHeal()
+    {
+        _oStat.Hp = _oStat.MaxHp;
     }
 }
