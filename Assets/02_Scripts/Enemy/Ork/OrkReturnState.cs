@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class OrkReturnState : MonsterBaseState
 {
-    public OrkReturnState(Ork ork) : base(ork) { }
+    public OrkReturnState(Ork ork) : base(ork) 
+    {
+        _ork = ork;
+    }
 
 
     public override void OnStateEnter()
