@@ -9,9 +9,14 @@ public class ItemManager : MonoBehaviour//인벤토리
     void Start()
     {
         //인벤토리 초기화
-        ItemDick.Add(ItemData.ItemType.Booty, new ItemGroup(15, 100, ItemData.ItemType.Booty));
-        ItemDick.Add(ItemData.ItemType.Equipment, new ItemGroup(15, 100, ItemData.ItemType.Equipment));
-        ItemDick.Add(ItemData.ItemType.Potion, new ItemGroup(15, 100, ItemData.ItemType.Potion));
+        AddGroup(15, 100, ItemData.ItemType.Booty);
+        AddGroup(15, 100, ItemData.ItemType.Equipment);
+        AddGroup(15, 100, ItemData.ItemType.Potion);
+    }
+
+    public void AddGroup(int maxSize, int LimitSize, ItemData.ItemType type) {
+        ItemDick.Add(type, new ItemGroup(maxSize, LimitSize, type));
+
     }
 
     public bool InsertItem(Item item)//아이템 삽입 빈칸이있으면 빈칸으로 중복이있으면 합쳐짐
