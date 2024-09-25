@@ -17,6 +17,8 @@ MonoBehaviour:
   _id: 3
   _name: "\uAC1C\uBAA9\uAC78\uC774"
   _iconSprite: {fileID: 0}
+  _buyingPrice: 0
+  _sellingPrice: 0
   _level: 1
   _grade: 1
   _healthRegen: 1
