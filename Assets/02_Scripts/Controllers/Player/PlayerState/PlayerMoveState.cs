@@ -9,7 +9,6 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void OnStateEnter()
     {
-        Logger.Log("무브상태 진입");
     }
 
     public override void OnStateUpdate()
@@ -19,13 +18,12 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void OnStateFixedUpdate()
     {
-        Logger.Log("무브상태 진행중(Fixed)");
         Move();
     }
 
     public override void OnStateExit()
     {
-        Logger.Log("무브상태 끝");
+        Logger.Log("이동상태 Exit");
         MoveStop();
     }
 

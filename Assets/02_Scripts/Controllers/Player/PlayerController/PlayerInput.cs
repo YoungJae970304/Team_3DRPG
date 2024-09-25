@@ -7,7 +7,8 @@ public class PlayerInput : MonoBehaviour
     Player _player;
     Vector3 _dir;
 
-    Queue<int> _atkInput = new Queue<int>();
+
+    public Queue<int> _atkInput = new Queue<int>();
 
     void Start()
     {

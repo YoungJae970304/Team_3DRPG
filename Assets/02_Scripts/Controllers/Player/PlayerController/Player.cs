@@ -75,12 +75,14 @@ public class Player : MonoBehaviour, IDamageAlbe
     public CharacterController _cc;
     [HideInInspector]
     public PlayerStat _playerStat;
+    public PlayerInput _playerInput;
 
     protected void Start()
     {
         #region 컴포넌트 초기화
         _cc = gameObject.GetOrAddComponent<CharacterController>();
         _playerStat = gameObject.GetOrAddComponent<PlayerStat>();
+        _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
         #endregion
 
         #region 딕셔너리 초기화
@@ -183,9 +185,9 @@ public class Player : MonoBehaviour, IDamageAlbe
     }
 
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
-    public virtual IEnumerator Attack()
+    public virtual void Attack()
     {
-        yield return null;
+
     }
 
     public void Damaged(int amount)

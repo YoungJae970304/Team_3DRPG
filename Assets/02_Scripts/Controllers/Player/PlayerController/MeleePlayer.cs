@@ -4,29 +4,43 @@ using UnityEngine;
 
 public class MeleePlayer : Player
 {
-    public override IEnumerator Attack()
+    public override void Attack()
     {
-        Debug.Log("근거리 캐릭터 공격");
-        switch (AtkCount)
+        if (_playerInput._atkInput.Count != 0)
         {
-            case 0:
-                Logger.Log("강공격");
-                break;
-            case 1:
-                Logger.Log("기본공격 1타");
-                break;
-            case 2:
-                Logger.Log("기본공격 2타");
-                break;
-            case 3:
-                Logger.Log("기본공격 3타");
-                break;
-            default:
-                Logger.LogError("지정한 공격이 아님");
-                break;
-        }
+            switch (AtkCount)
+            {
+                case 0:
+                    Logger.Log("강공격");
+                    break;
+                case 1:
+                    Logger.Log("기본공격 1타");
+                    break;
+                case 2:
+                    Logger.Log("기본공격 2타");
+                    break;
+                case 3:
+                    Logger.Log("기본공격 3타");
+                    break;
+                default:
+                    Logger.LogError("지정한 공격이 아님");
+                    break;
+            }
 
-        yield return new WaitForSeconds(0.5f);
-        _attacking = false;
+            AtkOffTimer(0.5f);
+        }
+    }
+
+    float _curTime = 0;
+
+    void AtkOffTimer(float targetTime)
+    {
+        _curTime += Time.deltaTime;
+
+        if (_curTime >= targetTime)
+        {
+            _curTime = 0;
+            _attacking = false; // 추후 애니메이션 이벤트로 이동 예정
+        }
     }
 }
