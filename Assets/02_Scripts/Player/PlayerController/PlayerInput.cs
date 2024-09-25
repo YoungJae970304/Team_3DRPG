@@ -7,9 +7,11 @@ public class PlayerInput : MonoBehaviour
     Player _player;
     Vector3 _dir;
 
+    Queue<Vector3> _atkInput = new Queue<Vector3>();
+
     void Start()
     {
-        _player = GetComponent<Player>();
+        _player = gameObject.GetOrAddComponent<Player>();
 
         Managers.Input.KeyAction -= MoveInput;
         Managers.Input.KeyAction += MoveInput;
