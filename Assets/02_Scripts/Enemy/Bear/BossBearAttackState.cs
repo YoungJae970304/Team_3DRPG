@@ -29,6 +29,7 @@ public class BossBearAttackState : MonsterBaseState
     public override void OnStateUpdate()
     {
         AttackTimer();
+        int RandomAttack = Random.Range(0, 100);
         //딜레이 후 플레이어 공격
         if (_timer > _bossBear._attackDelay)
         {
