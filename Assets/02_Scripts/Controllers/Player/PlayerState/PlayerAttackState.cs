@@ -11,7 +11,9 @@ public class PlayerAttackState : PlayerBaseState
 
     public override void OnStateEnter()
     {
+        Logger.Log("공격 상태 진입");
         _player._attacking = true;
+        _player._canAtkInput = false;
     }
 
     public override void OnStateUpdate()
@@ -22,5 +24,7 @@ public class PlayerAttackState : PlayerBaseState
     public override void OnStateExit()
     {
         Logger.Log("공격 상태 Exit");
+        _player._attacking = false;
+        _player.AtkCount = 0;
     }
 }

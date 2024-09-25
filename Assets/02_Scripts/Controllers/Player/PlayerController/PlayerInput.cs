@@ -84,17 +84,17 @@ public class PlayerInput : MonoBehaviour
 
     void AttackInput()
     {
-        if (Input.GetMouseButtonDown(0) && !_player._attacking)
+        if (Input.GetMouseButtonDown(0) && _player._canAtkInput)
         {
             _player.AtkCount++;
-            // 플레이어의 현재 정면을 queue에 저장
+
             InputBufferInsert(_player.AtkCount);
             _player.ChangeState(PlayerState.Attack);
         }
-        else if (Input.GetMouseButtonDown(1) && !_player._attacking)
+        else if (Input.GetMouseButtonDown(1) && _player._canAtkInput)
         {
             _player.AtkCount = 0;
-            // 플레이어의 현재 정면을 queue에 저장
+
             InputBufferInsert(_player.AtkCount);
             _player.ChangeState(PlayerState.Attack);
         }
@@ -110,8 +110,8 @@ public class PlayerInput : MonoBehaviour
 
     public void InputBufferInsert(int action)
     {
-        if(_atkInput.Count > 1) { return; }
-
+        if(_atkInput.Count > 3) { return; }
+        Logger.Log("231");
         _atkInput.Enqueue(action);
     }
 }

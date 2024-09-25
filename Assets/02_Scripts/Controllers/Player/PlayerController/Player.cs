@@ -44,6 +44,8 @@ public class Player : MonoBehaviour, IDamageAlbe
     // 공격 관련 변수
     [HideInInspector]
     public bool _attacking = false;
+    [HideInInspector]
+    public bool _canAtkInput = true;
     int _atkCount = 0;
     [HideInInspector]
     public int AtkCount
@@ -100,6 +102,7 @@ public class Player : MonoBehaviour, IDamageAlbe
         _curState = PlayerState.Idle;
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
         _camera = Camera.main;
+        _canAtkInput = true;
         #endregion
     }
 
@@ -110,6 +113,8 @@ public class Player : MonoBehaviour, IDamageAlbe
 
         // 상태 내부의 업데이트 실행
         _pFsm.UpdateState();
+
+        Logger.Log(_playerInput._atkInput.Count.ToString());
     }
 
     protected void FixedUpdate()

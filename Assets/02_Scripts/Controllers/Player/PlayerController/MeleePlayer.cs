@@ -6,9 +6,9 @@ public class MeleePlayer : Player
 {
     public override void Attack()
     {
-        if (_playerInput._atkInput.Count != 0)
+        if (_playerInput._atkInput.Count > 0)
         {
-            switch (AtkCount)
+            switch (_playerInput._atkInput.Dequeue())
             {
                 case 0:
                     Logger.Log("강공격");
@@ -27,20 +27,34 @@ public class MeleePlayer : Player
                     break;
             }
 
-            AtkOffTimer(0.5f);
+            CanAtkInputOffTimer(0.5f);
+            AtkOffTimer(1.5f);
         }
     }
 
-    float _curTime = 0;
+    float _curCAITime = 0;
 
+    // 추후 애니메이션 이벤트로 이동 예정
+    void CanAtkInputOffTimer(float targetTime)
+    {
+        _curCAITime += Time.deltaTime;
+
+        if (_curCAITime >= targetTime)
+        {
+            _curCAITime = 0;
+            _canAtkInput = true;
+        }
+    }
+
+    float _curATime = 0;
     void AtkOffTimer(float targetTime)
     {
-        _curTime += Time.deltaTime;
+        _curATime += Time.deltaTime;
 
-        if (_curTime >= targetTime)
+        if (_curATime >= targetTime)
         {
-            _curTime = 0;
-            _attacking = false; // 추후 애니메이션 이벤트로 이동 예정
+            _curATime = 0;
+            _attacking = false;
         }
     }
 }
