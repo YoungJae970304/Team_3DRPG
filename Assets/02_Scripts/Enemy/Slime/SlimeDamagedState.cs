@@ -28,7 +28,7 @@ public class SlimeDamagedState : MonsterBaseState
 
     public override void OnStateUpdate()
     {
-        _slime.StartCoroutine(StartDamege(_slime._sStat.Attack, _slime.transform.position, 0.5f, 0.5f));
+        _slime.StartCoroutine(StartDamege(_pStat.ATK, _slime.transform.position, 0.5f, 0.5f));
     }
     public IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
     {

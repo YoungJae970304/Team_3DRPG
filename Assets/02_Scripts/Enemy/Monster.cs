@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IDamageAlbe
 {
     private enum State
     {
@@ -55,4 +55,11 @@ public class Monster : MonoBehaviour
                 break;
         }
     }
+
+    public virtual void Damaged(int amount)
+    {
+
+    }
+
+
 }

@@ -122,10 +122,10 @@ public class Slime : Monster, IDamageAlbe
     }
     public void DropItem()
     {
-
+        //게임매니저에서 생성된 아이템을 pooling해야하는데 여기서는 아이템 키면서 가져와서 값만 넣어주면될듯
     }
 
-    public void Damaged(int amount)
+    public override void Damaged(int amount)
     {
         if(_curState != State.Return)
         {

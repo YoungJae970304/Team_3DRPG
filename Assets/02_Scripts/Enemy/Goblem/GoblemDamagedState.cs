@@ -7,9 +7,10 @@ public class GoblemDamagedState : MonsterBaseState
     public GoblemDamagedState(Goblem goblem) : base(goblem)
     {
         _goblem = goblem;
+        _pStat = _player._playerStat;
     }
     PlayerStat _pStat;
-    public override void OnStateEnter()
+public override void OnStateEnter()
     {
         //넉백, 데미지 받기
         //임시로 몬스터의 데미지를 넣어놓음 추후 플레이어 데미지 값 받아오게 설정
@@ -27,7 +28,7 @@ public class GoblemDamagedState : MonsterBaseState
 
     public override void OnStateUpdate()
     {
-        _goblem.StartCoroutine(StartDamege(_goblem._gStat.Attack, _goblem.transform.position, 0.5f, 0.5f)); //오크 스텟은 플레이어 공격력으로 교체 예정
+        _goblem.StartCoroutine(StartDamege(_pStat.ATK, _goblem.transform.position, 0.5f, 0.5f)); //오크 스텟은 플레이어 공격력으로 교체 예정
     }
     public IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
     {

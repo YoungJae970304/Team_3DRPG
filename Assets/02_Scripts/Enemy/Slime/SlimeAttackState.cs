@@ -8,9 +8,11 @@ public class SlimeAttackState : MonsterBaseState
     public SlimeAttackState(Slime slime) : base(slime) 
     {
         _slime = slime;
+        _player = _ork._player.GetComponent<Player>();
+        _pStat = _player._playerStat;
     }
     float _timer = 0f;
-
+    PlayerStat _pStat;
     public override void OnStateEnter()
     {
         //플레이어 공격
@@ -33,10 +35,15 @@ public class SlimeAttackState : MonsterBaseState
         {
             _timer = 0f;
             //여기에 에너미 공격 넣기
+            AttackPlayer();
         }
     }
     public void AttackTimer()
     {
         _timer += Time.deltaTime;
+    }
+    public void AttackPlayer()
+    {
+        _pStat.PlayerHP -= _slime._sStat.Attack;
     }
 }

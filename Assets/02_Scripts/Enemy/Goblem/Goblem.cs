@@ -130,7 +130,7 @@ public class Goblem : Monster, IDamageAlbe
 
     }
 
-    public void Damaged(int amount)
+    public override void Damaged(int amount)
     {
         if (_curState != State.Return)
         {

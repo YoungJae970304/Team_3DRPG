@@ -191,8 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d8331f3bfb48d448c949b2a263e3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
-  _dodgeSpeed: 10
 --- !u!114 &109840490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,7 +1072,7 @@ GameObject:
   - component: {fileID: 2102366270}
   - component: {fileID: 2102366276}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Ork
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -44,6 +44,7 @@ public class BossBear : Monster, IDamageAlbe
         States.Add(State.Damage, new BossBearDamagedState(this));
         States.Add(State.Return, new BossBearReturnState(this));
         States.Add(State.Die, new BossBearDieState(this));
+        States.Add(State.Skill, new BossBearSkillState(this));
         #endregion
         States[State.Idle].OnStateEnter();
     }
@@ -94,6 +95,14 @@ public class BossBear : Monster, IDamageAlbe
                 if ((_originPos - transform.position).magnitude <= 3f)
                     ChangeState(State.Idle);
                 break;
+            case State.Skill:
+                if (CanAttackPlayer())
+                    ChangeState(State.Attack);
+                else
+                {
+                    ChangeState(State.Move);
+                }
+                break;
             case State.Die:
                 break;
 
@@ -130,7 +139,7 @@ public class BossBear : Monster, IDamageAlbe
 
     }
 
-    public void Damaged(int amount)
+    public override void Damaged(int amount)
     {
         if (_curState != State.Return)
         {

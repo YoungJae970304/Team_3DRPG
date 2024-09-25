@@ -56,6 +56,7 @@ public class Ork : Monster, IDamageAlbe
         OrkState();
         States[_curState].OnStateUpdate();
         Logger.Log(CanSeePlayer().ToString());
+        Logger.Log(ReturnOrigin().ToString());
     }
     public void OrkState()
     {
@@ -126,13 +127,15 @@ public class Ork : Monster, IDamageAlbe
     public bool ReturnOrigin()
     {
         return _oStat.ReturnRange < (_originPos - transform.position).magnitude;
+        
+        //return _nav.remainingDistance < 2f;
     }
     public void DropItem()
     {
 
     }
 
-    public void Damaged(int amount)
+    public override void Damaged(int amount)
     {
         if (_curState != State.Return)
         {

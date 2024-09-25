@@ -7,6 +7,8 @@ public class OrkDamagedState : MonsterBaseState
     public OrkDamagedState(Ork ork) : base(ork)
     {
         _ork = ork;
+        _player = _ork._player.GetComponent<Player>();
+        _pStat = _player._playerStat;
     }
     PlayerStat _pStat;
     public override void OnStateEnter()
@@ -27,7 +29,7 @@ public class OrkDamagedState : MonsterBaseState
 
     public override void OnStateUpdate()
     {
-        _ork.StartCoroutine(StartDamege(_ork._oStat.Attack, _ork.transform.position, 0.5f, 0.5f)); //오크 스텟은 플레이어 공격력으로 교체 예정
+        _ork.StartCoroutine(StartDamege(_pStat.ATK, _ork.transform.position, 0.5f, 0.5f)); //오크 스텟은 플레이어 공격력으로 교체 예정
     }
     public IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
     {
