@@ -11,7 +11,6 @@ public interface ILoader<Key, Value>
 public class DataManager
 {
     public Dictionary<int, Data.Stat> StatDict {  get; private set; } = new Dictionary<int, Data.Stat>();
-
     public void Init()
     {
         // Json을 사용하기 위한 타입은 TextAsset

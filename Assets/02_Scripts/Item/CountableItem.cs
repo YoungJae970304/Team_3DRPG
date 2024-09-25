@@ -23,9 +23,10 @@ public abstract class CountableItem : Item
     {
         _itemData = data;
         SetAmount(amount);
+        Logger.Log($"{_amount} 수량체크");
     }
-  
-    //최대 갯수 지정
+
+    //최대 개수 지정
     public int SetAmount(int amount)
     {
         _amount = Mathf.Clamp(amount, 0, _maxAmount);
@@ -33,9 +34,30 @@ public abstract class CountableItem : Item
         return _amount;
     }
 
-    //99개가 넘어갔을 때 (함수 호출 하고)
-    //인벤토리 안에 있는 꽉찬 아이템 슬롯(idx?) 다음 아이템 슬롯(idx?)에서 부터 다시 CountableItem함수 호출
+    //실제 현재 몇개인지 알려줄 함수
+    public int GetCurrentAmount()
+    {
+        return _amount;
+    }
 
-    //갯수가 0 될 시 (함수 호출) 인벤토리에서 빼주고 인벤토리 갱신
+    //현재 몇개인지 확인 해주는 함수
+    public int AddAmount(int amount)
+    {
+        int nextAmount = _amount + amount;
+        //현재 수량과 추가된 수량이 _maxAmount를 초과 했는지 확인 할 변수
+        int over = 0;
+        //추가된 수량이 최대개수(99) 보타 커지면
+        if(nextAmount > _maxAmount)
+        {
+            over = nextAmount - _maxAmount;
+            _amount = _maxAmount;
+        }else
+        {
+            _amount = nextAmount;
+        }
+        return over;
+    }
 
+    //새로운 아이템 생성
+    protected abstract CountableItem Clone(int amount);
 }
