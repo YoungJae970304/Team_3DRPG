@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class ItemData : ScriptableObject
 {
-    //¾ÆÀÌÅÛÀÌ °ø¿ëÀ¸·Î »ç¿ëÇÒ Á¤º¸µé
+    //ì•„ì´í…œì´ ê³µìš©ìœ¼ë¡œ ì‚¬ìš©í•  ì •ë³´ë“¤
     public enum ItemType
     {
         Equipment,//0, 1, 2
@@ -12,6 +12,7 @@ public abstract class ItemData : ScriptableObject
         Booty,//4
     }
 
+    public ItemType Type => _itemType;
     public int ID => _id;
     public string Name => _name;
     public Sprite IconSprite => _iconSprite;
@@ -19,18 +20,18 @@ public abstract class ItemData : ScriptableObject
     public int SellingPrice => _sellingPrice;
     public int MaxAmount => _maxAmount;
 
-    //¾ÆÀÌÅÛ Å¸ÀÔ
+    //ì•„ì´í…œ íƒ€ì…
     [SerializeField] ItemType _itemType;
-    //ÃÖ´ë ¼ÒÁö °¹¼ö
+    //ìµœëŒ€ ì†Œì§€ ê°¯ìˆ˜
     [SerializeField] int _maxAmount = 99;
-    //¾ÆÀÌÅÛ ¹øÈ£
+    //ì•„ì´í…œ ë²ˆí˜¸
     [SerializeField] int _id;
-    //¾ÆÀÌÅÛ ÀÌ¸§
+    //ì•„ì´í…œ ì´ë¦„
     [SerializeField] string _name;
-    //¾ÆÀÌÅÛ ¾ÆÀÌÄÜ
+    //ì•„ì´í…œ ì•„ì´ì½˜
     [SerializeField] Sprite _iconSprite;
-    //±¸¸Å °¡°İ
+    //êµ¬ë§¤ ê°€ê²©
     [SerializeField] int _buyingPrice;
-    //ÆÇ¸Å °¡°İ
+    //íŒë§¤ ê°€ê²©
     [SerializeField] int _sellingPrice;
 }

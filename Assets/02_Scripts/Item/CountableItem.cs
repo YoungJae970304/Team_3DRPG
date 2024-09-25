@@ -2,62 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CountableItem : Item
+public class CountableItem : Item
 {
-    //¼ö·®ÀÌ ÀÖ´Â ¾ÆÀÌÅÛ¿¡ Àû¿ë
-    //¼ö·® ÀÖ´Â ¾ÆÀÌÅÛ µ¥ÀÌÅÍ ÇÁ·ÎÆÛÆ¼
-    public ItemData _itemData { get; private set; }
-
-    //ÇöÀç ¾ÆÀÌÅÛ °¹¼ö
-    public int _amount { get; protected set; }
-    //ÃÖ´ë·Î ¼ÒÁöÇÒ ¼ö ÀÖ´Â °¹¼ö
-    public int _maxAmount => _itemData.MaxAmount;
-
-    //¼ö·®ÀÌ °¡µæ Ã¡´ÂÁö ¿©ºÎ
-    public bool _isMax => _amount >= _itemData.MaxAmount;
-    //°³¼ö°¡ ¾ø´ÂÁö ¿©ºÎ
-    public bool _isEmpty => _amount <= 0;
-
-    //¼ö·®ÀÌ ÀÖ´Â ¾ÆÀÌÅÛÀº 1°³ºÎÅÍ ½ÃÀÛÇÏ´Â ÇÔ¼ö
-    public CountableItem(ItemData data, int amount = 1) : base(data)
+    public override int _maxAmount => Data.MaxAmount;
+    //ìˆ˜ëŸ‰ì´ ìžˆëŠ” ì•„ì´í…œì€ 1ê°œë¶€í„° ì‹œìž‘í•˜ëŠ” í•¨ìˆ˜
+    public CountableItem(ItemData data, int amount = 1) : base(data, amount)
     {
-        _itemData = data;
         SetAmount(amount);
-        Logger.Log($"{_amount} ¼ö·®Ã¼Å©");
     }
 
-    //ÃÖ´ë °³¼ö ÁöÁ¤
-    public int SetAmount(int amount)
+    //ìž¥ë¹„ ì œì™¸ ë‹¤ë¥¸ ì•„ì´í…œ ë³µì‚¬
+    protected override Item Clone(int amount)
     {
-        _amount = Mathf.Clamp(amount, 0, _maxAmount);
-
-        return _amount;
+        return new CountableItem(Data, amount);
     }
-
-    //½ÇÁ¦ ÇöÀç ¸î°³ÀÎÁö ¾Ë·ÁÁÙ ÇÔ¼ö
-    public int GetCurrentAmount()
-    {
-        return _amount;
-    }
-
-    //ÇöÀç ¸î°³ÀÎÁö È®ÀÎ ÇØÁÖ´Â ÇÔ¼ö
-    public int AddAmount(int amount)
-    {
-        int nextAmount = _amount + amount;
-        //ÇöÀç ¼ö·®°ú Ãß°¡µÈ ¼ö·®ÀÌ _maxAmount¸¦ ÃÊ°ú Çß´ÂÁö È®ÀÎ ÇÒ º¯¼ö
-        int over = 0;
-        //Ãß°¡µÈ ¼ö·®ÀÌ ÃÖ´ë°³¼ö(99) º¸Å¸ Ä¿Áö¸é
-        if(nextAmount > _maxAmount)
-        {
-            over = nextAmount - _maxAmount;
-            _amount = _maxAmount;
-        }else
-        {
-            _amount = nextAmount;
-        }
-        return over;
-    }
-
-    //»õ·Î¿î ¾ÆÀÌÅÛ »ý¼º
-    protected abstract CountableItem Clone(int amount);
 }
