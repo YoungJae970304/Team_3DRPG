@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GoldItem : GoldItemData
+public class GoldItem : GoldItemData
 {
     public int _gold { get; protected set; }
 
-    //ÇöÀç °ñµå¸¦ ÁöÁ¤ÇØ¼­ ³Ñ°ÜÁÜ °ñµå´Â
-    public void SetGold(int goldAmount)
+    //í˜„ìž¬ ê³¨ë“œë¥¼ ì§€ì •í•´ì„œ ë„˜ê²¨ì¤Œ ê³¨ë“œëŠ”
+    public void SetGold(int goldReward)
     {
-        _gold = goldAmount;
+        _gold = goldReward;
     }
 }

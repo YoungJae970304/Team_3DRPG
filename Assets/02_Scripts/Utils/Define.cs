@@ -8,7 +8,7 @@ public class Define
     {
         Bgm,
         Effect,
-        MaxCount    // ¾Æ¹«°Íµµ ¾Æ´ÏÁö¸¸ SoundÀÇ °¹¼ö¸¦ ¼¼±â À§ÇØ Ãß°¡
+        MaxCount    // ì•„ë¬´ê²ƒë„ ì•„ë‹ˆì§€ë§Œ Soundì˜ ê°¯ìˆ˜ë¥¼ ì„¸ê¸° ìœ„í•´ ì¶”ê°€
     }
 
     public enum Scene
@@ -38,5 +38,11 @@ public class Define
     public enum SkillType { 
         KeyDown,
         Normal,
+    }
+
+    public enum QuestType
+    {
+        Main,
+        Sub,
     }
 }
