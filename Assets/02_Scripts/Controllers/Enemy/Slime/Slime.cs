@@ -26,6 +26,7 @@ public class Slime : Monster, IDamageAlbe
     public float _attackDelay = 3f;
     Dictionary<State, MonsterBaseState> States = new Dictionary<State, MonsterBaseState>();
     public SlimeStat _sStat;
+
     private void Awake()
     {
         _sStat = GetComponent<SlimeStat>();
@@ -47,6 +48,7 @@ public class Slime : Monster, IDamageAlbe
         States.Add(State.Return, new SlimeReturnState(this));
         States.Add(State.Die, new SlimeDieState(this));
         #endregion
+
         States[State.Idle].OnStateEnter();
     }
 
@@ -120,11 +122,8 @@ public class Slime : Monster, IDamageAlbe
     {
         return _sStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
-    public void DropItem()
-    {
-        //게임매니저에서 생성된 아이템을 pooling해야하는데 여기서는 아이템 키면서 가져와서 값만 넣어주면될듯
-    }
 
+    
     public override void Damaged(int amount)
     {
         if(_curState != State.Return)
@@ -136,9 +135,9 @@ public class Slime : Monster, IDamageAlbe
             }
         }
     }
- 
-    public void SlimeDie()
+
+    public override void Die(GameObject mob)
     {
-        Destroy(gameObject, 2f);
+        Destroy(mob, 2f);
     }
 }

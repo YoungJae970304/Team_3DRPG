@@ -18,7 +18,7 @@ public class OrkIdleState : MonsterBaseState
         _oStat = _ork.GetComponent<OrkStat>();
         if (_oStat == null)
         {
-            Debug.LogError("OrkStat ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("OrkStat ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         awayRangeX = Random.Range(-_oStat.AwayRange, _oStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
@@ -28,39 +28,31 @@ public class OrkIdleState : MonsterBaseState
 
     public override void OnStateExit()
     {
-        //¾ê¸¦ ¾î¶»°Ô ÇØ¾ßÇÒ±î
+        //ì–˜ë¥¼ ì–´ë–»ê²Œ í•´ì•¼í• ê¹Œ
+
+            _ork._nav.destination = _ork._player.transform.position;
+ 
     }
 
     public override void OnStateUpdate()
     {
         if (_oStat == null) return;
-        //ÀÏÁ¤ °Å¸® ¹èÈ¸
-        //¼±°ø¸÷µéÀº ÇÃ·¹ÀÌ¾î°¡ ÀÏÁ¤ °Å¸® ¾È¿¡ µé¾î¿Â´Ù¸é Exit·Î »óÅÂ º¯È¯
+        //ì¼ì • ê±°ë¦¬ ë°°íšŒ
+        //ì„ ê³µëª¹ë“¤ì€ í”Œë ˆì´ì–´ê°€ ì¼ì • ê±°ë¦¬ ì•ˆì— ë“¤ì–´ì˜¨ë‹¤ë©´ Exitë¡œ ìƒíƒœ ë³€í™˜
         awayRangeX = Random.Range(-_oStat.AwayRange, _oStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
         awayRangeZ = Random.Range(-_oStat.AwayRange, _oStat.AwayRange);
 
-        if ((_ork._originPos + _ork.transform.position).magnitude < (_ork._originPos).magnitude + _oStat.ReturnRange ||
-            (_ork._originPos - _ork.transform.position).magnitude > (_ork._originPos).magnitude - _oStat.ReturnRange)
-        {
             if ((_ork._nav.destination - _ork.transform.position).magnitude > 1f)
             {
                 _ork._nav.SetDestination(_ork._nav.destination);
             }
-            else if (_ork._curState == Ork.State.Move)
-            {
-                _ork._nav.destination = _ork._player.transform.position;
-            }
+
             else
             {
                 _ork._nav.destination = _ork._originPos + new Vector3(awayRangeX, 0, awayRangeZ);
             }
-        }
-        else
-        {
-            //¿À¸®Áø Æ÷½º¿¡¼­ ÀÏÁ¤ ¹üÀ§ ÀÌ»óÀ¸·Î ¹ş¾î³µ´Ù¸é returnÇÏ±â - ±Ùµ¥ ¾ë slime¿¡¼­ º¯°æµÇ¾ßÇÔ
-            _ork._nav.destination = _ork._originPos;
-        }
+
         Logger.Log(_ork._nav.destination.ToString());
     }
 }

@@ -18,7 +18,7 @@ public class BossBearIdleState : MonsterBaseState
         _bStat = _bossBear.GetComponent<BearStat>();
         if (_bStat == null)
         {
-            Debug.LogError("SlimeStat ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("SlimeStat ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         awayRangeX = Random.Range(-_bStat.AwayRange, _bStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
@@ -28,38 +28,28 @@ public class BossBearIdleState : MonsterBaseState
 
     public override void OnStateExit()
     {
-        //¾ê¸¦ ¾î¶»°Ô ÇØ¾ßÇÒ±î
+        //ì–˜ë¥¼ ì–´ë–»ê²Œ í•´ì•¼í• ê¹Œ
+        _bossBear._nav.destination = _bossBear._player.transform.position;
     }
 
     public override void OnStateUpdate()
     {
         if (_bStat == null) return;
-        //ÀÏÁ¤ °Å¸® ¹èÈ¸
-        //¼±°ø¸÷µéÀº ÇÃ·¹ÀÌ¾î°¡ ÀÏÁ¤ °Å¸® ¾È¿¡ µé¾î¿Â´Ù¸é Exit·Î »óÅÂ º¯È¯
+        //ì¼ì • ê±°ë¦¬ ë°°íšŒ
+        //ì„ ê³µëª¹ë“¤ì€ í”Œë ˆì´ì–´ê°€ ì¼ì • ê±°ë¦¬ ì•ˆì— ë“¤ì–´ì˜¨ë‹¤ë©´ Exitë¡œ ìƒíƒœ ë³€í™˜
         awayRangeX = Random.Range(-_bStat.AwayRange, _bStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
         awayRangeZ = Random.Range(-_bStat.AwayRange, _bStat.AwayRange);
 
-        if ((_bossBear._originPos + _bossBear.transform.position).magnitude < (_bossBear._originPos).magnitude + _bStat.ReturnRange ||
-            (_bossBear._originPos - _bossBear.transform.position).magnitude > (_bossBear._originPos).magnitude - _bStat.ReturnRange)
-        {
             if ((_bossBear._nav.destination - _bossBear.transform.position).magnitude > 1f)
             {
                 _bossBear._nav.SetDestination(_bossBear._nav.destination);
             }
-            else if (_bossBear._curState == BossBear.State.Move)
-            {
-                _bossBear._nav.destination = _bossBear._player.transform.position;
-            }
+
             else
             {
                 _bossBear._nav.destination = _bossBear._originPos + new Vector3(awayRangeX, 0, awayRangeZ);
             }
-        }
-        else
-        {
-            //¿À¸®Áø Æ÷½º¿¡¼­ ÀÏÁ¤ ¹üÀ§ ÀÌ»óÀ¸·Î ¹ş¾î³µ´Ù¸é returnÇÏ±â - ±Ùµ¥ ¾ë slime¿¡¼­ º¯°æµÇ¾ßÇÔ
-            _bossBear._nav.destination = _bossBear._originPos;
-        }
+ 
     }
 }
