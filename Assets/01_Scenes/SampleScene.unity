@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 109840492}
   - component: {fileID: 109840488}
   - component: {fileID: 109840491}
+  - component: {fileID: 109840493}
   - component: {fileID: 109840490}
   - component: {fileID: 109840489}
   m_Layer: 0
@@ -179,6 +180,7 @@ MonoBehaviour:
   _minFOV: 30
   _maxFOV: 90
   _fovChangeSpeed: 5
+  _zoomOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &109840489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109840486}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 42d43ecadc6b57a41b542f8120875f1e, type: 3}
   m_Name: 
@@ -206,6 +208,8 @@ MonoBehaviour:
   _camera: {fileID: 0}
   _cameraArm: {fileID: 498344114}
   _playerModel: {fileID: 2022806367}
+  _cameraMode: 0
+  _playerType: 0
   _moveDir: {x: 0, y: 0, z: 0}
   _rotDir: {x: 0, y: 0, z: 0}
   _isMoving: 0
@@ -215,9 +219,12 @@ MonoBehaviour:
   _attacking: 0
   _canAtkInput: 1
   _curAtkCount: 0
+  _skillIndex: 0
+  _skillUsing: 0
   _cc: {fileID: 0}
   _playerStat: {fileID: 0}
   _playerInput: {fileID: 0}
+  _playerCam: {fileID: 0}
 --- !u!114 &109840491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +263,38 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &109840493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109840486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4710b664f7db0bb41aba920aa3e9b8cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
+  _cameraArm: {fileID: 498344114}
+  _playerModel: {fileID: 2022806367}
+  _cameraMode: 0
+  _playerType: 0
+  _moveDir: {x: 0, y: 0, z: 0}
+  _rotDir: {x: 0, y: 0, z: 0}
+  _isMoving: 0
+  _rotSpeed: 0.2
+  _dodgeing: 0
+  _dodgeTime: 0.5
+  _attacking: 0
+  _canAtkInput: 1
+  _curAtkCount: 0
+  _skillIndex: 0
+  _skillUsing: 0
+  _cc: {fileID: 0}
+  _playerStat: {fileID: 0}
+  _playerInput: {fileID: 0}
+  _playerCam: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

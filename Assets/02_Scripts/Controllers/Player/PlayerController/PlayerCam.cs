@@ -6,9 +6,8 @@ using static UnityEngine.Rendering.DebugUI.Table;
 public class PlayerCam : MonoBehaviour
 {
     // 타겟 (플레이어)으로 부터의 거리 
-    [SerializeField]
     [Header("카메라의 초기 위치값")]
-    Vector3 _delta = new Vector3(0f, 3f, -4f);
+    public Vector3 _delta = new Vector3(0f, 3f, -4f);
 
     // 장애물 감지를 위한 레이어
     [SerializeField]
@@ -29,6 +28,10 @@ public class PlayerCam : MonoBehaviour
     [Header("FOV 조절 속도")]
     float _fovChangeSpeed = 5f;
 
+    // 줌모드 오프셋
+    [HideInInspector]
+    public Vector3 _zoomOffset = Vector3.zero;
+
     private void Start()
     {
         _player = gameObject.GetOrAddComponent<Player>();
@@ -37,13 +40,23 @@ public class PlayerCam : MonoBehaviour
     void Update()
     {
         LookAround();
-        FOVControl();
+
+        switch (_player._cameraMode)
+        {
+            case Define.CameraMode.QuarterView:
+                FOVControl();
+                break;
+            case Define.CameraMode.ZoomView:
+                break;
+        }
     }
 
     private void LateUpdate()
     {
         CamControl();
     }
+
+    // 마우스 회전값에 따라 최상위 플레이어를 돌리면 카메라와 모델 둘다 돌아감
 
     // 마우스 이동에 따른 회전 메서드
     void LookAround()
@@ -64,6 +77,18 @@ public class PlayerCam : MonoBehaviour
         }
 
         _player._cameraArm.rotation = Quaternion.Euler(x, y, camAngle.z);
+
+        switch (_player._cameraMode)
+        {
+            case Define.CameraMode.QuarterView:
+                
+                break;
+            case Define.CameraMode.ZoomView:
+                Vector3 playerDir = _player._cameraArm.forward;
+                playerDir.y = 0;
+                _player._playerModel.forward = playerDir;
+                break;
+        }
     }
 
     // 카메라 제어에 관련된 메서드 ( 위치, 보는 방향, 장애물 체크 등 )
@@ -84,7 +109,15 @@ public class PlayerCam : MonoBehaviour
             _player._camera.transform.position = camPos;
         }
 
-        _player._camera.transform.LookAt(_player._cameraArm.position);
+        switch (_player._cameraMode)
+        {
+            case Define.CameraMode.QuarterView:
+                _player._camera.transform.LookAt(_player._cameraArm.position);
+                break;
+            case Define.CameraMode.ZoomView:
+                _player._camera.transform.position = camPos + _zoomOffset;
+                break;
+        }
     }
 
     // FOV조절 메서드
