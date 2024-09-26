@@ -8,19 +8,19 @@ public class SlimeDieState : MonsterBaseState
 
     public override void OnStateEnter()
     {
-        //Á×´Â ¸ğ¼Ç
-        _slime.DropItem();
+        //ì£½ëŠ” ëª¨ì…˜
+        //_slime.DropItem();
         OnStateExit();
     }
 
     public override void OnStateExit()
     {
-        //exit°¡ ÇÊ¿äÇÒ±î
-        _slime.SlimeDie();
+        //exitê°€ í•„ìš”í• ê¹Œ
+        //_slime.SlimeDie();
     }
 
     public override void OnStateUpdate()
     {    
-        //¿¢½ÃÆ® À§Ä¡ »ı°¢ÇÏ±â
+        //ì—‘ì‹œíŠ¸ ìœ„ì¹˜ ìƒê°í•˜ê¸°
     }
 }

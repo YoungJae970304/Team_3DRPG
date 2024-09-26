@@ -148,9 +148,9 @@ public class BossBear : Monster, IDamageAlbe
             }
         }
     }
-   
-    public void BossBearDie()
+
+    public override void Die(GameObject mob)
     {
-        Destroy(gameObject, 2f);
+        Destroy(mob, 2f);
     }
 }

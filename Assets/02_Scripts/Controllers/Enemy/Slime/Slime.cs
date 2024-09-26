@@ -123,65 +123,7 @@ public class Slime : Monster, IDamageAlbe
         return _sStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
 
-    public override void DropItem(string level, Transform mTransform, GameObject[] itemMenu)
-    {
-        //게임매니저에서 생성된 아이템을 pooling해야하는데 여기서는 아이템 키면서 가져와서 값만 넣어주면될듯
-        DropProbability(); //가중치 랜덤
-        if(level == "Hard")
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                itemMenu = itemtype(_probability[i]);
-                if(_probability[i] == _pR)
-                {
-                    if (_pR <= 100) // 일단 100프로로 설정해야되니까
-                    {
-                        Instantiate(itemMenu[0], mTransform.position, itemMenu[0].transform.rotation);
-                    }
-                    return;
-                }
-                    if (_probability[i] <= 70)
-                    {
-                        Instantiate(itemMenu[0], mTransform.position, itemMenu[0].transform.rotation);
-                    }
-                    else if (_probability[i] <= 90)
-                    {
-                        Instantiate(itemMenu[1], mTransform.position, itemMenu[1].transform.rotation);
-                    }
-                    else
-                    {
-                        Instantiate(itemMenu[2], mTransform.position, itemMenu[2].transform.rotation);
-                    }
-            }
-        }
-    }
-    public GameObject[] itemtype(int type)
-    {
-        if(type == _wR)
-        {
-            return _weapon;
-        }
-        else if(type == _aR)
-        {
-            return _armor;
-        } 
-        else if(type == _acR)
-        {
-            return _accesary;
-        }
-        else
-        {
-            return _product;
-        }
-        return null;
-    }
-    public void DropProbability()
-    {
-        for (int i = 0; i <= 3; i++)
-        {
-            _probability[i] = UnityEngine.Random.Range(0, 100);
-        }
-    }
+    
     public override void Damaged(int amount)
     {
         if(_curState != State.Return)
@@ -193,9 +135,9 @@ public class Slime : Monster, IDamageAlbe
             }
         }
     }
- 
-    public void SlimeDie()
+
+    public override void Die(GameObject mob)
     {
-        Destroy(gameObject, 2f);
+        Destroy(mob, 2f);
     }
 }

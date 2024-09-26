@@ -130,10 +130,7 @@ public class Ork : Monster, IDamageAlbe
         
         //return _nav.remainingDistance < 2f;
     }
-    public override void DropItem(string level, Transform mTransform, GameObject[] itemMenu)
-    {
 
-    }
 
     public override void Damaged(int amount)
     {
@@ -146,8 +143,8 @@ public class Ork : Monster, IDamageAlbe
             }
         }
     }
-    public void OrkDie()
+    public override void Die(GameObject mob)
     {
-        Destroy(gameObject, 2f);
+        Destroy(mob, 2f);
     }
 }
