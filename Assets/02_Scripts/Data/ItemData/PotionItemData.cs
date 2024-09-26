@@ -5,11 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item_Potion_", menuName = "ItemData/Potion", order = 4)]
 public class PotionItemData : ItemData
 {
-    //Æ÷¼Ç ¾ÆÀÌÅÛ µ¥ÀÌÅÍ¸¦ »ı¼º
+    //í¬ì…˜ ì•„ì´í…œ ë°ì´í„°ë¥¼ ìƒì„±
     public float Value => _value;
     public float CoolTime => _coolTime;
-    //È¸º¹·®(È¿°ú - ¹öÇÁµî)
+    //íšŒë³µëŸ‰(íš¨ê³¼ - ë²„í”„ë“±)
     [SerializeField] float _value;
-    //¾ÆÀÌÅÛ ÄğÅ¸ÀÓ
+    //ì•„ì´í…œ ì¿¨íƒ€ì„
     [SerializeField] float _coolTime;
 }
