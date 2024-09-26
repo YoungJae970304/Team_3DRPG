@@ -18,6 +18,6 @@ public class PlayerSkillState : PlayerBaseState
 
     public override void OnStateExit()
     {
-
+        Logger.Log("스킬상태 Exit");
     }
 }

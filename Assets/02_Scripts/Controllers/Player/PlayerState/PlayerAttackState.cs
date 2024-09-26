@@ -11,18 +11,22 @@ public class PlayerAttackState : PlayerBaseState
 
     public override void OnStateEnter()
     {
-        Logger.Log("°ø°İ »óÅÂ ÁøÀÔ");
+        Logger.Log("ê³µê²© ìƒíƒœ ì§„ì…");
         _player._attacking = true;
+        _player._canAtkInput = false;
+        _player._curAtkCount = _player._playerInput._atkInput.Dequeue();
     }
 
     public override void OnStateUpdate()
     {
-        Logger.Log("°ø°İ »óÅÂ ¾÷µ¥ÀÌÆ®");
         _player.Attack();
     }
 
     public override void OnStateExit()
     {
-        Logger.Log("°ø°İ »óÅÂ Exit");
+        Logger.Log("ê³µê²© ìƒíƒœ Exit ");
+        _player._attacking = false;
+        _player._canAtkInput = true;
+        _player.AtkCount = 0;
     }
 }

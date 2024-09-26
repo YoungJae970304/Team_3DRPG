@@ -8,11 +8,13 @@ public class SlimeAttackState : MonsterBaseState
     public SlimeAttackState(Slime slime) : base(slime) 
     {
         _slime = slime;
+        _sStat = _slime._sStat;
         _player = _ork._player.GetComponent<Player>();
         _pStat = _player._playerStat;
     }
     float _timer = 0f;
     PlayerStat _pStat;
+    SlimeStat _sStat;
     public override void OnStateEnter()
     {
         //플레이어 공격
@@ -44,6 +46,6 @@ public class SlimeAttackState : MonsterBaseState
     }
     public void AttackPlayer()
     {
-        _pStat.PlayerHP -= _slime._sStat.Attack;
+        _player.Damaged(_sStat.Attack);
     }
 }

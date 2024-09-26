@@ -18,7 +18,7 @@ public class Slime : Monster, IDamageAlbe
         Die,
     }
     public State _curState;
-    //NavMeshAgent nav; //¿©±â¼­ ¾È¾µµí?
+    //NavMeshAgent nav; //ì—¬ê¸°ì„œ ì•ˆì“¸ë“¯?
     private MonsterFSM _monFSM;
     //MonsterStat _mStat;
     //GameObject _player;
@@ -39,7 +39,7 @@ public class Slime : Monster, IDamageAlbe
         _originPos = transform.position;
         _nav = GetComponent<NavMeshAgent>();
         
-        #region »óÅÂµñ¼Å³Ê¸® ÃÊ±âÈ­
+        #region ìƒíƒœë”•ì…”ë„ˆë¦¬ ì´ˆê¸°í™”
         States.Add(State.Idle, new SlimeIdleState(this));
         States.Add(State.Move, new SlimeMoveState(this));
         States.Add(State.Attack, new SlimeAttackState(this));
@@ -113,7 +113,7 @@ public class Slime : Monster, IDamageAlbe
     }
     public bool CanAttackPlayer()
     {
-        //»çÁ¤°Å¸® Ã¼Å© ±¸Çö
+        //ì‚¬ì •ê±°ë¦¬ ì²´í¬ êµ¬í˜„
         return _sStat.AttackRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool ReturnOrigin()
@@ -122,7 +122,7 @@ public class Slime : Monster, IDamageAlbe
     }
     public void DropItem()
     {
-        //°ÔÀÓ¸Å´ÏÀú¿¡¼­ »ı¼ºµÈ ¾ÆÀÌÅÛÀ» poolingÇØ¾ßÇÏ´Âµ¥ ¿©±â¼­´Â ¾ÆÀÌÅÛ Å°¸é¼­ °¡Á®¿Í¼­ °ª¸¸ ³Ö¾îÁÖ¸éµÉµí
+        //ê²Œì„ë§¤ë‹ˆì €ì—ì„œ ìƒì„±ëœ ì•„ì´í…œì„ poolingí•´ì•¼í•˜ëŠ”ë° ì—¬ê¸°ì„œëŠ” ì•„ì´í…œ í‚¤ë©´ì„œ ê°€ì ¸ì™€ì„œ ê°’ë§Œ ë„£ì–´ì£¼ë©´ë ë“¯
     }
 
     public override void Damaged(int amount)
@@ -136,12 +136,7 @@ public class Slime : Monster, IDamageAlbe
             }
         }
     }
-    #region returnÀ¸·Î ¿Å±æ ÇÔ¼ö
-    public void ReturnHeal()
-    {
-        _sStat.Hp = _sStat.MaxHp;
-    }
-    #endregion
+ 
     public void SlimeDie()
     {
         Destroy(gameObject, 2f);

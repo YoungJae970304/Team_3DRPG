@@ -2,30 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EquipmentItem : Item
+public class EquipmentItem : Item
 {
-    public ItemData _itemData {  get; set; }
+    //ì¥ë¹„ ì•„ì´í…œ ìµœëŒ€ 1ê°œ
+    public override int _maxAmount => 1;
 
-    public EquipmentItemData _equipmentItemData {  get; set; }
-
-    public int _amount {  get; protected set; }
-    //Àåºñ ¾ÆÀÌÅÛÀÌ »ç¿ëÇÒ ÇÔ¼ö
-
-
-    //Àåºñ ¾ÆÀÌÅÛÀº 1°³°¡ ÃÖ´ëÄ¡·Î ¼³Á¤ ÇØÁÙ ÇÔ¼ö
-    public EquipmentItem(EquipmentItemData data, int amount = 1 ) : base(data)
+    //ì¥ë¹„ ì•„ì´í…œì€ 1ê°œê°€ ìµœëŒ€ì¹˜ë¡œ ì„¤ì • í•´ì¤„ í•¨ìˆ˜
+    public EquipmentItem(EquipmentItemData data) : base(data, 1)
     {
-        _itemData = data;
-        SetAmount(amount);
+        SetAmount(1);
     }
 
-    //°³¼ö 1°³¸¦ ÃÖ´ë °³¼ö·Î Àåºñ¿¡ ÁöÁ¤
-    public int SetAmount(int amount)
+    //ì¥ë¹„ ì•„ì´í…œ ìµœëŒ€ ê°¯ìˆ˜ 1ê°œë¡œ ì„¤ì •
+    public override int SetAmount(int amount)
     {
-        _amount = _itemData.MaxAmount;
-
-        amount = Mathf.Clamp(amount,0, _amount);
-
-        return amount;
+        return base.SetAmount(1);
     }
+
+    //ì¥ë¹„ ì•„ì´í…œ ë³µì œ
+    protected override Item Clone(int amount)
+    {
+        return new EquipmentItem(Data as EquipmentItemData);
+    }
+
+    //ì¥ë¹„ ì•„ì´í…œì´ ì‚¬ìš©í•  í•¨ìˆ˜
 }

@@ -7,7 +7,8 @@ public class PlayerInput : MonoBehaviour
     Player _player;
     Vector3 _dir;
 
-    Queue<int> _atkInput = new Queue<int>();
+
+    public Queue<int> _atkInput = new Queue<int>();
 
     void Start()
     {
@@ -27,7 +28,7 @@ public class PlayerInput : MonoBehaviour
 
     }
 
-    // ÀÌµ¿ °ü·Ã ÀÔ·Â ¹Þ°í »óÅÂÀüÈ¯À» À§ÇÑ boolº¯¼öÀÎ _isMoving¿¡ Á¢±Ù
+    // ì´ë™ ê´€ë ¨ ìž…ë ¥ ë°›ê³  ìƒíƒœì „í™˜ì„ ìœ„í•œ boolë³€ìˆ˜ì¸ _isMovingì— ì ‘ê·¼ 
     void MoveInput()
     {
         _player._rotDir = Vector3.zero;
@@ -83,17 +84,17 @@ public class PlayerInput : MonoBehaviour
 
     void AttackInput()
     {
-        if (Input.GetMouseButtonDown(0) && !_player._attacking)
+        if (Input.GetMouseButtonDown(0) && _player._canAtkInput)
         {
             _player.AtkCount++;
-            // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç Á¤¸éÀ» queue¿¡ ÀúÀå
+
             InputBufferInsert(_player.AtkCount);
             _player.ChangeState(PlayerState.Attack);
         }
-        else if (Input.GetMouseButtonDown(1) && !_player._attacking)
+        else if (Input.GetMouseButtonDown(1) && _player._canAtkInput)
         {
             _player.AtkCount = 0;
-            // ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç Á¤¸éÀ» queue¿¡ ÀúÀå
+
             InputBufferInsert(_player.AtkCount);
             _player.ChangeState(PlayerState.Attack);
         }
@@ -110,7 +111,8 @@ public class PlayerInput : MonoBehaviour
     public void InputBufferInsert(int action)
     {
         if(_atkInput.Count > 1) { return; }
-
         _atkInput.Enqueue(action);
+
+        Logger.Log(action.ToString());
     }
 }

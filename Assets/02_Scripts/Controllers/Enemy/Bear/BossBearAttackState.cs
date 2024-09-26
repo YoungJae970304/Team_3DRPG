@@ -1,19 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BossBearAttackState : MonsterBaseState
 {
+    public enum BearAttackSTATE
+    {
+        Idle,
+        Earthqauke,
+        LBite,
+        RBite,
+        LHand,
+        RHand,
+    }
+    
     public BossBearAttackState(BossBear bossBear) : base(bossBear)
     {
         _bossBear = bossBear;
         _bStat = _bossBear._bStat;
-        _player = _ork._player.GetComponent<Player>();
+        _player = _bossBear._player.GetComponent<Player>();
         _pStat = _player._playerStat;
+        _curState = BearAttackSTATE.Idle;
+        #region ê³° ê³µê²© ìƒíƒœ ì´ˆê¸°í™”
+        #endregion
     }
     float _timer;
     BearStat _bStat;
     PlayerStat _pStat;
+    int _randomAttack;
+    BearAttackSTATE _curState;
+    MonsterFSM _monFSM;
     public override void OnStateEnter()
     {
         _timer = 0;
@@ -29,41 +46,74 @@ public class BossBearAttackState : MonsterBaseState
     public override void OnStateUpdate()
     {
         AttackTimer();
-        //µô·¹ÀÌ ÈÄ ÇÃ·¹ÀÌ¾î °ø°İ
+        
+        _randomAttack = UnityEngine.Random.Range(1, 101);
+        //ë”œë ˆì´ í›„ í”Œë ˆì´ì–´ ê³µê²©
         if (_timer > _bossBear._attackDelay)
         {
             _timer = 0f;
-            //¿©±â¿¡ ¿¡³Ê¹Ì °ø°İ ³Ö±â
-            AttackPlayer();
+            //ì—¬ê¸°ì— ì—ë„ˆë¯¸ ê³µê²© ë„£ê¸°
+            
+            AttackStateSwitch();
+            Logger.Log(11.ToString());
         }
     }
     public void AttackTimer()
     {
         _timer += Time.deltaTime;
     }
-    public void AttackPlayer() // ÀÏ´Ü ¿©±â¿¡ ³Ö¾î³ù´Âµ¥ ¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ È£ÃâÇÏ´Â ÀÌº¥Æ®¹æ½ÄÀ¸·Î ¾µµí
+    public void AttackPlayer() // ì¼ë‹¨ ì—¬ê¸°ì— ë„£ì–´ë†¨ëŠ”ë° ì• ë‹ˆë©”ì´ì…˜ì—ì„œ í˜¸ì¶œí•˜ëŠ” ì´ë²¤íŠ¸ë°©ì‹ìœ¼ë¡œ ì“¸ë“¯
     {
-        _pStat.PlayerHP -= _ork._oStat.Attack;
+        _player.Damaged(_bStat.Attack);
+        
     }
-    public void LeftHandAttack()
+    public void AttackStateSwitch()
     {
-        //ÀÌ°É Å¬·¡½º »óÅÂ·Î ÇÑ¹ø ´õ Á¤¸®ÇÒ±î?
-        //¾Æ´Ï¸é ÇÔ¼ö·Î »ç¿ëÀ» ÇÒ±î
-    }
-    public void RightHandAttack()
-    {
-
-    }
-    public void LeftBiteAttack()
-    {
-
-    }
-    public void RightBiteAttack()
-    {
-
+        
+        if(_randomAttack <= 15)
+        {
+            LeftBiteAttack();
+        }
+        else if(_randomAttack <= 30)
+        {
+            RightBiteAttack();
+        }
+        else if(_randomAttack <= 60)
+        {
+            LeftHandAttack();
+        }
+        else if (_randomAttack <= 90)
+        {
+            RightHandAttack();
+        }
+        else 
+        {
+            EarthquakeAttack();
+        }
     }
     public void EarthquakeAttack()
     {
-
+        Logger.Log("EarthquakeAttack");
+        AttackPlayer();
+    }
+    public void LeftBiteAttack()
+    {
+        Logger.Log("LeftBiteAttack");
+        AttackPlayer();
+    }
+    public void RightBiteAttack()
+    {
+        Logger.Log("RightBiteAttack");
+        AttackPlayer();
+    }
+    public void LeftHandAttack()
+    {
+        Logger.Log("LeftHandAttack");
+        AttackPlayer();
+    }
+    public void RightHandAttack()
+    {
+        Logger.Log("RightHandAttack");
+        AttackPlayer();
     }
 }

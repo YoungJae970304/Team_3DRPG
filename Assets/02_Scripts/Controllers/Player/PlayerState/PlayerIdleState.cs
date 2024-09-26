@@ -18,6 +18,6 @@ public class PlayerIdleState : PlayerBaseState
 
     public override void OnStateExit()
     {
-
+        Logger.Log("Idle Exit");
     }
 }
