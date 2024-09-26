@@ -130,7 +130,7 @@ public class Ork : Monster, IDamageAlbe
         
         //return _nav.remainingDistance < 2f;
     }
-    public void DropItem()
+    public override void DropItem(string level, Transform mTransform, GameObject[] itemMenu)
     {
 
     }

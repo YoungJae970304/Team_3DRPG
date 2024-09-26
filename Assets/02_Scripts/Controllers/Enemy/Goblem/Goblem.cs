@@ -125,7 +125,7 @@ public class Goblem : Monster, IDamageAlbe
     {
         return _gStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
-    public void DropItem()
+    public override void DropItem(string level, Transform mTransform, GameObject[] itemMenu)
     {
 
     }

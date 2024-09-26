@@ -19,6 +19,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public GameObject _player;
     public NavMeshAgent _nav;
     public MonsterStat _mStat;
+    public GameObject[] _weapon, _armor, _accesary, _product;
+    public int[] _probability;
+    public int _wR, _aR, _acR, _pR;
+    public int star;
     private void Awake()
     {
         
@@ -27,6 +31,15 @@ public class Monster : MonoBehaviour, IDamageAlbe
     void Start()
     {
         _state = State.Idle;
+        #region 확률변수 초기화
+        _probability[0] = _wR;
+        _probability[1] = _aR;
+        _probability[2] = _acR;
+        _probability[3] = _pR;
+        #endregion
+        #region 딕셔너리 초기화
+
+        #endregion
     }
 
     // Update is called once per frame
@@ -61,5 +74,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
     }
 
+    public virtual void DropItem(string level, Transform mTransform, GameObject[] itemMenu) 
+    {
+        
+    }
 
 }

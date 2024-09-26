@@ -5,23 +5,13 @@ using System;
 
 public class BossBearAttackState : MonsterBaseState
 {
-    public enum BearAttackSTATE
-    {
-        Idle,
-        Earthqauke,
-        LBite,
-        RBite,
-        LHand,
-        RHand,
-    }
-    
     public BossBearAttackState(BossBear bossBear) : base(bossBear)
     {
         _bossBear = bossBear;
         _bStat = _bossBear._bStat;
         _player = _bossBear._player.GetComponent<Player>();
         _pStat = _player._playerStat;
-        _curState = BearAttackSTATE.Idle;
+      
         #region 곰 공격 상태 초기화
         #endregion
     }
@@ -29,7 +19,7 @@ public class BossBearAttackState : MonsterBaseState
     BearStat _bStat;
     PlayerStat _pStat;
     int _randomAttack;
-    BearAttackSTATE _curState;
+  
     MonsterFSM _monFSM;
     public override void OnStateEnter()
     {
