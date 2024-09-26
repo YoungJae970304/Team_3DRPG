@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Item_Potion_Power
   m_EditorClassIdentifier: 
   _itemType: 1
+  _maxAmount: 99
   _id: 6
   _name: "\uACF5\uACA9\uB825 \uC99D\uAC00 \uBC84\uD504"
-  _iconSprite: {fileID: 0}
-  _maxAmount: 99
-  _coolTime: 10
+  _iconSprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  _buyingPrice: 0
+  _sellingPrice: 0
   _value: 100
+  _coolTime: 10

@@ -4,20 +4,11 @@ using UnityEngine;
 
 public class EquipmentItem : Item
 {
-    //장비 아이템 최대 1개
-    public override int _maxAmount => 1;
 
-    //장비 아이템은 1개가 최대치로 설정 해줄 함수
-    public EquipmentItem(EquipmentItemData data) : base(data, 1)
+    public EquipmentItem(EquipmentItemData data) : base(data)
     {
-        SetAmount(1);
     }
 
-    //장비 아이템 최대 갯수 1개로 설정
-    public override int SetAmount(int amount)
-    {
-        return base.SetAmount(1);
-    }
 
     //장비 아이템 복제
     protected override Item Clone(int amount)
