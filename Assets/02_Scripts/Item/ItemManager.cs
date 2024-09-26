@@ -1,47 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class ItemManager : MonoBehaviour//ÀÎº¥Åä¸®
-{   //¾ÆÀÌÅÛ ±×·ìÀ» ´ãÀ» µñ¼Å³Ê¸® Å¸ÀÔ ÇÏ³ª´ç ÀÎº¥Åä¸® ÅÇ 1°³°¡ µÈ´Ù.
+using System;
+public class ItemManager : MonoBehaviour//ì¸ë²¤í† ë¦¬
+{   //ì•„ì´í…œ ê·¸ë£¹ì„ ë‹´ì„ ë”•ì…”ë„ˆë¦¬ íƒ€ì… í•˜ë‚˜ë‹¹ ì¸ë²¤í† ë¦¬ íƒ­ 1ê°œê°€ ëœë‹¤.
     Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>();
+
+    public Action GetItemAction;
+
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        //ÀÎº¥Åä¸® ÃÊ±âÈ­
-        AddGroup(15, 100, ItemData.ItemType.Booty);
-        AddGroup(15, 100, ItemData.ItemType.Equipment);
-        AddGroup(15, 100, ItemData.ItemType.Potion);
+        {
+            //ì¸ë²¤í† ë¦¬ ì´ˆê¸°í™”
+            AddGroup(15, 100, ItemData.ItemType.Booty);
+            AddGroup(15, 100, ItemData.ItemType.Equipment);
+            AddGroup(15, 100, ItemData.ItemType.Potion);
+        }
     }
+    
 
     public void AddGroup(int maxSize, int LimitSize, ItemData.ItemType type) {
         ItemDick.Add(type, new ItemGroup(maxSize, LimitSize, type));
 
     }
 
-    public bool InsertItem(Item item)//¾ÆÀÌÅÛ »ğÀÔ ºóÄ­ÀÌÀÖÀ¸¸é ºóÄ­À¸·Î Áßº¹ÀÌÀÖÀ¸¸é ÇÕÃÄÁü
+    public bool InsertItem(Item item)//ì•„ì´í…œ ì‚½ì… ë¹ˆì¹¸ì´ìˆìœ¼ë©´ ë¹ˆì¹¸ìœ¼ë¡œ ì¤‘ë³µì´ìˆìœ¼ë©´ í•©ì³ì§
     {
-        //¾ÆÀÌÅÛÀÇ Å¸ÀÔ¿¡ µû¶ó Å¸ÀÔ¿¡ ¸Â´Â ±×·ì¿¡ »ğÀÔÇÑ´Ù
+        GetItemAction?.Invoke();
+        //ì•„ì´í…œì˜ íƒ€ì…ì— ë”°ë¼ íƒ€ì…ì— ë§ëŠ” ê·¸ë£¹ì— ì‚½ì…í•œë‹¤
         return ItemDick[item.Data.Type].Insert(item);
     }
 
-    public Item GetItem(int index, ItemData.ItemType type)//ÀÎµ¦½º¿Í Å¸ÀÔÀ¸·Î ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸®¿¡¼­ °¡Á®¿Â´Ù
+    public Item GetItem(int index, ItemData.ItemType type)//ì¸ë±ìŠ¤ì™€ íƒ€ì…ìœ¼ë¡œ ì•„ì´í…œì„ ì¸ë²¤í† ë¦¬ì—ì„œ ê°€ì ¸ì˜¨ë‹¤
     {
         return ItemDick[type].GetItem(index);
     }
-    public Item Setitem(int index, Item item)//Æ¯Á¤ÀÎµ¦½ºÀÇ ¾ÆÀÌÅÛ¿¡ Æ¯Á¤¾ÆÀÌÅÛÀ¸·Î º¯°æÇÑ´Ù
+    public Item Setitem(int index, Item item)//íŠ¹ì •ì¸ë±ìŠ¤ì˜ ì•„ì´í…œì— íŠ¹ì •ì•„ì´í…œìœ¼ë¡œ ë³€ê²½í•œë‹¤
     {
         return ItemDick[item.Data.Type].Setitem(index, item);
     }
-
+    public Item Remove(int index, ItemData.ItemType type)
+    {
+        GetItemAction?.Invoke();
+        return ItemDick[type].Remove(index);
+    }
     public bool SwitchItem(int index1, int index2, ItemData.ItemType type) { 
         return ItemDick[type].SwitchItem(index1,index2);
     }
 
+
+    public int GetGroupSize(ItemData.ItemType type) {
+        return ItemDick[type]._maxSize;
+    }
+
     public class ItemGroup
-    {//Æ¯Á¤ Å¸ÀÔÀÇ ¾ÆÀÌÅÛÀ» ¸ğ¾Æ °ü¸®ÇÏ´Â ¾ÆÀÌÅÛ ±×·ì
+    {//íŠ¹ì • íƒ€ì…ì˜ ì•„ì´í…œì„ ëª¨ì•„ ê´€ë¦¬í•˜ëŠ” ì•„ì´í…œ ê·¸ë£¹
         Item[] _items;
-        int _maxSize;
+        public int _maxSize;
         ItemData.ItemType _type;
 
 
@@ -54,33 +70,42 @@ public class ItemManager : MonoBehaviour//ÀÎº¥Åä¸®
 
 
         public bool Insert(Item item)
-        {//Áßº¹ÀÌ ÀÖÀ¸¸é ¾ÆÀÌÅÛÀÇ °³¼ö¸¦ ´Ã¸®°í ÃÖ´ëÄ¡¸¦ ³Ñ°å´Ù¸é ´ÙÀ½À¸·Î ³Ñ¾î°¡¸ç
-        //Áßº¹ÀÌ ¾øÀ¸¸é ºóÄ­¿¡ ¾ÆÀÌÅÛÀ» ÇÒ´çÇÑ´Ù.
-            if (item.Data.Type != _type) { return false; }
-            int nullIndex = -1;
-            for (int i = 0; i < _maxSize; i++)
+        {//ì¤‘ë³µì´ ìˆìœ¼ë©´ ì•„ì´í…œì˜ ê°œìˆ˜ë¥¼ ëŠ˜ë¦¬ê³  ìµœëŒ€ì¹˜ë¥¼ ë„˜ê²¼ë‹¤ë©´ ë‹¤ìŒìœ¼ë¡œ ë„˜ì–´ê°€ë©°
+         //ì¤‘ë³µì´ ì—†ìœ¼ë©´ ë¹ˆì¹¸ì— ì•„ì´í…œì„ í• ë‹¹í•œë‹¤.
+            
+            if (item is CountableItem)
             {
-                if (_items[i] == null && nullIndex == -1)
+                CountableItem countableItem = item as CountableItem;
+                for (int i = 0; i < _maxSize; i++)
                 {
-                    nullIndex = i;
+
+                    if (_items[i] == null || !(_items[i] is CountableItem)) { continue; }//ë¹ˆì¹¸ì´ê±°ë‚˜ ìµœëŒ€ì¹˜ì¸ ì•„ì´í…œì€ ë¬´ì‹œ
+                    if (_items[i].Data.ID == item.Data.ID)
+                    {
+                        int overamount = ((CountableItem)_items[i]).AddAmount(countableItem._amount);
+                        if (overamount == 0) { return true; }
+                        else
+                        {
+                            countableItem.SetAmount(overamount);
+                        }
+                        //ì•„ì´í…œ ê°¯ìˆ˜ ì¤„ì–´ë“¤ê³  ì €ì¥ëœ ì•„ì´í…œì˜ ê°œìˆ˜ì¦ê°€
+                        //ë§Œì•½ ë°›ì€ ì•„ì´í…œ ê°œìˆ˜ê°€ ë‚¨ì•˜ë‹¤ë©´ continue
+                        //ì•„ë‹ˆë©´ return;
+                    }
                 }
-                if (_items[i] == null || _items[i].Data.MaxAmount == 99) { continue; }
-                if (_items[i].Data.ID == item.Data.ID && _items[i].Data.MaxAmount == 99)
-                {
-                    //¾ÆÀÌÅÛ °¹¼ö ÁÙ¾îµé°í ÀúÀåµÈ ¾ÆÀÌÅÛÀÇ °³¼öÁõ°¡
-                    //¸¸¾à ¹ŞÀº ¾ÆÀÌÅÛ °³¼ö°¡ ³²¾Ò´Ù¸é continue
-                    //¾Æ´Ï¸é return;
+                item = countableItem;
+            }
+                for (int i = 0; i < _maxSize; i++) {
+                
+                    if (_items[i] == null) { _items[i] = item; return true; }
                 }
-            }
-            if (nullIndex > -1)
-            {
-                _items[nullIndex] = item;
-            }
+            
+            
             return false;
         }
 
         public Item GetItem(int index)
-        {//ÀÎµ¦½º·Î ¾ÆÀÌÅÛÀ» ¸®ÅÏ
+        {//ì¸ë±ìŠ¤ë¡œ ì•„ì´í…œì„ ë¦¬í„´
             if (index <= _maxSize)
             {
                 return _items[index];
@@ -89,8 +114,7 @@ public class ItemManager : MonoBehaviour//ÀÎº¥Åä¸®
         }
 
         public Item Setitem(int index, Item item)
-        {//Æ¯Á¤ ÀÎµ¦½º¿¡ ¿øÇÏ´Â ¾ÆÀÌÅÛÀ» ÇÒ´çÇÏ°í ÀÌÀü¿¡ ÀÖ´ø ¾ÆÀÌÅÛÀ» ¸®ÅÏ
-            if (item.Data.Type != _type) { return null; }
+        {//íŠ¹ì • ì¸ë±ìŠ¤ì— ì›í•˜ëŠ” ì•„ì´í…œì„ í• ë‹¹í•˜ê³  ì´ì „ì— ìˆë˜ ì•„ì´í…œì„ ë¦¬í„´
             Item lastItme;
             if (index <= _maxSize)
             {
@@ -101,9 +125,20 @@ public class ItemManager : MonoBehaviour//ÀÎº¥Åä¸®
 
             return null;
         }
+        public Item Remove(int index) {
+            if (index <= _maxSize)
+            {
+                Item lastItme;
+                lastItme = _items[index];
+                _items[index] = null;
+                return lastItme;
+            }
+            return null;
+        }
+
 
         public bool SwitchItem(int index1, int index2)
-        {//µÎ ÀÎµ¦½º°£ÀÇ ¾ÆÀÌÅÛÀÇ À§Ä¡¸¦ º¯°æÇÑ´Ù.
+        {//ë‘ ì¸ë±ìŠ¤ê°„ì˜ ì•„ì´í…œì˜ ìœ„ì¹˜ë¥¼ ë³€ê²½í•œë‹¤.
             if (index1 <= _maxSize && index2 <= _maxSize)
             {
                 Item temp = _items[index1];
