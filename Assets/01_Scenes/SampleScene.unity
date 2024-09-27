@@ -173,11 +173,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8378db0a3994d7b41abbc04619e41076, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraArm: {fileID: 498344114}
+  _cameraMode: 0
   _cmQuarterCam: {fileID: 773660106}
   _cmZoomCam: {fileID: 1283271760}
-  _obstacle:
-    serializedVersion: 2
-    m_Bits: 32768
   _minFOV: 30
   _maxFOV: 90
   _fovChangeSpeed: 5
@@ -207,9 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d43ecadc6b57a41b542f8120875f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraArm: {fileID: 498344114}
   _playerModel: {fileID: 2022806367}
-  _cameraMode: 0
   _playerType: 0
   _moveDir: {x: 0, y: 0, z: 0}
   _rotDir: {x: 0, y: 0, z: 0}
@@ -276,9 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4710b664f7db0bb41aba920aa3e9b8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraArm: {fileID: 498344114}
   _playerModel: {fileID: 2022806367}
-  _cameraMode: 0
   _playerType: 0
   _moveDir: {x: 0, y: 0, z: 0}
   _rotDir: {x: 0, y: 0, z: 0}
@@ -387,7 +382,7 @@ MonoBehaviour:
   CameraDistance: 6
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
   IgnoreTag: 
   CameraRadius: 0.2
   DampingIntoCollision: 0

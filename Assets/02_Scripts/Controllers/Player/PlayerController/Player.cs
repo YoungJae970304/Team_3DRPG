@@ -20,10 +20,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 {
     // 기타 변수
     [Header("오브젝트 참조")]
-    public Transform _cameraArm;
     public Transform _playerModel;
-    [HideInInspector]
-    public Define.CameraMode _cameraMode;
     [HideInInspector]
     public Define.PlayerType _playerType;
 
@@ -117,7 +114,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
         //_camera = Camera.main;
         _canAtkInput = true;
-        _cameraMode = Define.CameraMode.QuarterView;
         #endregion
     }
 

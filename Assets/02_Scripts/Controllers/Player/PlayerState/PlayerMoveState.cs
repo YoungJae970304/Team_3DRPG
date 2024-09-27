@@ -31,7 +31,7 @@ public class PlayerMoveState : PlayerBaseState
     {
         if (_player._rotDir != Vector3.zero)
         {
-            switch (_player._cameraMode)
+            switch (_player._playerCam._cameraMode)
             {
                 case Define.CameraMode.QuarterView:
                     // 회전 방향 정규화  

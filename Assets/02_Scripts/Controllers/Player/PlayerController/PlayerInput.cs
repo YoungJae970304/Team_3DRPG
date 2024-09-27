@@ -35,7 +35,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            _dir = _player._cameraArm.transform.forward;
+            _dir = _player._playerCam._cameraArm.transform.forward;
             _dir.y = 0;
             _player._rotDir += _dir;
 
@@ -44,7 +44,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            _dir = -_player._cameraArm.transform.right;
+            _dir = -_player._playerCam._cameraArm.transform.right;
             _dir.y = 0;
             _player._rotDir += _dir;
 
@@ -53,7 +53,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S))
         {
-            _dir = -_player._cameraArm.transform.forward;
+            _dir = -_player._playerCam._cameraArm.transform.forward;
             _dir.y = 0;
             _player._rotDir += _dir;
 
@@ -62,7 +62,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            _dir = _player._cameraArm.transform.right;
+            _dir = _player._playerCam._cameraArm.transform.right;
             _dir.y = 0;
             _player._rotDir += _dir;
             _player._isMoving = true;
