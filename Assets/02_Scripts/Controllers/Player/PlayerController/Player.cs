@@ -29,20 +29,14 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public Vector3 _moveDir;
     [HideInInspector]
     public Vector3 _rotDir;
-    [HideInInspector]
-    public bool _isMoving = false;
     [Header("회전 속도")]
     public float _rotSpeed = 0.2f;
 
     // 회피 관련 변수
-    [HideInInspector]
-    public bool _dodgeing = false;
     [Header("회피 시간")]
     public float _dodgeTime = 0.5f;
 
     // 공격 관련 변수
-    [HideInInspector]
-    public bool _attacking = false;
     [HideInInspector]
     public bool _canAtkInput = true;
     int _atkCount = 0;
@@ -71,13 +65,21 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 스킬 관련 변수
     [HideInInspector]
     public int _skillIndex = 0;
-    [HideInInspector]
-    public bool _skillUsing = false;
 
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
     PlayerFSM _pFsm;
     Dictionary<PlayerState, PlayerBaseState> States = new Dictionary<PlayerState, PlayerBaseState>();
+    [HideInInspector]
+    public bool _isMoving = false;
+    [HideInInspector]
+    public bool _dodgeing = false;
+    [HideInInspector]
+    public bool _attacking = false;
+    [HideInInspector]
+    public bool _skillUsing = false;
+    [HideInInspector]
+    public bool _hitting = false;
 
     // 컴포넌트
     [HideInInspector]
@@ -179,8 +181,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Skill:
-                // 
-                // if KeyUp -> 딜레이 -> 상태 전환 <- 뭐였지..
                 if (!_skillUsing)
                 {
                     if (!_isMoving)
@@ -195,6 +195,17 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
+                if (!_hitting)
+                {
+                    if (!_isMoving)
+                    {
+                        ChangeState(PlayerState.Idle);
+                    }
+                    else
+                    {
+                        ChangeState(PlayerState.Move);
+                    }
+                }
                 break;
             case PlayerState.Dead:
                 // Dead에서 다른 상태로 이동하기 위한 조건
@@ -248,9 +259,10 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 우클릭 시 발생하는 행동
     public abstract void Special();
 
-    public virtual void Damaged(int amount)
+    public virtual void Damaged(int damage)
     {
         ChangeState(PlayerState.Damaged);
+        HitOffTimer(0.3f);
     }
 
     #region 타이머들(추후 anim이벤트로 변경)
@@ -300,6 +312,20 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             _curSTime = 0;
 
             _skillUsing = false;
+        }
+    }
+
+    // 추후 애니메이션 이벤트로 변경 예정
+    float _curHTime = 0;
+    protected void HitOffTimer(float targetTime)
+    {
+        _curHTime += Time.deltaTime;
+
+        if (_curHTime >= targetTime)
+        {
+            _curHTime = 0;
+
+            _hitting = false;
         }
     }
     #endregion
