@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,14 @@ public class PlayerCam : MonoBehaviour
 {
     // 타겟 (플레이어)으로 부터의 거리 
     [Header("카메라의 초기 위치값")]
-    public Vector3 _delta = new Vector3(0f, 3f, -4f);
+    //public Vector3 _delta = new Vector3(0f, 3f, -4f);
+
+    [SerializeField]
+    CinemachineVirtualCamera _cmQuarterCam;
+    [SerializeField]
+    CinemachineVirtualCamera _cmZoomCam;
+    CinemachineVirtualCamera _curCam;
+    Cinemachine3rdPersonFollow _personFollow;
 
     // 장애물 감지를 위한 레이어
     [SerializeField]
@@ -27,18 +35,23 @@ public class PlayerCam : MonoBehaviour
     [SerializeField]
     [Header("FOV 조절 속도")]
     float _fovChangeSpeed = 5f;
+    float _originFov;
 
-    // 줌모드 오프셋
-    [HideInInspector]
-    public Vector3 _zoomOffset = Vector3.zero;
+    // 수직 회전각 제한
+    public float _minVRot = 40f;
+    public float _maxVRot = 335f;
 
     private void Start()
     {
         _player = gameObject.GetOrAddComponent<Player>();
+        _personFollow = _cmQuarterCam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+        _curCam = _cmQuarterCam;
+        _originFov = _curCam.m_Lens.FieldOfView;
     }
 
     void Update()
     {
+        ChangeCMCam();
         LookAround();
 
         switch (_player._cameraMode)
@@ -51,9 +64,11 @@ public class PlayerCam : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    // 각 카메라의 우선도 설정, 카메라 모드에 따라 전환되는 카메라 전환
+    void ChangeCMCam()
     {
-        CamControl();
+        _cmQuarterCam.Priority = _player._cameraMode == Define.CameraMode.QuarterView ? 10 : 0;
+        _cmZoomCam.Priority = _player._cameraMode == Define.CameraMode.ZoomView ? 10 : 0;
     }
 
     // 마우스 회전값에 따라 최상위 플레이어를 돌리면 카메라와 모델 둘다 돌아감
@@ -67,56 +82,24 @@ public class PlayerCam : MonoBehaviour
         float x = camAngle.x - mouseDelta.y;
         float y = camAngle.y + mouseDelta.x;
 
+        // 수직 회전 제한
         if (x < 180f)
         {
-            x = Mathf.Clamp(x, -1f, 40f);
+            x = Mathf.Clamp(x, -1f, _minVRot);
         }
         else
         {
-            x = Mathf.Clamp(x, 320f, 361f);
+            x = Mathf.Clamp(x, _maxVRot, 361f);
         }
 
         _player._cameraArm.rotation = Quaternion.Euler(x, y, camAngle.z);
 
-        switch (_player._cameraMode)
+        // ZoomView모드면 캐릭터가 카메라 정면을 보도록
+        if (_player._cameraMode == Define.CameraMode.ZoomView)
         {
-            case Define.CameraMode.QuarterView:
-                
-                break;
-            case Define.CameraMode.ZoomView:
-                Vector3 playerDir = _player._cameraArm.forward;
-                playerDir.y = 0;
-                _player._playerModel.forward = playerDir;
-                break;
-        }
-    }
-
-    // 카메라 제어에 관련된 메서드 ( 위치, 보는 방향, 장애물 체크 등 )
-    void CamControl()
-    {
-        RaycastHit hit;
-        Vector3 camPos = _player._cameraArm.position + _player._cameraArm.rotation * _delta;
-        Vector3 camDir = camPos - _player._cameraArm.position;
-
-        // 플레이어에서 카메라 방향으로 레이를 발사 (플레이어 위치, 카메라 위치, out hit, 방향, 충돌 가능한 레이어 )
-        if (Physics.Raycast(_player.transform.position, camDir, out hit, camDir.magnitude, _obstacle))
-        {
-            float dist = (hit.point - _player.transform.position).magnitude * 0.8f; // 거리를 0.8 곱해줘서 줄여줌
-            _player._camera.transform.position = _player._cameraArm.position + _player._cameraArm.rotation * _delta.normalized * dist; // 카메라의 위치 변경
-        }
-        else
-        {
-            _player._camera.transform.position = camPos;
-        }
-
-        switch (_player._cameraMode)
-        {
-            case Define.CameraMode.QuarterView:
-                _player._camera.transform.LookAt(_player._cameraArm.position);
-                break;
-            case Define.CameraMode.ZoomView:
-                _player._camera.transform.position = camPos + _zoomOffset;
-                break;
+            Vector3 playerDir = _player._cameraArm.forward;
+            playerDir.y = 0;
+            _player._playerModel.forward = playerDir;
         }
     }
 
@@ -124,7 +107,35 @@ public class PlayerCam : MonoBehaviour
     void FOVControl()
     {
         float fovDelta = Input.GetAxis("Mouse ScrollWheel") * _fovChangeSpeed;
-        float newFOV = Mathf.Clamp(_player._camera.fieldOfView - fovDelta, _minFOV, _maxFOV);
-        _player._camera.fieldOfView = newFOV;
+        //float newFOV = Mathf.Clamp(_player._camera.fieldOfView - fovDelta, _minFOV, _maxFOV);
+        //_player._camera.fieldOfView = newFOV;
+        float nowFOv = Mathf.Clamp(_curCam.m_Lens.FieldOfView - fovDelta, _minFOV, _maxFOV);
+        _curCam.m_Lens.FieldOfView = nowFOv;
+    }
+
+    public void CamModeChange()
+    {
+        switch (_player._cameraMode)
+        {
+            case Define.CameraMode.QuarterView:
+                // 카메라 모드 변경
+                _player._cameraMode = Define.CameraMode.ZoomView;
+                // 현재 카메라 초기화
+                _curCam = _cmZoomCam;
+                _curCam.m_Lens.FieldOfView = _originFov;
+                _minVRot = 20f;
+                _maxVRot = 345f;
+                break;
+
+            case Define.CameraMode.ZoomView:
+                // 카메라 모드 변경
+                _player._cameraMode = Define.CameraMode.QuarterView;
+                // 현재 카메라 초기화
+                _curCam = _cmQuarterCam;
+                _curCam.m_Lens.FieldOfView = _originFov;
+                _minVRot = 40f;
+                _maxVRot = 335f;
+                break;
+        }
     }
 }

@@ -19,8 +19,6 @@ public enum PlayerState
 public abstract class Player : MonoBehaviour, IDamageAlbe
 {
     // 기타 변수
-    [HideInInspector]
-    public Camera _camera;
     [Header("오브젝트 참조")]
     public Transform _cameraArm;
     public Transform _playerModel;
@@ -117,7 +115,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         // 초기 상태
         _curState = PlayerState.Idle;
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
-        _camera = Camera.main;
+        //_camera = Camera.main;
         _canAtkInput = true;
         _cameraMode = Define.CameraMode.QuarterView;
         #endregion
