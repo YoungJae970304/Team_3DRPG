@@ -15,12 +15,12 @@ public class SlimeIdleState : MonsterBaseState
     float awayRangeZ;
     public override void OnStateEnter()
     {
-        //ÇöÀç À§Ä¡ ÀúÀå
-        //±Ùµ¥ ÀÌ°Íµµ ½½¶óÀÓ¿¡¼­ ÇßÀİ¾Æ
+        //í˜„ì¬ ìœ„ì¹˜ ì €ì¥
+        //ê·¼ë° ì´ê²ƒë„ ìŠ¬ë¼ì„ì—ì„œ í–ˆì–ì•„
         _sStat = _slime.GetComponent<SlimeStat>();
         if (_sStat == null)
         {
-            Debug.LogError("SlimeStat ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("SlimeStat ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         awayRangeX = Random.Range(-_sStat.AwayRange, _sStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
@@ -30,22 +30,19 @@ public class SlimeIdleState : MonsterBaseState
 
     public override void OnStateExit()
     {
-        //¾ê¸¦ ¾î¶»°Ô ÇØ¾ßÇÒ±î
+        //ì–˜ë¥¼ ì–´ë–»ê²Œ í•´ì•¼í• ê¹Œ
     }
 
     public override void OnStateUpdate()
     {
         if (_sStat == null) return;
-        //ÀÏÁ¤ °Å¸® ¹èÈ¸
-        //½½¶óÀÓÀº °è¼Ó ¹èÈ¸
-        //¼±°ø¸÷µéÀº ÇÃ·¹ÀÌ¾î°¡ ÀÏÁ¤ °Å¸® ¾È¿¡ µé¾î¿Â´Ù¸é Exit·Î »óÅÂ º¯È¯
+        //ì¼ì • ê±°ë¦¬ ë°°íšŒ
+        //ìŠ¬ë¼ì„ì€ ê³„ì† ë°°íšŒ
+        //ì„ ê³µëª¹ë“¤ì€ í”Œë ˆì´ì–´ê°€ ì¼ì • ê±°ë¦¬ ì•ˆì— ë“¤ì–´ì˜¨ë‹¤ë©´ Exitë¡œ ìƒíƒœ ë³€í™˜
         awayRangeX = Random.Range(-_sStat.AwayRange, _sStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
         awayRangeZ = Random.Range(-_sStat.AwayRange, _sStat.AwayRange);
-        
-        if ((_slime._originPos + _slime.transform.position).magnitude < (_slime._originPos).magnitude + _sStat.ReturnRange ||
-            (_slime._originPos - _slime.transform.position).magnitude > (_slime._originPos).magnitude - _sStat.ReturnRange)
-        {
+
             if((_slime._nav.destination - _slime.transform.position).magnitude > 1f)
             {
                 _slime._nav.SetDestination(_slime._nav.destination);
@@ -54,11 +51,6 @@ public class SlimeIdleState : MonsterBaseState
             {
                 _slime._nav.destination = _slime._originPos + new Vector3(awayRangeX, 0, awayRangeZ);
             }
-        }
-        else
-        {
-            //¿À¸®Áø Æ÷½º¿¡¼­ ÀÏÁ¤ ¹üÀ§ ÀÌ»óÀ¸·Î ¹ş¾î³µ´Ù¸é returnÇÏ±â - ±Ùµ¥ ¾ë slime¿¡¼­ º¯°æµÇ¾ßÇÔ
-            _slime._nav.destination = _slime._originPos;
-        }
+
     }
 }

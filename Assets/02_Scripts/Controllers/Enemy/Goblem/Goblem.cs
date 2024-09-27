@@ -125,11 +125,7 @@ public class Goblem : Monster, IDamageAlbe
     {
         return _gStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
-    public void DropItem()
-    {
-
-    }
-
+ 
     public override void Damaged(int amount)
     {
         if (_curState != State.Return)
@@ -141,9 +137,9 @@ public class Goblem : Monster, IDamageAlbe
             }
         }
     }
- 
-    public void GoblemDie()
+
+    public override void Die(GameObject mob)
     {
-        Destroy(gameObject, 2f);
+        Destroy(mob, 2f);
     }
 }

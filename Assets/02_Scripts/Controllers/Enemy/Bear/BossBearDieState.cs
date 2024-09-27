@@ -11,19 +11,18 @@ public class BossBearDieState : MonsterBaseState
 
     public override void OnStateEnter()
     {
-        //Á×´Â ¸ğ¼Ç
-        _bossBear.DropItem();
+        //ì£½ëŠ” ëª¨ì…˜
         OnStateExit();
     }
 
     public override void OnStateExit()
     {
-        //exit°¡ ÇÊ¿äÇÒ±î
-        _bossBear.BossBearDie();
+        //exitê°€ í•„ìš”í• ê¹Œ
+        //_bossBear.BossBearDie();
     }
 
     public override void OnStateUpdate()
     {
-        //¿¢½ÃÆ® À§Ä¡ »ı°¢ÇÏ±â
+        //ì—‘ì‹œíŠ¸ ìœ„ì¹˜ ìƒê°í•˜ê¸°
     }
 }

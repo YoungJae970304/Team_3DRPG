@@ -16,14 +16,13 @@ public enum PlayerState
     Dead
 }
 
-public class Player : MonoBehaviour, IDamageAlbe
+public abstract class Player : MonoBehaviour, IDamageAlbe
 {
     // 기타 변수
-    [HideInInspector]
-    public Camera _camera;
     [Header("오브젝트 참조")]
-    public Transform _cameraArm;
     public Transform _playerModel;
+    [HideInInspector]
+    public Define.PlayerType _playerType;
 
     // 이동 관련 변수
     [HideInInspector]
@@ -69,6 +68,12 @@ public class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public int _curAtkCount;
 
+    // 스킬 관련 변수
+    [HideInInspector]
+    public int _skillIndex = 0;
+    [HideInInspector]
+    public bool _skillUsing = false;
+
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
     PlayerFSM _pFsm;
@@ -79,14 +84,18 @@ public class Player : MonoBehaviour, IDamageAlbe
     public CharacterController _cc;
     [HideInInspector]
     public PlayerStat _playerStat;
+    [HideInInspector]
     public PlayerInput _playerInput;
+    [HideInInspector]
+    public PlayerCam _playerCam;
 
-    protected void Start()
+    protected virtual void Start()
     {
         #region 컴포넌트 초기화
         _cc = gameObject.GetOrAddComponent<CharacterController>();
         _playerStat = gameObject.GetOrAddComponent<PlayerStat>();
         _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
+        _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
         #endregion
 
         #region 딕셔너리 초기화
@@ -103,12 +112,12 @@ public class Player : MonoBehaviour, IDamageAlbe
         // 초기 상태
         _curState = PlayerState.Idle;
         _pFsm = new PlayerFSM(States[PlayerState.Idle]);
-        _camera = Camera.main;
+        //_camera = Camera.main;
         _canAtkInput = true;
         #endregion
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         // 상태 전환
         ChangeStateCondition();
@@ -117,13 +126,13 @@ public class Player : MonoBehaviour, IDamageAlbe
         _pFsm.UpdateState();
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         _pFsm.FixedUpdateState();
     }
 
     // 플레이어 상태 전환 조건을 담당하는 메서드
-    protected void ChangeStateCondition()
+    protected virtual void ChangeStateCondition()
     {
         switch (_curState)
         {
@@ -142,6 +151,7 @@ public class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Dodge:
+                // 회피 상태는 대기, 이동상태로만 전환
                 if (!_dodgeing)
                 {
                     if (!_isMoving)
@@ -155,7 +165,7 @@ public class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Attack:
-                // Attack에서 다른 상태로 이동하기 위한 조건
+                // 
                 if (!_attacking)
                 {
                     if (!_isMoving)
@@ -169,8 +179,19 @@ public class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Skill:
-                // Skill에서 다른 상태로 이동하기 위한 조건
-                // if KeyUp -> 딜레이 -> 상태 전환
+                // 
+                // if KeyUp -> 딜레이 -> 상태 전환 <- 뭐였지..
+                if (!_skillUsing)
+                {
+                    if (!_isMoving)
+                    {
+                        ChangeState(PlayerState.Idle);
+                    }
+                    else
+                    {
+                        ChangeState(PlayerState.Move);
+                    }
+                }
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
@@ -192,11 +213,94 @@ public class Player : MonoBehaviour, IDamageAlbe
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
     public virtual void Attack()
     {
+        switch (_curAtkCount)
+        {
+            case 0:
+                Logger.Log("강공격");
+                break;
+            case 1:
+                Logger.Log("기본공격 1타");
+                break;
+            case 2:
+                Logger.Log("기본공격 2타");
+                break;
+            case 3:
+                Logger.Log("기본공격 3타");
+                break;
+            default:
+                Logger.LogError("지정한 공격이 아님");
+                break;
+        }
 
+        // 추후 애니메이션 이벤트로 변경 예정
+
+        // 애니메이션 시작 시 _canAtkInput = false, _attacking = true;
+        // CanAtkInputOffTimer는 애니메이션의 중반쯤 _canAtkInput = true;
+
+        // AtkOffTimer는 애니메이션 종료 직전에 if-else문(_playerInput._atkInput.Count < 1)으로 
+        // _attacking = false;하거나 _curAtkCount = _playerInput._atkInput.Dequeue();
+        CanAtkInputOffTimer(0.5f);
+        AtkOffTimer(1.0f);
     }
 
-    public void Damaged(int amount)
+    public abstract void Skill();
+
+    // 우클릭 시 발생하는 행동
+    public abstract void Special();
+
+    public virtual void Damaged(int amount)
     {
         ChangeState(PlayerState.Damaged);
     }
+
+    #region 타이머들(추후 anim이벤트로 변경)
+    // 추후 애니메이션 이벤트로 변경 예정
+    float _curCAITime = 0;
+    protected void CanAtkInputOffTimer(float targetTime)
+    {
+        _curCAITime += Time.deltaTime;
+
+        if (_curCAITime >= targetTime)
+        {
+            _curCAITime = 0;
+            _canAtkInput = true;
+        }
+    }
+
+    // 추후 애니메이션 이벤트로 변경 예정
+    float _curATime = 0;
+    protected void AtkOffTimer(float targetTime)
+    {
+        _curATime += Time.deltaTime;
+
+        if (_curATime >= targetTime)
+        {
+            _curATime = 0;
+
+            // 선입력이 없다면 공격 중지
+            if (_playerInput._atkInput.Count < 1)
+            {
+                _attacking = false;
+            }
+            else    // 선입력이 남아있다면 재공격 
+            {
+                _curAtkCount = _playerInput._atkInput.Dequeue();
+            }
+        }
+    }
+
+    // 추후 애니메이션 이벤트로 변경 예정
+    float _curSTime = 0;
+    protected void SkillOffTimer(float targetTime)
+    {
+        _curSTime += Time.deltaTime;
+
+        if (_curSTime >= targetTime)
+        {
+            _curSTime = 0;
+
+            _skillUsing = false;
+        }
+    }
+    #endregion
 }

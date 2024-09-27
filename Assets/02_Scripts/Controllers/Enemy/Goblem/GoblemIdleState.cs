@@ -18,7 +18,7 @@ public class GoblemIdleState : MonsterBaseState
         _gStat = _goblem.GetComponent<GoblemStat>();
         if (_gStat == null)
         {
-            Debug.LogError("SlimeStat ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("SlimeStat ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         awayRangeX = Random.Range(-_gStat.AwayRange, _gStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
@@ -28,38 +28,28 @@ public class GoblemIdleState : MonsterBaseState
 
     public override void OnStateExit()
     {
-        //¾ê¸¦ ¾î¶»°Ô ÇØ¾ßÇÒ±î
+        //ì–˜ë¥¼ ì–´ë–»ê²Œ í•´ì•¼í• ê¹Œ
+
+        _goblem._nav.destination = _goblem._player.transform.position;
+
     }
 
     public override void OnStateUpdate()
     {
         if (_gStat == null) return;
-        //ÀÏÁ¤ °Å¸® ¹èÈ¸
-        //¼±°ø¸÷µéÀº ÇÃ·¹ÀÌ¾î°¡ ÀÏÁ¤ °Å¸® ¾È¿¡ µé¾î¿Â´Ù¸é Exit·Î »óÅÂ º¯È¯
+        //ì¼ì • ê±°ë¦¬ ë°°íšŒ
+        //ì„ ê³µëª¹ë“¤ì€ í”Œë ˆì´ì–´ê°€ ì¼ì • ê±°ë¦¬ ì•ˆì— ë“¤ì–´ì˜¨ë‹¤ë©´ Exitë¡œ ìƒíƒœ ë³€í™˜
         awayRangeX = Random.Range(-_gStat.AwayRange, _gStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
         awayRangeZ = Random.Range(-_gStat.AwayRange, _gStat.AwayRange);
-
-        if ((_goblem._originPos + _goblem.transform.position).magnitude < (_goblem._originPos).magnitude + _gStat.ReturnRange ||
-            (_goblem._originPos - _goblem.transform.position).magnitude > (_goblem._originPos).magnitude - _gStat.ReturnRange)
-        {
             if ((_goblem._nav.destination - _goblem.transform.position).magnitude > 1f)
             {
                 _goblem._nav.SetDestination(_goblem._nav.destination);
             }
-            else if (_goblem._curState == Goblem.State.Move)
-            {
-                _goblem._nav.destination = _goblem._player.transform.position;
-            }
+
             else
             {
                 _goblem._nav.destination = _goblem._originPos + new Vector3(awayRangeX, 0, awayRangeZ);
             }
-        }
-        else
-        {
-            //¿À¸®Áø Æ÷½º¿¡¼­ ÀÏÁ¤ ¹üÀ§ ÀÌ»óÀ¸·Î ¹ş¾î³µ´Ù¸é returnÇÏ±â - ±Ùµ¥ ¾ë slime¿¡¼­ º¯°æµÇ¾ßÇÔ
-            _goblem._nav.destination = _goblem._originPos;
-        }
     }
 }
