@@ -132,6 +132,7 @@ public class InventoryUI : MonoBehaviour
     private void DragEnd()
     {
         InventorySlot target=  GetUIRayCast<InventorySlot>();
+        if (target == _currnetSlot) { return; }
         if (target != null)
         {
             if (target.Item != null && target.Item.Data.ID == _currnetSlot.Item.Data.ID)
