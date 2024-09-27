@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item_Accessories_", menuName = "ItemData/Accessories", order = 3)]
 public class AccessoriesItemData : EquipmentItemData
 {
     public int HealthRegen => _healthRegen;

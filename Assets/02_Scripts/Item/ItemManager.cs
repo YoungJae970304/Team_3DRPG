@@ -13,8 +13,10 @@ public class ItemManager : MonoBehaviour//인벤토리
     {
         {
             //인벤토리 초기화
+            AddGroup(15, 100, ItemData.ItemType.Weapon);
+            AddGroup(15, 100, ItemData.ItemType.Armor);
+            AddGroup(15, 100, ItemData.ItemType.Accessories);
             AddGroup(15, 100, ItemData.ItemType.Booty);
-            AddGroup(15, 100, ItemData.ItemType.Equipment);
             AddGroup(15, 100, ItemData.ItemType.Potion);
         }
     }
