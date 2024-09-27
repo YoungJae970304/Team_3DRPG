@@ -7,7 +7,6 @@ public class PlayerInput : MonoBehaviour
     Player _player;
     Vector3 _dir;
 
-
     public Queue<int> _atkInput = new Queue<int>();
 
     void Start()
@@ -36,8 +35,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            //_player._rotDir += Vector3.forward;
-            _dir = _player._camera.transform.forward;
+            _dir = _player._playerCam._cameraArm.transform.forward;
             _dir.y = 0;
             _player._rotDir += _dir;
 
@@ -46,8 +44,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            //_player._rotDir += Vector3.left;
-            _dir = -_player._camera.transform.right;
+            _dir = -_player._playerCam._cameraArm.transform.right;
             _dir.y = 0;
             _player._rotDir += _dir;
 
@@ -56,8 +53,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S))
         {
-            //_player._rotDir += Vector3.back;
-            _dir = -_player._camera.transform.forward;
+            _dir = -_player._playerCam._cameraArm.transform.forward;
             _dir.y = 0;
             _player._rotDir += _dir;
 
@@ -66,8 +62,7 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            //_player._rotDir += Vector3.right;
-            _dir = _player._camera.transform.right;
+            _dir = _player._playerCam._cameraArm.transform.right;
             _dir.y = 0;
             _player._rotDir += _dir;
             _player._isMoving = true;
@@ -76,6 +71,8 @@ public class PlayerInput : MonoBehaviour
 
     void DodgeInput()
     {
+        if (_player._attacking || _player._skillUsing) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _player.ChangeState(PlayerState.Dodge);
@@ -84,27 +81,35 @@ public class PlayerInput : MonoBehaviour
 
     void AttackInput()
     {
+        if (_player._dodgeing || _player._skillUsing) return;
+
         if (Input.GetMouseButtonDown(0) && _player._canAtkInput)
         {
             _player.AtkCount++;
 
+            // Queue에 Enqueue함으로써 선입력 처리
             InputBufferInsert(_player.AtkCount);
             _player.ChangeState(PlayerState.Attack);
         }
         else if (Input.GetMouseButtonDown(1) && _player._canAtkInput)
         {
-            _player.AtkCount = 0;
-
-            InputBufferInsert(_player.AtkCount);
-            _player.ChangeState(PlayerState.Attack);
+            _player.Special();
         }
     }
 
     void SkillInput()
     {
-        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.R))
-        {
+        if (_player._dodgeing) return;
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            _player._skillIndex = 1;
+            _player.ChangeState(PlayerState.Skill);
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            _player._skillIndex = 2;
+            _player.ChangeState(PlayerState.Skill);
         }
     }
 

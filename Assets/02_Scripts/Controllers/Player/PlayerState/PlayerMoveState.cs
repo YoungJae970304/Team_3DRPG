@@ -31,15 +31,26 @@ public class PlayerMoveState : PlayerBaseState
     {
         if (_player._rotDir != Vector3.zero)
         {
-            // 회전 방향 정규화  
-            _player._rotDir.Normalize();
+            switch (_player._playerCam._cameraMode)
+            {
+                case Define.CameraMode.QuarterView:
+                    // 회전 방향 정규화  
+                    _player._rotDir.Normalize();
 
-            // 실제 회전
-            Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
-            _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
+                    // 실제 회전
+                    Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
+                    _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
 
-            // 이동 방향
-            _player._moveDir = _player._playerModel.forward * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
+                    // 이동 방향
+                    _player._moveDir = _player._playerModel.forward * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
+                    break;
+
+                case Define.CameraMode.ZoomView:
+                    _player._rotDir.Normalize();
+
+                    _player._moveDir = _player._rotDir * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
+                    break ;
+            }
         }
         else
         {

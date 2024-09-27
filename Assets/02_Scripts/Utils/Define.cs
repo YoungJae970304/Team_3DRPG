@@ -32,7 +32,14 @@ public class Define
 
     public enum CameraMode
     {
-        QuarterView
+        QuarterView,
+        ZoomView
+    }
+
+    public enum PlayerType
+    {
+        Melee,  // 근접
+        Ranged  // 원거리
     }
 
     public enum SkillType { 

@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
-    Item _Item;
-    Image _Image;
-    int _index;
-    ItemManager _itemManager;
-    Inventory _inventory;
+    Item _item;
+    public Item Item{get=>_item ;}
+    public Image _Image;
+    public int _index;
+    Inventory _itemManager;
+    InventoryUI _inventory;
     [SerializeField] Text _text;
     private void Awake()
     {
-        _Image = GetComponent<Image>();
 
     }
     private void Start()
@@ -27,24 +27,24 @@ public class InventorySlot : MonoBehaviour
         //UpdateInfo();
     }
 
-    public void Init(ItemManager itemManager, Inventory inventory) {
+    public void Init(Inventory itemManager, InventoryUI inventory) {
         _itemManager = itemManager;
         _inventory = inventory;
     }
 
     public void UpdateInfo()
     {
-        _Item = _itemManager.GetItem(_index, _inventory._currentType);
-        if (_Item == null)
+        _item = _itemManager.GetItem(_index, _inventory._currentType);
+        if (_item == null)
         {
             _Image.sprite = null;
             _text.text = "";
             return;
         }
-            _Image.sprite = _Item.Data.IconSprite == null ? _Image.sprite : _Item.Data.IconSprite;
-        if (_Item is CountableItem)
+            _Image.sprite = _item.Data.IconSprite == null ? _Image.sprite : _item.Data.IconSprite;
+        if (_item is CountableItem)
         {
-            _text.text = (_Item as CountableItem)._amount.ToString(); ;
+            _text.text = (_item as CountableItem)._amount.ToString(); ;
         }
         else {
             _text.text = "";
@@ -54,7 +54,7 @@ public class InventorySlot : MonoBehaviour
 
     public void test()
     {
-        if (_Item == null) { return; }
-        Logger.Log(_Item.Data.Name);
+        if (_item == null) { return; }
+        Logger.Log(_item.Data.Name);
     }
 }

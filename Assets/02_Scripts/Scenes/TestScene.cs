@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TestScene : BaseScene
 {
-    [SerializeField] ItemManager ItemManager;
-    [SerializeField] Inventory inventory;
-    [SerializeField] ItemData ItemData;
+    [SerializeField] Inventory ItemManager;
+    [SerializeField] InventoryUI inventory;
+    [SerializeField] ItemData ItemData,itemData2;
     protected override void Init()
     {
         base.Init();
@@ -23,6 +23,8 @@ public class TestScene : BaseScene
     public void test() {
         Item item = new CountableItem(ItemData,60);
         ItemManager.InsertItem(item);
+        Item item2 = new CountableItem(itemData2, 60);
+        ItemManager.InsertItem(item2);
         inventory.UpdateSlot();
     }
     [ContextMenu("remove")]
