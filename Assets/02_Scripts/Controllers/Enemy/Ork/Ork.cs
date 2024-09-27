@@ -65,11 +65,13 @@ public class Ork : Monster, IDamageAlbe
             case State.Idle:
                 if (CanSeePlayer())
                     ChangeState(State.Move);
+                if (_oStat.Hp <= 0)
+                    ChangeState(State.Die);
                 break;
             case State.Damage:
                 if (CanAttackPlayer())
                     ChangeState(State.Attack);
-                else if (_mStat.Hp <= 0)
+                else if (_oStat.Hp <= 0)
                     ChangeState(State.Die);
                 else
                     ChangeState(State.Move);

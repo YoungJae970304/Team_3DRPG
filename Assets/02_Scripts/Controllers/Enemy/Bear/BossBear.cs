@@ -67,7 +67,7 @@ public class BossBear : Monster, IDamageAlbe
             case State.Damage:
                 if (CanAttackPlayer())
                     ChangeState(State.Attack);
-                else if (_mStat.Hp <= 0)
+                else if (_bStat.Hp <= 0)
                     ChangeState(State.Die);
                 else
                     ChangeState(State.Move);
