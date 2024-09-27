@@ -15,6 +15,4 @@ public class EquipmentItem : Item
     {
         return new EquipmentItem(Data as EquipmentItemData);
     }
-
-    //장비 아이템이 사용할 함수
 }

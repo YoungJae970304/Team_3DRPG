@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public class ItemManager : MonoBehaviour//인벤토리
+public class Inventory : MonoBehaviour//인벤토리
 {   //아이템 그룹을 담을 딕셔너리 타입 하나당 인벤토리 탭 1개가 된다.
     Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>();
 
@@ -13,8 +13,10 @@ public class ItemManager : MonoBehaviour//인벤토리
     {
         {
             //인벤토리 초기화
+            AddGroup(15, 100, ItemData.ItemType.Weapon);
+            AddGroup(15, 100, ItemData.ItemType.Armor);
+            AddGroup(15, 100, ItemData.ItemType.Accessories);
             AddGroup(15, 100, ItemData.ItemType.Booty);
-            AddGroup(15, 100, ItemData.ItemType.Equipment);
             AddGroup(15, 100, ItemData.ItemType.Potion);
         }
     }
