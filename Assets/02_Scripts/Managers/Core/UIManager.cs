@@ -5,35 +5,40 @@ using System;
 
 public class UIManager
 {
-    int _order = 10;    // È¤½Ã ¸ğ¸£´Ï±ñ ¿©À¯¸¦ µÎ°í ¸ÕÀú »ı¼ºÇÒ°Ô ÀÖ´Ù¸é 10º¸´Ù ÀÛÀº ¼ö·Î ÆË¾÷ÇÒ ¼ö ÀÖ°ÔÇÔ
+    int _order = 10;    // í˜¹ì‹œ ëª¨ë¥´ë‹ˆê¹ ì—¬ìœ ë¥¼ ë‘ê³  ë¨¼ì € ìƒì„±í• ê²Œ ìˆë‹¤ë©´ 10ë³´ë‹¤ ì‘ì€ ìˆ˜ë¡œ íŒì—…í•  ìˆ˜ ìˆê²Œí•¨
+    GameObject _root = null;
     public GameObject Root
     {
         get
         {
-            GameObject root = GameObject.Find("@UI_Root");
-            if (root == null)
+            if (_root == null)
             {
-                root = new GameObject { name = "@UI_Root" };
+                _root = GameObject.Find("@UI_Root");
+                if (_root == null)
+                {
+                    _root = new GameObject { name = "@UI_Root" };
+                }
+                _root = new GameObject { name = "@UI_Root" };
             }
-            return root;
+            return _root;
         }
     }
 
-    // °¡Àå ¸¶Áö¸·¿¡ ¶ç¿î ÆË¾÷ÀÌ °¡Àå ¸ÕÀú »ç¶óÁ®¾ßÇÏ±â ¶§¹®¿¡ Stack»ç¿ë
+    // ê°€ì¥ ë§ˆì§€ë§‰ì— ë„ìš´ íŒì—…ì´ ê°€ì¥ ë¨¼ì € ì‚¬ë¼ì ¸ì•¼í•˜ê¸° ë•Œë¬¸ì— Stackì‚¬ìš©
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
     //Stack<UI_Scene> _scnenStack = new Stack<UI_Scene>();
 
     UI_Scene _sceneUI = null;
 
-    // ¾À UI¸¦ »ı¼ºÇØÁÖ´Â ÇÔ¼ö ( ¸Å°³º¯¼öÀÇ Å¸ÀÔÀ» ¹Ì¸® °áÁ¤ÇÏÁö ¾Ê°í, »ç¿ë ½Ã °áÁ¤ )
+    // ì”¬ UIë¥¼ ìƒì„±í•´ì£¼ëŠ” í•¨ìˆ˜ ( ë§¤ê°œë³€ìˆ˜ì˜ íƒ€ì…ì„ ë¯¸ë¦¬ ê²°ì •í•˜ì§€ ì•Šê³ , ì‚¬ìš© ì‹œ ê²°ì • )
     public T ShowSceneUI<T>(string name = null) where T : UI_Scene
-        // T´Â ¾Æ¹« T³ª ¹Ş´Â°Ô ¾Æ´Ï¶ó ¹«Á¶°Ç UI ÆË¾÷À» »ó¼Ó¹Ş´Â ¾Ö·Î ¸¸µéÀÚ
+        // TëŠ” ì•„ë¬´ Të‚˜ ë°›ëŠ”ê²Œ ì•„ë‹ˆë¼ ë¬´ì¡°ê±´ UI íŒì—…ì„ ìƒì†ë°›ëŠ” ì• ë¡œ ë§Œë“¤ì
     {
-        if (string.IsNullOrEmpty(name)) // ÀÌ¸§À» ¾È¹Ş¾ÒÀ¸¸é
-            name = typeof(T).Name;      // TÀÇ ÀÌ¸§À¸·Î
+        if (string.IsNullOrEmpty(name)) // ì´ë¦„ì„ ì•ˆë°›ì•˜ìœ¼ë©´
+            name = typeof(T).Name;      // Tì˜ ì´ë¦„ìœ¼ë¡œ
 
-        GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");  // ÆË¾÷ »ı¼º
-        T sceneUI = Util.GetOrAddComponent<T>(go);    // ÄÄÆÛ³ÍÆ®°¡ ºÙ¾îÀÖÁö ¾Ê´Ù¸é Ãß°¡
+        GameObject go = Managers.Resource.Instantiate($"UI/Scene/{name}");  // íŒì—… ìƒì„±
+        T sceneUI = Util.GetOrAddComponent<T>(go);    // ì»´í¼ë„ŒíŠ¸ê°€ ë¶™ì–´ìˆì§€ ì•Šë‹¤ë©´ ì¶”ê°€
         _sceneUI = sceneUI;
 
         go.transform.SetParent(Root.transform);
@@ -41,15 +46,15 @@ public class UIManager
         return sceneUI;
     }
 
-    // ÆË¾÷ UI¸¦ »ı¼ºÇØÁÖ´Â ÇÔ¼ö ( ¸Å°³º¯¼öÀÇ Å¸ÀÔÀ» ¹Ì¸® °áÁ¤ÇÏÁö ¾Ê°í, »ç¿ë ½Ã °áÁ¤ )
+    // íŒì—… UIë¥¼ ìƒì„±í•´ì£¼ëŠ” í•¨ìˆ˜ ( ë§¤ê°œë³€ìˆ˜ì˜ íƒ€ì…ì„ ë¯¸ë¦¬ ê²°ì •í•˜ì§€ ì•Šê³ , ì‚¬ìš© ì‹œ ê²°ì • )
     public T ShowPopupUI<T>(string name = null) where T : UI_Popup
-        // T´Â ¾Æ¹« T³ª ¹Ş´Â°Ô ¾Æ´Ï¶ó ¹«Á¶°Ç UI ÆË¾÷À» »ó¼Ó¹Ş´Â ¾Ö·Î ¸¸µéÀÚ
+        // TëŠ” ì•„ë¬´ Të‚˜ ë°›ëŠ”ê²Œ ì•„ë‹ˆë¼ ë¬´ì¡°ê±´ UI íŒì—…ì„ ìƒì†ë°›ëŠ” ì• ë¡œ ë§Œë“¤ì
     {
-        if (string.IsNullOrEmpty(name)) // ÀÌ¸§À» ¾È¹Ş¾ÒÀ¸¸é
-            name = typeof(T).Name;      // TÀÇ ÀÌ¸§À¸·Î
+        if (string.IsNullOrEmpty(name)) // ì´ë¦„ì„ ì•ˆë°›ì•˜ìœ¼ë©´
+            name = typeof(T).Name;      // Tì˜ ì´ë¦„ìœ¼ë¡œ
 
-        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}");  // ÆË¾÷ »ı¼º
-        T popup = Util.GetOrAddComponent<T>(go);    // ÄÄÆÛ³ÍÆ®°¡ ºÙ¾îÀÖÁö ¾Ê´Ù¸é Ãß°¡
+        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}");  // íŒì—… ìƒì„±
+        T popup = Util.GetOrAddComponent<T>(go);    // ì»´í¼ë„ŒíŠ¸ê°€ ë¶™ì–´ìˆì§€ ì•Šë‹¤ë©´ ì¶”ê°€
         _popupStack.Push(popup);
 
         go.transform.SetParent(Root.transform);
@@ -62,7 +67,7 @@ public class UIManager
         if (string.IsNullOrEmpty (name))
             name = typeof(T).Name;
 
-        GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");  // ÆË¾÷ »ı¼º
+        GameObject go = Managers.Resource.Instantiate($"UI/SubItem/{name}");  // íŒì—… ìƒì„±
         if (parent != null)
             go.transform.SetParent(parent);
 
@@ -73,7 +78,7 @@ public class UIManager
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
 
-        GameObject go = Managers.Resource.Instantiate($"UI/WorldSpace/{name}");  // ÆË¾÷ »ı¼º
+        GameObject go = Managers.Resource.Instantiate($"UI/WorldSpace/{name}");  // íŒì—… ìƒì„±
         if (parent != null)
             go.transform.SetParent(parent);
 
@@ -106,7 +111,7 @@ public class UIManager
         if (_popupStack.Count == 0)
             return;
 
-        // ½ºÅÃ ¸Ç À§¿¡ ÀÖ´Â °Í°ú ³»°¡ ÁöÁ¤ÇÑ popupÀÌ¶û °°À»¶§¸¸ CloseµÇµµ·Ï ÇØ¼­ ¾ÈÀüÇÏ°Ô »èÁ¦ °¡´É
+        // ìŠ¤íƒ ë§¨ ìœ„ì— ìˆëŠ” ê²ƒê³¼ ë‚´ê°€ ì§€ì •í•œ popupì´ë‘ ê°™ì„ë•Œë§Œ Closeë˜ë„ë¡ í•´ì„œ ì•ˆì „í•˜ê²Œ ì‚­ì œ ê°€ëŠ¥
         if (_popupStack.Peek() != popup)
         {
             Debug.Log("Close Popup Failed!");
@@ -118,13 +123,13 @@ public class UIManager
 
     public void SetCanvas(GameObject go, bool sort = true)
     {
-        // Äµ¹ö½º ÃßÃâ
+        // ìº”ë²„ìŠ¤ ì¶”ì¶œ
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        // ·£´õ¸ğµå´Â ¹«Á¶°Ç ScreenSpaceOverlay ( ÀÌ °æ¿ì¸¸ sortingµÇ±â ¶§¹® )
+        // ëœë”ëª¨ë“œëŠ” ë¬´ì¡°ê±´ ScreenSpaceOverlay ( ì´ ê²½ìš°ë§Œ sortingë˜ê¸° ë•Œë¬¸ )
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        // Äµ¹ö½º ¾È¿¡ Äµ¹ö½º°¡ ÁßÃ¸ÇØ¼­ ÀÖÀ» ¶§ ±× ºÎ¸ğ°¡ ¾î¶² °ªÀ» °¡Áö´ø ÀÚ½ÅÀº ¹«Á¶°Ç ³» sorting order¸¦ °¡Áø´Ù
-        // overrideSortingÀ» ÅëÇØ È¤½Ã¶óµµ ÁßÃ¸ Äµ¹ö½º¶ó ÀÚ½Ä Äµ¹ö½º°¡ ÀÖ´õ¶óµµ ºÎ¸ğ Äµ¹ö½º°¡ ¾î¶² °ªÀ» °¡Áö´ø
-        // ÀÚ½ÅÀº ÀÚ½ÅÀÇ ¿À´õ°ªÀ» °¡Áö·Á ÇÒ ¶§ true;
+        // ìº”ë²„ìŠ¤ ì•ˆì— ìº”ë²„ìŠ¤ê°€ ì¤‘ì²©í•´ì„œ ìˆì„ ë•Œ ê·¸ ë¶€ëª¨ê°€ ì–´ë–¤ ê°’ì„ ê°€ì§€ë˜ ìì‹ ì€ ë¬´ì¡°ê±´ ë‚´ sorting orderë¥¼ ê°€ì§„ë‹¤
+        // overrideSortingì„ í†µí•´ í˜¹ì‹œë¼ë„ ì¤‘ì²© ìº”ë²„ìŠ¤ë¼ ìì‹ ìº”ë²„ìŠ¤ê°€ ìˆë”ë¼ë„ ë¶€ëª¨ ìº”ë²„ìŠ¤ê°€ ì–´ë–¤ ê°’ì„ ê°€ì§€ë˜
+        // ìì‹ ì€ ìì‹ ì˜ ì˜¤ë”ê°’ì„ ê°€ì§€ë ¤ í•  ë•Œ true;
         canvas.overrideSorting = true;
 
         if (sort)
@@ -132,7 +137,7 @@ public class UIManager
             canvas.sortingOrder = _order;
             _order++;
         }
-        else    // ÆË¾÷ÀÌ¶û »ó°ü¾ø´Â ÀÏ¹İ UI
+        else    // íŒì—…ì´ë‘ ìƒê´€ì—†ëŠ” ì¼ë°˜ UI
         {
             canvas.sortingOrder = 0;
         }

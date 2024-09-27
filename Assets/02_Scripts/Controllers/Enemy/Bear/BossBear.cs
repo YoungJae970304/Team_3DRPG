@@ -134,10 +134,8 @@ public class BossBear : Monster, IDamageAlbe
     {
         return _bStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
-    public void DropItem()
-    {
 
-    }
+
 
     public override void Damaged(int amount)
     {
@@ -150,9 +148,9 @@ public class BossBear : Monster, IDamageAlbe
             }
         }
     }
-   
-    public void BossBearDie()
+
+    public override void Die(GameObject mob)
     {
-        Destroy(gameObject, 2f);
+        Destroy(mob, 2f);
     }
 }

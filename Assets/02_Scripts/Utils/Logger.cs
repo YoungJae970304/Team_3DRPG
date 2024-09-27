@@ -9,7 +9,20 @@ public static class Logger
     public static void Log(string msg) {
         UnityEngine.Debug.LogFormat("[{0}]",  msg);
     }
-
+    [Conditional("UNITY_EDITOR")]//조건부 컴파일 심볼
+    public static void Log(int msg)
+    {
+        UnityEngine.Debug.LogFormat("[{0}]", msg);
+    }
+    [Conditional("UNITY_EDITOR")]//조건부 컴파일 심볼
+    public static void Log(float msg)
+    {
+        UnityEngine.Debug.LogFormat("[{0}]", msg);
+    }
+    public static void Log(GameObject msg)
+    {
+        UnityEngine.Debug.LogFormat("[{0}]", msg);
+    }
     [Conditional("UNITY_EDITOR")]
     public static void LogWarning(string msg)//워밍 로그함수
     {
