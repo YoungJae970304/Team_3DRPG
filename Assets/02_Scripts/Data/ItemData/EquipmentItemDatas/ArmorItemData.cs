@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item_Armor_", menuName = "ItemData/Armor", order = 2)]
 public class ArmorItemData : EquipmentItemData
 {
     public int Defence => _defence;
     public int Health => _health;
 
-    //¹æ¾î·Â
+    //ë°©ì–´ë ¥
     [SerializeField] int _defence;
-    //Ã¼·Â
+    //ì²´ë ¥
     [SerializeField] int _health;
 }

@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ItemData : ScriptableObject
-{
+public abstract class ItemData
+{ 
     //아이템이 공용으로 사용할 정보들
     public enum ItemType
     {
-        Equipment,//0, 1, 2
-        Potion,//3
-        Booty,//4
+        Weapon = 1, //1
+        Armor,//2
+        Accessories,//3
+        Potion,//4
+        Booty,//5
     }
 
     public ItemType Type => _itemType;

@@ -46,4 +46,10 @@ public class Define
         KeyDown,
         Normal,
     }
+
+    public enum QuestType
+    {
+        Main,
+        Sub,
+    }
 }
