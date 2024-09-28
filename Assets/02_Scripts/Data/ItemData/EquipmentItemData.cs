@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class EquipmentItemData : ItemData
 {
-    public int Level => _level;
-    public int Grade => _grade;
-    
-    //Âø¿ë °¡´É ·¹º§
-    [SerializeField] int _level;
-    //µî±Þ
-    [SerializeField] int _grade;
+    //ì°©ìš© ê°€ëŠ¥ ë ˆë²¨
+    public int _level;
+    //ë“±ê¸‰
+    public int _grade;
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
-    static Managers s_instance; // À¯ÀÏ¼º º¸Àå
-    // À¯ÀÏÇÑ ¸Å´ÏÀú¸¦ °¡Á®¿È // ÇÁ·ÎÆÛÆ¼ // ÀĞ±â Àü¿ë
+    static Managers s_instance; // ìœ ì¼ì„± ë³´ì¥
+    // ìœ ì¼í•œ ë§¤ë‹ˆì €ë¥¼ ê°€ì ¸ì˜´ // í”„ë¡œí¼í‹° // ì½ê¸° ì „ìš©
     static Managers Instance { get { Init(); return s_instance; } }
     #region Contents
     GameManager _game = new GameManager();
@@ -22,6 +22,7 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
     DataManager _data = new DataManager();
+    DataTableManager _dataTable = new DataTableManager();
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resourece; } }
@@ -30,6 +31,7 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static DataManager Data { get { return Instance._data; } }
+    public static DataTableManager DataTable { get { return Instance._dataTable; } }
     #endregion
 
     private void Awake()
@@ -47,8 +49,8 @@ public class Managers : MonoBehaviour
 
     void Update()
     {
-        // inputÀ¸·Î ¾È ¾´ ÀÌÀ¯´Â ÀÌ°÷¿¡¼­ _inputÀ¸·Î Á÷Á¢ Á¢±ÙÇß±â ¶§¹®
-        _input.OnUpdate();  // ÀÎÇ² ¸Å´ÏÀúÀÇ OnUpdate() ½ÇÇà, OnUpdate()¿¡¼­ Invoke·Î ¾×¼Ç ½ÇÇà
+        // inputìœ¼ë¡œ ì•ˆ ì“´ ì´ìœ ëŠ” ì´ê³³ì—ì„œ _inputìœ¼ë¡œ ì§ì ‘ ì ‘ê·¼í–ˆê¸° ë•Œë¬¸
+        _input.OnUpdate();  // ì¸í’‹ ë§¤ë‹ˆì €ì˜ OnUpdate() ì‹¤í–‰, OnUpdate()ì—ì„œ Invokeë¡œ ì•¡ì…˜ ì‹¤í–‰
     }
 
     static void Init()
@@ -57,9 +59,9 @@ public class Managers : MonoBehaviour
         {
             GameObject go = GameObject.Find("@Managers");
 
-            if (go == null)  // go°¡ ¾øÀ¸¸é
+            if (go == null)  // goê°€ ì—†ìœ¼ë©´
             {
-                go = new GameObject { name = "@Managers" }; // ÄÚµå»óÀ¸·Î ¿ÀºêÁ§Æ®¸¦ ¸¸µé¾îÁÜ
+                go = new GameObject { name = "@Managers" }; // ì½”ë“œìƒìœ¼ë¡œ ì˜¤ë¸Œì íŠ¸ë¥¼ ë§Œë“¤ì–´ì¤Œ
                 go.AddComponent<Managers>();
             }
 
@@ -69,6 +71,7 @@ public class Managers : MonoBehaviour
             s_instance._sound.Init();
             s_instance._pool.Init();
             s_instance._data.Init();
+            //s_instance._dataTable.Init();
         }
     }
 

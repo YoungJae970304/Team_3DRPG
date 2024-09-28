@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class AccessoriesItemData : EquipmentItemData
 {
-    public int HealthRegen => _healthRegen;
-    public int Mana => _mana;
-    public int ManaRegen => _manaRegen;
-
     //체력 리젠(악세서리)
-    [SerializeField] int _healthRegen;
+    public int _healthRegen;
     //마나(악세서리)
-    [SerializeField] int _mana;
+    public int _mana;
     //마나 리젠(악세서리)
-    [SerializeField] int _manaRegen;
+    public int _manaRegen;
 }

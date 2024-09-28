@@ -15,10 +15,10 @@ public class CountableItem : Item
     }
 
     //장비 제외 다른 아이템 복사
-    protected override Item Clone(int amount)
-    {
-        return new CountableItem(Data, amount);
-    }
+    //protected override Item Clone(int amount)
+    //{
+    //    return new CountableItem(Data, amount);
+    //}
     //실제 현재 몇개인지 알려줄 함수
     public int GetCurrentAmount()
     {

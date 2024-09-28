@@ -4,42 +4,42 @@ using UnityEngine;
 
 public class ResourceManager
 {
-    //  Resources.Load<T>(path); ´ë½Å Load<T>(path)·Î »ç¿ëÇÏ±â À§ÇØ ·¦ÇÎ
+    //  Resources.Load<T>(path); ëŒ€ì‹  Load<T>(path)ë¡œ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ë©í•‘
     public T Load<T>(string path) where T : Object
     {
-        // 1. original ÀÌ¹Ì µé°í ÀÖÀ¸¸é ¹Ù·Î »ç¿ë
+        // 1. original ì´ë¯¸ ë“¤ê³  ìˆìœ¼ë©´ ë°”ë¡œ ì‚¬ìš©
 
-        // ¸¸¾à ÇÁ¸®ÆÕÀÎ °æ¿ì ¿ÀÇÇÁö³ÎÀ» Ç®¿¡¼­ ÇÑ¹ø Ã£¾Æ¼­ ±×°ÍÀ» ¹Ù·Î ¹İÈ¯
-        if (typeof(T) == typeof(GameObject))    // ÀÌ·¯¸é ÇÁ¸®ÆÕÀÏ È®·üÀÌ ³ôÀ½
+        // ë§Œì•½ í”„ë¦¬íŒ¹ì¸ ê²½ìš° ì˜¤í”¼ì§€ë„ì„ í’€ì—ì„œ í•œë²ˆ ì°¾ì•„ì„œ ê·¸ê²ƒì„ ë°”ë¡œ ë°˜í™˜
+        if (typeof(T) == typeof(GameObject))    // ì´ëŸ¬ë©´ í”„ë¦¬íŒ¹ì¼ í™•ë¥ ì´ ë†’ìŒ
         {
-            // ¿©±â ·Îµå¿¡ Load<GameObject>($"Prefabs/{path}"); ÀÌ·± ½ÄÀ¸·Î
-            // ÀüÃ¼ °æ·Î¸¦ ³Ñ°ÜÁÖ¾ú´Âµ¥ Ç®Àº ±×³É ÃÖÁ¾ÀûÀÎ ÀÌ¸§À» »ç¿äÛ°í ÀÖÀ¸´Ï
-            // /(name)À¸·Î µÇ¾î ÀÖÀ¸¸é (name)¸¸ »ç¿ëÇØ¾ß ÇÏ´Ï±î
+            // ì—¬ê¸° ë¡œë“œì— Load<GameObject>($"Prefabs/{path}"); ì´ëŸ° ì‹ìœ¼ë¡œ
+            // ì „ì²´ ê²½ë¡œë¥¼ ë„˜ê²¨ì£¼ì—ˆëŠ”ë° í’€ì€ ê·¸ëƒ¥ ìµœì¢…ì ì¸ ì´ë¦„ì„ ì‚¬ìš”ì•Ÿê³  ìˆìœ¼ë‹ˆ
+            // /(name)ìœ¼ë¡œ ë˜ì–´ ìˆìœ¼ë©´ (name)ë§Œ ì‚¬ìš©í•´ì•¼ í•˜ë‹ˆê¹Œ
             string name = path;
             int index = name.LastIndexOf('/');
             if (index >= 0)
             {
-                name = name.Substring(index + 1);   // ÀÌ·¡¾ß ('/') ´ÙÀ½ ºÎÅÍ°¡ µÊ
+                name = name.Substring(index + 1);   // ì´ë˜ì•¼ ('/') ë‹¤ìŒ ë¶€í„°ê°€ ë¨
             }
 
-            // (name)À» Ã£¾Æ”f´Âµ¥ ÀÖÀ¸¸é ÀÌ°ÍÀ» ¹İÈ¯
+            // (name)ì„ ì°¾ì•„ë´£ëŠ”ë° ìˆìœ¼ë©´ ì´ê²ƒì„ ë°˜í™˜
             GameObject go = Managers.Pool.GetOriginal(name);
-            // ±Ùµ¥ ¾ø´Ù¸é ¿¹ÀüÃ³·³ ±×³É return Resources.Load<T>(path);·Î ÁøÇàµÇ°Ô
+            // ê·¼ë° ì—†ë‹¤ë©´ ì˜ˆì „ì²˜ëŸ¼ ê·¸ëƒ¥ return Resources.Load<T>(path);ë¡œ ì§„í–‰ë˜ê²Œ
             if (go != null)
             {
                 return go as T;
             }
         }
-        // ¾ø´Ù¸é ÀÌÀü LoadÃ³·³ »ç¿ë
+        // ì—†ë‹¤ë©´ ì´ì „ Loadì²˜ëŸ¼ ì‚¬ìš©
         return Resources.Load<T>(path);
     }
     
     public GameObject Instantiate(string path, Transform parent = null)
     {
-        // °æ·Î¸¦ ·¦ÇÎÇØ¼­ ÀÌÈÄ¿¡´Â Instantiate("°æ·Î¾ÈÀÇ ÇÁ¸®ÆÕ ÀÌ¸§")À¸·Î ÇØ°á °¡´ÉÇØÁü
+        // ê²½ë¡œë¥¼ ë©í•‘í•´ì„œ ì´í›„ì—ëŠ” Instantiate("ê²½ë¡œì•ˆì˜ í”„ë¦¬íŒ¹ ì´ë¦„")ìœ¼ë¡œ í•´ê²° ê°€ëŠ¥í•´ì§
 
-        // 1. originalÀÌ ÀÖÀ¸¸é ¹Ù·Î »ç¿ë, ¾øÀ¸¸é ¾Æ·¡Ã³·³ »ç¿ë
-        GameObject original = Load<GameObject>($"Prefabs/{path}");  // ÀÇ¹Ì»ó È¥µ¿µÉ ¼ö ÀÖ¾î¼­ º¯¼ö¸í ¼öÁ¤
+        // 1. originalì´ ìˆìœ¼ë©´ ë°”ë¡œ ì‚¬ìš©, ì—†ìœ¼ë©´ ì•„ë˜ì²˜ëŸ¼ ì‚¬ìš©
+        GameObject original = Load<GameObject>($"Prefabs/{path}");  // ì˜ë¯¸ìƒ í˜¼ë™ë  ìˆ˜ ìˆì–´ì„œ ë³€ìˆ˜ëª… ìˆ˜ì •
 
         if (original == null)
         {
@@ -47,31 +47,31 @@ public class ResourceManager
             return null;
         }
 
-        // 2. È¤½Ã Ç®¸µµÈ ¿ÀºêÁ§Æ®°¡ ÀÖÀ¸¸é ±×°ÍÀ» ¹İÈ¯
+        // 2. í˜¹ì‹œ í’€ë§ëœ ì˜¤ë¸Œì íŠ¸ê°€ ìˆìœ¼ë©´ ê·¸ê²ƒì„ ë°˜í™˜
         if (original.GetComponent<Poolable>() != null)
         {
             return Managers.Pool.Pop(original, parent).gameObject;
         }
 
         GameObject go = Object.Instantiate(original, parent);
-        int index = go.name.IndexOf("(Clone)"); // Clone ¹®ÀÚ¿­À» Ã£¾Æ¼­ ÀÎµ¦½º¸¦ ¹İÈ¯
+        int index = go.name.IndexOf("(Clone)"); // Clone ë¬¸ìì—´ì„ ì°¾ì•„ì„œ ì¸ë±ìŠ¤ë¥¼ ë°˜í™˜
         if (index > 0 )
         {
             go.name = go.name.Substring(0, index);  // UI_Inven_Item//(Clone)
         }
 
         return go;
-        // Object¸¦ ºÙÀÌÁö ¾ÊÀ¸¸é Àç±ÍÇÏ·Á°í ÇÒ °Å¶ó¼­ // ¼³¸íÀÌ ºÎÁ·ÇÏÁö¸¸ Áö±İÀº ±×³É ÀÌ·¸°Ô »ç¿ë
+        // Objectë¥¼ ë¶™ì´ì§€ ì•Šìœ¼ë©´ ì¬ê·€í•˜ë ¤ê³  í•  ê±°ë¼ì„œ // ì„¤ëª…ì´ ë¶€ì¡±í•˜ì§€ë§Œ ì§€ê¸ˆì€ ê·¸ëƒ¥ ì´ë ‡ê²Œ ì‚¬ìš©
         //return Object.Instantiate(prefab, parent);
     }
 
-    // Object.Destroy(go);¸¦ Destroy()·Î ·¦ÇÎ ÇØº»°ÍÀÏ »Ó ½ÇÁ¦·Î´Â ÇÊ¿ä ¾øÀ½
+    // Object.Destroy(go);ë¥¼ Destroy()ë¡œ ë©í•‘ í•´ë³¸ê²ƒì¼ ë¿ ì‹¤ì œë¡œëŠ” í•„ìš” ì—†ìŒ
     public void Destroy(GameObject go)
     {
         if (go == null)
             return;
 
-        // 3. ¸¸¾à¿¡ Ç®¸µÀÌ ÇÊ¿äÇÑ ¿ÀºêÁ§Æ®¶ó¸é ¹Ù·Î »èÁ¦ÇÏ´Â °ÍÀÌ ¾Æ´Ï¶ó Ç®¸µ ¸Å´ÏÀúÇÑÅ× À§Å¹
+        // 3. ë§Œì•½ì— í’€ë§ì´ í•„ìš”í•œ ì˜¤ë¸Œì íŠ¸ë¼ë©´ ë°”ë¡œ ì‚­ì œí•˜ëŠ” ê²ƒì´ ì•„ë‹ˆë¼ í’€ë§ ë§¤ë‹ˆì €í•œí…Œ ìœ„íƒ
         Poolable poolable = go.GetComponent<Poolable>();
         if (poolable != null)
         {

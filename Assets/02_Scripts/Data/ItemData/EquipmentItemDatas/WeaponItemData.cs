@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WeaponItemData : EquipmentItemData
 {
-    public int Attack => _attack;
     //공격력
-    [SerializeField] int _attack;
+    public int _attack;
 }

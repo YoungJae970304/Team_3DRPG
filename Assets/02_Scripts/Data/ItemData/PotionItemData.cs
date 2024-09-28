@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class PotionItemData : ItemData
 {
-    //포션 아이템 데이터를 생성
-    public float Value => _value;
-    public float CoolTime => _coolTime;
+
+    public enum ValueType
+    {
+        NotUse,
+        Hp,
+        Mp,
+        Atk,
+        Def,
+    }
+
     //회복량(효과 - 버프등)
-    [SerializeField] float _value;
+    public ValueType _valueType;
     //아이템 쿨타임
-    [SerializeField] float _coolTime;
+    public float _coolTime;
+    //아이템 지속 시간
+    public float _durationTime;
 }
