@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerMoveState : PlayerBaseState
+public class PlayerMoveState : BaseState
 {
-    public PlayerMoveState(Player player) : base(player) { }
+    public PlayerMoveState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {

@@ -39,6 +39,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Dictionary<string,MonsterType> _productItem = new Dictionary<string,MonsterType>();
     public int _randomValue = 0;
     public int _wR, _aR, _acR, _pR;
+
+    
+
     private void Awake()
     {
         
