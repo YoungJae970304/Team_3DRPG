@@ -5,10 +5,12 @@ using UnityEngine;
 public abstract class PlayerBaseState
 {
     protected Player _player;
+    protected PlayerStat _playerStat;
 
     protected PlayerBaseState(Player player)
     {
         _player = player;
+        _playerStat = player._playerStat;
     }
 
     public abstract void OnStateEnter();

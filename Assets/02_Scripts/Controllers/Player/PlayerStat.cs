@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStat : MonoBehaviour
+public class PlayerStat : Stat
 {
     int _playerHp;
     int _playerMaxHp = 100;

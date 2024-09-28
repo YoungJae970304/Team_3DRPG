@@ -8,16 +8,16 @@ public class PlayerDamagedState : PlayerBaseState
 
     public override void OnStateEnter()
     {
-        
+        _player._hitting = true;
     }
     public override void OnStateUpdate()
     {
-        
+
     }
 
     public override void OnStateExit()
     {
-        
+        _player._hitting = false;
     }
 
 }
