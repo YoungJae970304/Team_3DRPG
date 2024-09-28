@@ -104,6 +104,10 @@ public class PlayerInput : MonoBehaviour
     {
         if (_player._dodgeing) return;
 
+        //_player._skillBase = 스킬 무언가가 들어가나?
+
+        // 추후 스킬 들어오는거에 맞춰 수정 필요
+        // _player.ChangeState(PlayerState.Skill); 하나만 쓰고 
         if (Input.GetKeyDown(KeyCode.E))
         {
             _player._skillIndex = 1;
