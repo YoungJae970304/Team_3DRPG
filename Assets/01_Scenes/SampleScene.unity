@@ -177,6 +177,7 @@ MonoBehaviour:
   _cameraMode: 0
   _cmQuarterCam: {fileID: 773660106}
   _cmZoomCam: {fileID: 1283271760}
+  _cmBrain: {fileID: 330585548}
   _minFOV: 30
   _maxFOV: 90
   _fovChangeSpeed: 5
@@ -210,15 +211,16 @@ MonoBehaviour:
   _playerType: 0
   _moveDir: {x: 0, y: 0, z: 0}
   _rotDir: {x: 0, y: 0, z: 0}
-  _isMoving: 0
   _rotSpeed: 0.2
-  _dodgeing: 0
   _dodgeTime: 0.5
-  _attacking: 0
   _canAtkInput: 1
   _curAtkCount: 0
   _skillIndex: 0
+  _isMoving: 0
+  _dodgeing: 0
+  _attacking: 0
   _skillUsing: 0
+  _hitting: 0
   _cc: {fileID: 0}
   _playerStat: {fileID: 0}
   _playerInput: {fileID: 0}
@@ -277,15 +279,16 @@ MonoBehaviour:
   _playerType: 0
   _moveDir: {x: 0, y: 0, z: 0}
   _rotDir: {x: 0, y: 0, z: 0}
-  _isMoving: 0
   _rotSpeed: 0.2
-  _dodgeing: 0
   _dodgeTime: 0.5
-  _attacking: 0
   _canAtkInput: 1
   _curAtkCount: 0
   _skillIndex: 0
+  _isMoving: 0
+  _dodgeing: 0
+  _attacking: 0
   _skillUsing: 0
+  _hitting: 0
   _cc: {fileID: 0}
   _playerStat: {fileID: 0}
   _playerInput: {fileID: 0}
@@ -1204,8 +1207,8 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0
-  m_VerticalDamping: 0
+  m_HorizontalDamping: 0.1
+  m_VerticalDamping: 0.1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_DeadZoneWidth: 0
@@ -1287,6 +1290,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Inventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 2178824295933842280, guid: fc7fc6bcba891f14493321b86496c8b1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4752905179935519858, guid: fc7fc6bcba891f14493321b86496c8b1,
         type: 3}

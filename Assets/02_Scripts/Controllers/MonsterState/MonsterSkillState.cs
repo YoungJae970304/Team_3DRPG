@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBearSkillState : BaseState
+public class MonsterSkillState : BaseState
 {
-    public BossBearSkillState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public MonsterSkillState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
+    {
+    }
 
     public override void OnStateEnter()
     {
@@ -19,5 +21,17 @@ public class BossBearSkillState : BaseState
     public override void OnStateUpdate()
     {
         throw new System.NotImplementedException();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

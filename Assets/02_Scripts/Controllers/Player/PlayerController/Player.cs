@@ -18,6 +18,9 @@ public enum PlayerState
 
 public abstract class Player : MonoBehaviour, IDamageAlbe
 {
+    // 참조용 변수
+    Monster _monster;
+
     // 기타 변수
     [Header("오브젝트 참조")]
     public Transform _playerModel;
@@ -29,20 +32,14 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public Vector3 _moveDir;
     [HideInInspector]
     public Vector3 _rotDir;
-    [HideInInspector]
-    public bool _isMoving = false;
     [Header("회전 속도")]
     public float _rotSpeed = 0.2f;
 
     // 회피 관련 변수
-    [HideInInspector]
-    public bool _dodgeing = false;
     [Header("회피 시간")]
     public float _dodgeTime = 0.5f;
 
     // 공격 관련 변수
-    [HideInInspector]
-    public bool _attacking = false;
     [HideInInspector]
     public bool _canAtkInput = true;
     int _atkCount = 0;
@@ -72,12 +69,22 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public int _skillIndex = 0;
     [HideInInspector]
-    public bool _skillUsing = false;
+    public SkillBase _skillBase;
 
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
-    PlayerFSM _pFsm;
-    Dictionary<PlayerState, PlayerBaseState> States = new Dictionary<PlayerState, PlayerBaseState>();
+    FSM _pFsm;
+    Dictionary<PlayerState, BaseState> States = new Dictionary<PlayerState, BaseState>();
+    [HideInInspector]
+    public bool _isMoving = false;
+    [HideInInspector]
+    public bool _dodgeing = false;
+    [HideInInspector]
+    public bool _attacking = false;
+    [HideInInspector]
+    public bool _skillUsing = false;
+    [HideInInspector]
+    public bool _hitting = false;
 
     // 컴포넌트
     [HideInInspector]
@@ -99,21 +106,21 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         #endregion
 
         #region 딕셔너리 초기화
-        States.Add(PlayerState.Idle, new PlayerIdleState(this));
-        States.Add(PlayerState.Move, new PlayerMoveState(this));
-        States.Add(PlayerState.Dodge, new PlayerDodgeState(this));
-        States.Add(PlayerState.Attack, new PlayerAttackState(this));
-        States.Add(PlayerState.Skill, new PlayerSkillState(this));
-        States.Add(PlayerState.Damaged, new PlayerDamagedState(this));
-        States.Add(PlayerState.Dead, new PlayerDeadState(this));
+        States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStat));
+        States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStat));
+        States.Add(PlayerState.Dodge, new PlayerDodgeState(this, _monster, _playerStat));
+        States.Add(PlayerState.Attack, new PlayerAttackState(this, _monster, _playerStat));
+        States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStat));
+        States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStat));
+        States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStat));
         #endregion
 
         #region 변수 초기화
         // 초기 상태
         _curState = PlayerState.Idle;
-        _pFsm = new PlayerFSM(States[PlayerState.Idle]);
-        //_camera = Camera.main;
+        _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
+        _playerStat.MoveSpeed = 5f;
         #endregion
     }
 
@@ -151,50 +158,54 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Dodge:
-                // 회피 상태는 대기, 이동상태로만 전환
-                if (!_dodgeing)
+                // 회피 중일때는 상태전환 불가
+                if (_dodgeing) return;
+
+                if (!_isMoving)
                 {
-                    if (!_isMoving)
-                    {
-                        ChangeState(PlayerState.Idle);
-                    }
-                    else
-                    {
-                        ChangeState(PlayerState.Move);
-                    }
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Attack:
-                // 
-                if (!_attacking)
+                // 공격 중일때는 상태전환 불가
+                if (_attacking) return;
+
+                if (!_isMoving)
                 {
-                    if (!_isMoving)
-                    {
-                        ChangeState(PlayerState.Idle);
-                    }
-                    else
-                    {
-                        ChangeState(PlayerState.Move);
-                    }
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Skill:
-                // 
-                // if KeyUp -> 딜레이 -> 상태 전환 <- 뭐였지..
-                if (!_skillUsing)
+                // 스킬사용 중일때는 상태전환 불가
+                if (_skillUsing) return;
+
+                if (!_isMoving)
                 {
-                    if (!_isMoving)
-                    {
-                        ChangeState(PlayerState.Idle);
-                    }
-                    else
-                    {
-                        ChangeState(PlayerState.Move);
-                    }
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
+                if (!_isMoving)
+                {
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
+                }
                 break;
             case PlayerState.Dead:
                 // Dead에서 다른 상태로 이동하기 위한 조건
@@ -248,11 +259,15 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 우클릭 시 발생하는 행동
     public abstract void Special();
 
-    public virtual void Damaged(int amount)
+    public virtual void Damaged(int damage)
     {
+        _playerStat.HP -= damage;
         ChangeState(PlayerState.Damaged);
+        HitOffTimer(0.3f);
     }
 
+    // 현재 공격 도중 회피 하면 타이머가 진행중에 끊기기때문에 다음 공격이 엄청 짧아짐
+    // 이는 추후 애니메이션 이벤트로 처리하게 될시 자동으로 해결될 것
     #region 타이머들(추후 anim이벤트로 변경)
     // 추후 애니메이션 이벤트로 변경 예정
     float _curCAITime = 0;
@@ -300,6 +315,20 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             _curSTime = 0;
 
             _skillUsing = false;
+        }
+    }
+
+    // 추후 애니메이션 이벤트로 변경 예정
+    float _curHTime = 0;
+    protected void HitOffTimer(float targetTime)
+    {
+        _curHTime += Time.deltaTime;
+
+        if (_curHTime >= targetTime)
+        {
+            _curHTime = 0;
+
+            _hitting = false;
         }
     }
     #endregion

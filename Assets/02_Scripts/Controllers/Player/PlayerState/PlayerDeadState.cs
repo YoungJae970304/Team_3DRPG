@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDeadState : PlayerBaseState
+public class PlayerDeadState : BaseState
 {
-    public PlayerDeadState(Player player) : base(player) { }
-
+    public PlayerDeadState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
     public override void OnStateEnter()
     {
 

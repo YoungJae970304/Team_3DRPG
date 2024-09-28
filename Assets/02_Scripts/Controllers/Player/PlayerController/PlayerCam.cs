@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.Rendering.DebugUI.Table;
 
 public class PlayerCam : MonoBehaviour
@@ -14,10 +15,9 @@ public class PlayerCam : MonoBehaviour
     CinemachineVirtualCamera _cmQuarterCam;
     [SerializeField]
     CinemachineVirtualCamera _cmZoomCam;
-    CinemachineVirtualCamera _curCam;
+    public CinemachineBrain _cmBrain;
 
-    // 중요 변수
-    Player _player;
+    CinemachineVirtualCamera _curCam;
 
     // FOV관련 변수
     [SerializeField]
@@ -37,8 +37,6 @@ public class PlayerCam : MonoBehaviour
 
     private void Start()
     {
-        _player = gameObject.GetOrAddComponent<Player>();
-
         _cameraMode = Define.CameraMode.QuarterView;
         _curCam = _cmQuarterCam;
         _originFov = _curCam.m_Lens.FieldOfView;
@@ -94,7 +92,7 @@ public class PlayerCam : MonoBehaviour
         {
             Vector3 playerDir = _cameraArm.forward;
             playerDir.y = 0;
-            _player._playerModel.forward = playerDir;
+            Managers.Game._player._playerModel.forward = playerDir;
         }
     }
 
@@ -102,8 +100,6 @@ public class PlayerCam : MonoBehaviour
     void FOVControl()
     {
         float fovDelta = Input.GetAxis("Mouse ScrollWheel") * _fovChangeSpeed;
-        //float newFOV = Mathf.Clamp(_player._camera.fieldOfView - fovDelta, _minFOV, _maxFOV);
-        //_player._camera.fieldOfView = newFOV;
         float nowFOv = Mathf.Clamp(_curCam.m_Lens.FieldOfView - fovDelta, _minFOV, _maxFOV);
         _curCam.m_Lens.FieldOfView = nowFOv;
     }
@@ -113,6 +109,7 @@ public class PlayerCam : MonoBehaviour
         switch (_cameraMode)
         {
             case Define.CameraMode.QuarterView:
+                EnableFL();
                 // 카메라 모드 변경
                 _cameraMode = Define.CameraMode.ZoomView;
                 // 현재 카메라 초기화
@@ -132,5 +129,19 @@ public class PlayerCam : MonoBehaviour
                 _maxVRot = 335f;
                 break;
         }
+    }
+
+    // zoom 카메라의 Follow와 LookAt을 끄는 함수
+    public void DisableFL()
+    {
+        _cmZoomCam.m_Follow = null;
+        _cmZoomCam.m_LookAt = null;
+    }
+
+    // zoom 카메라의 Follow와 LookAt을 키는 함수
+    public void EnableFL()
+    {
+        _cmZoomCam.m_Follow = _cameraArm;
+        _cmZoomCam.m_LookAt = Managers.Game._player._playerModel;
     }
 }

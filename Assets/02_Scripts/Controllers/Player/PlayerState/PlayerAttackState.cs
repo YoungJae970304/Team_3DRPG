@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackState : PlayerBaseState
+public class PlayerAttackState : BaseState
 {
-    public PlayerAttackState(Player player) : base(player) 
-    {
-        _player = player;
-    }
+    public PlayerAttackState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {
@@ -28,5 +25,8 @@ public class PlayerAttackState : PlayerBaseState
         _player._attacking = false;
         _player._canAtkInput = true;
         _player.AtkCount = 0;
+
+        // 큐 초기화
+        _player._playerInput._atkInput.Clear();
     }
 }
