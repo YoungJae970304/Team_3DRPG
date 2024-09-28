@@ -12,6 +12,7 @@ public class MeleePlayer : Player
 
     public override void Skill()
     {
+        // 추후 이곳에서 스킬 데이터를 받아서 SkillBase에 저장해주나?
         SkillOffTimer(1f);
     }
 
