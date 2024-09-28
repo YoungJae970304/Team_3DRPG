@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerBaseState
+public abstract class BaseState
 {
     protected Player _player;
-    protected PlayerStat _playerStat;
+    protected Monster _monster;
+    protected Stat _stat;
 
-    protected PlayerBaseState(Player player)
+    protected BaseState(Player player, Monster monster, Stat stat)
     {
         _player = player;
-        _playerStat = player._playerStat;
+        _monster = monster;
+        _stat = stat;
     }
 
     public abstract void OnStateEnter();

@@ -18,6 +18,9 @@ public enum PlayerState
 
 public abstract class Player : MonoBehaviour, IDamageAlbe
 {
+    // 참조용 변수
+    Monster _monster;
+
     // 기타 변수
     [Header("오브젝트 참조")]
     public Transform _playerModel;
@@ -70,8 +73,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
-    PlayerFSM _pFsm;
-    Dictionary<PlayerState, PlayerBaseState> States = new Dictionary<PlayerState, PlayerBaseState>();
+    FSM _pFsm;
+    Dictionary<PlayerState, BaseState> States = new Dictionary<PlayerState, BaseState>();
     [HideInInspector]
     public bool _isMoving = false;
     [HideInInspector]
@@ -103,19 +106,19 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         #endregion
 
         #region 딕셔너리 초기화
-        States.Add(PlayerState.Idle, new PlayerIdleState(this));
-        States.Add(PlayerState.Move, new PlayerMoveState(this));
-        States.Add(PlayerState.Dodge, new PlayerDodgeState(this));
-        States.Add(PlayerState.Attack, new PlayerAttackState(this));
-        States.Add(PlayerState.Skill, new PlayerSkillState(this));
-        States.Add(PlayerState.Damaged, new PlayerDamagedState(this));
-        States.Add(PlayerState.Dead, new PlayerDeadState(this));
+        States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStat));
+        States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStat));
+        States.Add(PlayerState.Dodge, new PlayerDodgeState(this, _monster, _playerStat));
+        States.Add(PlayerState.Attack, new PlayerAttackState(this, _monster, _playerStat));
+        States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStat));
+        States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStat));
+        States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStat));
         #endregion
 
         #region 변수 초기화
         // 초기 상태
         _curState = PlayerState.Idle;
-        _pFsm = new PlayerFSM(States[PlayerState.Idle]);
+        _pFsm = new FSM(States[PlayerState.Idle]);
         //_camera = Camera.main;
         _canAtkInput = true;
         #endregion

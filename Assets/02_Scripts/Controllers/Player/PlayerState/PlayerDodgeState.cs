@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDodgeState : PlayerBaseState
+public class PlayerDodgeState : BaseState
 {
-    public PlayerDodgeState(Player player) : base(player) { }
+    public PlayerDodgeState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
 
     float _curTime;
 

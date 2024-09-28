@@ -3,34 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class BossBearAttackState : MonsterBaseState
+public class BossBearAttackState : BaseState
 {
-    public BossBearAttackState(BossBear bossBear) : base(bossBear)
-    {
-        _bossBear = bossBear;
-        _bStat = _bossBear._bStat;
-        _player = _bossBear._player.GetComponent<Player>();
-        _pStat = _player._playerStat;
-      
-        #region 곰 공격 상태 초기화
-        #endregion
-    }
+    public BossBearAttackState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+
     float _timer;
-    BearStat _bStat;
-    PlayerStat _pStat;
     int _randomAttack;
-  
-    MonsterFSM _monFSM;
+
     public override void OnStateEnter()
     {
         _timer = 0;
-        _bossBear._nav.stoppingDistance = _bossBear._bStat.AttackRange;
+        _monster._nav.stoppingDistance = _monster._bStat.AttackRange;
     }
 
     public override void OnStateExit()
     {
-        _timer = _bossBear._attackDelay;
-        _bossBear._nav.stoppingDistance = 0;
+        _timer = _monster._attackDelay;
+        _monster._nav.stoppingDistance = 0;
     }
 
     public override void OnStateUpdate()

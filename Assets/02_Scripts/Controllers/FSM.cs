@@ -1,24 +1,25 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterFSM
+public class FSM
 {
-    private MonsterBaseState _curState;
+    BaseState _curState;
 
-    public MonsterFSM(MonsterBaseState initState)
+    public FSM(BaseState initState)
     {
         _curState = initState;
         ChangeState(_curState);
     }
 
-    public void ChangeState(MonsterBaseState nextState)
+    public void ChangeState(BaseState nextState)
     {
         if (nextState == _curState)
             return;
+
         if (_curState != null)
             _curState.OnStateExit();
+
         _curState = nextState;
         _curState.OnStateEnter();
     }
@@ -27,5 +28,11 @@ public class MonsterFSM
     {
         if (_curState != null)
             _curState.OnStateUpdate();
+    }
+
+    public void FixedUpdateState()
+    {
+        if (_curState != null)
+            _curState.OnStateFixedUpdate();
     }
 }
