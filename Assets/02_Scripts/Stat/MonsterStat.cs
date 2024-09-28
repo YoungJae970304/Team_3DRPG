@@ -19,4 +19,6 @@ public class MonsterStat : Stat
     public float ReturnRange { get { return _returnRange; } set { _returnRange = value; } }
     public float AttackRange {  get { return _attackRange; } set { _attackRange = value; } }
     public float AwayRange { get { return _awayRange; } set { _awayRange = value; } }
+
+    public float AtkDelay { get { return _atkDelay; } set { _atkDelay = value; } }
 }

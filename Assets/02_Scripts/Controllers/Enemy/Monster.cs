@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,9 +6,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
 
-public class Monster : MonoBehaviour, IDamageAlbe
+public abstract class Monster : MonoBehaviour, IDamageAlbe
 {
-    private enum State
+
+
+    protected enum MonsterState
     {
         Idle,
         Move,
@@ -17,202 +20,160 @@ public class Monster : MonoBehaviour, IDamageAlbe
         Return,
         Die,
     }
-    public enum MonsterType
-    {
-        Slime,
-        Goblem,
-        Ork,
-    }
-    public enum StageName
-    {
-        Easy,
-        Normal,
-        Hard,
-    }
-    private State _state;
-    private MonsterType _mType;
-    public GameObject _player;
+    protected MonsterState _curState;
+    public FSM _mFSM;
+    public Vector3 _originPos;
+    public Player _player;
     public NavMeshAgent _nav;
     public MonsterStat _mStat;
-    public GameObject[] _weapon, _armor, _accesary, _product;
-    public Dictionary<int,int> _probability = new Dictionary<int, int>();
-    public Dictionary<string,MonsterType> _productItem = new Dictionary<string,MonsterType>();
-    public int _randomValue = 0;
-    public int _wR, _aR, _acR, _pR;
+    protected Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
+    public float _timer = 0;
+    public int _randomAttack;
 
-    
 
     private void Awake()
     {
-        
+        _mStat = GetComponent<MonsterStat>();
     }
     // Start is called before the first frame update
     void Start()
     {
-        _state = State.Idle;
-        #region 확률변수 초기화
-        _probability.Add(0,_wR);
-        _probability.Add(1,_aR);
-        _probability.Add(2,_acR);
-        _probability.Add(3,_pR);
-        #endregion
-        #region 딕셔너리 초기화
-        _productItem.Add("Slime", MonsterType.Slime);
-        _productItem.Add("Goblem", MonsterType.Goblem);
-        _productItem.Add("Ork", MonsterType.Ork);
+        _curState = MonsterState.Idle;
+        _mFSM = new FSM(new IdleState(_player, this, _mStat));
+        _originPos = transform.position;
+        _nav = GetComponent<NavMeshAgent>();
+        #region 상태딕셔너리 초기화
+        States.Add(MonsterState.Idle, new IdleState(_player,this,_mStat));
+        States.Add(MonsterState.Move, new MoveState(_player, this, _mStat));
+        States.Add(MonsterState.Attack, new AttackState(_player, this, _mStat));
+        States.Add(MonsterState.Damage, new DamagedState(_player, this, _mStat));
+        States.Add(MonsterState.Return, new ReturnState(_player, this, _mStat));
+        States.Add(MonsterState.Die, new DieState(_player, this, _mStat));
+        States.Add(MonsterState.Skill, new SkillState(_player, this, _mStat));
         #endregion
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        BaseState();
+        _mFSM.UpdateState();
     }
 
-    private void BaseState()
+    protected virtual void BaseState()
     {
-        switch (_state)
+        switch (_curState)
         {
-            case State.Idle:
+            case MonsterState.Idle:
+                if (CanSeePlayer())
+                    MChangeState(MonsterState.Move);
                 break;
-            case State.Move:
+            case MonsterState.Damage:
+                if (CanAttackPlayer())
+                    MChangeState(MonsterState.Attack);
+                else if (_mStat.HP <= 0)
+                    MChangeState(MonsterState.Die);
+                else
+                    MChangeState(MonsterState.Move);
                 break;
-            case State.Attack:
+            case MonsterState.Move:
+                if (CanAttackPlayer())
+                    MChangeState(MonsterState.Attack);
+                else if (ReturnOrigin())
+                    MChangeState(MonsterState.Return);
                 break;
-            case State.Skill:
+            case MonsterState.Attack:
+                if (!CanAttackPlayer())
+                {
+                    if (!ReturnOrigin())
+                    {
+                        MChangeState(MonsterState.Move);
+                    }
+                    else
+                    {
+                        MChangeState(MonsterState.Return);
+                    }
+                }
                 break;
-            case State.Damage:
+            case MonsterState.Return:
+                if ((_originPos - transform.position).magnitude <= 3f)
+                    MChangeState(MonsterState.Idle);
                 break;
-            case State.Return:
+            case MonsterState.Die:
                 break;
-            case State.Die:
-                break;
+
+
         }
     }
-
+    protected void MChangeState(MonsterState nextState)
+    {
+        _curState = nextState;
+        _mFSM.ChangeState(States[_curState]);
+    }
     public virtual void Damaged(int amount)
     {
-
+        if (_curState != MonsterState.Return)
+        {
+            if (DamageToPlayer())
+            {
+                _mStat.HP -= amount;
+                _mFSM.ChangeState(States[MonsterState.Damage]);
+            }
+        }
     }
 
-    public IEnumerator DropItem(StageName level, Transform mTransform, GameObject[] itemMenu) 
-    {
-        //게임매니저에서 생성된 아이템을 pooling해야하는데 여기서는 아이템 키면서 가져와서 값만 넣어주면될듯
-        DropProbability(); //가중치 랜덤
-
-        level = StageName.Hard;
-        if (level == StageName.Hard)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                itemMenu = itemtype(_probability[i]);
-                if (_probability[i] == _pR)
-                {
-                    string mobName = mTransform.gameObject.name;
-                    _productItem.TryGetValue(mobName, out MonsterType monstertype);
-                    int productItem = (int)monstertype;
-                    if (_randomValue <= 100) // 일단 100프로로 설정해야되니까
-                    {
-                        Instantiate(itemMenu[productItem], mTransform.position, itemMenu[productItem].transform.rotation);
-                    }
-                    yield return null;
-                }
-                if (_randomValue <= 70)
-                {
-                    Instantiate(itemMenu[0], mTransform.position, itemMenu[0].transform.rotation);
-                }
-                else if (_randomValue <= 90)
-                {
-                    Instantiate(itemMenu[1], mTransform.position, itemMenu[1].transform.rotation);
-                }
-                else
-                {
-                    Instantiate(itemMenu[2], mTransform.position, itemMenu[2].transform.rotation);
-                }
-            }
-        }
-        else if (level == StageName.Normal)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                itemMenu = itemtype(_probability[i]);
-                if (_probability[i] == _pR)
-                {
-                    string mobName = mTransform.gameObject.name;
-                    _productItem.TryGetValue(mobName, out MonsterType monstertype);
-                    int productItem = (int)monstertype;
-                    if (_randomValue <= 100) // 일단 100프로로 설정해야되니까
-                    {
-                        Instantiate(itemMenu[productItem], mTransform.position, itemMenu[productItem].transform.rotation);
-                    }
-                    yield return null;
-                }
-                if (_randomValue <= 80)
-                {
-                    Instantiate(itemMenu[0], mTransform.position, itemMenu[0].transform.rotation);
-                }
-                else if (_randomValue <= 20)
-                {
-                    Instantiate(itemMenu[1], mTransform.position, itemMenu[1].transform.rotation);
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                itemMenu = itemtype(_probability[i]);
-                if (_probability[i] == _pR)
-                {
-                    string mobName = mTransform.gameObject.name;
-                    _productItem.TryGetValue(mobName, out MonsterType monstertype);
-                    int productItem = (int)monstertype;
-                    if (_randomValue <= 100) // 일단 100프로로 설정해야되니까
-                    {
-                        Instantiate(itemMenu[productItem], mTransform.position, itemMenu[productItem].transform.rotation);
-                    }
-                    yield return null;
-                }
-                if (_randomValue <= 100)
-                {
-                    Instantiate(itemMenu[0], mTransform.position, itemMenu[0].transform.rotation);
-                }
-            }
-        }
-        yield return new WaitForSeconds(1);
-
-        GameObject mob = mTransform.gameObject;
-        Die(mob);
-    }
     public virtual void Die(GameObject mob)
     {
-        
+        Destroy(mob, 2f);
     }
-    public GameObject[] itemtype(int type)
+    public bool DamageToPlayer()
     {
-        if (type == _wR)
-        {
-            return _weapon;
-        }
-        else if (type == _aR)
-        {
-            return _armor;
-        }
-        else if (type == _acR)
-        {
-            return _accesary;
-        }
-        else
-        {
-            return _product;
-        }
+        return _mStat.ReturnRange > _player.transform.position.magnitude;
     }
-    
-    public void DropProbability()
+    public bool CanAttackPlayer()
     {
-        for (int i = 0; i <= 3; i++)
+        //사정거리 체크 구현
+        return _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+    }
+    public bool CanSeePlayer()
+    {
+        return _mStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
+    }
+    public bool ReturnOrigin()
+    {
+        return _mStat.ReturnRange < (_originPos - transform.position).magnitude;
+    }
+    public void AttackTimer()
+    {
+        _timer += Time.deltaTime;
+    }
+    public void AttackPlayer() // 일단 여기에 넣어놨는데 애니메이션에서 호출하는 이벤트방식으로 쓸듯
+    {
+        _player.Damaged(_mStat.ATK);
+
+    }
+    public virtual IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
+    {
+        yield return new WaitForSeconds(delay);
+
+        try//이걸 실행해보고 문제가 없다면 실행
         {
-            _randomValue = UnityEngine.Random.Range(0, 100);
+
+            Vector3 diff = playerPosition - transform.position;
+            diff = diff / diff.sqrMagnitude;
+            _nav.isStopped = true;
+            GetComponent<Rigidbody>().
+            AddForce((transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
+
         }
+        catch (MissingReferenceException e)// 문제가 있다면 에러메세지 출력
+        {
+            Debug.Log(e.ToString());
+        }
+        //예외처리문
+    }
+    public virtual void AttackStateSwitch()
+    {
+
     }
 }

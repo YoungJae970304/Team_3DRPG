@@ -1,3 +1,4 @@
+using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,152 +6,122 @@ using UnityEngine.AI;
 
 public class BossBear : Monster, IDamageAlbe
 {
-    public enum State
-    {
-        Idle,
-        Move,
-        Attack,
-        Damage,
-        Return,
-        Skill,
-        Die,
-    }
-    public State _curState;
-    //NavMeshAgent nav; //여기서 안쓸듯?
-    private MonsterFSM _monFSM;
-    //MonsterStat _mStat;
-    //GameObject _player;
-    public Vector3 _originPos;
-    public float _attackDelay = 3f;
-    Dictionary<State, MonsterBaseState> States = new Dictionary<State, MonsterBaseState>();
-    public BearStat _bStat;
-    private void Awake()
-    {
-        _bStat = GetComponent<BearStat>();
-    }
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _curState = State.Idle;
-        _monFSM = new MonsterFSM(new BossBearIdleState(this));
-        _originPos = transform.position;
-        _nav = GetComponent<NavMeshAgent>();
-
-        #region 상태딕셔너리 초기화
-        States.Add(State.Idle, new BossBearIdleState(this));
-        States.Add(State.Move, new BossBearMoveState(this));
-        States.Add(State.Attack, new BossBearAttackState(this));
-        States.Add(State.Damage, new BossBearDamagedState(this));
-        States.Add(State.Return, new BossBearReturnState(this));
-        States.Add(State.Die, new BossBearDieState(this));
-        States.Add(State.Skill, new BossBearSkillState(this));
-        #endregion
-        States[State.Idle].OnStateEnter();
+  
     }
 
     // Update is called once per frame
     void Update()
     {
-        BossBearState();
-        States[_curState].OnStateUpdate();
-        //Logger.Log(CanSeePlayer().ToString());
+       
     }
-    public void BossBearState()
+    protected override void BaseState()
     {
         switch (_curState)
         {
-            case State.Idle:
+            case MonsterState.Idle:
                 if (CanSeePlayer())
-                    ChangeState(State.Move);
+                    _mFSM.ChangeState(States[MonsterState.Move]);
                 break;
-            case State.Damage:
+            case MonsterState.Damage:
                 if (CanAttackPlayer())
-                    ChangeState(State.Attack);
-                else if (_bStat.Hp <= 0)
-                    ChangeState(State.Die);
+                    _mFSM.ChangeState(States[MonsterState.Attack]);
+                else if (_mStat.HP <= 0)
+                    _mFSM.ChangeState(States[MonsterState.Die]);
                 else
-                    ChangeState(State.Move);
+                    _mFSM.ChangeState(States[MonsterState.Move]);
                 break;
-            case State.Move:
+            case MonsterState.Move:
                 if (CanAttackPlayer())
-                    ChangeState(State.Attack);
+                    _mFSM.ChangeState(States[MonsterState.Attack]);
                 else if (ReturnOrigin())
-                    ChangeState(State.Return);
+                    _mFSM.ChangeState(States[MonsterState.Return]);
                 break;
-            case State.Attack:
+            case MonsterState.Attack:
                 if (!CanAttackPlayer())
                 {
                     if (!ReturnOrigin())
                     {
-                        ChangeState(State.Move);
+                        _mFSM.ChangeState(States[MonsterState.Move]);
                     }
                     else
                     {
-                        ChangeState(State.Return);
+                        _mFSM.ChangeState(States[MonsterState.Return]);
                     }
                 }
                 break;
-            case State.Return:
+            case MonsterState.Return:
                 if ((_originPos - transform.position).magnitude <= 3f)
-                    ChangeState(State.Idle);
+                    _mFSM.ChangeState(States[MonsterState.Idle]);
                 break;
-            case State.Skill:
+            case MonsterState.Skill:
                 if (CanAttackPlayer())
-                    ChangeState(State.Attack);
+                    _mFSM.ChangeState(States[MonsterState.Attack]);
                 else
                 {
-                    ChangeState(State.Move);
+                    _mFSM.ChangeState(States[MonsterState.Move]);
                 }
                 break;
-            case State.Die:
+            case MonsterState.Die:
                 break;
 
 
         }
     }
 
-    public void ChangeState(State nextState)
+    public override void AttackStateSwitch()
     {
-        _curState = nextState;
-        _monFSM.ChangeState(States[_curState]);
-        States[_curState].OnStateEnter();
-    }
-
-    public bool DamageToPlayer()
-    {
-        return _bStat.ReturnRange > _player.transform.position.magnitude;
-    }
-    public bool CanAttackPlayer()
-    {
-        //사정거리 체크 구현
-        return _bStat.AttackRange > (_player.transform.position - transform.position).magnitude;
-    }
-    public bool CanSeePlayer()
-    {
-        return _bStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
-    }
-    public bool ReturnOrigin()
-    {
-        return _bStat.ReturnRange < (_originPos - transform.position).magnitude;
-    }
-
-
-
-    public override void Damaged(int amount)
-    {
-        if (_curState != State.Return)
+        if (_randomAttack <= 15)
         {
-            if (DamageToPlayer())
-            {
-                _bStat.Hp -= amount;
-                ChangeState(State.Damage);
-            }
+            LeftBiteAttack();
+        }
+        else if (_randomAttack <= 30)
+        {
+            RightBiteAttack();
+        }
+        else if (_randomAttack <= 60)
+        {
+            LeftHandAttack();
+        }
+        else if (_randomAttack <= 90)
+        {
+            RightHandAttack();
+        }
+        else
+        {
+            EarthquakeAttack();
         }
     }
-
-    public override void Die(GameObject mob)
+    public void EarthquakeAttack()
     {
-        Destroy(mob, 2f);
+        Logger.Log("EarthquakeAttack");
+        AttackPlayer();
+    }
+    public void LeftBiteAttack()
+    {
+        Logger.Log("LeftBiteAttack");
+        AttackPlayer();
+    }
+    public void RightBiteAttack()
+    {
+        Logger.Log("RightBiteAttack");
+        AttackPlayer();
+    }
+    public void LeftHandAttack()
+    {
+        Logger.Log("LeftHandAttack");
+        AttackPlayer();
+    }
+    public void RightHandAttack()
+    {
+        Logger.Log("RightHandAttack");
+        AttackPlayer();
+    }
+
+    public override IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)
+    {
+        return null;
     }
 }

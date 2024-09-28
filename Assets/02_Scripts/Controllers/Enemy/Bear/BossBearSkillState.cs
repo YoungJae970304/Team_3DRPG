@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBearSkillState : MonsterBaseState
+public class BossBearSkillState : BaseState
 {
-    public BossBearSkillState(BossBear bossBear) : base(bossBear)
-    {
-        _bossBear = bossBear;
-    }
+    public BossBearSkillState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {

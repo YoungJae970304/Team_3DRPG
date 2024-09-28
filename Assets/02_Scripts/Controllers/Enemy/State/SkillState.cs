@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoblemSkillState : MonsterBaseState
+public class SkillState : BaseState
 {
-    public GoblemSkillState(Goblem goblem) : base(goblem)
+    public SkillState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
     {
-        _goblem = goblem;
     }
 
     public override void OnStateEnter()
@@ -22,5 +21,17 @@ public class GoblemSkillState : MonsterBaseState
     public override void OnStateUpdate()
     {
         throw new System.NotImplementedException();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
