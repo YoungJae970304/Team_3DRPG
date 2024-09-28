@@ -25,5 +25,8 @@ public class PlayerAttackState : BaseState
         _player._attacking = false;
         _player._canAtkInput = true;
         _player.AtkCount = 0;
+
+        // 큐 초기화
+        _player._playerInput._atkInput.Clear();
     }
 }

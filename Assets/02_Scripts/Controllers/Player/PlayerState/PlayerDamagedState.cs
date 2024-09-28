@@ -19,5 +19,4 @@ public class PlayerDamagedState : BaseState
     {
         _player._hitting = false;
     }
-
 }

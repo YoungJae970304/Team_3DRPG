@@ -23,7 +23,6 @@ public class PlayerMoveState : BaseState
 
     public override void OnStateExit()
     {
-        Logger.Log("Move Exit");
         MoveStop();
     }
 
