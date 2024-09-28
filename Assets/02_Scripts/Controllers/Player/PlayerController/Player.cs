@@ -119,8 +119,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         // 초기 상태
         _curState = PlayerState.Idle;
         _pFsm = new FSM(States[PlayerState.Idle]);
-        //_camera = Camera.main;
         _canAtkInput = true;
+        _playerStat.MoveSpeed = 5f;
         #endregion
     }
 
