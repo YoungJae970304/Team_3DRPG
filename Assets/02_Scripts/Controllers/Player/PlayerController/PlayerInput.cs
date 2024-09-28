@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         _player = gameObject.GetOrAddComponent<Player>();
+        Managers.Game._player = _player;
 
         Managers.Input.KeyAction -= MoveInput;
         Managers.Input.KeyAction += MoveInput;
@@ -67,11 +68,13 @@ public class PlayerInput : MonoBehaviour
             _player._rotDir += _dir;
             _player._isMoving = true;
         }
+
+        _player._rotDir.Normalize();
     }
 
     void DodgeInput()
     {
-        if (_player._attacking || _player._skillUsing) return;
+        if (_player._skillUsing) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -91,7 +94,7 @@ public class PlayerInput : MonoBehaviour
             InputBufferInsert(_player.AtkCount);
             _player.ChangeState(PlayerState.Attack);
         }
-        else if (Input.GetMouseButtonDown(1) && _player._canAtkInput)
+        else if (Input.GetMouseButtonDown(1) && _player._canAtkInput && !_player._attacking)
         {
             _player.Special();
         }

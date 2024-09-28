@@ -65,6 +65,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 스킬 관련 변수
     [HideInInspector]
     public int _skillIndex = 0;
+    [HideInInspector]
+    public SkillBase _skillBase;
 
     // 상태전환 관련 변수
     PlayerState _curState;  // 현재 상태
@@ -153,58 +155,53 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Dodge:
-                // 회피 상태는 대기, 이동상태로만 전환
-                if (!_dodgeing)
+                // 회피 중일때는 상태전환 불가
+                if (_dodgeing) return;
+
+                if (!_isMoving)
                 {
-                    if (!_isMoving)
-                    {
-                        ChangeState(PlayerState.Idle);
-                    }
-                    else
-                    {
-                        ChangeState(PlayerState.Move);
-                    }
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Attack:
-                // 
-                if (!_attacking)
+                // 공격 중일때는 상태전환 불가
+                if (_attacking) return;
+
+                if (!_isMoving)
                 {
-                    if (!_isMoving)
-                    {
-                        ChangeState(PlayerState.Idle);
-                    }
-                    else
-                    {
-                        ChangeState(PlayerState.Move);
-                    }
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Skill:
-                if (!_skillUsing)
+                // 스킬사용 중일때는 상태전환 불가
+                if (_skillUsing) return;
+
+                if (!_isMoving)
                 {
-                    if (!_isMoving)
-                    {
-                        ChangeState(PlayerState.Idle);
-                    }
-                    else
-                    {
-                        ChangeState(PlayerState.Move);
-                    }
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
-                if (!_hitting)
+                if (!_isMoving)
                 {
-                    if (!_isMoving)
-                    {
-                        ChangeState(PlayerState.Idle);
-                    }
-                    else
-                    {
-                        ChangeState(PlayerState.Move);
-                    }
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
                 }
                 break;
             case PlayerState.Dead:

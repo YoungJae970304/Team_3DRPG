@@ -34,9 +34,6 @@ public class PlayerMoveState : PlayerBaseState
             switch (_player._playerCam._cameraMode)
             {
                 case Define.CameraMode.QuarterView:
-                    // 회전 방향 정규화  
-                    _player._rotDir.Normalize();
-
                     // 실제 회전
                     Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
                     _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
@@ -46,8 +43,6 @@ public class PlayerMoveState : PlayerBaseState
                     break;
 
                 case Define.CameraMode.ZoomView:
-                    _player._rotDir.Normalize();
-
                     _player._moveDir = _player._rotDir * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
                     break ;
             }
