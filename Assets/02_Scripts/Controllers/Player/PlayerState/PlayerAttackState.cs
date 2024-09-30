@@ -8,10 +8,12 @@ public class PlayerAttackState : BaseState
 
     public override void OnStateEnter()
     {
-        Logger.Log("공격 상태 진입");
+        //Logger.Log("공격 상태 진입");
         _player._attacking = true;
         _player._canAtkInput = false;
         _player._curAtkCount = _player._playerInput._atkInput.Dequeue();
+        _player.ApplyDamage();
+        Logger.Log(" 몇번 불러와지는지 ");
     }
 
     public override void OnStateUpdate()

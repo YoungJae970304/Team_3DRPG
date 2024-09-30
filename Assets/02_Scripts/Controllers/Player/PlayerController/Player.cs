@@ -67,7 +67,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public int _curAtkCount;
     [Header("공격 콜라이더 리스트")]
     public List<Collider> _atkColliders;
-    [HideInInspector]
+    //[HideInInspector]
     public List<Collider> _hitMobs;
 
     // 스킬 관련 변수
@@ -125,8 +125,12 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _curState = PlayerState.Idle;
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
+
+        _playerStat.MaxHP = 100;
+        _playerStat.HP = 100;
         _playerStat.MoveSpeed = 5f;
-        _playerStat.ATK = 100;
+        _playerStat.ATK = 1;
+        _playerStat.DEF = 15;
         #endregion
 
         // 공격 콜라이더 off
@@ -141,6 +145,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     protected virtual void Update()
     {
+        Logger.Log(_playerStat.HP);
+
         // 상태 전환
         ChangeStateCondition();
 
@@ -269,17 +275,14 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             case 1:
                 Logger.Log("기본공격 1타");
                 SetColActive("Combo1");
-                ApplyDamage();
                 break;
             case 2:
                 Logger.Log("기본공격 2타");
                 SetColActive("Combo2");
-                ApplyDamage();
                 break;
             case 3:
                 Logger.Log("기본공격 3타");
                 SetColActive("Combo3");
-                ApplyDamage();
                 break;
             default:
                 Logger.LogError("지정한 공격이 아님");
@@ -287,9 +290,10 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         }
     }
 
-    void ApplyDamage()
+    public void ApplyDamage()
     {
         int damage = _playerStat.ATK;
+        Logger.Log(damage);
 
         foreach(var mob in _hitMobs)
         {

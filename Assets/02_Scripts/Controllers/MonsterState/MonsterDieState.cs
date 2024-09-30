@@ -12,7 +12,6 @@ public class MonsterDieState : BaseState
     {
         Logger.Log("몬스터 사망");
         _monster.Die(_monster.gameObject);
-        //OnStateExit();
     }
 
     public override void OnStateExit()

@@ -55,7 +55,11 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
         _mFSM = new FSM(States[MonsterState.Idle]);
-        _mStat.HP = 100;
+
+        _mStat.MaxHP = 100;
+        _mStat.HP = _mStat.MaxHP;
+        _mStat.ATK = 30;
+        _mStat.DEF = 10;
     }
 
     // Update is called once per frame
@@ -113,20 +117,12 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     protected void MChangeState(MonsterState nextState)
     {
-        try
-        {
-            _curState = nextState;
-            _mFSM.ChangeState(States[_curState]);
-        }
-        catch (System.Exception)
-        {
-            Logger.Log(States[_curState].ToString());
-        }
-        
+        _curState = nextState;
+        _mFSM.ChangeState(States[_curState]);
     }
     public virtual void Damaged(int amount)
     {
-        _mStat.HP -= amount;
+        _mStat.HP -= ( amount - _mStat.DEF );
 
         if (_mStat.HP > 0)
         {
