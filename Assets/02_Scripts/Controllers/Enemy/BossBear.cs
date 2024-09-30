@@ -17,7 +17,7 @@ public class BossBear : Monster, IDamageAlbe
     {
        
     }
-    protected override void BaseState()
+    protected override void BaseState() //Monster에서 상속 후 재정의
     {
         switch (_curState)
         {
@@ -71,7 +71,7 @@ public class BossBear : Monster, IDamageAlbe
         }
     }
 
-    public override void AttackStateSwitch()
+    public override void AttackStateSwitch() // 확률에 따라 공격 모션을 다르게 발동시키기 위한 처리(가중치로 변경해도될듯)
     {
         if (_randomAttack <= 15)
         {
@@ -94,6 +94,7 @@ public class BossBear : Monster, IDamageAlbe
             EarthquakeAttack();
         }
     }
+    #region 공격처리
     public void EarthquakeAttack()
     {
         Logger.Log("EarthquakeAttack");
@@ -119,8 +120,8 @@ public class BossBear : Monster, IDamageAlbe
         Logger.Log("RightHandAttack");
         AttackPlayer();
     }
-
-    public override IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)
+    #endregion
+    public override IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack) // 보스는 넉백이 없으므로 그냥 null이 리턴되게함
     {
         return null;
     }
