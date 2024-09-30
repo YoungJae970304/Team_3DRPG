@@ -10,6 +10,10 @@ public class DataTableManager
     const string DATA_PATH = "DataTable";
     //저장할 때 사용할 키
     const string _PLAYER_PREFS_KEY = "ItemDataList";
+    public void Init()
+    {
+        LoadItemDataTable();
+    }
 
     #region 아이템 데이터 로드
     //데이터 테이블 폴더 안에 있는 장비아이템 데이터 csv파일
@@ -23,10 +27,7 @@ public class DataTableManager
     public List<ItemData> ItemEquippedDataTable = new List<ItemData>();
     public List<ItemData> ItemPotionDataTable = new List<ItemData>();
     public List<ItemData> ItemGoodsDataTable = new List<ItemData>();
-    public void Init()
-    {
-        LoadItemDataTable();
-    }
+
     void LoadItemDataTable()
     {
         #region 장비 데이터
@@ -44,13 +45,21 @@ public class DataTableManager
             {
                 itemData = new WeaponItemData()
                 {
+                    //id값
                    ID = Convert.ToInt32(data["ID"]),
+                   //이름
                    Name = data["Name"].ToString(),
+                   //착용 레벨
                    LimitLevel = Convert.ToInt32(data["LimitLevel"]),
+                   //등급
                    Grade = Convert.ToInt32(data["Grade"]),
+                   //공격력
                    AttackPower = Convert.ToInt32(data["AttackPower"]),
+                   //구매 가격
                    BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
+                   //판매 가격
                    SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                   //소지 개수 : 1
                    MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 };
             }
@@ -91,7 +100,6 @@ public class DataTableManager
                 ItemEquippedDataTable.Add(itemData);
             }
         }
-        //불러와서 저장해준 장비cvs데이터를 리스트에 넣어서 저장해주기
         #endregion
 
         #region 포션 데이터
@@ -113,9 +121,12 @@ public class DataTableManager
                     Grade = Convert.ToInt32(data["Grade"]),
                     BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                     SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    //적용 종류 : 회복
                     ValType = PotionItemData.ValueType.Recovery,
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                    //쿨타임
                     CoolTime = Convert.ToInt32(data["CoolTime"]),
+                    //회복 및 버프 효과
                     Value = Convert.ToSingle(data["Value"]),//%값
                 };
             }else if(itemType == "5" && valueType == "2")
@@ -127,6 +138,7 @@ public class DataTableManager
                     Grade = Convert.ToInt32(data["Grade"]),
                     BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                     SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    //적용 종류 : 공격력 증가
                     ValType = PotionItemData.ValueType.Atk,
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                     CoolTime = Convert.ToInt32(data["CoolTime"]),
@@ -143,6 +155,7 @@ public class DataTableManager
                     Grade = Convert.ToInt32(data["Grade"]),
                     BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                     SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    //적용 종류 : 방어력 증가
                     ValType = PotionItemData.ValueType.Def,
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                     CoolTime = Convert.ToInt32(data["CoolTime"]),
@@ -174,6 +187,7 @@ public class DataTableManager
                     Grade = Convert.ToInt32(data["Grade"]),
                     BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                     SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    //설명 텍스트
                     FlavorText = data["FlavorText"].ToString(),
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 };

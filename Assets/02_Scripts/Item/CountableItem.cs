@@ -7,18 +7,14 @@ public class CountableItem : Item
     public int _amount { get; protected set; }
     //최대로 소지할 수 있는 갯수
     public virtual int _maxAmount => Data.MaxAmount;
-   // public override int _maxAmount => Data.MaxAmount;
+    //public override int _maxAmount => Data.MaxAmount;
+
     //수량이 있는 아이템은 1개부터 시작하는 함수
     public CountableItem(ItemData data, int amount = 1) : base(data)
     {
         SetAmount(amount);
     }
 
-    //장비 제외 다른 아이템 복사
-    //protected override Item Clone(int amount)
-    //{
-    //    return new CountableItem(Data, amount);
-    //}
     //실제 현재 몇개인지 알려줄 함수
     public int GetCurrentAmount()
     {
