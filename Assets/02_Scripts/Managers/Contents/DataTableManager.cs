@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class DataTableManager
 {
-    //DataTable폴더 안에 있는 csv값을 스트링으로 가져오고 csv파일로 읽어올거임
-    const string DATA_PATH = "DataTable";
+    //CSVData폴더 안에 있는 csv값을 스트링으로 가져오고 csv파일로 읽어올거임
+    const string DATA_PATH = "CSVData";
     //저장할 때 사용할 키
     const string _PLAYER_PREFS_KEY = "ItemDataList";
     public void Init()
@@ -16,7 +16,7 @@ public class DataTableManager
     }
 
     #region 아이템 데이터 로드
-    //데이터 테이블 폴더 안에 있는 장비아이템 데이터 csv파일
+    //폴더 안에 있는 장비아이템 데이터 csv파일
     const string EQUIPMENT_ITEM_DATA_TABLE = "Equipment_Data_Table";
     //데이터 테이블 폴더 안에 있는 포션아이템 데이터 csv파일
     const string POTION_ITEM_DATA_TABLE = "Potion_Data_Table";
