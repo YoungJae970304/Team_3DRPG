@@ -1,4 +1,4 @@
-ID,name,Rarity,EquipType,LimitLv,BuyPrice,SellingPrcie,Attack,Defense,Hp,HpRegen,Mp,MpRegen,MaxAmount
+﻿ID,Name,Grade,EquippedType,LimitLevel,BuyingPrice,SellingPrice,AttackPower,Defense,Health,HealthRegen,Mana,ManaRegen,MaxAmount
 11001,낡은 무기1,1,1,5,500,100,20,0,0,0,0,0,1
 11002,낡은 무기2,1,1,10,1000,200,30,0,0,0,0,0,1
 11003,낡은 무기3,1,1,15,1500,300,40,0,0,0,0,0,1

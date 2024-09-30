@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class GoldItemData
 {
-    public int _gold;
+    public int Gold { get { return _gold; } set { _gold = value; } }
+
+    int _gold;
 }
