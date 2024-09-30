@@ -23,6 +23,7 @@ public class DataTableManager
 
     void LoadItemDataTable()
     {
+        #region 장비 데이터
         //장비 csv 파일 읽어오기
         var parsedEquippedDataTable = CSVReader.Read($"{DATA_PATH}/{EQUIPMENT_ITEM_DATA_TABLE}");
 
@@ -31,9 +32,9 @@ public class DataTableManager
             ItemData itemData = null;
             //아이템 데이터 안에있는 적잘한 서브클래스인스턴스를 생성
             //장비 데이터cvs파일을 불러와서 저장해주기
-            string itemType = data["EquippedType"].ToString();
+            string equippedType = data["EquippedType"].ToString();
             //무기
-            if(itemType == "WeaponItemData")
+            if(equippedType == "1")
             {
                 itemData = new WeaponItemData()
                 {
@@ -49,7 +50,7 @@ public class DataTableManager
                 ItemEquippedDataTable.Add(itemData);
             }
             //방어구
-            else if (itemType == "ArmorItemData")
+            else if (equippedType == "2")
             {
                 itemData = new ArmorItemData()
                 {
@@ -66,7 +67,7 @@ public class DataTableManager
                 ItemEquippedDataTable.Add(itemData);
             }
             //악세
-            else if (itemType == "AccessoriesItemData")
+            else if (equippedType == "3")
             {
                 itemData = new AccessoriesItemData
                 {
@@ -80,10 +81,93 @@ public class DataTableManager
                     SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 };
+                ItemEquippedDataTable.Add(itemData);
             }
         }
         //불러와서 저장해준 장비cvs데이터를 리스트에 넣어서 저장해주기
-    }
+        #endregion
 
+        #region 포션 데이터
+        //포션 데이터 터이블 가져오기
+        var parsedPotionDataTable = CSVReader.Read($"{DATA_PATH}/{POTION_ITEM_DATA_TABLE}");
+        //순회 하며 포션데이터를 현재 포션 아이템 데이터리스트에 넣어주기
+        foreach (var data in parsedPotionDataTable)
+        {
+            ItemData itemData = null;
+            string itemType = data["ItemType"].ToString();
+            string valueType = data["ValueType"].ToString();
+
+            if(itemType == "4" && valueType == "1")
+            {
+                itemData = new PotionItemData
+                {
+                    ID = Convert.ToInt32(data["ID"]),
+                    Name = data["Name"].ToString(),
+                    Grade = Convert.ToInt32(data["Grade"]),
+                    BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
+                    SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    ValType = PotionItemData.ValueType.Recovery,
+                    MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                    CoolTime = Convert.ToInt32(data["CoolTime"]),
+                    Value = Convert.ToSingle(data["Value"]),//%값
+                };
+            }else if(itemType == "5" && valueType == "2")
+            {
+                itemData = new PotionItemData
+                {
+                    ID = Convert.ToInt32(data["ID"]),
+                    Name = data["Name"].ToString(),
+                    Grade = Convert.ToInt32(data["Grade"]),
+                    BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
+                    SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    ValType = PotionItemData.ValueType.Atk,
+                    MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                    CoolTime = Convert.ToInt32(data["CoolTime"]),
+                    DurationTime = Convert.ToInt32(data["DurationTime"]),
+                    Value = Convert.ToSingle(data["Value"]),//%값
+                };
+            }else if (itemType == "5" && valueType == "3")
+            {
+                itemData = new PotionItemData
+                {
+                    ID = Convert.ToInt32(data["ID"]),
+                    Name = data["Name"].ToString(),
+                    Grade = Convert.ToInt32(data["Grade"]),
+                    BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
+                    SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    ValType = PotionItemData.ValueType.Def,
+                    MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                    CoolTime = Convert.ToInt32(data["CoolTime"]),
+                    DurationTime = Convert.ToInt32(data["DurationTime"]),
+                    Value = Convert.ToSingle(data["Value"]),//%값
+                };
+            }
+        }
+        #endregion
+
+        #region 기타 데이터
+        //기타아이템 데이터 테이블 가져오기
+        var parsedGoodsDatTable = CSVReader.Read($"{DATA_PATH}/{GOODS_ITEM_DATA_TABLE}");
+        
+        foreach ( var data in parsedGoodsDatTable )
+        {
+            ItemData itemData = null;
+            string itemType = data["ItemType"].ToString();
+            if(itemType == "1")
+            {
+                itemData = new GoodsItemData
+                {
+                    ID = Convert.ToInt32(data["ID"]),
+                    Name = data["Name"].ToString(),
+                    Grade = Convert.ToInt32(data["Grade"]),
+                    BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
+                    SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                    FlavorText = data["FlavorText"].ToString(),
+                    MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                };
+            }
+        }
+        #endregion
+    }
     #endregion
 }
