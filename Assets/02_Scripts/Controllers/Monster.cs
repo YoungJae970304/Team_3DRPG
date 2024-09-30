@@ -54,28 +54,17 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
-        //_mFSM = new FSM(States[MonsterState.Idle]);
-        // FSM 초기화
-        if (States.ContainsKey(MonsterState.Idle))
-        {
-            _mFSM = new FSM(States[MonsterState.Idle]);
-            Debug.Log("FSM 초기화 성공");
-        }
-        else
-        {
-            Debug.LogError("States 딕셔너리에 MonsterState.Idle이 없습니다.");
-        }
-       
+        _mFSM = new FSM(States[MonsterState.Idle]);
+        _mStat.HP = 100;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update 호출됨");
         BaseState();
         _mFSM.UpdateState();
-       
-       
+
+        Logger.Log(_mStat.HP);
     }
     
     protected virtual void BaseState()
@@ -90,8 +79,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
             case MonsterState.Damage:
                 if (CanAttackPlayer())
                     MChangeState(MonsterState.Attack);
-                else if (_mStat.HP <= 0)
-                    MChangeState(MonsterState.Die);
                 else
                     MChangeState(MonsterState.Move);
                 break;
@@ -126,18 +113,28 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     protected void MChangeState(MonsterState nextState)
     {
-        _curState = nextState;
-        _mFSM.ChangeState(States[_curState]);
+        try
+        {
+            _curState = nextState;
+            _mFSM.ChangeState(States[_curState]);
+        }
+        catch (System.Exception)
+        {
+            Logger.Log(States[_curState].ToString());
+        }
+        
     }
     public virtual void Damaged(int amount)
     {
-        if (_curState != MonsterState.Return)
+        _mStat.HP -= amount;
+
+        if (_mStat.HP > 0)
         {
-            if (DamageToPlayer())
-            {
-                _mStat.HP -= amount;
-                _mFSM.ChangeState(States[MonsterState.Damage]);
-            }
+            MChangeState(MonsterState.Damage);
+        }
+        else
+        {
+            MChangeState(MonsterState.Die);
         }
     }
 

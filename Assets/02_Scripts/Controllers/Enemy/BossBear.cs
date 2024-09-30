@@ -6,24 +6,13 @@ using UnityEngine.AI;
 
 public class BossBear : Monster, IDamageAlbe
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
     protected override void BaseState()
     {
         switch (_curState)
         {
             case MonsterState.Idle:
                 if (CanSeePlayer())
-                    _mFSM.ChangeState(States[MonsterState.Move]);
+                    MChangeState(MonsterState.Move);
                 break;
             case MonsterState.Damage:
                 if (CanAttackPlayer())
