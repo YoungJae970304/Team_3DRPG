@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WeaponItemData : EquipmentItemData
 {
+    public int AttackPower { get { return _attackPower; } set { _attackPower = value; } }
+
     //공격력
-    public int _attack;
+     int _attackPower;
 }

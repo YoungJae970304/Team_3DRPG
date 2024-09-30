@@ -34,7 +34,18 @@ public class Drop : MonoBehaviour
         Rare,
         Unique,
     }
-
+    public enum DeongeonRank
+    {
+        NomalWeapon = 11,
+        NomalArmor = 21,
+        NomalAccesary = 31,
+        RareWeapon = 12,
+        RareArmor = 22,
+        RareAccesary = 32,
+        UniqueWeapon = 13,
+        UniqueArmor = 23,
+        UniqueAccesary = 33,
+    }
     public Dictionary<DropTable, int> _dropTable = new Dictionary<DropTable, int>();
     public DropTable _dropValue = DropTable.Noluck;
     public Dictionary<PDropTable, int> _pDropTable = new Dictionary<PDropTable, int>();
@@ -43,8 +54,12 @@ public class Drop : MonoBehaviour
     public ItemType _itemType = ItemType.Weapon;
     public Dictionary<ItemGrade, int> _dropGrade = new Dictionary<ItemGrade, int>();
     public ItemGrade _itemGrade = ItemGrade.Nomal;
+    public Dictionary<DeongeonRank, List<string>> iteming = new Dictionary<DeongeonRank, List<string>>();
+    public List<string> sample = new List<string>();
     private void Start()
     {
+
+
         #region 드랍 테이블 더하기
         _dropTable.Add(DropTable.Equipment, 10);
         _dropTable.Add(DropTable.Noluck, 90);
@@ -63,6 +78,22 @@ public class Drop : MonoBehaviour
         _dropGrade.Add(ItemGrade.Rare, 30);
         _dropGrade.Add(ItemGrade.Unique, 10);
         #endregion
+        foreach(var item in sample)
+        {
+           int check = int.Parse(item)/1000;
+            if(check == 11)
+            {
+                iteming.Add(DeongeonRank.NomalWeapon, sample);
+            }
+            else if(check == 12)
+            {
+                iteming.Add(DeongeonRank.RareWeapon, sample);
+            }
+            else if(check == 13)
+            {
+                iteming.Add(DeongeonRank.UniqueWeapon, sample);
+            }
+        }
     }
 
     public static class WeightedRandomizer
@@ -123,22 +154,83 @@ public class Drop : MonoBehaviour
             return list;
         }
     }
-    public void DropValue()
+    public (DropTable dropTable, int value) DropValue()
     {
-        _dropValue = WeightedRandomizer.From(_dropTable).TakeOne();
+        var selectedDropTable = WeightedRandomizer.From(_dropTable).TakeOne();
+        int value = _dropTable[selectedDropTable];
+        _dropValue = selectedDropTable;
+        return (selectedDropTable, value);
     }
-    public void SelectGrade()
+    public (ItemGrade itemGrade, int value) SelectGrade()
     {
-        _itemGrade = WeightedRandomizer.From(_dropGrade).TakeOne();
+        var selectedItemGrade = WeightedRandomizer.From(_dropGrade).TakeOne();
+        int value = _dropGrade[selectedItemGrade];
+        _itemGrade = selectedItemGrade;
+        return (selectedItemGrade, value);
     }
-    public void SelectType()
+    public (ItemType itemtype, int value) SelectType()
     {
-        _itemType = WeightedRandomizer.From(_dropType).TakeOne();
+        var selectedItemType = WeightedRandomizer.From(_dropType).TakeOne();
+        int value = _dropType[selectedItemType];
+        _itemType = selectedItemType;
+        return (selectedItemType, value);
     }
-    public void PDropValue()
+    public (PDropTable pDropTable, int value) PDropValue()
     {
-        _pDropValue = WeightedRandomizer.From(_pDropTable).TakeOne();
+        var selectedPDropTable = WeightedRandomizer.From(_pDropTable).TakeOne();
+        int value = _pDropTable[selectedPDropTable];
+        _pDropValue = selectedPDropTable;
+        return (selectedPDropTable, value);
+    }
+    public void DropItemSelect()
+    {
+        var (pDroppedValue, pValue) = PDropValue();
+        var (droppedValue, value) = DropValue();
+        if(pDroppedValue == PDropTable.Product)
+        {
+            //JsonUtility.FromJson<제이슨 값 가져오는 class>(가져올 값{몬스터일듯});
+        }
+        if(droppedValue == DropTable.Equipment)
+        {
+            SelectType();
+            
+            var(itemtype, randomvalue) = SelectType();
+            switch (itemtype)
+            {
+                case ItemType.Weapon:
+                    Debug.Log("무기소환");
+                    ItemGradeSelect();
+                    break;
+                case ItemType.Armor:
+                    Debug.Log("방어구 소환");
+                    ItemGradeSelect();
+                    break;
+                case ItemType.Accesary:
+                    Debug.Log("악세서리 소환");
+                    ItemGradeSelect();
+                    break;
+            }
+            Debug.Log($"{SelectGrade().ToString()}{SelectType().ToString()}");
+            //이제 아이템 값을 받아와서 땅에 떨구는 코드만 작성하면됨.
+        }
+    }
+    public void ItemGradeSelect()
+    {
+        var (itemGrade, gradeValue) = SelectGrade();
+        switch (itemGrade)
+        {
+            case ItemGrade.Nomal:
+                Debug.Log("1성");
+                //아이템 생성 후 별값 넣기
+                break;
+            case ItemGrade.Rare:
+                Debug.Log("2성");
+                //아이템 생성 후 별값 넣기
+                break;
+            case ItemGrade.Unique:
+                Debug.Log("3성");
+                //아이템 생성 후 별값 넣기
+                break;
+        }
     }
 }
-
-

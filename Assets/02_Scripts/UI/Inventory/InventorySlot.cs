@@ -18,7 +18,7 @@ public class InventorySlot : MonoBehaviour
     }
     private void Start()
     {
-        _index = transform.GetSiblingIndex();
+        
         
     }
 
@@ -30,6 +30,7 @@ public class InventorySlot : MonoBehaviour
     public void Init(Inventory itemManager, InventoryUI inventory) {
         _itemManager = itemManager;
         _inventory = inventory;
+        _index = transform.GetSiblingIndex();
     }
 
     public void UpdateInfo()
@@ -37,11 +38,12 @@ public class InventorySlot : MonoBehaviour
         _item = _itemManager.GetItem(_index, _inventory._currentType);
         if (_item == null)
         {
-            _Image.sprite = null;
+            _Image.enabled = false;
             _text.text = "";
             return;
         }
-            _Image.sprite = _item.Data.IconSprite == null ? _Image.sprite : _item.Data.IconSprite;
+        _Image.enabled = true;
+        _Image.sprite = _item.Data.IconSprite == null ? _Image.sprite : _item.Data.IconSprite;
         if (_item is CountableItem)
         {
             _text.text = (_item as CountableItem)._amount.ToString(); ;

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class AccessoriesItemData : EquipmentItemData
 {
+    public int HealthRegen { get { return _healthRegen; } set { _healthRegen = value; } }
+    public int Mana { get { return _mana; } set { _mana = value; } }
+    public int ManaRegen { get { return _manaRegen; } set { _manaRegen = value; } }
+
     //체력 리젠(악세서리)
-    public int _healthRegen;
+    int _healthRegen;
     //마나(악세서리)
-    public int _mana;
+    int _mana;
     //마나 리젠(악세서리)
-    public int _manaRegen;
+    int _manaRegen;
 }
