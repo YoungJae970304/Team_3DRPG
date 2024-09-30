@@ -123,8 +123,7 @@ public class PlayerInput : MonoBehaviour
     public void InputBufferInsert(int action)
     {
         if(_atkInput.Count > 1) { return; }
-        _atkInput.Enqueue(action);
 
-        Logger.Log(action.ToString());
+        _atkInput.Enqueue(action);
     }
 }
