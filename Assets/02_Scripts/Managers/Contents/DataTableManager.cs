@@ -17,7 +17,7 @@ public class DataTableManager
 
     #region 아이템 데이터 로드
     //데이터 테이블 폴더 안에 있는 장비아이템 데이터 csv파일
-    const string EQUIPMENT_ITEM_DATA_TABLE = "Equipment_Item_Data_Table";
+    const string EQUIPMENT_ITEM_DATA_TABLE = "Equipment_Data_Table";
     //데이터 테이블 폴더 안에 있는 포션아이템 데이터 csv파일
     const string POTION_ITEM_DATA_TABLE = "Potion_Data_Table";
     //데잍터 테이블 폴더 안에 있는 기타아이템 데이터 csv파일
