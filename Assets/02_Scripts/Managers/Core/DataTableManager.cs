@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class DataTableManager
 {
     //DataTable폴더 안에 있는 csv값을 스트링으로 가져오고 csv파일로 읽어올거임
     const string DATA_PATH = "DataTable";
+    //저장할 때 사용할 키
+    const string _PLAYER_PREFS_KEY = "ItemDataList";
 
     #region 아이템 데이터 로드
     //데이터 테이블 폴더 안에 있는 장비아이템 데이터 csv파일
@@ -17,10 +20,13 @@ public class DataTableManager
     const string GOODS_ITEM_DATA_TABLE = "Goods_Data_Table";
 
     //실질적인 아이템 데이터의 리스트
-    List<ItemData> ItemEquippedDataTable = new List<ItemData>();
-    List<ItemData> ItemPotionDataTable = new List<ItemData>();
-    List<ItemData> ItemGoodsDataTable = new List<ItemData>();
-
+    public List<ItemData> ItemEquippedDataTable = new List<ItemData>();
+    public List<ItemData> ItemPotionDataTable = new List<ItemData>();
+    public List<ItemData> ItemGoodsDataTable = new List<ItemData>();
+    public void Init()
+    {
+        LoadItemDataTable();
+    }
     void LoadItemDataTable()
     {
         #region 장비 데이터
@@ -47,7 +53,6 @@ public class DataTableManager
                    SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                    MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 };
-                ItemEquippedDataTable.Add(itemData);
             }
             //방어구
             else if (equippedType == "2")
@@ -64,7 +69,6 @@ public class DataTableManager
                     SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 };
-                ItemEquippedDataTable.Add(itemData);
             }
             //악세
             else if (equippedType == "3")
@@ -81,6 +85,9 @@ public class DataTableManager
                     SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 };
+            }
+            if(itemData != null)
+            {
                 ItemEquippedDataTable.Add(itemData);
             }
         }
@@ -126,7 +133,8 @@ public class DataTableManager
                     DurationTime = Convert.ToInt32(data["DurationTime"]),
                     Value = Convert.ToSingle(data["Value"]),//%값
                 };
-            }else if (itemType == "5" && valueType == "3")
+            }
+            else if (itemType == "5" && valueType == "3")
             {
                 itemData = new PotionItemData
                 {
@@ -141,6 +149,10 @@ public class DataTableManager
                     DurationTime = Convert.ToInt32(data["DurationTime"]),
                     Value = Convert.ToSingle(data["Value"]),//%값
                 };
+            }
+            if (itemData != null)
+            {
+                ItemPotionDataTable.Add(itemData);
             }
         }
         #endregion
@@ -166,8 +178,70 @@ public class DataTableManager
                     MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 };
             }
+            if (itemData != null)
+            {
+                ItemGoodsDataTable.Add(itemData);
+            }
         }
         #endregion
+    }
+    #endregion
+
+    #region 모든 데이터 저장및 로드
+    //모든 데이터 플레이어프랩스로 제이슨저장
+    public void SaveAllItemData()
+    {
+        ItemDataListWrapper allItemData = new ItemDataListWrapper()
+        {
+            ItemDataList = new List<ItemData>()
+        };
+        //모든 아이템 데이터를 하나의 리스트로 합침
+        allItemData.ItemDataList.AddRange(ItemEquippedDataTable);
+        allItemData.ItemDataList.AddRange(ItemPotionDataTable);
+        allItemData.ItemDataList.AddRange(ItemGoodsDataTable);
+
+        //합친 데이터를 Json으로 변환
+        string itemJson = JsonUtility.ToJson(allItemData);
+        //Json데이터를 플레이어프랩스에 저장
+        PlayerPrefs.SetString(_PLAYER_PREFS_KEY, itemJson);
+        PlayerPrefs.Save();
+        Logger.Log("저장 완료 : " + itemJson);
+    }
+    //모든 데이터를 플레이어프랩스로 제이슨 로드
+    public void LoadAllItemData()
+    {
+        //저장된 제이슨 문자열 가져오기
+        string itemDataJson = PlayerPrefs.GetString(_PLAYER_PREFS_KEY);
+        if (!string.IsNullOrEmpty(itemDataJson))
+        {
+            //Json을 다시 객체로 변환시킴
+            ItemDataListWrapper loadedData = JsonUtility.FromJson<ItemDataListWrapper>(itemDataJson);
+            //기존 데이터 비우기
+            ItemEquippedDataTable.Clear();
+            ItemPotionDataTable.Clear();
+            ItemGoodsDataTable.Clear();
+            //타입에 맞춰 데이터를 다시 리스트에 추가
+            foreach (var item in loadedData.ItemDataList)
+            {
+                if (item.Type == ItemData.ItemType.Weapon || item.Type == ItemData.ItemType.Armor || item.Type == ItemData.ItemType.Accessories)
+                {
+                    ItemEquippedDataTable.Add(item);
+                }
+                else if (item.Type == ItemData.ItemType.Potion)
+                {
+                    ItemPotionDataTable.Add(item);
+                }
+                else if (item.Type == ItemData.ItemType.Booty)
+                {
+                    ItemGoodsDataTable.Add(item);
+                }
+            }
+            Logger.Log("데이터 로드 완료" + itemDataJson);
+        }
+        else
+        {
+            Logger.LogError("저장된 데이터가 없음");
+        }
     }
     #endregion
 }
