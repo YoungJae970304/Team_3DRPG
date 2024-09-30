@@ -12,7 +12,7 @@ public class MonsterDamagedState : BaseState
         //임시로 몬스터의 데미지를 넣어놓음 추후 플레이어 데미지 값 받아오게 설정
         _monster._nav.enabled = false;
         _monster.GetComponent<Rigidbody>().isKinematic = false;
-        _monster.StartCoroutine(_monster.StartDamege(_player._playerStat.ATK, _monster.transform.position, 0.1f, 10f));
+        _monster.StartCoroutine(_monster.StartDamege( _player.transform.position, 0.1f, 10f));
     }
 
     public override void OnStateExit()

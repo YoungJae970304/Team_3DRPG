@@ -16,41 +16,41 @@ public class BossBear : Monster, IDamageAlbe
                 break;
             case MonsterState.Damage:
                 if (CanAttackPlayer())
-                    _mFSM.ChangeState(States[MonsterState.Attack]);
+                    MChangeState(MonsterState.Attack);
                 else if (_mStat.HP <= 0)
-                    _mFSM.ChangeState(States[MonsterState.Die]);
+                    MChangeState(MonsterState.Die);
                 else
-                    _mFSM.ChangeState(States[MonsterState.Move]);
+                    MChangeState(MonsterState.Move);
                 break;
             case MonsterState.Move:
                 if (CanAttackPlayer())
-                    _mFSM.ChangeState(States[MonsterState.Attack]);
+                    MChangeState(MonsterState.Attack);
                 else if (ReturnOrigin())
-                    _mFSM.ChangeState(States[MonsterState.Return]);
+                        MChangeState(MonsterState.Return);
                 break;
             case MonsterState.Attack:
                 if (!CanAttackPlayer())
                 {
                     if (!ReturnOrigin())
                     {
-                        _mFSM.ChangeState(States[MonsterState.Move]);
+                        MChangeState(MonsterState.Move);
                     }
                     else
                     {
-                        _mFSM.ChangeState(States[MonsterState.Return]);
+                        MChangeState(MonsterState.Return);
                     }
                 }
                 break;
             case MonsterState.Return:
                 if ((_originPos - transform.position).magnitude <= 3f)
-                    _mFSM.ChangeState(States[MonsterState.Idle]);
+                        MChangeState(MonsterState.Idle);
                 break;
             case MonsterState.Skill:
                 if (CanAttackPlayer())
-                    _mFSM.ChangeState(States[MonsterState.Attack]);
+                    MChangeState(MonsterState.Attack);
                 else
                 {
-                    _mFSM.ChangeState(States[MonsterState.Move]);
+                    MChangeState(MonsterState.Move);
                 }
                 break;
             case MonsterState.Die:
@@ -109,7 +109,7 @@ public class BossBear : Monster, IDamageAlbe
         AttackPlayer();
     }
 
-    public override IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)
+    public override IEnumerator StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         return null;
     }

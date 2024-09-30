@@ -6,11 +6,6 @@ using UnityEngine.AI;
 
 public class Ork : Monster
 {
-    protected override void BaseState()
-    {
-        base.BaseState();
-    }
-
     public override void AttackStateSwitch()
     {
         if (_randomAttack <= 66)

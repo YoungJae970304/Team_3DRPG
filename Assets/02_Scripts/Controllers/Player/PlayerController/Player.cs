@@ -145,7 +145,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     protected virtual void Update()
     {
-        Logger.Log(_playerStat.HP);
+        //Logger.Log(_playerStat.HP);
 
         // 상태 전환
         ChangeStateCondition();
@@ -270,22 +270,22 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         switch (_curAtkCount)
         {
             case 0:
-                Logger.Log("강공격");
+                //Logger.Log("강공격");
                 break;
             case 1:
-                Logger.Log("기본공격 1타");
+                //Logger.Log("기본공격 1타");
                 SetColActive("Combo1");
                 break;
             case 2:
-                Logger.Log("기본공격 2타");
+                //Logger.Log("기본공격 2타");
                 SetColActive("Combo2");
                 break;
             case 3:
-                Logger.Log("기본공격 3타");
+                //Logger.Log("기본공격 3타");
                 SetColActive("Combo3");
                 break;
             default:
-                Logger.LogError("지정한 공격이 아님");
+                //Logger.LogError("지정한 공격이 아님");
                 break;
         }
     }
