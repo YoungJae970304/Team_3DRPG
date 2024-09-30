@@ -12,6 +12,7 @@ public enum PlayerState
     Move,
     Dodge,
     Attack,
+    AttackWait,
     Skill,
     Damaged,
     Dead
@@ -118,6 +119,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStat));
         States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStat));
         States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStat));
+        States.Add(PlayerState.AttackWait, new PlayerAttackWaitState(this, _monster, _playerStat));
         #endregion
 
         #region 변수 초기화
@@ -129,24 +131,16 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStat.MaxHP = 100;
         _playerStat.HP = 100;
         _playerStat.MoveSpeed = 5f;
-        _playerStat.ATK = 1;
+        _playerStat.ATK = 24;
         _playerStat.DEF = 15;
         #endregion
 
         // 공격 콜라이더 off
-        SetColActive("");
-        /*
-        foreach (var col in _atkColliders)
-        {
-            col.gameObject.SetActive(false);
-        }
-        */
+        SetColActive("Combo1");
     }
 
     protected virtual void Update()
     {
-        Logger.Log(_playerStat.HP);
-
         // 상태 전환
         ChangeStateCondition();
 
@@ -170,12 +164,22 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 {
                     ChangeState(PlayerState.Move);
                 }
+                // 선입력 있다면 공격상태로
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
+                }
                 break;
             case PlayerState.Move:
                 // Move -> Idle
                 if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
+                }
+                // 선입력 있다면 공격상태로
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
                 }
                 break;
             case PlayerState.Dodge:
@@ -192,7 +196,18 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Attack:
-                // 공격 중일때는 상태전환 불가
+                if (_canAtkInput)
+                {
+                    ChangeState(PlayerState.AttackWait);
+                }
+                break;
+            case PlayerState.AttackWait:
+                // 공격 선입력이 있다면 공격상태로 전환
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
+                }
+
                 if (_attacking) return;
 
                 if (!_isMoving)
@@ -247,11 +262,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         // 공격 콜라이더 off
         foreach (var col in _atkColliders)
         {
-            col.gameObject.SetActive(false);
+            col.gameObject.SetActive(col.name == colName);
         }
-
-        if (colName == "") return;
-        _atkColliders.Find(coll => coll.name == colName).gameObject.SetActive(true);
     }
 
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
@@ -264,41 +276,25 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
         // AtkOffTimer는 애니메이션 종료 직전에 if-else문(_playerInput._atkInput.Count < 1)으로 
         // _attacking = false;하거나 _curAtkCount = _playerInput._atkInput.Dequeue();
-        CanAtkInputOffTimer(0.5f);
-        AtkOffTimer(1.0f);
-
-        switch (_curAtkCount)
-        {
-            case 0:
-                Logger.Log("강공격");
-                break;
-            case 1:
-                Logger.Log("기본공격 1타");
-                SetColActive("Combo1");
-                break;
-            case 2:
-                Logger.Log("기본공격 2타");
-                SetColActive("Combo2");
-                break;
-            case 3:
-                Logger.Log("기본공격 3타");
-                SetColActive("Combo3");
-                break;
-            default:
-                Logger.LogError("지정한 공격이 아님");
-                break;
-        }
+        CanAtkInputOffTimer(1f);
+        AtkOffTimer(2f);
     }
 
     public void ApplyDamage()
     {
+        if (_hitMobs.Count == 0) return;
+
         int damage = _playerStat.ATK;
-        Logger.Log(damage);
 
         foreach(var mob in _hitMobs)
         {
-            mob.GetComponent<IDamageAlbe>().Damaged(damage);
+            if (mob.TryGetComponent<IDamageAlbe>(out var damageable))
+            {
+                damageable.Damaged(damage);
+            }
         }
+
+        _hitMobs.Clear();
     }
 
     public abstract void Skill();
@@ -335,8 +331,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 이는 추후 애니메이션 이벤트로 처리하게 될시 자동으로 해결될 것
     #region 타이머들(추후 anim이벤트로 일부 변경)
     // 추후 애니메이션 이벤트로 변경 예정
-    float _curCAITime = 0;
-    protected void CanAtkInputOffTimer(float targetTime)
+    public float _curCAITime = 0;
+    public void CanAtkInputOffTimer(float targetTime)
     {
         _curCAITime += Time.deltaTime;
 
@@ -348,24 +344,15 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     }
 
     // 추후 애니메이션 이벤트로 변경 예정
-    float _curATime = 0;
-    protected void AtkOffTimer(float targetTime)
+    public float _curATime = 0;
+    public void AtkOffTimer(float targetTime)
     {
         _curATime += Time.deltaTime;
 
         if (_curATime >= targetTime)
         {
             _curATime = 0;
-
-            // 선입력이 없다면 공격 중지
-            if (_playerInput._atkInput.Count < 1)
-            {
-                _attacking = false;
-            }
-            else    // 선입력이 남아있다면 재공격 
-            {
-                _curAtkCount = _playerInput._atkInput.Dequeue();
-            }
+            _attacking = false;
         }
     }
 

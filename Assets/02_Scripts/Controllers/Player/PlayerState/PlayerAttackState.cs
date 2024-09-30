@@ -8,27 +8,49 @@ public class PlayerAttackState : BaseState
 
     public override void OnStateEnter()
     {
-        //Logger.Log("공격 상태 진입");
+        Logger.Log("공격 상태 진입");
         _player._attacking = true;
         _player._canAtkInput = false;
+
         _player._curAtkCount = _player._playerInput._atkInput.Dequeue();
+        switch (_player._curAtkCount)
+        {
+            case 0:
+                Logger.Log("강공격");
+                break;
+            case 1:
+                Logger.Log("기본공격 1타");
+                _player.SetColActive("Combo1");
+                break;
+            case 2:
+                Logger.Log("기본공격 2타");
+                _player.SetColActive("Combo2");
+                break;
+            case 3:
+                Logger.Log("기본공격 3타");
+                _player.SetColActive("Combo3");
+                break;
+            default:
+                Logger.LogError("지정한 공격이 아님");
+                break;
+        }
+
         _player.ApplyDamage();
-        Logger.Log(" 몇번 불러와지는지 ");
     }
 
     public override void OnStateUpdate()
     {
+        Logger.Log("공격상태 업데이트");
         _player.Attack();
     }
 
     public override void OnStateExit()
     {
         Logger.Log("공격 상태 Exit ");
-        _player._attacking = false;
-        _player._canAtkInput = true;
-        _player.AtkCount = 0;
+
+        //_player.AtkCount = 0;
 
         // 큐 초기화
-        _player._playerInput._atkInput.Clear();
+        //_player._playerInput._atkInput.Clear();
     }
 }
