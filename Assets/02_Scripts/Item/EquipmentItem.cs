@@ -5,8 +5,9 @@ using UnityEngine;
 public class EquipmentItem : Item
 {
 
-    public EquipmentItem(EquipmentItemData data) : base(data)
+    public EquipmentItem(ItemData data) : base(data)
     {
+        Logger.Log(data.Name);
     }
 
 

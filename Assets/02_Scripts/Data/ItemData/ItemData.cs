@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+[Serializable]
 public class ItemData
-{ 
+{
     //아이템이 공용으로 사용할 정보들
+    [Serializable]
     public enum ItemType
     {
         Weapon = 1, //1

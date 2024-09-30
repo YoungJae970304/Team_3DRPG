@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+public struct ItemTypeComparer : IEqualityComparer<ItemData.ItemType>
+{
+    public bool Equals(ItemData.ItemType a, ItemData.ItemType b) { return a == b; }
+    public int GetHashCode(ItemData.ItemType a) { return (int)a; }
+}
 public class Inventory : MonoBehaviour//인벤토리
 {   //아이템 그룹을 담을 딕셔너리 타입 하나당 인벤토리 탭 1개가 된다.
-    Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>();
+    Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>(new ItemTypeComparer() );
 
     public Action GetItemAction;
 
@@ -14,8 +20,8 @@ public class Inventory : MonoBehaviour//인벤토리
         {
             //인벤토리 초기화
             AddGroup(15, 100, ItemData.ItemType.Weapon);
-            AddGroup(15, 100, ItemData.ItemType.Armor);
-            AddGroup(15, 100, ItemData.ItemType.Accessories);
+            AddGroup(ItemData.ItemType.Weapon, ItemData.ItemType.Armor);
+            AddGroup(ItemData.ItemType.Weapon, ItemData.ItemType.Accessories);
             AddGroup(15, 100, ItemData.ItemType.Booty);
             AddGroup(15, 100, ItemData.ItemType.Potion);
         }
@@ -26,10 +32,16 @@ public class Inventory : MonoBehaviour//인벤토리
         ItemDick.Add(type, new ItemGroup(maxSize, LimitSize, type));
 
     }
+    public void AddGroup(ItemData.ItemType type, ItemData.ItemType type2)
+    {
+        ItemDick.Add(type2, ItemDick[type]);
+
+    }
 
     public bool InsertItem(Item item)//아이템 삽입 빈칸이있으면 빈칸으로 중복이있으면 합쳐짐
     {
         GetItemAction?.Invoke();
+        Logger.Log(item.Data.Name);
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return ItemDick[item.Data.Type].Insert(item);
     }
@@ -60,16 +72,23 @@ public class Inventory : MonoBehaviour//인벤토리
     {//특정 타입의 아이템을 모아 관리하는 아이템 그룹
         Item[] _items;
         public int _maxSize;
-        ItemData.ItemType _type;
+        List<ItemData.ItemType> _type = new List<ItemData.ItemType>();
 
 
+        public ItemGroup(int maxSize, int LimitSize, ItemData.ItemType[] types)
+        {
+            _items = new Item[LimitSize];
+            _maxSize = maxSize;
+            foreach (var type in types) {
+                _type.Add(type);
+            }
+        }
         public ItemGroup(int maxSize, int LimitSize, ItemData.ItemType type)
         {
             _items = new Item[LimitSize];
             _maxSize = maxSize;
-            _type = type;
+            _type.Add(type);
         }
-
 
         public bool Insert(Item item)
         {//중복이 있으면 아이템의 개수를 늘리고 최대치를 넘겼다면 다음으로 넘어가며
