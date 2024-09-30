@@ -2,24 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Data;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.AI;
 
-public class Ork : Monster, IDamageAlbe
+public class Ork : Monster
 {
- 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     protected override void BaseState()
     {
         base.BaseState();

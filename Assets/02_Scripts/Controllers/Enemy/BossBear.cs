@@ -6,24 +6,13 @@ using UnityEngine.AI;
 
 public class BossBear : Monster, IDamageAlbe
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-    protected override void BaseState() //Monster에서 상속 후 재정의
+    protected override void BaseState()
     {
         switch (_curState)
         {
             case MonsterState.Idle:
                 if (CanSeePlayer())
-                    _mFSM.ChangeState(States[MonsterState.Move]);
+                    MChangeState(MonsterState.Move);
                 break;
             case MonsterState.Damage:
                 if (CanAttackPlayer())
@@ -71,7 +60,7 @@ public class BossBear : Monster, IDamageAlbe
         }
     }
 
-    public override void AttackStateSwitch() // 확률에 따라 공격 모션을 다르게 발동시키기 위한 처리(가중치로 변경해도될듯)
+    public override void AttackStateSwitch()
     {
         if (_randomAttack <= 15)
         {
@@ -94,7 +83,6 @@ public class BossBear : Monster, IDamageAlbe
             EarthquakeAttack();
         }
     }
-    #region 공격처리
     public void EarthquakeAttack()
     {
         Logger.Log("EarthquakeAttack");
@@ -120,8 +108,8 @@ public class BossBear : Monster, IDamageAlbe
         Logger.Log("RightHandAttack");
         AttackPlayer();
     }
-    #endregion
-    public override IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack) // 보스는 넉백이 없으므로 그냥 null이 리턴되게함
+
+    public override IEnumerator StartDamege(int damage, Vector3 playerPosition, float delay, float pushBack)
     {
         return null;
     }
