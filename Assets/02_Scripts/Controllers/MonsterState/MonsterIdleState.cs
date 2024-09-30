@@ -7,12 +7,16 @@ public class MonsterIdleState : BaseState
 {
     public MonsterIdleState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
     {
+        _player = player;
+        _monster = monster;
+        _stat = _monster._mStat;
     }
     float awayRangeX;
     //float awayRangeY = Random.Range(0, _sStat.AwayRange);
     float awayRangeZ;
     public override void OnStateEnter()
     {
+        Debug.Log(1);
         _monster._mStat = _monster.GetComponent<MonsterStat>();
         if (_monster._mStat == null)
         {
@@ -34,6 +38,7 @@ public class MonsterIdleState : BaseState
 
     public override void OnStateUpdate()
     {
+        Debug.Log(2);
         if (_monster._mStat == null) return;
         //일정 거리 배회
         //선공몹들은 플레이어가 일정 거리 안에 들어온다면 Exit로 상태 변환

@@ -13,10 +13,8 @@ GameObject:
   - component: {fileID: 9048371560697000619}
   - component: {fileID: 3737384139507784845}
   - component: {fileID: 2835101552906006973}
-  - component: {fileID: 4487471473886424822}
   - component: {fileID: 4747138439297018842}
   - component: {fileID: 4548036171585476497}
-  - component: {fileID: 1232732351913450669}
   - component: {fileID: 2581863909052154431}
   m_Layer: 0
   m_Name: Ork
@@ -123,38 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9ccc97f1608b048b4fc5dee6669e0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _originPos: {x: 0, y: 0, z: 0}
   _player: {fileID: 0}
   _nav: {fileID: 0}
   _mStat: {fileID: 0}
-  _curState: 0
-  _originPos: {x: 0, y: 0, z: 0}
-  _attackDelay: 3
-  _oStat: {fileID: 0}
---- !u!114 &4487471473886424822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3636524983878215047}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 551fe9a6bf9e84245ac03e14279d7b53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chaseRange: 20
-  _returnRange: 20
-  _attackRange: 3
-  _awayRange: 15
-  _level: 1
-  _hp: 100
-  _maxHp: 100
-  _mp: 100
-  _maxMp: 100
-  _attack: 10
-  _defense: 10
-  _gold: 10
-  _moveSpeed: 10
+  _timer: 0
+  _randomAttack: 0
 --- !u!195 &4747138439297018842
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -204,31 +176,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1232732351913450669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3636524983878215047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c08d78ae690f8ec43a283a1e4228f04a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chaseRange: 30
-  _returnRange: 30
-  _attackRange: 3
-  _awayRange: 25
-  _level: 1
-  _hp: 500
-  _maxHp: 500
-  _mp: 500
-  _maxMp: 500
-  _attack: 50
-  _defense: 50
-  _gold: 50
-  _moveSpeed: 3
 --- !u!114 &2581863909052154431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,10 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5750073aaaa57854e833c7c0b7186bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _originPos: {x: 0, y: 0, z: 0}
   _player: {fileID: 0}
   _nav: {fileID: 0}
   _mStat: {fileID: 0}
-  _curState: 0
-  _originPos: {x: 0, y: 0, z: 0}
-  _attackDelay: 3
-  _bStat: {fileID: 0}
+  _timer: 0
+  _randomAttack: 0

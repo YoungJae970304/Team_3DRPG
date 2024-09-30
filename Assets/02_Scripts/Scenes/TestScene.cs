@@ -21,9 +21,9 @@ public class TestScene : BaseScene
     }
     [ContextMenu("test")]
     public void test() {
-        Item item = new CountableItem(ItemData,60);
+        Item item = new EquipmentItem(ItemData);
         ItemManager.InsertItem(item);
-        Item item2 = new CountableItem(itemData2, 60);
+        Item item2 = new EquipmentItem(itemData2);
         ItemManager.InsertItem(item2);
         inventory.UpdateSlot();
     }

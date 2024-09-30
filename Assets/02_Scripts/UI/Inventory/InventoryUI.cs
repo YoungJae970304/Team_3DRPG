@@ -32,6 +32,7 @@ public class InventoryUI : MonoBehaviour
         _pointerEvent = new PointerEventData( EventSystem.current);
         _inventory.GetItemAction += UpdateSlot;
         SlotSetting(_currentType);
+        UpdateSlot();
         //Managers.Input.UIMouseAction += MouseInput;
     }
 
@@ -151,4 +152,15 @@ public class InventoryUI : MonoBehaviour
 
     }
     #endregion
+    
+    
+
+    public void ChageGroup(int type) {
+
+        _currentType = (ItemData.ItemType)type;
+        if (Enum.IsDefined(typeof(ItemData.ItemType), _currentType)) {
+            UpdateSlot();
+        }
+        
+    }
 }

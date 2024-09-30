@@ -6,11 +6,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
 
-public abstract class Monster : MonoBehaviour, IDamageAlbe
+public class Monster : MonoBehaviour, IDamageAlbe
 {
 
 
-    protected enum MonsterState
+    public enum MonsterState
     {
         Idle,
         Move,
@@ -26,24 +26,21 @@ public abstract class Monster : MonoBehaviour, IDamageAlbe
     public Player _player;
     public NavMeshAgent _nav;
     public MonsterStat _mStat;
-    protected Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
+    
+    public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
     public float _timer = 0;
     public int _randomAttack;
-
+    //
 
     private void Awake()
     {
         _mStat = GetComponent<MonsterStat>();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        _curState = MonsterState.Idle;
-        _mFSM = new FSM(new MonsterIdleState(_player, this, _mStat));
+         _nav = GetComponent<NavMeshAgent>();
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+      
         _originPos = transform.position;
-        _nav = GetComponent<NavMeshAgent>();
         #region 상태딕셔너리 초기화
-        States.Add(MonsterState.Idle, new MonsterIdleState(_player,this,_mStat));
+        States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
         States.Add(MonsterState.Move, new MonsterMoveState(_player, this, _mStat));
         States.Add(MonsterState.Attack, new MonsterAttackState(_player, this, _mStat));
         States.Add(MonsterState.Damage, new MonsterDamagedState(_player, this, _mStat));
@@ -52,16 +49,38 @@ public abstract class Monster : MonoBehaviour, IDamageAlbe
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
     }
+    // Start is called before the first frame update
+    void Start()
+    {
+        _curState = MonsterState.Idle;
+        Debug.Log($"초기 상태: {_curState}");
+        //_mFSM = new FSM(States[MonsterState.Idle]);
+        // FSM 초기화
+        if (States.ContainsKey(MonsterState.Idle))
+        {
+            _mFSM = new FSM(States[MonsterState.Idle]);
+            Debug.Log("FSM 초기화 성공");
+        }
+        else
+        {
+            Debug.LogError("States 딕셔너리에 MonsterState.Idle이 없습니다.");
+        }
+       
+    }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Update 호출됨");
         BaseState();
         _mFSM.UpdateState();
+       
+       
     }
-
+    
     protected virtual void BaseState()
     {
+        Debug.Log("BaseState 호출됨");
         switch (_curState)
         {
             case MonsterState.Idle:
