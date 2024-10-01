@@ -14,35 +14,35 @@ public class BossBear : Monster, IDamageAlbe
         if (_randomAttack <= 15)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-            _mAttackState = MAttackState.SkillAttack;
+            
             LeftBiteAttack();
             
         }
         else if (_randomAttack <= 30)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-            _mAttackState = MAttackState.SkillAttack;
+            
             RightBiteAttack();
             
         }
         else if (_randomAttack <= 60)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-            _mAttackState = MAttackState.SkillAttack;
+           
             LeftHandAttack();
             
         }
         else if (_randomAttack <= 90)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-            _mAttackState = MAttackState.SkillAttack;
+           
             RightHandAttack();
             
         }
         else
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-            _mAttackState = MAttackState.SkillAttack;
+        ;
             EarthquakeAttack();
             
         }
@@ -50,10 +50,10 @@ public class BossBear : Monster, IDamageAlbe
     //bool RoarOn = false;
     public void BearRoar()
     {
- 
-            AttackPlayer();
-            _mAttackState = MAttackState.StunAttack;
         _player._playerHitState = PlayerHitState.StunAttack;
+        AttackPlayer();
+            
+        
 
 
     }
@@ -101,35 +101,35 @@ public class BossBear : Monster, IDamageAlbe
     {
         Logger.Log("EarthquakeAttack");
         AttackPlayer();
-        _mAttackState = MAttackState.SkillAttack;
+      
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void LeftBiteAttack()
     {
         Logger.Log("LeftBiteAttack");
         AttackPlayer();
-        _mAttackState = MAttackState.SkillAttack;
+        
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void RightBiteAttack()
     {
         Logger.Log("RightBiteAttack");
         AttackPlayer();
-        _mAttackState = MAttackState.SkillAttack;
+       
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void LeftHandAttack()
     {
         Logger.Log("LeftHandAttack");
         AttackPlayer();
-        _mAttackState = MAttackState.SkillAttack;
+      
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void RightHandAttack()
     {
         Logger.Log("RightHandAttack");
         AttackPlayer();
-        _mAttackState = MAttackState.SkillAttack;
+       
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
 
