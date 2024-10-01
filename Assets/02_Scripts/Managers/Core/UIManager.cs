@@ -37,6 +37,7 @@ public class UIManager
     private Dictionary<Type, GameObject> m_CloseUIPool = new Dictionary<Type, GameObject>();
     //UI 화면이 열려있는지 닫혀있는지 구분이 필요하기 때문에 UI 풀을 2개의 변수로 관리
 
+    LinkedList<BaseUI> baseUIs = new LinkedList<BaseUI>();
     public void Init()
     {
         if (UICanvasTrs == null)
@@ -87,7 +88,7 @@ public class UIManager
         return ui;
     }
 
-    public T OpenUI<T>(BaseUIData uidata) where T : BaseUI
+    public T OpenUI<T>(BaseUIData uidata,bool sort=true) where T : BaseUI
     {
         System.Type uiType = typeof(T);
 
@@ -112,11 +113,12 @@ public class UIManager
         var siblingIdx = UICanvasTrs.childCount - 1;//하위 오브젝트 개수
         ui.Init(UICanvasTrs);//화면 초기화   
 
-        ui.transform.SetSiblingIndex(siblingIdx);
+        //ui.transform.SetSiblingIndex(siblingIdx);
         //하이어라키 창 우선순위변경
 
         ui.gameObject.SetActive(true);
         ui.SetInfo(uidata);
+        SetCanvas(ui.gameObject, sort); //소팅 우선순위 변경
         ui.ShowUI();
 
         m_FrontUI = ui;
@@ -130,13 +132,13 @@ public class UIManager
         Logger.Log($"{GetType()}::CloseUI({uiType})");
 
         ui.gameObject.SetActive(false);
-
+        
         m_OpenUIPool.Remove(uiType);
         m_CloseUIPool[uiType] = ui.gameObject;
         ui.transform.SetParent(CloseUITrs);
 
         m_FrontUI = null;
-
+        _order--;
         var lastChild = UICanvasTrs.GetChild(UICanvasTrs.childCount - 1);
 
         if (lastChild)
@@ -179,6 +181,27 @@ public class UIManager
         while (m_FrontUI)
         {
             m_FrontUI.CloseUI(true);
+        }
+    }
+    public void SetCanvas(GameObject go, bool sort = true)
+    {
+        // 캔버스 추출
+        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        // 랜더모드는 무조건 ScreenSpaceOverlay ( 이 경우만 sorting되기 때문 )
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        // 캔버스 안에 캔버스가 중첩해서 있을 때 그 부모가 어떤 값을 가지던 자신은 무조건 내 sorting order를 가진다
+        // overrideSorting을 통해 혹시라도 중첩 캔버스라 자식 캔버스가 있더라도 부모 캔버스가 어떤 값을 가지던
+        // 자신은 자신의 오더값을 가지려 할 때 true;
+        canvas.overrideSorting = true;
+
+        if (sort)
+        {
+            canvas.sortingOrder = _order;
+            _order++;
+        }
+        else    // 팝업이랑 상관없는 일반 UI
+        {
+            canvas.sortingOrder = 0;
         }
     }
     public void Clear()
