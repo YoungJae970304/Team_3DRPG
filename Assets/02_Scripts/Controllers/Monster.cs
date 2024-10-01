@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
+using System.Threading.Tasks;
 
 public class Monster : MonoBehaviour, IDamageAlbe
 {
@@ -65,13 +66,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Update is called once per frame
     void Update()
     {
-        BaseState();
+        
         _mFSM.UpdateState();
 
         
         if (_curState == MonsterState.Damage)
         {
-            return; // 다른 업데이트 로직 실행 방지
+            
+            return;
+        }
+        else
+        {
+            BaseState();
         }
     }
     
@@ -186,9 +192,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
         //예외처리문
     }*/
-    public virtual IEnumerator StartDamege(Vector3 playerPosition, float delay, float pushBack)
+    public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        yield return new WaitForSeconds(delay);
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
@@ -203,11 +208,11 @@ public class Monster : MonoBehaviour, IDamageAlbe
         rb.AddForce(force, ForceMode.Impulse);
 
         // 넉백 후 처리
-        yield return new WaitForSeconds(1); // 넉백 지속 시간 (필요에 따라 조정)
+        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (필요에 따라 조정)
 
         // 넉백이 끝나면 NavMeshAgent를 다시 활성화
-      
-       
+
+
         _nav.enabled = true;
         rb.isKinematic = true; // 다시 비활성화 (필요시)
         if (CanAttackPlayer())

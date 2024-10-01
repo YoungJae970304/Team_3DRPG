@@ -109,8 +109,8 @@ public class BossBear : Monster, IDamageAlbe
         AttackPlayer();
     }
 
-    public override IEnumerator StartDamege(Vector3 playerPosition, float delay, float pushBack)
+    public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        return null;
+        
     }
 }

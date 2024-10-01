@@ -8,7 +8,7 @@ public class Ork : Monster
 {
     public override void AttackStateSwitch()
     {
-        if (_randomAttack <= 66)
+        if (_randomAttack <= 100)
         {
             NomalAttack();
         }
