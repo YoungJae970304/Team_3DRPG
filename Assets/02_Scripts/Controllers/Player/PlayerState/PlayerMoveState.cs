@@ -9,6 +9,7 @@ public class PlayerMoveState : BaseState
 
     public override void OnStateEnter()
     {
+        _player.AtkCount = 0;
     }
 
     public override void OnStateUpdate()
@@ -23,6 +24,7 @@ public class PlayerMoveState : BaseState
 
     public override void OnStateExit()
     {
+        Logger.Log("무브상태 Exit");
         MoveStop();
     }
 
@@ -58,6 +60,6 @@ public class PlayerMoveState : BaseState
 
     void MoveStop()
     {
-        _player._moveDir = Vector3.zero ;
+        _player._moveDir = Vector3.zero;
     }
 }

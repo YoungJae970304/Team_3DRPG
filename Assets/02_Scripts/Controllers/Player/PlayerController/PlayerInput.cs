@@ -84,17 +84,17 @@ public class PlayerInput : MonoBehaviour
 
     void AttackInput()
     {
-        if (_player._dodgeing || _player._skillUsing) return;
+        if (_player._dodgeing || _player._skillUsing || !_player._canAtkInput) return;
 
-        if (Input.GetMouseButtonDown(0) && _player._canAtkInput)
+        if (Input.GetMouseButtonDown(0))
         {
             _player.AtkCount++;
 
             // Queue에 Enqueue함으로써 선입력 처리
             InputBufferInsert(_player.AtkCount);
-            _player.ChangeState(PlayerState.Attack);
+            //_player.ChangeState(PlayerState.AttackWait);
         }
-        else if (Input.GetMouseButtonDown(1) && _player._canAtkInput && !_player._attacking)
+        else if (Input.GetMouseButtonDown(1) && !_player._attacking)
         {
             _player.Special();
         }
@@ -110,12 +110,10 @@ public class PlayerInput : MonoBehaviour
         // _player.ChangeState(PlayerState.Skill); 하나만 쓰고 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _player._skillIndex = 1;
             _player.ChangeState(PlayerState.Skill);
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            _player._skillIndex = 2;
             _player.ChangeState(PlayerState.Skill);
         }
     }
@@ -123,8 +121,7 @@ public class PlayerInput : MonoBehaviour
     public void InputBufferInsert(int action)
     {
         if(_atkInput.Count > 1) { return; }
-        _atkInput.Enqueue(action);
 
-        Logger.Log(action.ToString());
+        _atkInput.Enqueue(action);
     }
 }

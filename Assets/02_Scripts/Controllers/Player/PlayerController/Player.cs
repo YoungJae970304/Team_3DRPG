@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 // 상태 
 public enum PlayerState
@@ -11,6 +12,7 @@ public enum PlayerState
     Move,
     Dodge,
     Attack,
+    AttackWait,
     Skill,
     Damaged,
     Dead
@@ -64,6 +66,10 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     }
     [HideInInspector]
     public int _curAtkCount;
+    [Header("공격 콜라이더 리스트")]
+    public List<Collider> _atkColliders;
+    //[HideInInspector]
+    public List<Collider> _hitMobs;
 
     // 스킬 관련 변수
     [HideInInspector]
@@ -113,6 +119,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStat));
         States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStat));
         States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStat));
+        States.Add(PlayerState.AttackWait, new PlayerAttackWaitState(this, _monster, _playerStat));
         #endregion
 
         #region 변수 초기화
@@ -120,8 +127,19 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _curState = PlayerState.Idle;
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
+
+        _playerStat.MaxHP = 100;
+        _playerStat.HP = 100;
         _playerStat.MoveSpeed = 5f;
-        #endregion
+        _playerStat.ATK = 24;
+        _playerStat.DEF = 15;
+
+        // 공격 콜라이더 off
+        SetColActive("Combo1");
+
+        // 스킬테스트
+        _skillBase = new TestSkill();
+        #endregion  
     }
 
     protected virtual void Update()
@@ -149,12 +167,22 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 {
                     ChangeState(PlayerState.Move);
                 }
+                // 선입력 있다면 공격상태로
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
+                }
                 break;
             case PlayerState.Move:
                 // Move -> Idle
                 if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
+                }
+                // 선입력 있다면 공격상태로
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
                 }
                 break;
             case PlayerState.Dodge:
@@ -171,7 +199,18 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 }
                 break;
             case PlayerState.Attack:
-                // 공격 중일때는 상태전환 불가
+                if (_canAtkInput)
+                {
+                    ChangeState(PlayerState.AttackWait);
+                }
+                break;
+            case PlayerState.AttackWait:
+                // 공격 선입력이 있다면 공격상태로 전환
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
+                }
+
                 if (_attacking) return;
 
                 if (!_isMoving)
@@ -221,28 +260,18 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm.ChangeState(States[_curState]);
     }
 
+    // 공격관련 콜라이더 제어
+    public void SetColActive(string colName)
+    {
+        foreach (var col in _atkColliders)
+        {
+            col.gameObject.SetActive(col.name == colName);
+        }
+    }
+
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
     public virtual void Attack()
     {
-        switch (_curAtkCount)
-        {
-            case 0:
-                Logger.Log("강공격");
-                break;
-            case 1:
-                Logger.Log("기본공격 1타");
-                break;
-            case 2:
-                Logger.Log("기본공격 2타");
-                break;
-            case 3:
-                Logger.Log("기본공격 3타");
-                break;
-            default:
-                Logger.LogError("지정한 공격이 아님");
-                break;
-        }
-
         // 추후 애니메이션 이벤트로 변경 예정
 
         // 애니메이션 시작 시 _canAtkInput = false, _attacking = true;
@@ -251,7 +280,24 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         // AtkOffTimer는 애니메이션 종료 직전에 if-else문(_playerInput._atkInput.Count < 1)으로 
         // _attacking = false;하거나 _curAtkCount = _playerInput._atkInput.Dequeue();
         CanAtkInputOffTimer(0.5f);
-        AtkOffTimer(1.0f);
+        AtkOffTimer(1f);
+    }
+
+    public void ApplyDamage()
+    {
+        if (_hitMobs.Count == 0) return;
+
+        int damage = _playerStat.ATK;
+
+        foreach(var mob in _hitMobs)
+        {
+            if (mob.TryGetComponent<IDamageAlbe>(out var damageable))
+            {
+                damageable.Damaged(damage);
+            }
+        }
+
+        _hitMobs.Clear();
     }
 
     public abstract void Skill();
@@ -261,17 +307,35 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     public virtual void Damaged(int damage)
     {
-        _playerStat.HP -= damage;
-        ChangeState(PlayerState.Damaged);
-        HitOffTimer(0.3f);
+        if (_hitting) return;
+
+        _hitting = true;
+
+        _playerStat.HP -= (damage - _playerStat.DEF);
+
+        if (_playerStat.HP > 0)
+        {
+            // 데미지 상태 안에서 애니메이션 제어가 이루어질 예정이라
+            // 넉백이 있는 공격의 경우에만 데미지로 상태전환 해주면 될 듯
+            // 넉백 공격을 인식하기 위한 조치가 필요
+            // 넉백 공격은 몬스터에서 무언가 처리를 해주고 ( 무언가 변수를 만든다? )
+            // 플레이어가 그 넉백 유무를 판단해 처리하는 작업이 필요
+            ChangeState(PlayerState.Damaged);
+            HitOffTimer(0.3f);
+        }
+        else
+        {
+            ChangeState(PlayerState.Dead);
+        }
+
     }
 
     // 현재 공격 도중 회피 하면 타이머가 진행중에 끊기기때문에 다음 공격이 엄청 짧아짐
     // 이는 추후 애니메이션 이벤트로 처리하게 될시 자동으로 해결될 것
-    #region 타이머들(추후 anim이벤트로 변경)
+    #region 타이머들(추후 anim이벤트로 일부 변경)
     // 추후 애니메이션 이벤트로 변경 예정
-    float _curCAITime = 0;
-    protected void CanAtkInputOffTimer(float targetTime)
+    public float _curCAITime = 0;
+    public void CanAtkInputOffTimer(float targetTime)
     {
         _curCAITime += Time.deltaTime;
 
@@ -283,24 +347,15 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     }
 
     // 추후 애니메이션 이벤트로 변경 예정
-    float _curATime = 0;
-    protected void AtkOffTimer(float targetTime)
+    public float _curATime = 0;
+    public void AtkOffTimer(float targetTime)
     {
         _curATime += Time.deltaTime;
 
         if (_curATime >= targetTime)
         {
             _curATime = 0;
-
-            // 선입력이 없다면 공격 중지
-            if (_playerInput._atkInput.Count < 1)
-            {
-                _attacking = false;
-            }
-            else    // 선입력이 남아있다면 재공격 
-            {
-                _curAtkCount = _playerInput._atkInput.Dequeue();
-            }
+            _attacking = false;
         }
     }
 
@@ -318,7 +373,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         }
     }
 
-    // 추후 애니메이션 이벤트로 변경 예정
+    // 1회성인 데미지에서만 실행되니까 이건 코루틴으로 바꾸던가 해야할듯, 움찔하지 않는 피격의 경우에도 사용해야 하니까 Damage상태에서는 못쓸것같음
     float _curHTime = 0;
     protected void HitOffTimer(float targetTime)
     {

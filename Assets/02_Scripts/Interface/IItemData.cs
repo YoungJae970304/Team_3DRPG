@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IUserData
+public interface IItemData
 {
     //기본 값으로 데이터를 초기화 시켜줌
     void SetDefaultData();

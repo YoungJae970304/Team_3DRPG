@@ -8,7 +8,7 @@ public class PlayerIdleState : BaseState
 
     public override void OnStateEnter()
     {
-
+        _player.AtkCount = 0;
     }
 
     public override void OnStateUpdate()
@@ -18,6 +18,6 @@ public class PlayerIdleState : BaseState
 
     public override void OnStateExit()
     {
-
+        Logger.Log("대기상태 Exit");
     }
 }

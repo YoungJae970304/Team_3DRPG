@@ -10,8 +10,10 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { Init(); return s_instance; } }
     #region Contents
     GameManager _game = new GameManager();
+    DataTableManager _dataTable = new DataTableManager();
 
     public static GameManager Game { get { return Instance._game; } }
+    public static DataTableManager DataTable { get { return Instance._dataTable; } }
     #endregion
 
     #region Core
@@ -22,7 +24,6 @@ public class Managers : MonoBehaviour
     SoundManager _sound = new SoundManager();
     PoolManager _pool = new PoolManager();
     DataManager _data = new DataManager();
-    DataTableManager _dataTable = new DataTableManager();
     
     public static InputManager Input { get { return Instance._input; } }
     public static ResourceManager Resource { get { return Instance._resourece; } }
@@ -31,7 +32,6 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static DataManager Data { get { return Instance._data; } }
-    public static DataTableManager DataTable { get { return Instance._dataTable; } }
     #endregion
 
     private void Awake()
@@ -73,6 +73,8 @@ public class Managers : MonoBehaviour
             s_instance._data.Init();
             s_instance._ui.Init();
             //s_instance._dataTable.Init();
+
+            s_instance._dataTable.Init();
         }
     }
 

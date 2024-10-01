@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
+
+public class ItemDataListWrapper
+{
+    public List<ItemData> ItemDataList { get; set; } = new List<ItemData>();
+}
+
 [Serializable]
-public class ItemData
+public class ItemData : IItemData
 {
     //아이템이 공용으로 사용할 정보들
     [Serializable]
@@ -18,7 +25,7 @@ public class ItemData
 
     public int ID { get { return _id; } set { _id = value; } }
     public string Name { get { return _name; } set { _name = value; } }
-    public int Rarity { get { return _rarity; } set { _rarity = value; } }
+    public int Grade { get { return _grade; } set { _grade = value; } }
     public ItemType Type { get { return _itemType; }set { _itemType = value;} }
     public Sprite IconSprite { get { return _iconSprite; } set { _iconSprite = value; } }
     public int BuyingPrice { get { return _buyingPrice; } set { _buyingPrice = value; } }
@@ -31,7 +38,7 @@ public class ItemData
     //아이템 이름
     [SerializeField] string _name;
     //아이템 등급
-    [SerializeField] int _rarity;
+    [SerializeField] int _grade;
     //아이템 타입
     [SerializeField] ItemType _itemType;
     //아이템 아이콘
@@ -42,4 +49,63 @@ public class ItemData
     [SerializeField] int _sellingPrice;
     //최대 소지 갯수
     [SerializeField] int _maxAmount = 99;
+
+    //아이템 데이터 초기화
+    public void SetDefaultData()
+    {
+        ID = _id;
+        Name = _name;
+        Grade = _grade;
+        Type = _itemType;
+        IconSprite = _iconSprite;
+        BuyingPrice = _buyingPrice;
+        SellingPrice = _sellingPrice;
+        MaxAmount = _maxAmount;
+    }
+
+    public bool LoadData()
+    {
+        Logger.Log($"{GetType()}::LoadData");
+        bool result = false;
+        try
+        {
+            string key = "ItemData_" + ID;
+            string itemDataJson = JsonUtility.ToJson(this);
+            PlayerPrefs.SetString(key, itemDataJson);
+            PlayerPrefs.Save();
+            result = true;
+           
+        }catch(Exception e)
+        {
+            Logger.Log($"Load failed (" + e.Message + ")");
+        }
+        return result;
+
+    }
+
+    public bool SaveData()
+    {
+        Logger.Log($"{GetType()}::Save Data");
+
+        bool result = false;
+        try
+        {
+            string key = "ItemData_" + ID;
+            if (PlayerPrefs.HasKey(key))
+            {
+                string itemDataJson = PlayerPrefs.GetString(key);
+                JsonUtility.FromJsonOverwrite(itemDataJson, this);
+                result = true;
+            }
+            else
+            {
+                Logger.LogWarning("저장된 데이터가 없음");
+            }
+        }
+        catch(Exception e)
+        {
+            Logger.Log("Save failed(" + e.Message + ")");
+        }
+        return result;
+    }
 }

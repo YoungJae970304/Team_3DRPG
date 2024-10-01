@@ -10,6 +10,7 @@ public class PlayerDodgeState : BaseState
 
     public override void OnStateEnter()
     {
+        _player.AtkCount = 0;
         _player._dodgeing = true;
         _player._cc.enabled = false;
     }
@@ -23,7 +24,8 @@ public class PlayerDodgeState : BaseState
     public override void OnStateExit()
     {
         Logger.Log("회피 Exit");
-
+        _player._canAtkInput = true;
+        _player._attacking = false;
         _player._cc.enabled = true;
     }
 
