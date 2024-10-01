@@ -16,7 +16,6 @@ public class TestSkill : SkillBase
         delay = 2f;
     }
 
-
     // 추후 아래의 Enter, Stay, Exit, Passive 들은 스킬마다 스크립트로 새로 제작
     // 그리고 각 스크립트의 Enter, Stay, Exit, Passive 들을 따로 가져와 위에서 조립?하는 식으로 사용할 수 있게 되어있음. ( 전략 패턴 )
     /* 예시) 이런식으로 조합이 가능함

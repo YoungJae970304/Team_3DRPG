@@ -8,7 +8,7 @@ public class PlayerAttackWaitState : BaseState
 
     public override void OnStateEnter()
     {
-        _player._curATime = 0;
+        _player._curATime = 0f;
     }
 
     public override void OnStateUpdate()

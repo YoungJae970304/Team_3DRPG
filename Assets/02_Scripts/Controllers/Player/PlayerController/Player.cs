@@ -279,8 +279,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
         // AtkOffTimer는 애니메이션 종료 직전에 if-else문(_playerInput._atkInput.Count < 1)으로 
         // _attacking = false;하거나 _curAtkCount = _playerInput._atkInput.Dequeue();
-        CanAtkInputOffTimer(1f);
-        AtkOffTimer(2f);
+        CanAtkInputOffTimer(0.5f);
+        AtkOffTimer(1f);
     }
 
     public void ApplyDamage()
