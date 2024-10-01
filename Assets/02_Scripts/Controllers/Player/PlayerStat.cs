@@ -47,8 +47,12 @@ public class PlayerStat : Stat
 
             _level = value;
 
+            MaxHP += 50;
+            PlayerMaxMP += 50;
+            MaxEXP += 100;
+
             HP = MaxHP;
-            PlayerMaxMP = PlayerMaxMP;
+            PlayerMP = PlayerMaxMP;
             SP += 5;
         } 
     }

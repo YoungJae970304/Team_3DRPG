@@ -9,15 +9,6 @@ public class PlayerSkillState : BaseState
     public override void OnStateEnter()
     {
         _player._skillUsing = true;
-        switch(_player._skillIndex)
-        {
-            case 1:
-                Logger.Log("E스킬 발동");
-                break;
-            case 2:
-                Logger.Log("R스킬 발동");
-                break;
-        }
 
         _player._skillBase.SkillEnter(_stat);
     }

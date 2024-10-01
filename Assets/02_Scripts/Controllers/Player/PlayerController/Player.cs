@@ -40,6 +40,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 회피 관련 변수
     [Header("회피 시간")]
     public float _dodgeTime = 0.5f;
+    // 무적 변수
+    [Header("회피 무적 체크")]
+    public bool _invincible = false;
 
     // 공격 관련 변수
     [HideInInspector]
@@ -133,10 +136,13 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStat.MoveSpeed = 5f;
         _playerStat.ATK = 24;
         _playerStat.DEF = 15;
-        #endregion
 
         // 공격 콜라이더 off
         SetColActive("Combo1");
+
+        // 스킬테스트
+        _skillBase = new TestSkill();
+        #endregion  
     }
 
     protected virtual void Update()
@@ -234,6 +240,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
+                if (_hitting) return;
+
                 if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
@@ -257,9 +265,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm.ChangeState(States[_curState]);
     }
 
+    // 공격관련 콜라이더 제어
     public void SetColActive(string colName)
     {
-        // 공격 콜라이더 off
         foreach (var col in _atkColliders)
         {
             col.gameObject.SetActive(col.name == colName);
@@ -276,8 +284,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
         // AtkOffTimer는 애니메이션 종료 직전에 if-else문(_playerInput._atkInput.Count < 1)으로 
         // _attacking = false;하거나 _curAtkCount = _playerInput._atkInput.Dequeue();
-        CanAtkInputOffTimer(1f);
-        AtkOffTimer(2f);
+        CanAtkInputOffTimer(0.5f);
+        AtkOffTimer(1f);
     }
 
     public void ApplyDamage()
@@ -304,9 +312,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     public virtual void Damaged(int damage)
     {
-        if (_hitting) return;
-
-        _hitting = true;
+        // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
+        // 피격 = 피격 모션 중 통짜 무적
+        if (_hitting && _invincible) return;
 
         _playerStat.HP -= (damage - _playerStat.DEF);
 

@@ -12,25 +12,45 @@ public class TestScene : BaseScene
         base.Init();
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Logger.Log(Managers.Game._player.name);
+        ItemManager = Managers.Game._player.GetComponent<Inventory>();
 
-        
+        Opentest();
+        Close();
     }
     public override void Clear()
     {
-       
+        
+
     }
-    [ContextMenu("test")]
-    public void test() {
-        Item item = new EquipmentItem(ItemData);
-        ItemManager.InsertItem(item);
+    [ContextMenu("OpenTest")]
+    public void Opentest() {
+        inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+    }
+    [ContextMenu("OpenNewTest")]
+    public void OpenNewtest()
+    {
+        inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData(),true,true);
+    }
+
+    [ContextMenu("Inserttest")]
+    public void Inserttest() {
         Item item2 = new EquipmentItem(itemData2);
         ItemManager.InsertItem(item2);
-        inventory.UpdateSlot();
+        Item item = new EquipmentItem(ItemData);
+        ItemManager.InsertItem(item);
     }
-    [ContextMenu("remove")]
-    public void remove()
+    [ContextMenu("Removetest")]
+    public void Remove()
     {
-        ItemManager.Remove(0, ItemData.ItemType.Potion);
-        inventory.UpdateSlot();
+        Managers.UI.CloseCurrFrontUI(true);
+    }
+    [ContextMenu("Close")]
+    public void Close() {
+        inventory.CloseUI();
+    }
+    [ContextMenu("CloseLast")]
+    public void CloseLast()
+    {
+        Managers.UI.CloseCurrFrontUI();
     }
 }
