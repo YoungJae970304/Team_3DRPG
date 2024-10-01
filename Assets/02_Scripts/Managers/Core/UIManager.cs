@@ -117,12 +117,10 @@ public class UIManager
 
         ui.gameObject.SetActive(true);
         ui.SetInfo(uidata);
-        SetCanvas(ui.gameObject, sort); //소팅 우선순위 변경
-        ui.ShowUI();
-        baseUIs.AddLast(ui);
         
-        m_FrontUI = ui;
+        ui.ShowUI();
         m_OpenUIPool[uiType] = ui.gameObject;
+        SetCurrentUI(ui, sort); //소팅 우선순위 변경
         return ui as T;
     }
 
@@ -194,21 +192,31 @@ public class UIManager
             m_FrontUI.CloseUI(true);
         }
     }
-    public void SetCanvas(GameObject go, bool sort = true)
+    public void SetCurrentUI(BaseUI ui, bool sort = true)
     {
         // 캔버스 추출
-        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        Canvas canvas = Util.GetOrAddComponent<Canvas>(ui.gameObject);
         // 랜더모드는 무조건 ScreenSpaceOverlay ( 이 경우만 sorting되기 때문 )
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         // 캔버스 안에 캔버스가 중첩해서 있을 때 그 부모가 어떤 값을 가지던 자신은 무조건 내 sorting order를 가진다
         // overrideSorting을 통해 혹시라도 중첩 캔버스라 자식 캔버스가 있더라도 부모 캔버스가 어떤 값을 가지던
         // 자신은 자신의 오더값을 가지려 할 때 true;
         canvas.overrideSorting = true;
-
+        if (baseUIs.Contains(ui)) {
+            baseUIs.Remove(ui);
+        }
+        baseUIs.AddLast(ui);
+        m_FrontUI = ui;
         if (sort)
         {
             canvas.sortingOrder = _order;
             _order++;
+            foreach (BaseUI baseUI in baseUIs) {
+                baseUI.OnIsNotCurrent();
+            }
+            ui.OnIsCurrent();
+
+
         }
         else    // 팝업이랑 상관없는 일반 UI
         {

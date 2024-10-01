@@ -13,16 +13,31 @@ public class BaseUIData
     public Action OnClose;
 }
 
-public class BaseUI : MonoBehaviour {
+public class BaseUI : MonoBehaviour, IPointerDownHandler
+{
     public Animation _UIOpenAnimation;
-
+    public Image TopBarImage;
 
     private Action _OnShow;
     private Action _OnClose;
 
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
+    Vector2 correction;
 
+
+
+    protected virtual void BeginDrag(PointerEventData data)
+    {
+        correction =  TopBarImage.transform.parent.position - (Vector3)data.position;
+    }
+    protected virtual void Drag(PointerEventData data) {
+        TopBarImage.transform.parent.position = data.position+ correction;
+    }
+    protected virtual void EndDrag(PointerEventData data)
+    {
+        
+    }
     // 컴퍼넌트에 연결해줄 함수 형태
     protected void Bind<T>(Type type) where T : UnityEngine.Object    // Type 쓰려면 using System;
     {
@@ -84,7 +99,11 @@ public class BaseUI : MonoBehaviour {
             Logger.LogError("UI does not Have RectTransform");
             return;
         }
-
+        if (TopBarImage != null)
+        {
+            Util.BindUIEvent(TopBarImage.gameObject, BeginDrag, Define.UIEvent.BeginDrag);
+            Util.BindUIEvent(TopBarImage.gameObject, Drag, Define.UIEvent.Drag);
+        }
         rectTransform.localPosition = Vector3.zero;
         rectTransform.localScale = Vector3.one;
         rectTransform.offsetMax = Vector2.zero;
@@ -122,7 +141,23 @@ public class BaseUI : MonoBehaviour {
 
         Managers.UI.CloseUI(this);
     }
-
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Logger.Log("test");
+        if (Managers.UI.GetCurrentFrontUI() != this)
+        {
+            OnIsCurrent();
+            Managers.UI.SetCurrentUI(this);
+        }
+    }
+    public virtual void OnIsCurrent() {
+        if (TopBarImage == null) { return; }
+        TopBarImage.color = Color.red;
+    }
+    public virtual void OnIsNotCurrent() {
+        if (TopBarImage == null) { return; }
+        TopBarImage.color = Color.black;
+    }
     public void OnClosedButton() {
         CloseUI();
     }

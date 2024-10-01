@@ -164,9 +164,6 @@ public class InventoryUI : BaseUI
 
     }
     #endregion
-
-    
-
     public void ChageGroup(int type) {
 
         _currentType = (ItemData.ItemType)type;
@@ -175,4 +172,6 @@ public class InventoryUI : BaseUI
         }
         
     }
+
+    
 }
