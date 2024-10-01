@@ -18,12 +18,22 @@ public enum PlayerState
     Dead
 }
 
+public enum PlayerHitState
+{
+    NomalAttack,
+    SkillAttack,
+    StunAttack,
+}
+
 public abstract class Player : MonoBehaviour, IDamageAlbe
 {
     // 참조용 변수
     Monster _monster;
 
     // 기타 변수
+    [HideInInspector]
+    public PlayerHitState _playerHitState;
+
     [Header("오브젝트 참조")]
     public Transform _playerModel;
     [HideInInspector]
@@ -104,6 +114,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public PlayerInput _playerInput;
     [HideInInspector]
     public PlayerCam _playerCam;
+
+    protected virtual void Awake()
+    {
+        
+    }
 
     protected virtual void Start()
     {
@@ -325,8 +340,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             // 넉백 공격을 인식하기 위한 조치가 필요
             // 넉백 공격은 몬스터에서 무언가 처리를 해주고 ( 무언가 변수를 만든다? )
             // 플레이어가 그 넉백 유무를 판단해 처리하는 작업이 필요
-            ChangeState(PlayerState.Damaged);
-            HitOffTimer(0.3f);
+            if (_playerHitState == PlayerHitState.SkillAttack || _playerHitState == PlayerHitState.StunAttack)
+            {
+                ChangeState(PlayerState.Damaged);
+            }
+            HitOffTimer(0.5f);
         }
         else
         {

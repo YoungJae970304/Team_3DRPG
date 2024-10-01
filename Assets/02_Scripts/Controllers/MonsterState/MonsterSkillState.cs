@@ -15,7 +15,8 @@ public class MonsterSkillState : BaseState
 
     public override void OnStateExit()
     {
-        _monster._mAttackState = MAttackState.NomalAttack;
+       
+        _player._playerHitState = PlayerHitState.NomalAttack;
     }
 
     public override void OnStateUpdate()
