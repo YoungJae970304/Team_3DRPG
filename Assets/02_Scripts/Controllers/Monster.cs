@@ -5,7 +5,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
+using System.Threading.Tasks;
 
+
+public enum MAttackState
+{
+    NomalAttack,
+    SkillAttack,
+    StunAttack,
+}
 public class Monster : MonoBehaviour, IDamageAlbe
 {
 
@@ -26,7 +34,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Player _player;
     public NavMeshAgent _nav;
     public MonsterStat _mStat;
-    
+    public MAttackState _mAttackState;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
     public float _timer = 0;
     public int _randomAttack;
@@ -37,7 +45,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat = GetComponent<MonsterStat>();
          _nav = GetComponent<NavMeshAgent>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-      
+        _mAttackState = MAttackState.NomalAttack;
         _originPos = transform.position;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
@@ -48,13 +56,14 @@ public class Monster : MonoBehaviour, IDamageAlbe
         States.Add(MonsterState.Die, new MonsterDieState(_player, this, _mStat));
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
+        _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
     }
     // Start is called before the first frame update
     void Start()
     {
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
-        _mFSM = new FSM(States[MonsterState.Idle]);
+       
 
         _mStat.MaxHP = 100;
         _mStat.HP = _mStat.MaxHP;
@@ -65,13 +74,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Update is called once per frame
     void Update()
     {
-        BaseState();
+        
         _mFSM.UpdateState();
 
         
         if (_curState == MonsterState.Damage)
         {
-            return; // 다른 업데이트 로직 실행 방지
+            
+            return;
+        }
+        else
+        {
+            BaseState();
         }
     }
     
@@ -119,13 +133,31 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     protected void MChangeState(MonsterState nextState)
     {
-        _curState = nextState;
-        _mFSM.ChangeState(States[_curState]);
+        if(_mFSM == null)
+        {
+            Logger.LogError("FSM이 null");
+            return;
+        }
+        if (States.ContainsKey(nextState))
+        {
+            _curState = nextState;
+            _mFSM.ChangeState(States[_curState]);
+        }
+        else
+        {
+            Logger.LogError($"상태가 유효하지 않음: {nextState}");
+        }
+       
     }
     public virtual void Damaged(int amount)
     {
+        if(_mStat == null)
+        {
+            Logger.LogError("MonsterStat이 null입니다");
+            return;
+        }
         _mStat.HP -= ( amount - _mStat.DEF );
-
+        StartDamege(_player.transform.position, 0.1f, 20f);
         if (_mStat.HP > 0)
         {
             MChangeState(MonsterState.Damage);
@@ -186,9 +218,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
         //예외처리문
     }*/
-    public virtual IEnumerator StartDamege(Vector3 playerPosition, float delay, float pushBack)
+    public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        yield return new WaitForSeconds(delay);
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
@@ -203,11 +234,11 @@ public class Monster : MonoBehaviour, IDamageAlbe
         rb.AddForce(force, ForceMode.Impulse);
 
         // 넉백 후 처리
-        yield return new WaitForSeconds(1); // 넉백 지속 시간 (필요에 따라 조정)
+        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (필요에 따라 조정)
 
         // 넉백이 끝나면 NavMeshAgent를 다시 활성화
-      
-       
+
+
         _nav.enabled = true;
         rb.isKinematic = true; // 다시 비활성화 (필요시)
         if (CanAttackPlayer())

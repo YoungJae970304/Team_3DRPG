@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 4747138439297018842}
   - component: {fileID: 4548036171585476497}
   - component: {fileID: 2581863909052154431}
+  - component: {fileID: 3333236529157362961}
   m_Layer: 0
   m_Name: Ork
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +117,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3636524983878215047}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d9ccc97f1608b048b4fc5dee6669e0a, type: 3}
   m_Name: 
@@ -174,7 +175,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &2581863909052154431
 MonoBehaviour:
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3636524983878215047}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5750073aaaa57854e833c7c0b7186bc3, type: 3}
   m_Name: 
@@ -194,3 +195,20 @@ MonoBehaviour:
   _mStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
+--- !u!114 &3333236529157362961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3636524983878215047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab24970a48883949afcddf26a43f0f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chaseRange: 20
+  _returnRange: 20
+  _attackRange: 2
+  _awayRange: 20
+  _atkDelay: 3

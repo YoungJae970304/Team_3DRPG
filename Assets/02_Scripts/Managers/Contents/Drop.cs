@@ -36,13 +36,17 @@ public class Drop : MonoBehaviour
             "32001", "32002", "32003", "32004", // 2성 악세서리
             "33001", "33002", "33003", "33004"  // 3성 악세서리
         };
-        dropValue = new Dictionary<int, int>
+        dropValue = new Dictionary<int, int> // 드랍 확률
         {
             { 1, 60 },
             { 2, 30 },
             { 3, 10 },
         };
-
+        
+    }
+    private void Update()
+    {
+        DropItemSelect(DeongeonLevel.Hard);
     }
     public static class WeightedRandomizer
     {
