@@ -133,10 +133,13 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStat.MoveSpeed = 5f;
         _playerStat.ATK = 24;
         _playerStat.DEF = 15;
-        #endregion
 
         // 공격 콜라이더 off
         SetColActive("Combo1");
+
+        // 스킬테스트
+        _skillBase = new TestSkill();
+        #endregion  
     }
 
     protected virtual void Update()
@@ -257,9 +260,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm.ChangeState(States[_curState]);
     }
 
+    // 공격관련 콜라이더 제어
     public void SetColActive(string colName)
     {
-        // 공격 콜라이더 off
         foreach (var col in _atkColliders)
         {
             col.gameObject.SetActive(col.name == colName);

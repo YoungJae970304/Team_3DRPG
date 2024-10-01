@@ -110,12 +110,10 @@ public class PlayerInput : MonoBehaviour
         // _player.ChangeState(PlayerState.Skill); 하나만 쓰고 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _player._skillIndex = 1;
             _player.ChangeState(PlayerState.Skill);
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            _player._skillIndex = 2;
             _player.ChangeState(PlayerState.Skill);
         }
     }
