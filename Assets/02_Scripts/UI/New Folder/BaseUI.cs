@@ -26,9 +26,12 @@ public class BaseUI : MonoBehaviour {
     // 컴퍼넌트에 연결해줄 함수 형태
     protected void Bind<T>(Type type) where T : UnityEngine.Object    // Type 쓰려면 using System;
     {
+        if (_objects.ContainsKey(typeof(T)))//이미 바인딩 되어있으면 리턴
+            return;
         string[] names = Enum.GetNames(type);
 
         UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
+        
         _objects.Add(typeof(T), objects);
 
         for (int i = 0; i < names.Length; i++)

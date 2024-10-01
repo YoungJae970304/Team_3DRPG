@@ -12,29 +12,36 @@ public class TestScene : BaseScene
         base.Init();
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Logger.Log(Managers.Game._player.name);
+        ItemManager = Managers.Game._player.GetComponent<Inventory>();
 
-        Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
-         
+        Opentest();
+        Close();
     }
     public override void Clear()
     {
-       
+        
+
     }
-    [ContextMenu("test")]
-    public void test() {
+    [ContextMenu("OpenTest")]
+    public void Opentest() {
+        inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+    }
+
+    [ContextMenu("Inserttest")]
+    public void Inserttest() {
         Item item2 = new EquipmentItem(itemData2);
         ItemManager.InsertItem(item2);
         Item item = new EquipmentItem(ItemData);
         ItemManager.InsertItem(item);
     }
-    [ContextMenu("remove")]
-    public void remove()
+    [ContextMenu("Removetest")]
+    public void Remove()
     {
         ItemManager.Remove(0, ItemData.ItemType.Potion);
         inventory.UpdateSlot();
     }
-    [ContextMenu("close")]
-    public void close() {
+    [ContextMenu("Close")]
+    public void Close() {
         Managers.UI.CloseUI(inventory);
     }
 }

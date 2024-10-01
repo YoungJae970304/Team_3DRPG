@@ -30,26 +30,26 @@ public class InventoryUI : BaseUI
 
     public List<InventorySlot> _inventorySlots;
     // Start is called before the first frame update
-    public override void Init(Transform anchor)
+    public void Awake()
     {
-        base.Init(anchor);
         Bind<GameObject>(typeof(GameObjects));
         _raycaster = GetComponent<GraphicRaycaster>();
         _pointerEvent = new PointerEventData(EventSystem.current);
         _inventory = Managers.Game._player.GetComponent<Inventory>();
         _inventory.GetItemAction += UpdateSlot;
         SlotSetting(_currentType);
+        
+    }
+    public override void Init(Transform anchor)
+    {
+        base.Init(anchor);
         UpdateSlot();
     }
     public override void SetInfo(BaseUIData uiData)
     {
         base.SetInfo(uiData);
     }
-    void Start()
-    {
-        
-        
-    }
+
 
     private void Update()
     {

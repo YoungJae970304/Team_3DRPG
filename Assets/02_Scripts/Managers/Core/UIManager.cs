@@ -87,7 +87,7 @@ public class UIManager
         return ui;
     }
 
-    public void OpenUI<T>(BaseUIData uidata)
+    public T OpenUI<T>(BaseUIData uidata) where T : BaseUI
     {
         System.Type uiType = typeof(T);
 
@@ -100,17 +100,17 @@ public class UIManager
         if (!ui)
         {
             Logger.Log($"{uiType} dose not exist");
-            return;
+            return null;
         }
 
         if (isAlreadyOpen)//이미 열려있으면 비정상적인 요청이라고 로그
         {
             Logger.Log($"{uiType} is Already Open ");
-            return;
+            return null;
         }
 
         var siblingIdx = UICanvasTrs.childCount - 1;//하위 오브젝트 개수
-        ui.Init(UICanvasTrs);//화면 초기화
+        ui.Init(UICanvasTrs);//화면 초기화   
 
         ui.transform.SetSiblingIndex(siblingIdx);
         //하이어라키 창 우선순위변경
@@ -121,6 +121,7 @@ public class UIManager
 
         m_FrontUI = ui;
         m_OpenUIPool[uiType] = ui.gameObject;
+        return ui as T;
     }
 
     public void CloseUI(BaseUI ui)
