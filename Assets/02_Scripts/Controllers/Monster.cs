@@ -7,6 +7,13 @@ using UnityEngine.AI;
 using UnityEngine.XR;
 using System.Threading.Tasks;
 
+
+public enum MAttackState
+{
+    NomalAttack,
+    SkillAttack,
+    StunAttack,
+}
 public class Monster : MonoBehaviour, IDamageAlbe
 {
 
@@ -27,7 +34,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Player _player;
     public NavMeshAgent _nav;
     public MonsterStat _mStat;
-    
+    public MAttackState _mAttackState;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
     public float _timer = 0;
     public int _randomAttack;
@@ -38,7 +45,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat = GetComponent<MonsterStat>();
          _nav = GetComponent<NavMeshAgent>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-      
+        _mAttackState = MAttackState.NomalAttack;
         _originPos = transform.position;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
@@ -49,13 +56,14 @@ public class Monster : MonoBehaviour, IDamageAlbe
         States.Add(MonsterState.Die, new MonsterDieState(_player, this, _mStat));
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
+        _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
     }
     // Start is called before the first frame update
     void Start()
     {
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
-        _mFSM = new FSM(States[MonsterState.Idle]);
+       
 
         _mStat.MaxHP = 100;
         _mStat.HP = _mStat.MaxHP;
@@ -125,13 +133,31 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     protected void MChangeState(MonsterState nextState)
     {
-        _curState = nextState;
-        _mFSM.ChangeState(States[_curState]);
+        if(_mFSM == null)
+        {
+            Logger.LogError("FSM이 null");
+            return;
+        }
+        if (States.ContainsKey(nextState))
+        {
+            _curState = nextState;
+            _mFSM.ChangeState(States[_curState]);
+        }
+        else
+        {
+            Logger.LogError($"상태가 유효하지 않음: {nextState}");
+        }
+       
     }
     public virtual void Damaged(int amount)
     {
+        if(_mStat == null)
+        {
+            Logger.LogError("MonsterStat이 null입니다");
+            return;
+        }
         _mStat.HP -= ( amount - _mStat.DEF );
-
+        StartDamege(_player.transform.position, 0.1f, 20f);
         if (_mStat.HP > 0)
         {
             MChangeState(MonsterState.Damage);
