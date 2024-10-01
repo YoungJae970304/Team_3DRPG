@@ -22,12 +22,14 @@ public class Ork : Monster
     {
         Logger.Log("NomalAttack");
         _mAttackState = MAttackState.NomalAttack;
+        _player._playerHitState = PlayerHitState.NomalAttack;
         AttackPlayer();
     }
     public void SkillAttack()
     {
         Logger.Log("SkillAttack");
         _mAttackState = MAttackState.SkillAttack;
+        _player._playerHitState = PlayerHitState.SkillAttack;
         AttackPlayer();
     }
 

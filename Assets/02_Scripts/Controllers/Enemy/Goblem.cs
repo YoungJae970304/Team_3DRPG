@@ -21,6 +21,7 @@ public class Goblem : Monster, IDamageAlbe
     {
         Logger.Log("NomalAttack");
         _mAttackState = MAttackState.NomalAttack;
+        _player._playerHitState = PlayerHitState.NomalAttack;
         AttackPlayer();
     }
     public void SkillAttack()
@@ -28,6 +29,7 @@ public class Goblem : Monster, IDamageAlbe
         Logger.Log("SkillAttack");
         AttackPlayer();
         _mAttackState = MAttackState.SkillAttack;
+        _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
