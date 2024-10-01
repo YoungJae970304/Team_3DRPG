@@ -12,20 +12,6 @@ public class InventorySlot : MonoBehaviour
     Inventory _itemManager;
     InventoryUI _inventory;
     [SerializeField] Text _text;
-    private void Awake()
-    {
-
-    }
-    private void Start()
-    {
-        
-        
-    }
-
-    public void OnEnable()
-    {
-        //UpdateInfo();
-    }
 
     public void Init(Inventory itemManager, InventoryUI inventory) {
         _itemManager = itemManager;
@@ -35,6 +21,7 @@ public class InventorySlot : MonoBehaviour
 
     public void UpdateInfo()
     {
+        
         _item = _itemManager.GetItem(_index, _inventory._currentType);
         if (_item == null)
         {
@@ -42,6 +29,7 @@ public class InventorySlot : MonoBehaviour
             _text.text = "";
             return;
         }
+        
         _Image.enabled = true;
         _Image.sprite = _item.Data.IconSprite == null ? _Image.sprite : _item.Data.IconSprite;
         if (_item is CountableItem)

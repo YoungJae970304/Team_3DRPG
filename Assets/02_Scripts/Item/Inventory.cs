@@ -40,10 +40,11 @@ public class Inventory : MonoBehaviour//인벤토리
 
     public bool InsertItem(Item item)//아이템 삽입 빈칸이있으면 빈칸으로 중복이있으면 합쳐짐
     {
+        bool result = ItemDick[item.Data.Type].Insert(item);
         GetItemAction?.Invoke();
         Logger.Log(item.Data.Name);
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
-        return ItemDick[item.Data.Type].Insert(item);
+        return result;
     }
 
     public Item GetItem(int index, ItemData.ItemType type)//인덱스와 타입으로 아이템을 인벤토리에서 가져온다

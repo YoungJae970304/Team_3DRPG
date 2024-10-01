@@ -8,7 +8,7 @@ using TMPro;
 
 public class Util
 {
-    // °ÔÀÓ¿ÀºêÁ§Æ®¿ë ¹Ì¸® ¸¸µé¾îµĞ ·¦ÇÎ
+    // ê²Œì„ì˜¤ë¸Œì íŠ¸ìš© ë¯¸ë¦¬ ë§Œë“¤ì–´ë‘” ë©í•‘
     public static GameObject FindChild(GameObject go, string name = null, bool recursive = false)
     {
                             // T FindChild<T>
@@ -20,15 +20,15 @@ public class Util
         return transform.gameObject;
     }
 
-    // ÃÖ»óÀ§ ºÎ¸ğ, ÀÌ¸§Àº ºñ±³ÇÏÁö ¾Ê°í ±× Å¸ÀÔ¿¡¸¸ ÇØ´çÇÏ¸é ¸®ÅÏ ( ÄÄÆÛ³ÍÆ® ÀÌ¸§ ),
-    // Àç±ÍÀûÀ¸·Î »ç¿ë, ÀÚ½Ä¸¸ Ã£À»°ÇÁö ÀÚ½ÄÀÇ ÀÚ½Äµµ Ã£À» °ÇÁö
+    // ìµœìƒìœ„ ë¶€ëª¨, ì´ë¦„ì€ ë¹„êµí•˜ì§€ ì•Šê³  ê·¸ íƒ€ì…ì—ë§Œ í•´ë‹¹í•˜ë©´ ë¦¬í„´ ( ì»´í¼ë„ŒíŠ¸ ì´ë¦„ ),
+    // ì¬ê·€ì ìœ¼ë¡œ ì‚¬ìš©, ìì‹ë§Œ ì°¾ì„ê±´ì§€ ìì‹ì˜ ìì‹ë„ ì°¾ì„ ê±´ì§€
     public static T FindChild<T>(GameObject go, string name = null, bool recursive = false)
         where T : UnityEngine.Object
     {
         if (go == null)
             return null;
 
-        if (recursive == false) // Á÷¼Ó ÀÚ½Ä¸¸
+        if (recursive == false) // ì§ì† ìì‹ë§Œ
         {
             for (int i = 0; i < go.transform.childCount; i++)
             {
@@ -41,10 +41,10 @@ public class Util
                 }
             }
         }
-        else    // ÀÚ½ÄÀÇ ÀÚ½Ä±îÁö
+        else    // ìì‹ì˜ ìì‹ê¹Œì§€
         {
             foreach (T component in go.GetComponentsInChildren<T>())
-            {   // ÀÌ¸§ÀÌ ºñ¾îÀÖ°Å³ª ³»°¡ Ã£À¸·Á´Â ÀÌ¸§°ú °°´Ù¸é
+            {   // ì´ë¦„ì´ ë¹„ì–´ìˆê±°ë‚˜ ë‚´ê°€ ì°¾ìœ¼ë ¤ëŠ” ì´ë¦„ê³¼ ê°™ë‹¤ë©´
                 if (string.IsNullOrEmpty(name) || component.name == name)
                     return component;
             }
@@ -53,7 +53,7 @@ public class Util
         return null;
     }
 
-    // °ÔÀÓ¿ÀºêÁ§Æ®(go)¿¡ ÇØ´ç ÄÄÆ÷³ÍÆ®°¡ ¾øÀ¸¸é T ÄÄÆ÷³ÍÆ® Ãß°¡
+    // ê²Œì„ì˜¤ë¸Œì íŠ¸(go)ì— í•´ë‹¹ ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìœ¼ë©´ T ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
     public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
     {
         T component = go.GetComponent<T>();
@@ -68,13 +68,13 @@ public class Util
     public static bool ChackFOV(Transform player, Transform target, int angle, int radius)
     {
 
-        // ½Ã¾ß°¢ÀÌ 90µµÀÏ ¶§, 45µµ
+        // ì‹œì•¼ê°ì´ 90ë„ì¼ ë•Œ, 45ë„
         Vector3 rightDir = AngleToDir(angle * 0.5f);
         
-        // ½Ã¾ß°¢ÀÌ 90µµÀÏ ¶§, -45µµ
+        // ì‹œì•¼ê°ì´ 90ë„ì¼ ë•Œ, -45ë„
         Vector3 leftDir = AngleToDir(angle * -1 * 0.5f);
 
-        // ¿¬»êÀ» ºü¸£°Ô Ã³¸®ÇÏ±â À§ÇØ Á¦°öµÈ °ªÀ» ±¸ÇÑ´Ù.
+        // ì—°ì‚°ì„ ë¹ ë¥´ê²Œ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ ì œê³±ëœ ê°’ì„ êµ¬í•œë‹¤.
         float sqrDistance = Vector3.SqrMagnitude(target.position - player.position);
         if (sqrDistance < radius * radius &&
             GetAngle(player.position, target.position) < angle * 0.5f)
@@ -86,8 +86,8 @@ public class Util
 
     static Vector3 AngleToDir(float angle)
     {
-        // UnityEngine.Mathf ÀÇ Sin, Cos ¿¡ µé¾î°¡´Â ÆÄ¶ó¹ÌÅÍ °ªÀº ¶óµğ¾ÈÀÌ´Ù.
-        // ±×·¯¹Ç·Î, ¶óµğ¾ÈÀ¸·Î ¹Ù²ãÁà¾ß ÇÑ´Ù. 
+        // UnityEngine.Mathf ì˜ Sin, Cos ì— ë“¤ì–´ê°€ëŠ” íŒŒë¼ë¯¸í„° ê°’ì€ ë¼ë””ì•ˆì´ë‹¤.
+        // ê·¸ëŸ¬ë¯€ë¡œ, ë¼ë””ì•ˆìœ¼ë¡œ ë°”ê¿”ì¤˜ì•¼ í•œë‹¤. 
         float rad = angle * Mathf.Deg2Rad;
         return new Vector3(Mathf.Sin(rad), 0, Mathf.Cos(rad));
     }
@@ -97,11 +97,35 @@ public class Util
         Vector3 direction = target.normalized - origin.normalized;
 
         /**
-         * z°¡ Àü¹æÀÌ±â ¶§¹®¿¡
-         * y ÆÄ¶ó¹ÌÅÍ : x
-         * x ÆÄ¶ó¹ÌÅÍ : z
-         * °ªÀÌ µé¾î°£´Ù.
+         * zê°€ ì „ë°©ì´ê¸° ë•Œë¬¸ì—
+         * y íŒŒë¼ë¯¸í„° : x
+         * x íŒŒë¼ë¯¸í„° : z
+         * ê°’ì´ ë“¤ì–´ê°„ë‹¤.
          */
         return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+    }
+    public static void BindUIEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
+    {
+        UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
+
+        switch (type)
+        {
+            case Define.UIEvent.Click:
+                evt.OnClickHandler -= action;
+                evt.OnClickHandler += action;
+                break;
+            case Define.UIEvent.Drag:
+                evt.OnDragHandler -= action;
+                evt.OnDragHandler += action;
+                break;
+            case Define.UIEvent.BeginDrag:
+                evt.OnBeginDragHandler -= action;
+                evt.OnBeginDragHandler += action;
+                break;
+            case Define.UIEvent.EndDrag:
+                evt.OnEndDragHandler -= action;
+                evt.OnEndDragHandler += action;
+                break;
+        }
     }
 }
