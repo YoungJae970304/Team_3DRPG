@@ -102,30 +102,35 @@ public class BossBear : Monster, IDamageAlbe
         Logger.Log("EarthquakeAttack");
         AttackPlayer();
         _mAttackState = MAttackState.SkillAttack;
+        _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void LeftBiteAttack()
     {
         Logger.Log("LeftBiteAttack");
         AttackPlayer();
         _mAttackState = MAttackState.SkillAttack;
+        _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void RightBiteAttack()
     {
         Logger.Log("RightBiteAttack");
         AttackPlayer();
         _mAttackState = MAttackState.SkillAttack;
+        _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void LeftHandAttack()
     {
         Logger.Log("LeftHandAttack");
         AttackPlayer();
         _mAttackState = MAttackState.SkillAttack;
+        _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void RightHandAttack()
     {
         Logger.Log("RightHandAttack");
         AttackPlayer();
         _mAttackState = MAttackState.SkillAttack;
+        _player._playerHitState = PlayerHitState.SkillAttack;
     }
 
     public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
