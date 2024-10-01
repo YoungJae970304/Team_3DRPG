@@ -6,7 +6,6 @@ public class ItemPickup : MonoBehaviour
     Inventory _inventory;
     Item _item;
     [SerializeField] float _pickupSpeed = 10f;
-    bool _isPickup = false;
 
     private void Awake()
     {
@@ -27,7 +26,6 @@ public class ItemPickup : MonoBehaviour
         float distance = Vector3.Distance(transform.position, _player.position);
         Renderer renderer = GetComponent<Renderer>();
 
-        _isPickup = true;
         Sequence seq = DOTween.Sequence();
         //transform.position = Vector3.MoveTowards(transform.position, _player.position, _pickupSpeed * Time.deltaTime);
         //플레이어에게 이동
