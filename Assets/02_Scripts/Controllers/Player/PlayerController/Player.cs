@@ -40,6 +40,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 회피 관련 변수
     [Header("회피 시간")]
     public float _dodgeTime = 0.5f;
+    // 무적 변수
+    [Header("회피 무적 체크")]
+    public bool _invincible = false;
 
     // 공격 관련 변수
     [HideInInspector]
@@ -237,6 +240,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
+                if (_hitting) return;
+
                 if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
@@ -307,9 +312,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     public virtual void Damaged(int damage)
     {
-        if (_hitting) return;
-
-        _hitting = true;
+        // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
+        // 피격 = 피격 모션 중 통짜 무적
+        if (_hitting && _invincible) return;
 
         _playerStat.HP -= (damage - _playerStat.DEF);
 

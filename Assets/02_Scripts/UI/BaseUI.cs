@@ -13,16 +13,32 @@ public class BaseUIData
     public Action OnClose;
 }
 
-public class BaseUI : MonoBehaviour {
+public class BaseUI : MonoBehaviour, IPointerDownHandler
+{
     public Animation _UIOpenAnimation;
-
+    public Image TopBarImage;
 
     private Action _OnShow;
     private Action _OnClose;
 
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
+    #region 드래그 구현부
+    Vector2 correction;
+    protected virtual void BeginDrag(PointerEventData data)
+    {
+        correction =  TopBarImage.transform.parent.position - (Vector3)data.position;
+    }
+    protected virtual void Drag(PointerEventData data) {
+        TopBarImage.transform.parent.position = data.position+ correction;
+    }
+    protected virtual void EndDrag(PointerEventData data)
+    {
+        
+    }
+    #endregion
 
+    #region Bind구현부
     // 컴퍼넌트에 연결해줄 함수 형태
     protected void Bind<T>(Type type) where T : UnityEngine.Object    // Type 쓰려면 using System;
     {
@@ -69,6 +85,27 @@ public class BaseUI : MonoBehaviour {
     protected TextMeshProUGUI GetText(int idx) { return Get<TextMeshProUGUI>(idx); }
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
+    #endregion
+
+    #region 클릭시 최상위로 변경
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (Managers.UI.GetCurrentFrontUI() != this)
+        {
+            Managers.UI.SetCurrentUI(this);
+        }
+    }
+    public virtual void OnIsCurrent()
+    {
+        if (TopBarImage == null) { return; }
+        TopBarImage.color = Color.red;
+    }
+    public virtual void OnIsNotCurrent()
+    {
+        if (TopBarImage == null) { return; }
+        TopBarImage.color = Color.black;
+    }
+    #endregion
 
     public virtual void Init(Transform anchor) {
         Logger.Log($"{GetType()} init");
@@ -84,7 +121,11 @@ public class BaseUI : MonoBehaviour {
             Logger.LogError("UI does not Have RectTransform");
             return;
         }
-
+        if (TopBarImage != null)
+        {
+            Util.BindUIEvent(TopBarImage.gameObject, BeginDrag, Define.UIEvent.BeginDrag);
+            Util.BindUIEvent(TopBarImage.gameObject, Drag, Define.UIEvent.Drag);
+        }
         rectTransform.localPosition = Vector3.zero;
         rectTransform.localScale = Vector3.one;
         rectTransform.offsetMax = Vector2.zero;
@@ -122,7 +163,7 @@ public class BaseUI : MonoBehaviour {
 
         Managers.UI.CloseUI(this);
     }
-
+    
     public void OnClosedButton() {
         CloseUI();
     }
