@@ -9,11 +9,14 @@ public class PlayerInput : MonoBehaviour
 
     public Queue<int> _atkInput = new Queue<int>();
 
-    void Start()
+    private void Awake()
     {
         _player = gameObject.GetOrAddComponent<Player>();
         Managers.Game._player = _player;
+    }
 
+    void Start()
+    {
         Managers.Input.KeyAction -= MoveInput;
         Managers.Input.KeyAction += MoveInput;
 
@@ -31,6 +34,8 @@ public class PlayerInput : MonoBehaviour
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 
     void MoveInput()
     {
+        if (_player._dodgeing) return;
+
         _player._rotDir = Vector3.zero;
         _player._isMoving = false;
 
@@ -74,7 +79,7 @@ public class PlayerInput : MonoBehaviour
 
     void DodgeInput()
     {
-        if (_player._skillUsing) return;
+        if (_player._skillUsing || _player._dodgeing) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

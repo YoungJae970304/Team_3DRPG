@@ -95,17 +95,17 @@ GameObject:
   m_Component:
   - component: {fileID: 8090862857995682411}
   - component: {fileID: 7642803941982465628}
+  - component: {fileID: 8909345481069742244}
   - component: {fileID: 1516078326189676196}
   - component: {fileID: 7730115033510396560}
   - component: {fileID: 75515129276120943}
-  - component: {fileID: 8909345481069742244}
   m_Layer: 0
   m_Name: MeleePlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8090862857995682411
 Transform:
   m_ObjectHideFlags: 0
@@ -149,6 +149,43 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8909345481069742244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918571816801624183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d43ecadc6b57a41b542f8120875f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerModel: {fileID: 2615630656875482108}
+  _playerType: 0
+  _moveDir: {x: 0, y: 0, z: 0}
+  _rotDir: {x: 0, y: 0, z: 0}
+  _rotSpeed: 0.2
+  _dodgeTime: 0.5
+  _canAtkInput: 1
+  _curAtkCount: 0
+  _atkColliders:
+  - {fileID: 6187484956664893051}
+  - {fileID: 2737017108277919504}
+  - {fileID: 5966816431286782040}
+  _hitMobs: []
+  _skillIndex: 0
+  _isMoving: 0
+  _dodgeing: 0
+  _attacking: 0
+  _skillUsing: 0
+  _hitting: 0
+  _cc: {fileID: 0}
+  _playerStat: {fileID: 0}
+  _playerInput: {fileID: 0}
+  _playerCam: {fileID: 0}
+  _curCAITime: 0
+  _curATime: 0
 --- !u!114 &1516078326189676196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,43 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d8331f3bfb48d448c949b2a263e3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8909345481069742244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1918571816801624183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42d43ecadc6b57a41b542f8120875f1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerModel: {fileID: 2615630656875482108}
-  _playerType: 0
-  _moveDir: {x: 0, y: 0, z: 0}
-  _rotDir: {x: 0, y: 0, z: 0}
-  _rotSpeed: 0.2
-  _dodgeTime: 0.5
-  _canAtkInput: 1
-  _curAtkCount: 0
-  _atkColliders:
-  - {fileID: 6187484956664893051}
-  - {fileID: 2737017108277919504}
-  - {fileID: 5966816431286782040}
-  _hitMobs: []
-  _skillIndex: 0
-  _isMoving: 0
-  _dodgeing: 0
-  _attacking: 0
-  _skillUsing: 0
-  _hitting: 0
-  _cc: {fileID: 0}
-  _playerStat: {fileID: 0}
-  _playerInput: {fileID: 0}
-  _playerCam: {fileID: 0}
-  _curCAITime: 0
-  _curATime: 0
 --- !u!1 &3134236904705541499
 GameObject:
   m_ObjectHideFlags: 0

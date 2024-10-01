@@ -12,7 +12,7 @@ public class PlayerDodgeState : BaseState
     {
         _player.AtkCount = 0;
         _player._dodgeing = true;
-        _player._cc.enabled = false;
+        _player._invincible = true;
     }
 
     public override void OnStateUpdate()
@@ -24,9 +24,9 @@ public class PlayerDodgeState : BaseState
     public override void OnStateExit()
     {
         Logger.Log("회피 Exit");
+        _player._rotDir = Vector3.zero;
         _player._canAtkInput = true;
         _player._attacking = false;
-        _player._cc.enabled = true;
     }
 
     void Dodge()
@@ -47,17 +47,23 @@ public class PlayerDodgeState : BaseState
         // 회피 방향
         _player._moveDir = _player._playerModel.transform.forward * _player._playerStat.DodgeSpeed * Time.deltaTime;
         // 회피
-        _player.transform.position += _player._moveDir;
+        _player._cc.Move(_player._moveDir);
     }
 
     // 일정 시간 후 회피 상태 해제
     void DodgeTimer()
     {
         _curTime += Time.deltaTime;
+
+        if (_curTime > _player._dodgeTime * 0.5f)
+        {
+            _player._invincible = false;
+        }
+
         if (_curTime > _player._dodgeTime)
         {
-            _player._dodgeing = false;
             _curTime = 0;
+            _player._dodgeing = false;
         }
     }
 }

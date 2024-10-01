@@ -36,13 +36,26 @@ public class PlayerCam : MonoBehaviour
 
     private void Start()
     {
+        VirtualCamInit();
+
         _cameraMode = Define.CameraMode.QuarterView;
         _curCam = _cmQuarterCam;
         _originFov = _curCam.m_Lens.FieldOfView;
     }
 
+    void VirtualCamInit()
+    {
+        // 어떤 플레이어가 들어오냐에 따라 추적해야 할 대상이 다르기 때문에 시작시 Follow와 LookAt 초기화
+        _cmQuarterCam.Follow = Managers.Game._player.transform.Find("CameraArm");
+        _cmQuarterCam.LookAt = Managers.Game._player.transform.Find("PlayerModel");
+        _cmZoomCam.Follow = Managers.Game._player.transform.Find("CameraArm");
+        _cmZoomCam.LookAt = Managers.Game._player.transform.Find("PlayerModel");
+    }
+
     void Update()
     {
+        // Managers.UI.Ex뭐시기 UI열려있는 bool이 true면 return
+
         ChangeCMCam();
         LookAround();
 
