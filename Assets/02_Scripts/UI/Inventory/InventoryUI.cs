@@ -60,7 +60,8 @@ public class InventoryUI : BaseUI
        int size= _inventory.GetGroupSize(type);
         _inventorySlots = new List<InventorySlot>();
         for (int i = 0; i < size; i++) {
-            InventorySlot slot= Managers.Resource.Instantiate("UI/Slot", GetGameObject((int)GameObjects.Slots).transform).GetComponent<InventorySlot>();
+            InventorySlot slot= Managers.Resource.Instantiate("UI/Slot",
+                GetGameObject((int)GameObjects.Slots).transform).GetOrAddComponent<InventorySlot>();
             slot.Init(_inventory,this);
             _inventorySlots.Add(slot);
         }
@@ -164,6 +165,7 @@ public class InventoryUI : BaseUI
 
     }
     #endregion
+
     public void ChageGroup(int type) {
 
         _currentType = (ItemData.ItemType)type;
