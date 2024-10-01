@@ -13,7 +13,8 @@ public class TestScene : BaseScene
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Logger.Log(Managers.Game._player.name);
 
-        
+        Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+         
     }
     public override void Clear()
     {
@@ -21,16 +22,19 @@ public class TestScene : BaseScene
     }
     [ContextMenu("test")]
     public void test() {
-        Item item = new EquipmentItem(ItemData);
-        ItemManager.InsertItem(item);
         Item item2 = new EquipmentItem(itemData2);
         ItemManager.InsertItem(item2);
-        inventory.UpdateSlot();
+        Item item = new EquipmentItem(ItemData);
+        ItemManager.InsertItem(item);
     }
     [ContextMenu("remove")]
     public void remove()
     {
         ItemManager.Remove(0, ItemData.ItemType.Potion);
         inventory.UpdateSlot();
+    }
+    [ContextMenu("close")]
+    public void close() {
+        Managers.UI.CloseUI(inventory);
     }
 }

@@ -17,8 +17,8 @@ public abstract class UI_Base : MonoBehaviour
         Init();
     }
 
-    // ÄÄÆÛ³ÍÆ®¿¡ ¿¬°áÇØÁÙ ÇÔ¼ö ÇüÅÂ
-    protected void Bind<T>(Type type) where T : UnityEngine.Object    // Type ¾²·Á¸é using System;
+    // ì»´í¼ë„ŒíŠ¸ì— ì—°ê²°í•´ì¤„ í•¨ìˆ˜ í˜•íƒœ
+    protected void Bind<T>(Type type) where T : UnityEngine.Object    // Type ì“°ë ¤ë©´ using System;
     {
         string[] names = Enum.GetNames(type);
 
@@ -27,7 +27,7 @@ public abstract class UI_Base : MonoBehaviour
 
         for (int i = 0; i < names.Length; i++)
         {
-            // °ÔÀÓ ¿ÀºêÁ§Æ®¿ë Àü¿ë ¹öÀüÀ» ÇÏ³ª ´õ ¸¸µé¾îÁÜ
+            // ê²Œì„ ì˜¤ë¸Œì íŠ¸ìš© ì „ìš© ë²„ì „ì„ í•˜ë‚˜ ë” ë§Œë“¤ì–´ì¤Œ
             if (typeof(T) == typeof(GameObject))
             {
                 objects[i] = Util.FindChild(gameObject, names[i], true);
@@ -37,7 +37,7 @@ public abstract class UI_Base : MonoBehaviour
                 objects[i] = Util.FindChild<T>(gameObject, names[i], true);
             }
 
-            // Àß Ã£¾ÆÁÖ°í ÀÖ´ÂÁö Å×½ºÆ®
+            // ì˜ ì°¾ì•„ì£¼ê³  ìˆëŠ”ì§€ í…ŒìŠ¤íŠ¸
             if (objects[i] == null)
             {
                 Debug.Log($"Failed to bind({names[i]})");
@@ -48,34 +48,19 @@ public abstract class UI_Base : MonoBehaviour
     protected T Get<T>(int idx) where T : UnityEngine.Object
     {
         UnityEngine.Object[] objects = null;
-        if (_objects.TryGetValue(typeof(T), out objects) == false)  // °ªÀÌ ¾øÀ¸¸é ±×³É ¸®ÅÏ
+        if (_objects.TryGetValue(typeof(T), out objects) == false)  // ê°’ì´ ì—†ìœ¼ë©´ ê·¸ëƒ¥ ë¦¬í„´
             return null;
 
-        return objects[idx] as T;   // ¿ÀºêÁ§Ã÷¿¡´Ù°¡ ÀÎµ¦½º ¹øÈ£¸¦ ÃßÃâÇÑ ´ÙÀ½¿¡ T·Î Ä³½ºÆÃ ÇØÁÜ
+        return objects[idx] as T;   // ì˜¤ë¸Œì ì¸ ì—ë‹¤ê°€ ì¸ë±ìŠ¤ ë²ˆí˜¸ë¥¼ ì¶”ì¶œí•œ ë‹¤ìŒì— Të¡œ ìºìŠ¤íŒ… í•´ì¤Œ
     }
 
 
-    // ÀÚÁÖ »ç¿ëÇÏ´Â °ÍµéÀº Get<T> ¸¦ ÀÌ¿ëÇÏÁö ¾Ê°í ¹Ù·Î »ç¿ëÇÒ ¼ö ÀÖ°Ô ¸¸µé¾î µÎÀÚ
+    // ìì£¼ ì‚¬ìš©í•˜ëŠ” ê²ƒë“¤ì€ Get<T> ë¥¼ ì´ìš©í•˜ì§€ ì•Šê³  ë°”ë¡œ ì‚¬ìš©í•  ìˆ˜ ìˆê²Œ ë§Œë“¤ì–´ ë‘ì
     protected GameObject GameObject(int idx) { return Get<GameObject>(idx); }
     protected TextMeshProUGUI GetText(int idx) { return Get<TextMeshProUGUI>(idx); }
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
 
     
-    public static void BindUIEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
-    {
-        UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
-
-        switch (type)
-        {
-            case Define.UIEvent.Click:
-                evt.OnClickHandler -= action;
-                evt.OnClickHandler += action;
-                break;
-            case Define.UIEvent.Drag:
-                evt.OnDragHandler -= action;
-                evt.OnDragHandler += action;
-                break;
-        }
-    }
+    
 }

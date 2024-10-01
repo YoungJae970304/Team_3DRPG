@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class InventoryUI : MonoBehaviour
+public class InventoryUI : BaseUI
 {
     public ItemData.ItemType _currentType= ItemData.ItemType.Potion;
 
@@ -23,17 +23,32 @@ public class InventoryUI : MonoBehaviour
         } 
     }
 
+    enum GameObjects {
+        Slots,
+
+    }
+
     public List<InventorySlot> _inventorySlots;
     // Start is called before the first frame update
-    void Start()
+    public override void Init(Transform anchor)
     {
-
+        base.Init(anchor);
+        Bind<GameObject>(typeof(GameObjects));
         _raycaster = GetComponent<GraphicRaycaster>();
-        _pointerEvent = new PointerEventData( EventSystem.current);
+        _pointerEvent = new PointerEventData(EventSystem.current);
+        _inventory = Managers.Game._player.GetComponent<Inventory>();
         _inventory.GetItemAction += UpdateSlot;
         SlotSetting(_currentType);
         UpdateSlot();
-        //Managers.Input.UIMouseAction += MouseInput;
+    }
+    public override void SetInfo(BaseUIData uiData)
+    {
+        base.SetInfo(uiData);
+    }
+    void Start()
+    {
+        
+        
     }
 
     private void Update()
@@ -45,7 +60,7 @@ public class InventoryUI : MonoBehaviour
        int size= _inventory.GetGroupSize(type);
         _inventorySlots = new List<InventorySlot>();
         for (int i = 0; i < size; i++) {
-            InventorySlot slot= Managers.Resource.Instantiate("UI/Slot", _itemTrs).GetComponent<InventorySlot>();
+            InventorySlot slot= Managers.Resource.Instantiate("UI/Slot", GetGameObject((int)GameObjects.Slots).transform).GetComponent<InventorySlot>();
             slot.Init(_inventory,this);
             _inventorySlots.Add(slot);
         }
@@ -61,12 +76,12 @@ public class InventoryUI : MonoBehaviour
     }
 
     #region Event
-    GraphicRaycaster _raycaster;
-    PointerEventData _pointerEvent;
-    List<RaycastResult> _result=new List<RaycastResult>();
-    InventorySlot _currnetSlot;
-    private Vector3 _beginDragIconPoint;   // 드래그 시작 시 슬롯의 위치
-    private Vector3 _beginDragCursorPoint; // 드래그 시작 시 커서의 위치
+    GraphicRaycaster _raycaster;                            //레이캐스트를 위한 레이캐스터
+    PointerEventData _pointerEvent;                         //포인트 이벤트
+    List<RaycastResult> _result=new List<RaycastResult>();  //레이캐스트 결과물을 담을 리스트
+    InventorySlot _currnetSlot;                             //클릭을 시작한 슬롯
+    private Vector3 _beginDragIconPoint;                    // 드래그 시작 시 슬롯의 위치
+    private Vector3 _beginDragCursorPoint;                  // 드래그 시작 시 커서의 위치
     T GetUIRayCast<T>() where T : Component
     {
         _result.Clear();
@@ -75,7 +90,6 @@ public class InventoryUI : MonoBehaviour
         _raycaster.Raycast(_pointerEvent, _result);
 
         if (_result.Count == 0) { return null; }
-        Logger.Log(_result[0].gameObject.name);
         return _result[0].gameObject.GetComponent<T>();
     }
 
@@ -99,8 +113,6 @@ public class InventoryUI : MonoBehaviour
                 Icon.sprite = _currnetSlot._Image.sprite;   //이미지 변경
                 _currnetSlot._Image.enabled = false;        //슬롯의 이미지 비활성화
                 _beginDragIconPoint = _currnetSlot._Image.transform.position;
-                // 해당 슬롯의 하이라이트 이미지를 아이콘보다 뒤에 위치시키기
-                //_currnetSlot.SetHighlightOnTop(false);
             }
             else
             {
@@ -152,7 +164,7 @@ public class InventoryUI : MonoBehaviour
 
     }
     #endregion
-    
+
     
 
     public void ChageGroup(int type) {

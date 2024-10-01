@@ -20,7 +20,18 @@ public class UIManager2
 
     public void Init()
     {
-
+        if (UICanvasTrs == null)
+        {
+            // 풀링을 할 오브젝트가 있다면 @Pool_Root 산하에 들고 있게 할 예정
+            UICanvasTrs = new GameObject { name = "@UI_Root" }.transform;
+            Object.DontDestroyOnLoad(UICanvasTrs);
+        }
+        if (CloseUITrs == null)
+        {
+            // 풀링을 할 오브젝트가 있다면 @Pool_Root 산하에 들고 있게 할 예정
+            UICanvasTrs = new GameObject { name = "@CloseUI_Root" }.transform;
+            UICanvasTrs.SetParent(UICanvasTrs);
+        }
     }
 
     //열ㄱ를 원하는 UI화면의 인스턴스를 가져오는함수

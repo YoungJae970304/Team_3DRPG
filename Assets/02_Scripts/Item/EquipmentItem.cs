@@ -7,7 +7,7 @@ public class EquipmentItem : Item
 
     public EquipmentItem(ItemData data) : base(data)
     {
-        Logger.Log(data.Name);
+        //Logger.Log(data.Name);
     }
 
 

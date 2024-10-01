@@ -36,7 +36,7 @@ public class UI_Button : UI_Popup
 
     public override void Init()
     {
-        // ºÎ¸ğÀÇ Init µµ ½ÇÇà
+        // ë¶€ëª¨ì˜ Init ë„ ì‹¤í–‰
         base.Init();
 
         Bind<Button>(typeof(Buttons));
@@ -45,13 +45,13 @@ public class UI_Button : UI_Popup
         Bind<Image>(typeof(Images));
 
         //test
-        //GetText((int)Texts.ScoreText).text = "Å×½ºÆ®";
+        //GetText((int)Texts.ScoreText).text = "í…ŒìŠ¤íŠ¸";
 
         GetButton((int)Buttons.PointButton).gameObject.BindUIEvent(OnButtonClicked);
 
         GameObject go = GetImage((int)Images.Image).gameObject;
-        // ½ÇÁ¦ »ç¿ë
-        BindUIEvent(go, (PointerEventData data) => { go.transform.position = data.position; }, Define.UIEvent.Drag);
+        // ì‹¤ì œ ì‚¬ìš©
+        Util.BindUIEvent(go, (PointerEventData data) => { go.transform.position = data.position; }, Define.UIEvent.Drag);
     }
 
     int _score = 0;
@@ -59,6 +59,6 @@ public class UI_Button : UI_Popup
     public void OnButtonClicked(PointerEventData data)
     {
         _score++;
-        GetText((int)Texts.ScoreText).text = $"Á¡¼ö : {_score}Á¡";
+        GetText((int)Texts.ScoreText).text = $"ì ìˆ˜ : {_score}ì ";
     }
 }
