@@ -120,7 +120,7 @@ public class BaseUI : MonoBehaviour {
         }
         _OnClose = null;
 
-        //UIManager.Instance.CloseUI(this);
+        Managers.UI.CloseUI(this);
     }
 
     public void OnClosedButton() {

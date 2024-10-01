@@ -58,19 +58,19 @@ public class UIManager
     //out 함수에서는 한가지 값이나 참조만 반환할 수 있기 때문에
     //여러가지 값이나 참조를 반환하고 싶을 때 이렇게 out매개변수를 사용
     //이 함수는 BaseUI,IsAlreadyOpen 두가지 값을 반환 할 수 있다.
-    private BaseUI GetUI<T>(out bool isAlreadyOpen)
+    private BaseUI GetUI<T>(out bool isAlreadyOpen, bool isNew = false)
     {
         System.Type uiType = typeof(T);
 
         BaseUI ui = null;
         isAlreadyOpen = false;
 
-        if (m_OpenUIPool.ContainsKey(uiType))//활성화된 UI면
+        if (!isNew&&m_OpenUIPool.ContainsKey(uiType) )//활성화된 UI면
         {
             ui = m_OpenUIPool[uiType].GetComponent<BaseUI>();
             isAlreadyOpen = true;
         }
-        else if (m_CloseUIPool.ContainsKey(uiType))//비활성화된 UI면
+        else if (!isNew && m_CloseUIPool.ContainsKey(uiType))//비활성화된 UI면
         {
 
             ui = m_CloseUIPool[uiType].GetComponent<BaseUI>();
@@ -81,14 +81,12 @@ public class UIManager
             GameObject uiObj = Managers.Resource.Instantiate($"UI/{uiType}");
             //프리팹의 이름이 클래스명이랑 같아야함
             //클래스명을 기준으로 참조하기 때문
-            Logger.Log(uiObj.name);
             ui = uiObj.GetComponent<BaseUI>();
-            Logger.Log(ui.name);
         }
         return ui;
     }
 
-    public T OpenUI<T>(BaseUIData uidata,bool sort=true) where T : BaseUI
+    public T OpenUI<T>(BaseUIData uidata,bool sort=true,bool isNew =false) where T : BaseUI
     {
         System.Type uiType = typeof(T);
 
@@ -97,7 +95,7 @@ public class UIManager
         bool isAlreadyOpen = false;
 
 
-        var ui = GetUI<T>(out isAlreadyOpen);
+        var ui = GetUI<T>(out isAlreadyOpen, isNew);
         if (!ui)
         {
             Logger.Log($"{uiType} dose not exist");
@@ -110,6 +108,7 @@ public class UIManager
             return null;
         }
 
+
         var siblingIdx = UICanvasTrs.childCount - 1;//하위 오브젝트 개수
         ui.Init(UICanvasTrs);//화면 초기화   
 
@@ -120,7 +119,8 @@ public class UIManager
         ui.SetInfo(uidata);
         SetCanvas(ui.gameObject, sort); //소팅 우선순위 변경
         ui.ShowUI();
-
+        baseUIs.AddLast(ui);
+        
         m_FrontUI = ui;
         m_OpenUIPool[uiType] = ui.gameObject;
         return ui as T;
@@ -135,16 +135,21 @@ public class UIManager
         
         m_OpenUIPool.Remove(uiType);
         m_CloseUIPool[uiType] = ui.gameObject;
-        ui.transform.SetParent(CloseUITrs);
-
+        
+        baseUIs.Remove(ui);
         m_FrontUI = null;
         _order--;
-        var lastChild = UICanvasTrs.GetChild(UICanvasTrs.childCount - 1);
-
-        if (lastChild)
+        if (baseUIs.Count>0)
         {
-            m_FrontUI = lastChild.gameObject.GetComponent<BaseUI>();
+            var lastChild = baseUIs.Last.Value;
+            m_FrontUI = lastChild;
         }
+        ui.transform.SetParent(CloseUITrs);
+    }
+
+    public void DeleteUI(BaseUI ui) {
+        ui.CloseUI();
+        UnityEngine.Object.Destroy(ui.gameObject);
     }
     //특정 UI화면이 열려있는지 확인하고 그 열려있는 UI화면을 가져오는 함수
     public BaseUI GetActiveUI<T>() //이름 신경쓰자 이후에 이름이 달라 에러가 발생했었다. -GetActivePopupUI이런 이름이였음
@@ -169,9 +174,15 @@ public class UIManager
     }
 
     //가장 최상단에 있는 UI화면 인스턴스를 닫는 함수
-    public void CloseCurrFrontUI()
+    public void CloseCurrFrontUI(bool delete=false)
     {
-        m_FrontUI.CloseUI();
+        if (delete)
+        {
+            DeleteUI(m_FrontUI);
+        }
+        else {
+            m_FrontUI.CloseUI();
+        }
     }
 
     //열려있는 모든 UI화면을 닫으라는 함수

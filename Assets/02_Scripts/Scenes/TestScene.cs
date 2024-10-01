@@ -26,6 +26,11 @@ public class TestScene : BaseScene
     public void Opentest() {
         inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
     }
+    [ContextMenu("OpenNewTest")]
+    public void OpenNewtest()
+    {
+        inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData(),true,true);
+    }
 
     [ContextMenu("Inserttest")]
     public void Inserttest() {
@@ -37,11 +42,15 @@ public class TestScene : BaseScene
     [ContextMenu("Removetest")]
     public void Remove()
     {
-        ItemManager.Remove(0, ItemData.ItemType.Potion);
-        inventory.UpdateSlot();
+        Managers.UI.CloseCurrFrontUI(true);
     }
     [ContextMenu("Close")]
     public void Close() {
-        Managers.UI.CloseUI(inventory);
+        inventory.CloseUI();
+    }
+    [ContextMenu("CloseLast")]
+    public void CloseLast()
+    {
+        Managers.UI.CloseCurrFrontUI();
     }
 }
