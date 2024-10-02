@@ -110,12 +110,13 @@ public class UIManager
 
 
         var siblingIdx = _uiCanvasTrs.childCount - 1;//하위 오브젝트 개수
-        ui.Init(_uiCanvasTrs);//화면 초기화   
+           
 
         //ui.transform.SetSiblingIndex(siblingIdx);
         //하이어라키 창 우선순위변경
 
         ui.gameObject.SetActive(true);
+        ui.Init(_uiCanvasTrs);//화면 초기화
         ui.SetInfo(uidata);
         
         ui.ShowUI();

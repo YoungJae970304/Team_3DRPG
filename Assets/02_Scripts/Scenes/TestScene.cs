@@ -25,7 +25,7 @@ public class TestScene : BaseScene
     [ContextMenu("OpenTest")]
     public void Opentest() {
         // 인벤토리 여는 것 I? ( 풀링 )
-        inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+        Managers.UI.OpenUI<TestUI>(new BaseUIData());
     }
     [ContextMenu("OpenNewTest")]
     public void OpenNewtest()
