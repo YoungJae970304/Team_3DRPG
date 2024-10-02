@@ -325,13 +325,14 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 우클릭 시 발생하는 행동
     public abstract void Special();
 
-    public virtual void Damaged(int damage)
+    public virtual void Damaged(int atk)
     {
         // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
         // 피격 = 피격 모션 중 통짜 무적
         if (_hitting && _invincible) return;
 
-        _playerStat.HP -= (damage - _playerStat.DEF);
+        // 체력- 공격력*(100/(방어력+100))
+        _playerStat.HP -= (atk * (100/(_playerStat.DEF+100)));
 
         if (_playerStat.HP > 0)
         {
