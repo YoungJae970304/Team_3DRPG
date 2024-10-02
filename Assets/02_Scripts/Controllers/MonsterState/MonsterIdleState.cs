@@ -7,9 +7,7 @@ public class MonsterIdleState : BaseState
 {
     public MonsterIdleState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
     {
-        _player = player;
-        _monster = monster;
-        _stat = _monster._mStat;
+
     }
     float awayRangeX;
     //float awayRangeY = Random.Range(0, _sStat.AwayRange);
@@ -32,7 +30,7 @@ public class MonsterIdleState : BaseState
     {
         //얘를 어떻게 해야할까
 
-        _monster._nav.destination = _monster._player.transform.position;
+        //_monster._nav.destination = _monster._player.transform.position;
 
     }
 

@@ -6,6 +6,4 @@ using UnityEngine;
 public class GameManager 
 {
     public Player _player;
-
-    
 }

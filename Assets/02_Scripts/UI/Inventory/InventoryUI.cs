@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using Unity.VisualScripting;
 
 public class InventoryUI : BaseUI
 {
@@ -35,7 +36,7 @@ public class InventoryUI : BaseUI
         Bind<GameObject>(typeof(GameObjects));
         _raycaster = GetComponent<GraphicRaycaster>();
         _pointerEvent = new PointerEventData(EventSystem.current);
-        _inventory = Managers.Game._player.GetComponent<Inventory>();
+        _inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
         _inventory.GetItemAction += UpdateSlot;
         SlotSetting(_currentType);
         

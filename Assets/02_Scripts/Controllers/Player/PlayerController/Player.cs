@@ -18,12 +18,22 @@ public enum PlayerState
     Dead
 }
 
+public enum PlayerHitState
+{
+    NomalAttack,
+    SkillAttack,
+    StunAttack,
+}
+
 public abstract class Player : MonoBehaviour, IDamageAlbe
 {
     // 참조용 변수
     Monster _monster;
 
     // 기타 변수
+    [HideInInspector]
+    public PlayerHitState _playerHitState;
+
     [Header("오브젝트 참조")]
     public Transform _playerModel;
     [HideInInspector]
@@ -40,6 +50,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 회피 관련 변수
     [Header("회피 시간")]
     public float _dodgeTime = 0.5f;
+    // 무적 변수
+    [Header("회피 무적 체크")]
+    public bool _invincible = false;
 
     // 공격 관련 변수
     [HideInInspector]
@@ -101,6 +114,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public PlayerInput _playerInput;
     [HideInInspector]
     public PlayerCam _playerCam;
+
+    protected virtual void Awake()
+    {
+        
+    }
 
     protected virtual void Start()
     {
@@ -237,6 +255,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 break;
             case PlayerState.Damaged:
                 // Damaged에서 다른 상태로 이동하기 위한 조건
+                if (_hitting) return;
+
                 if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
@@ -305,13 +325,14 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 우클릭 시 발생하는 행동
     public abstract void Special();
 
-    public virtual void Damaged(int damage)
+    public virtual void Damaged(int atk)
     {
-        if (_hitting) return;
+        // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
+        // 피격 = 피격 모션 중 통짜 무적
+        if (_hitting && _invincible) return;
 
-        _hitting = true;
-
-        _playerStat.HP -= (damage - _playerStat.DEF);
+        // 체력- 공격력*(100/(방어력+100))
+        _playerStat.HP -= (atk * (100/(_playerStat.DEF+100)));
 
         if (_playerStat.HP > 0)
         {
@@ -320,8 +341,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             // 넉백 공격을 인식하기 위한 조치가 필요
             // 넉백 공격은 몬스터에서 무언가 처리를 해주고 ( 무언가 변수를 만든다? )
             // 플레이어가 그 넉백 유무를 판단해 처리하는 작업이 필요
-            ChangeState(PlayerState.Damaged);
-            HitOffTimer(0.3f);
+            if (_playerHitState == PlayerHitState.SkillAttack || _playerHitState == PlayerHitState.StunAttack)
+            {
+                ChangeState(PlayerState.Damaged);
+            }
+            HitOffTimer(0.5f);
         }
         else
         {
