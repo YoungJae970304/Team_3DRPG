@@ -24,11 +24,13 @@ public class TestScene : BaseScene
     }
     [ContextMenu("OpenTest")]
     public void Opentest() {
+        // 인벤토리 여는 것 I? ( 풀링 )
         inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
     }
     [ContextMenu("OpenNewTest")]
     public void OpenNewtest()
     {
+        // 완전 새로운 오브젝트를 생성 후 여는 것 ( 풀링은 되는데 무조건 생성 )
         inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData(),true,true);
     }
 
@@ -42,15 +44,18 @@ public class TestScene : BaseScene
     [ContextMenu("Removetest")]
     public void Remove()
     {
+        // 오브젝트 자체를 삭제 ( 1번만 쓰는 UI 같은거 )
         Managers.UI.CloseCurrFrontUI(true);
     }
     [ContextMenu("Close")]
     public void Close() {
+        // 버튼 이벤트
         inventory.CloseUI();
     }
     [ContextMenu("CloseLast")]
     public void CloseLast()
     {
+        //ESC
         Managers.UI.CloseCurrFrontUI();
     }
 }
