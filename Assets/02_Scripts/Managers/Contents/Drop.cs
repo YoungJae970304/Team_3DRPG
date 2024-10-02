@@ -19,11 +19,13 @@ public class Drop : MonoBehaviour
         _drop = this;
     }
 
-
+    DataTableManager _dataTableManager;
     public List<string> sample = new List<string>();
     public Dictionary<int, int> dropValue;
     private void Start()
     {
+        _dataTableManager = new DataTableManager();
+        _dataTableManager.LoadItemDataTable();
         sample = new List<string>
         {
             "11001", "11002", "11003", "11004", // 1성 무기
@@ -35,6 +37,7 @@ public class Drop : MonoBehaviour
             "31001", "31002", "31003", "31004", // 1성 악세서리
             "32001", "32002", "32003", "32004", // 2성 악세서리
             "33001", "33002", "33003", "33004"  // 3성 악세서리
+        
         };
         dropValue = new Dictionary<int, int> // 드랍 확률
         {
@@ -119,27 +122,41 @@ public class Drop : MonoBehaviour
     public string DropItemSelect(DeongeonLevel level) //아이템 string랜덤으로 받아오기
     {
         int maxTier = GetDeongeonLevel(level); //아이템이 나올 최고 티어는 던젼레벨이 결정
-
         if (maxTier <= 0)
         {
             Logger.Log("이런 난이도는 없습니다.");
             return null;
         }
-
+        int[] test = new int[maxTier];
         Dictionary<string, int> itemDrop = new Dictionary<string, int>(); 
         foreach (var randomItem in sample)
         {
             int itemTier = int.Parse(randomItem[1].ToString());
-
+            Logger.Log(randomItem.ToString());
             if (itemTier <= maxTier)
             {
-                itemDrop[randomItem] = 10; // 드랍 확률 설정
+                
+                   itemDrop[randomItem.ToString()] = 10; // 드랍 확률 설정
+                test[itemTier-1] += itemDrop[randomItem];
             }
         }
+        foreach (var randomItem in sample)
+        {
+            int itemTier = int.Parse(randomItem[1].ToString());
+            if (itemTier <= maxTier)
+            {
 
+                itemDrop[randomItem] *= dropValue[itemTier] / test[itemTier];
+            }
+        }
         // 수정: 최종 드랍할 아이템을 저장할 변수
         string selectedItem = null;
-
+        if (itemDrop.Count > 0) //randomValue에 값이 있는지 확인하고
+        {
+            var randomizer = WeightedRandomizer.From(itemDrop); //가중치를 기반으로 랜덤 선택을 준비
+            selectedItem = randomizer.TakeOne(); // 가중치를 고려하여 선택된 아이템을 저장
+        }
+        /*
         foreach (var itemTier in dropValue.Keys) //키를 itemTier에 담고
         {
             if (itemTier <= maxTier) //그 아이템 티어가 스테이지로 설정한 최대값보다 작거나 같다면
@@ -148,9 +165,9 @@ public class Drop : MonoBehaviour
                 foreach (var result in sample) //샘플 list를 result에 담아서
                 {
                     int currentTier = int.Parse(result[1].ToString()); //result의(sample에 속한 string화한것) 앞에서부터 2번째 순번의 글자를 currentTier에 int화해서 담음
-                    if (currentTier == itemTier && itemDrop.ContainsKey(result))//null검사
+                    if (currentTier == itemTier && itemDrop.ContainsKey(result.ToString()))//null검사
                     {
-                        randomValue[result] = dropValue[itemTier];//randomvalue에 result(string)값이 들어갈 때 그 int값이 dropvalue[itemTier]에서 나온 int값이 들어가도록 설정
+                        randomValue[result.ToString()] = dropValue[itemTier];//randomvalue에 result(string)값이 들어갈 때 그 int값이 dropvalue[itemTier]에서 나온 int값이 들어가도록 설정
                     }
                 }
 
@@ -162,7 +179,7 @@ public class Drop : MonoBehaviour
                 }
             }
         }
-
+        */
         // 선택된 아이템이 있을 때만 로그 출력
         if (selectedItem != null)
         {
@@ -170,7 +187,7 @@ public class Drop : MonoBehaviour
         }
         else
         {
-            Logger.Log("드랍된 아이템이 없습니다.");
+            //Logger.Log("드랍된 아이템이 없습니다.");
         }
 
         return selectedItem; //선택된 아이템을 반환

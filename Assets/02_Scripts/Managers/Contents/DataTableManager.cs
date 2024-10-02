@@ -27,8 +27,8 @@ public class DataTableManager
     public List<ItemData> ItemEquippedDataTable = new List<ItemData>();
     public List<ItemData> ItemPotionDataTable = new List<ItemData>();
     public List<ItemData> ItemGoodsDataTable = new List<ItemData>();
-    public ItemDataListWrapper _AllItemData;
-    void LoadItemDataTable()
+    public List<ItemData> _AllItemData = new List<ItemData>(); 
+    public void LoadItemDataTable()
     {
         #region 장비 데이터
         //장비 csv 파일 읽어오기
@@ -98,6 +98,7 @@ public class DataTableManager
             if(itemData != null)
             {
                 ItemEquippedDataTable.Add(itemData);
+                _AllItemData.Add(itemData);
             }
         }
         #endregion
@@ -166,6 +167,7 @@ public class DataTableManager
             if (itemData != null)
             {
                 ItemPotionDataTable.Add(itemData);
+                _AllItemData.Add(itemData);
             }
         }
         #endregion
@@ -195,6 +197,7 @@ public class DataTableManager
             if (itemData != null)
             {
                 ItemGoodsDataTable.Add(itemData);
+                _AllItemData.Add(itemData);
             }
         }
         #endregion
@@ -249,6 +252,7 @@ public class DataTableManager
                 {
                     ItemGoodsDataTable.Add(item);
                 }
+                _AllItemData.Add(item);
             }
             Logger.Log("데이터 로드 완료" + itemDataJson);
         }
