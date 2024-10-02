@@ -29,6 +29,8 @@ public class PlayerInput : MonoBehaviour
         Managers.Input.KeyAction -= SkillInput;
         Managers.Input.KeyAction += SkillInput;
 
+        Managers.Input.KeyAction -= UIInput;
+        Managers.Input.KeyAction += UIInput;
     }
 
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 
@@ -128,5 +130,40 @@ public class PlayerInput : MonoBehaviour
         if(_atkInput.Count > 1) { return; }
 
         _atkInput.Enqueue(action);
+    }
+
+    void UIInput()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OpenInventory();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseFrontUI();
+        }
+    }
+
+    public void OpenInventory()
+    {
+        // 인벤토리 여는 것 I? ( 풀링 )
+        Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+    }
+    public void CloseFrontUI()
+    {
+        //ESC
+        Managers.UI.CloseCurrFrontUI();
+    }
+
+    // 사용할일이 있을까?
+    public void OpenNewtest()
+    {
+        // 완전 새로운 오브젝트를 생성 후 여는 것 ( 풀링은 되는데 무조건 생성 )
+        Managers.UI.OpenUI<InventoryUI>(new BaseUIData(), true, true);
+    }
+    public void Remove()
+    {
+        // 오브젝트 자체를 삭제 ( 1번만 쓰는 UI 같은거 )
+        Managers.UI.CloseCurrFrontUI(true);
     }
 }
