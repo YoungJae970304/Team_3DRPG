@@ -19,7 +19,7 @@ public class Item
 
         ItemData itemData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
-        foreach (var equippedItem in _dataTableManager.ItemEquippedDataTable)
+        foreach (var equippedItem in _dataTableManager._EquipeedItemData)
         {
             if (equippedItem.ID == id)
             {
@@ -29,7 +29,7 @@ public class Item
         }
         if (itemData == null)
         {
-            foreach (var potionItem in _dataTableManager.ItemPotionDataTable)
+            foreach (var potionItem in _dataTableManager._PotionItemData)
             {
                 if (potionItem.ID == id)
                 {
@@ -40,7 +40,7 @@ public class Item
         }
         if (itemData == null)
         {
-            foreach (var goodsItem in _dataTableManager.ItemGoodsDataTable)
+            foreach (var goodsItem in _dataTableManager._GoodsItemData)
             {
                 if (goodsItem.ID == id)
                 {
