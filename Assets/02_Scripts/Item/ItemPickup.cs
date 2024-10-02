@@ -4,7 +4,9 @@ public class ItemPickup : MonoBehaviour
 {
     Transform _player;
     Inventory _inventory;
-    Item _item;
+    public Item _newItem;
+    // itemID를 string으로 받아옴
+    public string _itemId;
     [SerializeField] float _pickupSpeed = 10f;
 
     private void Awake()
@@ -21,11 +23,17 @@ public class ItemPickup : MonoBehaviour
          TryPickupItem();
     }
 
+    //드랍된 아이템의 정보를 가져올 함수
+    public void GetDropItemID(DeongeonLevel level)
+    {
+        _itemId = Drop._drop.DropItemSelect(level);
+    }
+
     void TryPickupItem()
     {
         float distance = Vector3.Distance(transform.position, _player.position);
         Renderer renderer = GetComponent<Renderer>();
-
+      
         Sequence seq = DOTween.Sequence();
         //transform.position = Vector3.MoveTowards(transform.position, _player.position, _pickupSpeed * Time.deltaTime);
         //플레이어에게 이동
@@ -37,22 +45,22 @@ public class ItemPickup : MonoBehaviour
         //시퀀스 완료 후 아이템 획득
         seq.OnComplete(() =>
         {
-            // itemID를 string으로 받아옴
-            string itemId = Drop._drop.DropItemSelect(DeongeonLevel.Easy);
+            Logger.Log($"{_itemId}:소환 안됨");
             // 비어있는지 확인
-            if (!string.IsNullOrEmpty(itemId))
+            if (!string.IsNullOrEmpty(_itemId))
             {
                 // string을 int로 변환
-                if (int.TryParse(itemId, out int itemID))
+                if (int.TryParse(_itemId, out int itemID))
                 {
                     // id를 전달
-                    _item = Item.ItemSpawn(itemID);
-                    if (_item != null) // null 체크
+                    _newItem = Item.ItemSpawn(itemID);
+                    if (_newItem != null) // null 체크
                     {
+                        Logger.Log("아이템 생성");
                         if (_inventory != null)
                         {
-                            _inventory.InsertItem(_item);
-                            Logger.Log($"{_item.Data.Name} 인벤토리에 추가");
+                            _inventory.InsertItem(_newItem);
+                            Logger.Log($"{_newItem.Data.ID} 인벤토리에 추가");
                         }
                         else
                         {

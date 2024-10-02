@@ -27,7 +27,7 @@ public class DataTableManager
     public List<ItemData> ItemEquippedDataTable = new List<ItemData>();
     public List<ItemData> ItemPotionDataTable = new List<ItemData>();
     public List<ItemData> ItemGoodsDataTable = new List<ItemData>();
-
+    public ItemDataListWrapper _AllItemData;
     void LoadItemDataTable()
     {
         #region 장비 데이터
