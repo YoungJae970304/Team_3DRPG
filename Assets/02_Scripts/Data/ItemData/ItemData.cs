@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 
+[Serializable]
 public class ItemDataListWrapper
 {
     public List<ItemData> ItemDataList { get; set; } = new List<ItemData>();
