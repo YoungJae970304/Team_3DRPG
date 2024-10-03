@@ -8,7 +8,6 @@ public class InputManager
 {
     public Action KeyAction = null;
     public Action UIMouseAction = null;
-    public Action MouseAction = null;
     public Action AXis = null;
     bool _isPress = false;
 
@@ -17,10 +16,7 @@ public class InputManager
     {
         if (EventSystem.current.IsPointerOverGameObject()) {
             UIMouseAction?.Invoke();
-        }
-        else
-        {
-            MouseAction?.Invoke();
+            return;
         }
             
         if (KeyAction != null)

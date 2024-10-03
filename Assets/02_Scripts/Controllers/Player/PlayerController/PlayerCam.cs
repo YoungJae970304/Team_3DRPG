@@ -54,9 +54,12 @@ public class PlayerCam : MonoBehaviour
 
     void Update()
     {
-        ChangeCMCam();  // 줌
+        // Managers.UI.Ex뭐시기 UI열려있는 bool이 true면 return
+        if (Managers.UI.ExistsOpenUI()) return;
 
-        // 마우스 휠
+        ChangeCMCam();
+        LookAround();
+
         switch (_cameraMode)
         {
             case Define.CameraMode.QuarterView:
@@ -65,11 +68,6 @@ public class PlayerCam : MonoBehaviour
             case Define.CameraMode.ZoomView:
                 break;
         }
-
-        // 열려있는 UI가 있다면 화면 회전 금지
-        if (Managers.UI.ExistsOpenUI()) return;
-
-        LookAround();
     }
 
     // 각 카메라의 우선도 설정, 카메라 모드에 따라 전환되는 카메라 전환

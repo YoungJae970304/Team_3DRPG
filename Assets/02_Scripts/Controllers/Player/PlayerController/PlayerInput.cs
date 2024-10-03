@@ -23,14 +23,14 @@ public class PlayerInput : MonoBehaviour
         Managers.Input.KeyAction -= DodgeInput;
         Managers.Input.KeyAction += DodgeInput;
 
+        Managers.Input.KeyAction -= AttackInput;
+        Managers.Input.KeyAction += AttackInput;
+
         Managers.Input.KeyAction -= SkillInput;
         Managers.Input.KeyAction += SkillInput;
 
         Managers.Input.KeyAction -= UIInput;
         Managers.Input.KeyAction += UIInput;
-
-        Managers.Input.MouseAction -= AttackInput;
-        Managers.Input.MouseAction += AttackInput;
     }
 
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 
@@ -132,24 +132,14 @@ public class PlayerInput : MonoBehaviour
         _atkInput.Enqueue(action);
     }
 
-    // UI 관련 키 입력이 플레이어에 있어야 할까?
     void UIInput()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            var ui = Managers.UI.GetActiveUI<InventoryUI>();
-            if (ui == null)
-            {
-                OpenInventory();
-            }
-            else 
-            {
-                ui.CloseUI();
-            }
+            OpenInventory();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // 가장 앞에있는 UI를 Esc누르면 꺼지게 하는 작업
             CloseFrontUI();
         }
     }
