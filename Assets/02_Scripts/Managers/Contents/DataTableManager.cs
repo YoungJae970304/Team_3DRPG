@@ -41,7 +41,7 @@ public class DataTableManager
         {
             ItemData itemData = null;
             //아이템 데이터 안에있는 적잘한 서브클래스인스턴스를 생성
-            //장비 데이터cvs파일을 불러와서 저장해주기
+            //장비 데이터csv파일을 불러와서 저장해주기
             itemData = new EquipmentItemData
             {
                 //아이디
