@@ -14,6 +14,8 @@ public class DataTableManager
     public void Init()
     {
         LoadItemDataTable();
+        SaveAllItemData();
+        LoadAllItemData();
     }
 
     //폴더 안에 있는 장비아이템 데이터 csv파일
@@ -28,7 +30,7 @@ public class DataTableManager
     public List<ItemData> _GoodsItemData = new List<ItemData>();
     //실질적인 아이템 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
-   
+
 
     #region 장비데이터테이블 함수
     void EquipmentDataTable(string dataPath, string equipmentDataTable)
@@ -47,30 +49,30 @@ public class DataTableManager
                 ID = Convert.ToInt32(data["ID"]),
                 //이름
                 Name = data["Name"].ToString(),
-                //착용 레벨
-                LimitLevel = Convert.ToInt32(data["LimitLevel"]),
                 //등급
                 Grade = Convert.ToInt32(data["Grade"]),
+                //아이템 타입
+                Type = (ItemData.ItemType)(Convert.ToInt32(data["EquippedType"])),
+                //착용 레벨
+                LimitLevel = Convert.ToInt32(data["LimitLevel"]),
                 //판매 가격
                 BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                 //구매 가격
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),
-                //소지 수량
-                MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 //공격력
                 AttackPower = Convert.ToInt32(data["AttackPower"]),
                 //방어력
                 Defense = Convert.ToInt32(data["Defense"]),
-                //마나
-                Mana = Convert.ToInt32(data["Mana"]),
                 //체력
                 Health = Convert.ToInt32(data["Health"]),
                 //체력 리젠
                 HealthRegen = Convert.ToInt32(data["HealthRegen"]),
+                //마나
+                Mana = Convert.ToInt32(data["Mana"]),
                 //마나 리젠
                 ManaRegen = Convert.ToInt32(data["ManaRegen"]),
-                //아이템 타입
-                Type = (ItemData.ItemType)(Convert.ToInt32(data["Type"])),
+                //소지 수량
+                MaxAmount = Convert.ToInt32(data["MaxAmount"]),
             };
             if (itemData != null)
             {
@@ -98,20 +100,22 @@ public class DataTableManager
                 Name = data["Name"].ToString(),
                 //등급
                 Grade = Convert.ToInt32(data["Grade"]),
+                Type = (ItemData.ItemType)(Convert.ToInt32(data["ItemType"])),
+                LimitLevel = Convert.ToInt32(data["LimitLevel"]),
                 //구매 가격
                 BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                 //판매 가격
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                 //회복 타입
                 ValType = (PotionItemData.ValueType)(Convert.ToInt32(data["ValueType"])),
-                //소지 개수
-                MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                //실제 회복 밸류 %(버프는 0)
+                Value = Convert.ToSingle(data["Value"]),
                 //쿨타임
                 CoolTime = Convert.ToInt32(data["CoolTime"]),
                 //지속 시간(회복은 0)
                 DurationTime = Convert.ToInt32(data["DurationTime"]),
-                //실제 회복 밸류 %(버프는 0)
-                Value = Convert.ToSingle(data["Value"]),
+                //소지 개수
+                MaxAmount = Convert.ToInt32(data["MaxAmount"]),
             };
             if (itemData != null)
             {
@@ -132,23 +136,21 @@ public class DataTableManager
         foreach (var data in parsedGoodsDatTable)
         {
             ItemData itemData = null;
-            string itemType = data["ItemType"].ToString();
 
-            if (itemType == "1")
+            string itemType = data["ItemType"].ToString();
+            itemData = new GoodsItemData
             {
-                itemData = new GoodsItemData
-                {
-                    ID = Convert.ToInt32(data["ID"]),
-                    Name = data["Name"].ToString(),
-                    Grade = Convert.ToInt32(data["Grade"]),
-                    BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
-                    SellingPrice = Convert.ToInt32(data["SellingPrice"]),
-                    LimitLevel = Convert.ToInt32(data["LimitLevel"]),
-                    //설명 텍스트
-                    FlavorText = data["FlavorText"].ToString(),
-                    MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                };
-            }
+                ID = Convert.ToInt32(data["ID"]),
+                Name = data["Name"].ToString(),
+                Grade = Convert.ToInt32(data["Grade"]),
+                Type = (ItemData.ItemType)(Convert.ToInt32(data["ItemType"])),
+                LimitLevel = Convert.ToInt32(data["LimitLv"]),
+                BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
+                SellingPrice = Convert.ToInt32(data["SellingPrice"]),
+                //설명 텍스트
+                FlavorText = data["FlavorText"].ToString(),
+                MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+            };
             if (itemData != null)
             {
                 Logger.Log($"{itemData} 저장됨");
