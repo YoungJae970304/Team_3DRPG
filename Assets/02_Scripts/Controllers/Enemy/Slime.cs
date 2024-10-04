@@ -9,6 +9,9 @@ using UnityEngine.Jobs;
 
 public class Slime : Monster, IDamageAlbe
 {
+    public int _slimeID;
+    public string _slimeProduct;
+    
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         _nav.enabled = false;
@@ -81,5 +84,54 @@ public class Slime : Monster, IDamageAlbe
 
         }
     }
+    public override void itemtest(DeongeonLevel curGrade)
+    {
+        base.itemtest(curGrade);
 
+        foreach(var slimeDrop in _dropManager._MonsterDropData)
+        {
+            List<int> slimeID = new List<int>();
+            List<int> valueExp = new List<int>();
+            valueExp.Add(slimeDrop.Value5);
+            slimeID.Add(slimeDrop.ID);
+            switch (_slimeID)
+            {
+                
+            }
+        }
+        
+        
+
+    }
+    public void SlimeIDCheck(DeongeonLevel curLevel)
+    {
+        foreach(var sID in _dropManager._MonsterDropData)
+        {
+            string iDCheck = sID.ID.ToString("D0");
+            if (iDCheck == "1")
+            {
+                switch (curLevel)
+                {
+                    case DeongeonLevel.Easy:
+                        if(sID.ID.ToString("F2") == "1")
+                        {
+                            _slimeID = sID.ID;
+                        }
+                        break;
+                    case DeongeonLevel.Normal:
+                        if (sID.ID.ToString("F2") == "2")
+                        {
+                            _slimeID = sID.ID;
+                        }
+                        break;
+                    case DeongeonLevel.Hard:
+                        if (sID.ID.ToString("F2") == "3")
+                        {
+                            _slimeID = sID.ID;
+                        }
+                        break;
+                }
+            }
+        }
+    }
 }
