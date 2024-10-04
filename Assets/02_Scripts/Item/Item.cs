@@ -19,36 +19,15 @@ public class Item
 
         ItemData itemData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
-        foreach (var equippedItem in _dataTableManager.ItemEquippedDataTable)
+        foreach (var newItem in _dataTableManager._AllItemData)
         {
-            if (equippedItem.ID == id)
+            if (newItem.ID == id)
             {
-                itemData = equippedItem;
+                itemData = newItem;
                 break;
             }
         }
-        if (itemData == null)
-        {
-            foreach (var potionItem in _dataTableManager.ItemPotionDataTable)
-            {
-                if (potionItem.ID == id)
-                {
-                    itemData = potionItem;
-                    break;
-                }
-            }
-        }
-        if (itemData == null)
-        {
-            foreach (var goodsItem in _dataTableManager.ItemGoodsDataTable)
-            {
-                if (goodsItem.ID == id)
-                {
-                    itemData = goodsItem;
-                    break;
-                }
-            }
-        }
+
         if (itemData != null)
         {
             return new Item(itemData);
@@ -61,8 +40,8 @@ public class Item
     }
     #endregion
 
-    #region type으로?
-    //public static ItemSpawn(ItemData.ItemType itemType)
+    #region type에따른 id로 생성 시키기
+    //public static Item ItemSpawn(ItemData.ItemType itemType, int id)
     //{
     //    DataTableManager _dataTableManager = new DataTableManager();
     //    _dataTableManager.LoadAllItemData();
@@ -71,34 +50,30 @@ public class Item
     //    switch (itemType)
     //    {
     //        case ItemData.ItemType.Weapon:
-    //            itemDataList = _dataTableManager.ItemEquippedDataTable;
-    //            break;
     //        case ItemData.ItemType.Armor:
-    //            itemDataList = _dataTableManager.ItemEquippedDataTable;
-    //            break;
     //        case ItemData.ItemType.Accessories:
-    //            itemDataList = _dataTableManager.ItemEquippedDataTable;
+    //            itemDataList = _dataTableManager._EquipeedItemData;
     //            break;
     //        case ItemData.ItemType.Potion:
-    //            itemDataList = _dataTableManager.ItemPotionDataTable;
+    //            itemDataList = _dataTableManager._PotionItemData;
     //            break;
     //        case ItemData.ItemType.Booty:
-    //            itemDataList = _dataTableManager.ItemGoodsDataTable;
+    //            itemDataList = _dataTableManager._GoodsItemData;
     //            break;
     //        default:
     //            Logger.Log("타입 없음 : " + itemType);
-    //            return null;
+    //            break;
     //    }
-    //    if(itemDataList.Count > 0)
+    //    //아이템 데이터가 저장된 아이템 데이터 리스트에서순회하며 id를 찾고 새로운 아이템을 반환
+    //    foreach (ItemData itemData in itemDataList)
     //    {
-    //        ItemData itemData = itemDataList[0];
-    //        return new Item(itemData);
+    //        if (itemData.ID == id)
+    //        {
+    //            return new Item(itemData);
+    //        }
     //    }
-    //    else
-    //    {
-    //        Logger.Log("해당타입 없음 : " + itemType);
-    //        return null;
-    //    }
+    //    Logger.Log($"해당{id}와 일치하는게 없음");
+    //    return null;
     //}
     #endregion
 }
