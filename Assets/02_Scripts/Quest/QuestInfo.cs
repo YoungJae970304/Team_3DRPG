@@ -13,16 +13,15 @@ public class QuestInfo
     /// 퀘스트 이름에 타입 까지 적어서 표시
     /// </summary>
 
-    public enum RewardType
+    public enum RewardID
     {
-        Gold,
+        Gold = 1,
         Exp,
         Weapon,
         Armor,
         Accessroies,
         Potion,
     }
-
     //퀘스트 종류
     public Define.QuestType _questType;
     //퀘스트 제목
@@ -32,5 +31,5 @@ public class QuestInfo
     //진행 중인 퀘스트
     public GameObject[] _questSteps;
     //퀘스트 보상
-    public RewardType _rewardType;
+    public RewardID _rewardID;
 }
