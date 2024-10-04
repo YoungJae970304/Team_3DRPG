@@ -160,7 +160,7 @@ public class DataTableManager
     #endregion
 
     #region 모든 데이터 저장및 로드
-    void LoadItemDataTable()
+    public void LoadItemDataTable()
     {
         EquipmentDataTable(DATA_PATH, EQUIPMENT_ITEM_DATA_TABLE);
         PotionDataTable(DATA_PATH, POTION_ITEM_DATA_TABLE);

@@ -29,7 +29,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Player _player;
     public NavMeshAgent _nav;
     public MonsterStat _mStat;
- 
+    public Drop _monsterDrop;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
     public float _timer = 0;
     public int _randomAttack;
@@ -40,7 +40,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat = GetComponent<MonsterStat>();
          _nav = GetComponent<NavMeshAgent>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-       
         _originPos = transform.position;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
