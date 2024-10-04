@@ -11,7 +11,7 @@ public class ItemDataListWrapper
 }
 
 [Serializable]
-public class ItemData : IItemData
+public class ItemData : IData
 {
     //아이템이 공용으로 사용할 정보들
     [Serializable]

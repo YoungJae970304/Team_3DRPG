@@ -41,8 +41,7 @@ public class DataTableManager
         {
             ItemData itemData = null;
             //아이템 데이터 안에있는 적잘한 서브클래스인스턴스를 생성
-            //장비 데이터cvs파일을 불러와서 저장해주기
-            string equippedType = data["EquippedType"].ToString();
+            //장비 데이터csv파일을 불러와서 저장해주기
             itemData = new EquipmentItemData
             {
                 //아이디
@@ -90,7 +89,6 @@ public class DataTableManager
         var parsedPotionData = CSVReader.Read($"{dataPath}/{potionDataTable}");
         foreach (var data in parsedPotionData)
         {
-            string itemType = data["ItemType"].ToString();
             ItemData itemData = null;
             itemData = new PotionItemData
             {
@@ -137,7 +135,6 @@ public class DataTableManager
         {
             ItemData itemData = null;
 
-            string itemType = data["ItemType"].ToString();
             itemData = new GoodsItemData
             {
                 ID = Convert.ToInt32(data["ID"]),
