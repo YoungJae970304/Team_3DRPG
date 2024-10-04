@@ -126,10 +126,11 @@ public class Drop : MonoBehaviour
             return null;
         }
 
-        Dictionary<string, int> itemDrop = new Dictionary<string, int>(); 
+        Dictionary<string, int> itemDrop = new Dictionary<string, int>();
+
         foreach (var randomItem in sample)
         {
-            int itemTier = int.Parse(randomItem[1].ToString());
+            int itemTier = int.Parse(randomItem[1].ToString()) ;
 
             if (itemTier <= maxTier)
             {
