@@ -404,6 +404,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestItem
       objectReference: {fileID: 0}
+    - target: {fileID: 410208979198133161, guid: 4b20088e9bf0bef46b4c08d668543a9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2284050004414131207, guid: 4b20088e9bf0bef46b4c08d668543a9d,
         type: 3}
       propertyPath: _itemId
@@ -1049,9 +1054,14 @@ PrefabInstance:
     - {fileID: 1232732351913450669, guid: dc81a5f099938b2429681810ad13eca2, type: 3}
     - {fileID: 4487471473886424822, guid: dc81a5f099938b2429681810ad13eca2, type: 3}
     - {fileID: 2835101552906006973, guid: dc81a5f099938b2429681810ad13eca2, type: 3}
+    - {fileID: 2581863909052154431, guid: dc81a5f099938b2429681810ad13eca2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3636524983878215047, guid: dc81a5f099938b2429681810ad13eca2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1858982643}
   m_SourcePrefab: {fileID: 100100000, guid: dc81a5f099938b2429681810ad13eca2, type: 3}
 --- !u!1 &1283271758
 GameObject:
@@ -1231,6 +1241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1580453285}
   - component: {fileID: 1580453284}
+  - component: {fileID: 1580453286}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -1285,6 +1296,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1580453286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580453283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529a70099e85bbc43837d0b560acc6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deongeonLevel: 0
 --- !u!1001 &1582769787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1473,6 +1497,36 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc7fc6bcba891f14493321b86496c8b1, type: 3}
+--- !u!1 &1858982634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3636524983878215047, guid: dc81a5f099938b2429681810ad13eca2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1256216896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1858982643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858982634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870011cb3df44b24d9e3504b76aafc23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curState: 0
+  _originPos: {x: 0, y: 0, z: 0}
+  _player: {fileID: 0}
+  _nav: {fileID: 0}
+  _mStat: {fileID: 0}
+  _timer: 0
+  _randomAttack: 0
+  sample: []
+  _monsterDrop: {fileID: 0}
+  _deongeonLevel: 0
+  _slimeID: 0
+  _slimeProduct: 
 --- !u!1 &1888901473
 GameObject:
   m_ObjectHideFlags: 0
