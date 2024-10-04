@@ -21,13 +21,13 @@ public class Drop : MonoBehaviour
         _drop = this;
     }
 
-    DataTableManager _dataTableManager;
-    public List<string> sample = new List<string>();
+   
+    
+    public DeongeonLevel _deongeonLevel = DeongeonLevel.Easy;
     public Dictionary<int, float> dropValue;
     private void Start()
     {
-        _dataTableManager = new DataTableManager();
-        _dataTableManager.LoadItemDataTable();
+        
         /*sample = new List<string>
         {
             "11001", "11002", "11003", "11004", // 1성 무기
@@ -41,10 +41,7 @@ public class Drop : MonoBehaviour
             "33001", "33002", "33003", "33004"  // 3성 악세서리
         
         };*/
-     foreach(var item in _dataTableManager._AllItemData)
-        {
-            sample.Add(item.ToString());
-        }
+    
         dropValue = new Dictionary<int, float> // 드랍 확률
         {
             { 1, 60 },
@@ -55,7 +52,7 @@ public class Drop : MonoBehaviour
     }
     private void Update()
     {
-        DropItemSelect(DeongeonLevel.Hard);
+        //DropItemSelect(DeongeonLevel.Hard, );
     }
     public static class WeightedRandomizer
     {
@@ -119,7 +116,7 @@ public class Drop : MonoBehaviour
             _ => -1
         };
     }
-    public string DropItemSelect(DeongeonLevel level) //아이템 string랜덤으로 받아오기
+    public string DropItemSelect(DeongeonLevel level, List<string> sample) //아이템 string랜덤으로 받아오기
     {
         int maxTier = GetDeongeonLevel(level); //아이템이 나올 최고 티어는 던젼레벨이 결정
         if (maxTier <= 0)

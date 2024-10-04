@@ -31,12 +31,16 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public MonsterStat _mStat;
     public Drop _monsterDrop;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
+    public List<string> sample = new List<string>();
     public float _timer = 0;
     public int _randomAttack;
+    DataTableManager _dataTableManager;
     //
 
     private void Awake()
     {
+        _dataTableManager = new DataTableManager();
+        _dataTableManager.LoadItemDataTable();
         _mStat = GetComponent<MonsterStat>();
          _nav = GetComponent<NavMeshAgent>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -192,26 +196,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _player.Damaged(_mStat.ATK);
 
     }
-    /*public virtual IEnumerator StartDamege(Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
-    {
-        yield return new WaitForSeconds(delay);
 
-        try//이걸 실행해보고 문제가 없다면 실행
-        {
-
-            Vector3 diff = playerPosition - transform.position;
-            diff = diff / diff.sqrMagnitude;
-            _nav.isStopped = true;
-            GetComponent<Rigidbody>().
-            AddForce((transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
-
-        }
-        catch (MissingReferenceException e)// 문제가 있다면 에러메세지 출력
-        {
-            Debug.Log(e.ToString());
-        }
-        //예외처리문
-    }*/
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         _nav.enabled = false;
@@ -243,5 +228,32 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public virtual void AttackStateSwitch()
     {
 
+    }
+    public void DropItemType()
+    {
+        switch (_monsterDrop._deongeonLevel)
+        {
+            case DeongeonLevel.Easy:
+                for(int i = 11001; i <= 11012; i++)
+                {
+                    sample.Add(i.ToString());
+                }
+                break;
+            case DeongeonLevel.Normal:
+
+                break;
+            case DeongeonLevel.Hard:
+                foreach (var item in _dataTableManager._AllItemData)
+                {
+                   
+                    string dfi = item.ID.ToString();
+                    sample.Add(dfi);
+                }
+                break;
+        }
+    }
+    public void test()
+    {
+        
     }
 }

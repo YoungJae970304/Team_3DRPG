@@ -31,7 +31,7 @@ public class ItemPickup : MonoBehaviour
     //드랍된 아이템의 정보를 가져올 함수
     public void GetDropItemID(DeongeonLevel level)
     {
-        _itemId = Drop._drop.DropItemSelect(level);
+        //_itemId = Drop._drop.DropItemSelect(level);
     }
 
     void TryPickupItem()
