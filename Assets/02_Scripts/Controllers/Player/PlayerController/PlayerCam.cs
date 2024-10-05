@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.Rendering.DebugUI.Table;
 
 public class PlayerCam : MonoBehaviour
@@ -125,6 +126,8 @@ public class PlayerCam : MonoBehaviour
                 EnableFL();
                 // 카메라 모드 변경
                 _cameraMode = Define.CameraMode.ZoomView;
+                // 모드에 따른 애니메이션 변경
+                Managers.Game._player._playerAnim.SetBool("ZoomMode", true);
                 // 현재 카메라 초기화
                 _curCam = _cmZoomCam;
                 _curCam.m_Lens.FieldOfView = _originFov;
@@ -135,6 +138,8 @@ public class PlayerCam : MonoBehaviour
             case Define.CameraMode.ZoomView:
                 // 카메라 모드 변경
                 _cameraMode = Define.CameraMode.QuarterView;
+                // 모드에 따른 애니메이션 변경
+                Managers.Game._player._playerAnim.SetBool("ZoomMode", false);
                 // 현재 카메라 초기화
                 _curCam = _cmQuarterCam;
                 _curCam.m_Lens.FieldOfView = _originFov;

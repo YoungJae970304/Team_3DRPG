@@ -11,17 +11,6 @@ public class PlayerMoveState : BaseState
     {
         _player.AtkCount = 0;
         _player._playerAnim.SetBool("Run", true);
-
-        switch (_player._playerCam._cameraMode)
-        {
-            case Define.CameraMode.QuarterView:
-                _player._playerAnim.SetBool("ZoomMode", false);
-                break;
-
-            case Define.CameraMode.ZoomView:
-                _player._playerAnim.SetBool("ZoomMode", true);
-                break;
-        }
     }
 
     public override void OnStateUpdate()
