@@ -12,15 +12,15 @@ public class ItemPickup : MonoBehaviour
     private void Awake()
     {
         _inventory = FindAnyObjectByType<Inventory>();
-        if (_player == null)
-        {
-            Logger.LogError("플레이어가 없음");
-        }
     }
 
     private void Start()
     {
         _player = Managers.Game._player.transform;
+        if (_player == null)
+        {
+            Logger.LogError("플레이어가 없음");
+        }
     }
 
     private void Update()
@@ -44,37 +44,37 @@ public class ItemPickup : MonoBehaviour
         //플레이어에게 이동
         seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad));
         //점점 작아짐
-        //seq.Join(transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InBack));
+        seq.Join(transform.DOScale(Vector3.zero, _pickupDuration).SetEase(Ease.InBack));
         //이동하면서 점점 하얘짐
         seq.Join(renderer.material.DOColor(Color.white, _pickupDuration));
         //시퀀스 완료 후 아이템 획득
-        seq.OnComplete(() =>
+        seq.OnComplete(PickupItem);
+    }
+
+    void PickupItem()
+    {
+        if (!string.IsNullOrEmpty(_itemId))
         {
-            Logger.Log($"{_itemId}:소환 안됨");
-            // 비어있는지 확인
-            if (!string.IsNullOrEmpty(_itemId))
+            // string을 int로 변환
+            if (int.TryParse(_itemId, out int itemID))
             {
-                // string을 int로 변환
-                if (int.TryParse(_itemId, out int itemID))
+                // id를 전달
+                _newItem = Item.ItemSpawn(itemID);
+                if (_newItem != null) // null 체크
                 {
-                    // id를 전달
-                    _newItem = Item.ItemSpawn(itemID);
-                    if (_newItem != null) // null 체크
+                    Logger.Log("아이템 생성");
+                    if (_inventory != null)
                     {
-                        Logger.Log("아이템 생성");
-                        if (_inventory != null)
-                        {
-                            _inventory.InsertItem(_newItem);
-                            Logger.Log($"{_newItem.Data.ID} 인벤토리에 추가");
-                        }
-                        else
-                        {
-                            Logger.Log("인벤토리에 못넣음");
-                        }
+                        _inventory.InsertItem(_newItem);
+                        Logger.Log($"{_newItem.Data.ID} 인벤토리에 추가");
+                    }
+                    else
+                    {
+                        Logger.Log("인벤토리에 못넣음");
                     }
                 }
             }
-            Destroy(gameObject);
-        });
+        }
+        Destroy(gameObject);
     }
 }
