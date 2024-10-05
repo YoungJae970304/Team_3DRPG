@@ -10,7 +10,7 @@ using UnityEngine.Jobs;
 public class Slime : Monster, IDamageAlbe
 {
     public int _slimeID;
-    public string _slimeProduct;
+    public int _slimeProduct = 0;
     
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
@@ -92,11 +92,29 @@ public class Slime : Monster, IDamageAlbe
         {
             List<int> slimeID = new List<int>();
             List<int> valueExp = new List<int>();
+            List<int> slimeRandomStartGold = new List<int>();
+            List<int> slimeRandomEndGold = new List<int>();
+            slimeRandomEndGold.Add(slimeDrop.EndValue4);
+            slimeRandomStartGold.Add(slimeDrop.StartValue4);
             valueExp.Add(slimeDrop.Value5);
             slimeID.Add(slimeDrop.ID);
-            switch (_slimeID)
+            if(_slimeID.ToString("D0") == slimeDrop.Value6.ToString("D0") && _slimeProduct == 0)
             {
-                
+                _slimeProduct = slimeDrop.Value6;
+                _mStat.EXP = valueExp[0];
+            }
+            
+            switch (_slimeID.ToString("F1"))
+            {
+                case "1":
+                    _mStat.Gold = UnityEngine.Random.Range(slimeRandomStartGold[0], slimeRandomEndGold[0]);
+                    break;
+                case "2":
+                    _mStat.Gold = UnityEngine.Random.Range(slimeRandomStartGold[4], slimeRandomEndGold[4]);
+                    break;
+                case "3":
+                    _mStat.Gold = UnityEngine.Random.Range(slimeRandomStartGold[7], slimeRandomEndGold[7]);
+                    break;
             }
         }
         
@@ -113,19 +131,19 @@ public class Slime : Monster, IDamageAlbe
                 switch (curLevel)
                 {
                     case DeongeonLevel.Easy:
-                        if(sID.ID.ToString("F2") == "1")
+                        if(sID.ID.ToString("F1") == "1")
                         {
                             _slimeID = sID.ID;
                         }
                         break;
                     case DeongeonLevel.Normal:
-                        if (sID.ID.ToString("F2") == "2")
+                        if (sID.ID.ToString("F1") == "2")
                         {
                             _slimeID = sID.ID;
                         }
                         break;
                     case DeongeonLevel.Hard:
-                        if (sID.ID.ToString("F2") == "3")
+                        if (sID.ID.ToString("F1") == "3")
                         {
                             _slimeID = sID.ID;
                         }

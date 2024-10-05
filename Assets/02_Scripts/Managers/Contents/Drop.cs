@@ -75,9 +75,10 @@ public class Drop : MonoBehaviour
         public T TakeOne()
         {
             //var sortedSpawnRate = Sort(_weights);
-            float sum = 0;
+            float sum = _weights.Values.Sum();
             float roll = (float)_random.NextDouble() * sum;
-            T selected = _weights.Keys.First();
+            //T selected = _weights.Keys.First();
+            T selected = default;
             foreach (var spawn in _weights)
             {
                 if (roll < spawn.Value)
@@ -133,7 +134,7 @@ public class Drop : MonoBehaviour
             if (itemTier <= maxTier)
             {
 
-                itemDrop[randomItem.ToString()] = 10; // 드랍 확률 설정
+                itemDrop[randomItem] = 10; // 드랍 확률 설정
                // test[itemTier - 1] += itemDrop[randomItem];
             }
         }
@@ -151,6 +152,7 @@ public class Drop : MonoBehaviour
         {
             var randomizer = WeightedRandomizer.From(itemDrop); //가중치를 기반으로 랜덤 선택을 준비
             selectedItem = randomizer.TakeOne(); // 가중치를 고려하여 선택된 아이템을 저장
+            Logger.Log($"선택된 아이템: {selectedItem}");
         }
         /*
         foreach (var itemTier in dropValue.Keys) //키를 itemTier에 담고

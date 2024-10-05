@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
 using System.Threading.Tasks;
+using System.Linq;
 
 
 
@@ -35,6 +36,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
+    GameManager _gameManager;
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
@@ -42,19 +44,28 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Drop _monsterDrop;
     public DeongeonLevel _deongeonLevel;
     public Dictionary<string, int> randomValue = new Dictionary<string, int>();
+    
+    [Header("Drop리스트 추가 관련 변수")]
+    int startValue1;
+    int endValue1;
+    int startValue2;
+    int endValue2;
+    int startValue3;
+    int endValue3;
 
     private void Awake()
     {
         _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
-        
+        _gameManager =  new GameManager();
         _dataTableManager = new DataTableManager();
         _dataTableManager.LoadItemDataTable();
         _dropManager = new DropManager();
+        _monsterDrop = FindObjectOfType<Drop>();
         _dropManager.LoadItemDataTable();
         itemtest(_deongeonLevel);
         _mStat = GetComponent<MonsterStat>();
          _nav = GetComponent<NavMeshAgent>();
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _player = _gameManager._player;
         _originPos = transform.position;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
@@ -78,13 +89,15 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat.HP = _mStat.MaxHP;
         _mStat.ATK = 30;
         _mStat.DEF = 10;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        Logger.Log(_monsterDrop.DropItemSelect(_deongeonLevel, sample));
+        
+        
         _mFSM.UpdateState();
 
         
@@ -97,6 +110,13 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
             BaseState();
         }
+       
+        if (sample.Count == 0)
+        {
+            Debug.LogError("sample 리스트가 비어 있습니다. 아이템을 추가하세요.");
+            return;
+        }
+        _monsterDrop.DropItemSelect(_deongeonLevel, sample);
     }
     #region 상태 변환
     protected virtual void BaseState()
@@ -259,54 +279,67 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 몬스터 난이도별 드랍목록 정리 //추후 던전 난이도로 변경 예정
 
     #endregion
+    
+
     public virtual void itemtest(DeongeonLevel curGrade)
     {
         
         foreach (var item in _dropManager._MonsterDropData)
         {
-            int startValue1 = item.StartValue1;
-            int endValue1 = item.EndValue1;
-            int startValue2 = item.StartValue2;
-            int endValue2 = item.EndValue2;
-            int startValue3 = item.StartValue3;
-            int endValue3 = item.EndValue3;
-            switch (curGrade)
+            startValue1 = item.StartValue1;
+            endValue1 = item.EndValue1;
+            startValue2 = item.StartValue2;
+            endValue2 = item.EndValue2;
+            startValue3 = item.StartValue3;
+            endValue3 = item.EndValue3;
+            if (startValue1 != 0 && endValue1 != 0)
             {
-                case DeongeonLevel.Easy:
-                    for (int i = startValue1; i <= endValue1; i++)
-                    {
-                        sample.Add(i.ToString());
-                    }
-                    break;
-                case DeongeonLevel.Normal:
-                    for (int i = startValue1; i <= endValue1; i++)
-                    {
-                        sample.Add(i.ToString());
-                    }
-                    for (int i = startValue2; i <= endValue2; i++)
-                    {
-                        sample.Add(i.ToString());
-                    }
-                    break;
-                case DeongeonLevel.Hard:
-                    for (int i = startValue1; i <= endValue1; i++)
-                    {
-                        sample.Add(i.ToString());
-                        Logger.Log(i);
-                    }
-                    for (int i = startValue2; i <= endValue2; i++)
-                    {
-                        sample.Add(i.ToString());
-                        Logger.Log(i);
-                    }
-                    for (int i = startValue3; i <= endValue3; i++)
-                    {
-                        sample.Add(i.ToString());
-                        Logger.Log(i);
-                    }
-                    break;
+                switch (curGrade)
+                {
+                    case DeongeonLevel.Easy:
+                        
+                        for (int i = startValue1; i <= endValue1; i++)
+                        {
+                            AddSample(i);
+                            
+                        }
+                        break;
+                    case DeongeonLevel.Normal:
+                        for (int i = startValue1; i <= endValue1; i++)
+                        {
+                            AddSample(i);
+                        }
+                        for (int i = startValue2; i <= endValue2; i++)
+                        {
+                            AddSample(i);
+                        }
+                        break;
+                    case DeongeonLevel.Hard:
+                        for (int i = startValue1; i <= endValue1; i++)
+                        {
+                            AddSample(i);
+                        }
+                        for (int i = startValue2; i <= endValue2; i++)
+                        {
+                            AddSample(i);
+                            
+                        }
+                        for (int i = startValue3; i <= endValue3; i++)
+                        {
+                            AddSample(i);
+                        }
+                        break;
+                }
             }
-            
+        }
+        
+        
+    }
+    public void AddSample(int i)
+    {
+        if (!sample.Contains(i.ToString()) && i !=0)
+        {
+            sample.Add(i.ToString());
         }
     }
 
