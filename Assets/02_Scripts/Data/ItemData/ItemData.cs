@@ -52,7 +52,7 @@ public class ItemData : IData
     //최대 소지 갯수
     [SerializeField] int _maxAmount = 99;
     //착용 가능 레벨
-    int _limitLevel;
+    [SerializeField] int _limitLevel;
 
     //아이템 데이터 초기화
     public void SetDefaultData()
@@ -68,9 +68,9 @@ public class ItemData : IData
         LimitLevel = _limitLevel;
     }
 
-    public bool LoadData()
+    public bool SaveData()
     {
-        Logger.Log($"{GetType()}::LoadData");
+        Logger.Log($"{GetType()}::세이브 데이터");
         bool result = false;
         try
         {
@@ -82,15 +82,15 @@ public class ItemData : IData
            
         }catch(Exception e)
         {
-            Logger.Log($"Load failed (" + e.Message + ")");
+            Logger.Log($"저장 실패(" + e.Message + ")");
         }
         return result;
 
     }
 
-    public bool SaveData()
+    public bool LoadData()
     {
-        Logger.Log($"{GetType()}::Save Data");
+        Logger.Log($"{GetType()}::로드 데이터");
 
         bool result = false;
         try
@@ -109,7 +109,7 @@ public class ItemData : IData
         }
         catch(Exception e)
         {
-            Logger.Log("Save failed(" + e.Message + ")");
+            Logger.Log("로드 실패(" + e.Message + ")");
         }
         return result;
     }
