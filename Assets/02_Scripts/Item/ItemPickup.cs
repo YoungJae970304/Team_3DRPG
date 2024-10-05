@@ -17,15 +17,11 @@ public class ItemPickup : MonoBehaviour
     private void Start()
     {
         _player = Managers.Game._player.transform;
+        TryPickupItem();
         if (_player == null)
         {
             Logger.LogError("플레이어가 없음");
         }
-    }
-
-    private void Update()
-    {
-         TryPickupItem();
     }
 
     //드랍된 아이템의 정보를 가져올 함수
@@ -44,7 +40,7 @@ public class ItemPickup : MonoBehaviour
         //플레이어에게 이동
         seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad));
         //점점 작아짐
-        seq.Join(transform.DOScale(Vector3.zero, _pickupDuration).SetEase(Ease.InBack));
+        seq.Join(transform.DOScale(Vector3.zero, _pickupDuration - 0.1f).SetEase(Ease.InBack));
         //이동하면서 점점 하얘짐
         seq.Join(renderer.material.DOColor(Color.white, _pickupDuration));
         //시퀀스 완료 후 아이템 획득
