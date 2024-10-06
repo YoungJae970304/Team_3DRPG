@@ -279,8 +279,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 몬스터 난이도별 드랍목록 정리 //추후 던전 난이도로 변경 예정
 
     #endregion
-    
 
+    #region 아이템 드랍
     public virtual void itemtest(DeongeonLevel curGrade)
     {
         
@@ -342,5 +342,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
             sample.Add(i.ToString());
         }
     }
-
+    public void MakeItem()
+    {
+        GameObject item = Instantiate(Managers.Resource.Instantiate("ItemTest/TestItem"));
+        item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
+    }
+    #endregion
 }
