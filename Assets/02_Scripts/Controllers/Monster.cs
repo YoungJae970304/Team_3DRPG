@@ -1,12 +1,7 @@
-using Data;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.XR;
-using System.Threading.Tasks;
-using System.Linq;
 
 
 
@@ -26,7 +21,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     [Header("enum 변수")]
     public MonsterState _curState;
-    
+
     [Header("FSM관련 변수")]
     public FSM _mFSM;
     public Vector3 _originPos;
@@ -44,7 +39,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public DeongeonLevel _deongeonLevel;
     public DropData _dropData;
     public Dictionary<string, int> randomValue = new Dictionary<string, int>();
-    
+    public int _monsterProduct;
     [Header("Drop리스트 추가 관련 변수")]
     int startValue1;
     int endValue1;
@@ -59,9 +54,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _gameManager = Managers.Game;
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
-        itemtest(_deongeonLevel);
+        
         _mStat = GetComponent<MonsterStat>();
-         _nav = GetComponent<NavMeshAgent>();
+        _nav = GetComponent<NavMeshAgent>();
         _player = _gameManager._player;
         _originPos = transform.position;
         #region 상태딕셔너리 초기화
@@ -76,11 +71,12 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
     }
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
+
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
-        
+
 
         _mStat.MaxHP = 100;
         _mStat.HP = _mStat.MaxHP;
@@ -92,32 +88,33 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Update is called once per frame
     void Update()
     {
-        
+
         _mFSM.UpdateState();
 
-        
+
         if (_curState == MonsterState.Damage)
         {
-            
+
             return;
         }
         else
         {
             BaseState();
         }
-       
+
         if (sample.Count == 0)
         {
             Debug.LogError("sample 리스트가 비어 있습니다. 아이템을 추가하세요.");
             return;
         }
-        _monsterDrop.DropItemSelect(_deongeonLevel, sample);
+        //_monsterDrop.DropItemSelect(_deongeonLevel, sample);
+
     }
     #region 상태 변환
     protected virtual void BaseState()
     {
-     
-        
+
+
         switch (_curState)
         {
             case MonsterState.Idle:
@@ -125,7 +122,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
                     MChangeState(MonsterState.Move);
                 break;
             case MonsterState.Damage:
-                
+
                 break;
             case MonsterState.Move:
                 if (CanAttackPlayer())
@@ -160,7 +157,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 상태 변환 FSM 사용
     protected void MChangeState(MonsterState nextState)
     {
-        if(_mFSM == null)
+        if (_mFSM == null)
         {
             Logger.LogError("FSM이 null");
             return;
@@ -174,18 +171,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
             Logger.LogError($"상태가 유효하지 않음: {nextState}");
         }
-       
+
     }
     #endregion
     #region 받는 데미지 함수
     public virtual void Damaged(int amount)
     {
-        if(_mStat == null)
+        if (_mStat == null)
         {
             Logger.LogError("MonsterStat이 null입니다");
             return;
         }
-        _mStat.HP -= ( amount - _mStat.DEF );
+        _mStat.HP -= (amount - _mStat.DEF);
         StartDamege(_player.transform.position, 0.1f, 20f);
         if (_mStat.HP > 0)
         {
@@ -246,8 +243,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
         // Rigidbody 설정
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = false; // 물리 효과 활성화
-       
-        
+
+
         // 넉백 힘 적용
         rb.AddForce(force, ForceMode.Impulse);
 
@@ -276,9 +273,32 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #endregion
 
     #region 아이템 드랍
-    public virtual void itemtest(DeongeonLevel curGrade)
+    public virtual void itemtest(DeongeonLevel curGrade, int monsterid)
     {
-        
+        DropData dropData = null;
+        //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
+        foreach (var newItem in _dataTableManager._MonsterDropData)
+        {
+            
+            if (newItem.ID == monsterid)
+            {
+                dropData = newItem;
+                break;
+            }
+        }
+
+        if (dropData != null)
+        {
+            _mStat.EXP = dropData.Value5;
+            _monsterProduct = dropData.Value6;
+            _mStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
+        }
+        else
+        {
+            Logger.Log("해당 Id의 아이템을 찾을수가 없습니다. : " + monsterid);
+
+        }
+
         foreach (var item in _dataTableManager._MonsterDropData)
         {
             startValue1 = item.StartValue1;
@@ -287,16 +307,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
             endValue2 = item.EndValue2;
             startValue3 = item.StartValue3;
             endValue3 = item.EndValue3;
+
+
             if (startValue1 != 0 && endValue1 != 0)
             {
                 switch (curGrade)
                 {
                     case DeongeonLevel.Easy:
-                        
+
                         for (int i = startValue1; i <= endValue1; i++)
                         {
                             AddSample(i);
-                            
+
                         }
                         break;
                     case DeongeonLevel.Normal:
@@ -317,7 +339,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
                         for (int i = startValue2; i <= endValue2; i++)
                         {
                             AddSample(i);
-                            
+
                         }
                         for (int i = startValue3; i <= endValue3; i++)
                         {
@@ -327,12 +349,12 @@ public class Monster : MonoBehaviour, IDamageAlbe
                 }
             }
         }
-        
-        
+
+
     }
     public void AddSample(int i)
     {
-        if (!sample.Contains(i.ToString()) && i !=0)
+        if (!sample.Contains(i.ToString()) && i != 0)
         {
             sample.Add(i.ToString());
         }
