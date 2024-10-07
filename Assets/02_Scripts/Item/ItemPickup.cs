@@ -8,7 +8,8 @@ public class ItemPickup : MonoBehaviour
     // itemID를 string으로 받아옴
     public string _itemId;
     [SerializeField] float _pickupDuration = 1f;
-    Tweener _tweener;
+    Sequence _seq;
+
     private void Awake()
     {
         _inventory = FindAnyObjectByType<Inventory>();
@@ -28,35 +29,37 @@ public class ItemPickup : MonoBehaviour
     {
         //float distance = Vector3.Distance(transform.position, _player.position);
         Renderer renderer = GetComponent<Renderer>();
+        _seq = DOTween.Sequence();
 
-        Sequence seq = DOTween.Sequence();
-        //transform.position = Vector3.MoveTowards(transform.position, _player.position, _pickupSpeed * Time.deltaTime);
         //플레이어에게 이동
-        seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad));
         //점점 작아짐
-        seq.Join(transform.DOScale(Vector3.zero, _pickupDuration - 0.1f).SetEase(Ease.InBack));
         //이동하면서 점점 하얘짐
-        seq.Join(renderer.material.DOColor(Color.white, _pickupDuration));
-        //근데 시퀀스가 종료되기전에 플레이어가 움직이면 플레이어를 향해서 다시 경로 재탐색 
-        if (Vector3.Distance(transform.position, _player.position) < 0.1f)
-        {
-            //연출 효과 종료하고 경로 재 탐색
-            //Kill = Complete를 펄스로 해버림
-            _tweener.Kill();
-            FollowPlayer();
-            //시퀀스 종료.
-            seq.Complete();
-        }
+        _seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad))
+            .Join(transform.DOScale(Vector3.zero, _pickupDuration - 0.1f).SetEase(Ease.InBack))
+            .Join(renderer.material.DOColor(Color.white, _pickupDuration))
+            .OnUpdate(() =>
+            {
+                if (Vector3.Distance(transform.position, _player.position) > 0.1f)
+                {
+                    FollowPlayer();
+                }
+                else
+                {
+                    PickupItem();
+                    _seq.Complete();
+                    Destroy(gameObject);
+                }
+            });
 
         void FollowPlayer()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _player.position, 10f * Time.deltaTime);
-            PickupItem();
+            _seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad))
+            .Join(transform.DOScale(Vector3.zero, _pickupDuration - 0.1f).SetEase(Ease.InBack))
+            .Join(renderer.material.DOColor(Color.white, _pickupDuration));
         }
 
         void PickupItem()
         {
-
             if (!string.IsNullOrEmpty(_itemId))
             {
                 // string을 int로 변환
@@ -79,7 +82,6 @@ public class ItemPickup : MonoBehaviour
                     }
                 }
             }
-            Destroy(gameObject);
         }
     }
 }
