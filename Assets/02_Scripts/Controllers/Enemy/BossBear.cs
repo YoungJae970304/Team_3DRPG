@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 public class BossBear : Monster, IDamageAlbe
 {
-   
-
+    public int _bossBearID = 99999;
+    public override void Awake()
+    {
+        base.Awake();
+        itemtest(_deongeonLevel, _bossBearID);
+    }
     public override void AttackStateSwitch()
     {
         if (_randomAttack <= 15)
@@ -137,4 +141,5 @@ public class BossBear : Monster, IDamageAlbe
     {
         throw null;
     }
+  
 }

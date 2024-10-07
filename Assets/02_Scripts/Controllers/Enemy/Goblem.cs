@@ -6,6 +6,13 @@ using UnityEngine.AI;
 
 public class Goblem : Monster, IDamageAlbe
 {
+    public int _goblemID;
+    public override void Awake()
+    {
+        base.Awake();
+        GoblemIDCheck(_deongeonLevel);
+        itemtest(_deongeonLevel, _goblemID);
+    }
     public override void AttackStateSwitch()
     {
         if (_randomAttack <= 66)
@@ -58,5 +65,36 @@ public class Goblem : Monster, IDamageAlbe
             MChangeState(MonsterState.Attack);
         else
             MChangeState(MonsterState.Move);
+    }
+    public void GoblemIDCheck(DeongeonLevel curLevel)
+    {
+        foreach (var gID in _dataTableManager._MonsterDropData)
+        {
+            string iDCheck = gID.ID.ToString("D0");
+            if (iDCheck == "2")
+            {
+                switch (curLevel)
+                {
+                    case DeongeonLevel.Easy:
+                        if (gID.ID.ToString("F1") == "1")
+                        {
+                            _goblemID = gID.ID;
+                        }
+                        break;
+                    case DeongeonLevel.Normal:
+                        if (gID.ID.ToString("F1") == "2")
+                        {
+                            _goblemID = gID.ID;
+                        }
+                        break;
+                    case DeongeonLevel.Hard:
+                        if (gID.ID.ToString("F1") == "3")
+                        {
+                            _goblemID = gID.ID;
+                        }
+                        break;
+                }
+            }
+        }
     }
 }

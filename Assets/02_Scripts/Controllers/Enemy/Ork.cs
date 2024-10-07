@@ -7,6 +7,13 @@ using UnityEngine.AI;
 
 public class Ork : Monster
 {
+    public int _OrkID;
+    public override void Awake()
+    {
+        base.Awake();
+        OrkIDCheck(_deongeonLevel);
+        itemtest(_deongeonLevel, _OrkID);
+    }
     public override void AttackStateSwitch()
     {
         if (_randomAttack <= 100)
@@ -60,5 +67,36 @@ public class Ork : Monster
             MChangeState(MonsterState.Attack);
         else
             MChangeState(MonsterState.Move);
+    }
+    public void OrkIDCheck(DeongeonLevel curLevel)
+    {
+        foreach (var oID in _dataTableManager._MonsterDropData)
+        {
+            string iDCheck = oID.ID.ToString("D0");
+            if (iDCheck == "3")
+            {
+                switch (curLevel)
+                {
+                    case DeongeonLevel.Easy:
+                        if (oID.ID.ToString("F1") == "1")
+                        {
+                            _OrkID = oID.ID;
+                        }
+                        break;
+                    case DeongeonLevel.Normal:
+                        if (oID.ID.ToString("F1") == "2")
+                        {
+                            _OrkID = oID.ID;
+                        }
+                        break;
+                    case DeongeonLevel.Hard:
+                        if (oID.ID.ToString("F1") == "3")
+                        {
+                            _OrkID = oID.ID;
+                        }
+                        break;
+                }
+            }
+        }
     }
 }
