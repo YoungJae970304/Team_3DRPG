@@ -1654,11 +1654,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 483223905797117089, guid: ca485054dc4f410439e704b8252a351b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3322713625194072580, guid: ca485054dc4f410439e704b8252a351b,
         type: 3}
       propertyPath: _cmBrain
@@ -1674,20 +1669,10 @@ PrefabInstance:
       propertyPath: _cmQuarterCam
       value: 
       objectReference: {fileID: 773660106}
-    - target: {fileID: 4165115064410378243, guid: ca485054dc4f410439e704b8252a351b,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8312498464758197025, guid: ca485054dc4f410439e704b8252a351b,
         type: 3}
       propertyPath: m_Name
-      value: RangedPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 8312498464758197025, guid: ca485054dc4f410439e704b8252a351b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: MagePlayer
       objectReference: {fileID: 0}
     - target: {fileID: 8796244127300489124, guid: ca485054dc4f410439e704b8252a351b,
         type: 3}
@@ -1740,8 +1725,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 6859997119288624748, guid: ca485054dc4f410439e704b8252a351b, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca485054dc4f410439e704b8252a351b, type: 3}

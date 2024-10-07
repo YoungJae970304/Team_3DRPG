@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 9024554977287331986}
   - component: {fileID: 5068212463655096710}
   m_Layer: 0
-  m_Name: RangedPlayer
+  m_Name: MagePlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerHitState: 0
+  _playerAnim: {fileID: 0}
   _playerModel: {fileID: 7925344388107736099}
   _playerType: 0
   _moveDir: {x: 0, y: 0, z: 0}
@@ -485,6 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180ce674026e125428ff5496aabcc9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dir: {x: 0, y: 0, z: 0}
 --- !u!114 &5068212463655096710
 MonoBehaviour:
   m_ObjectHideFlags: 0
