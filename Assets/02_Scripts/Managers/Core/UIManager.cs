@@ -23,34 +23,34 @@ public class UIManager
             return _root;
         }
     }
-    public Transform UICanvasTrs;//UI화면을 랜더링할 캐너ㅡ 컴포넌트 트랜스폼
+    public Transform _uiCanvasTrs;//UI화면을 랜더링할 캐너ㅡ 컴포넌트 트랜스폼
     //UI 화면을 이 UI 캔버스 트랜스폼 하위에 위치시켜주어야 하기 때문에 필요함
 
-    public Transform CloseUITrs;//UI 화면을 닫을 때 비활성화 시킨 UI 화면들을 위치시켜줄 트랜스폼
+    public Transform _closeUITrs;//UI 화면을 닫을 때 비활성화 시킨 UI 화면들을 위치시켜줄 트랜스폼
 
 
 
-    private BaseUI m_FrontUI; //UI화면에 열려있는 가장 상단에 열려있는 UI
+    private BaseUI _frontUI; //UI화면에 열려있는 가장 상단에 열려있는 UI
     //활성화된 UI
-    private Dictionary<Type, GameObject> m_OpenUIPool = new Dictionary<Type, GameObject>();
+    private Dictionary<Type, GameObject> _OpenUIPool = new Dictionary<Type, GameObject>();
     //비활성화된 UI
-    private Dictionary<Type, GameObject> m_CloseUIPool = new Dictionary<Type, GameObject>();
+    private Dictionary<Type, GameObject> _CloseUIPool = new Dictionary<Type, GameObject>();
     //UI 화면이 열려있는지 닫혀있는지 구분이 필요하기 때문에 UI 풀을 2개의 변수로 관리
 
-    LinkedList<BaseUI> baseUIs = new LinkedList<BaseUI>();
+    LinkedList<BaseUI> _sortingList = new LinkedList<BaseUI>();
     public void Init()
     {
-        if (UICanvasTrs == null)
+        if (_uiCanvasTrs == null)
         {
             // 풀링을 할 오브젝트가 있다면 @Pool_Root 산하에 들고 있게 할 예정
-            UICanvasTrs = new GameObject { name = "@UI_Root" }.transform;
-            UnityEngine.Object.DontDestroyOnLoad(UICanvasTrs);
+            _uiCanvasTrs = new GameObject { name = "@UI_Root" }.transform;
+            UnityEngine.Object.DontDestroyOnLoad(_uiCanvasTrs);
         }
-        if (CloseUITrs == null)
+        if (_closeUITrs == null)
         {
             // 풀링을 할 오브젝트가 있다면 @Pool_Root 산하에 들고 있게 할 예정
-            CloseUITrs = new GameObject { name = "@CloseUI_Root" }.transform;
-            CloseUITrs.SetParent(UICanvasTrs);
+            _closeUITrs = new GameObject { name = "@CloseUI_Root" }.transform;
+            _closeUITrs.SetParent(_uiCanvasTrs);
         }
     }
 
@@ -65,16 +65,16 @@ public class UIManager
         BaseUI ui = null;
         isAlreadyOpen = false;
 
-        if (!isNew&&m_OpenUIPool.ContainsKey(uiType) )//활성화된 UI면
+        if (!isNew&&_OpenUIPool.ContainsKey(uiType) )//활성화된 UI면
         {
-            ui = m_OpenUIPool[uiType].GetComponent<BaseUI>();
+            ui = _OpenUIPool[uiType].GetComponent<BaseUI>();
             isAlreadyOpen = true;
         }
-        else if (!isNew && m_CloseUIPool.ContainsKey(uiType))//비활성화된 UI면
+        else if (!isNew && _CloseUIPool.ContainsKey(uiType))//비활성화된 UI면
         {
 
-            ui = m_CloseUIPool[uiType].GetComponent<BaseUI>();
-            m_CloseUIPool.Remove(uiType);
+            ui = _CloseUIPool[uiType].GetComponent<BaseUI>();
+            _CloseUIPool.Remove(uiType);
         }
         else
         { //한번도 생성된 적이 없는 UI 면
@@ -109,17 +109,18 @@ public class UIManager
         }
 
 
-        var siblingIdx = UICanvasTrs.childCount - 1;//하위 오브젝트 개수
-        ui.Init(UICanvasTrs);//화면 초기화   
+        var siblingIdx = _uiCanvasTrs.childCount - 1;//하위 오브젝트 개수
+           
 
         //ui.transform.SetSiblingIndex(siblingIdx);
         //하이어라키 창 우선순위변경
 
         ui.gameObject.SetActive(true);
+        ui.Init(_uiCanvasTrs);//화면 초기화
         ui.SetInfo(uidata);
         
         ui.ShowUI();
-        m_OpenUIPool[uiType] = ui.gameObject;
+        _OpenUIPool[uiType] = ui.gameObject;
         SetCurrentUI(ui, sort); //소팅 우선순위 변경
         return ui as T;
     }
@@ -131,18 +132,19 @@ public class UIManager
 
         ui.gameObject.SetActive(false);
         
-        m_OpenUIPool.Remove(uiType);
-        m_CloseUIPool[uiType] = ui.gameObject;
+        _OpenUIPool.Remove(uiType);
+        _CloseUIPool[uiType] = ui.gameObject;
         
-        baseUIs.Remove(ui);
-        m_FrontUI = null;
+        _sortingList.Remove(ui);
+        _frontUI = null;
         _order--;
-        if (baseUIs.Count>0)
+        if (_sortingList.Count>0)
         {
-            var lastChild = baseUIs.Last.Value;
-            m_FrontUI = lastChild;
+            var lastChild = _sortingList.Last.Value;
+            _frontUI = lastChild;
+            _frontUI.OnIsCurrent();
         }
-        ui.transform.SetParent(CloseUITrs);
+        ui.transform.SetParent(_closeUITrs);
     }
 
     public void DeleteUI(BaseUI ui) {
@@ -153,22 +155,22 @@ public class UIManager
     public BaseUI GetActiveUI<T>() //이름 신경쓰자 이후에 이름이 달라 에러가 발생했었다. -GetActivePopupUI이런 이름이였음
     {
         var uiType = typeof(T);
-        //m_OpenUIPool에 특정 화면 인스턴스가 존재한다면 그 화면 인스턴스를 리턴해 주고 그렇지 않으면 널 리턴
-        return m_OpenUIPool.ContainsKey(uiType) ? m_OpenUIPool[uiType].GetComponent<BaseUI>() : null;
+        //_OpenUIPool에 특정 화면 인스턴스가 존재한다면 그 화면 인스턴스를 리턴해 주고 그렇지 않으면 널 리턴
+        return _OpenUIPool.ContainsKey(uiType) ? _OpenUIPool[uiType].GetComponent<BaseUI>() : null;
 
     }
 
     //UI화면이 열린것이 하나라도 있는지 확인하는 함수
     public bool ExistsOpenUI()
     {
-        return m_FrontUI != null; //m_FrontUI가 null인지 아닌지 확인해서 bool값을 반환
+        return _frontUI != null; //_FrontUI가 null인지 아닌지 확인해서 bool값을 반환
     }
 
     //현재 가장 최상단에 있는 인스턴스를 리턴하는 함수
 
     public BaseUI GetCurrentFrontUI()
     {
-        return m_FrontUI;
+        return _frontUI;
     }
 
     //가장 최상단에 있는 UI화면 인스턴스를 닫는 함수
@@ -176,10 +178,10 @@ public class UIManager
     {
         if (delete)
         {
-            DeleteUI(m_FrontUI);
+            DeleteUI(_frontUI);
         }
         else {
-            m_FrontUI.CloseUI();
+            _frontUI.CloseUI();
         }
     }
 
@@ -187,9 +189,9 @@ public class UIManager
 
     public void CloseAllOpenUI()
     {
-        while (m_FrontUI)
+        while (_frontUI)
         {
-            m_FrontUI.CloseUI(true);
+            _frontUI.CloseUI(true);
         }
     }
     public void SetCurrentUI(BaseUI ui, bool sort = true)
@@ -202,16 +204,16 @@ public class UIManager
         // overrideSorting을 통해 혹시라도 중첩 캔버스라 자식 캔버스가 있더라도 부모 캔버스가 어떤 값을 가지던
         // 자신은 자신의 오더값을 가지려 할 때 true;
         canvas.overrideSorting = true;
-        if (baseUIs.Contains(ui)) {
-            baseUIs.Remove(ui);
+        if (_sortingList.Contains(ui)) {
+            _sortingList.Remove(ui);
         }
-        baseUIs.AddLast(ui);
-        m_FrontUI = ui;
+        _sortingList.AddLast(ui);
+        _frontUI = ui;
         if (sort)
         {
             canvas.sortingOrder = _order;
             _order++;
-            foreach (BaseUI baseUI in baseUIs) {
+            foreach (BaseUI baseUI in _sortingList) {
                 baseUI.OnIsNotCurrent();
             }
             ui.OnIsCurrent();

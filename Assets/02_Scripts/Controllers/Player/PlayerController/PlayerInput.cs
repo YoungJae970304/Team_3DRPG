@@ -147,8 +147,16 @@ public class PlayerInput : MonoBehaviour
 
     public void OpenInventory()
     {
-        // 인벤토리 여는 것 I? ( 풀링 )
-        Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+        InventoryUI inventoryUI = Managers.UI.GetActiveUI<InventoryUI>() as InventoryUI;
+        if (inventoryUI != null)
+        {
+            Managers.UI.CloseUI(inventoryUI);
+        }
+        else {
+            // 인벤토리 여는 것 I? ( 풀링 )
+            Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+        }
+        
     }
     public void CloseFrontUI()
     {

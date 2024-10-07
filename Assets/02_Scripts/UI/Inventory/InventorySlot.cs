@@ -1,50 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : ItemSlot
 {
-    Item _item;
-    public Item Item{get=>_item ;}
-    public Image _Image;
-    public int _index;
     Inventory _itemManager;
     InventoryUI _inventory;
-    [SerializeField] Text _text;
-
-    public void Init(Inventory itemManager, InventoryUI inventory) {
+    public int _index;
+    public virtual void Init(Inventory itemManager, InventoryUI inventory)
+    {
         _itemManager = itemManager;
         _inventory = inventory;
+        slotType = _inventory._currentType;
         _index = transform.GetSiblingIndex();
     }
-
-    public void UpdateInfo()
+    public override void UpdateInfo()
     {
-        
         _item = _itemManager.GetItem(_index, _inventory._currentType);
-        if (_item == null)
-        {
-            _Image.enabled = false;
-            _text.text = "";
-            return;
+        slotType = _inventory._currentType;
+        base.UpdateInfo();
+    }
+    public override void ItemInsert(ItemSlot moveSlot)
+    {
+        if (!_itemManager.Containtype(slotType, moveSlot.slotType)) { return; }
+        if (moveSlot is InventorySlot) {
+            _itemManager.SwitchItem(_index, ((InventorySlot)moveSlot)._index, moveSlot.Item.Data.Type);
         }
-        
-        _Image.enabled = true;
-        _Image.sprite = _item.Data.IconSprite == null ? _Image.sprite : _item.Data.IconSprite;
-        if (_item is CountableItem)
+        else
         {
-            _text.text = (_item as CountableItem)._amount.ToString(); ;
-        }
-        else {
-            _text.text = "";
+            Item item = moveSlot.Item;
+            moveSlot.MoveItem(this);
+            _itemManager.Setitem(_index, item);
         }
         
     }
-
-    public void test()
+    public override bool MoveItem(ItemSlot moveSlot)
     {
-        if (_item == null) { return; }
-        Logger.Log(_item.Data.Name);
+        Item item = moveSlot.Item;
+
+        if (item == null)
+        {
+            _itemManager.Remove(_index, slotType);
+        }
+        else {
+            _itemManager.Setitem(_index, item);
+        }
+        
+        return true;
     }
 }
