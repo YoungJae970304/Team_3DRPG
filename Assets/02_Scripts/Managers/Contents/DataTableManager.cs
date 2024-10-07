@@ -18,14 +18,16 @@ public class DataTableManager
         LoadAllItemData();
     }
 
-    //폴더 안에 있는 장비아이템 데이터 csv파일
+    //장비아이템 데이터 CSV파일
     const string EQUIPMENT_ITEM_DATA_TABLE = "Equipment_Data_Table";
-    //데이터 테이블 폴더 안에 있는 포션아이템 데이터 csv파일
+    //포션아이템 데이터 CSV파일
     const string POTION_ITEM_DATA_TABLE = "Potion_Data_Table";
-    //데잍터 테이블 폴더 안에 있는 기타아이템 데이터 csv파일
+    //기타아이템 데이터 CSV파일
     const string GOODS_ITEM_DATA_TABLE = "Goods_Data_Table";
-    //데이터 테이블 CSV파일
+    //드랍 데이터 테이블 CSV파일
     const string MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
+    //퀘스트 데이터 테이블 CSV 파일
+    const string QUEST_DATA_TABLE = "";
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
     public List<ItemData> _PotionItemData = new List<ItemData>();
@@ -33,8 +35,8 @@ public class DataTableManager
     public List<DropData> _MonsterDropData = new List<DropData>();
     //실질적인 아이템 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
-
-
+    //csv파일에서 퀘스트 데이터를 저장 하였으니 그 리스트 를 매니저에서 불러와 줌
+    public List<QuestData> QuestDataList = new List<QuestData>();
 
     #region 장비데이터테이블 함수
     void EquipmentDataTable(string dataPath, string equipmentDataTable)
