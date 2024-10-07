@@ -51,7 +51,6 @@ public class DialogSystem : UI_Interect
             speakers[i].spriteRenderer.gameObject.SetActive(true);
         }
     }
-    [ContextMenu("보이게 하기 테스트")]
     void SetActiveObjects(Speaker speaker, bool visible)
     {
         speaker.imageDialog.gameObject.SetActive(visible);

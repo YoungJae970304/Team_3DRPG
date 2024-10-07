@@ -4,6 +4,7 @@ public class ItemPickup : MonoBehaviour
 {
     Transform _player;
     Inventory _inventory;
+
     public Item _newItem;
     // itemID를 string으로 받아옴
     public string _itemId;
