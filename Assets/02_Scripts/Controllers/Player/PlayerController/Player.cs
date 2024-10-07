@@ -115,9 +115,17 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public PlayerStat _playerStat;
     [HideInInspector]
+    public PlayerStat _equipStat;
+    [HideInInspector]
     public PlayerInput _playerInput;
     [HideInInspector]
     public PlayerCam _playerCam;
+
+    public PlayerStat PlayerStat
+    {
+        get { return _playerStat + _equipStat; }
+    
+    }
 
     protected virtual void Awake()
     {
