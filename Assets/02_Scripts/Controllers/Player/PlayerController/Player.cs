@@ -34,6 +34,10 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public PlayerHitState _playerHitState;
 
+    // 애니메이션 관련 변수
+    [HideInInspector]
+    public Animator _playerAnim;
+
     [Header("오브젝트 참조")]
     public Transform _playerModel;
     [HideInInspector]
@@ -127,6 +131,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStat = gameObject.GetOrAddComponent<PlayerStat>();
         _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
         _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
+        _playerAnim = GetComponentInChildren<Animator>();
         #endregion
 
         #region 딕셔너리 초기화

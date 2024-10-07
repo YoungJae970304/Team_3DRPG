@@ -10,11 +10,22 @@ public class PlayerMoveState : BaseState
     public override void OnStateEnter()
     {
         _player.AtkCount = 0;
+        _player._playerAnim.SetBool("Run", true);
     }
 
     public override void OnStateUpdate()
     {
-        
+        switch (_player._playerCam._cameraMode)
+        {
+            case Define.CameraMode.QuarterView:
+                _player._playerAnim.SetFloat("PosX", _player._cc.velocity.magnitude);
+                break;
+
+            case Define.CameraMode.ZoomView:
+                _player._playerAnim.SetFloat("PosX", _player._rotDir.x);
+                _player._playerAnim.SetFloat("PosY", _player._rotDir.z);
+                break;
+        }
     }
 
     public override void OnStateFixedUpdate()
@@ -61,5 +72,6 @@ public class PlayerMoveState : BaseState
     void MoveStop()
     {
         _player._moveDir = Vector3.zero;
+        _player._playerAnim.SetBool("Run", false);
     }
 }

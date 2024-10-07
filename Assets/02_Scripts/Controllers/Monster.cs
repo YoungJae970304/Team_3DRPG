@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.XR;
 using System.Threading.Tasks;
+using System.Linq;
 
 
 
@@ -23,24 +24,48 @@ public class Monster : MonoBehaviour, IDamageAlbe
         Return,
         Die,
     }
-    protected MonsterState _curState;
+    [Header("enum 변수")]
+    public MonsterState _curState;
+    
+    [Header("FSM관련 변수")]
     public FSM _mFSM;
     public Vector3 _originPos;
     public Player _player;
     public NavMeshAgent _nav;
     public MonsterStat _mStat;
- 
-    public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
     public float _timer = 0;
     public int _randomAttack;
-    //
+    public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
+    GameManager _gameManager;
+    [Header("Drop관련 변수")]
+    public List<string> sample = new List<string>();
+    public DataTableManager _dataTableManager;
+    public DropManager _dropManager;
+    public Drop _monsterDrop;
+    public DeongeonLevel _deongeonLevel;
+    public Dictionary<string, int> randomValue = new Dictionary<string, int>();
+    
+    [Header("Drop리스트 추가 관련 변수")]
+    int startValue1;
+    int endValue1;
+    int startValue2;
+    int endValue2;
+    int startValue3;
+    int endValue3;
 
     private void Awake()
     {
+        _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
+        _gameManager =  new GameManager();
+        _dataTableManager = new DataTableManager();
+        _dataTableManager.LoadItemDataTable();
+        _dropManager = new DropManager();
+        _monsterDrop = FindObjectOfType<Drop>();
+        _dropManager.LoadItemDataTable();
+        itemtest(_deongeonLevel);
         _mStat = GetComponent<MonsterStat>();
          _nav = GetComponent<NavMeshAgent>();
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-       
+        _player = _gameManager._player;
         _originPos = transform.position;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
@@ -58,17 +83,20 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
-       
+        
 
         _mStat.MaxHP = 100;
         _mStat.HP = _mStat.MaxHP;
         _mStat.ATK = 30;
         _mStat.DEF = 10;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        
         
         _mFSM.UpdateState();
 
@@ -82,8 +110,15 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
             BaseState();
         }
+       
+        if (sample.Count == 0)
+        {
+            Debug.LogError("sample 리스트가 비어 있습니다. 아이템을 추가하세요.");
+            return;
+        }
+        _monsterDrop.DropItemSelect(_deongeonLevel, sample);
     }
-    
+    #region 상태 변환
     protected virtual void BaseState()
     {
      
@@ -126,6 +161,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
         }
     }
+    #endregion
+    #region 상태 변환 FSM 사용
     protected void MChangeState(MonsterState nextState)
     {
         if(_mFSM == null)
@@ -144,6 +181,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
        
     }
+    #endregion
+    #region 받는 데미지 함수
     public virtual void Damaged(int amount)
     {
         if(_mStat == null)
@@ -162,11 +201,14 @@ public class Monster : MonoBehaviour, IDamageAlbe
             MChangeState(MonsterState.Die);
         }
     }
-
+    #endregion
+    #region 죽었을 때
     public virtual void Die(GameObject mob)
     {
         Destroy(mob, 2f);
     }
+    #endregion
+    #region 상태 변환 조건
     public bool DamageToPlayer()
     {
         return _mStat.ReturnRange > _player.transform.position.magnitude;
@@ -184,35 +226,21 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         return _mStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
+    #endregion
+    #region 타이머
     public void AttackTimer()
     {
         _timer += Time.deltaTime;
     }
+    #endregion
+    #region 플레이어 공격함수
     public void AttackPlayer() // 일단 여기에 넣어놨는데 애니메이션에서 호출하는 이벤트방식으로 쓸듯
     {
         _player.Damaged(_mStat.ATK);
 
     }
-    /*public virtual IEnumerator StartDamege(Vector3 playerPosition, float delay, float pushBack)//넉백처리 중요!
-    {
-        yield return new WaitForSeconds(delay);
-
-        try//이걸 실행해보고 문제가 없다면 실행
-        {
-
-            Vector3 diff = playerPosition - transform.position;
-            diff = diff / diff.sqrMagnitude;
-            _nav.isStopped = true;
-            GetComponent<Rigidbody>().
-            AddForce((transform.position - new Vector3(diff.x, diff.y, 0f)) * 50f * pushBack);
-
-        }
-        catch (MissingReferenceException e)// 문제가 있다면 에러메세지 출력
-        {
-            Debug.Log(e.ToString());
-        }
-        //예외처리문
-    }*/
+    #endregion
+    #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         _nav.enabled = false;
@@ -241,8 +269,78 @@ public class Monster : MonoBehaviour, IDamageAlbe
         else
             MChangeState(MonsterState.Move);
     }
+    #endregion
+    #region 공격 상태 변환
     public virtual void AttackStateSwitch()
     {
 
     }
+    #endregion
+    #region 몬스터 난이도별 드랍목록 정리 //추후 던전 난이도로 변경 예정
+
+    #endregion
+    
+
+    public virtual void itemtest(DeongeonLevel curGrade)
+    {
+        
+        foreach (var item in _dropManager._MonsterDropData)
+        {
+            startValue1 = item.StartValue1;
+            endValue1 = item.EndValue1;
+            startValue2 = item.StartValue2;
+            endValue2 = item.EndValue2;
+            startValue3 = item.StartValue3;
+            endValue3 = item.EndValue3;
+            if (startValue1 != 0 && endValue1 != 0)
+            {
+                switch (curGrade)
+                {
+                    case DeongeonLevel.Easy:
+                        
+                        for (int i = startValue1; i <= endValue1; i++)
+                        {
+                            AddSample(i);
+                            
+                        }
+                        break;
+                    case DeongeonLevel.Normal:
+                        for (int i = startValue1; i <= endValue1; i++)
+                        {
+                            AddSample(i);
+                        }
+                        for (int i = startValue2; i <= endValue2; i++)
+                        {
+                            AddSample(i);
+                        }
+                        break;
+                    case DeongeonLevel.Hard:
+                        for (int i = startValue1; i <= endValue1; i++)
+                        {
+                            AddSample(i);
+                        }
+                        for (int i = startValue2; i <= endValue2; i++)
+                        {
+                            AddSample(i);
+                            
+                        }
+                        for (int i = startValue3; i <= endValue3; i++)
+                        {
+                            AddSample(i);
+                        }
+                        break;
+                }
+            }
+        }
+        
+        
+    }
+    public void AddSample(int i)
+    {
+        if (!sample.Contains(i.ToString()) && i !=0)
+        {
+            sample.Add(i.ToString());
+        }
+    }
+
 }

@@ -4,13 +4,14 @@ using UnityEngine;
 using System;
 using System.IO;
 
+[Serializable]
 public class ItemDataListWrapper
 {
     public List<ItemData> ItemDataList { get; set; } = new List<ItemData>();
 }
 
 [Serializable]
-public class ItemData : IItemData
+public class ItemData : IData
 {
     //아이템이 공용으로 사용할 정보들
     [Serializable]
@@ -31,6 +32,7 @@ public class ItemData : IItemData
     public int BuyingPrice { get { return _buyingPrice; } set { _buyingPrice = value; } }
     public int SellingPrice { get { return _sellingPrice; } set { _sellingPrice = value; } }
     public int MaxAmount { get { return _maxAmount; } set { _maxAmount = value; } }
+    public int LimitLevel { get { return _limitLevel; } set { _limitLevel = value; } }
 
 
     //아이템 번호
@@ -49,6 +51,8 @@ public class ItemData : IItemData
     [SerializeField] int _sellingPrice;
     //최대 소지 갯수
     [SerializeField] int _maxAmount = 99;
+    //착용 가능 레벨
+    int _limitLevel;
 
     //아이템 데이터 초기화
     public void SetDefaultData()
@@ -61,6 +65,7 @@ public class ItemData : IItemData
         BuyingPrice = _buyingPrice;
         SellingPrice = _sellingPrice;
         MaxAmount = _maxAmount;
+        LimitLevel = _limitLevel;
     }
 
     public bool LoadData()

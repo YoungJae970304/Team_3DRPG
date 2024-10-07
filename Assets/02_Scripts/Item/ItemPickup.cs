@@ -7,17 +7,22 @@ public class ItemPickup : MonoBehaviour
     public Item _newItem;
     // itemID를 string으로 받아옴
     public string _itemId;
-    [SerializeField] float _pickupSpeed = 10f;
+    [SerializeField] float _pickupDuration = 1f;
 
     private void Awake()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
         _inventory = FindAnyObjectByType<Inventory>();
         if (_player == null)
         {
             Logger.LogError("플레이어가 없음");
         }
     }
+
+    private void Start()
+    {
+        _player = Managers.Game._player.transform;
+    }
+
     private void Update()
     {
          TryPickupItem();
@@ -26,22 +31,22 @@ public class ItemPickup : MonoBehaviour
     //드랍된 아이템의 정보를 가져올 함수
     public void GetDropItemID(DeongeonLevel level)
     {
-        _itemId = Drop._drop.DropItemSelect(level);
+        //_itemId = Drop._drop.DropItemSelect(level);
     }
 
     void TryPickupItem()
     {
-        float distance = Vector3.Distance(transform.position, _player.position);
+        //float distance = Vector3.Distance(transform.position, _player.position);
         Renderer renderer = GetComponent<Renderer>();
       
         Sequence seq = DOTween.Sequence();
         //transform.position = Vector3.MoveTowards(transform.position, _player.position, _pickupSpeed * Time.deltaTime);
         //플레이어에게 이동
-        seq.Append(transform.DOMove(_player.position, distance / _pickupSpeed).SetEase(Ease.OutQuad));
+        seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad));
         //점점 작아짐
         //seq.Join(transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InBack));
         //이동하면서 점점 하얘짐
-        seq.Join(renderer.material.DOColor(Color.white, _pickupSpeed));
+        seq.Join(renderer.material.DOColor(Color.white, _pickupDuration));
         //시퀀스 완료 후 아이템 획득
         seq.OnComplete(() =>
         {
