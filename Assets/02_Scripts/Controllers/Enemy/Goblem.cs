@@ -16,13 +16,19 @@ public class Goblem : Monster, IDamageAlbe
     }
     public override void AttackStateSwitch()
     {
-        if (_randomAttack <= 66)
+        if (_randomAttack <= 50)
         {
+            _atkColliders[0].gameObject.SetActive(true);
             NomalAttack();
+            _anim.SetTrigger("attack");
+            
+           
         }
         else
         {
+            _atkColliders[1].gameObject.SetActive(true);
             SkillAttack();
+            _anim.SetTrigger("attack1");
         }
     }
     public void NomalAttack()
@@ -31,13 +37,20 @@ public class Goblem : Monster, IDamageAlbe
        
         _player._playerHitState = PlayerHitState.NomalAttack;
         AttackPlayer();
+       
+      
+        
+        
     }
     public void SkillAttack()
     {
         Logger.Log("SkillAttack");
+        _player._playerHitState = PlayerHitState.SkillAttack;
         AttackPlayer();
        
-        _player._playerHitState = PlayerHitState.SkillAttack;
+     
+        
+
     }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {

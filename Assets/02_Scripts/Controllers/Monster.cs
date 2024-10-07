@@ -31,7 +31,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
-    
+
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
@@ -47,12 +47,16 @@ public class Monster : MonoBehaviour, IDamageAlbe
     int endValue2;
     int startValue3;
     int endValue3;
-
+    [Header("몬스터 공격 콜라이더 리스트")]
+    public List<Collider> _atkColliders;
+    //[HideInInspector]
+    public List<Collider> _hitPlayer;
+    public Animator _anim;
     public virtual void Awake()
     {
         _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
-        
-       
+        _anim = GetComponent<Animator>();
+
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
         States.Add(MonsterState.Move, new MonsterMoveState(_player, this, _mStat));
@@ -83,7 +87,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat.HP = _mStat.MaxHP;
         _mStat.ATK = 30;
         _mStat.DEF = 10;
-
+       
+        
     }
 
     // Update is called once per frame
@@ -213,7 +218,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public bool CanSeePlayer()
     {
-       
+
         return _mStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool ReturnOrigin()
@@ -230,7 +235,23 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 플레이어 공격함수
     public void AttackPlayer() // 일단 여기에 넣어놨는데 애니메이션에서 호출하는 이벤트방식으로 쓸듯
     {
-        _player.Damaged(_mStat.ATK);
+
+        int damage = _mStat.ATK;
+
+        foreach (var player in _hitPlayer)
+        {
+            if (player.TryGetComponent<IDamageAlbe>(out var damageable))
+            {
+                damageable.Damaged(damage);
+                //_player.Damaged(_mStat.ATK);
+                Logger.LogError(_player._playerStat.HP.ToString());
+            }
+
+        }
+
+
+
+        _hitPlayer.Clear();
 
     }
     #endregion
@@ -281,7 +302,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
         foreach (var newItem in _dataTableManager._MonsterDropData)
         {
-            
+
             if (newItem.ID == monsterid)
             {
                 dropData = newItem;
@@ -363,7 +384,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void MakeItem()
     {
-        GameObject item = Instantiate(Managers.Resource.Instantiate("ItemTest/TestItem"));
+        GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
         item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
     }
     #endregion

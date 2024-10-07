@@ -151,7 +151,7 @@ public class Drop : MonoBehaviour
         {
             var randomizer = WeightedRandomizer.From(itemDrop); //가중치를 기반으로 랜덤 선택을 준비
             selectedItem = randomizer.TakeOne(); // 가중치를 고려하여 선택된 아이템을 저장
-            Logger.Log($"선택된 아이템: {selectedItem}");
+            //Logger.Log($"선택된 아이템: {selectedItem}");
         }
         /*
         foreach (var itemTier in dropValue.Keys) //키를 itemTier에 담고
