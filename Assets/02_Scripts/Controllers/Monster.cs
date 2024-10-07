@@ -40,9 +40,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
-    public DropManager _dropManager;
     public Drop _monsterDrop;
     public DeongeonLevel _deongeonLevel;
+    public DropData _dropData;
     public Dictionary<string, int> randomValue = new Dictionary<string, int>();
     
     [Header("Drop리스트 추가 관련 변수")]
@@ -53,15 +53,12 @@ public class Monster : MonoBehaviour, IDamageAlbe
     int startValue3;
     int endValue3;
 
-    private void Awake()
+    public virtual void Awake()
     {
         _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
-        _gameManager =  new GameManager();
-        _dataTableManager = new DataTableManager();
-        _dataTableManager.LoadItemDataTable();
-        _dropManager = new DropManager();
+        _gameManager = Managers.Game;
+        _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
-        _dropManager.LoadItemDataTable();
         itemtest(_deongeonLevel);
         _mStat = GetComponent<MonsterStat>();
          _nav = GetComponent<NavMeshAgent>();
@@ -95,8 +92,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Update is called once per frame
     void Update()
     {
-        
-        
         
         _mFSM.UpdateState();
 
@@ -279,12 +274,12 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 몬스터 난이도별 드랍목록 정리 //추후 던전 난이도로 변경 예정
 
     #endregion
-    
 
+    #region 아이템 드랍
     public virtual void itemtest(DeongeonLevel curGrade)
     {
         
-        foreach (var item in _dropManager._MonsterDropData)
+        foreach (var item in _dataTableManager._MonsterDropData)
         {
             startValue1 = item.StartValue1;
             endValue1 = item.EndValue1;
@@ -342,5 +337,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
             sample.Add(i.ToString());
         }
     }
-
+    public void MakeItem()
+    {
+        GameObject item = Instantiate(Managers.Resource.Instantiate("ItemTest/TestItem"));
+        item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
+    }
+    #endregion
 }

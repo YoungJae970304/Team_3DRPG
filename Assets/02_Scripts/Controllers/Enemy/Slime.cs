@@ -9,6 +9,7 @@ using UnityEngine.Jobs;
 
 public class Slime : Monster, IDamageAlbe
 {
+    
     public int _slimeID;
     public int _slimeProduct = 0;
     
@@ -87,13 +88,14 @@ public class Slime : Monster, IDamageAlbe
     public override void itemtest(DeongeonLevel curGrade)
     {
         base.itemtest(curGrade);
-
-        foreach(var slimeDrop in _dropManager._MonsterDropData)
+        List<int> slimeID = new List<int>();
+        List<int> valueExp = new List<int>();
+        List<int> slimeRandomStartGold = new List<int>();
+        List<int> slimeRandomEndGold = new List<int>();
+       
+        foreach (var slimeDrop in _dataTableManager._MonsterDropData)
         {
-            List<int> slimeID = new List<int>();
-            List<int> valueExp = new List<int>();
-            List<int> slimeRandomStartGold = new List<int>();
-            List<int> slimeRandomEndGold = new List<int>();
+            
             slimeRandomEndGold.Add(slimeDrop.EndValue4);
             slimeRandomStartGold.Add(slimeDrop.StartValue4);
             valueExp.Add(slimeDrop.Value5);
@@ -123,7 +125,7 @@ public class Slime : Monster, IDamageAlbe
     }
     public void SlimeIDCheck(DeongeonLevel curLevel)
     {
-        foreach(var sID in _dropManager._MonsterDropData)
+        foreach(var sID in _dataTableManager._MonsterDropData)
         {
             string iDCheck = sID.ID.ToString("D0");
             if (iDCheck == "1")
