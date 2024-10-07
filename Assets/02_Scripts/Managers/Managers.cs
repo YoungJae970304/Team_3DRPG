@@ -8,6 +8,7 @@ public class Managers : MonoBehaviour
     static Managers s_instance; // 유일성 보장
     // 유일한 매니저를 가져옴 // 프로퍼티 // 읽기 전용
     static Managers Instance { get { Init(); return s_instance; } }
+
     #region Contents
     GameManager _game = new GameManager();
     DataTableManager _dataTable = new DataTableManager();

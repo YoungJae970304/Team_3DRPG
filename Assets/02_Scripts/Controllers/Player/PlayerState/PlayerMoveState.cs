@@ -22,8 +22,9 @@ public class PlayerMoveState : BaseState
                 break;
 
             case Define.CameraMode.ZoomView:
-                _player._playerAnim.SetFloat("PosX", _player._rotDir.x);
-                _player._playerAnim.SetFloat("PosY", _player._rotDir.z);
+                // 애니메이션 전환은 GetAxis가 자연스러워서 GetAxis 채용
+                _player._playerAnim.SetFloat("PosX", Input.GetAxis("Horizontal"));
+                _player._playerAnim.SetFloat("PosY", Input.GetAxis("Vertical"));
                 break;
         }
     }

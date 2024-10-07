@@ -12,7 +12,7 @@ public class TestScene : BaseScene
         base.Init();
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Logger.Log(Managers.Game._player.name);
-        ItemManager = Managers.Game._player.GetComponent<Inventory>();
+        ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
 
         Opentest();
         Close();
@@ -25,7 +25,7 @@ public class TestScene : BaseScene
     [ContextMenu("OpenTest")]
     public void Opentest() {
         // 인벤토리 여는 것 I? ( 풀링 )
-        inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+        Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
     }
     [ContextMenu("OpenNewTest")]
     public void OpenNewtest()
@@ -50,7 +50,6 @@ public class TestScene : BaseScene
     [ContextMenu("Close")]
     public void Close() {
         // 버튼 이벤트
-        inventory.CloseUI();
     }
     [ContextMenu("CloseLast")]
     public void CloseLast()
