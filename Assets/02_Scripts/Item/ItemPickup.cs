@@ -18,14 +18,14 @@ public class ItemPickup : MonoBehaviour
     private void Start()
     {
         _player = Managers.Game._player.transform;
-        TryPickupItemEffect();
+        PickupItemEffect();
         if (_player == null)
         {
             Logger.LogError("플레이어가 없음");
         }
     }
 
-    void TryPickupItemEffect()
+    void PickupItemEffect()
     {
         //float distance = Vector3.Distance(transform.position, _player.position);
         Renderer renderer = GetComponent<Renderer>();
