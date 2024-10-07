@@ -13,7 +13,12 @@ public class Define
 
     public enum Scene
     {
-        Unknown,
+        Unknown = -1,
+        Loading,
+        Title,
+        Main,
+        Dungeon,
+        Boss
     }
 
     public enum UIEvent
