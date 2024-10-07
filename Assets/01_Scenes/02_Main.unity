@@ -306,9 +306,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000007397915, y: -0.000000005926387, z: -4.384291e-17,
-    w: 1}
-  m_LocalPosition: {x: 1, y: 2, z: -4}
+  m_LocalRotation: {x: 0.07437624, y: 0, z: 0, w: 0.9972303}
+  m_LocalPosition: {x: 0, y: 2.9, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -953,7 +952,7 @@ PrefabInstance:
     - target: {fileID: 3636524983878215047, guid: dc81a5f099938b2429681810ad13eca2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3636524983878215047, guid: dc81a5f099938b2429681810ad13eca2,
         type: 3}
@@ -1196,6 +1195,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1484795922
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 593171618488029809, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_Name
+      value: Goblin
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.092
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 81a2d66d25faee147af5888e0182ee4a, type: 3}
 --- !u!1 &1580453283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,8 +1485,8 @@ MonoBehaviour:
   sample: []
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
+  _monsterProduct: 0
   _slimeID: 0
-  _slimeProduct: 0
 --- !u!1 &1888901473
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,3 +1889,4 @@ SceneRoots:
   - {fileID: 1256216896}
   - {fileID: 371993914}
   - {fileID: 1661751424}
+  - {fileID: 1484795922}

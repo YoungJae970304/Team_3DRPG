@@ -184,7 +184,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             return;
         }
         _mStat.HP -= (amount - _mStat.DEF);
-        StartDamege(_player.transform.position, 0.1f, 20f);
+        StartDamege(_player.transform.position, 0.1f, 30f);
         if (_mStat.HP > 0)
         {
             MChangeState(MonsterState.Damage);
