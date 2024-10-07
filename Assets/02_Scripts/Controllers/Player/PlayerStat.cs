@@ -2,69 +2,53 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class PlayerStat : Stat
 {
-    int _recoveryHp;
+    public int _recoveryHp;
 
-    int _playerMp;
-    int _playerMaxMp = 100;
-    int _recoveryMp;
+    public int _mp;
+    public int _maxMp = 100;
+    public int _recoveryMp;
 
-    float _dodgeSpeed = 15f;
+    public float _dodgeSpeed = 15f;
 
-    int _level = 1;
-    int _maxExp;
+    public int _level = 1;
+    public int _maxExp;
 
-    int _sp;
+    public int _sp;
 
-    public int RecoveryHP { get { return _recoveryHp; } set { _recoveryHp = value; } }
-
-    public int PlayerMP
+    public int Level
     {
-        get { return _playerMp; }
-        set
+        get
         {
-            _playerMp = value;
-
-            _playerMp = Mathf.Clamp(_playerMp, 0, _playerMaxMp);
+            return _level;
         }
-    }
-    public int PlayerMaxMP { get { return _playerMaxMp; } set { _playerMaxMp = value; } }
-    public int RecoveryMP { get { return _recoveryMp; } set { _recoveryMp = value; } }
-
-    public float DodgeSpeed { get { return _dodgeSpeed; } set { _dodgeSpeed = value; } }
-
-    public int Level 
-    { 
-        get 
-        { 
-            return _level; 
-        } 
-        set 
+        set
         {
             if (value < _level) return;
 
             _level = value;
 
-            MaxHP += 50;
-            PlayerMaxMP += 50;
+            _maxHp += 50;
+            _maxMp += 50;
             MaxEXP += 100;
 
-            HP = MaxHP;
-            PlayerMP = PlayerMaxMP;
+            _hp = _maxHp;
+            _mp = _maxMp;
             SP += 5;
-        } 
+        }
     }
 
-    public override int EXP 
-    { 
-        get 
-        { 
-            return _exp; 
-        } 
-        set 
-        { 
+    public override int EXP
+    {
+        get
+        {
+            return _exp;
+        }
+        set
+        {
             _exp = value;
 
             if (_exp >= MaxEXP)
@@ -72,21 +56,20 @@ public class PlayerStat : Stat
                 _exp = _exp - MaxEXP;
                 Level++;
             }
-        } 
+        }
     }
-
     public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
-    public int SP 
-    { 
-        get 
-        { 
-            return _sp; 
-        } 
-        set 
-        { 
+    public int SP
+    {
+        get
+        {
+            return _sp;
+        }
+        set
+        {
             _sp = value;
 
             _sp = Mathf.Min(_sp, 0);
-        } 
+        }
     }
 }

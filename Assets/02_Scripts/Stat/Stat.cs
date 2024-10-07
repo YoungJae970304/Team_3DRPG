@@ -5,17 +5,31 @@ using static Cinemachine.DocumentationSortingAttribute;
 
 public class Stat : MonoBehaviour
 {
-    protected int _hp;
-    protected int _maxHp;
+    public int _hp;
+    public int _maxHp;
 
-    protected int _atk;
-    protected int _def;
+    public int _atk;
+    public int _def;
 
-    protected float _moveSpeed;
+    public float _moveSpeed;
 
-    protected int _exp;
-    protected int _gold;
+    public int _exp;
+    public int _gold;
 
+    public virtual int EXP { get { return _exp; } set { _exp = value; } }
+    public int Gold
+    {
+        get
+        {
+            return _gold;
+        }
+        set
+        {
+            _gold = Mathf.Max(value, 0);
+        }
+    }
+
+    /*
     public int HP
     {
         get { return _hp; }
@@ -59,4 +73,5 @@ public class Stat : MonoBehaviour
             _gold = Mathf.Min(_gold, 0);
         } 
     }
+    */
 }

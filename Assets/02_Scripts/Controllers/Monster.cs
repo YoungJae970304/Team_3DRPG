@@ -79,10 +79,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
         Debug.Log($"초기 상태: {_curState}");
 
 
-        _mStat.MaxHP = 100;
-        _mStat.HP = _mStat.MaxHP;
-        _mStat.ATK = 30;
-        _mStat.DEF = 10;
+        _mStat._maxHp = 100;
+        _mStat._hp = _mStat._maxHp;
+        _mStat._atk = 30;
+        _mStat._def = 10;
 
     }
 
@@ -183,9 +183,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
             Logger.LogError("MonsterStat이 null입니다");
             return;
         }
-        _mStat.HP -= (amount - _mStat.DEF);
+        _mStat._hp -= (amount - _mStat._def);
         StartDamege(_player.transform.position, 0.1f, 30f);
-        if (_mStat.HP > 0)
+        if (_mStat._hp > 0)
         {
             MChangeState(MonsterState.Damage);
         }
@@ -230,7 +230,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 플레이어 공격함수
     public void AttackPlayer() // 일단 여기에 넣어놨는데 애니메이션에서 호출하는 이벤트방식으로 쓸듯
     {
-        _player.Damaged(_mStat.ATK);
+        _player.Damaged(_mStat._atk);
 
     }
     #endregion

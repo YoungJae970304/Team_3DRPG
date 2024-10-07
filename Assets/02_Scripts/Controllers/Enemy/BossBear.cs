@@ -76,10 +76,10 @@ public class BossBear : Monster, IDamageAlbe
         }
 
    
-        _mStat.HP -= (amount - _mStat.DEF);
+        _mStat._hp -= (amount - _mStat._def);
 
        
-        float hpPercentage = (float)_mStat.HP / _mStat.MaxHP;
+        float hpPercentage = (float)_mStat._hp / _mStat._maxHp;
         int skillCount = 0;
       
         if (skillCount < _roarList.Count &&hpPercentage <= _roarList[skillCount])
@@ -91,7 +91,7 @@ public class BossBear : Monster, IDamageAlbe
         await Task.Delay(2);
 
         // HP 상태에 따른 상태 전환
-        if (_mStat.HP < 0)
+        if (_mStat._hp < 0)
         {
             MChangeState(MonsterState.Die);
         }

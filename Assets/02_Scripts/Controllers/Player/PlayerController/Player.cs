@@ -121,11 +121,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     protected virtual void Awake()
     {
-        
-    }
-
-    protected virtual void Start()
-    {
         #region 컴포넌트 초기화
         _cc = gameObject.GetOrAddComponent<CharacterController>();
         _playerStat = gameObject.GetOrAddComponent<PlayerStat>();
@@ -133,7 +128,10 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
         _playerAnim = GetComponentInChildren<Animator>();
         #endregion
+    }
 
+    protected virtual void Start()
+    {
         #region 딕셔너리 초기화
         States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStat));
         States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStat));
@@ -151,11 +149,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
 
-        _playerStat.MaxHP = 100;
-        _playerStat.HP = 100;
-        _playerStat.MoveSpeed = 5f;
-        _playerStat.ATK = 24;
-        _playerStat.DEF = 15;
+        Managers.Stat._playerStat._maxHp = 100;
+        Managers.Stat._playerStat._hp = Managers.Stat._playerStat._maxHp;
+        Managers.Stat._playerStat._moveSpeed = 5f;
+        Managers.Stat._playerStat._atk = 24;
+        Managers.Stat._playerStat._def = 0;
 
         // 공격 콜라이더 off
         SetColActive("Combo1");
@@ -167,6 +165,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     protected virtual void Update()
     {
+        Logger.LogWarning("HP 확인" + Managers.Stat.HP);
         // 상태 전환
         ChangeStateCondition();
 
@@ -312,7 +311,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     {
         if (_hitMobs.Count == 0) return;
 
-        int damage = _playerStat.ATK;
+        int damage = Managers.Stat.ATK;
 
         foreach(var mob in _hitMobs)
         {
@@ -337,9 +336,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         if (_hitting && _invincible) return;
 
         // 체력- 공격력*(100/(방어력+100))
-        _playerStat.HP -= (atk * (100/(_playerStat.DEF+100)));
+        Managers.Stat._playerStat._hp -= (atk * (100/(Managers.Stat.DEF+100)));
 
-        if (_playerStat.HP > 0)
+        if (Managers.Stat.HP > 0)
         {
             // 데미지 상태 안에서 애니메이션 제어가 이루어질 예정이라
             // 넉백이 있는 공격의 경우에만 데미지로 상태전환 해주면 될 듯

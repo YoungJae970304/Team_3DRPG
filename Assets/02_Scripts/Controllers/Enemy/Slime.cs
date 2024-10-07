@@ -55,7 +55,7 @@ public class Slime : Monster, IDamageAlbe
             case MonsterState.Damage:
                 if (CanAttackPlayer())
                     MChangeState(MonsterState.Attack);
-                else if (_mStat.HP <= 0)
+                else if (_mStat._hp <= 0)
                     MChangeState(MonsterState.Die);
                 else
                     MChangeState(MonsterState.Move);

@@ -45,7 +45,7 @@ public class PlayerDodgeState : BaseState
         }
 
         // 회피 방향
-        _player._moveDir = _player._playerModel.transform.forward * _player._playerStat.DodgeSpeed * Time.deltaTime;
+        _player._moveDir = _player._playerModel.transform.forward * Managers.Stat.DodgeSpeed * Time.deltaTime;
         // 회피
         _player._cc.Move(_player._moveDir);
     }

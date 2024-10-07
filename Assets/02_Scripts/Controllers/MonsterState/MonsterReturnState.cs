@@ -35,6 +35,6 @@ public class MonsterReturnState : BaseState
     }
     public void ReturnHeal()
     {
-        _monster._mStat.HP = _monster._mStat.MaxHP;
+        _monster._mStat._hp = _monster._mStat._maxHp;
     }
 }
