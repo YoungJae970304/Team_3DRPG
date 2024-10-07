@@ -35,6 +35,7 @@ public class Inventory : MonoBehaviour//인벤토리
     public void AddGroup(ItemData.ItemType type, ItemData.ItemType type2)
     {
         ItemDick.Add(type2, ItemDick[type]);
+        ItemDick[type].AddGroup(type2);
 
     }
 
@@ -53,15 +54,21 @@ public class Inventory : MonoBehaviour//인벤토리
     }
     public Item Setitem(int index, Item item)//특정인덱스의 아이템에 특정아이템으로 변경한다
     {
-        return ItemDick[item.Data.Type].Setitem(index, item);
+        Item result = ItemDick[item.Data.Type].Setitem(index, item);
+        GetItemAction?.Invoke();
+        return result;
     }
     public Item Remove(int index, ItemData.ItemType type)
     {
+        Item item = ItemDick[type].Remove(index);
         GetItemAction?.Invoke();
-        return ItemDick[type].Remove(index);
+        return item;
     }
-    public bool SwitchItem(int index1, int index2, ItemData.ItemType type) { 
-        return ItemDick[type].SwitchItem(index1,index2);
+    public bool SwitchItem(int index1, int index2, ItemData.ItemType type) {
+        bool result = ItemDick[type].SwitchItem(index1, index2);
+        GetItemAction?.Invoke();
+        //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
+        return result;
     }
 
 
@@ -69,13 +76,18 @@ public class Inventory : MonoBehaviour//인벤토리
         return ItemDick[type]._maxSize;
     }
 
+    public bool IsContain(Item item,ItemData.ItemType type) {
+        return ItemDick[type].IsContain(item);
+    }
+
+    public bool Containtype(ItemData.ItemType type, ItemData.ItemType type2) {
+        return ItemDick[type].Containtype(type2);
+    }
     public class ItemGroup
     {//특정 타입의 아이템을 모아 관리하는 아이템 그룹
         Item[] _items;
         public int _maxSize;
         List<ItemData.ItemType> _type = new List<ItemData.ItemType>();
-
-
         public ItemGroup(int maxSize, int LimitSize, ItemData.ItemType[] types)
         {
             _items = new Item[LimitSize];
@@ -90,7 +102,9 @@ public class Inventory : MonoBehaviour//인벤토리
             _maxSize = maxSize;
             _type.Add(type);
         }
-
+        public void AddGroup(ItemData.ItemType type) {
+            _type.Add(type);
+        }
         public bool Insert(Item item)
         {//중복이 있으면 아이템의 개수를 늘리고 최대치를 넘겼다면 다음으로 넘어가며
          //중복이 없으면 빈칸에 아이템을 할당한다.
@@ -125,7 +139,6 @@ public class Inventory : MonoBehaviour//인벤토리
             
             return false;
         }
-
         public Item GetItem(int index)
         {//인덱스로 아이템을 리턴
             if (index <= _maxSize)
@@ -134,7 +147,6 @@ public class Inventory : MonoBehaviour//인벤토리
             }
             return null;
         }
-
         public Item Setitem(int index, Item item)
         {//특정 인덱스에 원하는 아이템을 할당하고 이전에 있던 아이템을 리턴
             Item lastItme;
@@ -157,8 +169,6 @@ public class Inventory : MonoBehaviour//인벤토리
             }
             return null;
         }
-
-
         public bool SwitchItem(int index1, int index2)
         {//두 인덱스간의 아이템의 위치를 변경한다.
             if (index1 <= _maxSize && index2 <= _maxSize)
@@ -170,6 +180,12 @@ public class Inventory : MonoBehaviour//인벤토리
             }
             return false;
         }
-
+        public bool IsContain(Item item) {
+            return Array.Exists(_items, x => x == item);
+        }
+        public bool Containtype(ItemData.ItemType type)
+        {
+            return _type.Contains(type);
+        }
     }
 }

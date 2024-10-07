@@ -36,7 +36,6 @@ public class MonsterIdleState : BaseState
 
     public override void OnStateUpdate()
     {
-        Debug.Log(2);
         if (_monster._mStat == null) return;
         //일정 거리 배회
         //선공몹들은 플레이어가 일정 거리 안에 들어온다면 Exit로 상태 변환
