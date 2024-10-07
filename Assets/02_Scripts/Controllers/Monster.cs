@@ -31,7 +31,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
-    GameManager _gameManager;
+    
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
@@ -51,14 +51,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public virtual void Awake()
     {
         _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
-        _gameManager = Managers.Game;
-        _dataTableManager = Managers.DataTable;
-        _monsterDrop = FindObjectOfType<Drop>();
         
-        _mStat = GetComponent<MonsterStat>();
-        _nav = GetComponent<NavMeshAgent>();
-        _player = _gameManager._player;
-        _originPos = transform.position;
+       
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
         States.Add(MonsterState.Move, new MonsterMoveState(_player, this, _mStat));
@@ -73,7 +67,14 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Start is called before the first frame update
     public virtual void Start()
     {
+        _player = Managers.Game._player;
+        _dataTableManager = Managers.DataTable;
+        _monsterDrop = FindObjectOfType<Drop>();
 
+        _mStat = GetComponent<MonsterStat>();
+        _nav = GetComponent<NavMeshAgent>();
+
+        _originPos = transform.position;
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
 
@@ -212,6 +213,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public bool CanSeePlayer()
     {
+       
         return _mStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool ReturnOrigin()

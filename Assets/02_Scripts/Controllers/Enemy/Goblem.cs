@@ -7,9 +7,10 @@ using UnityEngine.AI;
 public class Goblem : Monster, IDamageAlbe
 {
     public int _goblemID;
-    public override void Awake()
+ 
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         GoblemIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _goblemID);
     }
