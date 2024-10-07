@@ -13,7 +13,12 @@ public class Define
 
     public enum Scene
     {
-        Unknown,
+        Unknown = -1,
+        Loading,
+        Title,
+        Main,
+        Dungeon,
+        Boss
     }
 
     public enum UIEvent
@@ -41,7 +46,7 @@ public class Define
     public enum PlayerType
     {
         Melee,  // 근접
-        Ranged  // 원거리
+        Mage  // 원거리
     }
 
     public enum SkillType { 

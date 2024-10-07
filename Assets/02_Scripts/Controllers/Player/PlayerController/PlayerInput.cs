@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     Player _player;
-    Vector3 _dir;
+    [HideInInspector]
+    public Vector3 _dir;
 
     public Queue<int> _atkInput = new Queue<int>();
 

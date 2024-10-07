@@ -77,6 +77,7 @@ public class Drop : MonoBehaviour
             //var sortedSpawnRate = Sort(_weights);
             float sum = _weights.Values.Sum();
             float roll = (float)_random.NextDouble() * sum;
+            
             //T selected = _weights.Keys.First();
             T selected = default;
             foreach (var spawn in _weights)
@@ -88,7 +89,6 @@ public class Drop : MonoBehaviour
                 }
                 roll -= spawn.Value;
             }
-
             return selected;
         }
 
@@ -130,7 +130,6 @@ public class Drop : MonoBehaviour
         foreach (var randomItem in sample)
         {
             int itemTier = int.Parse(randomItem[1].ToString());
-            //Logger.Log(randomItem.ToString());
             if (itemTier <= maxTier)
             {
 
@@ -143,16 +142,16 @@ public class Drop : MonoBehaviour
         {
             int itemTier = int.Parse(item[1].ToString());
             itemDrop[item] *= dropValue[itemTier] / totalWeight;
-            
+           
         }
         
-        // 수정: 최종 드랍할 아이템을 저장할 변수
+        //최종 드랍할 아이템을 저장할 변수
         string selectedItem = null;
         if (itemDrop.Count > 0) //randomValue에 값이 있는지 확인하고
         {
             var randomizer = WeightedRandomizer.From(itemDrop); //가중치를 기반으로 랜덤 선택을 준비
             selectedItem = randomizer.TakeOne(); // 가중치를 고려하여 선택된 아이템을 저장
-            //Logger.Log($"선택된 아이템: {selectedItem}");
+            Logger.Log($"선택된 아이템: {selectedItem}");
         }
         /*
         foreach (var itemTier in dropValue.Keys) //키를 itemTier에 담고
@@ -181,11 +180,11 @@ public class Drop : MonoBehaviour
         // 선택된 아이템이 있을 때만 로그 출력
         if (selectedItem != null)
         {
-            //Logger.Log($"선택된 아이템: {selectedItem}");
+            Logger.Log($"선택된 아이템: {selectedItem}");
         }
         else
         {
-            //Logger.Log("드랍된 아이템이 없습니다.");
+            Logger.Log("드랍된 아이템이 없습니다.");
         }
 
         return selectedItem; //선택된 아이템을 반환
