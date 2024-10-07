@@ -404,11 +404,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestItem
       objectReference: {fileID: 0}
-    - target: {fileID: 410208979198133161, guid: 4b20088e9bf0bef46b4c08d668543a9d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2284050004414131207, guid: 4b20088e9bf0bef46b4c08d668543a9d,
         type: 3}
       propertyPath: _itemId
@@ -416,28 +411,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2284050004414131207, guid: 4b20088e9bf0bef46b4c08d668543a9d,
         type: 3}
-      propertyPath: _pickupSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2284050004414131207, guid: 4b20088e9bf0bef46b4c08d668543a9d,
-        type: 3}
       propertyPath: _pickupDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4096380342856397326, guid: 4b20088e9bf0bef46b4c08d668543a9d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4096380342856397326, guid: 4b20088e9bf0bef46b4c08d668543a9d,
-        type: 3}
-      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5623259897646919114, guid: 4b20088e9bf0bef46b4c08d668543a9d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.54
+      value: 9.18
       objectReference: {fileID: 0}
     - target: {fileID: 5623259897646919114, guid: 4b20088e9bf0bef46b4c08d668543a9d,
         type: 3}
@@ -1304,6 +1284,7 @@ MonoBehaviour:
     _buyingPrice: 0
     _sellingPrice: 0
     _maxAmount: 99
+    _limitLevel: 0
   itemData2:
     _id: 2
     _name: tes1
@@ -1313,6 +1294,7 @@ MonoBehaviour:
     _buyingPrice: 0
     _sellingPrice: 0
     _maxAmount: 99
+    _limitLevel: 0
 --- !u!4 &1580453285
 Transform:
   m_ObjectHideFlags: 0
