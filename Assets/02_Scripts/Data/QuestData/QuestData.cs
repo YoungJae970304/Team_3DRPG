@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+[Serializable]
+public class QuestDataListWrapper
+{
+    //퀘스트 데이터를 담는 리스트
+    public List<QuestData> QuestDataList = new List<QuestData>();
+}
+
+[Serializable]
 public class QuestData : IData
 {
     public int ID { get { return _id; } set { _id = value; } }
@@ -76,17 +85,47 @@ public class QuestData : IData
         ValType3 = _rewardValueType3;
     }
 
-    public bool LoadData()
-    {
-        bool result = false;
-
-        return result;
-    }
-
     public bool SaveData()
     {
         bool result = false;
+        try
+        {
+            string key = "QusetData_" + ID;
+            string questDataJson = JsonUtility.ToJson(this);
+            PlayerPrefs.SetString(key, questDataJson);
+            PlayerPrefs.Save();
+            result = true;
 
+        }
+        catch (Exception e)
+        {
+            Logger.Log($"저장 실패(" + e.Message + ")");
+        }
+        return result;
+
+    }
+
+    public bool LoadData()
+    {
+        bool result = false;
+        try
+        {
+            string key = "QusetData_" + ID;
+            if (PlayerPrefs.HasKey(key))
+            {
+                string questDataJson = PlayerPrefs.GetString(key);
+                JsonUtility.FromJsonOverwrite(questDataJson, this);
+                result = true;
+            }
+            else
+            {
+                Logger.LogWarning("저장된 데이터가 없음");
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.Log("로드 실패(" + e.Message + ")");
+        }
         return result;
     }
 }
