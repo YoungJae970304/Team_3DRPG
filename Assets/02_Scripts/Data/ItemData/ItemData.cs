@@ -22,6 +22,7 @@ public class ItemData : IData
         Accessories,//3
         Potion,//4
         Booty,//5
+        DropData,
     }
 
     public int ID { get { return _id; } set { _id = value; } }
