@@ -7,9 +7,10 @@ using UnityEngine.AI;
 public class Goblem : Monster, IDamageAlbe
 {
     public int _goblemID;
-    public override void Awake()
+ 
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         GoblemIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _goblemID);
     }
@@ -48,11 +49,12 @@ public class Goblem : Monster, IDamageAlbe
         // Rigidbody 설정
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = false; // 물리 효과 활성화
-
+        rb.freezeRotation = true;
+        //여기에 애니메이션 멈추기 추가
 
         // 넉백 힘 적용
         rb.AddForce(force, ForceMode.Impulse);
-
+        
         // 넉백 후 처리
         await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (필요에 따라 조정)
 

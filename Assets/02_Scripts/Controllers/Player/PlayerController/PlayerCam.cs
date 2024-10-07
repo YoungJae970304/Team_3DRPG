@@ -119,6 +119,8 @@ public class PlayerCam : MonoBehaviour
 
     public void CamModeChange()
     {
+        if (Managers.UI.ExistsOpenUI()) return;
+
         switch (_cameraMode)
         {
             case Define.CameraMode.QuarterView:
