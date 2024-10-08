@@ -18,10 +18,6 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
-        Managers.Stat._playerStat = _player._playerStat;
-        Managers.Stat._equipStat = _player._playerStat;
-        Managers.Stat._buffStat = _player._playerStat;
-
         Managers.Input.KeyAction -= MoveInput;
         Managers.Input.KeyAction += MoveInput;
 

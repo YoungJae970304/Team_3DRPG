@@ -19,7 +19,7 @@ public class PlayerDamagedState : BaseState
                 break;
             case PlayerHitState.SkillAttack:
                 // 피격 애니메이션 재생
-                Logger.Log("플레이어 피격");
+                Logger.Log("플레이어 움찔");
                 break;
         }
     }

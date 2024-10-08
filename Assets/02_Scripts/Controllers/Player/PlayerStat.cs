@@ -6,18 +6,48 @@ using static Cinemachine.DocumentationSortingAttribute;
 
 public class PlayerStat : Stat
 {
-    public int _recoveryHp;
+    int _recoveryHp;
 
-    public int _mp;
-    public int _maxMp = 100;
-    public int _recoveryMp;
+    int _mp;
+    int _maxMp;
+    int _recoveryMp;
 
-    public float _dodgeSpeed = 15f;
+    float _dodgeSpeed;
 
-    public int _level = 1;
-    public int _maxExp;
+    int _level = 1;
+    int _maxExp;
 
-    public int _sp;
+    int _sp;
+
+    public int RecoveryHP 
+    { 
+        get 
+        { 
+            return _recoveryHp; 
+        } 
+        set 
+        {
+            _recoveryHp = value;
+
+            while (true)
+            {
+                //HP += RecoveryHP;
+            }
+        } 
+    }
+
+    public int MP
+    {
+        get { return _mp; }
+        set
+        {
+            _mp = Mathf.Clamp(value, 0, _maxMp);
+        }
+    }
+    public int MaxMP { get { return _maxMp; } set { _maxMp = value; } }
+    public int RecoveryMP { get { return _recoveryMp; } set { _recoveryMp = value; } }
+
+    public float DodgeSpeed { get { return _dodgeSpeed; } set { _dodgeSpeed = value; } }
 
     public int Level
     {
@@ -31,12 +61,12 @@ public class PlayerStat : Stat
 
             _level = value;
 
-            _maxHp += 50;
-            _maxMp += 50;
+            MaxHP += 50;
+            MaxMP += 50;
             MaxEXP += 100;
 
-            _hp = _maxHp;
-            _mp = _maxMp;
+            HP = MaxHP;
+            MP = MaxMP;
             SP += 5;
         }
     }
@@ -58,6 +88,7 @@ public class PlayerStat : Stat
             }
         }
     }
+
     public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
     public int SP
     {
@@ -67,9 +98,7 @@ public class PlayerStat : Stat
         }
         set
         {
-            _sp = value;
-
-            _sp = Mathf.Min(_sp, 0);
+            _sp = Mathf.Max(value, 0);
         }
     }
 }

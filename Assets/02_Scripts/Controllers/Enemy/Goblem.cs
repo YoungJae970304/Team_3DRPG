@@ -35,9 +35,9 @@ public class Goblem : Monster, IDamageAlbe
     public void SkillAttack()
     {
         Logger.Log("SkillAttack");
-        AttackPlayer();
-       
+               
         _player._playerHitState = PlayerHitState.SkillAttack;
+        AttackPlayer();
     }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
