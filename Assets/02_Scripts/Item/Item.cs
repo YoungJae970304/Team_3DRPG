@@ -36,20 +36,17 @@ public class Item
                 case ItemData.ItemType.Weapon:
                 case ItemData.ItemType.Armor:
                 case ItemData.ItemType.Accessories:
-                    new Item(itemData);
-                    break;
+                    return new Item(itemData);
                 //사용 가능 아이템
                 case ItemData.ItemType.Potion:
-                    new Item(itemData);
-                    break;
+                    return new Item(itemData);
                     //수량만 있는 아이템
                 case ItemData.ItemType.Booty:
-                    new Item(itemData);
-                    break;
+                    return new Item(itemData);
                 default:
-                    break;
+                    Logger.Log($"알 수 없는 아이템 타입 : {itemData.Type}");
+                    return null;
             }
-            return new Item(itemData);
         }
         else
         {
