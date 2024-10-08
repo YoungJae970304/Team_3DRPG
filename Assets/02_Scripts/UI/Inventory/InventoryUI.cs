@@ -24,7 +24,6 @@ public class InventoryUI : ItemUI
 
     enum GameObjects {
         Slots,
-
     }
 
     public List<ItemSlot> _inventorySlots;
