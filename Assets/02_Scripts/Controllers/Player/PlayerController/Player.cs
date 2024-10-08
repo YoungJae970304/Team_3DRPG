@@ -114,21 +114,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public CharacterController _cc;
     [HideInInspector]
-    public PlayerStat _playerStat;
-    [HideInInspector]
-    public PlayerStat _equipStat;
-    [HideInInspector]
     public PlayerInput _playerInput;
     [HideInInspector]
     public PlayerCam _playerCam;
     [HideInInspector]
     public PlayerStatManager _playerStatManager;
-
-    public PlayerStat PlayerStat
-    {
-        get { return _playerStat + _equipStat; }
-    
-    }
 
     protected virtual void Awake()
     {
@@ -348,6 +338,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     public virtual void Damaged(int atk)
     {
+        Logger.Log(" 데미지 함수 호출 확인 ");
         // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
         // 피격 = 피격 모션 중 통짜 무적
         if (_hitting && _invincible) return;
@@ -357,6 +348,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
         if (_playerStatManager.HP > 0)
         {
+            Logger.Log(" 플레이어 피격 조건 확인 이전");
             // 데미지 상태 안에서 애니메이션 제어가 이루어질 예정이라
             // 넉백이 있는 공격의 경우에만 데미지로 상태전환 해주면 될 듯
             // 넉백 공격을 인식하기 위한 조치가 필요
@@ -364,7 +356,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             // 플레이어가 그 넉백 유무를 판단해 처리하는 작업이 필요
             if (_playerHitState == PlayerHitState.SkillAttack || _playerHitState == PlayerHitState.StunAttack)
             {
-                Logger.Log(" 플레이어 피격 조건 확인 이후");
                 ChangeState(PlayerState.Damaged);
             }
             HitOffTimer(0.5f);
