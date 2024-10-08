@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static Cinemachine.DocumentationSortingAttribute;
 
@@ -101,4 +98,6 @@ public class PlayerStat : Stat
             _sp = Mathf.Max(value, 0);
         }
     }
+
+
 }

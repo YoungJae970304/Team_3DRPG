@@ -306,8 +306,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.07437624, y: 0, z: 0, w: 0.9972303}
-  m_LocalPosition: {x: 0, y: 2.9, z: -6}
+  m_LocalRotation: {x: -0.000000007397915, y: -0.000000005926387, z: -4.384291e-17,
+    w: 1}
+  m_LocalPosition: {x: 1, y: 2, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1188,6 +1189,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 2927079515272028332, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3056062686796694049, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1237,6 +1248,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7634593831163430774, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970390879321014521, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1468,6 +1489,8 @@ MonoBehaviour:
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
   _monsterProduct: 0
+  _atkColliders: []
+  _hitPlayer: []
   _slimeID: 0
 --- !u!1 &1888901473
 GameObject:
