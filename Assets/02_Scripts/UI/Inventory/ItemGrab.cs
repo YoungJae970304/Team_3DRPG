@@ -1,11 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
+using UnityEngine.UI;
 
-public class ItemGrap : MonoBehaviour
+public class ItemGrab : MonoBehaviour
 {
     public Image Icon;
     public static Action endGrapAction;
@@ -29,7 +28,7 @@ public class ItemGrap : MonoBehaviour
     }
 
     #region Event
-    
+
     T GetUIRayCast<T>() where T : Component
     {
         _result.Clear();
@@ -106,7 +105,7 @@ public class ItemGrap : MonoBehaviour
         if (target == _currnetSlot) { return; }
         if (target != null)
         {
-            
+
             if (target.Item != null && target.Item.Data.ID == _currnetSlot.Item.Data.ID)
             {
                 if (target.Item is CountableItem)
@@ -116,11 +115,11 @@ public class ItemGrap : MonoBehaviour
                     return;
                 }
             }
-            
+
             target.ItemInsert(_currnetSlot);
         }
     }
-    
+
     private void OnPointerEnterAndExit()
     {
         // 이전 프레임의 슬롯
@@ -151,14 +150,26 @@ public class ItemGrap : MonoBehaviour
                 OnCurrentEnter();
             }
         }
+        if (currSlot != null && Input.GetMouseButtonDown(1))
+        {
+            if (currSlot.Item == null)
+                return;
+            Logger.Log(currSlot.Item.Data.Name);
+            if (currSlot.Item is IUsableItem)
+            {
+                (currSlot.Item as IUsableItem).Use();
+            }
+        }
         //슬롯 위에 올라가면
         void OnCurrentEnter()
         {
             //curSlot
-            if (currSlot.Item != null&& _currnetSlot==null) {
+            if (currSlot.Item != null && _currnetSlot == null)
+            {
                 toolTip.SetInfo(currSlot.Item.Data);
-                toolTip.transform.position = Input.mousePosition; 
+                toolTip.transform.position = Input.mousePosition;
                 toolTip.gameObject.SetActive(true);
+
             }
         }
         //슬롯에서 나가면
@@ -168,10 +179,25 @@ public class ItemGrap : MonoBehaviour
             //prevSlot
         }
     }
+    /*
+    float time = 0;
+    void test()
+    {
+        if (currSlot != null && Input.GetMouseButtonDown(0))
+        {
+            if (Time.time - time < 0.25f)
+            {
+
+
+            }
+            time = Time.time;
+        }
+    }*/
+
 
     #endregion
 
-    
+
 
 
 }

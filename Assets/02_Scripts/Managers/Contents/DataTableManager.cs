@@ -76,6 +76,7 @@ public class DataTableManager
                 ManaRegen = Convert.ToInt32(data["ManaRegen"]),
                 //소지 수량
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                //IconSprite = Managers.Resource.Load<Sprite>(data["test"].ToString())
             };
             if (itemData != null)
             {
