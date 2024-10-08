@@ -8,9 +8,9 @@ using UnityEngine.AI;
 public class Ork : Monster
 {
     public int _OrkID;
-    public override void Awake()
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         OrkIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _OrkID);
     }

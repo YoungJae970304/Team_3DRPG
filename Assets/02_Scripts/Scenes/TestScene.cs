@@ -14,7 +14,7 @@ public class TestScene : BaseScene
         Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
 
-        Opentest();
+        //Opentest();
         Close();
     }
     public override void Clear()
