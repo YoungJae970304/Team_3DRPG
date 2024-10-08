@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[Serializable]
 public class DropDataListWrapper
 {
     public List<DropData> DropDataList { get; set; } = new List<DropData>();
 }
+
+[Serializable]
 public class DropData : IData
 {
     [SerializeField] int _id;
@@ -56,9 +58,9 @@ public class DropData : IData
         bool result = false;
         try
         {
-            string key = "ItemData_" + ID;
-            string itemDataJson = JsonUtility.ToJson(this);
-            PlayerPrefs.SetString(key, itemDataJson);
+            string key = "DropData_" + ID;
+            string dropDataJson = JsonUtility.ToJson(this);
+            PlayerPrefs.SetString(key, dropDataJson);
             PlayerPrefs.Save();
             result = true;
 
@@ -77,11 +79,11 @@ public class DropData : IData
         bool result = false;
         try
         {
-            string key = "ItemData_" + ID;
+            string key = "DropData_" + ID;
             if (PlayerPrefs.HasKey(key))
             {
-                string itemDataJson = PlayerPrefs.GetString(key);
-                JsonUtility.FromJsonOverwrite(itemDataJson, this);
+                string dropDataJson = PlayerPrefs.GetString(key);
+                JsonUtility.FromJsonOverwrite(dropDataJson, this);
                 result = true;
             }
             else

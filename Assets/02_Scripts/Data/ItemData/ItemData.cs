@@ -25,7 +25,7 @@ public class ItemData : IData
         DropData,
     }
 
-    public int ID { get { return _id; } set { _id = value; } }
+    public int ID { get; set; }
     public string Name { get { return _name; } set { _name = value; } }
     public int Grade { get { return _grade; } set { _grade = value; } }
     public ItemType Type { get { return _itemType; }set { _itemType = value;} }

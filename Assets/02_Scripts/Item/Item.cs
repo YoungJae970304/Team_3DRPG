@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public class Item
 {
     public ItemData Data { get; private set; }
@@ -21,6 +19,7 @@ public class Item
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
         foreach (var newItem in _dataTableManager._AllItemData)
         {
+            Logger.Log($"선택된아이템 아이디 {newItem.ID}");
             if (newItem.ID == id)
             {
                 itemData = newItem;
@@ -30,27 +29,27 @@ public class Item
 
         if (itemData != null)
         {
-            switch (itemData.Type)
-            {
-                //장착 아이템
-                case ItemData.ItemType.Weapon:
-                case ItemData.ItemType.Armor:
-                case ItemData.ItemType.Accessories:
-                    return new Item(itemData);
-                //사용 가능 아이템
-                case ItemData.ItemType.Potion:
-                    return new Item(itemData);
+                switch (itemData.Type)
+                {
+                    //장착 아이템
+                    case ItemData.ItemType.Weapon:
+                    case ItemData.ItemType.Armor:
+                    case ItemData.ItemType.Accessories:
+                        return new Item(itemData);
+                    //사용 가능 아이템
+                    case ItemData.ItemType.Potion:
+                        return new Item(itemData);
                     //수량만 있는 아이템
-                case ItemData.ItemType.Booty:
-                    return new Item(itemData);
-                default:
-                    Logger.Log($"알 수 없는 아이템 타입 : {itemData.Type}");
-                    return null;
-            }
+                    case ItemData.ItemType.Booty:
+                        return new Item(itemData);
+                    default:
+                        Logger.Log($"알 수 없는 아이템 타입 : {itemData.Type}");
+                        return null;
+                }
         }
         else
         {
-            Logger.Log("해당 Id의 아이템을 찾을수가 없슈 : " + id);
+            Logger.Log("해당 Id의 아이템을 찾을수가 없습니다 : " + id);
             return null;
         }
     }

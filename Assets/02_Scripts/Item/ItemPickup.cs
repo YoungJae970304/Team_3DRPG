@@ -6,7 +6,6 @@ public class ItemPickup : MonoBehaviour
     Inventory _inventory;
 
     public Item _newItem;
-    // itemID를 string으로 받아옴
     public string _itemId;
     [SerializeField] float _pickupDuration = 1f;
     Sequence _seq;

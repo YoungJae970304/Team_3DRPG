@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class DataTableManager
@@ -10,6 +11,7 @@ public class DataTableManager
     const string DATA_PATH = "CSVData";
     //저장할 때 사용할 키
     const string _PLAYER_PREFS_KEY = "ItemDataList";
+    const string _PLAYER_PREFS_DROP_KEY = "DropDataList";
 
     public void Init()
     {
@@ -179,11 +181,11 @@ public class DataTableManager
     #region 드랍 데이터테이블 함수
     void DropDataTable(string dataPath, string monsterDropTable)
     {
-        var parsedDropdataTable = CSVReader.Read($"{dataPath}/{monsterDropTable}");
-        foreach (var data in parsedDropdataTable)
+        var parsedDropDataTable = CSVReader.Read($"{dataPath}/{monsterDropTable}");
+        foreach (var data in parsedDropDataTable)
         {
-            DropData itemData = null;
-            itemData = new DropData
+            DropData dropData = null;
+            dropData = new DropData
             {
                 //아이디
                 ID = Convert.ToInt32(data["ID"]),
@@ -221,13 +223,11 @@ public class DataTableManager
                 ItemValue6 = Convert.ToInt32(data["ItemType6"]),
                 //기타템 종류
                 Value6 = Convert.ToInt32(data["Vaule6"]),
-
             };
-            if (itemData != null)
+            if (dropData != null)
             {
-                Logger.Log($"{itemData} 저장됨");
-                _MonsterDropData.Add(itemData);
-
+                Logger.Log($"{dropData} 저장됨");
+                _MonsterDropData.Add(dropData);
             }
         }
     }
@@ -252,7 +252,7 @@ public class DataTableManager
         string dropJson = JsonUtility.ToJson(savedDropData);
         //Json데이터를 플레이어프랩스에 저장
         PlayerPrefs.SetString(_PLAYER_PREFS_KEY, itemJson);
-        PlayerPrefs.SetString(_PLAYER_PREFS_KEY, dropJson);
+        PlayerPrefs.SetString(_PLAYER_PREFS_DROP_KEY, dropJson);
         PlayerPrefs.Save();
         Logger.Log("저장 완료 : " + itemJson);
     }
@@ -262,11 +262,12 @@ public class DataTableManager
     {
         //저장된 제이슨 문자열 가져오기
         string itemDataJson = PlayerPrefs.GetString(_PLAYER_PREFS_KEY);
+        string dropDataJson = PlayerPrefs.GetString(_PLAYER_PREFS_DROP_KEY);
         if (!string.IsNullOrEmpty(itemDataJson))
         {
             //Json을 다시 객체로 변환시킴
             ItemDataListWrapper loadedData = JsonUtility.FromJson<ItemDataListWrapper>(itemDataJson);
-            DropDataListWrapper loadedDropData = JsonUtility.FromJson<DropDataListWrapper>(itemDataJson);
+           
             //기존 데이터 비우기
             _EquipeedItemData.Clear();
             _PotionItemData.Clear();
@@ -291,6 +292,14 @@ public class DataTableManager
                     default:
                         Logger.LogWarning($"{item.Type}은 알 수 없는 타입입니다.");
                         break;
+                }
+            }
+            if (!string.IsNullOrEmpty(dropDataJson))
+            {
+                DropDataListWrapper loadedDropData = JsonUtility.FromJson<DropDataListWrapper>(dropDataJson);
+                foreach (var drop in loadedDropData.DropDataList)
+                {
+                    _MonsterDropData.Add(drop);
                 }
             }
         }
