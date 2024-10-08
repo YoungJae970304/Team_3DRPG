@@ -13,7 +13,7 @@ public class Item
     public static Item ItemSpawn(int id)
     {
         //데이터테이블매니저 인스턴스
-        DataTableManager _dataTableManager = new DataTableManager();
+        DataTableManager _dataTableManager = Managers.DataTable;
         //모든 아이템 데이터 로드
         _dataTableManager.LoadAllItemData();
 
@@ -30,6 +30,25 @@ public class Item
 
         if (itemData != null)
         {
+            switch (itemData.Type)
+            {
+                //장착 아이템
+                case ItemData.ItemType.Weapon:
+                case ItemData.ItemType.Armor:
+                case ItemData.ItemType.Accessories:
+                    new Item(itemData);
+                    break;
+                //사용 가능 아이템
+                case ItemData.ItemType.Potion:
+                    new Item(itemData);
+                    break;
+                    //수량만 있는 아이템
+                case ItemData.ItemType.Booty:
+                    new Item(itemData);
+                    break;
+                default:
+                    break;
+            }
             return new Item(itemData);
         }
         else

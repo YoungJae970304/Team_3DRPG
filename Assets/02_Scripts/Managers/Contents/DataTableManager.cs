@@ -57,7 +57,7 @@ public class DataTableManager
                 //등급
                 Grade = Convert.ToInt32(data["Grade"]),
                 //아이템 타입
-                Type = (ItemData.ItemType)(Convert.ToInt32(data["EquippedType"])),
+                Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["EquippedType"].ToString()),
                 //착용 레벨
                 LimitLevel = Convert.ToInt32(data["LimitLevel"]),
                 //판매 가격
@@ -104,14 +104,14 @@ public class DataTableManager
                 Name = data["Name"].ToString(),
                 //등급
                 Grade = Convert.ToInt32(data["Grade"]),
-                Type = (ItemData.ItemType)(Convert.ToInt32(data["ItemType"])),
+                Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["ItemType"].ToString()),
                 LimitLevel = Convert.ToInt32(data["LimitLevel"]),
                 //구매 가격
                 BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                 //판매 가격
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                 //회복 타입
-                ValType = (PotionItemData.ValueType)(Convert.ToInt32(data["ValueType"])),
+                ValType = (PotionItemData.ValueType)Enum.Parse(typeof(PotionItemData.ValueType), data["ValueType"].ToString()),
                 //실제 회복 밸류 %(버프는 0)
                 Value = Convert.ToSingle(data["Value"]),
                 //쿨타임
@@ -146,13 +146,14 @@ public class DataTableManager
                 ID = Convert.ToInt32(data["ID"]),
                 Name = data["Name"].ToString(),
                 Grade = Convert.ToInt32(data["Grade"]),
-                Type = (ItemData.ItemType)(Convert.ToInt32(data["ItemType"])),
+                Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["ItemType"].ToString()),
                 LimitLevel = Convert.ToInt32(data["LimitLv"]),
                 BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                 //설명 텍스트
                 FlavorText = data["FlavorText"].ToString(),
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                IconSprite = Resources.Load<Sprite>(data[""].ToString()),
             };
             if (itemData != null)
             {
