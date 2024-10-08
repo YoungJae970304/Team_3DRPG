@@ -157,6 +157,7 @@ public class ItemGrap : MonoBehaviour
             //curSlot
             if (currSlot.Item != null&& _currnetSlot==null) {
                 toolTip.SetInfo(currSlot.Item.Data);
+                toolTip.transform.position = Input.mousePosition; 
                 toolTip.gameObject.SetActive(true);
             }
         }
