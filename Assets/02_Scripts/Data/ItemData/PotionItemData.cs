@@ -1,16 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class PotionItemData : ItemData
 {
-    public ValueType ValType { get { return _valueType; } set { _valueType = value; } }
+    public ValueType ValType;
 
-    public float CoolTime { get { return _coolTime; }set { _coolTime = value; } }
+    public float CoolTime;
 
-    public float DurationTime { get { return _durationTime; } set { _durationTime = value; } }
-    public float Value { get { return _value; } set { _value = value; } }
+    public float DurationTime;
+    public float Value;
 
+    [Serializable]
     public enum ValueType
     {
         NotUse,
@@ -18,6 +21,7 @@ public class PotionItemData : ItemData
         Atk,
         Def,
     }
+
     //포션 타입
     ValueType _valueType;
     //타입에 따라 회복또는 버프적용
