@@ -15,6 +15,8 @@ public class ItemGrap : MonoBehaviour
     ItemSlot _currnetSlot;                                  //클릭을 시작한 슬롯
     private Vector3 _beginDragIconPoint;                    // 드래그 시작 시 슬롯의 위치
     private Vector3 _beginDragCursorPoint;                  // 드래그 시작 시 커서의 위치
+    public ToolTipUI toolTip;           //아이템 정보를 표시할 UI
+    private ItemSlot _pointerOverSlot; // 현재 포인터가 위치한 곳의 슬롯
     private void Awake()
     {
         Raycaster = GetComponent<GraphicRaycaster>();
@@ -43,6 +45,9 @@ public class ItemGrap : MonoBehaviour
     public void MouseInput()
     {
         if (Raycaster == null) { return; }
+
+        OnPointerEnterAndExit();
+
         OnPointDown();
         OnPointerDrag();
         OnPointerUp();
@@ -89,6 +94,7 @@ public class ItemGrap : MonoBehaviour
             _currnetSlot._Image.enabled = true;
 
             DragEnd();
+            _pointerOverSlot = null;
             endGrapAction?.Invoke();
             _currnetSlot = null;
         }
@@ -114,6 +120,58 @@ public class ItemGrap : MonoBehaviour
             target.ItemInsert(_currnetSlot);
         }
     }
+    
+    private void OnPointerEnterAndExit()
+    {
+        // 이전 프레임의 슬롯
+        var prevSlot = _pointerOverSlot;
+
+        // 현재 프레임의 슬롯
+        var currSlot = _pointerOverSlot = GetUIRayCast<ItemSlot>();
+
+        if (prevSlot == null)
+        {
+            //슬롯위로 처음으로 올라갔을 때
+            if (currSlot != null)
+            {
+                OnCurrentEnter();
+            }
+        }
+        else
+        {
+            //슬롯 위에 있지 않으면
+            if (currSlot == null)
+            {
+                OnPrevExit();
+            }
+            //새로운 슬롯 위로 올라가면
+            else if (prevSlot != currSlot)
+            {
+                OnPrevExit();
+                OnCurrentEnter();
+            }
+        }
+        //슬롯 위에 올라가면
+        void OnCurrentEnter()
+        {
+            //curSlot
+            if (currSlot.Item != null&& _currnetSlot==null) {
+                toolTip.SetInfo(currSlot.Item.Data);
+                toolTip.transform.position = Input.mousePosition; 
+                toolTip.gameObject.SetActive(true);
+            }
+        }
+        //슬롯에서 나가면
+        void OnPrevExit()
+        {
+            toolTip.gameObject.SetActive(false);
+            //prevSlot
+        }
+    }
+
     #endregion
+
+    
+
 
 }

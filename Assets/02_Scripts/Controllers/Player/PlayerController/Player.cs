@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 // 상태 
 public enum PlayerState
@@ -113,36 +114,38 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public CharacterController _cc;
     [HideInInspector]
-    public PlayerStat _playerStat;
-    [HideInInspector]
     public PlayerInput _playerInput;
     [HideInInspector]
     public PlayerCam _playerCam;
+    [HideInInspector]
+    public PlayerStatManager _playerStatManager;
 
     protected virtual void Awake()
     {
-        
+        #region 컴포넌트 초기화
+        _cc = gameObject.GetOrAddComponent<CharacterController>();
+        _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
+        _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
+        _playerAnim = GetComponentInChildren<Animator>();
+        _playerStatManager = new PlayerStatManager();
+        #endregion
+
+        _playerStatManager._originStat = new PlayerStat();
+        _playerStatManager._equipStat = new PlayerStat();
+        _playerStatManager._buffStat = new PlayerStat();
     }
 
     protected virtual void Start()
     {
-        #region 컴포넌트 초기화
-        _cc = gameObject.GetOrAddComponent<CharacterController>();
-        _playerStat = gameObject.GetOrAddComponent<PlayerStat>();
-        _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
-        _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
-        _playerAnim = GetComponentInChildren<Animator>();
-        #endregion
-
         #region 딕셔너리 초기화
-        States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStat));
-        States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStat));
-        States.Add(PlayerState.Dodge, new PlayerDodgeState(this, _monster, _playerStat));
-        States.Add(PlayerState.Attack, new PlayerAttackState(this, _monster, _playerStat));
-        States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStat));
-        States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStat));
-        States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStat));
-        States.Add(PlayerState.AttackWait, new PlayerAttackWaitState(this, _monster, _playerStat));
+        States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.Dodge, new PlayerDodgeState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.Attack, new PlayerAttackState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.AttackWait, new PlayerAttackWaitState(this, _monster, _playerStatManager._originStat));
         #endregion
 
         #region 변수 초기화
@@ -151,11 +154,14 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
 
-        _playerStat.MaxHP = 100;
-        _playerStat.HP = 100;
-        _playerStat.MoveSpeed = 5f;
-        _playerStat.ATK = 24;
-        _playerStat.DEF = 15;
+        _playerStatManager._originStat.MaxHP = 100;
+        _playerStatManager._originStat.HP = _playerStatManager._originStat.MaxHP;
+        _playerStatManager._originStat.MaxMP = 100;
+        _playerStatManager._originStat.MP = _playerStatManager._originStat.MaxMP;
+        _playerStatManager._originStat.MoveSpeed = 5f;
+        _playerStatManager._originStat.DodgeSpeed = 15f;
+        _playerStatManager._originStat.ATK = 24;
+        _playerStatManager._originStat.DEF = 1;
 
         // 공격 콜라이더 off
         SetColActive("Combo1");
@@ -312,7 +318,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     {
         if (_hitMobs.Count == 0) return;
 
-        int damage = _playerStat.ATK;
+        int damage = _playerStatManager._originStat.ATK;
 
         foreach(var mob in _hitMobs)
         {
@@ -332,15 +338,17 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     public virtual void Damaged(int atk)
     {
+        Logger.Log(" 데미지 함수 호출 확인 ");
         // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
         // 피격 = 피격 모션 중 통짜 무적
         if (_hitting && _invincible) return;
 
         // 체력- 공격력*(100/(방어력+100))
-        _playerStat.HP -= (atk * (100/(_playerStat.DEF+100)));
+        _playerStatManager.HP -= atk * (100/(_playerStatManager.DEF+100));
 
-        if (_playerStat.HP > 0)
+        if (_playerStatManager.HP > 0)
         {
+            Logger.Log(" 플레이어 피격 조건 확인 이전");
             // 데미지 상태 안에서 애니메이션 제어가 이루어질 예정이라
             // 넉백이 있는 공격의 경우에만 데미지로 상태전환 해주면 될 듯
             // 넉백 공격을 인식하기 위한 조치가 필요
