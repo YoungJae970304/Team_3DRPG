@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 public class BossBear : Monster, IDamageAlbe
 {
     public int _bossBearID = 99999;
-    public override void Awake()
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         itemtest(_deongeonLevel, _bossBearID);
     }
     public override void AttackStateSwitch()

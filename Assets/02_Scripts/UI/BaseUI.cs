@@ -152,7 +152,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     public virtual void CloseUI(bool isCloseAll = false) {
         //isCloseAll : 씬을 전환하거나 할 때 열려있는화면을
         //전부 다 닫아줄 필요가 있을 때
-        //true를 넘겨줘ㅓ 화면을 닫을 때 필요한 처리들을
+        //true를 넘겨줘서 화면을 닫을 때 필요한 처리들을
         //다 무시하고 화면만 닫아주기 위해서 사용할것
 
         if (!isCloseAll) {

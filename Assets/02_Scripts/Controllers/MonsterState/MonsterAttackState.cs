@@ -34,6 +34,8 @@ public class MonsterAttackState : BaseState
             //여기에 에너미 공격 넣기
 
             _monster.AttackStateSwitch();
+
         }
+     
     }
 }

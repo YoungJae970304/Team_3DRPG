@@ -11,15 +11,10 @@ public class Slime : Monster, IDamageAlbe
 {
     
     public int _slimeID;
-    public override void Awake()
-    {
-        base.Awake();
-        SlimeIDCheck(_deongeonLevel);
-        
-    }
     public override void Start()
     {
         base.Start();
+        SlimeIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _slimeID);
     }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)

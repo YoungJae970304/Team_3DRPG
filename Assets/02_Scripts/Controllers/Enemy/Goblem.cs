@@ -7,21 +7,28 @@ using UnityEngine.AI;
 public class Goblem : Monster, IDamageAlbe
 {
     public int _goblemID;
-    public override void Awake()
+ 
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         GoblemIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _goblemID);
     }
     public override void AttackStateSwitch()
     {
-        if (_randomAttack <= 66)
+        if (_randomAttack <= 50)
         {
+            _atkColliders[0].gameObject.SetActive(true);
             NomalAttack();
+            _anim.SetTrigger("attack");
+            
+           
         }
         else
         {
+            _atkColliders[1].gameObject.SetActive(true);
             SkillAttack();
+            _anim.SetTrigger("attack1");
         }
     }
     public void NomalAttack()
@@ -30,13 +37,20 @@ public class Goblem : Monster, IDamageAlbe
        
         _player._playerHitState = PlayerHitState.NomalAttack;
         AttackPlayer();
+       
+      
+        
+        
     }
     public void SkillAttack()
     {
         Logger.Log("SkillAttack");
+        _player._playerHitState = PlayerHitState.SkillAttack;
         AttackPlayer();
        
-        _player._playerHitState = PlayerHitState.SkillAttack;
+     
+        
+
     }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
@@ -48,11 +62,12 @@ public class Goblem : Monster, IDamageAlbe
         // Rigidbody 설정
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = false; // 물리 효과 활성화
-
+        rb.freezeRotation = true;
+        //여기에 애니메이션 멈추기 추가
 
         // 넉백 힘 적용
         rb.AddForce(force, ForceMode.Impulse);
-
+        
         // 넉백 후 처리
         await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (필요에 따라 조정)
 

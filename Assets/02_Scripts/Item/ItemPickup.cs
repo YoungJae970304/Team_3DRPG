@@ -4,54 +4,63 @@ public class ItemPickup : MonoBehaviour
 {
     Transform _player;
     Inventory _inventory;
+
     public Item _newItem;
     // itemID를 string으로 받아옴
     public string _itemId;
     [SerializeField] float _pickupDuration = 1f;
+    Sequence _seq;
 
     private void Awake()
     {
         _inventory = FindAnyObjectByType<Inventory>();
+    }
+
+    private void Start()
+    {
+        _player = Managers.Game._player.transform;
+        PickupItemEffect();
         if (_player == null)
         {
             Logger.LogError("플레이어가 없음");
         }
     }
 
-    private void Start()
-    {
-        _player = Managers.Game._player.transform;
-    }
-
-    private void Update()
-    {
-         TryPickupItem();
-    }
-
-    //드랍된 아이템의 정보를 가져올 함수
-    public void GetDropItemID(DeongeonLevel level)
-    {
-        //_itemId = Drop._drop.DropItemSelect(level);
-    }
-
-    void TryPickupItem()
+    void PickupItemEffect()
     {
         //float distance = Vector3.Distance(transform.position, _player.position);
         Renderer renderer = GetComponent<Renderer>();
-      
-        Sequence seq = DOTween.Sequence();
-        //transform.position = Vector3.MoveTowards(transform.position, _player.position, _pickupSpeed * Time.deltaTime);
+        _seq = DOTween.Sequence();
+
         //플레이어에게 이동
-        seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad));
         //점점 작아짐
-        //seq.Join(transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InBack));
         //이동하면서 점점 하얘짐
-        seq.Join(renderer.material.DOColor(Color.white, _pickupDuration));
-        //시퀀스 완료 후 아이템 획득
-        seq.OnComplete(() =>
+        _seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad))
+            .Join(transform.DOScale(Vector3.zero, _pickupDuration - 0.1f).SetEase(Ease.InBack))
+            .Join(renderer.material.DOColor(Color.white, _pickupDuration))
+            .OnUpdate(() =>
+            {
+                if (Vector3.Distance(transform.position, _player.position) > 0.1f)
+                {
+                    FollowPlayer();
+                }
+                else
+                {
+                    PickupItem();
+                    _seq.Complete();
+                    Destroy(gameObject);
+                }
+            });
+
+        void FollowPlayer()
         {
-            Logger.Log($"{_itemId}:소환 안됨");
-            // 비어있는지 확인
+            _seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad))
+            .Join(transform.DOScale(Vector3.zero, _pickupDuration - 0.1f).SetEase(Ease.InBack))
+            .Join(renderer.material.DOColor(Color.white, _pickupDuration));
+        }
+
+        void PickupItem()
+        {
             if (!string.IsNullOrEmpty(_itemId))
             {
                 // string을 int로 변환
@@ -74,7 +83,6 @@ public class ItemPickup : MonoBehaviour
                     }
                 }
             }
-            Destroy(gameObject);
-        });
+        }
     }
 }
