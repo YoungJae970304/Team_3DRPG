@@ -81,7 +81,7 @@ public class DataTableManager
                 //소지 수량
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 //csv파일에 없어서 일단 임시로 로드만 해줌
-                IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
                 //아이콘
                 //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
@@ -127,7 +127,7 @@ public class DataTableManager
                 //소지 개수
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 //csv파일에 없어서 일단 임시로 로드만 해줌
-                IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
                 //아이콘
                 //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
@@ -164,7 +164,7 @@ public class DataTableManager
                 FlavorText = data["FlavorText"].ToString(),
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 //csv파일에 없어서 일단 임시로 로드만 해줌
-                IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
                 //아이콘
                 //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
@@ -254,7 +254,7 @@ public class DataTableManager
         PlayerPrefs.SetString(_PLAYER_PREFS_KEY, itemJson);
         PlayerPrefs.SetString(_PLAYER_PREFS_DROP_KEY, dropJson);
         PlayerPrefs.Save();
-        Logger.Log("저장 완료 : " + itemJson);
+        Logger.Log("저장 완료 : " + dropJson);
     }
 
     //모든 데이터를 플레이어프랩스로 제이슨 로드
@@ -267,7 +267,7 @@ public class DataTableManager
         {
             //Json을 다시 객체로 변환시킴
             ItemDataListWrapper loadedData = JsonUtility.FromJson<ItemDataListWrapper>(itemDataJson);
-           
+        
             //기존 데이터 비우기
             _EquipeedItemData.Clear();
             _PotionItemData.Clear();
@@ -293,6 +293,7 @@ public class DataTableManager
                         Logger.LogWarning($"{item.Type}은 알 수 없는 타입입니다.");
                         break;
                 }
+                _AllItemData.Add(item);
             }
             if (!string.IsNullOrEmpty(dropDataJson))
             {

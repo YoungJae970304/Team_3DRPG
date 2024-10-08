@@ -6,11 +6,11 @@ using UnityEngine;
 [Serializable]
 public class DropDataListWrapper
 {
-    public List<DropData> DropDataList { get; set; } = new List<DropData>();
+    public List<DropData> DropDataList = new List<DropData>();
 }
 
 [Serializable]
-public class DropData : IData
+public class DropData
 {
     [SerializeField] int _id;
     [SerializeField] string _name;
@@ -30,27 +30,27 @@ public class DropData : IData
     [SerializeField] int _value5;
     [SerializeField] int _itemType6;
     [SerializeField] int _value6;
-    
-    
-    
-    public int ID { get { return _id; } set { _id = value; } }
-    public string Name { get { return _name; } set { _name = value; } }
-    public int DropType1 { get { return _dropType1; } set { _dropType1 = value; } }
-    public int StartValue1 { get { return _startValue1; } set { _startValue1 = value; } }
-    public int EndValue1 { get { return _endValue1; } set { _endValue1 = value; } }
-    public int DropType2 { get { return _dropType2; } set { _dropType2 = value; } }
-    public int StartValue2 { get { return _startValue2; } set { _startValue2 = value; } }
-    public int EndValue2 { get { return _endValue2; } set { _endValue2 = value; } }
-    public int DropType3 { get { return _dropType3; } set { _dropType3 = value; } }
-    public int StartValue3 { get { return _startValue3; } set { _startValue3 = value; } }
-    public int EndValue3 { get { return _endValue3; } set { _endValue3 = value; } }
-    public int DropType4 { get { return _dropType4; } set { _dropType4 = value; } }
-    public int StartValue4 { get { return _startValue4; } set { _startValue4 = value; } }
-    public int EndValue4 { get { return _endValue4; } set { _endValue4 = value; } }
-    public int ItemValue5 { get { return _itemType5; } set { _itemType5 = value; } }
-    public int Value5 { get { return _value5; } set { _value5 = value; } }
-    public int ItemValue6 { get { return _itemType6; } set { _itemType6 = value; } }
-    public int Value6 { get { return _value6; } set { _value6 = value; } }
+
+
+
+    public int ID;
+    public string Name;
+    public int DropType1;
+    public int StartValue1;
+    public int EndValue1;
+    public int DropType2;
+    public int StartValue2;
+    public int EndValue2;
+    public int DropType3;
+    public int StartValue3;
+    public int EndValue3;
+    public int DropType4;
+    public int StartValue4;
+    public int EndValue4;
+    public int ItemValue5;
+    public int Value5;
+    public int ItemValue6;
+    public int Value6;
 
     public bool LoadData()
     {

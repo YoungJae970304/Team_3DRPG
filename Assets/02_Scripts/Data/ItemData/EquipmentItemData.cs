@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class EquipmentItemData : ItemData
 {
-    public int HealthRegen { get { return _healthRegen; } set { _healthRegen = value; } }
-    public int Mana { get { return _mana; } set { _mana = value; } }
-    public int ManaRegen { get { return _manaRegen; } set { _manaRegen = value; } }
-    public int Defense { get { return _defense; } set { _defense = value; } }
-    public int Health { get { return _health; } set { _health = value; } }
-    public int AttackPower { get { return _attackPower; } set { _attackPower = value; } }
+    public int HealthRegen;
+    public int Mana;
+    public int ManaRegen;
+    public int Defense;
+    public int Health;
+    public int AttackPower;
 
     //공격력(무기_Curr)
     int _attackPower;

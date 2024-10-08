@@ -22,7 +22,7 @@ public class ToolTipUI :MonoBehaviour
     }
 
     public void SetInfo(ItemData data) {
-        _icon.sprite = data.IconSprite;
+        //_icon.sprite = data.IconSprite;
         _toolTiptext.text = $"Name:{data.Name}";
 
 

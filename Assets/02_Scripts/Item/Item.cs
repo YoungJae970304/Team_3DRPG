@@ -12,6 +12,7 @@ public class Item
     {
         //데이터테이블매니저 인스턴스
         DataTableManager _dataTableManager = Managers.DataTable;
+        _dataTableManager.SaveAllItemData();
         //모든 아이템 데이터 로드
         _dataTableManager.LoadAllItemData();
 
