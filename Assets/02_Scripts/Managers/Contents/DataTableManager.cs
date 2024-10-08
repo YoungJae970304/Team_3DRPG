@@ -18,14 +18,16 @@ public class DataTableManager
         LoadAllItemData();
     }
 
-    //폴더 안에 있는 장비아이템 데이터 csv파일
+    //장비아이템 데이터 CSV파일
     const string EQUIPMENT_ITEM_DATA_TABLE = "Equipment_Data_Table";
-    //데이터 테이블 폴더 안에 있는 포션아이템 데이터 csv파일
+    //포션아이템 데이터 CSV파일
     const string POTION_ITEM_DATA_TABLE = "Potion_Data_Table";
-    //데잍터 테이블 폴더 안에 있는 기타아이템 데이터 csv파일
+    //기타아이템 데이터 CSV파일
     const string GOODS_ITEM_DATA_TABLE = "Goods_Data_Table";
-    //데이터 테이블 CSV파일
+    //드랍 데이터 테이블 CSV파일
     const string MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
+    //퀘스트 데이터 테이블 CSV 파일
+    const string QUEST_DATA_TABLE = "";
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
     public List<ItemData> _PotionItemData = new List<ItemData>();
@@ -33,8 +35,8 @@ public class DataTableManager
     public List<DropData> _MonsterDropData = new List<DropData>();
     //실질적인 아이템 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
-
-
+    //csv파일에서 퀘스트 데이터를 저장 하였으니 그 리스트 를 매니저에서 불러와 줌
+    public List<QuestData> QuestDataList = new List<QuestData>();
 
     #region 장비데이터테이블 함수
     void EquipmentDataTable(string dataPath, string equipmentDataTable)
@@ -55,7 +57,7 @@ public class DataTableManager
                 //등급
                 Grade = Convert.ToInt32(data["Grade"]),
                 //아이템 타입
-                Type = (ItemData.ItemType)(Convert.ToInt32(data["EquippedType"])),
+                Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["EquippedType"].ToString()),
                 //착용 레벨
                 LimitLevel = Convert.ToInt32(data["LimitLevel"]),
                 //판매 가격
@@ -76,6 +78,10 @@ public class DataTableManager
                 ManaRegen = Convert.ToInt32(data["ManaRegen"]),
                 //소지 수량
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                //csv파일에 없어서 일단 임시로 로드만 해줌
+                IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //아이콘
+                //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
             if (itemData != null)
             {
@@ -102,14 +108,14 @@ public class DataTableManager
                 Name = data["Name"].ToString(),
                 //등급
                 Grade = Convert.ToInt32(data["Grade"]),
-                Type = (ItemData.ItemType)(Convert.ToInt32(data["ItemType"])),
+                Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["ItemType"].ToString()),
                 LimitLevel = Convert.ToInt32(data["LimitLevel"]),
                 //구매 가격
                 BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                 //판매 가격
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                 //회복 타입
-                ValType = (PotionItemData.ValueType)(Convert.ToInt32(data["ValueType"])),
+                ValType = (PotionItemData.ValueType)Enum.Parse(typeof(PotionItemData.ValueType), data["ValueType"].ToString()),
                 //실제 회복 밸류 %(버프는 0)
                 Value = Convert.ToSingle(data["Value"]),
                 //쿨타임
@@ -118,6 +124,10 @@ public class DataTableManager
                 DurationTime = Convert.ToInt32(data["DurationTime"]),
                 //소지 개수
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                //csv파일에 없어서 일단 임시로 로드만 해줌
+                IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //아이콘
+                //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
             if (itemData != null)
             {
@@ -144,13 +154,17 @@ public class DataTableManager
                 ID = Convert.ToInt32(data["ID"]),
                 Name = data["Name"].ToString(),
                 Grade = Convert.ToInt32(data["Grade"]),
-                Type = (ItemData.ItemType)(Convert.ToInt32(data["ItemType"])),
+                Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["ItemType"].ToString()),
                 LimitLevel = Convert.ToInt32(data["LimitLv"]),
                 BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                 //설명 텍스트
                 FlavorText = data["FlavorText"].ToString(),
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
+                //csv파일에 없어서 일단 임시로 로드만 해줌
+                IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //아이콘
+                //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
             if (itemData != null)
             {

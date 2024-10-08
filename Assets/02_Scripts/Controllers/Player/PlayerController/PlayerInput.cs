@@ -24,14 +24,14 @@ public class PlayerInput : MonoBehaviour
         Managers.Input.KeyAction -= DodgeInput;
         Managers.Input.KeyAction += DodgeInput;
 
-        Managers.Input.KeyAction -= AttackInput;
-        Managers.Input.KeyAction += AttackInput;
-
         Managers.Input.KeyAction -= SkillInput;
         Managers.Input.KeyAction += SkillInput;
 
         Managers.Input.KeyAction -= UIInput;
         Managers.Input.KeyAction += UIInput;
+
+        Managers.Input.MouseAction -= AttackInput;
+        Managers.Input.MouseAction += AttackInput;
     }
 
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 
