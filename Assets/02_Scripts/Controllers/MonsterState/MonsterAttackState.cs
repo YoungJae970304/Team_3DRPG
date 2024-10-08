@@ -14,12 +14,14 @@ public class MonsterAttackState : BaseState
     {
         _monster._timer = 0;
         _monster._nav.stoppingDistance = _monster._mStat.AttackRange;
+        _monster._anim.SetTrigger("BeforeAttack");
     }
 
     public override void OnStateExit()
     {
         _monster._timer = _monster._mStat.AtkDelay;
         _monster._nav.stoppingDistance = 0;
+        _monster._anim.SetTrigger("AfterAttack");
     }
 
     public override void OnStateUpdate()

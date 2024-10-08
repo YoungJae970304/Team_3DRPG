@@ -233,7 +233,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     #endregion
     #region 플레이어 공격함수
-    public void AttackPlayer() // 일단 여기에 넣어놨는데 애니메이션에서 호출하는 이벤트방식으로 쓸듯
+    public async void AttackPlayer() // 일단 여기에 넣어놨는데 애니메이션에서 호출하는 이벤트방식으로 쓸듯
     {
 
         int damage = _mStat.ATK;
@@ -248,8 +248,11 @@ public class Monster : MonoBehaviour, IDamageAlbe
             }
 
         }
-
-
+        await Task.Delay((int)_mStat.AtkDelay*1000);
+        for(int i =0; i <_atkColliders.Count; i++)
+        {
+            _atkColliders[i].gameObject.SetActive(false);
+        }
 
         _hitPlayer.Clear();
 
