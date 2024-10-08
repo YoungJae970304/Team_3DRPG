@@ -244,7 +244,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
             {
                 damageable.Damaged(damage);
                 //_player.Damaged(_mStat.ATK);
-                Logger.LogError(_player._playerStat.HP.ToString());
             }
 
         }
