@@ -1189,16 +1189,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
-    - target: {fileID: 2927079515272028332, guid: 81a2d66d25faee147af5888e0182ee4a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3056062686796694049, guid: 81a2d66d25faee147af5888e0182ee4a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1249,16 +1239,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7634593831163430774, guid: 81a2d66d25faee147af5888e0182ee4a,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7970390879321014521, guid: 81a2d66d25faee147af5888e0182ee4a,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1297,21 +1277,39 @@ MonoBehaviour:
   ItemManager: {fileID: 687286401}
   inventory: {fileID: 0}
   ItemData:
+    ID: 0
+    Name: 
+    Grade: 0
+    Type: 0
+    IconSprite: 
+    BuyingPrice: 0
+    SellingPrice: 0
+    MaxAmount: 0
+    LimitLevel: 0
     _id: 1
     _name: tes2
     _grade: 0
     _itemType: 1
-    _iconSprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    _iconSprite: 
     _buyingPrice: 0
     _sellingPrice: 0
     _maxAmount: 99
     _limitLevel: 0
   itemData2:
+    ID: 0
+    Name: 
+    Grade: 0
+    Type: 0
+    IconSprite: 
+    BuyingPrice: 0
+    SellingPrice: 0
+    MaxAmount: 0
+    LimitLevel: 0
     _id: 2
     _name: tes1
     _grade: 0
     _itemType: 3
-    _iconSprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+    _iconSprite: 
     _buyingPrice: 0
     _sellingPrice: 0
     _maxAmount: 99
@@ -1377,6 +1375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Icon: {fileID: 601861903}
+  toolTip: {fileID: 0}
 --- !u!114 &1661751421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1488,9 +1487,47 @@ MonoBehaviour:
   sample: []
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
+  _dropData:
+    _id: 0
+    _name: 
+    _dropType1: 0
+    _startValue1: 0
+    _endValue1: 0
+    _dropType2: 0
+    _startValue2: 0
+    _endValue2: 0
+    _dropType3: 0
+    _startValue3: 0
+    _endValue3: 0
+    _dropType4: 0
+    _startValue4: 0
+    _endValue4: 0
+    _itemType5: 0
+    _value5: 0
+    _itemType6: 0
+    _value6: 0
+    ID: 0
+    Name: 
+    DropType1: 0
+    StartValue1: 0
+    EndValue1: 0
+    DropType2: 0
+    StartValue2: 0
+    EndValue2: 0
+    DropType3: 0
+    StartValue3: 0
+    EndValue3: 0
+    DropType4: 0
+    StartValue4: 0
+    EndValue4: 0
+    ItemValue5: 0
+    Value5: 0
+    ItemValue6: 0
+    Value6: 0
   _monsterProduct: 0
   _atkColliders: []
   _hitPlayer: []
+  _anim: {fileID: 0}
   _slimeID: 0
 --- !u!1 &1888901473
 GameObject:
@@ -1736,6 +1773,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MagePlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312498464758197025, guid: ca485054dc4f410439e704b8252a351b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8796244127300489124, guid: ca485054dc4f410439e704b8252a351b,
         type: 3}

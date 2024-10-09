@@ -12,6 +12,7 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateEnter()
     {
+        _monster._hitPlayer.Clear();
         _monster._timer = 0;
         _monster._nav.stoppingDistance = _monster._mStat.AttackRange;
         _monster._anim.SetTrigger("BeforeAttack");
@@ -21,7 +22,9 @@ public class MonsterAttackState : BaseState
     {
         _monster._timer = _monster._mStat.AtkDelay;
         _monster._nav.stoppingDistance = 0;
+        
         _monster._anim.SetTrigger("AfterAttack");
+        _monster._hitPlayer.Clear();
     }
 
     public override void OnStateUpdate()
@@ -32,10 +35,11 @@ public class MonsterAttackState : BaseState
         //딜레이 후 플레이어 공격
         if (_monster._timer > _monster._mStat.AtkDelay)
         {
+            _monster.AttackStateSwitch();
             _monster._timer = 0f;
             //여기에 에너미 공격 넣기
 
-            _monster.AttackStateSwitch();
+            
 
         }
      
