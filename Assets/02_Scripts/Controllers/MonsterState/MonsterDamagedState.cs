@@ -10,7 +10,7 @@ public class MonsterDamagedState : BaseState
     {
         //넉백, 데미지 받기
         //임시로 몬스터의 데미지를 넣어놓음 추후 플레이어 데미지 값 받아오게 설정
-       
+        _monster._anim.SetTrigger("Damaged");
         
         
     }

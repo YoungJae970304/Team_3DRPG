@@ -195,6 +195,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         StartDamege(_player.transform.position, 0.1f, 30f);
         if (_mStat.HP > 0)
         {
+            
             MChangeState(MonsterState.Damage);
         }
         else
@@ -207,6 +208,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public virtual void Die(GameObject mob)
     {
         Destroy(mob, 2f);
+    }
+    public void MonsterAnimFalse() // 애니메이션 이벤트용
+    {
+        _anim.enabled = false;
     }
     #endregion
     #region 상태 변환 조건
@@ -285,11 +290,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
         _hitPlayer.Clear();
     }
-    public void DetectPlayer()
-    {
-        
 
-    }
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
@@ -420,8 +421,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void MakeItem()
     {
-        GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
-        item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
+        int randomDice = UnityEngine.Random.Range(1, 100);
+        if(randomDice <= 100)
+        {
+            GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
+            item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
+        }
+        if(randomDice <= 100)
+        {
+            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
+        }
+        
     }
     #endregion
 }

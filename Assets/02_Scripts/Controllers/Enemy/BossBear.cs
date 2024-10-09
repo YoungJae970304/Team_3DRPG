@@ -12,48 +12,93 @@ public class BossBear : Monster, IDamageAlbe
     {
         base.Start();
         itemtest(_deongeonLevel, _bossBearID);
+        _monsterProduct = 61004;
     }
+    protected override void BaseState()
+    {
+        switch (_curState)
+        {
+            case MonsterState.Idle:
+                if (CanSeePlayer())
+                {
+                    _anim.SetTrigger("PlayerChase");
+                    MChangeState(MonsterState.Move);
+                }
+                break;
+            case MonsterState.Damage:
+
+                break;
+            case MonsterState.Move:
+                if (CanAttackPlayer())
+                    MChangeState(MonsterState.Attack);
+                else if (ReturnOrigin())
+                {
+                    _anim.SetTrigger("NonPlayerChase");
+                    MChangeState(MonsterState.Return);
+                }
+                break;
+            case MonsterState.Attack:
+                if (!CanAttackPlayer())
+                {
+                    if (!ReturnOrigin())
+                    {
+                        _anim.SetTrigger("PlayerChase");
+                        MChangeState(MonsterState.Move);
+                    }
+                    else
+                    {
+                        _anim.SetTrigger("NonPlayerChase");
+                        MChangeState(MonsterState.Return);
+                    }
+                }
+                break;
+            case MonsterState.Return:
+                if ((_originPos - transform.position).magnitude <= 3f)
+                {
+                    _anim.SetTrigger("NonPlayerChase");
+                    MChangeState(MonsterState.Idle);
+                }
+                break;
+            case MonsterState.Die:
+                break;
+        }
+        }
     public override void AttackStateSwitch()
     {
-        if (_randomAttack <= 15)
+        
+        if (_randomAttack <= 30)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-            
-            LeftBiteAttack();
-            
-        }
-        else if (_randomAttack <= 30)
-        {
-            _player._playerHitState = PlayerHitState.SkillAttack;
-            
-            RightBiteAttack();
+            _anim.SetTrigger("Bite");
+           // BiteAttack();
             
         }
         else if (_randomAttack <= 60)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-           
-            LeftHandAttack();
-            
+            _anim.SetTrigger("LeftHandAttack");
+            //LeftHandAttack();
+
         }
         else if (_randomAttack <= 90)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-           
-            RightHandAttack();
+            _anim.SetTrigger("RightHandAttack");
+           // RightHandAttack();
             
         }
         else
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
-        ;
-            EarthquakeAttack();
+            _anim.SetTrigger("Earthquake");
+           // EarthquakeAttack();
             
         }
     }
     //bool RoarOn = false;
     public void BearRoar()
     {
+        
         _player._playerHitState = PlayerHitState.StunAttack;
         AttackPlayer();
             
@@ -84,6 +129,10 @@ public class BossBear : Monster, IDamageAlbe
       
         if (skillCount < _roarList.Count &&hpPercentage <= _roarList[skillCount])
         {
+            _anim.SetTrigger("BossRoar");
+            //(이 밑에 if문 들어갈거임)
+            //시간 초 후 roar발동
+            //바닥에 깔리는 장판 구현해야함
             BearRoar();
             skillCount++;
         }
@@ -108,16 +157,10 @@ public class BossBear : Monster, IDamageAlbe
       
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
-    public void LeftBiteAttack()
+    
+    public void BiteAttack()
     {
-        Logger.Log("LeftBiteAttack");
-        AttackPlayer();
-        
-        _player._playerHitState = PlayerHitState.SkillAttack;
-    }
-    public void RightBiteAttack()
-    {
-        Logger.Log("RightBiteAttack");
+        Logger.Log("BiteAttack");
         AttackPlayer();
        
         _player._playerHitState = PlayerHitState.SkillAttack;

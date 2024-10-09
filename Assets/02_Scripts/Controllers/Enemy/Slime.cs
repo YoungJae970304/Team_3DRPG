@@ -17,6 +17,11 @@ public class Slime : Monster, IDamageAlbe
         SlimeIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _slimeID);
     }
+    public override void AttackStateSwitch()
+    {
+        _atkColliders[0].gameObject.SetActive(true);
+        _anim.SetTrigger("Attack");
+    }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         _nav.enabled = false;
@@ -119,6 +124,7 @@ public class Slime : Monster, IDamageAlbe
                         break;
                 }
             }
+            _monsterProduct = sID.Value6;
         }
     }
  

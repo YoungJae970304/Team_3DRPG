@@ -92,6 +92,7 @@ public class Goblem : Monster, IDamageAlbe
                         break;
                 }
             }
+            _monsterProduct = gID.Value6;
         }
     }
 }
