@@ -16,43 +16,24 @@ public class Goblem : Monster, IDamageAlbe
     }
     public override void AttackStateSwitch()
     {
+        
         if (_randomAttack <= 50)
         {
             _atkColliders[0].gameObject.SetActive(true);
-            NomalAttack();
+            //NomalAttack();
             _anim.SetTrigger("attack");
             
-           
+
         }
         else
         {
             _atkColliders[1].gameObject.SetActive(true);
-            SkillAttack();
+            //SkillAttack();
             _anim.SetTrigger("attack1");
+            
         }
     }
-    public void NomalAttack()
-    {
-        Logger.Log("NomalAttack");
-       
-        _player._playerHitState = PlayerHitState.NomalAttack;
-        AttackPlayer();
-       
-      
-        
-        
-    }
-    public void SkillAttack()
-    {
-        Logger.Log("SkillAttack");
-               
-        _player._playerHitState = PlayerHitState.SkillAttack;
-        AttackPlayer();
-               
-      
-        
-        
-    }
+   
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         _nav.enabled = false;
@@ -111,6 +92,7 @@ public class Goblem : Monster, IDamageAlbe
                         break;
                 }
             }
+            _monsterProduct = gID.Value6;
         }
     }
 }

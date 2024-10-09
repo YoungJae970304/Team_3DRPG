@@ -8,7 +8,7 @@ public class EnemyAttackCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GetComponentInParent<Monster>()._hitPlayer.Add(other);
+            GetComponentInParent<Monster>()._hitPlayer.Add(other.gameObject);
         }
     }
 
@@ -16,7 +16,7 @@ public class EnemyAttackCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GetComponentInParent<Monster>()._hitPlayer.Remove(other);
+            GetComponentInParent<Monster>()._hitPlayer.Remove(other.gameObject);
         }
     }
 }
