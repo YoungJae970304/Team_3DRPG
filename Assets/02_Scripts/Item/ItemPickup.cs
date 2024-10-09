@@ -73,7 +73,7 @@ public class ItemPickup : MonoBehaviour
                         if (_inventory != null)
                         {
                             _inventory.InsertItem(_newItem);
-                            Logger.Log($"{_newItem.Data.ID} 인벤토리에 추가");
+                            Logger.Log($"{_newItem.Data.Name} 인벤토리에 추가");
                         }
                         else
                         {

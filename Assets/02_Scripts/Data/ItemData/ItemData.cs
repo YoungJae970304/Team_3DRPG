@@ -29,11 +29,11 @@ public class ItemData : IData
     public string Name; 
     public int Grade;
     public ItemType Type;
-    public string IconSprite = "Icon"; //아이템 이미지 스프라이트 아이콘 기본 경로
     public int BuyingPrice;
     public int SellingPrice;
     public int MaxAmount;
     public int LimitLevel;
+    public string IconSprite = "Icon/"; //아이템 이미지 스프라이트 아이콘 기본 경로
 
 
     //아이템 번호
@@ -64,11 +64,6 @@ public class ItemData : IData
         SellingPrice = _sellingPrice;
         MaxAmount = _maxAmount;
         LimitLevel = _limitLevel;
-        IconSprite ="Icon/TestIcon";
-    }
-    public Sprite LoadIcon()
-    {
-        return Resources.Load<Sprite>(IconSprite);
     }
 
     public bool SaveData()
