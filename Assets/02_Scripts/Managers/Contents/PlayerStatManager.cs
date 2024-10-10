@@ -8,7 +8,9 @@ public class PlayerStatManager
     public PlayerStat _equipStat;
     public PlayerStat _buffStat;
 
-    public int HP { get { return Mathf.Max(0, _originStat.HP); } set { _originStat.HP = value; } }
+    public int HP { get { return Mathf.Max(0, _originStat.HP); } set {
+            _originStat.HP = value; 
+        } }
 
     public int MaxHP { get { return Mathf.Max(0, _originStat.MaxHP + _equipStat.MaxHP + _buffStat.MaxHP); } }
 

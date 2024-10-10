@@ -248,20 +248,15 @@ public class Monster : MonoBehaviour, IDamageAlbe
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         foreach (Collider collider in checkColliders)
         {
-            if (collider.CompareTag("Player") && _hitPlayer == null)
+            if (collider.CompareTag("Player") && _hitPlayer.Count==0)
             {
-                _hitPlayer.Add(collider.gameObject);
+                if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    damageable.Damaged(damage);
+                    //_player.Damaged(_mStat.ATK);
+                    Logger.LogError($"{_player._playerStatManager.HP}");
+                }
             }
-        }
-        foreach (var player in _hitPlayer)
-        {
-            if (player.TryGetComponent<IDamageAlbe>(out var damageable))
-            {
-                damageable.Damaged(damage);
-                //_player.Damaged(_mStat.ATK);
-                Logger.LogError($"{_player._playerStatManager.HP}");
-            }
-
         }
 
     }

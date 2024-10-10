@@ -36,10 +36,10 @@ public class Item
                     case ItemData.ItemType.Weapon:
                     case ItemData.ItemType.Armor:
                     case ItemData.ItemType.Accessories:
-                        return new Item(itemData);
+                        return new EquipmentItem(itemData);
                     //사용 가능 아이템
                     case ItemData.ItemType.Potion:
-                        return new Item(itemData);
+                        return new CountableItem(itemData);
                     //수량만 있는 아이템
                     case ItemData.ItemType.Booty:
                         return new Item(itemData);
