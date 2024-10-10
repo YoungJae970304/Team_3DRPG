@@ -8,16 +8,21 @@ public class PlayerAttackWaitState : BaseState
 
     public override void OnStateEnter()
     {
-        _player._curATime = 0f;
+
     }
 
     public override void OnStateUpdate()
     {
-        _player.Attack();
+
     }
 
     public override void OnStateExit()
     {
         Logger.Log("공격 대기 상태 Exit");
+        if (_player._playerInput._atkInput.Count < 1)
+        {
+            _player._attacking = false;
+            _player._playerAnim.SetBool("isAttacking", false);
+        }
     }
 }

@@ -23,6 +23,7 @@ public class MonsterMoveState : BaseState
 
     public override void OnStateUpdate()
     {
+        _monster.LookPlayer();
         //플레이어 추격
         _monster._nav.SetDestination(_monster._nav.destination);
         _timer += Time.deltaTime;

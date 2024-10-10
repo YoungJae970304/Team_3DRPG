@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Threading.Tasks;
 
-public class BossBear : Monster, IDamageAlbe
+public class BossBear : Monster
 {
     public int _bossBearID = 99999;
     public override void Start()
@@ -140,7 +140,7 @@ public class BossBear : Monster, IDamageAlbe
         await Task.Delay(2);
 
         // HP 상태에 따른 상태 전환
-        if (_mStat.HP < 0)
+        if (_mStat.HP <= 0)
         {
             MChangeState(MonsterState.Die);
         }
@@ -182,7 +182,7 @@ public class BossBear : Monster, IDamageAlbe
 
     public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        transform.LookAt(_player.transform.position);
+        LookPlayer();
     }
     public override void MakeItem()
     {
