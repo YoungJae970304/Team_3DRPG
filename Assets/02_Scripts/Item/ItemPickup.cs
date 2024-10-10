@@ -8,8 +8,9 @@ public class ItemPickup : MonoBehaviour
     public Item _newItem;
     public string _itemId;
     [SerializeField] float _pickupDuration = 1f;
+    bool _isPickup = false;
     Sequence _seq;
-
+    Tweener _tweener;
     private void Awake()
     {
     }
@@ -39,9 +40,13 @@ public class ItemPickup : MonoBehaviour
             .Join(renderer.material.DOColor(Color.white, _pickupDuration))
             .OnUpdate(() =>
             {
-                if (Vector3.Distance(transform.position, _player.position) > 0.1f)
+                if(_isPickup == true)
                 {
-                    FollowPlayer();
+                    if (Vector3.Distance(transform.position, _player.position) > 0.1f)
+                    {
+                        _tweener.Kill();
+                        FollowPlayer();
+                    }
                 }
                 else
                 {
@@ -53,6 +58,8 @@ public class ItemPickup : MonoBehaviour
 
         void FollowPlayer()
         {
+            if (_isPickup == true) { return; }
+
             _seq.Append(transform.DOMove(_player.position, _pickupDuration).SetEase(Ease.OutQuad))
             .Join(transform.DOScale(Vector3.zero, _pickupDuration - 0.1f).SetEase(Ease.InBack))
             .Join(renderer.material.DOColor(Color.white, _pickupDuration));
@@ -62,6 +69,7 @@ public class ItemPickup : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(_itemId))
             {
+                _tweener.Kill();
                 // string을 int로 변환
                 if (int.TryParse(_itemId, out int itemID))
                 {
@@ -72,8 +80,9 @@ public class ItemPickup : MonoBehaviour
                         Logger.Log("아이템 생성");
                         if (_inventory != null)
                         {
+                            _isPickup = true;
                             _inventory.InsertItem(_newItem);
-                            Logger.Log($"{_newItem.Data.ID} 인벤토리에 추가");
+                            Logger.Log($"{_newItem.Data.Name} 인벤토리에 추가");
                         }
                         else
                         {

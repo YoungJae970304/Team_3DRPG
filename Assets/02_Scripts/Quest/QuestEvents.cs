@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class QuestEvents : MonoBehaviour
+public class QuestEvents
 {
     //퀘스트 시작 액션
-    public event Action<string> _onStartQuest;
+    public event Action<int> _onStartQuest;
     //퀘스트 진행 액션
-    public event Action<string> _onAdvanceQuest;
+    public event Action<int> _onAdvanceQuest;
     //퀘스트 완료 액션
-    public event Action<string> _onFinishQuest;
+    public event Action<int> _onFinishQuest;
     //퀘스트 상태 변경 액션
     public event Action<Quest> _onQuestStateChange;
     //퀘스트 단계의 상태를 변경하는 액션
-    public event Action<string, int, QuestStepState> onQuestStepStateChange;
+    public event Action<int, int, QuestStepState> _onQuestStepStateChange;
+
     //퀘스트 시작 트리거 함수
-    public void StartQuest(string id)
+    public void StartQuest(int id)
     {
          if(_onStartQuest != null)
         {
@@ -25,7 +26,7 @@ public class QuestEvents : MonoBehaviour
         }
     }
 
-    public void AdvanceQuest(string id)
+    public void AdvanceQuest(int id)
     {
         if(_onAdvanceQuest != null)
         {
@@ -34,7 +35,7 @@ public class QuestEvents : MonoBehaviour
         }
     }
 
-    public void FinishQuest(string id)
+    public void FinishQuest(int id)
     {
         if(_onFinishQuest != null)
         {
@@ -52,12 +53,12 @@ public class QuestEvents : MonoBehaviour
         }
     }
 
-    public void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+    public void QuestStepStateChange(int id, int stepIndex, QuestStepState questStepState)
     {
-        if(onQuestStepStateChange != null)
+        if(_onQuestStepStateChange != null)
         {
             //퀘스트 단계(즉, 메인퀘스트의 다음 단계 정도? 의 변경 액션 이벤트
-            onQuestStepStateChange(id, stepIndex, questStepState);
+            _onQuestStepStateChange(id, stepIndex, questStepState);
         }
     }
 }

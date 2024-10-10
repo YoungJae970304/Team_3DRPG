@@ -81,9 +81,11 @@ public class DataTableManager
                 //소지 수량
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //IconSprite = data["TestIcon"].ToString(),
                 //아이콘
                 //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
+                //임시로 이미지 로드
+                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
@@ -127,9 +129,10 @@ public class DataTableManager
                 //소지 개수
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
+                //IconSprite = data["TestIcon"].ToString(),
                 //아이콘
                 //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
+                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
@@ -164,10 +167,7 @@ public class DataTableManager
                 //설명 텍스트
                 FlavorText = data["FlavorText"].ToString(),
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = Resources.Load<Sprite>("Icon/TestIcon"),
-                //아이콘
-                //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
+                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
@@ -255,6 +255,7 @@ public class DataTableManager
         PlayerPrefs.SetString(_PLAYER_PREFS_KEY, itemJson);
         PlayerPrefs.SetString(_PLAYER_PREFS_DROP_KEY, dropJson);
         PlayerPrefs.Save();
+        Logger.Log("저장 완료 : " + itemJson);
         Logger.Log("저장 완료 : " + dropJson);
     }
 
@@ -298,6 +299,7 @@ public class DataTableManager
             }
             if (!string.IsNullOrEmpty(dropDataJson))
             {
+                _MonsterDropData.Clear();
                 DropDataListWrapper loadedDropData = JsonUtility.FromJson<DropDataListWrapper>(dropDataJson);
                 foreach (var drop in loadedDropData.DropDataList)
                 {
