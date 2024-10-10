@@ -344,8 +344,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         if (_hitting && _invincible) return;
 
         // 체력- 공격력*(100/(방어력+100))
-        _playerStatManager.HP -= atk * (100/(_playerStatManager.DEF+100));
-
+        _playerStatManager.HP -= (int)(atk * (100f/(_playerStatManager.DEF+100f)));
         if (_playerStatManager.HP > 0)
         {
             Logger.Log(" 플레이어 피격 조건 확인 이전");
