@@ -306,9 +306,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000007397915, y: -0.000000005926387, z: -4.384291e-17,
-    w: 1}
-  m_LocalPosition: {x: 1, y: 2, z: -4}
+  m_LocalRotation: {x: 0.07437624, y: 0, z: 0, w: 0.9972303}
+  m_LocalPosition: {x: 0, y: 2.9, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -404,6 +403,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TestItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 410208979198133161, guid: 4b20088e9bf0bef46b4c08d668543a9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2284050004414131207, guid: 4b20088e9bf0bef46b4c08d668543a9d,
         type: 3}
@@ -1160,16 +1164,15 @@ MonoBehaviour:
     Name: 
     Grade: 0
     Type: 0
-    IconSprite: 
     BuyingPrice: 0
     SellingPrice: 0
     MaxAmount: 0
     LimitLevel: 0
+    IconSprite: 
     _id: 1
     _name: tes2
     _grade: 0
     _itemType: 1
-    _iconSprite: 
     _buyingPrice: 0
     _sellingPrice: 0
     _maxAmount: 99
@@ -1179,16 +1182,15 @@ MonoBehaviour:
     Name: 
     Grade: 0
     Type: 0
-    IconSprite: 
     BuyingPrice: 0
     SellingPrice: 0
     MaxAmount: 0
     LimitLevel: 0
+    IconSprite: 
     _id: 2
     _name: tes1
     _grade: 0
     _itemType: 3
-    _iconSprite: 
     _buyingPrice: 0
     _sellingPrice: 0
     _maxAmount: 99
@@ -1621,7 +1623,7 @@ PrefabInstance:
     - target: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
         type: 3}
@@ -1964,6 +1966,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bear
+      objectReference: {fileID: 0}
+    - target: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

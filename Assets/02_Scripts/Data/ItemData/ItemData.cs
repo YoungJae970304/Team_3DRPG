@@ -33,7 +33,7 @@ public class ItemData : IData
     public int SellingPrice;
     public int MaxAmount;
     public int LimitLevel;
-    public string IconSprite = "Icon/"; //아이템 이미지 스프라이트 아이콘 기본 경로
+    public string IconSprite = "Icon/TestIcon"; //아이템 이미지 스프라이트 아이콘 기본 경로
 
 
     //아이템 번호

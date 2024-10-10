@@ -12,9 +12,11 @@ public class Managers : MonoBehaviour
     #region Contents
     GameManager _game = new GameManager();
     DataTableManager _dataTable = new DataTableManager();
+    QuestEvents _questEnvets = new QuestEvents();
 
     public static GameManager Game { get { return Instance._game; } }
     public static DataTableManager DataTable { get { return Instance._dataTable; } }
+    public static QuestEvents QuestEvents { get { return Instance._questEnvets; } }
     #endregion
 
     #region Core

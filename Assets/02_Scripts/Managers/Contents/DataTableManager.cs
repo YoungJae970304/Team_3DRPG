@@ -132,6 +132,7 @@ public class DataTableManager
                 //IconSprite = data["TestIcon"].ToString(),
                 //아이콘
                 //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
+                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
@@ -165,7 +166,7 @@ public class DataTableManager
                 //설명 텍스트
                 FlavorText = data["FlavorText"].ToString(),
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                
+                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
@@ -253,6 +254,7 @@ public class DataTableManager
         PlayerPrefs.SetString(_PLAYER_PREFS_KEY, itemJson);
         PlayerPrefs.SetString(_PLAYER_PREFS_DROP_KEY, dropJson);
         PlayerPrefs.Save();
+        Logger.Log("저장 완료 : " + itemJson);
         Logger.Log("저장 완료 : " + dropJson);
     }
 

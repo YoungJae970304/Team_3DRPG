@@ -56,6 +56,7 @@ public class Item
         }
     }
     #endregion
+
     //스프라이트 이미지를 이름으로 저장하고 있기에 이미지 이름을 Resource.load로 경로에서 이미지아이콘 찾아오기
     public Sprite LoadIcon()
     {
