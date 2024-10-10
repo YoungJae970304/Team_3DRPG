@@ -1734,14 +1734,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 646775508015885836}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.58158195, y: 0.30147263, z: -0.4736857, w: 0.5886413}
-  m_LocalPosition: {x: -0.9796316, y: 0.22655687, z: -1.062589}
+  m_LocalRotation: {x: -0.012131689, y: 0.5491498, z: -0.11703867, w: 0.8273991}
+  m_LocalPosition: {x: -0.21, y: 0.12, z: -0.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 642762146979841012}
   m_Father: {fileID: 7387187457134297094}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 6.227, y: 66.489, z: -12.019}
 --- !u!1 &655788358012746284
 GameObject:
   m_ObjectHideFlags: 0
@@ -28858,11 +28858,11 @@ GameObject:
   - component: {fileID: 3208645783841606517}
   m_Layer: 0
   m_Name: Ork
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7107406576438657974
 Transform:
   m_ObjectHideFlags: 0
@@ -29034,7 +29034,6 @@ MonoBehaviour:
   _atkColliders:
   - {fileID: 7978530830655158342}
   - {fileID: 1941726885001490678}
-  _hitPlayer: []
   _anim: {fileID: 0}
   _OrkID: 0
 --- !u!65 &3208645783841606517

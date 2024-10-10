@@ -1911,11 +1911,11 @@ GameObject:
   - component: {fileID: 6726248427313091088}
   m_Layer: 0
   m_Name: Bear
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &50978328962805125
 Transform:
   m_ObjectHideFlags: 0
@@ -2110,7 +2110,6 @@ MonoBehaviour:
   - {fileID: 2498612419582649953}
   - {fileID: 3144228113651959425}
   - {fileID: 8734980858918225144}
-  _hitPlayer: []
   _anim: {fileID: 0}
   _bossBearID: 99999
 --- !u!1 &6728447082621265980

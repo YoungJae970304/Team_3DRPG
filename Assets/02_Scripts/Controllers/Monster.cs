@@ -52,7 +52,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     [Header("몬스터 공격 콜라이더 리스트")]
     public List<Collider> _atkColliders;
     //[HideInInspector]
-    public List<GameObject> _hitPlayer;
+    //public List<GameObject> _hitPlayer;
     public Animator _anim;
     public virtual void Awake()
     {
@@ -90,7 +90,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat.HP = _mStat.MaxHP;
         _mStat.ATK = 30;
         _mStat.DEF = 10;
-       
+        _mStat.MoveSpeed = 1f;
         
     }
 
@@ -248,7 +248,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         foreach (Collider collider in checkColliders)
         {
-            if (collider.CompareTag("Player") && _hitPlayer.Count==0)
+            if (collider.CompareTag("Player") )
             {
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
@@ -283,13 +283,14 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
             _atkColliders[i].gameObject.SetActive(false);
         }
-        _hitPlayer.Clear();
+        //_hitPlayer.Clear();
     }
 
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
+        
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
@@ -414,7 +415,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             sample.Add(i.ToString());
         }
     }
-    public void MakeItem()
+    public virtual void MakeItem()
     {
         int randomDice = UnityEngine.Random.Range(1, 100);
         if(randomDice <= 100)
@@ -422,11 +423,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
             item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
         }
-        if(randomDice <= 100)
-        {
-            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
-            productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
-        }
+        
         
     }
     #endregion

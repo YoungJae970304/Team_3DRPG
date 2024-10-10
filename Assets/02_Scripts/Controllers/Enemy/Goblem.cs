@@ -36,6 +36,7 @@ public class Goblem : Monster, IDamageAlbe
    
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
+        transform.LookAt(_player.transform.position);
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
@@ -67,32 +68,55 @@ public class Goblem : Monster, IDamageAlbe
     {
         foreach (var gID in _dataTableManager._MonsterDropData)
         {
-            string iDCheck = gID.ID.ToString("D0");
-            if (iDCheck == "2")
+            string iDCheck = gID.ID.ToString();
+            //Logger.LogError(iDCheck);
+            char lastDigit = iDCheck[iDCheck.Length - 1];
+            char GID = iDCheck[iDCheck.Length - 4];
+            //Logger.LogError(lastDigit.ToString());
+            if (lastDigit == '2')
             {
+                if (lastDigit == '2')
+                {
+                    _monsterProduct = gID.Value6;
+                }
+                //Logger.LogError(gID.Value6.ToString("D1"));
                 switch (curLevel)
                 {
                     case DeongeonLevel.Easy:
-                        if (gID.ID.ToString("F1") == "1")
+                        if (GID == '1')
                         {
                             _goblemID = gID.ID;
                         }
                         break;
                     case DeongeonLevel.Normal:
-                        if (gID.ID.ToString("F1") == "2")
+                        if (GID == '2')
                         {
                             _goblemID = gID.ID;
                         }
                         break;
                     case DeongeonLevel.Hard:
-                        if (gID.ID.ToString("F1") == "3")
+                        if (GID == '3')
                         {
                             _goblemID = gID.ID;
                         }
                         break;
                 }
+                
             }
-            _monsterProduct = gID.Value6;
+            
+        }
+    }
+    public override void MakeItem()
+    {
+        base.MakeItem();
+        int randomDice = UnityEngine.Random.Range(1, 101);
+        if (randomDice <= 100)
+        {
+            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
+            Logger.LogError($"{productItem.GetComponent<ItemPickup>()._itemId}");
+            productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
+           
         }
     }
 }

@@ -24,6 +24,7 @@ public class Slime : Monster, IDamageAlbe
     }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
+        transform.LookAt(_player.transform.position);
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
@@ -94,38 +95,58 @@ public class Slime : Monster, IDamageAlbe
 
         }
     }
-
+    public override void MakeItem()
+    {
+        base.MakeItem();
+        int randomDice = UnityEngine.Random.Range(1, 101);
+        if (randomDice <= 100)
+        {
+            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
+            productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
+            
+        }
+    }
     public void SlimeIDCheck(DeongeonLevel curLevel)
     {
         foreach(var sID in _dataTableManager._MonsterDropData)
         {
-            string iDCheck = sID.ID.ToString("D0");
-            if (iDCheck == "1")
+            string iDCheck = sID.ID.ToString();
+            char lastDigit = iDCheck[iDCheck.Length - 1];
+            char SID = iDCheck[iDCheck.Length - 4];
+            if (lastDigit == '1')
             {
+                if (lastDigit == '1')
+                {
+                    _monsterProduct = sID.Value6;
+                }
                 switch (curLevel)
                 {
                     case DeongeonLevel.Easy:
-                        if(sID.ID.ToString("F1") == "1")
+                        if(SID == '1')
                         {
                             _slimeID = sID.ID;
                         }
                         break;
                     case DeongeonLevel.Normal:
-                        if (sID.ID.ToString("F1") == "2")
+                        if (SID == '2')
                         {
                             _slimeID = sID.ID;
                         }
                         break;
                     case DeongeonLevel.Hard:
-                        if (sID.ID.ToString("F1") == "3")
+                        if (SID == '3')
                         {
                             _slimeID = sID.ID;
                         }
                         break;
                 }
+                
+                
             }
-            _monsterProduct = sID.Value6;
+            
         }
+       
     }
  
 }

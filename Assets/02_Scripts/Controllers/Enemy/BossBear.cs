@@ -182,7 +182,18 @@ public class BossBear : Monster, IDamageAlbe
 
     public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        throw null;
+        transform.LookAt(_player.transform.position);
     }
-  
+    public override void MakeItem()
+    {
+        base.MakeItem();
+        int randomDice = UnityEngine.Random.Range(1, 101);
+        if (randomDice <= 100)
+        {
+            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
+            productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
+            
+        }
+    }
 }
