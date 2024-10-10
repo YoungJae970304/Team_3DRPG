@@ -24,7 +24,7 @@ public class Slime : Monster, IDamageAlbe
     }
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        transform.LookAt(_player.transform.position);
+        LookPlayer();
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향

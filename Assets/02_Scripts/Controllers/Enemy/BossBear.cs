@@ -182,7 +182,7 @@ public class BossBear : Monster, IDamageAlbe
 
     public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        transform.LookAt(_player.transform.position);
+        LookPlayer();
     }
     public override void MakeItem()
     {
