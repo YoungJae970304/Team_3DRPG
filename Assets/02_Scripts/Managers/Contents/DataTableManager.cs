@@ -5,7 +5,7 @@ using UnityEngine;
 public class DataTableManager
 {
     //CSVData폴더 안에 있는 csv값을 스트링으로 가져오고 csv파일로 읽어올거임
-    const string DATA_PATH = "CSVData";
+    const string _DATA_PATH = "CSVData";
     //저장할 때 사용할 키
     const string _PLAYER_PREFS_KEY = "ItemDataList";
     const string _PLAYER_PREFS_QUEST_KEY = "QuestDataList";
@@ -19,15 +19,15 @@ public class DataTableManager
     }
 
     //장비아이템 데이터 CSV파일
-    const string EQUIPMENT_ITEM_DATA_TABLE = "Equipment_Data_Table";
+    const string _EQUIPMENT_ITEM_DATA_TABLE = "Equipment_Data_Table";
     //포션아이템 데이터 CSV파일
-    const string POTION_ITEM_DATA_TABLE = "Potion_Data_Table";
+    const string _POTION_ITEM_DATA_TABLE = "Potion_Data_Table";
     //기타아이템 데이터 CSV파일
-    const string GOODS_ITEM_DATA_TABLE = "Goods_Data_Table";
+    const string _GOODS_ITEM_DATA_TABLE = "Goods_Data_Table";
     //드랍 데이터 테이블 CSV파일
-    const string MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
+    const string _MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
     //퀘스트 데이터 테이블 CSV 파일
-    const string QUEST_DATA_TABLE = "Quest_Data_Table";
+    const string _QUEST_DATA_TABLE = "Quest_Data_Table";
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
     public List<ItemData> _PotionItemData = new List<ItemData>();
@@ -266,11 +266,11 @@ public class DataTableManager
     #region 모든 데이터 저장및 로드
     public void LoadItemDataTable()
     {
-        EquipmentDataTable(DATA_PATH, EQUIPMENT_ITEM_DATA_TABLE);
-        PotionDataTable(DATA_PATH, POTION_ITEM_DATA_TABLE);
-        GoodsDataTable(DATA_PATH, GOODS_ITEM_DATA_TABLE);
-        DropDataTable(DATA_PATH, MONSTER_DROP_DATA_TABLE);
-        QuestDataTable(DATA_PATH, QUEST_DATA_TABLE);
+        EquipmentDataTable(_DATA_PATH, _EQUIPMENT_ITEM_DATA_TABLE);
+        PotionDataTable(_DATA_PATH, _POTION_ITEM_DATA_TABLE);
+        GoodsDataTable(_DATA_PATH, _GOODS_ITEM_DATA_TABLE);
+        DropDataTable(_DATA_PATH, _MONSTER_DROP_DATA_TABLE);
+        QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
     }
 
     //모든 데이터 플레이어프랩스로 제이슨저장
@@ -310,7 +310,6 @@ public class DataTableManager
             _EquipeedItemData.Clear();
             _PotionItemData.Clear();
             _GoodsItemData.Clear();
-            _QuestData.Clear();
             _AllItemData.Clear();
             //타입에 맞춰 데이터를 다시 리스트에 추가
             foreach (var item in loadedData.ItemDataList)
