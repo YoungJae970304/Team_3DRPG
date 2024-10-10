@@ -22,6 +22,7 @@ public class QuestEvents
          if(_onStartQuest != null)
         {
             //퀘스트 id로 퀘스트 시작 알림 액션 이벤트
+            //즉, 현재 퀘스트아이디가 80001인 퀘스트가 시작되었으니 그 퀘스트의 정보들을 가져옴
             _onStartQuest(id);
         }
     }
@@ -57,7 +58,7 @@ public class QuestEvents
     {
         if(_onQuestStepStateChange != null)
         {
-            //퀘스트 단계(즉, 메인퀘스트의 다음 단계 정도? 의 변경 액션 이벤트
+            //퀘스트 단계(즉, 메인퀘스트의 다음 단계 정도의 변경 액션 이벤트
             _onQuestStepStateChange(id, stepIndex, questStepState);
         }
     }

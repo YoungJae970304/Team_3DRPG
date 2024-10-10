@@ -28856,7 +28856,7 @@ GameObject:
   - component: {fileID: 3157727795826859909}
   - component: {fileID: 1833457911203871617}
   - component: {fileID: 3208645783841606517}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ork
   m_TagString: Monster
   m_Icon: {fileID: 0}

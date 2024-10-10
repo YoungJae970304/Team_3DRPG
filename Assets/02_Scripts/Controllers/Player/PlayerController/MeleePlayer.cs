@@ -10,6 +10,11 @@ public class MeleePlayer : Player
         _playerType = Define.PlayerType.Melee;
     }
 
+    public override void Attack()
+    {
+        
+    }
+
     public override void Skill()
     {
         // 추후 이곳에서 스킬 데이터를 받아서 SkillBase에 저장해주나?
