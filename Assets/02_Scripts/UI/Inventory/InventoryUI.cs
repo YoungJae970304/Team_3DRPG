@@ -26,7 +26,7 @@ public class InventoryUI : ItemUI
         Slots,
     }
 
-    public List<ItemSlot> _inventorySlots;
+    public List<InventorySlot> _inventorySlots;
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -44,7 +44,7 @@ public class InventoryUI : ItemUI
     }
     void SlotSetting(ItemData.ItemType type) {
        int size= _inventory.GetGroupSize(type);
-        _inventorySlots = new List<ItemSlot>();
+        _inventorySlots = new List<InventorySlot>();
         for (int i = 0; i < size; i++) {
             InventorySlot slot= Managers.Resource.Instantiate("UI/InventorySlot",
                 GetGameObject((int)GameObjects.Slots).transform).GetComponent<InventorySlot>();

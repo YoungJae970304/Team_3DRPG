@@ -13,38 +13,38 @@ public class QuestDataListWrapper
 [Serializable]
 public class QuestData : IData
 {
-    public int ID { get { return _id; } set { _id = value; } }
-    public string Name { get { return _name; } set { _name = value; } }
-    public string Info { get { return _info; } set { _info = value; } }
-    public int PlayerLevelRequirement { get { return _playerLevelRequirement; } set { _playerLevelRequirement = value; } }
-    public int TargetID { get { return _targetID; } set { _targetID = value; } }
-    public int TargetCount { get { return _targetCount; } set { _targetCount = value; } }
-    public bool IsComplate { get { return _isComplate; } set { _isComplate = value; } }
-    public RewardType Type { get { return _rewardType; }set { _rewardType = value; } }
-    public RewardValueType ValType1 { get { return _rewardValueType1;}set { _rewardValueType1 = value; } }
-    public RewardValueType ValType2 { get { return _rewardValueType2;}set {  _rewardValueType2 = value; } }
-    public RewardValueType ValType3 { get { return _rewardValueType3;}set { _rewardValueType3 = value; } }
+    public int ID;
+    public string Name;
+    public string Info;
+    public int PlayerLevelRequirement;  
+    public int TargetID;
+    public int TargetCount;
+    public bool IsComplate;
+    public RewardType Type;
+    public RewardValueType ValType1;
+    public RewardValueType ValType2;
+    public RewardValueType ValType3;
 
     //퀘스트 아이디
-    int _id;
+   [SerializeField] int _id;
     //퀘스트 제목
-    string _name;
+    [SerializeField] string _name;
     //퀘스트 정보
-    string _info;
+    [SerializeField] string _info;
     //시작 가능 레벨
-    int _playerLevelRequirement;
+    [SerializeField] int _playerLevelRequirement;
     //목표 대상의 ID(즉, 처치냐 모으기냐의 따른 ID 분류)
-    int _targetID;
+    [SerializeField] int _targetID;
     //목표 수량(즉, 처치 마릿수, 기타아이템 수집 개수)
-    int _targetCount;
+    [SerializeField] int _targetCount;
     //완료 조건 충족 불 변수
-    bool _isComplate = false;
+    [SerializeField] bool _isComplate = false;
     //리워드 타입
-    RewardType _rewardType;
+    [SerializeField] RewardType _rewardType;
     //리워드 밸류타입
-    RewardValueType _rewardValueType1;
-    RewardValueType _rewardValueType2;
-    RewardValueType _rewardValueType3;
+    [SerializeField] RewardValueType _rewardValueType1;
+    [SerializeField] RewardValueType _rewardValueType2;
+    [SerializeField] RewardValueType _rewardValueType3;
     
     [Serializable]
     public enum RewardType

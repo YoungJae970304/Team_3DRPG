@@ -12,7 +12,8 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateEnter()
     {
-        _monster._hitPlayer.Clear();
+        _monster.LookPlayer();
+        //_monster._hitPlayer.Clear();
         _monster._timer = 0;
         _monster._nav.stoppingDistance = _monster._mStat.AttackRange;
         _monster._anim.SetTrigger("BeforeAttack");
@@ -24,7 +25,7 @@ public class MonsterAttackState : BaseState
         _monster._nav.stoppingDistance = 0;
         
         _monster._anim.SetTrigger("AfterAttack");
-        _monster._hitPlayer.Clear();
+        //_monster._hitPlayer.Clear();
     }
 
     public override void OnStateUpdate()

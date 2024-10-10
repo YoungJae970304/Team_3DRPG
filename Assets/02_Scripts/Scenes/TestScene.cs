@@ -6,14 +6,13 @@ public class TestScene : BaseScene
 {
     [SerializeField] Inventory ItemManager;
     [SerializeField] InventoryUI inventory;
-    [SerializeField] ItemData ItemData,itemData2;
+    [SerializeField] ItemData ItemData, itemData2 ;
     protected override void Init()
     {
         base.Init();
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
-
         //Opentest();
         Close();
     }
@@ -37,9 +36,9 @@ public class TestScene : BaseScene
     [ContextMenu("Inserttest")]
     public void Inserttest() {
         Item item2 = new EquipmentItem(itemData2);
-        ItemManager.InsertItem(item2);
+        ItemManager.InsertItem(Item.ItemSpawn(11001));
         Item item = new EquipmentItem(ItemData);
-        ItemManager.InsertItem(item);
+        //ItemManager.InsertItem(item);
     }
     [ContextMenu("Removetest")]
     public void Remove()

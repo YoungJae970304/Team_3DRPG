@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - NPC
+  - PlayerModel
   layers:
   - Default
   - TransparentFX

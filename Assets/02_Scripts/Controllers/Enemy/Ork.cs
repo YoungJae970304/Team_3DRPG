@@ -33,6 +33,7 @@ public class Ork : Monster
 
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
+        LookPlayer();
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
@@ -63,33 +64,54 @@ public class Ork : Monster
     {
         foreach (var oID in _dataTableManager._MonsterDropData)
         {
-            string iDCheck = oID.ID.ToString("D0");
-            if (iDCheck == "3")
+            string iDCheck = oID.ID.ToString();
+            //Logger.LogError(iDCheck);
+            char lastDigit = iDCheck[iDCheck.Length - 1];
+            char OID = iDCheck[iDCheck.Length - 4];
+            if (lastDigit == '3')
             {
+                if (lastDigit == '3')
+                {
+                    _monsterProduct = oID.Value6;
+                }
                 switch (curLevel)
                 {
                     case DeongeonLevel.Easy:
-                        if (oID.ID.ToString("F1") == "1")
+                        if (OID == '1')
                         {
                             _OrkID = oID.ID;
                         }
                         break;
                     case DeongeonLevel.Normal:
-                        if (oID.ID.ToString("F1") == "2")
+                        if (OID == '2')
                         {
                             _OrkID = oID.ID;
                         }
                         break;
                     case DeongeonLevel.Hard:
-                        if (oID.ID.ToString("F1") == "3")
+                        if (OID== '3')
                         {
                             _OrkID = oID.ID;
                         }
                         break;
                 }
+               
+                
             }
-            _monsterProduct = oID.Value6;
+            
         }
         
+    }
+    public override void MakeItem()
+    {
+        base.MakeItem();
+        int randomDice = UnityEngine.Random.Range(1, 101);
+        if (randomDice <= 100)
+        {
+            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
+            productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
+            
+        }
     }
 }
