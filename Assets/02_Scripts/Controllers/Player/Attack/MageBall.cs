@@ -20,6 +20,16 @@ public class MageBall : MonoBehaviour
     {
         transform.position += _ballDir * _ballSpeed * Time.deltaTime;
 
+        if (Managers.Game._player._playerCam._cameraMode == Define.CameraMode.QuarterView)
+        {
+            //transform.position += _ballDir * _ballSpeed * Time.deltaTime;
+        }
+        else
+        {
+            // 클릭한 곳을 향해 날아가도록 구현
+        }
+
+
         float distance = Vector3.Distance(_originPlayerPos.position, transform.position);
 
         if (distance > _ballRange)
