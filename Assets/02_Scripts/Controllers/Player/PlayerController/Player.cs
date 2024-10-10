@@ -154,7 +154,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
 
-        _playerStatManager._originStat.MaxHP = 100;
+        _playerStatManager._originStat.MaxHP = 10000;
         _playerStatManager._originStat.HP = _playerStatManager._originStat.MaxHP;
         _playerStatManager._originStat.MaxMP = 100;
         _playerStatManager._originStat.MP = _playerStatManager._originStat.MaxMP;

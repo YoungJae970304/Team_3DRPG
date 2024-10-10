@@ -13,6 +13,7 @@ public class MonsterAttackState : BaseState
     public override void OnStateEnter()
     {
         _monster.LookPlayer();
+        _monster._anim.SetBool("BeforeChase", false);
         //_monster._hitPlayer.Clear();
         _monster._timer = 0;
         _monster._nav.stoppingDistance = _monster._mStat.AttackRange;
@@ -25,6 +26,7 @@ public class MonsterAttackState : BaseState
         _monster._nav.stoppingDistance = 0;
         
         _monster._anim.SetTrigger("AfterAttack");
+        _monster._anim.SetBool("BeforeChase", true);
         //_monster._hitPlayer.Clear();
     }
 

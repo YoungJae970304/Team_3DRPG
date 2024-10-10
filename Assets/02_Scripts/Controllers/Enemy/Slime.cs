@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Jobs;
 
-public class Slime : Monster, IDamageAlbe
+public class Slime : Monster
 {
     
     public int _slimeID;

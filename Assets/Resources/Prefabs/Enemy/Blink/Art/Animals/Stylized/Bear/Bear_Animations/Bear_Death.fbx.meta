@@ -92,7 +92,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.95454544
+      - time: 1
         functionName: MonsterAnimFalse
         data: 
         objectReferenceParameter: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,

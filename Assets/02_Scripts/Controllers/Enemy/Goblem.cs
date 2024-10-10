@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Goblem : Monster, IDamageAlbe
+public class Goblem : Monster
 {
     public int _goblemID;
  
