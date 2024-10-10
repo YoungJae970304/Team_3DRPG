@@ -30,7 +30,7 @@ public abstract class ItemSlot : MonoBehaviour
         
         _Image.enabled = true;
         //_Image.sprite = Item.Data.IconSprite == null ? _Image.sprite : Item.Data.IconSprite;
-        //_Image.sprite = Item.IconSprite == null ? _Image.sprite : Item.IconSprite;
+        _Image.sprite = Item.LoadIcon();
         if (Item is CountableItem)
         {
             _text.text = (Item as CountableItem)._amount.ToString(); ;

@@ -163,7 +163,7 @@ public class ItemGrab : MonoBehaviour
             //curSlot
             if (currSlot.Item != null && _currnetSlot == null)
             {
-                toolTip.SetInfo(currSlot.Item.Data);
+                toolTip.SetInfo(currSlot);
                 toolTip.transform.position = Input.mousePosition;
                 toolTip.gameObject.SetActive(true);
 

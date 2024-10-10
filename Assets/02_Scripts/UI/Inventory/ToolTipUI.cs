@@ -21,9 +21,9 @@ public class ToolTipUI :MonoBehaviour
         _rectTransform.position = Input.mousePosition;
     }
 
-    public void SetInfo(ItemData data) {
-        //_icon.sprite = data.IconSprite;
-        _toolTiptext.text = $"Name:{data.Name}";
+    public void SetInfo(ItemSlot data) {
+        _icon.sprite = data._Image.sprite;
+        _toolTiptext.text = $"Name:{data.Item.Data.Name}";
 
 
     }
