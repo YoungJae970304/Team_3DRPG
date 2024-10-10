@@ -51,8 +51,11 @@ public class QuestManager
     {
         var questData = Managers.DataTable._QuestData;
 
-        _AllQuestData.AddRange(questData);
-        Logger.Log("퀘스트 데이터 리스트 가져오기 확인" + questData);
+        foreach (var quest in questData)
+        {
+            _AllQuestData.AddRange(questData);
+            Logger.Log($"퀘스트 데이터 ID: {quest.ID} 이름: {quest.Name}");
+        }
     }
 
     //시작 메서드
