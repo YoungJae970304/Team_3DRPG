@@ -16,6 +16,7 @@ public class ItemGrab : MonoBehaviour
     private Vector3 _beginDragCursorPoint;                  // 드래그 시작 시 커서의 위치
     public ToolTipUI toolTip;           //아이템 정보를 표시할 UI
     private ItemSlot _pointerOverSlot; // 현재 포인터가 위치한 곳의 슬롯
+    float _lastClicktime = 0;
     private void Awake()
     {
         Raycaster = GetComponent<GraphicRaycaster>();
@@ -150,15 +151,11 @@ public class ItemGrab : MonoBehaviour
                 OnCurrentEnter();
             }
         }
-        if (currSlot != null && Input.GetMouseButtonDown(1))
+        if (currSlot == null)
+            return;
+        if (Input.GetMouseButtonDown(1)|| IsDoubleClick())
         {
-            if (currSlot.Item == null)
-                return;
-            Logger.Log(currSlot.Item.Data.Name);
-            if (currSlot.Item is IUsableItem)
-            {
-                (currSlot.Item as IUsableItem).Use();
-            }
+            ItemUse();
         }
         //슬롯 위에 올라가면
         void OnCurrentEnter()
@@ -178,21 +175,30 @@ public class ItemGrab : MonoBehaviour
             toolTip.gameObject.SetActive(false);
             //prevSlot
         }
-    }
-    /*
-    float time = 0;
-    void test()
-    {
-        if (currSlot != null && Input.GetMouseButtonDown(0))
+        bool IsDoubleClick()
         {
-            if (Time.time - time < 0.25f)
+            if (currSlot != null && Input.GetMouseButtonDown(0))
             {
-
-
+                if (Time.time - _lastClicktime < 0.25f)
+                {
+                    return true;
+                }
+                _lastClicktime = Time.time;
             }
-            time = Time.time;
+            return false;
         }
-    }*/
+        void ItemUse() {
+            if (currSlot.Item == null)
+                return;
+            Logger.Log(currSlot.Item.Data.Name);
+            if (currSlot.Item is IUsableItem)
+            {
+                (currSlot.Item as IUsableItem).Use();
+            }
+        }
+    }
+
+    
 
 
     #endregion

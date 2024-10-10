@@ -23,6 +23,7 @@ public class Item
             Logger.Log($"선택된아이템 아이디 {newItem.ID}");
             if (newItem.ID == id)
             {
+                
                 itemData = newItem;
                 break;
             }

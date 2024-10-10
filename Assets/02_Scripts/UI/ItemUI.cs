@@ -15,7 +15,6 @@ public class ItemUI : BaseUI, IPointerEnterHandler,IPointerExitHandler
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
         ItemGrab.Raycaster = _raycaster;
-        Logger.Log(ItemGrab.Raycaster.gameObject);
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)

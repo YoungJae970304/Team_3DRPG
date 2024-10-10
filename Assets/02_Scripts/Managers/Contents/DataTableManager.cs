@@ -87,7 +87,7 @@ public class DataTableManager
             };
             if (itemData != null)
             {
-                Logger.Log($"{itemData} 저장됨");
+                Logger.Log($"{itemData.ID} 저장됨");
                 _EquipeedItemData.Add(itemData);
                 _AllItemData.Add(itemData);
             }
@@ -156,7 +156,8 @@ public class DataTableManager
                 ID = Convert.ToInt32(data["ID"]),
                 Name = data["Name"].ToString(),
                 Grade = Convert.ToInt32(data["Grade"]),
-                Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["ItemType"].ToString()),
+                //Type = (ItemData.ItemType)Enum.Parse(typeof(ItemData.ItemType), data["ItemType"].ToString()),
+                Type = ItemData.ItemType.Booty,
                 LimitLevel = Convert.ToInt32(data["LimitLv"]),
                 BuyingPrice = Convert.ToInt32(data["BuyingPrice"]),
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),

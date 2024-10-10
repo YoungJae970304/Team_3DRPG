@@ -12,12 +12,12 @@ public class ItemPickup : MonoBehaviour
 
     private void Awake()
     {
-        _inventory = FindAnyObjectByType<Inventory>();
     }
 
     private void Start()
     {
         _player = Managers.Game._player.transform;
+        _inventory = _player.gameObject.GetOrAddComponent<Inventory>();
         PickupItemEffect();
         if (_player == null)
         {
