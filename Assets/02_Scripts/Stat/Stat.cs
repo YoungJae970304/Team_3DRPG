@@ -16,21 +16,19 @@ public class Stat : MonoBehaviour
     protected int _exp;
     protected int _gold;
 
-    public int HP
+    public virtual int HP
     {
         get { return _hp; }
         set
         {
-            _hp = value;
-
-            _hp = Mathf.Clamp(_hp, 0, _maxHp);
+            _hp = Mathf.Clamp(value, 0, _maxHp);
         }
     }
 
-    public int MaxHP { get { return _maxHp; } set { _maxHp = value; } }
+    public virtual int MaxHP { get { return _maxHp; } set { _maxHp = value; } }
 
-    public int ATK { get { return _atk; } set { _atk = value; } }
-    public int DEF 
+    public virtual int ATK { get { return _atk; } set { _atk = value; } }
+    public virtual int DEF 
     { 
         get 
         { 
@@ -38,25 +36,21 @@ public class Stat : MonoBehaviour
         } 
         set 
         { 
-            _def = value;
-
-            _def = Mathf.Min(_def, 0);
+            _def = Mathf.Max(value, 0);
         } 
     }
-    public float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
+    public virtual float MoveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 
     public virtual int EXP { get { return _exp; } set { _exp = value; } }
-    public int Gold 
-    { 
-        get 
-        { 
-            return _gold; 
-        } 
-        set 
-        { 
-            _gold = value;
-
-            _gold = Mathf.Min(_gold, 0);
-        } 
+    public int Gold
+    {
+        get
+        {
+            return _gold;
+        }
+        set
+        {
+            _gold = Mathf.Max(value, 0);
+        }
     }
 }

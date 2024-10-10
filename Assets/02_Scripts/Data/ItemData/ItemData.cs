@@ -7,7 +7,7 @@ using System.IO;
 [Serializable]
 public class ItemDataListWrapper
 {
-    public List<ItemData> ItemDataList { get; set; } = new List<ItemData>();
+    public List<ItemData> ItemDataList = new List<ItemData>();
 }
 
 [Serializable]
@@ -25,15 +25,15 @@ public class ItemData : IData
         DropData,
     }
 
-    public int ID { get { return _id; } set { _id = value; } }
-    public string Name { get { return _name; } set { _name = value; } }
-    public int Grade { get { return _grade; } set { _grade = value; } }
-    public ItemType Type { get { return _itemType; }set { _itemType = value;} }
-    public Sprite IconSprite { get { return _iconSprite; } set { _iconSprite = value; } }
-    public int BuyingPrice { get { return _buyingPrice; } set { _buyingPrice = value; } }
-    public int SellingPrice { get { return _sellingPrice; } set { _sellingPrice = value; } }
-    public int MaxAmount { get { return _maxAmount; } set { _maxAmount = value; } }
-    public int LimitLevel { get { return _limitLevel; } set { _limitLevel = value; } }
+    public int ID;
+    public string Name; 
+    public int Grade;
+    public ItemType Type;
+    public string IconSprite;
+    public int BuyingPrice;
+    public int SellingPrice;
+    public int MaxAmount;
+    public int LimitLevel;
 
 
     //아이템 번호
@@ -45,7 +45,7 @@ public class ItemData : IData
     //아이템 타입
     [SerializeField] ItemType _itemType;
     //아이템 아이콘
-    [SerializeField] Sprite _iconSprite;
+    [SerializeField] string _iconSprite;
     //구매 가격
     [SerializeField] int _buyingPrice;
     //판매 가격

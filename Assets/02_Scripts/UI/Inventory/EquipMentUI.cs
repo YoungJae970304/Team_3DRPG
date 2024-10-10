@@ -35,7 +35,7 @@ public class EquipMentUI : ItemUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-        _equipStat = new PlayerStat();
+        _equipStat = Managers.Game._player._playerStatManager._equipStat;
         StatSum(WeaponItem, ArmorItem, AccessoriesItem);
     }
     public void StatSum(params EquipmentItemData[] items) {
@@ -43,7 +43,7 @@ public class EquipMentUI : ItemUI
         {
             if (item == null) { continue; }
             _equipStat.RecoveryHP = item.HealthRegen;
-            _equipStat.PlayerMaxMP = item.Mana;
+            _equipStat.MaxMP = item.Mana;
             _equipStat.RecoveryMP = item.ManaRegen;
             _equipStat.DEF = item.Defense;
             _equipStat.MaxHP = item.Health;

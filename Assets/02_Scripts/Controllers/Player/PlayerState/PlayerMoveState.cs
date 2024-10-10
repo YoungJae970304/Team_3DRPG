@@ -52,11 +52,11 @@ public class PlayerMoveState : BaseState
                     _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
 
                     // 이동 방향
-                    _player._moveDir = _player._playerModel.forward * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
+                    _player._moveDir = _player._playerModel.forward * _player._playerStatManager.MoveSpeed * Time.fixedDeltaTime;
                     break;
 
                 case Define.CameraMode.ZoomView:
-                    _player._moveDir = _player._rotDir * _player._playerStat.MoveSpeed * Time.fixedDeltaTime;
+                    _player._moveDir = _player._rotDir * _player._playerStatManager.MoveSpeed * Time.fixedDeltaTime;
                     break ;
             }
         }

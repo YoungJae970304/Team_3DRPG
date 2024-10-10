@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Data;
 using UnityEngine;
@@ -18,27 +20,16 @@ public class Ork : Monster
     {
         if (_randomAttack <= 100)
         {
-            NomalAttack();
+            _atkColliders[0].gameObject.SetActive(true);
+            _anim.SetTrigger("Attack");
         }
         else
         {
-            SkillAttack();
+            _atkColliders[1].gameObject.SetActive(true);
+            _anim.SetTrigger("Attack1");
         }
     }
-    public void NomalAttack()
-    {
-        Logger.Log("NomalAttack");
-     
-        _player._playerHitState = PlayerHitState.NomalAttack;
-        AttackPlayer();
-    }
-    public void SkillAttack()
-    {
-        Logger.Log("SkillAttack");
-        
-        _player._playerHitState = PlayerHitState.SkillAttack;
-        AttackPlayer();
-    }
+   
 
     public override async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
@@ -97,6 +88,8 @@ public class Ork : Monster
                         break;
                 }
             }
+            _monsterProduct = oID.Value6;
         }
+        
     }
 }

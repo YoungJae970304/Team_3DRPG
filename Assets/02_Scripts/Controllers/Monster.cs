@@ -1,3 +1,5 @@
+using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -50,13 +52,12 @@ public class Monster : MonoBehaviour, IDamageAlbe
     [Header("몬스터 공격 콜라이더 리스트")]
     public List<Collider> _atkColliders;
     //[HideInInspector]
-    public List<Collider> _hitPlayer;
+    public List<GameObject> _hitPlayer;
     public Animator _anim;
     public virtual void Awake()
     {
         _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
         _anim = GetComponent<Animator>();
-
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
         States.Add(MonsterState.Move, new MonsterMoveState(_player, this, _mStat));
@@ -67,6 +68,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
+        
+
     }
     // Start is called before the first frame update
     public virtual void Start()
@@ -192,6 +195,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         StartDamege(_player.transform.position, 0.1f, 30f);
         if (_mStat.HP > 0)
         {
+            
             MChangeState(MonsterState.Damage);
         }
         else
@@ -204,6 +208,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public virtual void Die(GameObject mob)
     {
         Destroy(mob, 2f);
+    }
+    public void MonsterAnimFalse() // 애니메이션 이벤트용
+    {
+        _anim.enabled = false;
     }
     #endregion
     #region 상태 변환 조건
@@ -233,27 +241,56 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     #endregion
     #region 플레이어 공격함수
-    public void AttackPlayer() // 일단 여기에 넣어놨는데 애니메이션에서 호출하는 이벤트방식으로 쓸듯
+    public void AttackPlayer() // 공격 모션 중간에 호출
     {
 
         int damage = _mStat.ATK;
-
+        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
+        foreach (Collider collider in checkColliders)
+        {
+            if (collider.CompareTag("Player") && _hitPlayer == null)
+            {
+                _hitPlayer.Add(collider.gameObject);
+            }
+        }
         foreach (var player in _hitPlayer)
         {
             if (player.TryGetComponent<IDamageAlbe>(out var damageable))
             {
                 damageable.Damaged(damage);
                 //_player.Damaged(_mStat.ATK);
-                Logger.LogError(_player._playerStat.HP.ToString());
+                Logger.LogError($"{_player._playerStatManager.HP}");
             }
 
         }
 
+    }
+    public void NomalAttack() //이벤트 2번
+    {
+        Logger.Log("NomalAttack");
 
-
-        _hitPlayer.Clear();
+        _player._playerHitState = PlayerHitState.NomalAttack;
+        AttackPlayer();
 
     }
+    public void SkillAttack() // 이벤트 2번
+    {
+        Logger.Log("SkillAttack");
+
+        _player._playerHitState = PlayerHitState.SkillAttack;
+        AttackPlayer();
+
+    }
+    public void AttackColliderActiveFalse()//공격 모션 마지막에 호출 이벤트 3번
+    {
+      
+        for (int i = 0; i < _atkColliders.Count; i++)
+        {
+            _atkColliders[i].gameObject.SetActive(false);
+        }
+        _hitPlayer.Clear();
+    }
+
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
@@ -384,8 +421,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void MakeItem()
     {
-        GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
-        item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
+        int randomDice = UnityEngine.Random.Range(1, 100);
+        if(randomDice <= 100)
+        {
+            GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
+            item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
+        }
+        if(randomDice <= 100)
+        {
+            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
+        }
+        
     }
     #endregion
 }
