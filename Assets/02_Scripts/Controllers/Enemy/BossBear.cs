@@ -140,7 +140,7 @@ public class BossBear : Monster
         await Task.Delay(2);
 
         // HP 상태에 따른 상태 전환
-        if (_mStat.HP < 0)
+        if (_mStat.HP <= 0)
         {
             MChangeState(MonsterState.Die);
         }

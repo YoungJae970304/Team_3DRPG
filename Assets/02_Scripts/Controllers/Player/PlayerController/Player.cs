@@ -160,7 +160,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStatManager._originStat.MP = _playerStatManager._originStat.MaxMP;
         _playerStatManager._originStat.MoveSpeed = 5f;
         _playerStatManager._originStat.DodgeSpeed = 15f;
-        _playerStatManager._originStat.ATK = 30;
+        _playerStatManager._originStat.ATK = 50;
         _playerStatManager._originStat.DEF = 50;
 
         // 공격 콜라이더 off
