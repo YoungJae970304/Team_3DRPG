@@ -14,13 +14,11 @@ public class EquipmentSlot : ItemSlot
         if (item.Data.Type != slotType) { return; }
         moveSlot.MoveItem(this);
         Item = item;
-        UpdateInfo();
     }
 
     public override bool MoveItem(ItemSlot moveSlot)
     {
         Item = moveSlot.Item;
-        UpdateInfo();
         return true;
     }
 }
