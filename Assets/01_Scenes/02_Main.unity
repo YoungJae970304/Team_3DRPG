@@ -666,7 +666,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1661751424}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2001,7 +2001,7 @@ PrefabInstance:
     - target: {fileID: 928789730507995237, guid: 50784459399964046a8186d12893c707,
         type: 3}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1924794231176365935, guid: 50784459399964046a8186d12893c707,
         type: 3}
@@ -2085,3 +2085,4 @@ SceneRoots:
   - {fileID: 1721668120779998506}
   - {fileID: 7133272839047318325}
   - {fileID: 1252076482}
+  - {fileID: 601861905}
