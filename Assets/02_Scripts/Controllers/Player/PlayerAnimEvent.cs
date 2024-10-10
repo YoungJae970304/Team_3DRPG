@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerAnimEvent : MonoBehaviour
 {
     Player _player;
-    public Transform _mageBallPos;
 
     private void Start()
     {
@@ -25,10 +24,9 @@ public class PlayerAnimEvent : MonoBehaviour
         _player._canAtkInput = true;
     }
 
-    public void MageBallCreate()
+    public void PlayerNormalAttack()
     {
-        GameObject go = Managers.Resource.Instantiate("Player/MageBall");
-        go.transform.position = _mageBallPos.position;
+        _player.Attack();
     }
 
     // 평타 애니메이션 후반부

@@ -41,6 +41,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     [Header("오브젝트 참조")]
     public Transform _playerModel;
+    public UI_Cursor _cursorUI;
     [HideInInspector]
     public Define.PlayerType _playerType;
 
@@ -300,7 +301,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         }
     }
 
-    // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
+    // 자식(Melee, Ranged Player)의 공격 부분 구현
     public virtual void Attack()
     {
 
