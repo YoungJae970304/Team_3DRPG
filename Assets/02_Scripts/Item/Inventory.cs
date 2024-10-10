@@ -1,7 +1,6 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public struct ItemTypeComparer : IEqualityComparer<ItemData.ItemType>
 {
@@ -10,7 +9,7 @@ public struct ItemTypeComparer : IEqualityComparer<ItemData.ItemType>
 }
 public class Inventory : MonoBehaviour//인벤토리
 {   //아이템 그룹을 담을 딕셔너리 타입 하나당 인벤토리 탭 1개가 된다.
-    Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>(new ItemTypeComparer() );
+    Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>(new ItemTypeComparer());
 
     public Action GetItemAction;
 
@@ -26,9 +25,10 @@ public class Inventory : MonoBehaviour//인벤토리
             AddGroup(15, 100, ItemData.ItemType.Potion);
         }
     }
-    
 
-    public void AddGroup(int maxSize, int LimitSize, ItemData.ItemType type) {
+
+    public void AddGroup(int maxSize, int LimitSize, ItemData.ItemType type)
+    {
         ItemDick.Add(type, new ItemGroup(maxSize, LimitSize, type));
 
     }
@@ -41,9 +41,10 @@ public class Inventory : MonoBehaviour//인벤토리
 
     public bool InsertItem(Item item)//아이템 삽입 빈칸이있으면 빈칸으로 중복이있으면 합쳐짐
     {
+        Logger.Log(item.Data.Type.ToString());
         bool result = ItemDick[item.Data.Type].Insert(item);
         GetItemAction?.Invoke();
-        Logger.Log(item.Data.Name);
+        
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }
@@ -64,7 +65,8 @@ public class Inventory : MonoBehaviour//인벤토리
         GetItemAction?.Invoke();
         return item;
     }
-    public bool SwitchItem(int index1, int index2, ItemData.ItemType type) {
+    public bool SwitchItem(int index1, int index2, ItemData.ItemType type)
+    {
         bool result = ItemDick[type].SwitchItem(index1, index2);
         GetItemAction?.Invoke();
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
@@ -72,15 +74,18 @@ public class Inventory : MonoBehaviour//인벤토리
     }
 
 
-    public int GetGroupSize(ItemData.ItemType type) {
+    public int GetGroupSize(ItemData.ItemType type)
+    {
         return ItemDick[type]._maxSize;
     }
 
-    public bool IsContain(Item item,ItemData.ItemType type) {
+    public bool IsContain(Item item, ItemData.ItemType type)
+    {
         return ItemDick[type].IsContain(item);
     }
 
-    public bool Containtype(ItemData.ItemType type, ItemData.ItemType type2) {
+    public bool Containtype(ItemData.ItemType type, ItemData.ItemType type2)
+    {
         return ItemDick[type].Containtype(type2);
     }
     public class ItemGroup
@@ -92,7 +97,8 @@ public class Inventory : MonoBehaviour//인벤토리
         {
             _items = new Item[LimitSize];
             _maxSize = maxSize;
-            foreach (var type in types) {
+            foreach (var type in types)
+            {
                 _type.Add(type);
             }
         }
@@ -102,13 +108,14 @@ public class Inventory : MonoBehaviour//인벤토리
             _maxSize = maxSize;
             _type.Add(type);
         }
-        public void AddGroup(ItemData.ItemType type) {
+        public void AddGroup(ItemData.ItemType type)
+        {
             _type.Add(type);
         }
         public bool Insert(Item item)
         {//중복이 있으면 아이템의 개수를 늘리고 최대치를 넘겼다면 다음으로 넘어가며
          //중복이 없으면 빈칸에 아이템을 할당한다.
-            
+
             if (item is CountableItem)
             {
                 CountableItem countableItem = item as CountableItem;
@@ -131,12 +138,16 @@ public class Inventory : MonoBehaviour//인벤토리
                 }
                 item = countableItem;
             }
-                for (int i = 0; i < _maxSize; i++) {
-                
-                    if (_items[i] == null) { _items[i] = item; return true; }
+            for (int i = 0; i < _maxSize; i++)
+            {
+
+                if (_items[i] == null)
+                {
+                    _items[i] = item; return true;
                 }
-            
-            
+            }
+
+
             return false;
         }
         public Item GetItem(int index)
@@ -159,7 +170,8 @@ public class Inventory : MonoBehaviour//인벤토리
 
             return null;
         }
-        public Item Remove(int index) {
+        public Item Remove(int index)
+        {
             if (index <= _maxSize)
             {
                 Item lastItme;
@@ -180,7 +192,8 @@ public class Inventory : MonoBehaviour//인벤토리
             }
             return false;
         }
-        public bool IsContain(Item item) {
+        public bool IsContain(Item item)
+        {
             return Array.Exists(_items, x => x == item);
         }
         public bool Containtype(ItemData.ItemType type)

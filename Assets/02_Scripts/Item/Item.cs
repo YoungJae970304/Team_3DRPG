@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Item
 {
     public ItemData Data { get; private set; }
@@ -12,7 +14,6 @@ public class Item
     {
         //데이터테이블매니저 인스턴스
         DataTableManager _dataTableManager = Managers.DataTable;
-        _dataTableManager.SaveAllItemData();
         //모든 아이템 데이터 로드
         _dataTableManager.LoadAllItemData();
 
@@ -23,6 +24,7 @@ public class Item
             Logger.Log($"선택된아이템 아이디 {newItem.ID}");
             if (newItem.ID == id)
             {
+                
                 itemData = newItem;
                 break;
             }
@@ -55,6 +57,18 @@ public class Item
         }
     }
     #endregion
+
+    //스프라이트 이미지를 이름으로 저장하고 있기에 이미지 이름을 Resource.load로 경로에서 이미지아이콘 찾아오기
+    public Sprite LoadIcon()
+    {
+        Sprite icon = Resources.Load<Sprite>(Data.IconSprite);
+        if (icon == null) 
+        {
+            Logger.LogError("icon 로드 실패 ");
+            return null;
+        }
+        return icon;
+    }
 
     #region type에따른 id로 생성 시키기
     //public static Item ItemSpawn(ItemData.ItemType itemType, int id)

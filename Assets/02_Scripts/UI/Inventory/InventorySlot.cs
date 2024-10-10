@@ -14,11 +14,10 @@ public class InventorySlot : ItemSlot
         slotType = _inventory._currentType;
         _index = transform.GetSiblingIndex();
     }
-    public override void UpdateInfo()
+    public void UpdateInfo()
     {
-        _item = _itemManager.GetItem(_index, _inventory._currentType);
+        Item = _itemManager.GetItem(_index, _inventory._currentType);
         slotType = _inventory._currentType;
-        base.UpdateInfo();
     }
     public override void ItemInsert(ItemSlot moveSlot)
     {

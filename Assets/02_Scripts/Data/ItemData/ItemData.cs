@@ -29,11 +29,11 @@ public class ItemData : IData
     public string Name; 
     public int Grade;
     public ItemType Type;
-    public string IconSprite;
     public int BuyingPrice;
     public int SellingPrice;
     public int MaxAmount;
     public int LimitLevel;
+    public string IconSprite = "Icon/TestIcon"; //아이템 이미지 스프라이트 아이콘 기본 경로
 
 
     //아이템 번호
@@ -44,8 +44,6 @@ public class ItemData : IData
     [SerializeField] int _grade;
     //아이템 타입
     [SerializeField] ItemType _itemType;
-    //아이템 아이콘
-    [SerializeField] string _iconSprite;
     //구매 가격
     [SerializeField] int _buyingPrice;
     //판매 가격
@@ -62,7 +60,6 @@ public class ItemData : IData
         Name = _name;
         Grade = _grade;
         Type = _itemType;
-        IconSprite = _iconSprite;
         BuyingPrice = _buyingPrice;
         SellingPrice = _sellingPrice;
         MaxAmount = _maxAmount;
