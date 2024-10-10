@@ -107,6 +107,12 @@ public class PlayerInput : MonoBehaviour
             _player.Special();
         }
     }
+    public void InputBufferInsert(int action)
+    {
+        if (_atkInput.Count > 1) { return; }
+
+        _atkInput.Enqueue(action);
+    }
 
     void SkillInput()
     {
@@ -124,13 +130,6 @@ public class PlayerInput : MonoBehaviour
         {
             _player.ChangeState(PlayerState.Skill);
         }
-    }
-
-    public void InputBufferInsert(int action)
-    {
-        if(_atkInput.Count > 1) { return; }
-
-        _atkInput.Enqueue(action);
     }
 
     void UIInput()

@@ -160,11 +160,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStatManager._originStat.MP = _playerStatManager._originStat.MaxMP;
         _playerStatManager._originStat.MoveSpeed = 5f;
         _playerStatManager._originStat.DodgeSpeed = 15f;
-        _playerStatManager._originStat.ATK = 24;
-        _playerStatManager._originStat.DEF = 1;
+        _playerStatManager._originStat.ATK = 30;
+        _playerStatManager._originStat.DEF = 50;
 
         // 공격 콜라이더 off
-        SetColActive("Combo1");
+        //SetColActive("Combo1");
 
         // 스킬테스트
         _skillBase = new TestSkill();
@@ -197,7 +197,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                     ChangeState(PlayerState.Move);
                 }
                 // 선입력 있다면 공격상태로
-                if (_playerInput._atkInput.Count > 0)
+                else if (_playerInput._atkInput.Count > 0)
                 {
                     ChangeState(PlayerState.Attack);
                 }
@@ -209,7 +209,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                     ChangeState(PlayerState.Idle);
                 }
                 // 선입력 있다면 공격상태로
-                if (_playerInput._atkInput.Count > 0)
+                else if (_playerInput._atkInput.Count > 0)
                 {
                     ChangeState(PlayerState.Attack);
                 }
@@ -303,15 +303,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 자식(Melee, Ranged Player)의 공격 부분 구현 ( AttackState에서 사용 )
     public virtual void Attack()
     {
-        // 추후 애니메이션 이벤트로 변경 예정
 
-        // 애니메이션 시작 시 _canAtkInput = false, _attacking = true;
-        // CanAtkInputOffTimer는 애니메이션의 중반쯤 _canAtkInput = true;
-
-        // AtkOffTimer는 애니메이션 종료 직전에 if-else문(_playerInput._atkInput.Count < 1)으로 
-        // _attacking = false;하거나 _curAtkCount = _playerInput._atkInput.Dequeue();
-        CanAtkInputOffTimer(0.5f);
-        AtkOffTimer(1f);
     }
 
     public void ApplyDamage()
@@ -369,31 +361,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 현재 공격 도중 회피 하면 타이머가 진행중에 끊기기때문에 다음 공격이 엄청 짧아짐
     // 이는 추후 애니메이션 이벤트로 처리하게 될시 자동으로 해결될 것
     #region 타이머들(추후 anim이벤트로 일부 변경)
-    // 추후 애니메이션 이벤트로 변경 예정
-    public float _curCAITime = 0;
-    public void CanAtkInputOffTimer(float targetTime)
-    {
-        _curCAITime += Time.deltaTime;
-
-        if (_curCAITime >= targetTime)
-        {
-            _curCAITime = 0;
-            _canAtkInput = true;
-        }
-    }
-
-    // 추후 애니메이션 이벤트로 변경 예정
-    public float _curATime = 0;
-    public void AtkOffTimer(float targetTime)
-    {
-        _curATime += Time.deltaTime;
-
-        if (_curATime >= targetTime)
-        {
-            _curATime = 0;
-            _attacking = false;
-        }
-    }
 
     // 추후 애니메이션 이벤트로 변경 예정
     float _curSTime = 0;

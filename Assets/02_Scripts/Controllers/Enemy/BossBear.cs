@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Threading.Tasks;
 
-public class BossBear : Monster, IDamageAlbe
+public class BossBear : Monster
 {
     public int _bossBearID = 99999;
     public override void Start()
