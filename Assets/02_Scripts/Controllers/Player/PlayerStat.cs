@@ -25,11 +25,6 @@ public class PlayerStat : Stat
         set 
         {
             _recoveryHp = value;
-
-            while (true)
-            {
-                //HP += RecoveryHP;
-            }
         } 
     }
 

@@ -158,7 +158,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
 
-        _playerStatManager._originStat.MaxHP = 100;
+        _playerStatManager._originStat.MaxHP = 10000;
         _playerStatManager._originStat.HP = _playerStatManager._originStat.MaxHP;
         _playerStatManager._originStat.MaxMP = 100;
         _playerStatManager._originStat.MP = _playerStatManager._originStat.MaxMP;
@@ -176,7 +176,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     {
         // 상태 전환
         ChangeStateCondition();
-
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z); // 임시 추가 삭제예정
         // 상태 내부의 업데이트 실행
         _pFsm.UpdateState();
     }

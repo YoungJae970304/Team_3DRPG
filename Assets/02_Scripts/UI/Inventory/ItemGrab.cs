@@ -30,14 +30,14 @@ public class ItemGrab : MonoBehaviour
 
     #region Event
 
-    T GetUIRayCast<T>() where T : Component
+    T GetUIRayCast<T>() where T : IItemDropAble
     {
         _result.Clear();
         _pointerEvent.position = Input.mousePosition;
 
         Raycaster.Raycast(_pointerEvent, _result);
 
-        if (_result.Count == 0) { return null; }
+        if (_result.Count == 0) { return default(T); }
         return _result[0].gameObject.GetComponent<T>();
     }
 
@@ -102,25 +102,18 @@ public class ItemGrab : MonoBehaviour
 
     private void DragEnd()
     {
-        ItemSlot target = GetUIRayCast<ItemSlot>();
-        if (target == _currnetSlot) { return; }
-        if (target != null)
+        IItemDropAble target = GetUIRayCast<IItemDropAble>();
+        if (target != _currnetSlot)
         {
-
-            if (target.Item != null && target.Item.Data.ID == _currnetSlot.Item.Data.ID)
+            if (target != null)
             {
-                if (target.Item is CountableItem)
-                {
-                    int overAmount = ((CountableItem)target.Item).AddAmount(((CountableItem)_currnetSlot.Item)._amount);
-                    ((CountableItem)_currnetSlot.Item).SetAmount(overAmount);
-                    return;
-                }
+                target.ItemInsert(_currnetSlot);
             }
-
-            target.ItemInsert(_currnetSlot);
         }
-    }
 
+
+
+    }
     private void OnPointerEnterAndExit()
     {
         // 이전 프레임의 슬롯
@@ -197,9 +190,6 @@ public class ItemGrab : MonoBehaviour
             }
         }
     }
-
-    
-
 
     #endregion
 

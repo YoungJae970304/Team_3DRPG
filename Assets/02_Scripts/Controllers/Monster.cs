@@ -207,7 +207,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 죽었을 때
     public virtual void Die(GameObject mob)
     {
-        Destroy(mob, 2f);
+        Destroy(mob, 4f);
     }
     public void MonsterAnimFalse() // 애니메이션 이벤트용
     {
