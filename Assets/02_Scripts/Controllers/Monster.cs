@@ -95,7 +95,15 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat._mStat.ATK = 30;
         _mStat._mStat.DEF = 10;
         _mStat._mStat.MoveSpeed = 1f;
-        
+        _mStat._mStat.RecoveryHP = 0;
+        _mStat._mStat.MP = 0;
+        _mStat._mStat.MaxMP = 0;
+        _mStat._mStat.RecoveryMP = 0;
+        _mStat._mStat.ChaseRange = 20;
+        _mStat._mStat.ReturnRange = 20;
+        _mStat._mStat.AttackRange = 2;
+        _mStat._mStat.AwayRange = 20;
+        _mStat._mStat.AtkDelay = 3;
     }
 
     // Update is called once per frame
