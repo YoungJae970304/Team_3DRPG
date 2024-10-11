@@ -230,10 +230,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5970438155559640589, guid: 9ff4859bd0f216b40b1dc15fc287c1fc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7123166283053031737, guid: 9ff4859bd0f216b40b1dc15fc287c1fc,
         type: 3}
       propertyPath: m_Name
       value: Cursor
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123166283053031737, guid: 9ff4859bd0f216b40b1dc15fc287c1fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1314,42 +1324,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemManager: {fileID: 687286401}
   inventory: {fileID: 0}
-  ItemData:
-    ID: 0
-    Name: 
-    Grade: 0
-    Type: 0
-    BuyingPrice: 0
-    SellingPrice: 0
-    MaxAmount: 0
-    LimitLevel: 0
-    IconSprite: 
-    _id: 1
-    _name: tes2
-    _grade: 0
-    _itemType: 1
-    _buyingPrice: 0
-    _sellingPrice: 0
-    _maxAmount: 99
-    _limitLevel: 0
-  itemData2:
-    ID: 0
-    Name: 
-    Grade: 0
-    Type: 0
-    BuyingPrice: 0
-    SellingPrice: 0
-    MaxAmount: 0
-    LimitLevel: 0
-    IconSprite: 
-    _id: 2
-    _name: tes1
-    _grade: 0
-    _itemType: 3
-    _buyingPrice: 0
-    _sellingPrice: 0
-    _maxAmount: 99
-    _limitLevel: 0
 --- !u!4 &1580453285
 Transform:
   m_ObjectHideFlags: 0

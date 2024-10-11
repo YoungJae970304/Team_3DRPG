@@ -88,6 +88,20 @@ public class QuestManager
 
     }
 
+    //퀘스트 맵을 생성하는 함수
+    //Dictionary<int, Quest> CreateQuestMap()
+    //{
+
+
+    //}
+
+    //퀘스트 아이디 가져오는 함수
+    //Quest GetQuestByID(int id)
+    //{
+
+    //}
+
+    //시작 가능을 확인할 bool 함수
     //bool CheckRequirementMet()
     //{
 

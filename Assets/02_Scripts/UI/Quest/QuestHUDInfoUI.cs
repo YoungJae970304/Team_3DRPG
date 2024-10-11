@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class QuestHUDInfoUI : BaseUI
 {
     /// <summary>
@@ -14,23 +14,23 @@ public class QuestHUDInfoUI : BaseUI
     /// </summary>
 
     //퀘스트 제목
-    public string _displayName;
-    //진행 중인 퀘스트
-    public string[] _questSteps;
+    public Text _displayName;
     //퀘스트 완료 목표
-    public string _requirementTxt;
+    public Text _requirementTxt;
     //퀘스트 완료 목표에 따른 수량이라면 수량체크
-    public int _requirement;
+    public Text _requirementAmountTxt;
+
+    int _requriement;
 
     public override void SetInfo(BaseUIData uiData)
     {
         base.SetInfo(uiData);
-
     }
 
     public override void ShowUI()
     {
         base.ShowUI();
+        
     }
 
     public override void CloseUI(bool isCloseAll = false)

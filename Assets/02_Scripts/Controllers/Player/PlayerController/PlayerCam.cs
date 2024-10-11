@@ -45,8 +45,8 @@ public class PlayerCam : MonoBehaviour
 
     void VirtualCamInit()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 
         // 어떤 플레이어가 들어오냐에 따라 추적해야 할 대상이 다르기 때문에 시작시 Follow와 LookAt 초기화
         _cmQuarterCam.Follow = Managers.Game._player.transform.Find("CameraArm");
