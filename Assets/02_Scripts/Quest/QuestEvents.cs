@@ -16,6 +16,11 @@ public class QuestEvents
     //퀘스트 단계의 상태를 변경하는 액션
     public event Action<int, int, QuestStepState> _onQuestStepStateChange;
 
+    public void Init()
+    {
+
+    }
+
     //퀘스트 시작 트리거 함수
     public void StartQuest(int id)
     {
