@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDamagedState : BaseState
 {
-    public PlayerDamagedState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public PlayerDamagedState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {

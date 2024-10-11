@@ -142,14 +142,14 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     protected virtual void Start()
     {
         #region 딕셔너리 초기화
-        States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStatManager._originStat));
-        States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStatManager._originStat));
-        States.Add(PlayerState.Dodge, new PlayerDodgeState(this, _monster, _playerStatManager._originStat));
-        States.Add(PlayerState.Attack, new PlayerAttackState(this, _monster, _playerStatManager._originStat));
-        States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStatManager._originStat));
-        States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStatManager._originStat));
-        States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStatManager._originStat));
-        States.Add(PlayerState.AttackWait, new PlayerAttackWaitState(this, _monster, _playerStatManager._originStat));
+        States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.Dodge, new PlayerDodgeState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.Attack, new PlayerAttackState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.Skill, new PlayerSkillState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.AttackWait, new PlayerAttackWaitState(this, _monster, _playerStatManager));
         #endregion
 
         #region 변수 초기화

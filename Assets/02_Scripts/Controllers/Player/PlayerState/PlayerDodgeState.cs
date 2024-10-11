@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDodgeState : BaseState
 {
-    public PlayerDodgeState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public PlayerDodgeState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
     float _curTime;
 

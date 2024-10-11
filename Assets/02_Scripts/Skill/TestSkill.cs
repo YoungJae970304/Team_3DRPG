@@ -26,7 +26,7 @@ public class TestSkill : SkillBase
      */
     public class TestSkillEnter : SkillEnter
     {
-        public void Enter(Stat stat)
+        public void Enter(ITotalStat stat)
         {
             Debug.Log("TestSkill 시작");
 
@@ -49,12 +49,12 @@ public class TestSkill : SkillBase
 
     public class TestSkillStay : SkillStay
     {
-        public void Stay(Stat stat)
+        public void Stay(ITotalStat stat)
         {
             Debug.Log("TestSkill 지속중");
         }
 
-        public void End(Stat stat)
+        public void End(ITotalStat stat)
         {
             Debug.Log("TestSkill 지속 효과 종료");
         }
@@ -62,7 +62,7 @@ public class TestSkill : SkillBase
 
     public class TestSkillExit : SkillExit
     {
-        public void Exit(Stat stat)
+        public void Exit(ITotalStat stat)
         {
             Debug.Log("TestSkill 종료");
             Managers.Game._player._playerStatManager._buffStat.ATK -= 10; // 증가된 공격력 복구
@@ -71,7 +71,7 @@ public class TestSkill : SkillBase
 
     public class TestSkillPassive : SkillPassive
     {
-        public void Passive(Stat stat)
+        public void Passive(ITotalStat stat)
         {
             Debug.Log("TestSkill 패시브 효과");
             Managers.Game._player._playerStatManager._buffStat.MaxHP += 50;
