@@ -37,7 +37,7 @@ public class PlayerAttackState : BaseState
                 Logger.LogError("지정한 공격이 아님");
                 break;
         }
-
+            
         _player.ApplyDamage();
     }
 

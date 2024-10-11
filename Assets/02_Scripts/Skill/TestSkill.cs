@@ -29,6 +29,9 @@ public class TestSkill : SkillBase
         public void Enter(Stat stat)
         {
             Debug.Log("TestSkill 시작");
+
+            Managers.Game._player._playerAnim.Play("Skill1");
+
             Managers.Game._player._playerStatManager._buffStat.ATK += 10; // 임시로 공격력 증가
 
             // 자기 주위로 광역 데미지

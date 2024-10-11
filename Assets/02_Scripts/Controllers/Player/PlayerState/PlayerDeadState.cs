@@ -8,31 +8,18 @@ public class PlayerDeadState : BaseState
     public override void OnStateEnter()
     {
         Logger.Log("플레이어 사망");
+        _player._playerAnim.SetTrigger("doDead");
+        _player._cc.enabled = false;
+        _player.enabled = false;
     }
 
     public override void OnStateUpdate()
     {
         Logger.Log("사망상태 Update");
-        // 임시로 1.5초후 비활성화
-        DeadTimer(1.5f);
     }
 
     public override void OnStateExit()
     {
         Logger.Log("사망상태 Exit");
-    }
-
-
-    float curtime = 0;
-    void DeadTimer(float targetTime)
-    {
-        curtime += Time.deltaTime;
-
-        if (curtime > targetTime)
-        {
-            curtime = 0;
-
-            _player.gameObject.SetActive(false);
-        }
     }
 }

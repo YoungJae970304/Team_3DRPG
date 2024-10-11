@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 // 상태 
 public enum PlayerState
@@ -34,6 +33,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 기타 변수
     [HideInInspector]
     public PlayerHitState _playerHitState;
+    [HideInInspector]
+    public bool _canAnyInput;
 
     // 애니메이션 관련 변수
     [HideInInspector]
@@ -54,11 +55,13 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public float _rotSpeed = 0.2f;
 
     // 회피 관련 변수
-    [Header("회피 시간")]
-    public float _dodgeTime = 0.5f;
     // 무적 변수
     [Header("회피 무적 체크")]
     public bool _invincible = false;
+
+    // 피격 관련 변수
+    [Header("일반피격 무적 시간")]
+    public float _hitDelay = 0.5f;
 
     // 공격 관련 변수
     [HideInInspector]
@@ -160,15 +163,12 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStatManager._originStat.MaxMP = 100;
         _playerStatManager._originStat.MP = _playerStatManager._originStat.MaxMP;
         _playerStatManager._originStat.MoveSpeed = 5f;
-        _playerStatManager._originStat.DodgeSpeed = 15f;
+        _playerStatManager._originStat.DodgeSpeed = 10f;
         _playerStatManager._originStat.ATK = 50;
         _playerStatManager._originStat.DEF = 50;
 
         // 공격 콜라이더 off
         //SetColActive("Combo1");
-
-        // 스킬테스트
-        _skillBase = new TestSkill();
         #endregion  
     }
 
@@ -219,7 +219,12 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 // 회피 중일때는 상태전환 불가
                 if (_dodgeing) return;
 
-                if (!_isMoving)
+                // 공격 전환 추가
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
+                }
+                else if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
                 }
@@ -331,32 +336,43 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     public virtual void Damaged(int atk)
     {
-        Logger.Log(" 데미지 함수 호출 확인 ");
         // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
         // 피격 = 피격 모션 중 통짜 무적
-        if (_hitting && _invincible) return;
+        if (_invincible) return;
 
-        // 체력- 공격력*(100/(방어력+100))
+        // 체력- 공격력*(100f/(방어력+100f))
         _playerStatManager.HP -= (int)(atk * (100f/(_playerStatManager.DEF+100f)));
         if (_playerStatManager.HP > 0)
         {
-            Logger.Log(" 플레이어 피격 조건 확인 이전");
-            // 데미지 상태 안에서 애니메이션 제어가 이루어질 예정이라
-            // 넉백이 있는 공격의 경우에만 데미지로 상태전환 해주면 될 듯
-            // 넉백 공격을 인식하기 위한 조치가 필요
-            // 넉백 공격은 몬스터에서 무언가 처리를 해주고 ( 무언가 변수를 만든다? )
-            // 플레이어가 그 넉백 유무를 판단해 처리하는 작업이 필요
+            _hitting = true;
+            _invincible = true;
+
             if (_playerHitState == PlayerHitState.SkillAttack || _playerHitState == PlayerHitState.StunAttack)
             {
                 ChangeState(PlayerState.Damaged);
             }
-            HitOffTimer(0.5f);
+            else
+            {
+                InvincibleDelay();
+            }
         }
         else
         {
             ChangeState(PlayerState.Dead);
         }
+    }
 
+    public void InvincibleDelay()
+    {
+        StartCoroutine(HitDelayCo());
+    }
+
+    // 1회성인 데미지에서만 실행되니까 이건 코루틴으로 바꾸던가 해야할듯, 움찔하지 않는 피격의 경우에도 사용해야 하니까 Damage상태에서는 못쓸것같음
+    IEnumerator HitDelayCo()
+    {
+        yield return new WaitForSeconds(_hitDelay);
+
+        _invincible = false;
     }
 
     // 현재 공격 도중 회피 하면 타이머가 진행중에 끊기기때문에 다음 공격이 엄청 짧아짐
@@ -374,20 +390,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             _curSTime = 0;
 
             _skillUsing = false;
-        }
-    }
-
-    // 1회성인 데미지에서만 실행되니까 이건 코루틴으로 바꾸던가 해야할듯, 움찔하지 않는 피격의 경우에도 사용해야 하니까 Damage상태에서는 못쓸것같음
-    float _curHTime = 0;
-    protected void HitOffTimer(float targetTime)
-    {
-        _curHTime += Time.deltaTime;
-
-        if (_curHTime >= targetTime)
-        {
-            _curHTime = 0;
-
-            _hitting = false;
         }
     }
     #endregion
