@@ -122,13 +122,13 @@ public class PlayerInput : MonoBehaviour
         {
             // 스킬테스트
             _player._skillBase = new TestSkill();
+            _player.ChangeState(PlayerState.Skill);
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
             _player._skillBase = new TestSkill();
+            _player.ChangeState(PlayerState.Skill);
         }
-
-        _player.ChangeState(PlayerState.Skill);
     }
 
     void UIInput()

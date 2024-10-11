@@ -34,7 +34,7 @@ public class TestSkill : SkillBase
 
             Managers.Game._player._playerAnim.Play("Skill1");
 
-            Managers.Game._player._playerStatManager._buffStat.ATK += 10; // 임시로 공격력 증가
+            stat.ATK += 10; // 임시로 공격력 증가
 
             // 자기 주위로 광역 데미지
             Collider[] hitMobs = Physics.OverlapSphere(Managers.Game._player.transform.position, 30f, 1 << LayerMask.NameToLayer("Monster"));
@@ -42,8 +42,8 @@ public class TestSkill : SkillBase
             {
                 if (col.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    Logger.Log(" 데미지 확인 : " + Managers.Game._player._playerStatManager.ATK);
-                    damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    Logger.Log(" 데미지 확인 : " + stat.ATK);
+                    damageable.Damaged(stat.ATK);
                 }
             }
         }
@@ -67,7 +67,7 @@ public class TestSkill : SkillBase
         public void Exit(ITotalStat stat)
         {
             Debug.Log("TestSkill 종료");
-            Managers.Game._player._playerStatManager._buffStat.ATK -= 10; // 증가된 공격력 복구
+            stat.ATK -= 10; // 증가된 공격력 복구
         }
     }
 
@@ -76,7 +76,7 @@ public class TestSkill : SkillBase
         public void Passive(ITotalStat stat)
         {
             Debug.Log("TestSkill 패시브 효과");
-            Managers.Game._player._playerStatManager._buffStat.MaxHP += 50;
+            stat.MaxHP += 50;
         }
     }
 
