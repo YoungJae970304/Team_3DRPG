@@ -207,7 +207,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 죽었을 때
     public virtual void Die(GameObject mob)
     {
-        Destroy(mob, 2f);
+        Destroy(mob, 4f);
     }
     public void MonsterAnimFalse() // 애니메이션 이벤트용
     {
@@ -240,7 +240,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _timer += Time.deltaTime;
     }
     #endregion
-    #region 플레이어 공격함수
+    #region 플레이어 공격관련 함수
     public void AttackPlayer() // 공격 모션 중간에 호출
     {
 
@@ -285,7 +285,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
         //_hitPlayer.Clear();
     }
+    public void LookPlayer()
+    {
+        // 플레이어와의 방향 계산
+        Vector3 direction = _player.transform.position - transform.position;
+        direction.y = 0; // Y축 회전 방지 (수평 평면에서만 회전)
 
+        // 새로운 회전값 설정
+        if (direction != Vector3.zero) // 방향 벡터가 0이 아닐 때만 회전
+        {
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
+    }
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)

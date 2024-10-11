@@ -1896,7 +1896,7 @@ GameObject:
   - component: {fileID: 4997558526808137638}
   - component: {fileID: 4174132317601738234}
   - component: {fileID: 2756691823595451738}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Goblin
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -2073,7 +2073,6 @@ MonoBehaviour:
   _atkColliders:
   - {fileID: 7970390879321014521}
   - {fileID: 7634593831163430774}
-  _hitPlayer: []
   _anim: {fileID: 0}
   _goblemID: 0
 --- !u!65 &2756691823595451738

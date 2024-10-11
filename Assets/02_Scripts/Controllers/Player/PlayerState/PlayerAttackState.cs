@@ -9,10 +9,10 @@ public class PlayerAttackState : BaseState
     public override void OnStateEnter()
     {
         Logger.Log("공격 상태 진입");
-        _player._attacking = true;
-        _player._canAtkInput = false;
+        _player._playerAnim.SetBool("isAttacking", true);
 
         _player._curAtkCount = _player._playerInput._atkInput.Dequeue();
+
         switch (_player._curAtkCount)
         {
             case 0:
@@ -20,15 +20,18 @@ public class PlayerAttackState : BaseState
                 break;
             case 1:
                 Logger.Log("기본공격 1타");
-                _player.SetColActive("Combo1");
+                _player._playerAnim.SetTrigger("doCombo1");
+                //_player.SetColActive("Combo1");
                 break;
             case 2:
                 Logger.Log("기본공격 2타");
-                _player.SetColActive("Combo2");
+                _player._playerAnim.SetTrigger("doCombo2");
+                //_player.SetColActive("Combo2");
                 break;
             case 3:
                 Logger.Log("기본공격 3타");
-                _player.SetColActive("Combo3");
+                _player._playerAnim.SetTrigger("doCombo3");
+                //_player.SetColActive("Combo3");
                 break;
             default:
                 Logger.LogError("지정한 공격이 아님");
@@ -41,7 +44,6 @@ public class PlayerAttackState : BaseState
     public override void OnStateUpdate()
     {
         Logger.Log("공격상태 업데이트");
-        _player.Attack();
     }
 
     public override void OnStateExit()

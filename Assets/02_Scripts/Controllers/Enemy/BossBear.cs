@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Threading.Tasks;
 
-public class BossBear : Monster, IDamageAlbe
+public class BossBear : Monster
 {
     public int _bossBearID = 99999;
+    int skillCount = 0;
     public override void Start()
     {
         base.Start();
@@ -30,7 +31,10 @@ public class BossBear : Monster, IDamageAlbe
                 break;
             case MonsterState.Move:
                 if (CanAttackPlayer())
+                {
+                    _anim.SetTrigger("BeforeAttack");
                     MChangeState(MonsterState.Attack);
+                }
                 else if (ReturnOrigin())
                 {
                     _anim.SetTrigger("NonPlayerChase");
@@ -101,16 +105,17 @@ public class BossBear : Monster, IDamageAlbe
         
         _player._playerHitState = PlayerHitState.StunAttack;
         AttackPlayer();
-            
-        
+
+      
 
 
     }
 
 
     private List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
-    public async override void Damaged(int amount)
+    public override void Damaged(int amount)
     {
+        
         //MChangeState(MonsterState.Damage);
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
@@ -120,14 +125,14 @@ public class BossBear : Monster, IDamageAlbe
             return;
         }
 
-   
+        //Logger.LogError(_mStat.HP.ToString());
         _mStat.HP -= (amount - _mStat.DEF);
+        //Logger.LogError(_mStat.HP.ToString());
 
-       
         float hpPercentage = (float)_mStat.HP / _mStat.MaxHP;
-        int skillCount = 0;
-      
-        if (skillCount < _roarList.Count &&hpPercentage <= _roarList[skillCount])
+
+
+        if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount])
         {
             _anim.SetTrigger("BossRoar");
             //(이 밑에 if문 들어갈거임)
@@ -135,14 +140,31 @@ public class BossBear : Monster, IDamageAlbe
             //바닥에 깔리는 장판 구현해야함
             BearRoar();
             skillCount++;
+
+
+        }
+        else
+        {
+            // HP 상태에 따른 상태 전환
+            if (_mStat.HP <= 0)
+            {
+                MChangeState(MonsterState.Die);
+
+            }
+            else
+            {
+                MChangeState(MonsterState.Move);
+            }
         }
         
-        await Task.Delay(2);
-
+    }
+    public void AfterDamagedState()
+    {
         // HP 상태에 따른 상태 전환
-        if (_mStat.HP < 0)
+        if (_mStat.HP <= 0)
         {
             MChangeState(MonsterState.Die);
+
         }
         else
         {
@@ -182,7 +204,8 @@ public class BossBear : Monster, IDamageAlbe
 
     public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        transform.LookAt(_player.transform.position);
+        LookPlayer();
+      
     }
     public override void MakeItem()
     {
