@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EquipmentSlot : ItemSlot
 {
-    
-    public void ChangeEquipment() { 
-    
-    }
+    EquipMentUI _equipMentUI;
+
     public override void ItemInsert(ItemSlot moveSlot)
     {
-        Item item = moveSlot.Item;
+        if (moveSlot is ShopItemSlot)//상점창이면 무시함
+        { return; }
+            Item item = moveSlot.Item;
         if (item.Data.Type != slotType) { return; }
         moveSlot.MoveItem(this);
         Item = item;

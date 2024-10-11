@@ -7,11 +7,10 @@ using System;
 public abstract class ItemSlot : MonoBehaviour
 {
     protected Item _item;
-    protected Action itemChangedAction;
+    public Action itemChangedAction;
     public Item Item{get=>_item ; protected set {
-            
+            _item = value; 
             itemChangedAction?.Invoke();
-            _item = value;
             UpdateSlotInfo();
         } }
     public Image _Image;
@@ -19,7 +18,7 @@ public abstract class ItemSlot : MonoBehaviour
     public ItemData.ItemType slotType = ItemData.ItemType.Weapon;
 
 
-    public void UpdateSlotInfo()
+    public virtual void UpdateSlotInfo()
     {
         if (Item == null)
         {

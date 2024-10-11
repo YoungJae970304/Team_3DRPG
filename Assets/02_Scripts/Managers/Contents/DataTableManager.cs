@@ -16,8 +16,8 @@ public class DataTableManager
     public void Init()
     {
         LoadItemDataTable();
-        SaveAllItemData();
-        LoadAllItemData();
+        //SaveAllItemData();
+        //LoadAllItemData();
     }
 
     //장비아이템 데이터 CSV파일
@@ -242,7 +242,7 @@ public class DataTableManager
         GoodsDataTable(DATA_PATH, GOODS_ITEM_DATA_TABLE);
         DropDataTable(DATA_PATH, MONSTER_DROP_DATA_TABLE);
     }
-
+    /*
     //모든 데이터 플레이어프랩스로 제이슨저장
     public void SaveAllItemData()
     {
@@ -311,6 +311,6 @@ public class DataTableManager
         {
             Logger.LogError("저장된 데이터가 없음");
         }
-    }
+    }*/
     #endregion
 }

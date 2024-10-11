@@ -25,6 +25,12 @@ public class InventorySlot : ItemSlot
         if (moveSlot is InventorySlot) {
             _itemManager.SwitchItem(_index, ((InventorySlot)moveSlot)._index, moveSlot.Item.Data.Type);
         }
+        else if (moveSlot is ShopItemSlot) { 
+            //돈이 사려는 아이템보다 많으면
+            //구매 확인 UI 출력
+            //구매확인 UI 는 확인 버튼을 누를시 아이템을 insert하고 사라짐
+        
+        }
         else
         {
             Item item = moveSlot.Item;

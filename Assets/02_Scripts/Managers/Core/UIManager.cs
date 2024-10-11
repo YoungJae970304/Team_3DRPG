@@ -88,6 +88,7 @@ public class UIManager
 
     public T OpenUI<T>(BaseUIData uidata,bool sort=true,bool isNew =false) where T : BaseUI
     {
+
         System.Type uiType = typeof(T);
 
         Logger.Log($"{GetType()}::OpneUI({uiType})");
