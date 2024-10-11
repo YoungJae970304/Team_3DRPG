@@ -138,6 +138,9 @@ public class BossBear : Monster
             //(이 밑에 if문 들어갈거임)
             //시간 초 후 roar발동
             //바닥에 깔리는 장판 구현해야함
+            //시간 ++, 장판 활성화
+            //시간이 늘어남에 따라 장판크기가 그에 맞춰서 커지고
+            //다 커졌을 때 로어와 함께 장판 삭제
             BearRoar();
             skillCount++;
 
