@@ -30,6 +30,8 @@ public class TestSkill : SkillBase
         {
             Debug.Log("TestSkill 시작");
 
+            
+
             Managers.Game._player._playerAnim.Play("Skill1");
 
             Managers.Game._player._playerStatManager._buffStat.ATK += 10; // 임시로 공격력 증가

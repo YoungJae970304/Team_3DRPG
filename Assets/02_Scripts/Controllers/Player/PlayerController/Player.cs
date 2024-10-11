@@ -159,9 +159,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _canAtkInput = true;
 
         _playerStatManager._originStat.MaxHP = 10000;
-        _playerStatManager._originStat.HP = _playerStatManager._originStat.MaxHP;
+        _playerStatManager.HP = _playerStatManager._originStat.MaxHP;
         _playerStatManager._originStat.MaxMP = 100;
-        _playerStatManager._originStat.MP = _playerStatManager._originStat.MaxMP;
+        _playerStatManager.MP = _playerStatManager._originStat.MaxMP;
         _playerStatManager._originStat.MoveSpeed = 5f;
         _playerStatManager._originStat.DodgeSpeed = 10f;
         _playerStatManager._originStat.ATK = 50;
