@@ -205,6 +205,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
         _mStat.HP -= (amount - _mStat.DEF);
         StartDamege(_player.transform.position, 0.1f, 30f);
+        Logger.LogError(_mStat.HP.ToString());
         if (_mStat.HP > 0)
         {
             
@@ -256,7 +257,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 플레이어 공격관련 함수
     public void AttackPlayer() // 공격 모션 중간에 호출
     {
-
+//
         int damage = _mStat.ATK;
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         foreach (Collider collider in checkColliders)
