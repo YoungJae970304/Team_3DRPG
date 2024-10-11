@@ -6,19 +6,22 @@ public interface ITotalStat
 {
     public int HP { get; set; }
 
-    public int MaxHP { get; set; }
+    public int MaxHP { get; }
 
-    public int ATK { get; set; }
+    public int ATK { get; }
 
-    public int DEF { get; set; }
+    public int DEF { get; }
 
-    public float MoveSpeed { get; set; }
+    public float MoveSpeed { get; }
 
-    public int RecoveryHP { get; set; }
+    public int RecoveryHP { get; }
 
     public int MP { get; set; }
 
-    public int MaxMP { get; set; }
+    public int MaxMP { get; }
 
-    public int RecoveryMP { get; set; }
+    public int RecoveryMP { get; }
+
+    public int EXP { get; set; }
+    public int Gold { get; set; }
 }
