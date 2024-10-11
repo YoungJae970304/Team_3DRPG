@@ -14,7 +14,6 @@ public class MonsterIdleState : BaseState
     float awayRangeZ;
     public override void OnStateEnter()
     {
-        
         _monster._mStat = _monster.GetComponent<MonsterStat>();
         if (_monster._mStat == null)
         {

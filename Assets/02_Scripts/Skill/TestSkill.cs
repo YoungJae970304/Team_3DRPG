@@ -37,7 +37,7 @@ public class TestSkill : SkillBase
             {
                 if (col.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    Logger.Log(" 데미지 확인 ");
+                    Logger.Log(" 데미지 확인 : " + Managers.Game._player._playerStatManager.ATK);
                     damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
                 }
             }

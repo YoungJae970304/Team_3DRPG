@@ -45,6 +45,9 @@ public class PlayerCam : MonoBehaviour
 
     void VirtualCamInit()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         // 어떤 플레이어가 들어오냐에 따라 추적해야 할 대상이 다르기 때문에 시작시 Follow와 LookAt 초기화
         _cmQuarterCam.Follow = Managers.Game._player.transform.Find("CameraArm");
         _cmQuarterCam.LookAt = Managers.Game._player.transform.Find("PlayerModel");
@@ -124,6 +127,7 @@ public class PlayerCam : MonoBehaviour
         switch (_cameraMode)
         {
             case Define.CameraMode.QuarterView:
+                // Follow, LookAt 사용
                 EnableFL();
                 // 카메라 모드 변경
                 _cameraMode = Define.CameraMode.ZoomView;
@@ -134,6 +138,8 @@ public class PlayerCam : MonoBehaviour
                 _curCam.m_Lens.FieldOfView = _originFov;
                 _minVRot = 20f;
                 _maxVRot = 345f;
+                // 줌모드 전환하면 에임 커서 활성화
+                Managers.Game._player._cursorUI.SetCursorImage(UI_Cursor.CursorImages.AimCursor);
                 break;
 
             case Define.CameraMode.ZoomView:
@@ -146,6 +152,8 @@ public class PlayerCam : MonoBehaviour
                 _curCam.m_Lens.FieldOfView = _originFov;
                 _minVRot = 40f;
                 _maxVRot = 335f;
+                // 기존 카메라로 전환하면 에임 커서 비활성화
+                Managers.Game._player._cursorUI.SetCursorImage(UI_Cursor.CursorImages.None);
                 break;
         }
     }

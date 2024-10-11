@@ -14,19 +14,23 @@ public class QuestDataListWrapper
 public class QuestData : IData
 {
     public int ID;
+    public Define.QuestType Type;
     public string Name;
     public string Info;
     public int PlayerLevelRequirement;  
     public int TargetID;
     public int TargetCount;
-    public bool IsComplate;
-    public RewardType Type;
-    public RewardValueType ValType1;
-    public RewardValueType ValType2;
-    public RewardValueType ValType3;
+    public int RewardValue1;
+    public int RewardValue2;
+    public int RewardValue3;
+    public RewardType ValType1;
+    public RewardType ValType2;
+    public RewardType ValType3;
 
     //퀘스트 아이디
    [SerializeField] int _id;
+    //퀘스트 타입
+    [SerializeField] Define.QuestType _questType;
     //퀘스트 제목
     [SerializeField] string _name;
     //퀘스트 정보
@@ -37,52 +41,44 @@ public class QuestData : IData
     [SerializeField] int _targetID;
     //목표 수량(즉, 처치 마릿수, 기타아이템 수집 개수)
     [SerializeField] int _targetCount;
-    //완료 조건 충족 불 변수
-    [SerializeField] bool _isComplate = false;
-    //리워드 타입
-    [SerializeField] RewardType _rewardType;
+    //보상 타입에 따른 보상 수량
+    [SerializeField] int _rewardValue1;
+    [SerializeField] int _rewardValue2;
+    [SerializeField] int _rewardValue3;
     //리워드 밸류타입
-    [SerializeField] RewardValueType _rewardValueType1;
-    [SerializeField] RewardValueType _rewardValueType2;
-    [SerializeField] RewardValueType _rewardValueType3;
+    [SerializeField] RewardType _rewardType1;
+    [SerializeField] RewardType _rewardType2;
+    [SerializeField] RewardType _rewardType3;
     
+    //퀘스트의 리워드 타입
     [Serializable]
     public enum RewardType
     {
-        //단일
-        Type1 = 1,
-        //반복
-        Type2,
-    }
-    [Serializable]
-    //경험치 + 골드 + 알파 라서 타입을 3개가지로 해서 가중치 입력
-    public enum RewardValueType
-    {
-        //보상 없음
-        NonRewarded,
+        //장비 1번중 선택하는 법이 있나?
+        Equipped = 1,
+        //포션
+        Potion,
         //골드
         Gold,
         //경험치
         Exp,
-        //장비
-        Equipment,
-        //포션
-        Potion,
     }
 
     public void SetDefaultData()
     {
         ID = _id;
+        Type = _questType;
         Name = _name;
         Info = _info;
-        PlayerLevelRequirement = _playerLevelRequirement;
         TargetID = _targetID;
         TargetCount = _targetCount;
-        IsComplate = _isComplate;
-        Type = _rewardType;
-        ValType1 = _rewardValueType1;
-        ValType2 = _rewardValueType2;
-        ValType3 = _rewardValueType3;
+        PlayerLevelRequirement = _playerLevelRequirement;
+        RewardValue1 = _rewardValue1;
+        RewardValue2 = _rewardValue2;
+        RewardValue3 = _rewardValue3;
+        ValType1 = _rewardType1;
+        ValType2 = _rewardType2;
+        ValType3 = _rewardType3;
     }
 
     public bool SaveData()

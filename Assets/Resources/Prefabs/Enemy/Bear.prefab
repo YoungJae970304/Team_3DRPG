@@ -1909,7 +1909,7 @@ GameObject:
   - component: {fileID: 928789730507995237}
   - component: {fileID: 3864297021554841245}
   - component: {fileID: 6726248427313091088}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bear
   m_TagString: Monster
   m_Icon: {fileID: 0}

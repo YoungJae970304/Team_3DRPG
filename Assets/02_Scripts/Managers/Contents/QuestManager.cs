@@ -12,4 +12,11 @@ public class QuestManager : MonoBehaviour
     {
 
     }
+
+    private Dictionary<string, Quest> CreateQuestMap()
+    {
+
+
+        return CreateQuestMap();
+    }
 }
