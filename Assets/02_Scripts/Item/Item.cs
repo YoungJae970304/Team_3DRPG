@@ -14,8 +14,6 @@ public class Item
     {
         //데이터테이블매니저 인스턴스
         DataTableManager _dataTableManager = Managers.DataTable;
-        //모든 아이템 데이터 로드
-        _dataTableManager.LoadAllItemData();
 
         ItemData itemData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기

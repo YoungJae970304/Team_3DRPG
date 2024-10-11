@@ -14,8 +14,6 @@ public class DataTableManager
     public void Init()
     {
         LoadItemDataTable();
-        SaveAllItemData();
-        LoadAllItemData();
     }
 
     //장비아이템 데이터 CSV파일
@@ -36,6 +34,17 @@ public class DataTableManager
     public List<QuestData> _QuestData = new List<QuestData>();
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
+
+    #region 모든 데이터 저장및 로드
+    public void LoadItemDataTable()
+    {
+        EquipmentDataTable(_DATA_PATH, _EQUIPMENT_ITEM_DATA_TABLE);
+        PotionDataTable(_DATA_PATH, _POTION_ITEM_DATA_TABLE);
+        GoodsDataTable(_DATA_PATH, _GOODS_ITEM_DATA_TABLE);
+        DropDataTable(_DATA_PATH, _MONSTER_DROP_DATA_TABLE);
+        QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
+    }
+    #endregion
 
 
     #region 장비데이터테이블 함수
@@ -261,101 +270,5 @@ public class DataTableManager
         }
     }
 
-    #endregion
-
-    #region 모든 데이터 저장및 로드
-    public void LoadItemDataTable()
-    {
-        EquipmentDataTable(_DATA_PATH, _EQUIPMENT_ITEM_DATA_TABLE);
-        PotionDataTable(_DATA_PATH, _POTION_ITEM_DATA_TABLE);
-        GoodsDataTable(_DATA_PATH, _GOODS_ITEM_DATA_TABLE);
-        DropDataTable(_DATA_PATH, _MONSTER_DROP_DATA_TABLE);
-        QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
-    }
-
-    //모든 데이터 플레이어프랩스로 제이슨저장
-    public void SaveAllItemData()
-    {
-        ItemDataListWrapper savedData = new ItemDataListWrapper { ItemDataList = _AllItemData };
-        DropDataListWrapper savedDropData = new DropDataListWrapper { DropDataList = _MonsterDropData };
-        QuestDataListWrapper savedQuestData = new QuestDataListWrapper { QuestDataList = _QuestData };
-        //합친 데이터를 Json으로 변환
-        string itemJson = JsonUtility.ToJson(savedData);
-        string dropJson = JsonUtility.ToJson(savedDropData);
-        string questJson = JsonUtility.ToJson(savedQuestData);
-
-        //Json데이터를 플레이어프랩스에 저장
-        PlayerPrefs.SetString(_PLAYER_PREFS_KEY, itemJson);
-        PlayerPrefs.SetString(_PLAYER_PREFS_DROP_KEY, dropJson);
-        PlayerPrefs.SetString(_PLAYER_PREFS_QUEST_KEY, questJson);
-        PlayerPrefs.Save();
-        Logger.Log("저장 완료 : " + itemJson);
-        Logger.Log("저장 완료 : " + dropJson);
-        Logger.Log("저장 완료 : " + questJson);
-    }
-
-    //모든 데이터를 플레이어프랩스로 제이슨 로드
-    public void LoadAllItemData()
-    {
-        //저장된 제이슨 문자열 가져오기
-        string itemDataJson = PlayerPrefs.GetString(_PLAYER_PREFS_KEY);
-        string dropDataJson = PlayerPrefs.GetString(_PLAYER_PREFS_DROP_KEY);
-        string questDataJson = PlayerPrefs.GetString(_PLAYER_PREFS_QUEST_KEY);
-        if (!string.IsNullOrEmpty(itemDataJson))
-        {
-            //Json을 다시 객체로 변환시킴
-            ItemDataListWrapper loadedData = JsonUtility.FromJson<ItemDataListWrapper>(itemDataJson);
-
-            //기존 데이터 비우기
-            _EquipeedItemData.Clear();
-            _PotionItemData.Clear();
-            _GoodsItemData.Clear();
-            _AllItemData.Clear();
-            //타입에 맞춰 데이터를 다시 리스트에 추가
-            foreach (var item in loadedData.ItemDataList)
-            {
-                switch (item.Type)
-                {
-                    case ItemData.ItemType.Potion:
-                        _PotionItemData.Add(item);
-                        break;
-                    case ItemData.ItemType.Booty:
-                        _GoodsItemData.Add(item);
-                        break;
-                    case ItemData.ItemType.Weapon:
-                    case ItemData.ItemType.Armor:
-                    case ItemData.ItemType.Accessories:
-                        _EquipeedItemData.Add(item);
-                        break;
-                    default:
-                        Logger.LogWarning($"{item.Type}은 알 수 없는 타입입니다.");
-                        break;
-                }
-                _AllItemData.Add(item);
-            }
-        }
-        if (!string.IsNullOrEmpty(questDataJson))
-        {
-            _QuestData.Clear();
-            QuestDataListWrapper loadedQuestData = JsonUtility.FromJson<QuestDataListWrapper>(questDataJson);
-            foreach (var quest in loadedQuestData.QuestDataList)
-            {
-                _QuestData.Add(quest);
-            }
-        }
-        if (!string.IsNullOrEmpty(dropDataJson))
-        {
-            _MonsterDropData.Clear();
-            DropDataListWrapper loadedDropData = JsonUtility.FromJson<DropDataListWrapper>(dropDataJson);
-            foreach (var drop in loadedDropData.DropDataList)
-            {
-                _MonsterDropData.Add(drop);
-            }
-        }
-        else
-        {
-            Logger.LogError("저장된 데이터가 없음");
-        }
-    }
     #endregion
 }

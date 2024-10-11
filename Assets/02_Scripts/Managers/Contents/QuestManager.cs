@@ -87,4 +87,9 @@ public class QuestManager
     {
 
     }
+
+    //bool CheckRequirementMet()
+    //{
+
+    //}
 }
