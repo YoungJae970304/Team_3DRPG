@@ -62,9 +62,8 @@ public class Item
     //스프라이트 이미지를 이름으로 저장하고 있기에 이미지 이름을 Resource.load로 경로에서 이미지아이콘 찾아오기
     public Sprite LoadIcon()
     {
-        var itemIcon = Data.ID.ToString("D4");
-
-        Sprite[] icon = Resources.LoadAll<Sprite>($"Icon/{itemIcon}");
+        string iconName = "Icon/" + Data.ID.ToString();
+        Sprite icon = Resources.Load<Sprite>(iconName);
 
         if (icon == null) 
         {
@@ -72,7 +71,7 @@ public class Item
             return null;
         }
 
-        return icon[1];
+        return icon;
     }
 
     #region type에따른 id로 생성 시키기

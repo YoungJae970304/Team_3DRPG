@@ -88,11 +88,8 @@ public class DataTableManager
                 //소지 수량
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
                 //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = data["TestIcon"].ToString(),
+                //IconSprite = data["ItemIcon"].ToString(),
                 //아이콘
-                //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
-                //임시로 이미지 로드
-                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
@@ -139,7 +136,6 @@ public class DataTableManager
                 //IconSprite = data["TestIcon"].ToString(),
                 //아이콘
                 //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
-                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
@@ -174,7 +170,6 @@ public class DataTableManager
                 //설명 텍스트
                 FlavorText = data["FlavorText"].ToString(),
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                IconSprite = "Icon/TestIcon",
             };
             if (itemData != null)
             {
