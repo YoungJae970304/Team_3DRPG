@@ -4,17 +4,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Threading.Tasks;
+using System;
 
 public class BossBear : Monster
 {
     public int _bossBearID = 99999;
     int skillCount = 0;
+    public GameObject _roarRange; // 장판 오브젝트
+
+   
+    private Vector2 _startScale; // 초기 크기
+    float _stageRoarPlus = 10f;
+    float _roarTimer;
+    public GameObject _maxRoarRange;
     public override void Start()
     {
         base.Start();
         itemtest(_deongeonLevel, _bossBearID);
         _monsterProduct = 61004;
+        _startScale = _roarRange.transform.localScale;
+
+        _roarRange.SetActive(false);
+
     }
+    public override void Update()
+    {
+        base.Update();
+       
+    }
+    IEnumerator PlusRoarRange()
+    {
+        _roarTimer = 0;
+        _roarRange.transform.localScale = _startScale;
+        _maxRoarRange.SetActive(true);
+        while (_roarRange.transform.localScale.x < _mStat.AtkDelay)
+        { 
+            _roarRange.SetActive(true);
+            Logger.LogError(_roarRange.activeSelf.ToString());
+            _roarRange.transform.localScale = _startScale * (0.1f + _roarTimer * _stageRoarPlus);
+            Logger.LogError(_roarRange.transform.localScale.x.ToString());
+            _roarTimer += Time.deltaTime;
+            if (_roarRange.transform.localScale.x >= _mStat.AtkDelay)
+            {
+               
+                _roarTimer = 0;
+                _anim.SetBool("AfterStay", true);
+                _roarRange.SetActive(false);//애니메이션이 끝나는 시점에 꺼지도록 따로 함수작성
+                BearRoar();
+                _maxRoarRange.SetActive(false);//애니메이션이 끝나는 시점에 꺼지도록 따로 함수작성
+                break;
+            }
+            _anim.SetBool("AterStay", false);
+           
+            yield return null;
+        }
+        
+        
+    }
+  
     protected override void BaseState()
     {
         switch (_curState)
@@ -141,9 +188,9 @@ public class BossBear : Monster
             //시간 ++, 장판 활성화
             //시간이 늘어남에 따라 장판크기가 그에 맞춰서 커지고
             //다 커졌을 때 로어와 함께 장판 삭제
-            BearRoar();
+            StartCoroutine(PlusRoarRange());
             skillCount++;
-
+            
 
         }
         else

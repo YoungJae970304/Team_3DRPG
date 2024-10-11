@@ -95,7 +95,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
 
         _mFSM.UpdateState();
