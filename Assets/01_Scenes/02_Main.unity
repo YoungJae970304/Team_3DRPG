@@ -720,6 +720,12 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &485724278 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6888826929519498038, guid: 50784459399964046a8186d12893c707,
+    type: 3}
+  m_PrefabInstance: {fileID: 7133272839047318325}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &498344114 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6169465399569319872, guid: ca485054dc4f410439e704b8252a351b,
@@ -2097,45 +2103,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 418471982801695891, guid: 50784459399964046a8186d12893c707,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 806428174184475216, guid: 50784459399964046a8186d12893c707,
+    - target: {fileID: 3253822993884424849, guid: 50784459399964046a8186d12893c707,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 928789730507995237, guid: 50784459399964046a8186d12893c707,
+    - target: {fileID: 3424196430054544556, guid: 50784459399964046a8186d12893c707,
         type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
+      propertyPath: m_LocalScale.x
+      value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 1924794231176365935, guid: 50784459399964046a8186d12893c707,
+    - target: {fileID: 3424196430054544556, guid: 50784459399964046a8186d12893c707,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2498612419582649953, guid: 50784459399964046a8186d12893c707,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3004166058120221315, guid: 50784459399964046a8186d12893c707,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3144228113651959425, guid: 50784459399964046a8186d12893c707,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5745001862427680957, guid: 50784459399964046a8186d12893c707,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_LocalScale.y
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,
         type: 3}
@@ -2145,27 +2126,17 @@ PrefabInstance:
     - target: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,
+    - target: {fileID: 6726248427313091088, guid: 50784459399964046a8186d12893c707,
         type: 3}
-      propertyPath: m_TagString
-      value: Monster
-      objectReference: {fileID: 0}
-    - target: {fileID: 6912514214886399856, guid: 50784459399964046a8186d12893c707,
+      propertyPath: _maxRoarRange
+      value: 
+      objectReference: {fileID: 485724278}
+    - target: {fileID: 6888826929519498038, guid: 50784459399964046a8186d12893c707,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8280184659402799687, guid: 50784459399964046a8186d12893c707,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8734980858918225144, guid: 50784459399964046a8186d12893c707,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerMoveState : BaseState
 {
-    public PlayerMoveState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public PlayerMoveState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {

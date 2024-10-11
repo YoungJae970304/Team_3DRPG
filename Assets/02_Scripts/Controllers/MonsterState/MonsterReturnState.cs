@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MonsterReturnState : BaseState
 {
-    public MonsterReturnState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
+    public MonsterReturnState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat)
     {
     }
 

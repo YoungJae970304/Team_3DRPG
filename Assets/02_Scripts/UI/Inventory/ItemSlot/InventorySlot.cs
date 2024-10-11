@@ -21,6 +21,7 @@ public class InventorySlot : ItemSlot
     }
     public override void ItemInsert(ItemSlot moveSlot)
     {
+        base.ItemInsert(moveSlot);
         if (!_itemManager.Containtype(slotType, moveSlot.slotType)) { return; }
         if (moveSlot is InventorySlot) {
             _itemManager.SwitchItem(_index, ((InventorySlot)moveSlot)._index, moveSlot.Item.Data.Type);

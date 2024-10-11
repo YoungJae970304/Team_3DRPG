@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public abstract class ItemSlot : MonoBehaviour
+public abstract class ItemSlot : MonoBehaviour, IItemDropAble
 {
     protected Item _item;
     public Action itemChangedAction;
@@ -39,6 +39,21 @@ public abstract class ItemSlot : MonoBehaviour
         }
     }
 
-    public abstract void ItemInsert(ItemSlot moveSlot);
+    public virtual void ItemInsert(ItemSlot moveSlot) {
+        if(Item != null && Item.Data.ID == moveSlot.Item.Data.ID)
+            {
+            if (Item is CountableItem)
+            {
+                int overAmount = ((CountableItem)Item).AddAmount(((CountableItem)moveSlot.Item)._amount);
+                ((CountableItem)moveSlot.Item).SetAmount(overAmount);
+                return;
+            }
+        }
+
+    }
     public abstract bool MoveItem(ItemSlot moveSlot);
+
+    public void RemoveItem() {
+        Item = null;
+    }
 }

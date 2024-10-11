@@ -29,7 +29,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Vector3 _originPos;
     public Player _player;
     public NavMeshAgent _nav;
-    public MonsterStat _mStat;
+    public MonsterStatManager _mStat;
+    public MonsterStat _dropStat;
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
@@ -74,11 +75,14 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Start is called before the first frame update
     public virtual void Start()
     {
+        _mStat = new MonsterStatManager();
+        _mStat._mStat = new MonsterStat();
+        _mStat._buffStat = new MonsterStat();
         _player = Managers.Game._player;
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
-
-        _mStat = GetComponent<MonsterStat>();
+        _dropStat = GetComponent<MonsterStat>();
+       
         _nav = GetComponent<NavMeshAgent>();
 
         _originPos = transform.position;
@@ -86,16 +90,24 @@ public class Monster : MonoBehaviour, IDamageAlbe
         Debug.Log($"초기 상태: {_curState}");
 
 
-        _mStat.MaxHP = 100;
-        _mStat.HP = _mStat.MaxHP;
-        _mStat.ATK = 30;
-        _mStat.DEF = 10;
-        _mStat.MoveSpeed = 1f;
-        
+        _mStat._mStat.MaxHP = 100;
+        _mStat._mStat.HP = _mStat._mStat.MaxHP;
+        _mStat._mStat.ATK = 30;
+        _mStat._mStat.DEF = 10;
+        _mStat._mStat.MoveSpeed = 1f;
+        _mStat._mStat.RecoveryHP = 0;
+        _mStat._mStat.MP = 0;
+        _mStat._mStat.MaxMP = 0;
+        _mStat._mStat.RecoveryMP = 0;
+        _mStat._mStat.ChaseRange = 20;
+        _mStat._mStat.ReturnRange = 20;
+        _mStat._mStat.AttackRange = 2;
+        _mStat._mStat.AwayRange = 20;
+        _mStat._mStat.AtkDelay = 3;
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
 
         _mFSM.UpdateState();
@@ -140,7 +152,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
                     MChangeState(MonsterState.Return);
                 break;
             case MonsterState.Attack:
-                if (!CanAttackPlayer())
+                if (!CanAttackPlayer())//내가 공격을 끝냈는지에 대한 조건을 상위조건으로 걸기// 불변수 // 급
                 {
                     if (!ReturnOrigin())
                     {
@@ -193,6 +205,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
         _mStat.HP -= (amount - _mStat.DEF);
         StartDamege(_player.transform.position, 0.1f, 30f);
+        Logger.LogError(_mStat.HP.ToString());
         if (_mStat.HP > 0)
         {
             
@@ -222,6 +235,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public bool CanAttackPlayer()
     {
         //사정거리 체크 구현
+        //여기에 타이머넣어서 변환까지 시간걸리게
         return _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool CanSeePlayer()
@@ -243,7 +257,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 플레이어 공격관련 함수
     public void AttackPlayer() // 공격 모션 중간에 호출
     {
-
+//
         int damage = _mStat.ATK;
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         foreach (Collider collider in checkColliders)
@@ -356,9 +370,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
         if (dropData != null)
         {
-            _mStat.EXP = dropData.Value5;
+            _dropStat.EXP = dropData.Value5;
             _monsterProduct = dropData.Value6;
-            _mStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
+            _dropStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
         }
         else
         {

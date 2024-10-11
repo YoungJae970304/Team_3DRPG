@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterMoveState : BaseState
 {
-    public MonsterMoveState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
+    public MonsterMoveState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat)
     {
     }
 

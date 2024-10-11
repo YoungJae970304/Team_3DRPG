@@ -38,4 +38,28 @@ public class PlayerAnimEvent : MonoBehaviour
             _player._playerAnim.SetBool("isAttacking", false);
         }
     }
+
+    // 회피 애니메이션 시작부
+    public void DodgeStart()
+    {
+        _player._invincible = true;
+    }
+
+    // 애니메이션 무적 해제부분
+    public void InvincibleOff()
+    {
+        _player._invincible = false;
+    }
+
+    // 회피 애니메이션 회피 상태 해제부분
+    public void DodgeEnd()
+    {
+        _player._dodgeing = false;
+    }
+
+    // 피격 애니메이션 피격 상태 해제부분
+    public void HittingEnd()
+    {
+        _player._hitting = false;
+    }
 }
