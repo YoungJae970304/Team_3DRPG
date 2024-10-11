@@ -92,7 +92,7 @@ public class PlayerInput : MonoBehaviour
 
     void AttackInput()
     {
-        if (_player._dodgeing || _player._skillUsing || !_player._canAtkInput) return;
+        if (_player._invincible || _player._skillUsing || !_player._canAtkInput) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -100,7 +100,6 @@ public class PlayerInput : MonoBehaviour
 
             // Queue에 Enqueue함으로써 선입력 처리
             InputBufferInsert(_player.AtkCount);
-            //_player.ChangeState(PlayerState.AttackWait);
         }
         else if (Input.GetMouseButtonDown(1) && !_player._attacking)
         {
@@ -116,20 +115,20 @@ public class PlayerInput : MonoBehaviour
 
     void SkillInput()
     {
-        if (_player._dodgeing) return;
+        if (_player._dodgeing || _player._skillUsing) return;
 
-        //_player._skillBase = 스킬 무언가가 들어가나?
-
-        // 추후 스킬 들어오는거에 맞춰 수정 필요
-        // _player.ChangeState(PlayerState.Skill); 하나만 쓰고 
+        // 추후 E,R 슬롯에 등록되어 있는 스킬을 가져와 _skillBase에 담아주면 될듯?
         if (Input.GetKeyDown(KeyCode.E))
         {
-            _player.ChangeState(PlayerState.Skill);
+            // 스킬테스트
+            _player._skillBase = new TestSkill();
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            _player.ChangeState(PlayerState.Skill);
+            _player._skillBase = new TestSkill();
         }
+
+        _player.ChangeState(PlayerState.Skill);
     }
 
     void UIInput()

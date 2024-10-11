@@ -6,7 +6,6 @@ public class TestScene : BaseScene
 {
     [SerializeField] Inventory ItemManager;
     [SerializeField] InventoryUI inventory;
-    [SerializeField] ItemData ItemData, itemData2 ;
     protected override void Init()
     {
         base.Init();
@@ -30,15 +29,12 @@ public class TestScene : BaseScene
     public void OpenNewtest()
     {
         // 완전 새로운 오브젝트를 생성 후 여는 것 ( 풀링은 되는데 무조건 생성 )
-        inventory = Managers.UI.OpenUI<InventoryUI>(new BaseUIData(),true,true);
+        Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
     }
 
     [ContextMenu("Inserttest")]
     public void Inserttest() {
-        Item item2 = new EquipmentItem(itemData2);
         ItemManager.InsertItem(Item.ItemSpawn(11001));
-        Item item = new EquipmentItem(ItemData);
-        //ItemManager.InsertItem(item);
     }
     [ContextMenu("Removetest")]
     public void Remove()

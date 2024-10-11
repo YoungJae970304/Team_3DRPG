@@ -6,9 +6,9 @@ public abstract class BaseState
 {
     protected Player _player;
     protected Monster _monster;
-    protected Stat _stat;
+    protected ITotalStat _stat;
 
-    protected BaseState(Player player, Monster monster, Stat stat)
+    protected BaseState(Player player, Monster monster, ITotalStat stat)
     {
         _player = player;
         _monster = monster;

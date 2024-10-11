@@ -68,4 +68,5 @@ public class InventoryUI : ItemUI
             UpdateSlot();
         }
     }
+
 }

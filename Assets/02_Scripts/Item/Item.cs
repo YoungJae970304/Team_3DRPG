@@ -27,7 +27,8 @@ public class Item
                 break;
             }
         }
-
+        Logger.Log("EquipmentItemData" + (itemData is EquipmentItemData).ToString()) ;
+        Logger.Log(itemData.GetType().ToString());
         if (itemData != null)
         {
                 switch (itemData.Type)

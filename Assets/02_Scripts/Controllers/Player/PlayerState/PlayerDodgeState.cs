@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class PlayerDodgeState : BaseState
 {
-    public PlayerDodgeState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public PlayerDodgeState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
     float _curTime;
 
     public override void OnStateEnter()
     {
+        _player._playerAnim.SetBool("isDodge", true);
         _player.AtkCount = 0;
         _player._dodgeing = true;
-        _player._invincible = true;
     }
 
     public override void OnStateUpdate()
     {
+        if (_player._invincible)
         Dodge();
-        DodgeTimer();
     }
 
     public override void OnStateExit()
     {
         Logger.Log("회피 Exit");
+        _player._playerAnim.SetBool("isDodge", false);
         _player._rotDir = Vector3.zero;
         _player._canAtkInput = true;
         _player._attacking = false;
@@ -48,22 +49,5 @@ public class PlayerDodgeState : BaseState
         _player._moveDir = _player._playerModel.transform.forward * _player._playerStatManager.DodgeSpeed * Time.deltaTime;
         // 회피
         _player._cc.Move(_player._moveDir);
-    }
-
-    // 일정 시간 후 회피 상태 해제
-    void DodgeTimer()
-    {
-        _curTime += Time.deltaTime;
-
-        if (_curTime > _player._dodgeTime * 0.5f)
-        {
-            _player._invincible = false;
-        }
-
-        if (_curTime > _player._dodgeTime)
-        {
-            _curTime = 0;
-            _player._dodgeing = false;
-        }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSkillState : BaseState
 {
-    public PlayerSkillState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public PlayerSkillState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {

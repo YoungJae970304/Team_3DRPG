@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAttackState : BaseState
 {
-    public PlayerAttackState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public PlayerAttackState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {
@@ -37,7 +37,7 @@ public class PlayerAttackState : BaseState
                 Logger.LogError("지정한 공격이 아님");
                 break;
         }
-
+            
         _player.ApplyDamage();
     }
 

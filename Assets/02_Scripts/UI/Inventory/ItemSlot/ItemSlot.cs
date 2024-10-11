@@ -4,14 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public abstract class ItemSlot : MonoBehaviour
+public abstract class ItemSlot : MonoBehaviour, IItemDropAble
 {
     protected Item _item;
-    protected Action itemChangedAction;
+    public Action itemChangedAction;
     public Item Item{get=>_item ; protected set {
-            
+            _item = value; 
             itemChangedAction?.Invoke();
-            _item = value;
             UpdateSlotInfo();
         } }
     public Image _Image;
@@ -19,7 +18,7 @@ public abstract class ItemSlot : MonoBehaviour
     public ItemData.ItemType slotType = ItemData.ItemType.Weapon;
 
 
-    public void UpdateSlotInfo()
+    public virtual void UpdateSlotInfo()
     {
         if (Item == null)
         {
@@ -40,6 +39,21 @@ public abstract class ItemSlot : MonoBehaviour
         }
     }
 
-    public abstract void ItemInsert(ItemSlot moveSlot);
+    public virtual void ItemInsert(ItemSlot moveSlot) {
+        if(Item != null && Item.Data.ID == moveSlot.Item.Data.ID)
+            {
+            if (Item is CountableItem)
+            {
+                int overAmount = ((CountableItem)Item).AddAmount(((CountableItem)moveSlot.Item)._amount);
+                ((CountableItem)moveSlot.Item).SetAmount(overAmount);
+                return;
+            }
+        }
+
+    }
     public abstract bool MoveItem(ItemSlot moveSlot);
+
+    public void RemoveItem() {
+        Item = null;
+    }
 }

@@ -3,53 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class SkillBase//Àü·« ÆĞÅÏ »ç¿ë
+public abstract class SkillBase//ì „ëµ íŒ¨í„´ ì‚¬ìš©
 {
-    public abstract SkillModule.SkillEnter Enter { get; set;} //½ºÅ³ ½ÃÀü½Ã È¿°ú
-    public abstract SkillModule.SkillStay Stay { get; set; } //½ºÅ³ ½ÃÀüÁß È¿°ú
-    public abstract SkillModule.SkillExit Exit { get; set; } //½ºÅ³ Á¾·á½Ã È¿°ú
-    public abstract SkillModule.SkillPassive Passive { get; set; }//½ºÅ³ ½Àµæ½Ã Àû¿ëµÇ´Â È¿°ú
+    public abstract SkillModule.SkillEnter Enter { get; set;} //ìŠ¤í‚¬ ì‹œì „ì‹œ íš¨ê³¼
+    public abstract SkillModule.SkillStay Stay { get; set; } //ìŠ¤í‚¬ ì‹œì „ì¤‘ íš¨ê³¼
+    public abstract SkillModule.SkillExit Exit { get; set; } //ìŠ¤í‚¬ ì¢…ë£Œì‹œ íš¨ê³¼
+    public abstract SkillModule.SkillPassive Passive { get; set; }//ìŠ¤í‚¬ ìŠµë“ì‹œ ì ìš©ë˜ëŠ” íš¨ê³¼
 
-    public Define.SkillType skillType;  //½ºÅ³ÀÇ Å¸ÀÔex) Å°´Ù¿îor±âº»½ºÅ³
+    public Define.SkillType skillType;  //ìŠ¤í‚¬ì˜ íƒ€ì…ex) í‚¤ë‹¤ìš´orê¸°ë³¸ìŠ¤í‚¬
 
-    protected Sprite _icon;             //½ºÅ³ ¾ÆÀÌÄÜ
+    protected Sprite _icon;             //ìŠ¤í‚¬ ì•„ì´ì½˜
 
-    public float delay;                 //½ºÅ³ÀÇ ÈÄµô·¹ÀÌ
-    public virtual void SkillEnter(Stat stat) {
+    public float delay;                 //ìŠ¤í‚¬ì˜ í›„ë”œë ˆì´
+    public virtual void SkillEnter(ITotalStat stat) {
         Enter.Enter(stat);
-    }//½ºÅ³ ½ÃÀü½Ã
-    public virtual void SkillStay(Stat stat) {
+    }//ìŠ¤í‚¬ ì‹œì „ì‹œ
+    public virtual void SkillStay(ITotalStat stat) {
         Stay.Stay(stat);
-    }//½ºÅ³ ½ÃÀüµµÁß
+    }//ìŠ¤í‚¬ ì‹œì „ë„ì¤‘
 
-    public virtual void SkillExit(Stat stat) {
+    public virtual void SkillExit(ITotalStat stat) {
         Stay.End(stat);
         Exit.Exit(stat);
-    }//½ºÅ³ ½ÃÀüÁ¾·á½Ã
+    }//ìŠ¤í‚¬ ì‹œì „ì¢…ë£Œì‹œ
 
-    public virtual void PassiveEffect(Stat stat) {
+    public virtual void PassiveEffect(ITotalStat stat) {
         Passive.Passive(stat);
-    }//ÆĞ½Ãºê È¿°ú
+    }//íŒ¨ì‹œë¸Œ íš¨ê³¼
 
 }
 
 
-namespace SkillModule {//Àü·«
+namespace SkillModule {//ì „ëµ
     public interface SkillEnter {
-        public void Enter(Stat stat);
+        public void Enter(ITotalStat stat);
     }
     public interface SkillStay
     {
-        public void Stay(Stat stat);
-        public void End(Stat stat);
+        public void Stay(ITotalStat stat);
+        public void End(ITotalStat stat);
 
     }
     public interface SkillExit
     {
-        public void Exit(Stat stat);
+        public void Exit(ITotalStat stat);
     }
     public interface SkillPassive
     {
-        public void Passive(Stat stat);
+        public void Passive(ITotalStat stat);
     }
 }

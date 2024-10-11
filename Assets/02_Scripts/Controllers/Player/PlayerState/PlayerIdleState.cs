@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerIdleState : BaseState
 {
-    public PlayerIdleState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public PlayerIdleState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
     public override void OnStateEnter()
     {
