@@ -175,7 +175,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     {
         // 상태 전환
         ChangeStateCondition();
-
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z); // 임시 추가 삭제예정
         // 상태 내부의 업데이트 실행
         _pFsm.UpdateState();
     }

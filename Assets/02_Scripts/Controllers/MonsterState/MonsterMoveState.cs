@@ -12,7 +12,7 @@ public class MonsterMoveState : BaseState
     public override void OnStateEnter()
     {
         //플레이어 찾기(슬라임에서 찾아둠)
-        _monster._nav.stoppingDistance = _monster._mStat.AttackRange;
+        _monster._nav.stoppingDistance = _monster._mStat.AttackRange-0.5f;
         _monster._nav.destination = _monster._player.transform.position;
     }
 
