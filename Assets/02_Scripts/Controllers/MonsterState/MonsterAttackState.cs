@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterAttackState : BaseState
 {
-    public MonsterAttackState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
+    public MonsterAttackState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat)
     {
     }
 

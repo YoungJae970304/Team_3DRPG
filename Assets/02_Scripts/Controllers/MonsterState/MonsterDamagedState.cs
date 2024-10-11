@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MonsterDamagedState : BaseState
 {
-    public MonsterDamagedState(Player player, Monster monster, Stat stat) : base(player, monster, stat) { }
+    public MonsterDamagedState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
     public override void OnStateEnter()
     {
         //넉백, 데미지 받기

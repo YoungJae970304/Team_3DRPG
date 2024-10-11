@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MonsterDieState : BaseState
 {
-    public MonsterDieState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
+    public MonsterDieState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat)
     {
     }
 

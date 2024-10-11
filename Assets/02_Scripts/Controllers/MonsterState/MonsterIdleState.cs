@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MonsterIdleState : BaseState
 {
-    public MonsterIdleState(Player player, Monster monster, Stat stat) : base(player, monster, stat)
+    public MonsterIdleState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat)
     {
 
     }
@@ -14,7 +14,7 @@ public class MonsterIdleState : BaseState
     float awayRangeZ;
     public override void OnStateEnter()
     {
-        _monster._mStat = _monster.GetComponent<MonsterStat>();
+        _monster._mStat = _monster.GetComponent<MonsterStatManager>();
         if (_monster._mStat == null)
         {
             Debug.LogError("OrkStat 컴포넌트를 찾을 수 없습니다.");
