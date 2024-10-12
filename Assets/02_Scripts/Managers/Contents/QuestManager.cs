@@ -13,7 +13,6 @@ public class QuestManager
     public List<QuestData> _AllQuestData = new List<QuestData>();
     //퀘스트 상태 관리 딕셔너리
     public Dictionary<int, QuestState.State> _QuestStates = new Dictionary<int, QuestState.State>();
-
     public void Init()
     {
         LoadQuestData();
@@ -54,14 +53,41 @@ public class QuestManager
         foreach (var quest in questData)
         {
             _AllQuestData.AddRange(questData);
-            Logger.Log($"퀘스트 데이터 ID: {quest.ID} 이름: {quest.Name}");
+            Logger.Log($"퀘스트 데이터 ID: {quest.ID}");
         }
     }
 
     //시작 메서드
-  public  void OnStartQuest(int id)
+    public void OnStartQuest(int id)
     {
-        
+        QuestData questData = _AllQuestData.Find(q => q.ID == id);
+        CheckUnlockQuest();
+        if (questData != null)
+        {
+            if (questData.IsUnlock)
+            {
+                // 퀘스트 시작 로직
+                Logger.Log("퀘스트를 수락");
+                _ActiveQuests.Add(new Quest(questData));
+            }
+        }
+    }
+
+    //시작 가능 체크
+    public void CheckUnlockQuest()
+    {
+        int playeLevel = Managers.Game._player._playerStatManager._originStat.Level;
+
+        foreach (var quest in _AllQuestData)
+        {
+            if(playeLevel >= quest.PlayerLevelRequirement && !quest.IsUnlock)
+            {
+                //퀘스트 로그 UI 업데이트
+                //NPC를 퀘스트 수락 포인트로 지정 해서 머리에 표시까지
+                //퀘스트 로그 UI 제작...
+                quest.IsUnlock = true;
+            } 
+        }
     }
 
     //진행 메서드
@@ -87,23 +113,4 @@ public class QuestManager
     {
 
     }
-
-    //퀘스트 맵을 생성하는 함수
-    //Dictionary<int, Quest> CreateQuestMap()
-    //{
-
-
-    //}
-
-    //퀘스트 아이디 가져오는 함수
-    //Quest GetQuestByID(int id)
-    //{
-
-    //}
-
-    //시작 가능을 확인할 bool 함수
-    //bool CheckRequirementMet()
-    //{
-
-    //}
 }
