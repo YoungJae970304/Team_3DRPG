@@ -1651,7 +1651,7 @@ PrefabInstance:
     - target: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1887,6 +1887,16 @@ PrefabInstance:
       propertyPath: _mageBallPos
       value: 
       objectReference: {fileID: 672201581}
+    - target: {fileID: 5278561626242740415, guid: ca485054dc4f410439e704b8252a351b,
+        type: 3}
+      propertyPath: m_SkinWidth
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5278561626242740415, guid: ca485054dc4f410439e704b8252a351b,
+        type: 3}
+      propertyPath: m_StepOffset
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7999316620019485694, guid: ca485054dc4f410439e704b8252a351b,
         type: 3}
       propertyPath: _cursorUI

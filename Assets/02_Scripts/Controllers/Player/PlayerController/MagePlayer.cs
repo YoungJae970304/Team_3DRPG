@@ -21,7 +21,7 @@ public class MagePlayer : Player
 
     public override void Skill()
     {
-        SkillOffTimer(1f);
+        
     }
 
     public override void Special()

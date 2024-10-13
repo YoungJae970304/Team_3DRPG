@@ -37,10 +37,11 @@ public class PlayerInput : MonoBehaviour
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 
     void MoveInput()
     {
+        _player._isMoving = false;
+
         if (_player._dodgeing) return;
 
         _player._rotDir = Vector3.zero;
-        _player._isMoving = false;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -80,6 +81,7 @@ public class PlayerInput : MonoBehaviour
         _player._rotDir.Normalize();
     }
 
+    // 회피 입력
     void DodgeInput()
     {
         if (_player._skillUsing || _player._dodgeing) return;
@@ -90,6 +92,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // 공격 입력
     void AttackInput()
     {
         if (_player._invincible || _player._skillUsing || !_player._canAtkInput) return;
@@ -106,6 +109,7 @@ public class PlayerInput : MonoBehaviour
             _player.Special();
         }
     }
+    // 선입력
     public void InputBufferInsert(int action)
     {
         if (_atkInput.Count > 1) { return; }
@@ -113,6 +117,7 @@ public class PlayerInput : MonoBehaviour
         _atkInput.Enqueue(action);
     }
 
+    // 스킬입력
     void SkillInput()
     {
         if (_player._dodgeing || _player._skillUsing) return;
@@ -126,7 +131,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            _player._skillBase = new TestSkill();
+            _player._skillBase = new ChainLightning();
             _player.ChangeState(PlayerState.Skill);
         }
     }
