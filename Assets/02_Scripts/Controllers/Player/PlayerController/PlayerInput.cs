@@ -37,10 +37,11 @@ public class PlayerInput : MonoBehaviour
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 
     void MoveInput()
     {
+        _player._isMoving = false;
+
         if (_player._dodgeing) return;
 
         _player._rotDir = Vector3.zero;
-        _player._isMoving = false;
 
         if (Input.GetKey(KeyCode.W))
         {

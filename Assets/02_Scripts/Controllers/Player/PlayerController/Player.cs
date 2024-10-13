@@ -202,7 +202,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             verticalVelocity.y += gravity * Time.deltaTime;
         }
 
-        _cc.Move(verticalVelocity * Time.fixedDeltaTime);
+        _cc.Move(new Vector3(0, verticalVelocity.y, 0) * Time.fixedDeltaTime);
     }
 
     // 플레이어 상태 전환 조건을 담당하는 메서드
