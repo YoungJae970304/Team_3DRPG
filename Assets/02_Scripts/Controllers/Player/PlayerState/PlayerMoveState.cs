@@ -67,7 +67,8 @@ public class PlayerMoveState : BaseState
         }
 
         // 실제 최종 이동
-        _player._cc.Move(_player._moveDir);
+        //_player._cc.Move(_player._moveDir);
+        _player._cc.Move(new Vector3(_player._moveDir.x, 0, _player._moveDir.z));
     }
 
     void MoveStop()

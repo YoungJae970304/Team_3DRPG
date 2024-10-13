@@ -53,6 +53,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public Vector3 _rotDir;
     [Header("회전 속도")]
     public float _rotSpeed = 0.2f;
+    [HideInInspector]
+    public float gravity = -9.81f;
+    private Vector3 verticalVelocity;
 
     // 회피 관련 변수
     // 무적 변수
@@ -182,7 +185,24 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     protected virtual void FixedUpdate()
     {
+        // 중력 적용
+        ApplyGravity();
+
         _pFsm.FixedUpdateState();
+    }
+
+    private void ApplyGravity()
+    {
+        if (_cc.isGrounded && verticalVelocity.y < 0)
+        {
+            verticalVelocity.y = -2f; // 약간의 하향 속도 유지
+        }
+        else
+        {
+            verticalVelocity.y += gravity * Time.deltaTime;
+        }
+
+        _cc.Move(verticalVelocity * Time.fixedDeltaTime);
     }
 
     // 플레이어 상태 전환 조건을 담당하는 메서드
@@ -378,18 +398,5 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     // 이는 추후 애니메이션 이벤트로 처리하게 될시 자동으로 해결될 것
     #region 타이머들(추후 anim이벤트로 일부 변경)
 
-    // 추후 애니메이션 이벤트로 변경 예정
-    float _curSTime = 0;
-    protected void SkillOffTimer(float targetTime)
-    {
-        _curSTime += Time.deltaTime;
-
-        if (_curSTime >= targetTime)
-        {
-            _curSTime = 0;
-
-            _skillUsing = false;
-        }
-    }
     #endregion
 }

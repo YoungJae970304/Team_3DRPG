@@ -12,6 +12,16 @@ public class SceneManagerEx
         get { return GameObject.FindObjectOfType<BaseScene>(); }
     }
 
+    public void Init()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Managers.Game.AddMonsterOnNowScene();
+    }
+
     string GetSceneName(Define.Scene type)
     {
         string name = System.Enum.GetName(typeof(Define.Scene), type);

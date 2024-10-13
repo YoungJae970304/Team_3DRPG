@@ -81,6 +81,7 @@ public class Managers : MonoBehaviour
             s_instance._dataTable.Init();
             s_instance._questManager.Init();
             s_instance._questEnvets.Init();
+            s_instance._scene.Init();
         }
     }
 

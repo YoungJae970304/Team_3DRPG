@@ -36,9 +36,10 @@ public class TestSkill : SkillBase
 
             //Managers.Game._player._playerStatManager._buffStat.ATK += 10;
 
-            Logger.LogError(" 데미지 확인 : " + stat.ATK);
+            //Logger.LogError(" 데미지 확인 : " + stat.ATK);
 
             // 자기 주위로 광역 데미지
+            /* 애니메이션 이벤트로 옮김
             Collider[] hitMobs = Physics.OverlapSphere(Managers.Game._player.transform.position, 30f, 1 << LayerMask.NameToLayer("Monster"));
             foreach (Collider col in hitMobs)
             {
@@ -47,6 +48,7 @@ public class TestSkill : SkillBase
                     damageable.Damaged(stat.ATK);
                 }
             }
+            */
         }
     }
 

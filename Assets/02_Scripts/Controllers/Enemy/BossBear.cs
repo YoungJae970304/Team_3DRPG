@@ -42,7 +42,7 @@ public class BossBear : Monster
             _roarRange.SetActive(true);
             Logger.LogError(_roarRange.activeSelf.ToString());
             _roarRange.transform.localScale = _startScale * (0.1f + _roarTimer * _stageRoarPlus);
-            Logger.LogError(_roarRange.transform.localScale.x.ToString());
+            //Logger.LogError(_roarRange.transform.localScale.x.ToString());
             _roarTimer += Time.deltaTime;
             if (_roarRange.transform.localScale.x >= _mStat.AtkDelay)
             {
