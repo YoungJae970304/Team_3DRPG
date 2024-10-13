@@ -12,6 +12,7 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateEnter()
     {
+        _monster._attackCompleted = false;
         _monster.LookPlayer();
         _monster._anim.SetBool("BeforeChase", false);
         //_monster._hitPlayer.Clear();
@@ -22,6 +23,7 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateExit()
     {
+        
         _monster._timer = _monster._mStat.AtkDelay;
         _monster._nav.stoppingDistance = 0;
         
@@ -29,7 +31,12 @@ public class MonsterAttackState : BaseState
         _monster._anim.SetBool("BeforeChase", true);
         //_monster._hitPlayer.Clear();
     }
-
+    private IEnumerator AttackDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _monster._anim.SetBool("AfterAttackMotion", true);
+        _monster._attackCompleted = false;
+    }
     public override void OnStateUpdate()
     {
         _monster.AttackTimer();
@@ -38,13 +45,12 @@ public class MonsterAttackState : BaseState
         //딜레이 후 플레이어 공격
         if (_monster._timer > _monster._mStat.AtkDelay)
         {
+            _monster._attackCompleted = true;
+            _monster._anim.SetBool("AfterAttackMotion", false);
             _monster.AttackStateSwitch();
             _monster._timer = 0f;
+            _monster.StartCoroutine(AttackDelay(0.8f));
             //여기에 에너미 공격 넣기
-
-            
-
         }
-     
     }
 }
