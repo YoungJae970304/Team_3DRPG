@@ -25,7 +25,7 @@ public class BossBear : Monster
         _startScale = _roarRange.transform.localScale;
 
         _roarRange.SetActive(false);
-
+        _mStat._mStat.AttackRange = 3;
     }
     public override void Update()
     {
@@ -40,7 +40,7 @@ public class BossBear : Monster
         while (_roarRange.transform.localScale.x < _mStat.AtkDelay)
         { 
             _roarRange.SetActive(true);
-            Logger.LogError(_roarRange.activeSelf.ToString());
+            //Logger.LogError(_roarRange.activeSelf.ToString());
             _roarRange.transform.localScale = _startScale * (0.1f + _roarTimer * _stageRoarPlus);
             //Logger.LogError(_roarRange.transform.localScale.x.ToString());
             _roarTimer += Time.deltaTime;
@@ -54,14 +54,14 @@ public class BossBear : Monster
                 _maxRoarRange.SetActive(false);//애니메이션이 끝나는 시점에 꺼지도록 따로 함수작성
                 break;
             }
-            _anim.SetBool("AterStay", false);
+            _anim.SetBool("AfterStay", false);
            
             yield return null;
         }
         
         
     }
-  
+
     protected override void BaseState()
     {
         switch (_curState)
@@ -89,19 +89,23 @@ public class BossBear : Monster
                 }
                 break;
             case MonsterState.Attack:
-                if (!CanAttackPlayer())
+                if(_attackCompleted == true)
                 {
-                    if (!ReturnOrigin())
+                    if (!CanAttackPlayer())
                     {
-                        _anim.SetTrigger("PlayerChase");
-                        MChangeState(MonsterState.Move);
-                    }
-                    else
-                    {
-                        _anim.SetTrigger("NonPlayerChase");
-                        MChangeState(MonsterState.Return);
+                        if (!ReturnOrigin())
+                        {
+                            _anim.SetTrigger("PlayerChase");
+                            MChangeState(MonsterState.Move);
+                        }
+                        else
+                        {
+                            _anim.SetTrigger("NonPlayerChase");
+                            MChangeState(MonsterState.Return);
+                        }
                     }
                 }
+                
                 break;
             case MonsterState.Return:
                 if ((_originPos - transform.position).magnitude <= 3f)
@@ -111,6 +115,8 @@ public class BossBear : Monster
                 }
                 break;
             case MonsterState.Die:
+                break;
+            case MonsterState.Skill:
                 break;
         }
         }
@@ -182,6 +188,7 @@ public class BossBear : Monster
         if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount])
         {
             _anim.SetTrigger("BossRoar");
+            MChangeState(MonsterState.Skill);
             //(이 밑에 if문 들어갈거임)
             //시간 초 후 roar발동
             //바닥에 깔리는 장판 구현해야함

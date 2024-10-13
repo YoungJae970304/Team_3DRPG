@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Threading;
 
 
 
@@ -50,8 +51,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     int endValue2;
     int startValue3;
     int endValue3;
-    [Header("몬스터 공격 콜라이더 리스트")]
+    [Header("몬스터 공격")]
     public List<Collider> _atkColliders;
+    public bool _attackCompleted = false;
+
     //[HideInInspector]
     //public List<GameObject> _hitPlayer;
     public Animator _anim;
@@ -257,7 +260,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 플레이어 공격관련 함수
     public void AttackPlayer() // 공격 모션 중간에 호출
     {
-//
         int damage = _mStat.ATK;
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         foreach (Collider collider in checkColliders)
@@ -311,6 +313,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             transform.rotation = Quaternion.LookRotation(direction);
         }
     }
+   
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
