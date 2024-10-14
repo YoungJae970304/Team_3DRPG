@@ -60,7 +60,7 @@ public class Ork : Monster
         else
             MChangeState(MonsterState.Move);
     }
-    public void OrkIDCheck(DeongeonLevel curLevel)
+    public void OrkIDCheck(DeongeonType curLevel)
     {
         foreach (var oID in _dataTableManager._MonsterDropData)
         {
@@ -76,19 +76,19 @@ public class Ork : Monster
                 }
                 switch (curLevel)
                 {
-                    case DeongeonLevel.Easy:
+                    case DeongeonType.Easy:
                         if (OID == '1')
                         {
                             _OrkID = oID.ID;
                         }
                         break;
-                    case DeongeonLevel.Normal:
+                    case DeongeonType.Normal:
                         if (OID == '2')
                         {
                             _OrkID = oID.ID;
                         }
                         break;
-                    case DeongeonLevel.Hard:
+                    case DeongeonType.Hard:
                         if (OID== '3')
                         {
                             _OrkID = oID.ID;

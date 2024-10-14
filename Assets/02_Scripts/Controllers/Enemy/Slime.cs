@@ -107,7 +107,7 @@ public class Slime : Monster
             
         }
     }
-    public void SlimeIDCheck(DeongeonLevel curLevel)
+    public void SlimeIDCheck(DeongeonType curLevel)
     {
         foreach(var sID in _dataTableManager._MonsterDropData)
         {
@@ -122,19 +122,19 @@ public class Slime : Monster
                 }
                 switch (curLevel)
                 {
-                    case DeongeonLevel.Easy:
+                    case DeongeonType.Easy:
                         if(SID == '1')
                         {
                             _slimeID = sID.ID;
                         }
                         break;
-                    case DeongeonLevel.Normal:
+                    case DeongeonType.Normal:
                         if (SID == '2')
                         {
                             _slimeID = sID.ID;
                         }
                         break;
-                    case DeongeonLevel.Hard:
+                    case DeongeonType.Hard:
                         if (SID == '3')
                         {
                             _slimeID = sID.ID;
