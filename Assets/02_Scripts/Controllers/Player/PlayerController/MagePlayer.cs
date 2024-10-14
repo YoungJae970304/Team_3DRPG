@@ -7,9 +7,10 @@ public class MagePlayer : Player
     [Header("평타 투사체 생성 위치")]
     public Transform _mageBallPos;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
+
         _playerType = Define.PlayerType.Mage;
     }
 

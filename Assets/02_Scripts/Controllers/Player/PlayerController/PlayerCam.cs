@@ -53,6 +53,18 @@ public class PlayerCam : MonoBehaviour
         _cmQuarterCam.LookAt = Managers.Game._player.transform.Find("PlayerModel");
         _cmZoomCam.Follow = Managers.Game._player.transform.Find("CameraArm");
         _cmZoomCam.LookAt = Managers.Game._player.transform.Find("PlayerModel");
+
+        var aim = _cmQuarterCam.GetCinemachineComponent<CinemachineComposer>();
+
+        switch (Managers.Game._player._playerType)
+        {
+            case Define.PlayerType.Melee:
+                aim.m_TrackedObjectOffset.y = 0.5f;
+                break;
+            case Define.PlayerType.Mage:
+                aim.m_TrackedObjectOffset.y = 0.0f;
+                break;
+        }
     }
 
     void Update()

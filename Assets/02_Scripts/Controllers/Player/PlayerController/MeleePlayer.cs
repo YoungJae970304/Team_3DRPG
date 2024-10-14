@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MeleePlayer : Player
 {
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
+
         _playerType = Define.PlayerType.Melee;
     }
 

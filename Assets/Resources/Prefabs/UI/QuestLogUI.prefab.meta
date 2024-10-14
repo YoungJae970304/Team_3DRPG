@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Prefabs/UI/QuestLogUI.prefab.meta
 guid: 5ca01f7183a697e46a0393478f2a17b2
 PrefabImporter:
+========
+guid: 3c88ead8db0b5b845ae92ee1910fbf00
+DefaultImporter:
+>>>>>>>> Master:Assets/lilToon/BaseShaderResources/lts.lilinternal.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

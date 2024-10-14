@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Prefabs/UI/QuestListBtn.prefab.meta
 guid: 75ce98b696bc31841b2d81a131cb6adb
 PrefabImporter:
+========
+guid: c9dd6a844225d504fae29b983bf95995
+DefaultImporter:
+>>>>>>>> Master:Assets/lilToon/BaseShaderResources/lilCustomShaderDatas.lilblock.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
