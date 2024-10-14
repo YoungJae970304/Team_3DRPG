@@ -27,6 +27,5 @@ public class MeleePlayer : Player
         AtkCount = 0;
 
         _playerInput.InputBufferInsert(AtkCount);
-        ChangeState(PlayerState.Attack);
     }
 }
