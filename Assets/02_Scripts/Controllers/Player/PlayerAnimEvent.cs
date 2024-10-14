@@ -47,6 +47,7 @@ public class PlayerAnimEvent : MonoBehaviour
         _player._skillUsing = false;
     }
 
+    #region 원거리 플레이어 스킬
     // 1번째 스킬 ( 주위로 광역 데미지 )
     public void FirstSkillDamage()
     {
@@ -90,6 +91,24 @@ public class PlayerAnimEvent : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region 근거리 플레이어 스킬
+    public void MeleeFirstSkillDamage()
+    {
+        Logger.LogWarning("근거리 플레이어 1번째 스킬");
+    }
+
+    public void MeleeSecondSkillDamage()
+    {
+        Logger.LogWarning("근거리 플레이어 2번째 스킬");
+    }
+
+    public void MeleeThirdSkillDamage()
+    {
+        Logger.LogWarning("근거리 플레이어 3번째 스킬");
+    }
+    #endregion
 
     // 회피 애니메이션 시작부
     public void DodgeStart()
