@@ -17,6 +17,7 @@ public class PlayerAttackState : BaseState
         {
             case 0:
                 Logger.Log("강공격");
+                _player._playerAnim.SetTrigger("doSpAttack");
                 break;
             case 1:
                 Logger.Log("기본공격 1타");
