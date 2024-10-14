@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 7983998085977020005}
   - component: {fileID: 147287174814431883}
   - component: {fileID: 8134815791338881591}
-  - component: {fileID: 9205027619870400602}
+  - component: {fileID: 508846245605939594}
   m_Layer: 0
   m_Name: JP_Tree_Oak_02_LOD0
   m_TagString: Untagged
@@ -231,7 +231,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &9205027619870400602
+--- !u!136 &508846245605939594
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,7 +241,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.58
+  m_Radius: 0.64
   m_Height: 12.922263
   m_Direction: 1
   m_Center: {x: 0, y: 6.452806, z: 0}
