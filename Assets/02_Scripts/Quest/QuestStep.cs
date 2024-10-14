@@ -35,22 +35,11 @@ public abstract class QuestStep : MonoBehaviour
 
     protected void FinishQuestStep()
     {
-        if (!_isFinished)
-        {
-            _isFinished = true;
-            //퀘스트가 진행 되었음을 알리는 이벤트
-            Managers.QuestEvents.AdvanceQuest(_questID);
-            //이 이벤트 삭제
-            Destroy(gameObject);
-        }
+
     }
 
     protected void ChangeState(string newState, string newStatus)
     {
-        Managers.QuestEvents.QuestStepStateChange(
-            _questID,
-            _stepIdx,
-            new QuestStepState(newState, newStatus)
-            );
+
     }
 }

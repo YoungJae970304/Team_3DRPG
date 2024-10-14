@@ -17,35 +17,6 @@ public class QuestManager
     {
         LoadQuestData();
     }
-
-    private void OnEnable()
-    {
-        //시작 이벤트 구독
-        Managers.QuestEvents._onStartQuest += OnStartQuest;
-        //진행 이벤트 구독
-        Managers.QuestEvents._onAdvanceQuest += OnAdvanceQuest;
-        //완료 이벤트 구독
-        Managers.QuestEvents._onFinishQuest += OnFinishQuest;
-        //상태 변경 이벤트 구독
-        Managers.QuestEvents._onQuestStateChange += OnQuestStateChange;
-        //스텝 상태 변경 이벤트 구독
-        Managers.QuestEvents._onQuestStepStateChange += OnQuestStepStateChange;
-    }
-
-    private void OnDisable()
-    {
-        //시작 이벤트 구독 해지
-        Managers.QuestEvents._onStartQuest -= OnStartQuest;
-        //진행 이벤트 구독 해지
-        Managers.QuestEvents._onAdvanceQuest -= OnAdvanceQuest;
-        //완료 이벤트 구독 해지
-        Managers.QuestEvents._onFinishQuest -= OnFinishQuest;
-        //상태 변경 이벤트 구독 해지
-        Managers.QuestEvents._onQuestStateChange -= OnQuestStateChange;
-        //스텝 상태 변경 이벤트 구독 해지
-        Managers.QuestEvents._onQuestStepStateChange -= OnQuestStepStateChange;
-    }
-
     void LoadQuestData()
     {
         var questData = Managers.DataTable._QuestData;
