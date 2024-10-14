@@ -1,18 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestStepState : MonoBehaviour
+[Serializable]
+public class QuestStepState
 {
-    // Start is called before the first frame update
-    void Start()
+    public string _state;
+    public string _status;
+
+    public QuestStepState(string state, string status)
     {
-        
+        _state = state;
+        _status = status;
     }
 
-    // Update is called once per frame
-    void Update()
+    public QuestStepState()
     {
-        
+        _state = "";
+        _status = "";
     }
 }
