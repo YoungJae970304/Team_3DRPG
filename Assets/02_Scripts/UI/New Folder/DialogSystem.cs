@@ -17,7 +17,7 @@ public class DialogSystem : UI_Interect
     bool isFirst = true;          //최초 1회만 호출하기 위한 변수
     int currentDialogIndex = -1;  //현재 대사 순번
     int currentSpeakerIndex = 0;  //현재 말을 하는 회자(Speaker)의 speakers 배열 순번
-    float typingSpeed = 0.1f;     //텍스트 타이핑 효과의 재생 속도
+    float typingSpeed = 0.2f;     //텍스트 타이핑 효과의 재생 속도
     bool isTypingEffect = false;  //텍스트 타이핑 효과를 재생중인지
 
     
@@ -79,7 +79,7 @@ public class DialogSystem : UI_Interect
             //자동 재생(isAutoStart = true)으로 설정되어 있으면
             //첫 번째 대사 재생
             if (isAutoStart)
-            { SetNextDialog(); }
+            { SetNextDialog();}
 
             isFirst = false;
         }

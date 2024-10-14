@@ -26,7 +26,7 @@ public class DataTableManager
     //드랍 데이터 테이블 CSV파일
     const string _MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
     //던전 데이터 테이블 CSV파일
-    const string _DUNGEON_DATA_TABLE = "DungeomDataTable";
+    const string _DUNGEON_DATA_TABLE = "DungeonDataTable";
     //퀘스트 데이터 테이블 CSV 파일
     const string _QUEST_DATA_TABLE = "Quest_Data_Table";
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
