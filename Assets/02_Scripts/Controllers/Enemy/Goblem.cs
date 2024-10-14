@@ -64,7 +64,7 @@ public class Goblem : Monster
         else
             MChangeState(MonsterState.Move);
     }
-    public void GoblemIDCheck(DeongeonLevel curLevel)
+    public void GoblemIDCheck(DeongeonType curLevel)
     {
         foreach (var gID in _dataTableManager._MonsterDropData)
         {
@@ -82,19 +82,19 @@ public class Goblem : Monster
                 //Logger.LogError(gID.Value6.ToString("D1"));
                 switch (curLevel)
                 {
-                    case DeongeonLevel.Easy:
+                    case DeongeonType.Easy:
                         if (GID == '1')
                         {
                             _goblemID = gID.ID;
                         }
                         break;
-                    case DeongeonLevel.Normal:
+                    case DeongeonType.Normal:
                         if (GID == '2')
                         {
                             _goblemID = gID.ID;
                         }
                         break;
-                    case DeongeonLevel.Hard:
+                    case DeongeonType.Hard:
                         if (GID == '3')
                         {
                             _goblemID = gID.ID;

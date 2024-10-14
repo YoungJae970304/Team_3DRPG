@@ -40,7 +40,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
     public Drop _monsterDrop;
-    public DeongeonLevel _deongeonLevel;
+    public DeongeonType _deongeonLevel;
     public DropData _dropData;
     public Dictionary<string, int> randomValue = new Dictionary<string, int>();
     public int _monsterProduct;
@@ -60,7 +60,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Animator _anim;
     public virtual void Awake()
     {
-        _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
+        _deongeonLevel = DeongeonType.Hard; // 추후 던젼에서 받아오도록 설정
         _anim = GetComponent<Animator>();
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
@@ -357,7 +357,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #endregion
 
     #region 아이템 드랍
-    public virtual void itemtest(DeongeonLevel curGrade, int monsterid)
+    public virtual void itemtest(DeongeonType curGrade, int monsterid)
     {
         DropData dropData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
@@ -397,7 +397,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             {
                 switch (curGrade)
                 {
-                    case DeongeonLevel.Easy:
+                    case DeongeonType.Easy:
 
                         for (int i = startValue1; i <= endValue1; i++)
                         {
@@ -405,7 +405,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
                         }
                         break;
-                    case DeongeonLevel.Normal:
+                    case DeongeonType.Normal:
                         for (int i = startValue1; i <= endValue1; i++)
                         {
                             AddSample(i);
@@ -415,7 +415,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
                             AddSample(i);
                         }
                         break;
-                    case DeongeonLevel.Hard:
+                    case DeongeonType.Hard:
                         for (int i = startValue1; i <= endValue1; i++)
                         {
                             AddSample(i);
