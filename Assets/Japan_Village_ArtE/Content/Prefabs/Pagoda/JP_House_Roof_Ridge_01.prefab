@@ -151,7 +151,6 @@ GameObject:
   - component: {fileID: 306745786294283067}
   - component: {fileID: 8338225084802111485}
   - component: {fileID: 9092066027129323437}
-  - component: {fileID: 6457905224425069621}
   m_Layer: 0
   m_Name: DF_House_Roof_Ridge_01_LOD0
   m_TagString: Untagged
@@ -224,16 +223,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6457905224425069621
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9150735292719105590}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.34000003, y: 0.34859562, z: 2}
-  m_Center: {x: -0.000000007450581, y: -0.023573294, z: 0}

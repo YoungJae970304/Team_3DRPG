@@ -70,8 +70,21 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _AmbientOcclusion_Power: 1
     - _BillBoardNoisePower: 0
     - _BillBoardOffset: -0.4
@@ -82,6 +95,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DoDither: 0
     - _DstBlend: 0
+    - _EnvironmentReflections: 1
     - _FaceCameraBillboard: 1
     - _Float2: 0
     - _Float3: 0
@@ -104,9 +118,12 @@ Material:
     - _Parallax: 0.02
     - _PosterizeFactor: 8
     - _PushPower: -0.23
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RandomIndexScale: 1
     - _RandomizeColorFactor: 0
     - _RandomizerDarkness: 1
+    - _ReceiveShadows: 1
     - _SSSPower: 0
     - _SSSScale: 0
     - _ScaleB: -0.86
@@ -128,11 +145,11 @@ Material:
     - _BillBoardNoiseRemaper: {r: 0, g: 1, b: 1, a: 1}
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LightTint: {r: 0.4229972, g: 0.7735849, b: 0.25177997, a: 0}
-    - _ShadowTint: {r: 0.16153434, g: 0.27694464, b: 0.28301886, a: 0}
+    - _LightTint: {r: 0.42299718, g: 0.7735849, b: 0.2517799, a: 0}
+    - _ShadowTint: {r: 0.16153431, g: 0.2769446, b: 0.28301883, a: 0}
     - _StylizedTint_A: {r: 0.13750447, g: 0.2830189, b: 0.23607875, a: 0}
     - _StylizedTint_B: {r: 0.43867922, g: 1, b: 0.47791126, a: 0}
     - _SubSurfaceTint: {r: 0, g: 0, b: 0, a: 0}
-    - _Tint: {r: 0.4261748, g: 0.5754717, b: 0.46178138, a: 0}
+    - _Tint: {r: 0.42617476, g: 0.57547164, b: 0.46178138, a: 0}
     - _WindSphere: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

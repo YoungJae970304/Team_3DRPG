@@ -12,9 +12,9 @@ Material:
   m_ValidKeywords:
   - _GIBLYSTYLIZE_ON
   - _GLOBALTINT_ENABLE_ON
+  - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords:
   - _GLOSSYREFLECTIONS_OFF
-  - _SPECULARHIGHLIGHTS_OFF
   - _VERTEXCOLORTINT_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -81,6 +81,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AO_Power: 0.131
@@ -98,6 +110,7 @@ Material:
     - _Dither: 0
     - _DstBlend: 0
     - _EE: 2.38
+    - _EnvironmentReflections: 1
     - _Exp: 15.26
     - _FaceCameraBillboard: 0
     - _GhiblyIntensity: 0.263
@@ -123,8 +136,11 @@ Material:
     - _OcclusionStrength: 1
     - _OverlayFactor: 0.607
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RandomizeColorFactor: 0
     - _RandomizerDarkness: 1
+    - _ReceiveShadows: 1
     - _SSSPower: 3.49
     - _SSSScale: 2.88
     - _Smoothness: 0.094

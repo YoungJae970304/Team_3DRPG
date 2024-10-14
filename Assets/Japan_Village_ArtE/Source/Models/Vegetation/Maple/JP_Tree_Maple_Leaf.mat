@@ -71,8 +71,21 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaCutoff: 0.5
     - _AmbientOcclusion_Power: 0.561
     - _BillBoardNoisePower: 5.79
     - _BillBoardOffset: 0
@@ -81,6 +94,7 @@ Material:
     - _Cutoff: 0.3
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EnvironmentReflections: 1
     - _FaceCameraBillboard: 1
     - _GhiblyIntensity: 0.208
     - _Ghibly_Exponent: 0.58
@@ -98,8 +112,11 @@ Material:
     - _OcclusionStrength: 1
     - _OverlayFactor: 0.691
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RandomizeColorFactor: 0
     - _RandomizerDarkness: 1
+    - _ReceiveShadows: 1
     - _SSSPower: 4.6
     - _SSSScale: 4.9
     - _SmoothnessTextureChannel: 0
