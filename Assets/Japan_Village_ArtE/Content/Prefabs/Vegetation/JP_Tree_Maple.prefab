@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2285282017366490397}
   - component: {fileID: 8584372238757862445}
   - component: {fileID: 8577900874376730719}
-  - component: {fileID: 4337057418431734501}
+  - component: {fileID: 1847174993039602271}
   m_Layer: 0
   m_Name: JP_Tree_Maple_LOD0
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4337057418431734501
+--- !u!136 &1847174993039602271
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +95,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.45
+  m_Radius: 0.66
   m_Height: 10.193305
   m_Direction: 1
   m_Center: {x: 0, y: 4.9596562, z: 0}

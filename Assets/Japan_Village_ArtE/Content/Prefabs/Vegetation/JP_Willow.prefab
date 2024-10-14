@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2449729561940359571}
   - component: {fileID: 5469301584212192212}
   - component: {fileID: 1514527448623655947}
-  - component: {fileID: 4614630498921872906}
+  - component: {fileID: 2860955841142266229}
   m_Layer: 0
   m_Name: JP_Willow_Trunk_LOD0
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4614630498921872906
+--- !u!136 &2860955841142266229
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,10 +95,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.4
+  m_Radius: 0.53
   m_Height: 4.5949507
   m_Direction: 1
-  m_Center: {x: 0.19, y: 2.0249238, z: 0.18}
+  m_Center: {x: 0, y: 2.0249238, z: 0}
 --- !u!1 &4688380960317166184
 GameObject:
   m_ObjectHideFlags: 0
