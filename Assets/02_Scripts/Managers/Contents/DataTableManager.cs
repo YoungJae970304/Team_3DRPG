@@ -10,6 +10,7 @@ public class DataTableManager
     const string _PLAYER_PREFS_KEY = "ItemDataList";
     const string _PLAYER_PREFS_QUEST_KEY = "QuestDataList";
     const string _PLAYER_PREFS_DROP_KEY = "DropDataList";
+    const string _PLAYER_PREFS_DUNGEON_KEY = "DungeonDataList";
 
     public void Init()
     {
@@ -24,6 +25,8 @@ public class DataTableManager
     const string _GOODS_ITEM_DATA_TABLE = "Goods_Data_Table";
     //드랍 데이터 테이블 CSV파일
     const string _MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
+    //던전 데이터 테이블 CSV파일
+    const string _DUNGEON_DATA_TABLE = "DungeomDataTable";
     //퀘스트 데이터 테이블 CSV 파일
     const string _QUEST_DATA_TABLE = "Quest_Data_Table";
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
@@ -31,6 +34,7 @@ public class DataTableManager
     public List<ItemData> _PotionItemData = new List<ItemData>();
     public List<ItemData> _GoodsItemData = new List<ItemData>();
     public List<DropData> _MonsterDropData = new List<DropData>();
+    public List<DungeonData> _DungeonData = new List<DungeonData>();
     public List<QuestData> _QuestData = new List<QuestData>();
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
@@ -43,6 +47,7 @@ public class DataTableManager
         GoodsDataTable(_DATA_PATH, _GOODS_ITEM_DATA_TABLE);
         DropDataTable(_DATA_PATH, _MONSTER_DROP_DATA_TABLE);
         QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
+        DungeonDataTable(_DATA_PATH, _DUNGEON_DATA_TABLE);
     }
     #endregion
 
@@ -235,7 +240,37 @@ public class DataTableManager
         }
     }
     #endregion
+    void DungeonDataTable(string dataPath, string dungeonDataTable)
+    {
+        var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
+        foreach (var data in parsedDungeonDataTable)
+        {
+            DungeonData dungeonData = null;
+            dungeonData = new DungeonData
+            {
+                //인덱스
+                Index = Convert.ToInt32(data["Index"]),
+                //아이디
+                ID = Convert.ToInt32(data["ID"]),
+                //던전 이름
+                DungeonName = data["DungeonName"].ToString(),
+                //몬스터 타입1
+                MonsterType1 = Convert.ToInt32(data["MonsterType1"]),
+                //몬스터 타입2
+                MonsterType2 = Convert.ToInt32(data["MonsterType2"]),
+                //몬스터 타입3
+                MonsterType3 = Convert.ToInt32(data["MonsterType3"]),
+            };
+            if (dungeonData != null)
+            {
+                Logger.Log($"{dungeonData} 저장됨");
+                _DungeonData.Add(dungeonData);
+            }
+        }
+    }
+    #region 던전 데이터테이블 함수
 
+    #endregion
     #region 퀘스트 데이터테이블 함수
     void QuestDataTable(string dataPath, string questDataTable)
     {
