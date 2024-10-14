@@ -10,8 +10,6 @@ public class InventoryUI : ItemUI
 {
     public ItemData.ItemType _currentType= ItemData.ItemType.Potion;
 
-    public Transform _itemTrs;
-
     public Inventory _inventory;
     
     public Inventory Inventory
@@ -23,6 +21,7 @@ public class InventoryUI : ItemUI
     }
 
     enum GameObjects {
+        Inventory,
         Slots,
     }
 
@@ -35,6 +34,17 @@ public class InventoryUI : ItemUI
         _inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
         _inventory.GetItemAction += UpdateSlot;
         //ItemGrap.endGrapAction += UpdateSlot;
+        GetGameObject((int)GameObjects.Inventory).GetOrAddComponent<ItemProxy>().SetProxy((moveSlot) => {
+            if (moveSlot is InventorySlot) { return; }
+            if (_inventory.InsertItem(moveSlot.Item))
+            {
+                moveSlot.RemoveItem();
+            }
+            else
+            {
+                moveSlot.UpdateSlotInfo();
+            }
+        }); ;
         SlotSetting(_currentType);
     }
     public override void Init(Transform anchor)
