@@ -87,9 +87,6 @@ public class DataTableManager
                 ManaRegen = Convert.ToInt32(data["ManaRegen"]),
                 //소지 수량
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = data["ItemIcon"].ToString(),
-                //아이콘
             };
             if (itemData != null)
             {
@@ -132,10 +129,6 @@ public class DataTableManager
                 DurationTime = Convert.ToInt32(data["DurationTime"]),
                 //소지 개수
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = data["TestIcon"].ToString(),
-                //아이콘
-                //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
             if (itemData != null)
             {
