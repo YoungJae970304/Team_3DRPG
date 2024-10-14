@@ -51,7 +51,6 @@ public class DataTableManager
     }
     #endregion
 
-
     #region 장비데이터테이블 함수
     void EquipmentDataTable(string dataPath, string equipmentDataTable)
     {
@@ -233,6 +232,8 @@ public class DataTableManager
         }
     }
     #endregion
+
+    #region 던전 데이터테이블 함수
     void DungeonDataTable(string dataPath, string dungeonDataTable)
     {
         var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
@@ -261,9 +262,8 @@ public class DataTableManager
             }
         }
     }
-    #region 던전 데이터테이블 함수
-
     #endregion
+
     #region 퀘스트 데이터테이블 함수
     void QuestDataTable(string dataPath, string questDataTable)
     {
