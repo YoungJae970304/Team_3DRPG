@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 47c17621337f36344a6dc63624ff0c65, type: 2}
+  - {fileID: -8876663572800315499, guid: 07e661e469846ee4e83243f99c37b261, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,7 +156,6 @@ GameObject:
   - component: {fileID: 7019363350877393424}
   - component: {fileID: 1124070309603583050}
   - component: {fileID: 4919889825138579632}
-  - component: {fileID: 6377909279853451096}
   m_Layer: 0
   m_Name: JP_Water_Heater_LOD0
   m_TagString: Untagged
@@ -207,7 +206,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 47c17621337f36344a6dc63624ff0c65, type: 2}
+  - {fileID: -8876663572800315499, guid: 07e661e469846ee4e83243f99c37b261, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,19 +228,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6377909279853451096
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6848993469311307272}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.18586281, y: 0.7874154, z: 0.5139246}
-  m_Center: {x: 0.09220484, y: -0.1571436, z: -0.08190702}
 --- !u!1 &8953035913745984066
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +289,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 47c17621337f36344a6dc63624ff0c65, type: 2}
+  - {fileID: -8876663572800315499, guid: 07e661e469846ee4e83243f99c37b261, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

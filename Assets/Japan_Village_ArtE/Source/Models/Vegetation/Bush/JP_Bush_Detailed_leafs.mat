@@ -9,11 +9,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: JP_Bush_Detailed_leafs
   m_Shader: {fileID: 4800000, guid: fca946b0b05f46745baa1bc414f02ea1, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords:
   - _DITHER_ON
   - _GLOSSYREFLECTIONS_OFF
-  - _SPECULARHIGHLIGHTS_OFF
   - _VERTEXCOLORTINT_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -80,12 +80,25 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AO_Power: 0.368
     - _ASEOutlineWidth: 0.01
     - _AlphaCutoff: 0.5
     - _AmbientOcclusion_Power: 0.367
+    - _BillBoardNoisePower: 0
     - _BillBoardOffset: 0
     - _BillboardScale: 1
     - _BumpScale: 1
@@ -96,6 +109,7 @@ Material:
     - _Dither: 1
     - _DstBlend: 0
     - _EE: 2.38
+    - _EnvironmentReflections: 1
     - _Exp: 0
     - _FaceCameraBillboard: 0
     - _GhiblyIntensity: 0
@@ -121,6 +135,11 @@ Material:
     - _OcclusionStrength: 1
     - _OverlayFactor: 0
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _RandomizeColorFactor: 0
+    - _RandomizerDarkness: 1
+    - _ReceiveShadows: 1
     - _SSSPower: 3.3
     - _SSSScale: 5.13
     - _Smoothness: 0.094
@@ -148,6 +167,7 @@ Material:
     - __dirty: 0
     m_Colors:
     - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 0}
+    - _BillBoardNoiseRemaper: {r: 0, g: 1, b: 1, a: 1}
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FreshnelColor: {r: 0, g: 0, b: 0, a: 1}

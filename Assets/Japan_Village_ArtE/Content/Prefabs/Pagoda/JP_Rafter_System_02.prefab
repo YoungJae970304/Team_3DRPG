@@ -68,7 +68,6 @@ GameObject:
   - component: {fileID: 2745185641182270563}
   - component: {fileID: 1273566991336650244}
   - component: {fileID: 9032741870528620697}
-  - component: {fileID: 4362081430999173495}
   m_Layer: 0
   m_Name: DF_JP_Rafter_System_02_LOD0
   m_TagString: Untagged
@@ -141,19 +140,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4362081430999173495
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565740262599713283}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.29140282, y: 0.2479713, z: 2}
-  m_Center: {x: 0.23497581, y: 0.16706955, z: -1}
 --- !u!1 &3459381785535297112
 GameObject:
   m_ObjectHideFlags: 0

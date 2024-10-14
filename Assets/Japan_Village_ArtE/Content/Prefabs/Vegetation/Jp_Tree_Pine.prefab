@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1191396961399696400}
   - component: {fileID: 4135458908858394534}
   - component: {fileID: 5698859733408497243}
-  - component: {fileID: 2118397747101898203}
+  - component: {fileID: 2336713228950547609}
   m_Layer: 0
   m_Name: JP_Tree_Pine_LOD0
   m_TagString: Untagged
@@ -85,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2118397747101898203
+--- !u!136 &2336713228950547609
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +95,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.41
+  m_Radius: 1.01
   m_Height: 23.718618
   m_Direction: 1
   m_Center: {x: 0, y: 11.517631, z: 0}

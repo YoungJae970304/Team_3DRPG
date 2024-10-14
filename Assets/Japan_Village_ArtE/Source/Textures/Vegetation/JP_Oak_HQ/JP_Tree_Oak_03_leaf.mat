@@ -79,9 +79,22 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _AO_Power: 0.641
+    - _AlphaCutoff: 0.5
     - _AmbientOcclusion_Power: 0.718
     - _BillBoardNoisePower: 7.39
     - _BillBoardOffset: 0.089
@@ -95,6 +108,7 @@ Material:
     - _Dither: 0
     - _DoDither: 0
     - _DstBlend: 0
+    - _EnvironmentReflections: 1
     - _Exp: 4.14
     - _FaceCameraBillboard: 1
     - _Float2: 0
@@ -120,17 +134,20 @@ Material:
     - _Parallax: 0.02
     - _PosterizeFactor: 4.894118
     - _PushPower: 0.09
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RandomIndexScale: 0.35
     - _RandomizeColorFactor: 0
     - _RandomizerDarkness: 1
-    - _SSSPower: 2.3
+    - _ReceiveShadows: 1
+    - _SSSPower: 0.56
     - _SSSScale: 2.97
     - _ScaleB: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 1
     - _SrcBlend: 1
-    - _SubSurfaceDistorion: 0.908
+    - _SubSurfaceDistorion: 0.313
     - _SunPower: 0.53
     - _TextureArraySize: 4
     - _TransAmbient: 0.172
@@ -159,7 +176,7 @@ Material:
     - _ShadowTint: {r: 0, g: 0.47065255, b: 0.5377358, a: 0}
     - _StylizedTint_A: {r: 0.08713063, g: 0.20754716, b: 0.16953167, a: 0}
     - _StylizedTint_B: {r: 0.17617476, g: 0.29807478, b: 0.34905657, a: 0}
-    - _SubSurfaceTint: {r: 1.934777, g: 2.1185474, b: 0.86516607, a: 0}
+    - _SubSurfaceTint: {r: 1.9410775, g: 2.828427, b: 1.1424627, a: 0}
     - _Tint: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 0}
     - _UV_SIze: {r: 0.49, g: 0.62, b: 0, a: 0}
     - _WindSphere: {r: 0, g: 0, b: 0, a: 0}
