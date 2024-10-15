@@ -97,6 +97,7 @@ public class PlayerAnimEvent : MonoBehaviour
     public void MeleeFirstSkillDamage()
     {
         Logger.LogWarning("근거리 플레이어 1번째 스킬");
+        _player.ApplyDamage();
     }
 
     public void MeleeSecondSkillDamage()

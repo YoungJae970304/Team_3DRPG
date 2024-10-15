@@ -13,13 +13,7 @@ public class MeleePlayer : Player
 
     public override void Attack()
     {
-        
-    }
-
-    public override void Skill()
-    {
-        // 추후 이곳에서 스킬 데이터를 받아서 SkillBase에 저장해주나?
-
+        ApplyDamage();
     }
 
     public override void Special()
@@ -27,5 +21,16 @@ public class MeleePlayer : Player
         AtkCount = 0;
 
         _playerInput.InputBufferInsert(AtkCount);
+    }
+
+    public override void SkillSetE()
+    {
+        // 추후 이곳에서 스킬 데이터를 받아서 SkillBase에 저장해주나?
+        _skillBase = new MeleeSkill1();
+    }
+
+    public override void SkillSetR()
+    {
+        _skillBase = new MeleeSkill1();
     }
 }
