@@ -11,6 +11,7 @@ public class MonsterDieState : BaseState
 
     public override void OnStateEnter()
     {
+        _monster._nav.destination = Vector3.zero;
         Logger.Log("몬스터 사망");
         _monster._anim.SetTrigger("Die");
         _monster._nav.enabled = false;

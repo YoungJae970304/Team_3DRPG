@@ -14,6 +14,7 @@ public class MonsterMoveState : BaseState
         //플레이어 찾기(슬라임에서 찾아둠)
         _monster._nav.stoppingDistance = _monster._mStat.AttackRange-0.5f;
         _monster._nav.destination = _monster._player.transform.position;
+        _monster._nav.SetDestination(_monster._nav.destination);
     }
 
     public override void OnStateExit()
@@ -23,13 +24,16 @@ public class MonsterMoveState : BaseState
 
     public override void OnStateUpdate()
     {
-        _monster.LookPlayer();
+        
+        //_monster.PlayerLook();
+
         //플레이어 추격
-        _monster._nav.SetDestination(_monster._nav.destination);
-        _timer += Time.deltaTime;
-        if (_timer > 2f)
-        {
+        //_timer += Time.deltaTime;
+       
+            _monster.LookPlayer();
             _monster._nav.destination = _monster._player.transform.position;
-        }
+            _monster._nav.SetDestination(_monster._nav.destination);
+           // _timer = 0;
+        
     }
 }
