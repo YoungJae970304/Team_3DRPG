@@ -15,9 +15,6 @@ public class PlayerSkillState : BaseState
 
     public override void OnStateUpdate()
     {
-        // 시간 지나면 스킬 상태 끝나게 (임시)
-        _player.Skill();
-        
         _player._skillBase.SkillStay(_stat);
     }
 

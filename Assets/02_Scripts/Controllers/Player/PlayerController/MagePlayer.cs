@@ -20,13 +20,18 @@ public class MagePlayer : Player
         go.transform.position = _mageBallPos.position;
     }
 
-    public override void Skill()
-    {
-        
-    }
-
     public override void Special()
     {
         _playerCam.CamModeChange();
+    }
+
+    public override void SkillSetE()
+    {
+        _skillBase = new TestSkill();
+    }
+
+    public override void SkillSetR()
+    {
+        _skillBase = new ChainLightning();
     }
 }
