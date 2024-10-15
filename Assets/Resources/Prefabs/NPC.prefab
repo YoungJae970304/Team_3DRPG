@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4025654484850620818
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 448, y: -113}
+  m_AnchoredPosition: {x: 448, y: -88.25}
   m_SizeDelta: {x: 279.8777, y: 83.5808}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3501060830072536616
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1764809740954991706}
         m_TargetAssemblyTypeName: DialogDungeonUI, Assembly-CSharp
         m_MethodName: OpenDungeonUI
         m_Mode: 1
@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5282910713298907443
 RectTransform:
   m_ObjectHideFlags: 0
@@ -168,7 +168,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 639.6, y: -483.8}
+  m_AnchoredPosition: {x: 639.6, y: -459.05}
   m_SizeDelta: {x: 45.4624, y: 39.7796}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3385502047167873416
@@ -257,6 +257,8 @@ Transform:
   m_Children:
   - {fileID: 3309143363492029247}
   - {fileID: 3496842380419737983}
+  - {fileID: 3560793742355986129}
+  - {fileID: 7475955114555301622}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5192120283780874669
@@ -343,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 2784349132712581450}
-  DungeonDialogUI: {fileID: 0}
+  DungeonDialogUI: {fileID: 3777529934814659062}
 --- !u!1 &2946919621585500628
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,13 +358,14 @@ GameObject:
   - component: {fileID: 3777529934814659062}
   - component: {fileID: 3438860598239601959}
   - component: {fileID: 5857152726163010929}
+  - component: {fileID: 1764809740954991706}
   m_Layer: 5
   m_Name: DungeonDIalog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3496842380419737983
 RectTransform:
   m_ObjectHideFlags: 0
@@ -451,6 +454,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1764809740954991706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2946919621585500628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5b5f1f3b8511444825b7b2a1029044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogSystem:
+  - {fileID: 2558093873819579789}
+  - {fileID: 102254933993219657}
+  _dungeonUI: {fileID: 0}
+  _dungeonBtn: {fileID: 6052707490373127565}
 --- !u!1 &3411212464102269781
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2277951112248040728
 RectTransform:
   m_ObjectHideFlags: 0
@@ -485,7 +505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 65.861084, y: -456.46857}
+  m_AnchoredPosition: {x: 65.861084, y: -431.71857}
   m_SizeDelta: {x: -617.3218, y: -912.9371}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4214636282995249295
@@ -647,6 +667,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _UIOpenAnimation: {fileID: 0}
   TopBarImage: {fileID: 0}
+--- !u!1 &5318445288551851865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7475955114555301622}
+  - component: {fileID: 102254933993219657}
+  m_Layer: 0
+  m_Name: DungeonNPClog_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7475955114555301622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318445288551851865}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.3, y: -0.5, z: -6.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3025065218896775382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &102254933993219657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5318445288551851865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f4a905ea71b4944aa5f5d0e68cb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakers:
+  - spriteRenderer: {fileID: 6397613403791126087}
+    imageDialog: {fileID: 7738398150876259064}
+    textName: {fileID: 6606101854301370372}
+    textDialog: {fileID: 8160538488589350249}
+    objectArrow: {fileID: 955796843262228197}
+  dialogs:
+  - speakerIndex: 0
+    name: "\uB358\uC804 NPC"
+    dialogue: "\uB358\uC804\uC5D0 \uB4E4\uC5B4\uAC00\uACE0 \uC2F6\uB2E4\uACE0?"
+  isAutoStart: 0
 --- !u!1 &5998645664282443438
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &569933911427969518
 Transform:
   m_ObjectHideFlags: 0
@@ -673,7 +748,7 @@ Transform:
   m_GameObject: {fileID: 5998645664282443438}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -958.55, y: -538.75, z: -0}
+  m_LocalPosition: {x: -958.55, y: -514, z: -0}
   m_LocalScale: {x: 0.024302159, y: 0.024302155, z: 0.024302155}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -823,7 +898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3309396539319313145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -840,7 +915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -536, y: -322}
+  m_AnchoredPosition: {x: -536, y: -297.25}
   m_SizeDelta: {x: -1728.2322, y: -1029.7322}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8710540463166421516
@@ -902,7 +977,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7935372961227279743
 RectTransform:
   m_ObjectHideFlags: 0
@@ -919,7 +994,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: -404.15848}
+  m_AnchoredPosition: {x: 19, y: -379.40848}
   m_SizeDelta: {x: 1396.4004, y: 271.683}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1343096242040206913
@@ -960,6 +1035,61 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8215792123665572837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3560793742355986129}
+  - component: {fileID: 2558093873819579789}
+  m_Layer: 0
+  m_Name: DungeonNPClog_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3560793742355986129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215792123665572837}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.3, y: -0.5, z: -6.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3025065218896775382}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2558093873819579789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215792123665572837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f4a905ea71b4944aa5f5d0e68cb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakers:
+  - spriteRenderer: {fileID: 6397613403791126087}
+    imageDialog: {fileID: 7738398150876259064}
+    textName: {fileID: 6606101854301370372}
+    textDialog: {fileID: 8160538488589350249}
+    objectArrow: {fileID: 955796843262228197}
+  dialogs:
+  - speakerIndex: 0
+    name: "\uB358\uC804 NPC"
+    dialogue: "\uC65C \uB9D0\uAC78\uC5B4"
+  isAutoStart: 0
 --- !u!1 &9109253490481526720
 GameObject:
   m_ObjectHideFlags: 0
