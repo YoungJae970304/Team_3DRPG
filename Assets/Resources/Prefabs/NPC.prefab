@@ -412,7 +412,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &3438860598239601959
 MonoBehaviour:
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   - speakerIndex: 0
     name: "\uB358\uC804 NPC"
     dialogue: "\uC65C \uB9D0\uAC78\uC5B4"
-  isAutoStart: 0
+  isAutoStart: 1
 --- !u!1 &9109253490481526720
 GameObject:
   m_ObjectHideFlags: 0
