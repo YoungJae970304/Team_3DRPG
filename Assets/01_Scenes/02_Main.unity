@@ -478,7 +478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &274652012
 Transform:
   m_ObjectHideFlags: 0
@@ -1368,6 +1368,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 2390683838968090313, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2784349132712581450, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
@@ -2863,11 +2868,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ork
       objectReference: {fileID: 0}
-    - target: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3053,11 +3053,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Slime_01_King
-      objectReference: {fileID: 0}
-    - target: {fileID: 8042249935538729580, guid: 41febf0d389836f42bc608116d9b7e9a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3379,7 +3374,7 @@ PrefabInstance:
     - target: {fileID: 2184752452405639459, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.000000059604645
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2338164303099282149, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
         type: 3}

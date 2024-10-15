@@ -73,16 +73,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.96812755
-        functionName: AttackColliderActiveFalse
+      - time: 0.52191234
+        functionName: NomalAttack
         data: 
         objectReferenceParameter: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.52191234
-        functionName: NomalAttack
+      - time: 0
+        functionName: AttackCompleteCheck
         data: 
         objectReferenceParameter: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
           type: 3}
