@@ -33,7 +33,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
-    private bool _isDamaged = false; //데미지를 받고있는 여부를 판단하는 bool변수
+    public CharacterController _characterController;
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
@@ -60,6 +60,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         _deongeonLevel = DeongeonType.Hard; // 추후 던젼에서 받아오도록 설정
         _anim = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
+        //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
         States.Add(MonsterState.Move, new MonsterMoveState(_player, this, _mStat));
@@ -208,11 +210,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             Logger.LogError("MonsterStat이 null입니다");
             return;
         }
-        if(_isDamaged == true)
-        {
-            return;
-        }
-        _isDamaged = true;
+      
         _mStat.HP -= (amount - _mStat.DEF);
         StartDamege(_player.transform.position, 0.1f, 30f);
         Logger.LogError(_mStat.HP.ToString());
@@ -225,13 +223,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
             MChangeState(MonsterState.Die);
         }
-        StartCoroutine(ResetDamageState());
+     
     }
-    private IEnumerator ResetDamageState()
-    {
-        yield return new WaitForSeconds(1f); // 적절한 시간 동안 대기
-        _isDamaged = false; // 데미지 상태 초기화
-    }
+
     #endregion
     #region 죽었을 때
     public virtual void Die(GameObject mob)
@@ -252,7 +246,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         //사정거리 체크 구현
         //여기에 타이머넣어서 변환까지 시간걸리게
-        return _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        bool rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position)<60;
+        return rangeCheck && angleCheck;
     }
     public bool CanSeePlayer()
     {
@@ -271,10 +267,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     #endregion
     #region 플레이어 공격관련 함수
-    public void AttackPlayer() // 공격 모션 중간에 호출
+    public void AttackPlayer() // 공격 모션 중간에 호출 // 수정 예정
     {
         int damage = _mStat.ATK;
-        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
+        //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
+        // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
+        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.8f);
+
+        // 박스의 크기 설정 (폭, 높이, 깊이)
+        Vector3 boxSize = new Vector3(1.2f, 2f, _mStat.AttackRange); // 너비 1, 높이 1, 깊이 AttackRange
+
+        // 박스에 충돌하는 객체를 체크
+        Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
         foreach (Collider collider in checkColliders)
         {
             if (collider.CompareTag("Player"))
@@ -319,46 +323,43 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public void LookPlayer()
     {
         // 플레이어와의 방향 계산
-        Vector3 direction = _player.transform.position;
+        Vector3 direction = (_player.transform.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         direction.y = 0; // Y축 회전 방지 (수평 평면에서만 회전)
 
         // 새로운 회전값 설정
         if (direction != Vector3.zero) // 방향 벡터가 0이 아닐 때만 회전
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime*5);
         }
     }
     public void AttackCompleteCheck()
     {
         _attackCompleted = false;
     }
+   
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
+        //_nav.enabled = false;
+        //_characterController.enabled = true; // CharacterController 비활성화
 
-        _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
         Vector3 force = diff * pushBack; // 넉백 힘
 
-        // Rigidbody 설정
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false; // 물리 효과 활성화
-
-
-        // 넉백 힘 적용
-        rb.AddForce(force, ForceMode.Impulse);
+        // 넉백 처리
+        Vector3 moveDirection = force; // CharacterController는 이동 방향을 사용
+        //_characterController.Move(moveDirection * Time.deltaTime); // 이동
 
         // 넉백 후 처리
-        await Task.Delay((int)(delay * 2000)); // 넉백 지속 시간 (필요에 따라 조정)
+        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (ms 단위)
 
-        // 넉백이 끝나면 NavMeshAgent를 다시 활성화
+        // 넉백이 끝나면 CharacterController를 다시 활성화
+       // _nav.enabled = true;
+       // _characterController.enabled = false;
 
-
-        _nav.enabled = true;
-        rb.isKinematic = true; // 다시 비활성화 (필요시)
         if (CanAttackPlayer())
             MChangeState(MonsterState.Attack);
         else

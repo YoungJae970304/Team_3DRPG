@@ -51,6 +51,7 @@ public class MonsterAttackState : BaseState
         if (_monster._timer > _monster._mStat.AtkDelay)
         {
             //_monster._attackCompleted = false;
+            _monster.LookPlayer();
             _monster._anim.SetBool("AfterAttackMotion", false);
             _monster.AttackStateSwitch();
             _monster._timer = 0f;
