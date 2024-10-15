@@ -117,13 +117,12 @@ public class DungeonType : BaseUI
         Managers.Resource.Instantiate($"");
         Managers.Resource.Instantiate("");
         Managers.Resource.Instantiate("");
-        /*for (int i = _monsterType1; i <= _monsterType3; i++)
+        for (int i = _monsterType1; i <= _monsterType3; i++)
         {
-            InventorySlot slot = Managers.Resource.Instantiate("UI/InventorySlot",
-                GetGameObject((int)GameObjects.Slots).transform).GetComponent<InventorySlot>();
-            slot.Init(_inventory, this);
-            _inventorySlots.Add(slot);
-        }*/
+            //InventorySlot slot = Managers.Resource.Instantiate("UI/MonsterImage",
+                //GetGameObject(gameObject.).transform).GetComponent<InventorySlot>();
+           
+        }
     }
 
 }
