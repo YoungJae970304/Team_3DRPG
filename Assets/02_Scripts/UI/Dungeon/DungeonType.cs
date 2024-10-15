@@ -9,15 +9,16 @@ public class DungeonType : BaseUI
     [Header("Dungeon관련 변수")]
     public DataTableManager _dataTableManager;
     public DeongeonType _deongeonLevel;
-    public DungeonData _dungeonData;
+    DungeonData _dungeonData;
     string _dungeonName;
-    int _monsterType1;
-    int _monsterType2;
-    int _monsterType3;
-    int _dungeonID;
+    public int _monsterType1;
+    public int _monsterType2;
+    public int _monsterType3;
+    public int _dungeonID;
     [Header("UI이미지 관련 변수")]
     public GameObject _mainMonster;
     public TextMeshProUGUI _dungeonText;
+    public GameObject _monsterImageType;
     private void Awake()
     {
         _dataTableManager = Managers.DataTable;
@@ -83,9 +84,9 @@ public class DungeonType : BaseUI
                     break;
 
             }
-            DungeonUITest(_dungeonID);
-        }
             
+        }
+        DungeonUITest(_dungeonID);
     }
     public void DungeonUITest(int ID)
     {
@@ -109,19 +110,19 @@ public class DungeonType : BaseUI
                 Logger.LogError($"{_monsterType1}");
                 Logger.LogError($"{_monsterType2}");
                 Logger.LogError($"{_monsterType3}");
+                break;
             }
         }
-        //던전이름text = dungeonName;
+        _dungeonText.text = _dungeonName;
         Image mainMonster = _mainMonster.GetComponent<Image>();
         mainMonster.sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType1}");
-        Managers.Resource.Instantiate($"");
-        Managers.Resource.Instantiate("");
-        Managers.Resource.Instantiate("");
+        //던전이름text = dungeonName;
         for (int i = _monsterType1; i <= _monsterType3; i++)
         {
-            //InventorySlot slot = Managers.Resource.Instantiate("UI/MonsterImage",
-                //GetGameObject(gameObject.).transform).GetComponent<InventorySlot>();
-           
+            GameObject dungeonMonsterType = Managers.Resource.Instantiate("UI/MonsterImage", _monsterImageType.transform);
+            Image dungeonMonsterImage = dungeonMonsterType.GetComponent<Image>();
+            dungeonMonsterImage.sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{i}"); //추후 경로 변경
+            //dungeonMonsterImage.rectTransform.localPosition = Vector3.zero;
         }
     }
 
