@@ -18,7 +18,7 @@ public class DialogDungeonUI : BaseUI
 
         yield return new WaitUntil(() => _dialogSystem[1].UpdateDialog());
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
         _dungeonBtn.gameObject.SetActive(false);
     }

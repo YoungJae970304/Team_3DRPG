@@ -145,6 +145,9 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseFrontUI();
+        }else if (Input.GetKeyDown(KeyCode.F))
+        {
+            _player._interectController._lastObj.DungeonNpcDialog();
         }
     }
 

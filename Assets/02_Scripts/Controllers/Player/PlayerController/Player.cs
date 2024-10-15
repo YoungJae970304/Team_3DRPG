@@ -126,13 +126,15 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public PlayerCam _playerCam;
     [HideInInspector]
     public PlayerStatManager _playerStatManager;
-
+    [HideInInspector]
+    public InterectController _interectController;
     protected virtual void Awake()
     {
         #region 컴포넌트 초기화
         _cc = gameObject.GetOrAddComponent<CharacterController>();
         _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
         _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
+        _interectController = gameObject.GetOrAddComponent<InterectController>();
         _playerAnim = GetComponentInChildren<Animator>();
         _playerStatManager = new PlayerStatManager();
         #endregion

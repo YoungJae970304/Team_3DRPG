@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class NpcController :Interectable
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Interection(GameObject gameObject)
     {
-        
+        base.Interection(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void UIPopUp(bool active)
     {
-        
+        base.UIPopUp(active);
+    }
+
+    public override void DungeonNpcDialog()
+    {
+        base.DungeonNpcDialog();
     }
 }

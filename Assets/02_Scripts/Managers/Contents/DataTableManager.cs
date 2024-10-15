@@ -6,11 +6,6 @@ public class DataTableManager
 {
     //CSVData폴더 안에 있는 csv값을 스트링으로 가져오고 csv파일로 읽어올거임
     const string _DATA_PATH = "CSVData";
-    //저장할 때 사용할 키
-    const string _PLAYER_PREFS_KEY = "ItemDataList";
-    const string _PLAYER_PREFS_QUEST_KEY = "QuestDataList";
-    const string _PLAYER_PREFS_DROP_KEY = "DropDataList";
-    const string _PLAYER_PREFS_DUNGEON_KEY = "DungeonDataList";
 
     public void Init()
     {
