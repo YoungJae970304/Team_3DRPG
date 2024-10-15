@@ -249,7 +249,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         //사정거리 체크 구현
         //여기에 타이머넣어서 변환까지 시간걸리게
         bool rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
-        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position)<60;
+        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position)<45;
         return rangeCheck && angleCheck;
     }
     public bool CanSeePlayer()
@@ -321,6 +321,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
             _atkColliders[i].gameObject.SetActive(false);
         }
         //_hitPlayer.Clear();
+    }
+    public void LookBeforeAttack()
+    {
+        transform.LookAt(_player.transform);
     }
     public void LookPlayer()
     {
