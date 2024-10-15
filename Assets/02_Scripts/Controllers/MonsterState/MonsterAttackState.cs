@@ -17,7 +17,7 @@ public class MonsterAttackState : BaseState
         _monster._anim.SetBool("BeforeChase", false);
         //_monster._hitPlayer.Clear();
         
-        _monster._timer = 1.5f;
+        _monster._timer = 3f;
         
         _monster._nav.stoppingDistance = _monster._mStat.AttackRange-0.5f;
         _monster._anim.SetTrigger("BeforeAttack");
