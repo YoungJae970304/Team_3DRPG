@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.VisualScripting;
 
 
 
@@ -212,8 +213,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
       
         _mStat.HP -= (amount - _mStat.DEF);
-        StartDamege(_player.transform.position, 0.1f, 30f);
-        Logger.LogError(_mStat.HP.ToString());
         if (_mStat.HP > 0)
         {
 
@@ -223,6 +222,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
             MChangeState(MonsterState.Die);
         }
+        StartDamege(_player.transform.position, 0.1f, 30f);
+        Logger.LogError(_mStat.HP.ToString());
+        
      
     }
 
@@ -342,7 +344,11 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        //_nav.enabled = false;
+        if(_mStat.HP <= 0)
+        {
+            return;
+        }
+        _nav.enabled = false;
         //_characterController.enabled = true; // CharacterController 비활성화
 
         // 넉백 방향 계산
@@ -357,7 +363,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (ms 단위)
 
         // 넉백이 끝나면 CharacterController를 다시 활성화
-       // _nav.enabled = true;
+        _nav.enabled = true;
        // _characterController.enabled = false;
 
         if (CanAttackPlayer())

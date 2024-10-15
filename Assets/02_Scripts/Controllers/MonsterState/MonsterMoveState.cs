@@ -30,7 +30,7 @@ public class MonsterMoveState : BaseState
         //플레이어 추격
         //_timer += Time.deltaTime;
        
-            _monster.LookPlayer();
+            
             _monster._nav.destination = _monster._player.transform.position;
             _monster._nav.SetDestination(_monster._nav.destination);
            // _timer = 0;
