@@ -47,6 +47,23 @@ public class PlayerAnimEvent : MonoBehaviour
         _player._skillUsing = false;
     }
 
+    // 광역으로 일괄 데미지를 넣을 때 사용하는 이벤트 range로 범위 조절
+    public void AreaDamage(float range)
+    {
+        Vector3 playerPos = Managers.Game._player.transform.position;
+
+        for (int i = 0; i < Managers.Game._monsters.Count; i++)
+        {
+            if (Vector3.Distance(playerPos, Managers.Game._monsters[i].transform.position) < range)
+            {
+                if (Managers.Game._monsters[i].TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+                }
+            }
+        }
+    }
+
     #region 원거리 플레이어 스킬
     // 1번째 스킬 ( 주위로 광역 데미지 )
     public void FirstSkillDamage()
@@ -89,6 +106,9 @@ public class PlayerAnimEvent : MonoBehaviour
                     damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
                 }
             }
+
+            // 추후 다음 에너미에게 데미지를 가하기까지 딜레이를 줘야함
+
         }
     }
     #endregion
@@ -96,13 +116,26 @@ public class PlayerAnimEvent : MonoBehaviour
     #region 근거리 플레이어 스킬
     public void MeleeFirstSkillDamage()
     {
-        Logger.LogWarning("근거리 플레이어 1번째 스킬");
         _player.ApplyDamage();
     }
 
-    public void MeleeSecondSkillDamage()
+    public void MeleeSecondSkillDamage(float range)
     {
+        // 주변을 넓게 베는 스킬, 발도같은 느낌
         Logger.LogWarning("근거리 플레이어 2번째 스킬");
+
+        Vector3 playerPos = Managers.Game._player.transform.position;
+
+        for (int i = 0; i < Managers.Game._monsters.Count; i++)
+        {
+            if (Vector3.Distance(playerPos, Managers.Game._monsters[i].transform.position) < range)
+            {
+                if (Managers.Game._monsters[i].TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+                }
+            }
+        }
     }
 
     public void MeleeThirdSkillDamage()

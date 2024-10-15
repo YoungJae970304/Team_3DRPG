@@ -31,6 +31,6 @@ public class MeleePlayer : Player
 
     public override void SkillSetR()
     {
-        _skillBase = new MeleeSkill1();
+        _skillBase = new MeleeSkill2();
     }
 }
