@@ -155,17 +155,21 @@ public class Monster : MonoBehaviour, IDamageAlbe
                     MChangeState(MonsterState.Return);
                 break;
             case MonsterState.Attack:
-                if (!CanAttackPlayer())//내가 공격을 끝냈는지에 대한 조건을 상위조건으로 걸기// 불변수 // 급
+                if (_attackCompleted == true)
                 {
-                    if (!ReturnOrigin())
+                    if (!CanAttackPlayer())//내가 공격을 끝냈는지에 대한 조건을 상위조건으로 걸기// 불변수 // 급
                     {
-                        MChangeState(MonsterState.Move);
-                    }
-                    else
-                    {
-                        MChangeState(MonsterState.Return);
+                        if (!ReturnOrigin())
+                        {
+                            MChangeState(MonsterState.Move);
+                        }
+                        else
+                        {
+                            MChangeState(MonsterState.Return);
+                        }
                     }
                 }
+                
                 break;
             case MonsterState.Return:
                 if ((_originPos - transform.position).magnitude <= 3f)
@@ -278,6 +282,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void NomalAttack() //이벤트 2번
     {
+        
         Logger.Log("NomalAttack");
 
         _player._playerHitState = PlayerHitState.NomalAttack;
@@ -286,6 +291,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void SkillAttack() // 이벤트 2번
     {
+        
         Logger.Log("SkillAttack");
 
         _player._playerHitState = PlayerHitState.SkillAttack;
@@ -304,16 +310,20 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public void LookPlayer()
     {
         // 플레이어와의 방향 계산
-        Vector3 direction = _player.transform.position - transform.position;
+        Vector3 direction = _player.transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
         direction.y = 0; // Y축 회전 방지 (수평 평면에서만 회전)
 
         // 새로운 회전값 설정
         if (direction != Vector3.zero) // 방향 벡터가 0이 아닐 때만 회전
         {
-            transform.rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
         }
     }
-   
+   public void AttackCompleteCheck()
+    {
+        _attackCompleted = false;
+    }
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)

@@ -107,6 +107,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0
+        functionName: AttackCompleteCheck
+        data: 
+        objectReferenceParameter: {fileID: 8042249935538729580, guid: 41febf0d389836f42bc608116d9b7e9a,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
