@@ -1,10 +1,8 @@
-using System.Collections;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Threading;
+using System.Collections;
 
 
 
@@ -35,7 +33,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
-
+    private bool _isDamaged = false; //데미지를 받고있는 여부를 판단하는 bool변수
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
@@ -72,7 +70,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
-        
+
 
     }
     // Start is called before the first frame update
@@ -85,7 +83,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
         _dropStat = GetComponent<MonsterStat>();
-       
+
         _nav = GetComponent<NavMeshAgent>();
 
         _originPos = transform.position;
@@ -169,7 +167,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
                         }
                     }
                 }
-                
+
                 break;
             case MonsterState.Return:
                 if ((_originPos - transform.position).magnitude <= 3f)
@@ -210,18 +208,29 @@ public class Monster : MonoBehaviour, IDamageAlbe
             Logger.LogError("MonsterStat이 null입니다");
             return;
         }
+        if(_isDamaged == true)
+        {
+            return;
+        }
+        _isDamaged = true;
         _mStat.HP -= (amount - _mStat.DEF);
         StartDamege(_player.transform.position, 0.1f, 30f);
         Logger.LogError(_mStat.HP.ToString());
         if (_mStat.HP > 0)
         {
-            
+
             MChangeState(MonsterState.Damage);
         }
         else
         {
             MChangeState(MonsterState.Die);
         }
+        StartCoroutine(ResetDamageState());
+    }
+    private IEnumerator ResetDamageState()
+    {
+        yield return new WaitForSeconds(1f); // 적절한 시간 동안 대기
+        _isDamaged = false; // 데미지 상태 초기화
     }
     #endregion
     #region 죽었을 때
@@ -268,7 +277,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         foreach (Collider collider in checkColliders)
         {
-            if (collider.CompareTag("Player") )
+            if (collider.CompareTag("Player"))
             {
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
@@ -282,7 +291,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void NomalAttack() //이벤트 2번
     {
-        
+
         Logger.Log("NomalAttack");
 
         _player._playerHitState = PlayerHitState.NomalAttack;
@@ -291,7 +300,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void SkillAttack() // 이벤트 2번
     {
-        
+
         Logger.Log("SkillAttack");
 
         _player._playerHitState = PlayerHitState.SkillAttack;
@@ -300,7 +309,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void AttackColliderActiveFalse()//공격 모션 마지막에 호출 이벤트 3번
     {
-      
+
         for (int i = 0; i < _atkColliders.Count; i++)
         {
             _atkColliders[i].gameObject.SetActive(false);
@@ -320,7 +329,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
         }
     }
-   public void AttackCompleteCheck()
+    public void AttackCompleteCheck()
     {
         _attackCompleted = false;
     }
@@ -328,7 +337,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        
+
         _nav.enabled = false;
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
@@ -456,13 +465,13 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public virtual void MakeItem()
     {
         int randomDice = UnityEngine.Random.Range(1, 100);
-        if(randomDice <= 100)
+        if (randomDice <= 100)
         {
             GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
             item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
         }
-        
-        
+
+
     }
     #endregion
 }
