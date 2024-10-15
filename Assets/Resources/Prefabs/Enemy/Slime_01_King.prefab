@@ -176,7 +176,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -266,7 +266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6423914184171704433
 Transform:
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
   _originPos: {x: 0, y: 0, z: 0}
   _player: {fileID: 0}
   _nav: {fileID: 0}
-  _mStat: {fileID: 0}
+  _dropStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
   sample: []
@@ -434,6 +434,7 @@ MonoBehaviour:
   _monsterProduct: 0
   _atkColliders:
   - {fileID: 6762031736458368283}
+  _attackCompleted: 0
   _anim: {fileID: 0}
   _slimeID: 0
 --- !u!65 &6859415761765004083
