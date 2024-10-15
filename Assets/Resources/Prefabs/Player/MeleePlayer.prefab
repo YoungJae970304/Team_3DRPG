@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 1516078326189676196}
   - component: {fileID: 7730115033510396560}
   - component: {fileID: 75515129276120943}
+  - component: {fileID: 5757558879396367340}
   m_Layer: 0
   m_Name: MeleePlayer
   m_TagString: Player
@@ -188,6 +189,7 @@ MonoBehaviour:
   _cc: {fileID: 0}
   _playerInput: {fileID: 0}
   _playerCam: {fileID: 0}
+  _interectController: {fileID: 0}
 --- !u!114 &1516078326189676196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +237,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d8331f3bfb48d448c949b2a263e3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5757558879396367340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918571816801624183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078c1bc2077f6bf47b9770efab646625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interectRange: 5
+  _main: {fileID: 0}
+  _target: []
+  _lastObj: {fileID: 0}
 --- !u!1 &2509168502048895412
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using System.Dynamic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogSystem : UI_Interect
+public class DialogSystem : MonoBehaviour
 {
     [SerializeField]
     Speaker[] speakers;           //대화에 참여하는 캐릭터들의 UI 배열
@@ -20,24 +20,9 @@ public class DialogSystem : UI_Interect
     float typingSpeed = 0.03f;     //텍스트 타이핑 효과의 재생 속도
     bool isTypingEffect = false;  //텍스트 타이핑 효과를 재생중인지
 
-    
     private void Awake()
     {
         //Setup();
-    }
-
-    //다이얼 로그가 끝났을 때 닫아주기
-    public override void CloseUI(bool isCloseAll = false)
-    {
-        base.CloseUI(isCloseAll);
-    }
-
-    //근데 이제는 NPC와 상호작용 시 출력 되어야 함.
-    //상호 작용 하고 Dialog가 나오게 해야하는데....
-    public override void ShowUI()
-    {
-        base.ShowUI();
-        Setup();
     }
     
     void Setup()
@@ -46,9 +31,9 @@ public class DialogSystem : UI_Interect
         for (int i = 0; i < speakers.Length; ++i)
         {
             //비활성화
-            SetActiveObjects(speakers[i], false);
+            //SetActiveObjects(speakers[i], false);
             //캐릭터 이미지는 보이도록 설정
-            speakers[i].spriteRenderer.gameObject.SetActive(true);
+            //speakers[i].spriteRenderer.gameObject.SetActive(true);
         }
     }
     void SetActiveObjects(Speaker speaker, bool visible)
@@ -84,7 +69,7 @@ public class DialogSystem : UI_Interect
             isFirst = false;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
         {
             //텍스트 타이핑 효과를 재생중일때
             //마우스 왼쪽 클릭하면 타이핑 효과 종료
@@ -100,8 +85,9 @@ public class DialogSystem : UI_Interect
                 //대사가 완료 되었을 때 출력되는 커서 활성화
                 speakers[currentSpeakerIndex].objectArrow.SetActive(true);
 
-                return false;//false값을 반환 함             
+                return false;//false값을 반환 함
             }
+
             //대사가 남아 있을경우 다음 대사 진행
             if (dialogs.Length > currentDialogIndex + 1)
             {
@@ -111,14 +97,15 @@ public class DialogSystem : UI_Interect
             {
                 //대사가 더 이상 없을 경우
                 //모든 오브젝트를 비활성화 하고 true 반환
-                for (int i = 0; i < speakers.Length; ++i)
+                for (int i = 0; i < speakers.Length; i++)
                 {
                     //현재 대화에 참여했던 모든 캐릭터,
                     //대화 관련 UI를 보이지 않게 비활성화
-                    SetActiveObjects(speakers[i], false);
+                    //SetActiveObjects(speakers[i], false);
                     //SetActiveObject()에 캐릭터 이미지를 보이지 않게 하는 부분이 없기 때문에 별도로 호출
-                    speakers[i].spriteRenderer.gameObject.SetActive(false);
+                    //speakers[i].spriteRenderer.gameObject.SetActive(false);
                 }
+                ResetDialog();
                 return true;
             }
         }
@@ -128,7 +115,7 @@ public class DialogSystem : UI_Interect
     void SetNextDialog()
     {
         //이전 화자의 대화 관련 오브젝트 비활성화 말하는 사람키면 말안하는 사람 꺼주기
-        SetActiveObjects(speakers[currentSpeakerIndex], false);
+        //SetActiveObjects(speakers[currentSpeakerIndex], false);
         //다음 대사를 진행 하도록
         currentDialogIndex++;
         //현재 화자 순번 설정
@@ -166,6 +153,20 @@ public class DialogSystem : UI_Interect
 
         //대사가 완료 되었을 때 출력 되는 커서 활성화
         speakers[currentSpeakerIndex].objectArrow.SetActive(true);
+    }
+
+    public void ResetDialog()
+    {
+        currentDialogIndex = -1;
+        currentSpeakerIndex = 0;
+        isFirst = true;
+        isTypingEffect = false;
+
+        Setup();
+        if (isAutoStart)
+        {
+            SetNextDialog();
+        }
     }
 }
 

@@ -2,26 +2,42 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogDungeonUI : BaseUI
+public class DialogDungeonUI : MonoBehaviour
 {
     [SerializeField]
-    DialogSystem[] _dialogSystem;
+    DialogSystem _dialogSystem;
     public GameObject _dungeonUI;
     public Button _dungeonBtn;
-    IEnumerator Start()
+    public Canvas DungeonUI;
+
+    private void OnEnable()
+    {
+        StartCoroutine(DialogStart());
+    }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    private void Start()
+    {
+
+    }
+
+    IEnumerator DialogStart()
     {
         _dungeonBtn.gameObject.SetActive(false);
 
-        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
+        yield return new WaitUntil(() => _dialogSystem.UpdateDialog());
 
         _dungeonBtn.gameObject.SetActive(true);
 
-        yield return new WaitUntil(() => _dialogSystem[1].UpdateDialog());
+        yield return new WaitUntil(() => _dialogSystem.UpdateDialog());
 
         yield return new WaitForSeconds(0.2f);
-        this.gameObject.SetActive(false);
         _dungeonBtn.gameObject.SetActive(false);
     }
+
 
     public void OpenDungeonUI()
     {
