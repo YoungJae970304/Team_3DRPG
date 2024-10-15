@@ -27,11 +27,6 @@ public class DialogDungeonUI : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
         _dungeonBtn.gameObject.SetActive(false);
-
-        foreach (var dialog in _dialogSystem)
-        {
-            dialog.RestartDialog();
-        }
     }
 
     public void OpenDungeonUI()

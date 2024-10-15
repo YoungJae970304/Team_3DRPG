@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,12 +17,11 @@ public class DialogSystem : MonoBehaviour
     int currentSpeakerIndex = 0;  //현재 말을 하는 회자(Speaker)의 speakers 배열 순번
     float typingSpeed = 0.03f;     //텍스트 타이핑 효과의 재생 속도
     bool isTypingEffect = false;  //텍스트 타이핑 효과를 재생중인지
-    bool isDone = false;
     private void Awake()
     {
         //Setup();
     }
-    
+
     void Setup()
     {
         //모든 대화 관련 게임오브젝트 비활성화
@@ -35,9 +32,6 @@ public class DialogSystem : MonoBehaviour
             //캐릭터 이미지는 보이도록 설정
             speakers[i].spriteRenderer.gameObject.SetActive(true);
         }
-        currentDialogIndex = -1;
-        isFirst = true;
-        isDone = true;
     }
 
     void SetActiveObjects(Speaker speaker, bool visible)
@@ -68,13 +62,12 @@ public class DialogSystem : MonoBehaviour
             //자동 재생(isAutoStart = true)으로 설정되어 있으면
             //첫 번째 대사 재생
             if (isAutoStart)
-            { SetNextDialog();}
+            { SetNextDialog(); }
 
             isFirst = false;
-            isDone = false;
         }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
+        if (Input.GetMouseButtonDown(0))
         {
             //텍스트 타이핑 효과를 재생중일때
             //마우스 왼쪽 클릭하면 타이핑 효과 종료
@@ -89,7 +82,7 @@ public class DialogSystem : MonoBehaviour
                 speakers[currentSpeakerIndex].textDialog.text = dialogs[currentDialogIndex].dialogue;
                 //대사가 완료 되었을 때 출력되는 커서 활성화
                 speakers[currentSpeakerIndex].objectArrow.SetActive(true);
-               
+
                 return false;//false값을 반환 함
             }
 
@@ -110,8 +103,8 @@ public class DialogSystem : MonoBehaviour
                     //SetActiveObject()에 캐릭터 이미지를 보이지 않게 하는 부분이 없기 때문에 별도로 호출
                     speakers[i].spriteRenderer.gameObject.SetActive(false);
                 }
-                isDone = true;
-                Setup();
+                isFirst = true; 
+                currentDialogIndex = -1; 
                 return true;
             }
         }
@@ -158,21 +151,7 @@ public class DialogSystem : MonoBehaviour
 
         //대사가 완료 되었을 때 출력 되는 커서 활성화
         speakers[currentSpeakerIndex].objectArrow.SetActive(true);
-        
-    }
 
-    public void RestartDialog()
-    {
-        Setup();
-        currentDialogIndex = -1;
-        isFirst = true;
-        isDone = false;
-        SetNextDialog();
-    }
-
-    public bool IsDialogDone()
-    {
-        return isDone;
     }
 }
 
