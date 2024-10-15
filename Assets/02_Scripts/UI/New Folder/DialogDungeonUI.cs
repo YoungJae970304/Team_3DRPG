@@ -5,39 +5,34 @@ using UnityEngine.UI;
 public class DialogDungeonUI : MonoBehaviour
 {
     [SerializeField]
-    DialogSystem _dialogSystem;
+    DialogSystem[] _dialogSystem;
     public GameObject _dungeonUI;
     public Button _dungeonBtn;
-    public Canvas DungeonUI;
 
-    private void OnEnable()
+    public void StartDialog()
     {
         StartCoroutine(DialogStart());
-    }
-    private void OnDisable()
-    {
-        StopAllCoroutines();
-    }
-
-    private void Start()
-    {
-
     }
 
     IEnumerator DialogStart()
     {
+        //첫 대사 시작전에 버튼을 숨기고 있다가
         _dungeonBtn.gameObject.SetActive(false);
 
-        yield return new WaitUntil(() => _dialogSystem.UpdateDialog());
+        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
 
         _dungeonBtn.gameObject.SetActive(true);
 
-        yield return new WaitUntil(() => _dialogSystem.UpdateDialog());
+        yield return new WaitUntil(() => _dialogSystem[1].UpdateDialog());
 
         yield return new WaitForSeconds(0.2f);
         _dungeonBtn.gameObject.SetActive(false);
-    }
 
+        foreach (var dialog in _dialogSystem)
+        {
+            dialog.RestartDialog();
+        }
+    }
 
     public void OpenDungeonUI()
     {

@@ -134,18 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &69764583 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6326950542308680957, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &78566275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -274,24 +262,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ff4859bd0f216b40b1dc15fc287c1fc, type: 3}
---- !u!114 &94756250 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9045470790053083045, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!212 &98675545 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8741853020937784761, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &136895891 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6052707490373127565, guid: 81a17a1681951a34bab17685dd098bfa,
@@ -304,6 +274,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &166661851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 166661852}
+  - component: {fileID: 166661853}
+  m_Layer: 0
+  m_Name: DungeonNPClog_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &166661852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166661851}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 274652012}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &166661853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166661851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f4a905ea71b4944aa5f5d0e68cb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakers:
+  - spriteRenderer: {fileID: 1135162122}
+    imageDialog: {fileID: 1250904858}
+    textName: {fileID: 67490377}
+    textDialog: {fileID: 1405576961}
+    objectArrow: {fileID: 1411102351}
+  dialogs:
+  - speakerIndex: 0
+    name: "\uB358\uC804 NPC"
+    dialogue: "\uB358\uC804\uC5D0 \uB4E4\uC5B4\uAC00\uACE0 \uC2F6\uB2E4\uACE0?"
+  isAutoStart: 0
 --- !u!1 &274652010
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,7 +360,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1868102887}
-  - {fileID: 986268567}
+  - {fileID: 166661852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &274652013
@@ -350,10 +375,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5b5f1f3b8511444825b7b2a1029044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogSystem: {fileID: 0}
-  _dungeonUI: {fileID: 0}
+  _dialogSystem:
+  - {fileID: 1868102886}
+  - {fileID: 166661853}
+  _dungeonUI: {fileID: 1074243578}
   _dungeonBtn: {fileID: 136895891}
-  DungeonUI: {fileID: 0}
 --- !u!1 &281825761
 GameObject:
   m_ObjectHideFlags: 3
@@ -451,18 +477,6 @@ MonoBehaviour:
   CameraRadius: 0.2
   DampingIntoCollision: 0
   DampingFromCollision: 2
---- !u!114 &306894640 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5360861254579709019, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,12 +856,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7133272839047318325}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &497774446 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 1973592039698026083, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
-    type: 3}
-  m_PrefabInstance: {fileID: 7559869982765699350}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &498344114 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6169465399569319872, guid: ca485054dc4f410439e704b8252a351b,
@@ -1132,6 +1140,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -514
       objectReference: {fileID: 0}
+    - target: {fileID: 810021786601747198, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 955796843262228197, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1282406393396071828, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
       propertyPath: DungeonDialogUI
@@ -1150,7 +1168,7 @@ PrefabInstance:
     - target: {fileID: 2946919621585500628, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3025065218896775382, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
@@ -1207,6 +1225,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -297.25
       objectReference: {fileID: 0}
+    - target: {fileID: 3411212464102269781, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4025654484850620818, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1217,11 +1240,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -459.05
       objectReference: {fileID: 0}
+    - target: {fileID: 5998645664282443438, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6052707490373127565, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 274652013}
+    - target: {fileID: 6052707490373127565, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenDungeonUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827367772331183800, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415417890660996602, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7935372961227279743, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1229,19 +1272,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3025065218896775382, guid: 81a17a1681951a34bab17685dd098bfa,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953672049}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81a17a1681951a34bab17685dd098bfa, type: 3}
---- !u!4 &821962023 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3025065218896775382, guid: 81a17a1681951a34bab17685dd098bfa,
-    type: 3}
-  m_PrefabInstance: {fileID: 811806875}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1291,166 +1324,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &953672048
+--- !u!1 &1074243578 stripped
 GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 953672049}
-  - component: {fileID: 953672050}
-  m_Layer: 0
-  m_Name: GameObject_1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &953672049
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953672048}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1168513464}
-  m_Father: {fileID: 821962023}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &953672050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953672048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f4a905ea71b4944aa5f5d0e68cb872, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakers:
-  - spriteRenderer: {fileID: 98675545}
-    imageDialog: {fileID: 306894640}
-    textName: {fileID: 958956688}
-    textDialog: {fileID: 69764583}
-    objectArrow: {fileID: 1319838460}
-  dialogs:
-  - speakerIndex: 0
-    name: "\uB358\uC804 NPC"
-    dialogue: "\uC65C \uB9D0\uAC78\uC5B4"
-  - speakerIndex: 1
-    name: "\uB358\uC804 NPC"
-    dialogue: "\uB358\uC804\uC5D0 \uB4E4\uC5B4\uAC00\uACE0 \uC2F6\uB2E4\uACE0?"
-  isAutoStart: 0
---- !u!114 &958956688 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6399914765124011963, guid: 68f84fe7b818f1f41a717e847d30458f,
+  m_CorrespondingSourceObject: {fileID: 2338164303099282149, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
     type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
+  m_PrefabInstance: {fileID: 7559869982765699350}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &986268566
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 986268567}
-  - component: {fileID: 986268568}
-  m_Layer: 0
-  m_Name: DungeonNPClog_2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &986268567
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986268566}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 274652012}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &986268568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 986268566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58f4a905ea71b4944aa5f5d0e68cb872, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakers:
-  - spriteRenderer: {fileID: 1135162122}
-    imageDialog: {fileID: 1250904858}
-    textName: {fileID: 67490377}
-    textDialog: {fileID: 1405576961}
-    objectArrow: {fileID: 1411102351}
-  dialogs:
-  - speakerIndex: 0
-    name: "\uB358\uC804 NPC"
-    dialogue: "\uB358\uC804\uC5D0 \uB4E4\uC5B4\uAC00\uACE0 \uC2F6\uB2E4\uACE0?"
-  isAutoStart: 0
 --- !u!212 &1135162122 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 6397613403791126087, guid: 81a17a1681951a34bab17685dd098bfa,
     type: 3}
   m_PrefabInstance: {fileID: 811806875}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1168513463 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3248593829709318713, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1168513464 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1168513465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168513463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f5b5f1f3b8511444825b7b2a1029044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dialogSystem: {fileID: 953672050}
-  _dungeonUI: {fileID: 1168513463}
-  _dungeonBtn: {fileID: 94756250}
-  DungeonUI: {fileID: 497774446}
 --- !u!114 &1250904858 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7738398150876259064, guid: 81a17a1681951a34bab17685dd098bfa,
@@ -1703,12 +1588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1319838460 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5248619820331463261, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1811163048}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1405576961 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8160538488589350249, guid: 81a17a1681951a34bab17685dd098bfa,
@@ -1799,138 +1678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deongeonLevel: 0
---- !u!1001 &1811163048
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 953672049}
-    m_Modifications:
-    - target: {fileID: 3248593829709318713, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_Name
-      value: DungeonDIalog
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002339993723015197, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9045470790053083045, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1168513465}
-    - target: {fileID: 9045470790053083045, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenDungeonUI
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3248593829709318713, guid: 68f84fe7b818f1f41a717e847d30458f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1168513465}
-  m_SourcePrefab: {fileID: 100100000, guid: 68f84fe7b818f1f41a717e847d30458f, type: 3}
 --- !u!1 &1868102885
 GameObject:
   m_ObjectHideFlags: 0

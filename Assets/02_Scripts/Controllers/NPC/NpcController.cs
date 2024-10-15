@@ -17,6 +17,5 @@ public class NpcController : Interectable
     public override void DungeonNpcDialog()
     {
         base.DungeonNpcDialog();
-
     }
 }

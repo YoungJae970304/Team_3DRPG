@@ -19,7 +19,7 @@ public class DialogSystem : MonoBehaviour
     int currentSpeakerIndex = 0;  //현재 말을 하는 회자(Speaker)의 speakers 배열 순번
     float typingSpeed = 0.03f;     //텍스트 타이핑 효과의 재생 속도
     bool isTypingEffect = false;  //텍스트 타이핑 효과를 재생중인지
-
+    bool isDone = false;
     private void Awake()
     {
         //Setup();
@@ -31,11 +31,15 @@ public class DialogSystem : MonoBehaviour
         for (int i = 0; i < speakers.Length; ++i)
         {
             //비활성화
-            //SetActiveObjects(speakers[i], false);
+            SetActiveObjects(speakers[i], false);
             //캐릭터 이미지는 보이도록 설정
-            //speakers[i].spriteRenderer.gameObject.SetActive(true);
+            speakers[i].spriteRenderer.gameObject.SetActive(true);
         }
+        currentDialogIndex = -1;
+        isFirst = true;
+        isDone = true;
     }
+
     void SetActiveObjects(Speaker speaker, bool visible)
     {
         speaker.imageDialog.gameObject.SetActive(visible);
@@ -67,6 +71,7 @@ public class DialogSystem : MonoBehaviour
             { SetNextDialog();}
 
             isFirst = false;
+            isDone = false;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
@@ -84,7 +89,7 @@ public class DialogSystem : MonoBehaviour
                 speakers[currentSpeakerIndex].textDialog.text = dialogs[currentDialogIndex].dialogue;
                 //대사가 완료 되었을 때 출력되는 커서 활성화
                 speakers[currentSpeakerIndex].objectArrow.SetActive(true);
-
+               
                 return false;//false값을 반환 함
             }
 
@@ -97,15 +102,16 @@ public class DialogSystem : MonoBehaviour
             {
                 //대사가 더 이상 없을 경우
                 //모든 오브젝트를 비활성화 하고 true 반환
-                for (int i = 0; i < speakers.Length; i++)
+                for (int i = 0; i < speakers.Length; ++i)
                 {
                     //현재 대화에 참여했던 모든 캐릭터,
                     //대화 관련 UI를 보이지 않게 비활성화
-                    //SetActiveObjects(speakers[i], false);
+                    SetActiveObjects(speakers[i], false);
                     //SetActiveObject()에 캐릭터 이미지를 보이지 않게 하는 부분이 없기 때문에 별도로 호출
-                    //speakers[i].spriteRenderer.gameObject.SetActive(false);
+                    speakers[i].spriteRenderer.gameObject.SetActive(false);
                 }
-                ResetDialog();
+                isDone = true;
+                Setup();
                 return true;
             }
         }
@@ -129,7 +135,6 @@ public class DialogSystem : MonoBehaviour
         StartCoroutine("OnTypingText");
         /*speakers[currentSpeakerIndex].textDialog.text=
        dialogs[currentDialogIndex].dialogue;*/
-
     }
 
     IEnumerator OnTypingText()
@@ -153,20 +158,21 @@ public class DialogSystem : MonoBehaviour
 
         //대사가 완료 되었을 때 출력 되는 커서 활성화
         speakers[currentSpeakerIndex].objectArrow.SetActive(true);
+        
     }
 
-    public void ResetDialog()
+    public void RestartDialog()
     {
-        currentDialogIndex = -1;
-        currentSpeakerIndex = 0;
-        isFirst = true;
-        isTypingEffect = false;
-
         Setup();
-        if (isAutoStart)
-        {
-            SetNextDialog();
-        }
+        currentDialogIndex = -1;
+        isFirst = true;
+        isDone = false;
+        SetNextDialog();
+    }
+
+    public bool IsDialogDone()
+    {
+        return isDone;
     }
 }
 
