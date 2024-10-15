@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MeleePlayer : Player
 {
+    [Header("검기 생성 위치")]
+    public Transform _swordAuraPos;
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,6 +34,6 @@ public class MeleePlayer : Player
 
     public override void SkillSetR()
     {
-        _skillBase = new MeleeSkill2();
+        _skillBase = new MeleeSkill3();
     }
 }

@@ -9,6 +9,8 @@ public class PlayerSkillState : BaseState
     public override void OnStateEnter()
     {
         _player._skillUsing = true;
+        _player._canAtkInput = true;
+        _player._attacking = false;
 
         _player._skillBase.SkillEnter(_stat);
     }
