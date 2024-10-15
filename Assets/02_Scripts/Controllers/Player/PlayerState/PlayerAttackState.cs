@@ -36,8 +36,6 @@ public class PlayerAttackState : BaseState
                 Logger.LogError("지정한 공격이 아님");
                 break;
         }
-            
-        //_player.ApplyDamage();
     }
 
     public override void OnStateUpdate()
@@ -48,10 +46,5 @@ public class PlayerAttackState : BaseState
     public override void OnStateExit()
     {
         Logger.Log("공격 상태 Exit ");
-
-        //_player.AtkCount = 0;
-
-        // 큐 초기화
-        //_player._playerInput._atkInput.Clear();
     }
 }

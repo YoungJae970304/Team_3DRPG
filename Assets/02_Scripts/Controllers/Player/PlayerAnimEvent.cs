@@ -142,6 +142,15 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         Logger.LogWarning("근거리 플레이어 3번째 스킬");
     }
+
+    public void SwordAuraCreate()
+    {
+        MeleePlayer meleePlayer = (MeleePlayer) _player;
+
+        // 검기 생성
+        GameObject go = Managers.Resource.Instantiate("Player/SwordAura");
+        go.transform.position = meleePlayer._swordAuraPos.position;
+    }
     #endregion
 
     // 회피 애니메이션 시작부

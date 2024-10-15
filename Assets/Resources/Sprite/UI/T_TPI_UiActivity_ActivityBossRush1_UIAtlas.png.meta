@@ -1,0 +1,819 @@
+fileFormatVersion: 2
+guid: ec29fe54025c7224c95534053d43ce9b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 1117
+        width: 480
+        height: 890
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32ccf61bdbccaf34e8ca1f9b9c4c9975
+      internalID: 473807557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_1
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 1116
+        width: 480
+        height: 892
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b3f47142ef82b54bb03dde0fd37ce61
+      internalID: 1061857642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_16
+      rect:
+        serializedVersion: 2
+        x: 1109
+        y: 1176
+        width: 467
+        height: 856
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 236e88ac231ec474885b1568fda72fdd
+      internalID: 1201221199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_17
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 1885
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79db52aaefec5e4458a47122b7bb7531
+      internalID: -1941612865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_18
+      rect:
+        serializedVersion: 2
+        x: 1592
+        y: 1740
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf91068ead6022b4eac135413face09c
+      internalID: 1098378800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_19
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 1597
+        width: 120
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f77d93e3276334aafc2e95cf0b7752
+      internalID: -724494224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_20
+      rect:
+        serializedVersion: 2
+        x: 1580
+        y: 1464
+        width: 128
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 860c1d4a21a4d8d40bfc3c2defc3d7d6
+      internalID: 1014438212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_21
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 1333
+        width: 126
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52c36fbb352e46848a1383f70fe43379
+      internalID: -1220372662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_22
+      rect:
+        serializedVersion: 2
+        x: 1580
+        y: 1200
+        width: 128
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9141ad3ec27231b46a717b1b6a4f1115
+      internalID: 1291210097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_45
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 216
+        width: 470
+        height: 860
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89b190898c1ea974782cbd56b1860c0f
+      internalID: -897043632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_46
+      rect:
+        serializedVersion: 2
+        x: 1513
+        y: 904
+        width: 171
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 4, y: 4, z: 4, w: 4}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1326ef73a9f65b948ac14fadfe9ce593
+      internalID: -2102124648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_50
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 158
+        width: 478
+        height: 890
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48749e8a53534b84887677aeaca6ee99
+      internalID: 2086745483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_59
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 713
+        width: 179
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c5ea5aebae18264e9eb4ffb25fec21e
+      internalID: -1040689886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_62
+      rect:
+        serializedVersion: 2
+        x: 1516
+        y: 568
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6671a2a27ff0fdc43be8469c18ea57cd
+      internalID: -852505281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_63
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 618
+        width: 90
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b4db96c4cb721d4e9780bb236542074
+      internalID: 269852150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_64
+      rect:
+        serializedVersion: 2
+        x: 1661
+        y: 565
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebb626a7070a7144185eb627a11a4105
+      internalID: -198706871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_66
+      rect:
+        serializedVersion: 2
+        x: 1511
+        y: 424
+        width: 114
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc40f4418144391438d4d94756f6aa2e
+      internalID: 1191682115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_67
+      rect:
+        serializedVersion: 2
+        x: 1650
+        y: 449
+        width: 88
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 8, y: 8, z: 7, w: 6}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa972944fab134e469fc557ac5fd3e1c
+      internalID: 586323486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_68
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 299
+        width: 127
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab04fd07b2e0a1f42b2ba1630d33261a
+      internalID: 1226552859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_69
+      rect:
+        serializedVersion: 2
+        x: 1636
+        y: 340
+        width: 92
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cba1c68d60029c468c5a9f6ccf8d474
+      internalID: -1348116821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_70
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 216
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccaeafd49378b724db4f6da56b1d717b
+      internalID: -1735430694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_71
+      rect:
+        serializedVersion: 2
+        x: 1638
+        y: 246
+        width: 90
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4da57c1b20e32438681556e2025e85
+      internalID: 1617741908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_76
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 32
+        width: 447
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7c65e3c3dde2c345a915611d1caaed1
+      internalID: -135890525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_77
+      rect:
+        serializedVersion: 2
+        x: 1609
+        y: 122
+        width: 119
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0e6847ddbd05b441b7d43fcfe1da676
+      internalID: 1453931780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_81
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 13
+        width: 583
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a66461f340f7b84fbea9036a4886003
+      internalID: 846612805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiActivity_ActivityBossRush1_UIAtlas_100
+      rect:
+        serializedVersion: 2
+        x: 1604
+        y: 24
+        width: 84
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d2a9105aba4fdf4ba48883afa4f6ae8
+      internalID: -1948501835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: eb2030397342bf945a5fdd9ffa169a0a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_0: 473807557
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_1: 1061857642
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_10: 1074654766
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_100: -1948501835
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_101: 384931625
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_102: -1420260958
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_103: 2104865831
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_104: 1885158443
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_105: -1346648035
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_106: -982206679
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_107: -84968379
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_108: 191611883
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_109: -1081153105
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_11: -2078053773
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_110: -641161942
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_111: 872980076
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_112: 402162713
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_113: -834853511
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_114: 822453306
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_115: -1830294534
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_116: -173272927
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_117: 666940154
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_118: 78747985
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_119: 1838135644
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_12: -152614653
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_120: -2106227046
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_121: 1537112351
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_122: 316840635
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_123: -2127672786
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_124: 1208229294
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_125: -1520635568
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_126: -1092542798
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_127: -1373910457
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_128: 1224276178
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_129: -1259121195
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_13: 1435642280
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_130: -1164137660
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_131: 735331873
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_132: 60641332
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_14: -947304712
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_15: 1568988145
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_16: 1201221199
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_17: -1941612865
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_18: 1098378800
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_19: -724494224
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_2: 1635424306
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_20: 1014438212
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_21: -1220372662
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_22: 1291210097
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_23: -332769309
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_24: -1310312147
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_25: -553962023
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_26: -762086133
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_27: 529041398
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_28: -1884055773
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_29: -755246893
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_3: 1918838081
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_30: -1159994273
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_31: 1684470491
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_32: 1231491684
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_33: -180445410
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_34: 20863682
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_35: 726714630
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_36: 239962248
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_37: 416206345
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_38: -1585795024
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_39: -2028232474
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_4: 1537957122
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_40: 699145217
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_41: 561721153
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_42: -1944433699
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_43: -812386761
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_44: -1894019935
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_45: -897043632
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_46: -2102124648
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_47: 1375114065
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_48: 314898834
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_49: 1104357456
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_5: 1262936866
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_50: 2086745483
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_51: 1829876394
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_52: 1805706361
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_53: 440247718
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_54: -819952793
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_55: 877278161
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_56: -1056557842
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_57: -17429179
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_58: -1345872694
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_59: -1040689886
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_6: 2056412496
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_60: 947706018
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_61: 5066259
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_62: -852505281
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_63: 269852150
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_64: -198706871
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_65: -1816014824
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_66: 1191682115
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_67: 586323486
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_68: 1226552859
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_69: -1348116821
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_7: -1932028963
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_70: -1735430694
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_71: 1617741908
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_72: -2038994600
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_73: 1453897803
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_74: 569029371
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_75: -2064713603
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_76: -135890525
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_77: 1453931780
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_78: 720120014
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_79: -1431744566
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_8: -1053196677
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_80: 379872205
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_81: 846612805
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_82: -1302402558
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_83: -916434965
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_84: -1706566960
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_85: 1917150146
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_86: -1837770741
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_87: 81473425
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_88: -1530523595
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_89: -1088710340
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_9: 872820744
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_90: 80473233
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_91: 1664194558
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_92: 789913879
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_93: 656795153
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_94: -126374024
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_95: -696231969
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_96: 762927310
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_97: -686268445
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_98: 1869416142
+      T_TPI_UiActivity_ActivityBossRush1_UIAtlas_99: -1275257974
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

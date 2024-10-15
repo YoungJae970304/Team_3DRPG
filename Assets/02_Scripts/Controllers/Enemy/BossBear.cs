@@ -169,9 +169,6 @@ public class BossBear : Monster
     public override void Damaged(int amount)
     {
         
-        //MChangeState(MonsterState.Damage);
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
         if (_mStat == null)
         {
             Logger.LogError("MonsterStat이 null입니다");

@@ -1,0 +1,613 @@
+fileFormatVersion: 2
+guid: 0f7d3e4718c789b459eec1e3c6bfee7b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 485
+        width: 1227
+        height: 305
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 276baeb621f4e1345b79d93c0ec71539
+      internalID: 934121353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_1
+      rect:
+        serializedVersion: 2
+        x: 1243
+        y: 689
+        width: 128
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 5, y: 3, z: 0, w: 3}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1513b961e9386e45bbcac81f7de5a47
+      internalID: -1253561898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 1618
+        y: 704
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3559724ff8ebd64785bf099e87f678a
+      internalID: -382476143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_10
+      rect:
+        serializedVersion: 2
+        x: 1804
+        y: 693
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31b2ba72d5e953e4f8d2e2e497e0f05e
+      internalID: -1658219472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_33
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 352
+        width: 866
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2720cec0d67ba1a4f9c67045d485fe13
+      internalID: -648069543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_34
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 352
+        width: 866
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 578f125adec7fba4db8d74470713726a
+      internalID: -1873999123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_36
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 220
+        width: 866
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90c71d516fa447b439316611518a8e9d
+      internalID: -1576193871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_37
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 220
+        width: 866
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c88c96801d9e54479f25e11c5227e7c
+      internalID: 1544476260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_39
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 88
+        width: 866
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8694582b89a3207409d8a07ff0fa8668
+      internalID: 680409103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_40
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 88
+        width: 866
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6128ea9287c646141bd12dfc5f279589
+      internalID: -415662234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_43
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fb31ebe76aa43d48b6652ef0ed17029
+      internalID: -985978726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_44
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 073ee0ab10c4613478ee0e905b83c2d1
+      internalID: 1174130439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_45
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7464a7ee4e1e7864b94a3a59e38df6e3
+      internalID: -2010325002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_46
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 899435391caf0e64bad82972a9ebb8b5
+      internalID: -1526731988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_47
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab3fb0ba752cadb449894d411992d396
+      internalID: -29496224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_48
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ac62ea6017a5744ea69dcdcf1e41729
+      internalID: -1629806178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_49
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac88ea193fc0e55429c1dcd81fb4a1f9
+      internalID: -957659566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_50
+      rect:
+        serializedVersion: 2
+        x: 1464
+        y: 4
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c72cd7399fa0d19418999f15478d1f14
+      internalID: 1073078020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_51
+      rect:
+        serializedVersion: 2
+        x: 1548
+        y: 8
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbbd819b19b8cda44b8ced6a2188a5da
+      internalID: -2030934236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_52
+      rect:
+        serializedVersion: 2
+        x: 1640
+        y: 42
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aad32351b83d8ca4b9fee7bb2cbd0227
+      internalID: -465018508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiQuest1_UIAtlas_53
+      rect:
+        serializedVersion: 2
+        x: 1689
+        y: 34
+        width: 54
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a74094aa96beea40a02c6a074a68654
+      internalID: -1949806157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      T_TPI_UiQuest1_UIAtlas_0: 934121353
+      T_TPI_UiQuest1_UIAtlas_1: -1253561898
+      T_TPI_UiQuest1_UIAtlas_10: -1658219472
+      T_TPI_UiQuest1_UIAtlas_11: 612703092
+      T_TPI_UiQuest1_UIAtlas_12: -1428632524
+      T_TPI_UiQuest1_UIAtlas_13: 1184926790
+      T_TPI_UiQuest1_UIAtlas_14: -1337951189
+      T_TPI_UiQuest1_UIAtlas_15: 204398135
+      T_TPI_UiQuest1_UIAtlas_16: 1799259046
+      T_TPI_UiQuest1_UIAtlas_17: -1528036257
+      T_TPI_UiQuest1_UIAtlas_18: 1762613833
+      T_TPI_UiQuest1_UIAtlas_19: 691653833
+      T_TPI_UiQuest1_UIAtlas_2: 248160369
+      T_TPI_UiQuest1_UIAtlas_20: 1032861560
+      T_TPI_UiQuest1_UIAtlas_21: 1122252979
+      T_TPI_UiQuest1_UIAtlas_22: 33459338
+      T_TPI_UiQuest1_UIAtlas_23: -300756384
+      T_TPI_UiQuest1_UIAtlas_24: -2005532056
+      T_TPI_UiQuest1_UIAtlas_25: -575048174
+      T_TPI_UiQuest1_UIAtlas_26: -1415706294
+      T_TPI_UiQuest1_UIAtlas_27: -1470319362
+      T_TPI_UiQuest1_UIAtlas_28: 1348715269
+      T_TPI_UiQuest1_UIAtlas_29: -2071372692
+      T_TPI_UiQuest1_UIAtlas_3: -1189734340
+      T_TPI_UiQuest1_UIAtlas_30: 419066624
+      T_TPI_UiQuest1_UIAtlas_31: -1426724181
+      T_TPI_UiQuest1_UIAtlas_32: 1779507091
+      T_TPI_UiQuest1_UIAtlas_33: -648069543
+      T_TPI_UiQuest1_UIAtlas_34: -1873999123
+      T_TPI_UiQuest1_UIAtlas_35: -459897074
+      T_TPI_UiQuest1_UIAtlas_36: -1576193871
+      T_TPI_UiQuest1_UIAtlas_37: 1544476260
+      T_TPI_UiQuest1_UIAtlas_38: 1487268253
+      T_TPI_UiQuest1_UIAtlas_39: 680409103
+      T_TPI_UiQuest1_UIAtlas_4: 462858529
+      T_TPI_UiQuest1_UIAtlas_40: -415662234
+      T_TPI_UiQuest1_UIAtlas_41: 1897030440
+      T_TPI_UiQuest1_UIAtlas_42: 471930125
+      T_TPI_UiQuest1_UIAtlas_43: -985978726
+      T_TPI_UiQuest1_UIAtlas_44: 1174130439
+      T_TPI_UiQuest1_UIAtlas_45: -2010325002
+      T_TPI_UiQuest1_UIAtlas_46: -1526731988
+      T_TPI_UiQuest1_UIAtlas_47: -29496224
+      T_TPI_UiQuest1_UIAtlas_48: -1629806178
+      T_TPI_UiQuest1_UIAtlas_49: -957659566
+      T_TPI_UiQuest1_UIAtlas_5: 1445129899
+      T_TPI_UiQuest1_UIAtlas_50: 1073078020
+      T_TPI_UiQuest1_UIAtlas_51: -2030934236
+      T_TPI_UiQuest1_UIAtlas_52: -465018508
+      T_TPI_UiQuest1_UIAtlas_53: -1949806157
+      T_TPI_UiQuest1_UIAtlas_54: -1896943509
+      T_TPI_UiQuest1_UIAtlas_55: -122929069
+      T_TPI_UiQuest1_UIAtlas_56: 1076009343
+      T_TPI_UiQuest1_UIAtlas_57: -766821984
+      T_TPI_UiQuest1_UIAtlas_6: -1468372719
+      T_TPI_UiQuest1_UIAtlas_7: -341192605
+      T_TPI_UiQuest1_UIAtlas_8: 2053462531
+      T_TPI_UiQuest1_UIAtlas_9: -382476143
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
