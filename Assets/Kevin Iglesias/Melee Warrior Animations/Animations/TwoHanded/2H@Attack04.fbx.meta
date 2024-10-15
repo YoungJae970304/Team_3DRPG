@@ -800,10 +800,10 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.4361111
-        functionName: PlayerNormalAttack
+        functionName: AreaDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
+        floatParameter: 5
         intParameter: 0
         messageOptions: 0
       - time: 0.9611111
