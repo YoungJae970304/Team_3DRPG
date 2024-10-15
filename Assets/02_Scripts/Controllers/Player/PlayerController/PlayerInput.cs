@@ -126,12 +126,16 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             // 스킬테스트
-            _player._skillBase = new TestSkill();
+            //_player._skillBase = new TestSkill();
+
+            _player.SkillSetE();
             _player.ChangeState(PlayerState.Skill);
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            _player._skillBase = new ChainLightning();
+            //_player._skillBase = new ChainLightning();
+
+            _player.SkillSetR();
             _player.ChangeState(PlayerState.Skill);
         }
     }
@@ -145,6 +149,9 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseFrontUI();
+        }else if (Input.GetKeyDown(KeyCode.F))
+        {
+            _player._interectController._lastObj.DungeonNpcDialog();
         }
     }
 

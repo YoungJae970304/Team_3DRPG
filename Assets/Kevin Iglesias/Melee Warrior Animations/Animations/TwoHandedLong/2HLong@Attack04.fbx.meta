@@ -793,13 +793,13 @@ ModelImporter:
       curves: []
       events:
       - time: 0.24899597
-        functionName: MeleeSecondSkillDamage
+        functionName: AreaDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
+        floatParameter: 10
         intParameter: 0
         messageOptions: 0
-      - time: 1
+      - time: 0.8346154
         functionName: SkillEnd
         data: 
         objectReferenceParameter: {instanceID: 0}

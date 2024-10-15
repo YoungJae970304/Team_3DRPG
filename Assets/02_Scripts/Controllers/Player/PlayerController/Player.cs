@@ -126,13 +126,15 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public PlayerCam _playerCam;
     [HideInInspector]
     public PlayerStatManager _playerStatManager;
-
+    [HideInInspector]
+    public InterectController _interectController;
     protected virtual void Awake()
     {
         #region 컴포넌트 초기화
         _cc = gameObject.GetOrAddComponent<CharacterController>();
         _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
         _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
+        _interectController = gameObject.GetOrAddComponent<InterectController>();
         _playerAnim = GetComponentInChildren<Animator>();
         _playerStatManager = new PlayerStatManager();
         #endregion
@@ -171,7 +173,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStatManager._originStat.DEF = 50;
 
         // 공격 콜라이더 off
-        //SetColActive("Combo1");
+        SetColActive("Katana");
         #endregion  
     }
 
@@ -348,7 +350,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _hitMobs.Clear();
     }
 
-    public abstract void Skill();
+    public abstract void SkillSetE();
+    public abstract void SkillSetR();
 
     // 우클릭 시 발생하는 행동
     public abstract void Special();
