@@ -166,7 +166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8796244127300489124
 Transform:
   m_ObjectHideFlags: 0
@@ -250,6 +250,7 @@ MonoBehaviour:
   _cc: {fileID: 0}
   _playerInput: {fileID: 0}
   _playerCam: {fileID: 0}
+  _interectController: {fileID: 0}
   _mageBallPos: {fileID: 867853495206885531}
 --- !u!114 &3322713625194072580
 MonoBehaviour:

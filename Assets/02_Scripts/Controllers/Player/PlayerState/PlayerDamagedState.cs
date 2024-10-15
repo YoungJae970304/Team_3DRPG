@@ -33,5 +33,7 @@ public class PlayerDamagedState : BaseState
     {
         _player._hitting = false;
         _player._invincible = false;
+        _player._canAtkInput = true;
+        _player._attacking = false;
     }
 }
