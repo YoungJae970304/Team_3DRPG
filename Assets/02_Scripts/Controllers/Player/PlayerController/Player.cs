@@ -280,7 +280,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                 // 스킬사용 중일때는 상태전환 불가
                 if (_skillUsing) return;
 
-                if (!_isMoving)
+                if (_playerInput._atkInput.Count > 0)
+                {
+                    ChangeState(PlayerState.Attack);
+                }
+                else if (!_isMoving)
                 {
                     ChangeState(PlayerState.Idle);
                 }

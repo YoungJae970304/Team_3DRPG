@@ -985,6 +985,37 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &411640072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 411640073}
+  m_Layer: 0
+  m_Name: SwordAuraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &411640073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411640072}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3160257371656070506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485724278 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6888826929519498038, guid: 50784459399964046a8186d12893c707,
@@ -2800,6 +2831,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3208645783841606517, guid: a2e3dc51d57abdb4ebc799c2e370599a,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208645783841606517, guid: a2e3dc51d57abdb4ebc799c2e370599a,
+        type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -3230,11 +3266,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8909345481069742244, guid: b717a8a5e2e7912419c9ad416b4b84a6,
+        type: 3}
+      propertyPath: _swordAuraPos
+      value: 
+      objectReference: {fileID: 411640073}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6406264737570272463, guid: b717a8a5e2e7912419c9ad416b4b84a6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 411640073}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b717a8a5e2e7912419c9ad416b4b84a6, type: 3}
+--- !u!4 &3160257371656070506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6406264737570272463, guid: b717a8a5e2e7912419c9ad416b4b84a6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3160257371656070505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7133272839047318325
 PrefabInstance:
   m_ObjectHideFlags: 0

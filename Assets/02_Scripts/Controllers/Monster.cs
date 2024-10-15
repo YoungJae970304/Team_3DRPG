@@ -343,7 +343,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         rb.AddForce(force, ForceMode.Impulse);
 
         // 넉백 후 처리
-        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (필요에 따라 조정)
+        await Task.Delay((int)(delay * 2000)); // 넉백 지속 시간 (필요에 따라 조정)
 
         // 넉백이 끝나면 NavMeshAgent를 다시 활성화
 
