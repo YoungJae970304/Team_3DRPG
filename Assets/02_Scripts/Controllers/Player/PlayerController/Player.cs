@@ -95,6 +95,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public List<Collider> _atkColliders;
     //[HideInInspector]
     public List<Collider> _hitMobs;
+    public HashSet<IDamageAlbe> _damageAlbes = new HashSet<IDamageAlbe>();
 
     // 스킬 관련 변수
     [HideInInspector]

@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 
 public class SwordAura : MonoBehaviour
 {
-    HashSet<IDamageAlbe> _damageAlbes = new HashSet<IDamageAlbe>();
-
     public float _swordAuraDis = 10;
     public float _swordAuraSpd = 7.5f;
     Transform _originPlayerPos;
@@ -18,7 +16,7 @@ public class SwordAura : MonoBehaviour
 
         _swordAuraDir = _originPlayerPos.forward;
 
-        _damageAlbes.Clear();
+        Managers.Game._player._damageAlbes.Clear();
     }
 
     void Update()
@@ -40,12 +38,12 @@ public class SwordAura : MonoBehaviour
             if (other.TryGetComponent<IDamageAlbe>(out var damageAlbe))
             {
                 // 데미지 적용
-                if (!_damageAlbes.Contains(damageAlbe))
+                if (!Managers.Game._player._damageAlbes.Contains(damageAlbe))
                 {
                     damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
                 }
                 // 콜라이더로 담을 때
-                _damageAlbes.Add(damageAlbe);
+                Managers.Game._player._damageAlbes.Add(damageAlbe);
             }
         }
     }
