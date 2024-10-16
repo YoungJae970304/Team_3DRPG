@@ -336,7 +336,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         // 새로운 회전값 설정
         if (direction != Vector3.zero) // 방향 벡터가 0이 아닐 때만 회전
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime*5);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime*10);
         }
     }
     public void AttackCompleteCheck()
@@ -364,17 +364,20 @@ public class Monster : MonoBehaviour, IDamageAlbe
         //_characterController.Move(moveDirection * Time.deltaTime); // 이동
 
         // 넉백 후 처리
-        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (ms 단위)
+        await Task.Delay((int)(delay * 2000)); // 넉백 지속 시간 (ms 단위)
 
-        // 넉백이 끝나면 CharacterController를 다시 활성화
-        _nav.enabled = true;
-       // _characterController.enabled = false;
+          // 넉백이 끝나면 CharacterController를 다시 활성화
+        
+           // _nav.enabled = true;
+            // _characterController.enabled = false;
 
-        if (CanAttackPlayer())
-            MChangeState(MonsterState.Attack);
-        else
-            MChangeState(MonsterState.Move);
+            if (CanAttackPlayer())
+                MChangeState(MonsterState.Attack);
+            else
+                MChangeState(MonsterState.Move);
+        
     }
+
     #endregion
     #region 공격 상태 변환
     public virtual void AttackStateSwitch()
