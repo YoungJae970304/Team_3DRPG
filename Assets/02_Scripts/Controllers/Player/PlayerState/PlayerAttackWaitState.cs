@@ -13,25 +13,44 @@ public class PlayerAttackWaitState : BaseState
 
     public override void OnStateUpdate()
     {
-        
         Logger.Log("공격 대기 상태 Update");
 
         AnimatorStateInfo stateInfo = _player._playerAnim.GetCurrentAnimatorStateInfo(0);
 
-        // 현재 애니메이션이 공격 애니메이션인지 확인
-        if (IsAttackAnimation(stateInfo))
+        switch (_player._playerType)
         {
-            if (stateInfo.normalizedTime <= 0.25f)
-            {
-                // 부드러운 회전
-                Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
-                _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
+            case Define.PlayerType.Melee:
+                // 현재 애니메이션이 공격 애니메이션인지 확인
+                if (IsAttackAnimation(stateInfo))
+                {
+                    if (stateInfo.normalizedTime <= 0.25f)
+                    {
+                        // 부드러운 회전
+                        Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
+                        _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
 
-                // 이동 방향
-                _player._moveDir = _player._playerModel.forward * _player._playerStatManager.MoveSpeed * Time.fixedDeltaTime;
-                _player._cc.Move(new Vector3(_player._moveDir.x, 0, _player._moveDir.z));
-            }
+                        // 약간 전진
+                        _player._moveDir = _player._playerModel.forward * _player._playerStatManager.MoveSpeed * Time.fixedDeltaTime;
+                        _player._cc.Move(new Vector3(_player._moveDir.x, 0, _player._moveDir.z));
+                    }
+                }
+                break;
+            case Define.PlayerType.Mage:
+                if (IsAttackAnimation(stateInfo))
+                {
+                    if (stateInfo.normalizedTime <= 0.25f)
+                    {
+                        // 부드러운 회전
+                        Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
+                        _player._playerModel.rotation = Quaternion.Slerp(_player._playerModel.rotation, targetRot, _player._rotSpeed);
+                    }
+                }
+                break;
+            default:
+                break;
         }
+
+
         
     }
 
