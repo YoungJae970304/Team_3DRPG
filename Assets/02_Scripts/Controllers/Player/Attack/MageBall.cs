@@ -24,6 +24,8 @@ public class MageBall : MonoBehaviour
             // 클릭한 곳을 향해 날아가도록 구현
             _ballDir = _cameraForward;
         }
+
+        Managers.Game._player._damageAlbes.Clear();
     }
 
     void Update()
@@ -44,9 +46,14 @@ public class MageBall : MonoBehaviour
         {
             if (other.TryGetComponent<IDamageAlbe>(out var damageAlbe))
             {
-                damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
-
-                Managers.Resource.Destroy(gameObject);
+                // 데미지 적용
+                if (!Managers.Game._player._damageAlbes.Contains(damageAlbe))
+                {
+                    damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    Managers.Resource.Destroy(gameObject);
+                }
+                // 콜라이더로 담을 때
+                Managers.Game._player._damageAlbes.Add(damageAlbe);
             }
         }
     }

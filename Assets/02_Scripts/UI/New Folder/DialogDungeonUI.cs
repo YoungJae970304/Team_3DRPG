@@ -1,31 +1,49 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogDungeonUI : BaseUI
 {
     [SerializeField]
     DialogSystem[] _dialogSystem;
-    public GameObject _dungeonUI;
-    public Button _dungeonBtn;
-    IEnumerator Start()
+    public Button _dungeonUIOpenBtn;
+
+
+    public override void Init(Transform anchor)
     {
-        _dungeonBtn.gameObject.SetActive(false);
-
-        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
-
-        _dungeonBtn.gameObject.SetActive(true);
-
-        yield return new WaitUntil(() => _dialogSystem[1].UpdateDialog());
-
-        yield return new WaitForSeconds(0.2f);
-        this.gameObject.SetActive(false);
-        _dungeonBtn.gameObject.SetActive(false);
+        base.Init(anchor);
+        StartCoroutine(DialogStart());
     }
 
+    public override void CloseUI(bool isCloseAll = false)
+    {
+        base.CloseUI(isCloseAll);
+        StopAllCoroutines();
+    }
+
+    IEnumerator DialogStart()
+    {
+        //대사 시작
+        _dungeonUIOpenBtn.gameObject.SetActive(true);
+        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
+        yield return new WaitForSeconds(0.2f);
+        _dungeonUIOpenBtn.gameObject.SetActive(false);
+        Managers.UI.CloseUI(this);
+    }
+
+    //던전 UI 오픈 함수 버튼 클릭시 생성
     public void OpenDungeonUI()
     {
-        _dungeonUI.SetActive(true);
-        _dungeonBtn.gameObject.SetActive(false);
+        DungeonType dungeonUi = Managers.UI.GetActiveUI<DungeonType>() as DungeonType;
+
+        if(dungeonUi != null )
+        {
+            Managers.UI.CloseUI(dungeonUi);
+        }
+        else
+        {
+            Managers.UI.OpenUI<DungeonType>(new BaseUIData());
+        }
     }
 }

@@ -15,11 +15,11 @@ public class Item
     public static Item ItemSpawn(int id,int amount =1)
     {
         //데이터테이블매니저 인스턴스
-        DataTableManager _dataTableManager = Managers.DataTable;
+        DataTableManager dataTableManager = Managers.DataTable;
 
         ItemData itemData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
-        foreach (var newItem in _dataTableManager._AllItemData)
+        foreach (var newItem in dataTableManager._AllItemData)
         {
             Logger.Log($"선택된아이템 아이디 {newItem.ID}");
             if (newItem.ID == id)

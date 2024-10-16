@@ -17,7 +17,7 @@ public class QuestData : IData
     public Define.QuestType Type;
     public string Name;
     public string Info;
-    public int PlayerLevelRequirement;  
+    public int PlayerLevelRequirement;
     public int TargetID;
     public int TargetCount;
     public int RewardValue1;
@@ -26,7 +26,7 @@ public class QuestData : IData
     public RewardType ValType1;
     public RewardType ValType2;
     public RewardType ValType3;
-    public bool IsUnlock;
+
     //퀘스트 아이디
    [SerializeField] int _id;
     //퀘스트 타입
@@ -54,7 +54,7 @@ public class QuestData : IData
     [Serializable]
     public enum RewardType
     {
-        //장비 1번중 선택하는 법이 있나?
+        //장비 1번중 선택
         Equipped = 1,
         //포션
         Potion,
@@ -79,7 +79,6 @@ public class QuestData : IData
         ValType1 = _rewardType1;
         ValType2 = _rewardType2;
         ValType3 = _rewardType3;
-        IsUnlock = false;
     }
 
     public bool SaveData()

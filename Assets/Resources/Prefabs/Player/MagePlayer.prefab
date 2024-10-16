@@ -180,7 +180,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6190625161673776525}
   - component: {fileID: 6065330576751249574}
-  - component: {fileID: 3550189667939416161}
   - component: {fileID: 5602787367160659850}
   m_Layer: 9
   m_Name: MinimapCamera
@@ -255,14 +254,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3550189667939416161
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3962100888076573255}
-  m_Enabled: 1
 --- !u!114 &5602787367160659850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +374,7 @@ GameObject:
   - component: {fileID: 3322713625194072580}
   - component: {fileID: 9024554977287331986}
   - component: {fileID: 5068212463655096710}
+  - component: {fileID: 4459902747821146588}
   m_Layer: 0
   m_Name: MagePlayer
   m_TagString: Player
@@ -520,6 +512,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d8331f3bfb48d448c949b2a263e3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4459902747821146588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8312498464758197025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078c1bc2077f6bf47b9770efab646625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interectRange: 5
+  _main: {fileID: 0}
+  _target: []
+  _lastObj: {fileID: 0}
 --- !u!1001 &5087807368953550209
 PrefabInstance:
   m_ObjectHideFlags: 0

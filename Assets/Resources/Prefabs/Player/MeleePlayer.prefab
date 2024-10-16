@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 1516078326189676196}
   - component: {fileID: 7730115033510396560}
   - component: {fileID: 75515129276120943}
+  - component: {fileID: 4041324828668755092}
   m_Layer: 9
   m_Name: MeleePlayer
   m_TagString: Player
@@ -301,6 +302,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d8331f3bfb48d448c949b2a263e3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4041324828668755092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918571816801624183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078c1bc2077f6bf47b9770efab646625, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interectRange: 5
+  _main: {fileID: 0}
+  _target: []
+  _lastObj: {fileID: 0}
 --- !u!1 &2509168502048895412
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,8 +411,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -10, z: 0}
-  m_LocalScale: {x: 2, y: 3, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2615630656875482108}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -440,8 +457,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224,
-    type: 3}
+  m_Sprite: {fileID: -577553960, guid: aad84795fce583c459ed0aaec55c2cc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -526,7 +542,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3041718312240628393}
   - component: {fileID: 7250270771945026265}
-  - component: {fileID: 7481891124138668047}
   - component: {fileID: 4283925908794235559}
   m_Layer: 9
   m_Name: MinimapCamera
@@ -601,14 +616,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7481891124138668047
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7254868057973231399}
-  m_Enabled: 1
 --- !u!114 &4283925908794235559
 MonoBehaviour:
   m_ObjectHideFlags: 0

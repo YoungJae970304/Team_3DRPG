@@ -5,8 +5,8 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 public enum ConfirmType { 
-    OK,//È®ÀÎ¿ë ÆË¾÷
-    OK_CANCEL,//À¯Àú ¼±ÅÃÁö Á¦½Ã
+    OK,//í™•ì¸ìš© íŒì—…
+    OK_CANCEL,//ìœ ì € ì„ íƒì§€ ì œì‹œ
 }
 public class ConfirmUIData : BaseUIData {
 
@@ -22,12 +22,33 @@ public class ConfirmUIData : BaseUIData {
 
 public class ConfirmUI : BaseUI
 {
+    enum ConfirmTexts
+    {
+        DescTxt,
+        OkBtnTxt,
+        CancelBtnTxt,
+    }
+
+    enum ConfirmButtons
+    {
+        OKBtn,
+        CancelBtn,
+    }
+
+    // ë°”ì¸ë“œë¡œ ì²˜ë¦¬
     public TextMeshProUGUI TitleTxt = null;
-    public TextMeshProUGUI DescTxt = null;
     public Button OKBtn;
     public Button CancelBtn;
     public TextMeshProUGUI OKBtnTxt = null;
     public TextMeshProUGUI CancelBtnTxt = null;
+
+    private void Awake()
+    {
+        Bind<TextMeshProUGUI>(typeof(ConfirmTexts));
+        Bind<Button>(typeof(ConfirmButtons));
+
+        GetText((int)ConfirmTexts.DescTxt).text = "í…ìŠ¤íŠ¸ë¥¼ ì‚¬ìš©";
+    }
 
     ConfirmUIData m_ConfirmUIData = null;
 
@@ -35,17 +56,17 @@ public class ConfirmUI : BaseUI
     public Action m_OnclickCancelButton =null;
 
     public override void SetInfo(BaseUIData uiData)
-    {//µ¥ÀÌÅÍ ÃÊ±âÈ­
+    {//ë°ì´í„° ì´ˆê¸°í™”
         base.SetInfo(uiData);
         m_ConfirmUIData = uiData as ConfirmUIData;
         TitleTxt.text = m_ConfirmUIData.TitleTxt;
-        DescTxt.text = m_ConfirmUIData.DescTxt;
+        GetText((int)ConfirmTexts.DescTxt).text = m_ConfirmUIData.DescTxt;
         m_OnclickOKButton = m_ConfirmUIData.OnclickOKButton;
         m_OnclickCancelButton = m_ConfirmUIData.OnclickCancelButton;
         OKBtnTxt.text = m_ConfirmUIData.OKBtnTxt;
         CancelBtnTxt.text = m_ConfirmUIData.CancelTxt;
-        // ok¹öÆ°°ú cancel ¹öÆ° È°¼ºÈ­
-        // ConfirmTypeÀÌ OK¸é OK¹öÆ°¸¸, OK_CANCELÀÌ¸é ¹öÆ° µÑ´Ù È°¼ºÈ­
+        // okë²„íŠ¼ê³¼ cancel ë²„íŠ¼ í™œì„±í™”
+        // ConfirmTypeì´ OKë©´ OKë²„íŠ¼ë§Œ, OK_CANCELì´ë©´ ë²„íŠ¼ ë‘˜ë‹¤ í™œì„±í™”
         OKBtn.gameObject.SetActive(true);
         CancelBtn.gameObject.SetActive(m_ConfirmUIData.ConfirmType == ConfirmType.OK_CANCEL);
     }
