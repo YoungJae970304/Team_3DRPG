@@ -372,7 +372,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 50711
 --- !u!114 &3870719186428004309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
   _UIOpenAnimation: {fileID: 0}
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
-  _isSort: 0
+  _isSort: 1
   _dialogSystem:
   - {fileID: 4192826246697405307}
 --- !u!114 &784941052778792677

@@ -35,6 +35,7 @@ public class DialogDungeonUI : BaseUI
         GetButton((int)Buttons.OpenBtn).onClick.AddListener(() => OpenDungeonUI());
         yield return new WaitForSeconds(0.2f);
         GetButton((int)Buttons.OpenBtn).gameObject.SetActive(false);
+        Managers.UI.CloseUI(this);
     }
 
     //던전 UI 오픈 함수 버튼 클릭시 생성
