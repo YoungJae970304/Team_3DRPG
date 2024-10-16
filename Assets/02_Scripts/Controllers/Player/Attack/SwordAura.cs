@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SwordAura : MonoBehaviour
 {
-    HashSet<IDamageAlbe> _damageAlbes;
+    HashSet<IDamageAlbe> _damageAlbes = new HashSet<IDamageAlbe>();
 
     public float _swordAuraDis = 10;
     public float _swordAuraSpd = 7.5f;
@@ -16,6 +17,8 @@ public class SwordAura : MonoBehaviour
         _originPlayerPos = Managers.Game._player._playerModel.transform;
 
         _swordAuraDir = _originPlayerPos.forward;
+
+        _damageAlbes.Clear();
     }
 
     void Update()
