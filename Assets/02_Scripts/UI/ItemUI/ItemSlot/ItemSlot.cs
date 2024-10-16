@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public abstract class ItemSlot : MonoBehaviour, IItemDropAble
+public abstract class ItemSlot : MonoBehaviour, IItemDropAble,IItemDragAble
 {
     protected Item _item;
     public Action itemChangedAction;
@@ -57,5 +57,10 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble
 
     public void RemoveItem() {
         Item = null;
+    }
+
+    public virtual void NullTarget()
+    {
+        //아이템 버리기 UI 출력
     }
 }

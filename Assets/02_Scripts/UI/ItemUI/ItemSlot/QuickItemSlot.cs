@@ -5,7 +5,7 @@ using UnityEngine;
 public class QuickItemSlot : ItemSlot
 {
     int index = -1;
-    public Inventory Inventory;
+    public Inventory _inventory;
     
     public override void UpdateSlotInfo()
     {
@@ -22,8 +22,7 @@ public class QuickItemSlot : ItemSlot
         if (_text == null) { return; }
         if (Item is CountableItem)
         {
-            _text.text = ((Item as CountableItem).GetCurrentAmount()+
-                Inventory.GetItemAmount(Item.Data.ID)).ToString(); ;
+            _text.text = _inventory.GetItemAmount(Item.Data.ID).ToString(); ;
         }
         else
         {
@@ -36,7 +35,6 @@ public class QuickItemSlot : ItemSlot
         { return; }
         Item item = moveSlot.Item;
         if (item ==null|| item.Data.Type != slotType) { return; }
-        moveSlot.MoveItem(this);
         Item = item;
     }
     public override bool MoveItem(ItemSlot moveSlot)
@@ -44,5 +42,24 @@ public class QuickItemSlot : ItemSlot
         Item = moveSlot.Item;
 
         return true;
+    }
+    
+    public void Use()
+    {
+        (Item as IUsableItem).Use();
+        if ((Item as CountableItem).GetCurrentAmount() == 0) {
+            Item = _inventory.GetItemToId(Item.Data.ID);
+        }
+    }
+    [ContextMenu("사용 테스트")]
+    public void UseText()
+    {
+        (Item as CountableItem).SetAmount(1);
+        Use();
+    }
+
+    public override void NullTarget()
+    {
+        Item = null;
     }
 }

@@ -12,6 +12,7 @@ public class TestScene : BaseScene
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
+        Managers.UI.OpenUI<MainUI>(new BaseUIData(),false);
         //Opentest();
         Close();
     }

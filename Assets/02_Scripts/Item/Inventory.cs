@@ -80,6 +80,17 @@ public class Inventory : MonoBehaviour//인벤토리
         }
         return ItemDick[itemType].GetItemAmount(id);
     }
+    //아이디로 검색해서 가장 처음 값을 가져온다.
+    public Item GetItemToId(int id) {
+        ItemData.ItemType itemType = (ItemData.ItemType)(id / 10000);
+        if (!Enum.IsDefined(typeof(ItemData.ItemType), itemType))
+        {
+            return null;
+        }
+        Item result = ItemDick[itemType].GetItemToId(id);
+        GetItemAction?.Invoke();
+        return result;
+    }
 
     //슬롯 사이즈 반환
     public int GetGroupSize(ItemData.ItemType type)
@@ -130,7 +141,7 @@ public class Inventory : MonoBehaviour//인벤토리
                 for (int i = 0; i < _maxSize; i++)
                 {
 
-                    if (_items[i] == null || !(_items[i] is CountableItem)) { continue; }//빈칸이거나 최대치인 아이템은 무시
+                    if (_items[i] == null || !(_items[i] is CountableItem)) { continue; }//빈칸이거나 1개가 최대인 아이템은 무시
                     if (_items[i].Data.ID == item.Data.ID)
                     {
                         int overamount = ((CountableItem)_items[i]).AddAmount(countableItem._amount);
@@ -163,6 +174,22 @@ public class Inventory : MonoBehaviour//인벤토리
             if (index <= _maxSize)
             {
                 return _items[index];
+            }
+            return null;
+        }
+        public Item GetItemToId(int id)
+        {//ID로 아이템을 리턴
+            for (int i = 0; i < _maxSize; i++)
+            {
+                if (_items[i] == null) { continue; }//빈칸이면 무시
+                if (_items[i].Data.ID == id)
+                {//개수가 0인아이템이 남아있다면삭제
+                    if (_items[i] is CountableItem&& (_items[i] as CountableItem).GetCurrentAmount() == 0) {
+                        Remove(i);
+                        continue;
+                    }
+                    return _items[i];
+                }
             }
             return null;
         }

@@ -24,7 +24,9 @@ public class MainUI : ItemUI
 
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
         {
-            Get<QuickItemSlot>((int)quickItemSlot).Inventory = _inventory;
+            Get<QuickItemSlot>((int)quickItemSlot)._inventory = _inventory;
+            _inventory.GetItemAction -= Get<QuickItemSlot>((int)quickItemSlot).UpdateSlotInfo;
+            _inventory.GetItemAction +=Get<QuickItemSlot>((int)quickItemSlot).UpdateSlotInfo;
         }
     }
     public override void Init(Transform anchor)
@@ -33,7 +35,14 @@ public class MainUI : ItemUI
         Bind<QuickItemSlot>(typeof(QuickItemSlots));
 
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots))) {
-            Get<QuickItemSlot>((int)quickItemSlot).Inventory = _inventory;
+            Get<QuickItemSlot>((int)quickItemSlot)._inventory = _inventory;
+        }
+    }
+
+    public void QuickslotUpdate() {
+        foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
+        {
+            Get<QuickItemSlot>((int)quickItemSlot).UpdateSlotInfo();
         }
     }
 }

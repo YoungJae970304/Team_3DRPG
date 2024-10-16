@@ -205,8 +205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Image: {fileID: 1580263914356944586}
   _text: {fileID: 948305550275912812}
-  slotType: 1
-  Inventory: {fileID: 0}
+  slotType: 4
+  _inventory: {fileID: 0}
 --- !u!1 &1150539307231298257
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +676,7 @@ MonoBehaviour:
   _Image: {fileID: 3435543769593191556}
   _text: {fileID: 3242248880512079558}
   slotType: 4
-  Inventory: {fileID: 0}
+  _inventory: {fileID: 0}
 --- !u!1 &3034373462228777451
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,6 +1750,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _UIOpenAnimation: {fileID: 0}
   TopBarImage: {fileID: 0}
+  _isSort: 1
 --- !u!1 &5688424542019934166
 GameObject:
   m_ObjectHideFlags: 0
@@ -2576,7 +2577,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 6323628963575711797}
   m_HandleRect: {fileID: 0}
@@ -2821,7 +2822,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4169775374497617909}
   m_HandleRect: {fileID: 0}

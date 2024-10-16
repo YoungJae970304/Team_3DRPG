@@ -21,6 +21,8 @@ public class InventorySlot : ItemSlot
     }
     public override void ItemInsert(ItemSlot moveSlot)
     {
+        if (moveSlot is QuickItemSlot) { return; }
+        if (!_itemManager.Containtype(slotType, moveSlot.slotType)) { return; }
         if (Item != null && Item.Data.ID == moveSlot.Item.Data.ID)
         {
             if (Item is CountableItem)
@@ -32,7 +34,7 @@ public class InventorySlot : ItemSlot
                 return;
             }
         }
-        if (!_itemManager.Containtype(slotType, moveSlot.slotType)) { return; }
+        
         if (moveSlot is InventorySlot) {
             _itemManager.SwitchItem(_index, ((InventorySlot)moveSlot)._index, moveSlot.Item.Data.Type);
         }

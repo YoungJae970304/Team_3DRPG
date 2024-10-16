@@ -20,6 +20,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
 
     private Action _OnShow;
     private Action _OnClose;
+    public bool _isSort = true;
 
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
@@ -90,7 +91,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     #region 클릭시 최상위로 변경
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (Managers.UI.GetCurrentFrontUI() != this)
+        if (_isSort && Managers.UI.GetCurrentFrontUI() != this )
         {
             Managers.UI.SetCurrentUI(this);
         }

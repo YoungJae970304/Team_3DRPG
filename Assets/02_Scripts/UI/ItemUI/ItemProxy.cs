@@ -19,5 +19,4 @@ public class ItemProxy : MonoBehaviour,IItemDropAble
     public void SetProxy(Action<ItemSlot> action) {
         _itemProxyAction = action;
     }
-
 }

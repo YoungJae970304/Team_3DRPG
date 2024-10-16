@@ -223,6 +223,7 @@ public class UIManager
         }
         else    // 팝업이랑 상관없는 일반 UI
         {
+            ui._isSort = sort;
             canvas.sortingOrder = 0;
         }
     }

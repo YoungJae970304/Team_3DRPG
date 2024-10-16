@@ -34,7 +34,7 @@ public class InventoryUI : ItemUI
         _inventory.GetItemAction += UpdateSlot;
         //ItemGrap.endGrapAction += UpdateSlot;
         GetGameObject((int)GameObjects.Inventory).GetOrAddComponent<ItemProxy>().SetProxy((moveSlot) => {
-            if (moveSlot is InventorySlot) { return; }
+            if (moveSlot is InventorySlot|| moveSlot is QuickItemSlot) { return; }
             if (_inventory.InsertItem(moveSlot.Item))
             {
                 moveSlot.RemoveItem();

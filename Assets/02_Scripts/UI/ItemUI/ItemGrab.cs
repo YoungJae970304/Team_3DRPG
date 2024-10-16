@@ -36,7 +36,7 @@ public class ItemGrab : MonoBehaviour
         _pointerEvent.position = Input.mousePosition;
 
         Raycaster.Raycast(_pointerEvent, _result);
-        
+
         if (_result.Count == 0) { return default(T); }
         return _result[0].gameObject.GetComponent<T>();
     }
@@ -57,13 +57,13 @@ public class ItemGrab : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            
+
             _currnetSlot = GetUIRayCast<ItemSlot>();
 
             // 아이템을 갖고 있는 슬롯만 해당
             if (_currnetSlot != null && _currnetSlot.Item != null)
             {
-                
+
                 // 위치 기억, 참조 등록
                 _beginDragCursorPoint = Input.mousePosition;//마우스 드래그 시작위치
                 Icon.enabled = true;                        //마우스 따라다닐 이미지
@@ -106,12 +106,18 @@ public class ItemGrab : MonoBehaviour
     private void DragEnd()
     {
         IItemDropAble target = GetUIRayCast<IItemDropAble>();
-        if (target != _currnetSlot)
+
+        if (target != null)
         {
-            if (target != null)
+            if (target != _currnetSlot)
             {
                 Logger.Log(target.GetType().ToString());
                 target.ItemInsert(_currnetSlot);
+            }
+        }
+        else {
+            if (_result.Count <= 0) {
+                _currnetSlot.NullTarget();
             }
         }
 
@@ -150,7 +156,7 @@ public class ItemGrab : MonoBehaviour
         }
         if (currSlot == null)
             return;
-        if (Input.GetMouseButtonDown(1)|| IsDoubleClick())
+        if (Input.GetMouseButtonDown(1) || IsDoubleClick())
         {
             ItemUse();
         }
@@ -184,7 +190,8 @@ public class ItemGrab : MonoBehaviour
             }
             return false;
         }
-        void ItemUse() {
+        void ItemUse()
+        {
             if (currSlot.Item == null)
                 return;
             Logger.Log(currSlot.Item.Data.Name);
@@ -192,6 +199,8 @@ public class ItemGrab : MonoBehaviour
             {
                 (currSlot.Item as IUsableItem).Use();
                 currSlot.UpdateSlotInfo();
+                (Managers.UI.GetActiveUI<InventoryUI>() as InventoryUI)?.UpdateSlot();
+                (Managers.UI.GetActiveUI<MainUI>() as MainUI)?.QuickslotUpdate();
             }
         }
     }
