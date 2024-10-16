@@ -1001,9 +1001,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1282406393396071828, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
+      propertyPath: DungeonDialogUI
+      value: 
+      objectReference: {fileID: 2784003624122026532, guid: 68f84fe7b818f1f41a717e847d30458f,
+        type: 3}
+    - target: {fileID: 1282406393396071828, guid: 81a17a1681951a34bab17685dd098bfa,
+        type: 3}
       propertyPath: _dialogDungeonUI
       value: 
-      objectReference: {fileID: 1044592898}
+      objectReference: {fileID: 0}
     - target: {fileID: 1764809740954991706, guid: 81a17a1681951a34bab17685dd098bfa,
         type: 3}
       propertyPath: _dungeonUI
@@ -1118,18 +1124,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1044592898 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1764809740954991706, guid: 81a17a1681951a34bab17685dd098bfa,
-    type: 3}
-  m_PrefabInstance: {fileID: 811806875}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f5b5f1f3b8511444825b7b2a1029044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1252076482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2363,6 +2357,11 @@ PrefabInstance:
       propertyPath: _cmQuarterCam
       value: 
       objectReference: {fileID: 773660106}
+    - target: {fileID: 4459902747821146588, guid: ca485054dc4f410439e704b8252a351b,
+        type: 3}
+      propertyPath: _main
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 7999316620019485694, guid: ca485054dc4f410439e704b8252a351b,
         type: 3}
       propertyPath: _cursorUI

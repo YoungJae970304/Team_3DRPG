@@ -19,6 +19,6 @@ public class QuestLogUI : BaseUI
     //나가기 버튼
     public void ExitBtn()
     {
-
+        this.gameObject.SetActive(false);
     }
 }

@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &560677445867776313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2117340263652180624}
+  m_Layer: 0
+  m_Name: Dialog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2117340263652180624
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560677445867776313}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5445595060684425833}
+  - {fileID: 1966521277687675570}
+  m_Father: {fileID: 9002339993723015197}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639841525759814862
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,6 +117,61 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2863024555115930594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5445595060684425833}
+  - component: {fileID: 4192826246697405307}
+  m_Layer: 0
+  m_Name: DungeonNPClog_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5445595060684425833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2863024555115930594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2117340263652180624}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4192826246697405307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2863024555115930594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f4a905ea71b4944aa5f5d0e68cb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakers:
+  - spriteRenderer: {fileID: 8741853020937784761}
+    imageDialog: {fileID: 5360861254579709019}
+    textName: {fileID: 6399914765124011963}
+    textDialog: {fileID: 6326950542308680957}
+    objectArrow: {fileID: 5248619820331463261}
+  dialogs:
+  - speakerIndex: 0
+    name: "\uB358\uC804 NPC"
+    dialogue: "\uC65C \uB9D0\uAC78\uC5B4"
+  isAutoStart: 1
 --- !u!1 &3040517844161636495
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +185,7 @@ GameObject:
   - component: {fileID: 3796131993146129681}
   - component: {fileID: 9045470790053083045}
   m_Layer: 5
-  m_Name: DungeonUIOpenBtn
+  m_Name: OpenBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,7 +293,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3870719186428004309}
         m_TargetAssemblyTypeName: DialogDungeonUI, Assembly-CSharp
         m_MethodName: OpenDungeonUI
         m_Mode: 1
@@ -229,8 +317,9 @@ GameObject:
   - component: {fileID: 2784003624122026532}
   - component: {fileID: 3761090086491151074}
   - component: {fileID: 2106089529187994733}
+  - component: {fileID: 3870719186428004309}
   m_Layer: 5
-  m_Name: DungeonDIalog
+  m_Name: DialogDungeonUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,6 +343,7 @@ RectTransform:
   - {fileID: 5096641960544464111}
   - {fileID: 3901575713556534661}
   - {fileID: 230739040480269240}
+  - {fileID: 2117340263652180624}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -282,7 +372,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &3761090086491151074
 MonoBehaviour:
@@ -324,6 +414,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3870719186428004309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3248593829709318713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5b5f1f3b8511444825b7b2a1029044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UIOpenAnimation: {fileID: 0}
+  TopBarImage: {fileID: 0}
+  _dialogSystem:
+  - {fileID: 4192826246697405307}
+  - {fileID: 3312749593865474170}
+  _dungeonUIOpenBtn: {fileID: 9045470790053083045}
 --- !u!1 &5248619820331463261
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +596,61 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &6484504876976154616
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1966521277687675570}
+  - component: {fileID: 3312749593865474170}
+  m_Layer: 0
+  m_Name: DungeonNPClog_2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1966521277687675570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484504876976154616}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2117340263652180624}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3312749593865474170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484504876976154616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f4a905ea71b4944aa5f5d0e68cb872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakers:
+  - spriteRenderer: {fileID: 8741853020937784761}
+    imageDialog: {fileID: 5360861254579709019}
+    textName: {fileID: 6399914765124011963}
+    textDialog: {fileID: 6326950542308680957}
+    objectArrow: {fileID: 5248619820331463261}
+  dialogs:
+  - speakerIndex: 0
+    name: "\uB358\uC804 NPC"
+    dialogue: "\uB358\uC804\uC5D0 \uB4E4\uC5B4\uAC00\uACE0 \uC2F6\uB2E4\uACE0?"
+  isAutoStart: 0
 --- !u!1 &6510754275293867801
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +742,7 @@ GameObject:
   - component: {fileID: 2110521867084352771}
   - component: {fileID: 6399914765124011963}
   m_Layer: 5
-  m_Name: NPCName
+  m_Name: NpcName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
