@@ -20,7 +20,8 @@ public class PlayerDodgeState : BaseState
 
     public override void OnStateUpdate()
     {
-        if (_player._invincible)
+        //if (_player._invincible)
+        if (_player._dodgeing)  // 더 자연스럽게 원한다면 이 부분을 제거
         Dodge();
     }
 

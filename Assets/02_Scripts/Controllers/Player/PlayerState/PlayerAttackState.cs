@@ -10,7 +10,6 @@ public class PlayerAttackState : BaseState
     {
         Logger.Log("공격 상태 진입");
         _player._playerAnim.SetBool("isAttacking", true);
-        //_player.SetColActive("Combo3");
 
         _player._curAtkCount = _player._playerInput._atkInput.Dequeue();
 
@@ -36,6 +35,9 @@ public class PlayerAttackState : BaseState
                 Logger.LogError("지정한 공격이 아님");
                 break;
         }
+
+        //Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
+        //_player._playerModel.rotation = targetRot;
     }
 
     public override void OnStateUpdate()
