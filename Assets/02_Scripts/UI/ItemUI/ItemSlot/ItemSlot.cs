@@ -1,19 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System;
 
-public abstract class ItemSlot : MonoBehaviour, IItemDropAble,IItemDragAble
+public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
 {
     protected Item _item;
     public Action itemChangedAction;
-    public Item Item{get=>_item ; protected set {
-            _item = value; 
+    public Item Item
+    {
+        get => _item; protected set
+        {
+            _item = value;
             itemChangedAction?.Invoke();
             UpdateSlotInfo();
-        } }
+        }
+    }
     public Image _Image;
     [SerializeField] protected TextMeshProUGUI _text;
     public ItemData.ItemType slotType = ItemData.ItemType.Weapon;
@@ -24,10 +26,11 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble,IItemDragAble
         if (Item == null)
         {
             _Image.enabled = false;
-            _text.text = "";
+            if (_text != null)
+                _text.text = "";
             return;
         }
-        
+
         _Image.enabled = true;
         //_Image.sprite = Item.Data.IconSprite == null ? _Image.sprite : Item.Data.IconSprite;
         _Image.sprite = Item.LoadIcon();
@@ -36,14 +39,16 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble,IItemDragAble
         {
             _text.text = (Item as CountableItem)._amount.ToString(); ;
         }
-        else {
+        else
+        {
             _text.text = "";
         }
     }
 
-    public virtual void ItemInsert(ItemSlot moveSlot) {
-        if(Item != null && Item.Data.ID == moveSlot.Item.Data.ID)
-            {
+    public virtual void ItemInsert(ItemSlot moveSlot)
+    {
+        if (Item != null && Item.Data.ID == moveSlot.Item.Data.ID)
+        {
             if (Item is CountableItem)
             {
                 int overAmount = ((CountableItem)Item).AddAmount(((CountableItem)moveSlot.Item)._amount);
@@ -55,7 +60,8 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble,IItemDragAble
     }
     public abstract bool MoveItem(ItemSlot moveSlot);
 
-    public void RemoveItem() {
+    public void RemoveItem()
+    {
         Item = null;
     }
 

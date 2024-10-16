@@ -208,10 +208,11 @@ public class UIManager
         if (_sortingList.Contains(ui)) {
             _sortingList.Remove(ui);
         }
-        _sortingList.AddLast(ui);
-        _frontUI = ui;
+        
         if (sort)
         {
+            _sortingList.AddLast(ui);
+            _frontUI = ui;
             canvas.sortingOrder = _order;
             _order++;
             foreach (BaseUI baseUI in _sortingList) {

@@ -16,8 +16,8 @@ public class BaseUIData
 public class BaseUI : MonoBehaviour, IPointerDownHandler
 {
     public Animation _UIOpenAnimation;
-    public Image TopBarImage;
-
+    public Image _topBarImage;
+    public Button _exitBtn;
     private Action _OnShow;
     private Action _OnClose;
     public bool _isSort = true;
@@ -28,10 +28,10 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     Vector2 correction;
     protected virtual void BeginDrag(PointerEventData data)
     {
-        correction =  TopBarImage.transform.parent.position - (Vector3)data.position;
+        correction =  _topBarImage.transform.parent.position - (Vector3)data.position;
     }
     protected virtual void Drag(PointerEventData data) {
-        TopBarImage.transform.parent.position = data.position+ correction;
+        _topBarImage.transform.parent.position = data.position+ correction;
     }
     protected virtual void EndDrag(PointerEventData data)
     {
@@ -98,19 +98,20 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     }
     public virtual void OnIsCurrent()
     {
-        if (TopBarImage == null) { return; }
-        TopBarImage.color = Color.red;
+        if (_topBarImage == null) { return; }
+        _topBarImage.color = Color.red;
     }
     public virtual void OnIsNotCurrent()
     {
-        if (TopBarImage == null) { return; }
-        TopBarImage.color = Color.black;
+        if (_topBarImage == null) { return; }
+        _topBarImage.color = Color.black;
     }
     #endregion
 
     public virtual void Init(Transform anchor) {
         Logger.Log($"{GetType()} init");
-
+        _topBarImage = Util.FindChild<Image>(gameObject,"TopBar", true);
+        _exitBtn = Util.FindChild<Button>(gameObject, "ExitBtn", true);
         _OnShow = null;
         _OnClose = null;
 
@@ -122,10 +123,13 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
             Logger.LogError("UI does not Have RectTransform");
             return;
         }
-        if (TopBarImage != null)
+        if (_topBarImage != null)
         {
-            Util.BindUIEvent(TopBarImage.gameObject, BeginDrag, Define.UIEvent.BeginDrag);
-            Util.BindUIEvent(TopBarImage.gameObject, Drag, Define.UIEvent.Drag);
+            Util.BindUIEvent(_topBarImage.gameObject, BeginDrag, Define.UIEvent.BeginDrag);
+            Util.BindUIEvent(_topBarImage.gameObject, Drag, Define.UIEvent.Drag);
+        }
+        if (_exitBtn != null) {
+            _exitBtn.onClick.AddListener(()=>CloseUI());
         }
         rectTransform.localPosition = Vector3.zero;
         rectTransform.localScale = Vector3.one;

@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8040634148007393217}
   - component: {fileID: 1627049493991443799}
   m_Layer: 5
-  m_Name: ExitButton
+  m_Name: ExitBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -420,7 +420,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _UIOpenAnimation: {fileID: 0}
-  TopBarImage: {fileID: 2333228718023571892}
+  _topBarImage: {fileID: 0}
+  _exitBtn: {fileID: 0}
+  _isSort: 1
   _currentType: 1
   _inventory: {fileID: 0}
   _inventorySlots: []
