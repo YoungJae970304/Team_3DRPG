@@ -95,7 +95,7 @@ public class PlayerInput : MonoBehaviour
     // 공격 입력
     void AttackInput()
     {
-        if (_player._invincible || _player._skillUsing || !_player._canAtkInput) return;
+        if (_player._dodgeing || _player._skillUsing || !_player._canAtkInput) return;
 
         if (Input.GetMouseButtonDown(0))
         {
