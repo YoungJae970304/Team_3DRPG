@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class QuestListBtn : MonoBehaviour, ISelectHandler
+public class QuestListBtn : BaseUI, ISelectHandler
 {
     public Button _button {  get; private set; }
 
@@ -41,8 +41,9 @@ public class QuestListBtn : MonoBehaviour, ISelectHandler
             case QuestState.State.CanFinish:
                 _listBtnText.color = Color.yellow;
                 break;
+                //완료된 퀘스트 표시 안함
             case QuestState.State.Finished:
-                _listBtnText.color = Color.green;
+                _button.gameObject.SetActive(false);
                 break;
             default:
                 Logger.LogWarning("존재하지 않는 퀘스트 상태입니다");

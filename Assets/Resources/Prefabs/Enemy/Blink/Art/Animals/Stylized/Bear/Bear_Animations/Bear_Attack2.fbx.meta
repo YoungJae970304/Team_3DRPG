@@ -100,14 +100,6 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.96818185
-        functionName: AttackColliderActiveFalse
-        data: 
-        objectReferenceParameter: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0
         functionName: AttackCompleteCheck
         data: 

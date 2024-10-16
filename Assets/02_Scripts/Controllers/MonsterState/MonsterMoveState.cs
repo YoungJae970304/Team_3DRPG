@@ -7,6 +7,8 @@ public class MonsterMoveState : BaseState
     float _timer = 0;
     public override void OnStateEnter()
     {
+        _monster.StopAllCoroutines();
+        //_monster._nav.enabled = true;
         //플레이어 찾기(슬라임에서 찾아둠)
         _monster._anim.SetBool("BeforeChase", true);
        
@@ -26,12 +28,10 @@ public class MonsterMoveState : BaseState
         _monster.LookPlayer();
 
         //플레이어 추격
-        //_timer += Time.deltaTime;
+        //_timer += _monster
 
-
-        _monster._nav.destination = _monster._player.transform.position;
-        _monster._nav.SetDestination(_monster._nav.destination);
-        // _timer = 0;
+        _monster.SetDestinationTimer(2);
+       
 
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,10 +12,19 @@ public class ShopItemSlot : ItemSlot
         //판매 확인창에서 버튼을 누르면 아이템 가치에 맞는 돈을 획득
     }
 
+    public void Init() { 
+    
+    }
     public override bool MoveItem(ItemSlot moveSlot)
     {
         //구현할 필요 없음
         return true;
     }
 
+    public void BuyConfirm(InventorySlot inventorySlot)
+    {
+        //돈이 사려는 아이템보다 많으면
+        //구매 확인 UI 출력
+        //구매확인 UI 는 확인 버튼을 누를시 아이템을 insert하고 사라짐
+    }
 }

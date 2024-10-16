@@ -4,13 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using Unity.VisualScripting;
 
 public class InventoryUI : ItemUI
 {
     public ItemData.ItemType _currentType= ItemData.ItemType.Potion;
-
-    public Transform _itemTrs;
 
     public Inventory _inventory;
     
@@ -23,6 +20,7 @@ public class InventoryUI : ItemUI
     }
 
     enum GameObjects {
+        Inventory,
         Slots,
     }
 
@@ -32,9 +30,20 @@ public class InventoryUI : ItemUI
     {
         base.Awake();
         Bind<GameObject>(typeof(GameObjects));
-        _inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
+        _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         _inventory.GetItemAction += UpdateSlot;
         //ItemGrap.endGrapAction += UpdateSlot;
+        GetGameObject((int)GameObjects.Inventory).GetOrAddComponent<ItemProxy>().SetProxy((moveSlot) => {
+            if (moveSlot is InventorySlot|| moveSlot is QuickItemSlot) { return; }
+            if (_inventory.InsertItem(moveSlot.Item))
+            {
+                moveSlot.RemoveItem();
+            }
+            else
+            {
+                moveSlot.UpdateSlotInfo();
+            }
+        }); ;
         SlotSetting(_currentType);
     }
     public override void Init(Transform anchor)

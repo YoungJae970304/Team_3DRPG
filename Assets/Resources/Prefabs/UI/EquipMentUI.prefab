@@ -116,7 +116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _UIOpenAnimation: {fileID: 0}
-  TopBarImage: {fileID: 1151152127420543704}
+  _topBarImage: {fileID: 0}
+  _exitBtn: {fileID: 0}
+  _isSort: 1
   _slots:
   - {fileID: 7411668492195702471}
   - {fileID: 3605173694153656218}
@@ -133,7 +135,7 @@ GameObject:
   - component: {fileID: 4802153485667724349}
   - component: {fileID: 1151152127420543704}
   m_Layer: 5
-  m_Name: Topbar
+  m_Name: TopBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -365,7 +367,7 @@ GameObject:
   - component: {fileID: 4859939762818674270}
   - component: {fileID: 5438847500021736707}
   m_Layer: 5
-  m_Name: ExitButton
+  m_Name: ExitBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

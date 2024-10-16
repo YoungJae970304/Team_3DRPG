@@ -25,13 +25,9 @@ public class BossBear : Monster
         _startScale = _roarRange.transform.localScale;
 
         _roarRange.SetActive(false);
-        _mStat._mStat.AttackRange = 3;
+        _mStat._mStat.AttackRange = 4;
     }
-    public override void Update()
-    {
-        base.Update();
-       
-    }
+
     IEnumerator PlusRoarRange()
     {
         _roarTimer = 0;
@@ -157,13 +153,30 @@ public class BossBear : Monster
     {
         
         _player._playerHitState = PlayerHitState.StunAttack;
-        AttackPlayer();
+        Roar();
 
       
 
 
     }
-
+    public void Roar()
+    {
+        int damage = 0;
+        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _maxRoarRange.transform.localScale.x*2);
+        Logger.LogError($"{_maxRoarRange.transform.localScale.x}");
+        foreach (Collider collider in checkColliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    damageable.Damaged(damage);
+                    //_player.Damaged(_mStat.ATK);
+                    Logger.LogError($"{_player._playerStatManager.HP}");
+                }
+            }
+        }
+    }
 
     private List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
     public override void Damaged(int amount)
@@ -182,7 +195,7 @@ public class BossBear : Monster
         float hpPercentage = (float)_mStat.HP / _mStat.MaxHP;
 
 
-        if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount])
+        if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount] && _mStat.HP >0)
         {
             _anim.SetTrigger("BossRoar");
             MChangeState(MonsterState.Skill);
@@ -212,19 +225,7 @@ public class BossBear : Monster
         }
         
     }
-    public void AfterDamagedState()
-    {
-        // HP 상태에 따른 상태 전환
-        if (_mStat.HP <= 0)
-        {
-            MChangeState(MonsterState.Die);
-
-        }
-        else
-        {
-            MChangeState(MonsterState.Move);
-        }
-    }
+   
 
     public void EarthquakeAttack()
     {
