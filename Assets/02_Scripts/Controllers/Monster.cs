@@ -51,7 +51,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     int startValue3;
     int endValue3;
     [Header("몬스터 공격")]
-    public List<Collider> _atkColliders;
+ 
     public bool _attackCompleted = false;
 
     //[HideInInspector]
@@ -60,7 +60,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public virtual void Awake()
     {
         _deongeonLevel = DeongeonType.Hard; // 추후 던젼에서 받아오도록 설정
-        _anim = GetComponent<Animator>();
+        //_anim = GetComponent<Animator>();
+        _anim = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
         //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
@@ -184,7 +185,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     #endregion
     #region 상태 변환 FSM 사용
-    protected void MChangeState(MonsterState nextState)
+    public void MChangeState(MonsterState nextState)
     {
         if (_mFSM == null)
         {
@@ -217,12 +218,13 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
 
             MChangeState(MonsterState.Damage);
+            StartDamege(_player.transform.position, 0.1f, 30f);
         }
         else
         {
             MChangeState(MonsterState.Die);
         }
-        StartDamege(_player.transform.position, 0.1f, 30f);
+        
         Logger.LogError(_mStat.HP.ToString());
         
      
@@ -234,10 +236,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         Destroy(mob, 4f);
     }
-    public void MonsterAnimFalse() // 애니메이션 이벤트용
-    {
-        _anim.enabled = false;
-    }
+ 
     #endregion
     #region 상태 변환 조건
     public bool DamageToPlayer()
@@ -266,6 +265,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public void AttackTimer()
     {
         _timer += Time.deltaTime;
+
+
+    }
+    public void SetDestinationTimer(float targetTIme)
+    {
+        _timer += Time.deltaTime;
+        if(_timer >= targetTIme)
+        {
+            _nav.destination = _player.transform.position;
+            _nav.SetDestination(_nav.destination);
+            _timer = 0;
+        }
     }
     #endregion
     #region 플레이어 공격관련 함수
@@ -295,33 +306,8 @@ public class Monster : MonoBehaviour, IDamageAlbe
         }
 
     }
-    public void NomalAttack() //이벤트 2번
-    {
+  
 
-        Logger.Log("NomalAttack");
-
-        _player._playerHitState = PlayerHitState.NomalAttack;
-        AttackPlayer();
-
-    }
-    public void SkillAttack() // 이벤트 2번
-    {
-
-        Logger.Log("SkillAttack");
-
-        _player._playerHitState = PlayerHitState.SkillAttack;
-        AttackPlayer();
-
-    }
-    public void AttackColliderActiveFalse()//공격 모션 마지막에 호출 이벤트 3번
-    {
-
-        for (int i = 0; i < _atkColliders.Count; i++)
-        {
-            _atkColliders[i].gameObject.SetActive(false);
-        }
-        //_hitPlayer.Clear();
-    }
     public void LookBeforeAttack()
     {
         transform.LookAt(_player.transform);
@@ -339,20 +325,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime*10);
         }
     }
-    public void AttackCompleteCheck()
-    {
-        _attackCompleted = false;
-    }
+  
    
     #endregion
-    #region 넉백 코루틴
+    #region 넉백
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         if(_mStat.HP <= 0)
         {
             return;
         }
-        _nav.enabled = false;
+        //_nav.enabled = false;
+        _nav.ResetPath();
         //_characterController.enabled = true; // CharacterController 비활성화
 
         // 넉백 방향 계산
@@ -366,15 +350,16 @@ public class Monster : MonoBehaviour, IDamageAlbe
         // 넉백 후 처리
         await Task.Delay((int)(delay * 2000)); // 넉백 지속 시간 (ms 단위)
 
-          // 넉백이 끝나면 CharacterController를 다시 활성화
-        
-           // _nav.enabled = true;
-            // _characterController.enabled = false;
+        // 넉백이 끝나면 CharacterController를 다시 활성화
 
+        // _nav.enabled = true;
+        // _characterController.enabled = false;
+     
             if (CanAttackPlayer())
                 MChangeState(MonsterState.Attack);
             else
                 MChangeState(MonsterState.Move);
+       
         
     }
 

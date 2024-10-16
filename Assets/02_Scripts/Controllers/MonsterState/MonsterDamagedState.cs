@@ -11,7 +11,8 @@ public class MonsterDamagedState : BaseState
         //넉백, 데미지 받기
         //임시로 몬스터의 데미지를 넣어놓음 추후 플레이어 데미지 값 받아오게 설정
         _monster._anim.SetTrigger("Damaged");
-        _monster._nav.enabled = false;
+        // _monster._nav.enabled = false;
+        _monster._nav.ResetPath();
         
     }
 
@@ -19,7 +20,8 @@ public class MonsterDamagedState : BaseState
     {
         //코루틴 멈추기?
         //상태는 냅둿다가 나중에 슬라임 스위치 데미지파트랑 비교하기
-        _monster._nav.enabled = true;
+        //_monster._nav.enabled = true;
+        
     }
 
     public override void OnStateUpdate()

@@ -19,7 +19,7 @@ public class Slime : Monster
     }
     public override void AttackStateSwitch()
     {
-        _atkColliders[0].gameObject.SetActive(true);
+    
         _anim.SetTrigger("Attack");
     }
 
