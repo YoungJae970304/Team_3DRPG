@@ -39,13 +39,14 @@ public class MonsterAttackState : BaseState
     }
     private IEnumerator AttackDelay(float delay)
     {
-        
-        //_monster._nav.enabled = false;
         yield return new WaitForSeconds(delay);
+        //_monster._nav.enabled = false;
+        Logger.LogError("1");
         _monster._anim.SetBool("AfterAttackMotion", true);
 
-        yield return new WaitForSeconds(1.2f); 
-        _monster._attackCompleted = true;
+        
+        Logger.LogError("2");
+        
         //_monster._nav.enabled = true;
     }
     public override void OnStateUpdate()

@@ -7,6 +7,7 @@ public class MonsterMoveState : BaseState
     float _timer = 0;
     public override void OnStateEnter()
     {
+        Logger.LogError("3");
         _monster.StopAllCoroutines();
         //_monster._nav.enabled = true;
         //플레이어 찾기(슬라임에서 찾아둠)
@@ -25,7 +26,7 @@ public class MonsterMoveState : BaseState
     public override void OnStateUpdate()
     {
 
-        _monster.LookPlayer();
+        //_monster.LookPlayer();
 
         //플레이어 추격
         //_timer += _monster
