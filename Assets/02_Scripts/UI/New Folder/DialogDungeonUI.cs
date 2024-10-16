@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogDungeonUI : BaseUI
 {
@@ -21,14 +22,11 @@ public class DialogDungeonUI : BaseUI
         StopAllCoroutines();
     }
 
-    [ContextMenu("DialogTest")]
     IEnumerator DialogStart()
     {
         //대사 시작
-        _dungeonUIOpenBtn.gameObject.SetActive(false);
-        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _dungeonUIOpenBtn.gameObject.SetActive(true);
-        yield return new WaitUntil(() => _dialogSystem[1].UpdateDialog());
+        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         yield return new WaitForSeconds(0.2f);
         _dungeonUIOpenBtn.gameObject.SetActive(false);
         Managers.UI.CloseUI(this);
