@@ -705,7 +705,7 @@ MonoBehaviour:
   CameraDistance: 3
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 32768
+    m_Bits: 33792
   IgnoreTag: 
   CameraRadius: 0.2
   DampingIntoCollision: 0
@@ -5575,6 +5575,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 50978328962805125, guid: 50784459399964046a8186d12893c707,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 50978328962805125, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 50978328962805125, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 50978328962805125, guid: 50784459399964046a8186d12893c707,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.001854
       objectReference: {fileID: 0}
@@ -5623,6 +5638,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 50978328962805125, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2150391311920958626, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2150391311920958626, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2150391311920958626, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.67
+      objectReference: {fileID: 0}
     - target: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,
         type: 3}
       propertyPath: m_Name
@@ -5632,6 +5667,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008509309050383447, guid: 50784459399964046a8186d12893c707,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

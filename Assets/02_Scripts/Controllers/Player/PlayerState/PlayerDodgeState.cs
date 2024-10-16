@@ -28,7 +28,7 @@ public class PlayerDodgeState : BaseState
     {
         Logger.Log("회피 Exit");
         _player._playerAnim.SetBool("isDodge", false);
-        _player._rotDir = Vector3.zero;
+        //_player._rotDir = Vector3.zero;
         _player._canAtkInput = true;
         _player._attacking = false;
         _player._dodgeing = false;
