@@ -19,16 +19,14 @@ public class Goblem : Monster
         
         if (_randomAttack <= 50)
         {
-            _atkColliders[0].gameObject.SetActive(true);
-            //NomalAttack();
+          
             _anim.SetTrigger("attack");
             
 
         }
         else
         {
-            _atkColliders[1].gameObject.SetActive(true);
-            //SkillAttack();
+    
             _anim.SetTrigger("attack1");
             
         }

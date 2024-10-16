@@ -12,6 +12,9 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateEnter()
     {
+        
+        _monster._nav.isStopped = true;
+        //_monster._nav.ResetPath();
         //초기화
         _monster._attackCompleted = false;
         //_monster.LookBeforeAttack();
@@ -25,7 +28,8 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateExit()
     {
-        
+        //_monster._nav.enabled = true;
+        _monster._nav.isStopped = false;
         _monster._timer = _monster._mStat.AtkDelay;
         _monster._nav.stoppingDistance = 0;
         
@@ -36,20 +40,22 @@ public class MonsterAttackState : BaseState
     private IEnumerator AttackDelay(float delay)
     {
         
-        _monster._nav.enabled = false;
+        //_monster._nav.enabled = false;
         yield return new WaitForSeconds(delay);
         _monster._anim.SetBool("AfterAttackMotion", true);
 
         yield return new WaitForSeconds(1.2f); 
         _monster._attackCompleted = true;
-        _monster._nav.enabled = true;
+        //_monster._nav.enabled = true;
     }
     public override void OnStateUpdate()
     {
+        
         _monster.AttackTimer();
         //_monster.LookPlayer();
         
         _monster._randomAttack = UnityEngine.Random.Range(1, 101);
+
         //딜레이 후 플레이어 공격
         if (_monster._timer > _monster._mStat.AtkDelay)
         {

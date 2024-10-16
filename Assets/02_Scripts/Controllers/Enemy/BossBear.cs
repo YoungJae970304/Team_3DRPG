@@ -27,11 +27,7 @@ public class BossBear : Monster
         _roarRange.SetActive(false);
         _mStat._mStat.AttackRange = 4;
     }
-    public override void Update()
-    {
-        base.Update();
-       
-    }
+
     IEnumerator PlusRoarRange()
     {
         _roarTimer = 0;
@@ -199,7 +195,7 @@ public class BossBear : Monster
         float hpPercentage = (float)_mStat.HP / _mStat.MaxHP;
 
 
-        if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount])
+        if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount] && _mStat.HP >0)
         {
             _anim.SetTrigger("BossRoar");
             MChangeState(MonsterState.Skill);
@@ -229,19 +225,7 @@ public class BossBear : Monster
         }
         
     }
-    public void AfterDamagedState()
-    {
-        // HP 상태에 따른 상태 전환
-        if (_mStat.HP <= 0)
-        {
-            MChangeState(MonsterState.Die);
-
-        }
-        else
-        {
-            MChangeState(MonsterState.Move);
-        }
-    }
+   
 
     public void EarthquakeAttack()
     {
