@@ -341,7 +341,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     {
         if (_hitMobs.Count == 0) return;
 
-        int damage = _playerStatManager._originStat.ATK;
+        int damage = _playerStatManager.ATK;
 
         foreach(var mob in _hitMobs)
         {

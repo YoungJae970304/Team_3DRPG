@@ -705,7 +705,7 @@ MonoBehaviour:
   CameraDistance: 3
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 33792
+    m_Bits: 32768
   IgnoreTag: 
   CameraRadius: 0.2
   DampingIntoCollision: 0
@@ -2116,6 +2116,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Goblin
+      objectReference: {fileID: 0}
+    - target: {fileID: 593171618488029809, guid: 81a2d66d25faee147af5888e0182ee4a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3326553808174703748, guid: 81a2d66d25faee147af5888e0182ee4a,
         type: 3}
@@ -4030,6 +4035,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Slime_01_King
+      objectReference: {fileID: 0}
+    - target: {fileID: 8042249935538729580, guid: 41febf0d389836f42bc608116d9b7e9a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
