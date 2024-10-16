@@ -327,7 +327,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     {
         foreach (var col in _atkColliders)
         {
-            col.gameObject.SetActive(col.name == colName);
+            col.enabled = (col.name == colName);
         }
     }
 
@@ -400,10 +400,4 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
         _invincible = false;
     }
-
-    // 현재 공격 도중 회피 하면 타이머가 진행중에 끊기기때문에 다음 공격이 엄청 짧아짐
-    // 이는 추후 애니메이션 이벤트로 처리하게 될시 자동으로 해결될 것
-    #region 타이머들(추후 anim이벤트로 일부 변경)
-
-    #endregion
 }

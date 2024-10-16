@@ -10,6 +10,9 @@ public class PlayerDodgeState : BaseState
 
     public override void OnStateEnter()
     {
+        _player._playerAnim.SetBool("isAttacking", false);
+        _player._playerAnim.SetBool("Run", false);
+        _player._playerAnim.SetBool("ZoomMode", false);
         _player._playerAnim.SetBool("isDodge", true);
         _player.AtkCount = 0;
         _player._dodgeing = true;
@@ -28,6 +31,7 @@ public class PlayerDodgeState : BaseState
         _player._rotDir = Vector3.zero;
         _player._canAtkInput = true;
         _player._attacking = false;
+        _player._dodgeing = false;
     }
 
     void Dodge()
