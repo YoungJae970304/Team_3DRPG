@@ -159,8 +159,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
             case MonsterState.Attack:
                 if (_attackCompleted == true)
                 {
+                  
                     if (!CanAttackPlayer())//내가 공격을 끝냈는지에 대한 조건을 상위조건으로 걸기// 불변수 // 급
                     {
+                        
                         if (!ReturnOrigin())
                         {
                             MChangeState(MonsterState.Move);
@@ -218,7 +220,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         {
 
             MChangeState(MonsterState.Damage);
-            StartDamege(_player.transform.position, 0.1f, 30f);
+            StartDamege(_player.transform.position, 1f, 30f);
         }
         else
         {
@@ -271,6 +273,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public void SetDestinationTimer(float targetTIme)
     {
         _timer += Time.deltaTime;
+        if(_timer>= targetTIme/2)
+        {
+            LookPlayer();
+        }
         if(_timer >= targetTIme)
         {
             _nav.destination = _player.transform.position;
@@ -348,7 +354,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         //_characterController.Move(moveDirection * Time.deltaTime); // 이동
 
         // 넉백 후 처리
-        await Task.Delay((int)(delay * 2000)); // 넉백 지속 시간 (ms 단위)
+        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (ms 단위)
 
         // 넉백이 끝나면 CharacterController를 다시 활성화
 

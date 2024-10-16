@@ -118,6 +118,17 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         _player.ApplyDamage();
     }
+    public void PhysicsLayerOff()
+    {
+        // 플레이어와 몬스터의 충돌을 잠시 off
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Monster"), true);
+    }
+
+    public void PhysicsLayerOn()
+    {
+        // 플레이어와 몬스터의 충돌을 원래대로 되돌림
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Monster"), false);
+    }
 
     public void MeleeSecondSkillDamage(float range)
     {

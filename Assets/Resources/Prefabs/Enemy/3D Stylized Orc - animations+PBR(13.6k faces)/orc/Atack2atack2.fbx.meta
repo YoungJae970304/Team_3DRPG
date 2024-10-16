@@ -73,18 +73,24 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.52191234
-        functionName: NomalAttack
-        data: 
-        objectReferenceParameter: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0
         functionName: AttackCompleteCheck
         data: 
-        objectReferenceParameter: {fileID: 8862738492010600982, guid: a2e3dc51d57abdb4ebc799c2e370599a,
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.52191234
+        functionName: NomalAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: MonsterAttackCheck
+        data: 
+        objectReferenceParameter: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
           type: 3}
         floatParameter: 0
         intParameter: 0

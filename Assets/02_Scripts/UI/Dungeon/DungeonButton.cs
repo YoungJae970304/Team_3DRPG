@@ -22,7 +22,7 @@ public class DungeonButton : BaseUI
 
     private void OnEnable()
     {
-        
+        MakeDungeonType();
     }
     public void MakeDungeonType()
     {

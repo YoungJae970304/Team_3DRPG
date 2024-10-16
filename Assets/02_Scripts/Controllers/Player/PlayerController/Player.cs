@@ -95,6 +95,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public List<Collider> _atkColliders;
     //[HideInInspector]
     public List<Collider> _hitMobs;
+    public HashSet<IDamageAlbe> _damageAlbes = new HashSet<IDamageAlbe>();
 
     // 스킬 관련 변수
     [HideInInspector]
@@ -341,7 +342,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     {
         if (_hitMobs.Count == 0) return;
 
-        int damage = _playerStatManager._originStat.ATK;
+        int damage = _playerStatManager.ATK;
 
         foreach(var mob in _hitMobs)
         {
