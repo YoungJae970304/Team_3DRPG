@@ -39,8 +39,6 @@ public class DialogSystem : BaseUI
     private void Awake()
     {
         //Setup();
-  
-        
     }
 
     void Setup()
