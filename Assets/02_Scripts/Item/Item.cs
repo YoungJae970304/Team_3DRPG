@@ -12,7 +12,7 @@ public class Item
     }
 
     #region ID로
-    public static Item ItemSpawn(int id)
+    public static Item ItemSpawn(int id,int amount =1)
     {
         //데이터테이블매니저 인스턴스
         DataTableManager _dataTableManager = Managers.DataTable;
@@ -42,11 +42,11 @@ public class Item
                         return new EquipmentItem(itemData);
                     //사용 가능 아이템
                     case ItemData.ItemType.Potion:
-                        return new CountableItem(itemData);
+                        return new ConsumableItem(itemData, amount);
                     //수량만 있는 아이템
                     case ItemData.ItemType.Booty:
-                        return new Item(itemData);
-                    default:
+                        return new CountableItem(itemData, amount);
+                default:
                         Logger.Log($"알 수 없는 아이템 타입 : {itemData.Type}");
                         return null;
                 }

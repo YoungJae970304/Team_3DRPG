@@ -12,6 +12,7 @@ public class TestScene : BaseScene
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
+        Managers.UI.OpenUI<MainUI>(new BaseUIData(),false);
         //Opentest();
         Close();
     }
@@ -34,7 +35,8 @@ public class TestScene : BaseScene
 
     [ContextMenu("Inserttest")]
     public void Inserttest() {
-        ItemManager.InsertItem(Item.ItemSpawn(11001));
+        ItemManager.InsertItem(Item.ItemSpawn(42001,15));
+        ItemManager.InsertItem(Item.ItemSpawn(11010, 15));
     }
     [ContextMenu("Removetest")]
     public void Remove()
