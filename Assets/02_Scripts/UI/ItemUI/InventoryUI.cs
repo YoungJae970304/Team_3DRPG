@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using Unity.VisualScripting;
 
 public class InventoryUI : ItemUI
 {
@@ -31,7 +30,7 @@ public class InventoryUI : ItemUI
     {
         base.Awake();
         Bind<GameObject>(typeof(GameObjects));
-        _inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
+        _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         _inventory.GetItemAction += UpdateSlot;
         //ItemGrap.endGrapAction += UpdateSlot;
         GetGameObject((int)GameObjects.Inventory).GetOrAddComponent<ItemProxy>().SetProxy((moveSlot) => {

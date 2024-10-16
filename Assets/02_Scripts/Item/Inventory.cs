@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour//인벤토리
         Logger.Log(item.Data.Type.ToString());
         bool result = ItemDick[item.Data.Type].Insert(item);
         GetItemAction?.Invoke();
-        
+
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }
@@ -72,18 +72,26 @@ public class Inventory : MonoBehaviour//인벤토리
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }
+    //인벤토리에 특정id의 아이템이 몇개 있는지 반환
+    public int GetItemAmount(int id) {
+        ItemData.ItemType itemType =(ItemData.ItemType)(id / 10000);
+        if (!Enum.IsDefined(typeof(ItemData.ItemType), itemType)) {
+            return -1;
+        }
+        return ItemDick[itemType].GetItemAmount(id);
+    }
 
-
+    //슬롯 사이즈 반환
     public int GetGroupSize(ItemData.ItemType type)
     {
         return ItemDick[type]._maxSize;
     }
-
+    //내부에 아이템이 있는지 확인
     public bool IsContain(Item item, ItemData.ItemType type)
     {
         return ItemDick[type].IsContain(item);
     }
-
+    //타입끼리 연결되어있는지 확인
     public bool Containtype(ItemData.ItemType type, ItemData.ItemType type2)
     {
         return ItemDick[type].Containtype(type2);
@@ -199,6 +207,27 @@ public class Inventory : MonoBehaviour//인벤토리
         public bool Containtype(ItemData.ItemType type)
         {
             return _type.Contains(type);
+        }
+
+        public int GetItemAmount(int id)
+        {
+            int amount = 0;
+            for (int i = 0; i < _maxSize; i++)
+            {
+                if (_items[i] == null) { continue; }//빈칸이면 무시
+                if (_items[i].Data.ID == id)
+                {
+                    if (_items[i] is CountableItem)
+                    {
+                        amount += (_items[i] as CountableItem).GetCurrentAmount();
+                    }
+                    else
+                    {
+                        amount += 1;
+                    }
+                }
+            }
+            return amount;
         }
     }
 }

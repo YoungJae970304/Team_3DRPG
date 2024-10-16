@@ -34,7 +34,7 @@ public class TestScene : BaseScene
 
     [ContextMenu("Inserttest")]
     public void Inserttest() {
-        ItemManager.InsertItem(Item.ItemSpawn(11001));
+        ItemManager.InsertItem(Item.ItemSpawn(42001,15));
     }
     [ContextMenu("Removetest")]
     public void Remove()

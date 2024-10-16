@@ -36,7 +36,7 @@ public class ItemGrab : MonoBehaviour
         _pointerEvent.position = Input.mousePosition;
 
         Raycaster.Raycast(_pointerEvent, _result);
-
+        
         if (_result.Count == 0) { return default(T); }
         return _result[0].gameObject.GetComponent<T>();
     }
@@ -57,11 +57,13 @@ public class ItemGrab : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            
             _currnetSlot = GetUIRayCast<ItemSlot>();
 
             // 아이템을 갖고 있는 슬롯만 해당
             if (_currnetSlot != null && _currnetSlot.Item != null)
             {
+                
                 // 위치 기억, 참조 등록
                 _beginDragCursorPoint = Input.mousePosition;//마우스 드래그 시작위치
                 Icon.enabled = true;                        //마우스 따라다닐 이미지
@@ -87,6 +89,7 @@ public class ItemGrab : MonoBehaviour
     public void OnPointerUp()
     {
         if (_currnetSlot == null) { return; }
+
         if (Input.GetMouseButtonUp(0))
         {
             //Down에서 한 처리 다시 초기화
@@ -107,6 +110,7 @@ public class ItemGrab : MonoBehaviour
         {
             if (target != null)
             {
+                Logger.Log(target.GetType().ToString());
                 target.ItemInsert(_currnetSlot);
             }
         }
@@ -187,6 +191,7 @@ public class ItemGrab : MonoBehaviour
             if (currSlot.Item is IUsableItem)
             {
                 (currSlot.Item as IUsableItem).Use();
+                currSlot.UpdateSlotInfo();
             }
         }
     }

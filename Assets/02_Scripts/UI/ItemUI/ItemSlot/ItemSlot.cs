@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System;
 
 public abstract class ItemSlot : MonoBehaviour, IItemDropAble
@@ -14,7 +15,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble
             UpdateSlotInfo();
         } }
     public Image _Image;
-    [SerializeField] protected Text _text;
+    [SerializeField] protected TextMeshProUGUI _text;
     public ItemData.ItemType slotType = ItemData.ItemType.Weapon;
 
 
@@ -30,6 +31,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble
         _Image.enabled = true;
         //_Image.sprite = Item.Data.IconSprite == null ? _Image.sprite : Item.Data.IconSprite;
         _Image.sprite = Item.LoadIcon();
+        if (_text == null) { return; }
         if (Item is CountableItem)
         {
             _text.text = (Item as CountableItem)._amount.ToString(); ;
