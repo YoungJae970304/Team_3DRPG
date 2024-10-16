@@ -25,7 +25,7 @@ public class BossBear : Monster
         _startScale = _roarRange.transform.localScale;
 
         _roarRange.SetActive(false);
-        _mStat._mStat.AttackRange = 3;
+        _mStat._mStat.AttackRange = 4;
     }
     public override void Update()
     {
@@ -157,13 +157,30 @@ public class BossBear : Monster
     {
         
         _player._playerHitState = PlayerHitState.StunAttack;
-        AttackPlayer();
+        Roar();
 
       
 
 
     }
-
+    public void Roar()
+    {
+        int damage = 0;
+        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _maxRoarRange.transform.localScale.x*2);
+        Logger.LogError($"{_maxRoarRange.transform.localScale.x}");
+        foreach (Collider collider in checkColliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    damageable.Damaged(damage);
+                    //_player.Damaged(_mStat.ATK);
+                    Logger.LogError($"{_player._playerStatManager.HP}");
+                }
+            }
+        }
+    }
 
     private List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
     public override void Damaged(int amount)

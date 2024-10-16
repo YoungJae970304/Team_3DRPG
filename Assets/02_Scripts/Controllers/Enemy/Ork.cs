@@ -20,12 +20,12 @@ public class Ork : Monster
     {
         if (_randomAttack <= 100)
         {
-            _atkColliders[0].gameObject.SetActive(true);
+            //_atkColliders[0].gameObject.SetActive(true);
             _anim.SetTrigger("Attack");
         }
         else
         {
-            _atkColliders[1].gameObject.SetActive(true);
+            //_atkColliders[1].gameObject.SetActive(true);
             _anim.SetTrigger("Attack1");
         }
     }
