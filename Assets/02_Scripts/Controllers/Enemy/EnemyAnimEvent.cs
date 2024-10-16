@@ -50,4 +50,8 @@ public class EnemyAnimEvent : MonoBehaviour
             _monster.MChangeState(Monster.MonsterState.Move);
         }
     }
+    public void MonsterAttackCheck()
+    {
+        _monster._attackCompleted = true;
+    }
 }

@@ -95,7 +95,14 @@ ModelImporter:
       - time: 1
         functionName: AfterDamagedState
         data: 
-        objectReferenceParameter: {fileID: 6653915954773530564, guid: 50784459399964046a8186d12893c707,
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: MonsterAttackCheck
+        data: 
+        objectReferenceParameter: {fileID: 2231100289048953305, guid: 0d75a8766ed77fb47adb550a875dfedf,
           type: 3}
         floatParameter: 0
         intParameter: 0

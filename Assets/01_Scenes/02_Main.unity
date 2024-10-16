@@ -263,6 +263,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!1 &167175208 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8260383407382734134, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7559869982765699350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &244298534 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7089879775436571641, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7559869982765699350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &244298538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244298534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2d1edd79442da4f895d757392c7538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UIOpenAnimation: {fileID: 0}
+  _topBarImage: {fileID: 0}
+  _exitBtn: {fileID: 715114882}
+  _isSort: 1
+  _deongeonLevel: 0
+  _dungeonTypeview: {fileID: 167175208}
 --- !u!1 &281825761
 GameObject:
   m_ObjectHideFlags: 3
@@ -864,6 +894,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &715114882 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3599089477673465059, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7559869982765699350}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &747994378
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,10 +2074,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1602711901432113811, guid: a2e3dc51d57abdb4ebc799c2e370599a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 650fb87034cd8784783d04f04a6d2b54, type: 2}
     - target: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
         type: 3}
       propertyPath: m_Name
       value: Ork
+      objectReference: {fileID: 0}
+    - target: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4585,7 +4637,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7089879775436571641, guid: 4e4a9fac8b4951149b2cc54decc25c0a,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 244298538}
   m_SourcePrefab: {fileID: 100100000, guid: 4e4a9fac8b4951149b2cc54decc25c0a, type: 3}
 --- !u!224 &7561857635106783734
 RectTransform:
