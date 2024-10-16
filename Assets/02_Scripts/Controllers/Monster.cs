@@ -1,10 +1,9 @@
-using System.Collections;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Threading;
+using System.Collections;
+using Unity.VisualScripting;
 
 
 
@@ -35,12 +34,12 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
-
+    public CharacterController _characterController;
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
     public Drop _monsterDrop;
-    public DeongeonLevel _deongeonLevel;
+    public DeongeonType _deongeonLevel;
     public DropData _dropData;
     public Dictionary<string, int> randomValue = new Dictionary<string, int>();
     public int _monsterProduct;
@@ -60,8 +59,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Animator _anim;
     public virtual void Awake()
     {
-        _deongeonLevel = DeongeonLevel.Hard; // 추후 던젼에서 받아오도록 설정
+        _deongeonLevel = DeongeonType.Hard; // 추후 던젼에서 받아오도록 설정
         _anim = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
+        //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
         States.Add(MonsterState.Move, new MonsterMoveState(_player, this, _mStat));
@@ -72,7 +73,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
-        
+
 
     }
     // Start is called before the first frame update
@@ -85,7 +86,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
         _dropStat = GetComponent<MonsterStat>();
-       
+
         _nav = GetComponent<NavMeshAgent>();
 
         _originPos = transform.position;
@@ -155,17 +156,21 @@ public class Monster : MonoBehaviour, IDamageAlbe
                     MChangeState(MonsterState.Return);
                 break;
             case MonsterState.Attack:
-                if (!CanAttackPlayer())//내가 공격을 끝냈는지에 대한 조건을 상위조건으로 걸기// 불변수 // 급
+                if (_attackCompleted == true)
                 {
-                    if (!ReturnOrigin())
+                    if (!CanAttackPlayer())//내가 공격을 끝냈는지에 대한 조건을 상위조건으로 걸기// 불변수 // 급
                     {
-                        MChangeState(MonsterState.Move);
-                    }
-                    else
-                    {
-                        MChangeState(MonsterState.Return);
+                        if (!ReturnOrigin())
+                        {
+                            MChangeState(MonsterState.Move);
+                        }
+                        else
+                        {
+                            MChangeState(MonsterState.Return);
+                        }
                     }
                 }
+
                 break;
             case MonsterState.Return:
                 if ((_originPos - transform.position).magnitude <= 3f)
@@ -206,19 +211,23 @@ public class Monster : MonoBehaviour, IDamageAlbe
             Logger.LogError("MonsterStat이 null입니다");
             return;
         }
+      
         _mStat.HP -= (amount - _mStat.DEF);
-        StartDamege(_player.transform.position, 0.1f, 30f);
-        Logger.LogError(_mStat.HP.ToString());
         if (_mStat.HP > 0)
         {
-            
+
             MChangeState(MonsterState.Damage);
         }
         else
         {
             MChangeState(MonsterState.Die);
         }
+        StartDamege(_player.transform.position, 0.1f, 30f);
+        Logger.LogError(_mStat.HP.ToString());
+        
+     
     }
+
     #endregion
     #region 죽었을 때
     public virtual void Die(GameObject mob)
@@ -239,7 +248,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         //사정거리 체크 구현
         //여기에 타이머넣어서 변환까지 시간걸리게
-        return _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        bool rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position)<45;
+        return rangeCheck && angleCheck;
     }
     public bool CanSeePlayer()
     {
@@ -258,13 +269,21 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     #endregion
     #region 플레이어 공격관련 함수
-    public void AttackPlayer() // 공격 모션 중간에 호출
+    public void AttackPlayer() // 공격 모션 중간에 호출 // 수정 예정
     {
         int damage = _mStat.ATK;
-        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
+        //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
+        // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
+        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.8f);
+
+        // 박스의 크기 설정 (폭, 높이, 깊이)
+        Vector3 boxSize = new Vector3(1.2f, 2f, _mStat.AttackRange); // 너비 1, 높이 1, 깊이 AttackRange
+
+        // 박스에 충돌하는 객체를 체크
+        Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
         foreach (Collider collider in checkColliders)
         {
-            if (collider.CompareTag("Player") )
+            if (collider.CompareTag("Player"))
             {
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
@@ -278,6 +297,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void NomalAttack() //이벤트 2번
     {
+
         Logger.Log("NomalAttack");
 
         _player._playerHitState = PlayerHitState.NomalAttack;
@@ -286,6 +306,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void SkillAttack() // 이벤트 2번
     {
+
         Logger.Log("SkillAttack");
 
         _player._playerHitState = PlayerHitState.SkillAttack;
@@ -294,52 +315,61 @@ public class Monster : MonoBehaviour, IDamageAlbe
     }
     public void AttackColliderActiveFalse()//공격 모션 마지막에 호출 이벤트 3번
     {
-      
+
         for (int i = 0; i < _atkColliders.Count; i++)
         {
             _atkColliders[i].gameObject.SetActive(false);
         }
         //_hitPlayer.Clear();
     }
+    public void LookBeforeAttack()
+    {
+        transform.LookAt(_player.transform);
+    }
     public void LookPlayer()
     {
         // 플레이어와의 방향 계산
-        Vector3 direction = _player.transform.position - transform.position;
+        Vector3 direction = (_player.transform.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
         direction.y = 0; // Y축 회전 방지 (수평 평면에서만 회전)
 
         // 새로운 회전값 설정
         if (direction != Vector3.zero) // 방향 벡터가 0이 아닐 때만 회전
         {
-            transform.rotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime*5);
         }
+    }
+    public void AttackCompleteCheck()
+    {
+        _attackCompleted = false;
     }
    
     #endregion
     #region 넉백 코루틴
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        
+        if(_mStat.HP <= 0)
+        {
+            return;
+        }
         _nav.enabled = false;
+        //_characterController.enabled = true; // CharacterController 비활성화
+
         // 넉백 방향 계산
         Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
         Vector3 force = diff * pushBack; // 넉백 힘
 
-        // Rigidbody 설정
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false; // 물리 효과 활성화
-
-
-        // 넉백 힘 적용
-        rb.AddForce(force, ForceMode.Impulse);
+        // 넉백 처리
+        Vector3 moveDirection = force; // CharacterController는 이동 방향을 사용
+        //_characterController.Move(moveDirection * Time.deltaTime); // 이동
 
         // 넉백 후 처리
-        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (필요에 따라 조정)
+        await Task.Delay((int)(delay * 1000)); // 넉백 지속 시간 (ms 단위)
 
-        // 넉백이 끝나면 NavMeshAgent를 다시 활성화
-
-
+        // 넉백이 끝나면 CharacterController를 다시 활성화
         _nav.enabled = true;
-        rb.isKinematic = true; // 다시 비활성화 (필요시)
+       // _characterController.enabled = false;
+
         if (CanAttackPlayer())
             MChangeState(MonsterState.Attack);
         else
@@ -357,7 +387,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #endregion
 
     #region 아이템 드랍
-    public virtual void itemtest(DeongeonLevel curGrade, int monsterid)
+    public virtual void itemtest(DeongeonType curGrade, int monsterid)
     {
         DropData dropData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
@@ -397,7 +427,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
             {
                 switch (curGrade)
                 {
-                    case DeongeonLevel.Easy:
+                    case DeongeonType.Easy:
 
                         for (int i = startValue1; i <= endValue1; i++)
                         {
@@ -405,7 +435,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
                         }
                         break;
-                    case DeongeonLevel.Normal:
+                    case DeongeonType.Normal:
                         for (int i = startValue1; i <= endValue1; i++)
                         {
                             AddSample(i);
@@ -415,7 +445,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
                             AddSample(i);
                         }
                         break;
-                    case DeongeonLevel.Hard:
+                    case DeongeonType.Hard:
                         for (int i = startValue1; i <= endValue1; i++)
                         {
                             AddSample(i);
@@ -446,13 +476,13 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public virtual void MakeItem()
     {
         int randomDice = UnityEngine.Random.Range(1, 100);
-        if(randomDice <= 100)
+        if (randomDice <= 100)
         {
             GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
             item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
         }
-        
-        
+
+
     }
     #endregion
 }

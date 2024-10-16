@@ -6,10 +6,6 @@ public class DataTableManager
 {
     //CSVData폴더 안에 있는 csv값을 스트링으로 가져오고 csv파일로 읽어올거임
     const string _DATA_PATH = "CSVData";
-    //저장할 때 사용할 키
-    const string _PLAYER_PREFS_KEY = "ItemDataList";
-    const string _PLAYER_PREFS_QUEST_KEY = "QuestDataList";
-    const string _PLAYER_PREFS_DROP_KEY = "DropDataList";
 
     public void Init()
     {
@@ -24,6 +20,8 @@ public class DataTableManager
     const string _GOODS_ITEM_DATA_TABLE = "Goods_Data_Table";
     //드랍 데이터 테이블 CSV파일
     const string _MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
+    //던전 데이터 테이블 CSV파일
+    const string _DUNGEON_DATA_TABLE = "DungeonDataTable";
     //퀘스트 데이터 테이블 CSV 파일
     const string _QUEST_DATA_TABLE = "Quest_Data_Table";
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
@@ -31,6 +29,7 @@ public class DataTableManager
     public List<ItemData> _PotionItemData = new List<ItemData>();
     public List<ItemData> _GoodsItemData = new List<ItemData>();
     public List<DropData> _MonsterDropData = new List<DropData>();
+    public List<DungeonData> _DungeonData = new List<DungeonData>();
     public List<QuestData> _QuestData = new List<QuestData>();
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
@@ -43,9 +42,9 @@ public class DataTableManager
         GoodsDataTable(_DATA_PATH, _GOODS_ITEM_DATA_TABLE);
         DropDataTable(_DATA_PATH, _MONSTER_DROP_DATA_TABLE);
         QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
+        DungeonDataTable(_DATA_PATH, _DUNGEON_DATA_TABLE);
     }
     #endregion
-
 
     #region 장비데이터테이블 함수
     void EquipmentDataTable(string dataPath, string equipmentDataTable)
@@ -87,9 +86,6 @@ public class DataTableManager
                 ManaRegen = Convert.ToInt32(data["ManaRegen"]),
                 //소지 수량
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = data["ItemIcon"].ToString(),
-                //아이콘
             };
             if (itemData != null)
             {
@@ -132,10 +128,6 @@ public class DataTableManager
                 DurationTime = Convert.ToInt32(data["DurationTime"]),
                 //소지 개수
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
-                //csv파일에 없어서 일단 임시로 로드만 해줌
-                //IconSprite = data["TestIcon"].ToString(),
-                //아이콘
-                //IconSprite = Resources.Load<Sprite>(data["Icon/TestIcon"].ToString()),
             };
             if (itemData != null)
             {
@@ -231,6 +223,37 @@ public class DataTableManager
             {
                 Logger.Log($"{dropData} 저장됨");
                 _MonsterDropData.Add(dropData);
+            }
+        }
+    }
+    #endregion
+
+    #region 던전 데이터테이블 함수
+    void DungeonDataTable(string dataPath, string dungeonDataTable)
+    {
+        var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
+        foreach (var data in parsedDungeonDataTable)
+        {
+            DungeonData dungeonData = null;
+            dungeonData = new DungeonData
+            {
+                //인덱스
+                Index = Convert.ToInt32(data["Index"]),
+                //아이디
+                ID = Convert.ToInt32(data["ID"]),
+                //던전 이름
+                DungeonName = data["DungeonName"].ToString(),
+                //몬스터 타입1
+                MonsterType1 = Convert.ToInt32(data["MonsterType1"]),
+                //몬스터 타입2
+                MonsterType2 = Convert.ToInt32(data["MonsterType2"]),
+                //몬스터 타입3
+                MonsterType3 = Convert.ToInt32(data["MonsterType3"]),
+            };
+            if (dungeonData != null)
+            {
+                Logger.Log($"{dungeonData} 저장됨");
+                _DungeonData.Add(dungeonData);
             }
         }
     }

@@ -12,12 +12,10 @@ public class Managers : MonoBehaviour
     #region Contents
     GameManager _game = new GameManager();
     DataTableManager _dataTable = new DataTableManager();
-    QuestEvents _questEnvets = new QuestEvents();
     QuestManager _questManager = new QuestManager();
 
     public static GameManager Game { get { return Instance._game; } }
     public static DataTableManager DataTable { get { return Instance._dataTable; } }
-    public static QuestEvents QuestEvents { get { return Instance._questEnvets; } }
     public static QuestManager QuestManager { get { return Instance._questManager; } }
     #endregion
 
@@ -80,7 +78,6 @@ public class Managers : MonoBehaviour
             
             s_instance._dataTable.Init();
             s_instance._questManager.Init();
-            s_instance._questEnvets.Init();
             s_instance._scene.Init();
         }
     }

@@ -9,15 +9,14 @@ public class PlayerSkillState : BaseState
     public override void OnStateEnter()
     {
         _player._skillUsing = true;
+        _player._canAtkInput = true;
+        _player._attacking = false;
 
         _player._skillBase.SkillEnter(_stat);
     }
 
     public override void OnStateUpdate()
     {
-        // 시간 지나면 스킬 상태 끝나게 (임시)
-        _player.Skill();
-        
         _player._skillBase.SkillStay(_stat);
     }
 

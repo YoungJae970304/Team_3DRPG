@@ -6,11 +6,12 @@ using static UnityEditor.Progress;
 using static Cinemachine.DocumentationSortingAttribute;
 using System.Linq;
 
-public enum DeongeonLevel
+public enum DeongeonType
 {
-    Easy,
-    Normal,
-    Hard,
+    Easy = 1,
+    Normal = 2,
+    Hard = 3,
+    Boss = 4,
 }
 // 아이템 클래스
 public class Drop : MonoBehaviour
@@ -23,7 +24,7 @@ public class Drop : MonoBehaviour
 
    
     
-    public DeongeonLevel _deongeonLevel = DeongeonLevel.Easy;
+    public DeongeonType _deongeonLevel = DeongeonType.Easy;
     public Dictionary<int, float> dropValue;
     private void Start()
     {
@@ -107,17 +108,17 @@ public class Drop : MonoBehaviour
             return list;
         }
     }
-    public int GetDeongeonLevel(DeongeonLevel level)
+    public int GetDeongeonLevel(DeongeonType level)
     {
         return level switch
         {
-            DeongeonLevel.Easy => 1,
-            DeongeonLevel.Normal => 2,
-            DeongeonLevel.Hard => 3,
+            DeongeonType.Easy => 1,
+            DeongeonType.Normal => 2,
+            DeongeonType.Hard => 3,
             _ => -1
         };
     }
-    public string DropItemSelect(DeongeonLevel level, List<string> sample) //아이템 string랜덤으로 받아오기
+    public string DropItemSelect(DeongeonType level, List<string> sample) //아이템 string랜덤으로 받아오기
     {
         int maxTier = GetDeongeonLevel(level); //아이템이 나올 최고 티어는 던젼레벨이 결정
         if (maxTier <= 0)

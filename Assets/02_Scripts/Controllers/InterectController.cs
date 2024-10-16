@@ -28,7 +28,7 @@ public class InterectController : MonoBehaviour
     {
         InterectCheck();
     }
-    [ContextMenu("»óÈ£ÀÛ¿ë Å×½ºÆ®")]
+    [ContextMenu("ìƒí˜¸ì‘ìš© í…ŒìŠ¤íŠ¸")]
     public void InterectCheck()
     {
         _currentDis = _interectRange;

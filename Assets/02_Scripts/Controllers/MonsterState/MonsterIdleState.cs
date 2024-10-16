@@ -14,11 +14,6 @@ public class MonsterIdleState : BaseState
     float awayRangeZ;
     public override void OnStateEnter()
     {
-        _monster._mStat = _monster.GetComponent<MonsterStatManager>();
-        if (_monster._mStat == null)
-        {
-            Debug.LogError("OrkStat 컴포넌트를 찾을 수 없습니다.");
-        }
         awayRangeX = Random.Range(-_monster._mStat.AwayRange, _monster._mStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
         awayRangeZ = Random.Range(-_monster._mStat.AwayRange, _monster._mStat.AwayRange);
