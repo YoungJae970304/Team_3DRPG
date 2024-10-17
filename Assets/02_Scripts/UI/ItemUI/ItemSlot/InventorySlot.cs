@@ -19,10 +19,16 @@ public class InventorySlot : ItemSlot
         Item = _itemManager.GetItem(_index, _inventory._currentType);
         slotType = _inventory._currentType;
     }
+    //아이템 드롭시
     public override void ItemInsert(ItemSlot moveSlot)
     {
-        if (moveSlot is QuickItemSlot) { return; }
+        if (moveSlot is QuickItemSlot) { return; }                              //퀵슬롯이거나 타입이 다르면 리턴
         if (!_itemManager.Containtype(slotType, moveSlot.slotType)) { return; }
+        base.ItemInsert(moveSlot);
+        
+    }
+    public override void EqualSlot(ItemSlot moveSlot)
+    {
         if (Item != null && Item.Data.ID == moveSlot.Item.Data.ID)
         {
             if (Item is CountableItem)
@@ -34,39 +40,39 @@ public class InventorySlot : ItemSlot
                 return;
             }
         }
-        
-        if (moveSlot is InventorySlot) {
-            _itemManager.SwitchItem(_index, ((InventorySlot)moveSlot)._index, moveSlot.Item.Data.Type);
-        }
-        else if (moveSlot is ShopItemSlot) {
-            (moveSlot as ShopItemSlot).BuyConfirm(this);
-        }
-        else
-        {
-            Item item = moveSlot.Item;
-            moveSlot.MoveItem(this);
-            _itemManager.Setitem(_index, item);
-        }
-        
+        _itemManager.SwitchItem(_index, ((InventorySlot)moveSlot)._index, moveSlot.Item.Data.Type);
     }
-    public override bool MoveItem(ItemSlot moveSlot)
-    {
-        Item item = moveSlot.Item;
+    public Inventory GetInventory() {
+        return _itemManager;
+    }
 
+    public override void Setitem(Item item)
+    {
+        
         if (item == null)
         {
             _itemManager.Remove(_index, slotType);
+            base.Setitem(item);
         }
-        else if (moveSlot.slotType == slotType)
+        else if (_itemManager.Containtype(slotType, item.Data.Type))
         {
             _itemManager.Setitem(_index, item);
+            base.Setitem(item);
         }
-        else {
+        else
+        {
             _itemManager.InsertItem(item);
         }
-        
+    }
+
+    public override bool MoveItem(ItemSlot moveSlot)
+    {
+        Item item = moveSlot.Item;
+        Setitem(item);
         return true;
     }
+
+
 
     public override void UpdateSlotInfo()
     {

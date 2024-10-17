@@ -10,10 +10,10 @@ public class EquipmentSlot : ItemSlot
     {
         if (moveSlot is ShopItemSlot)//상점창이면 무시함
         { return; }
-            Item item = moveSlot.Item;
+        Item item = moveSlot.Item;
         if (item.Data.Type != slotType) { return; }
-        moveSlot.MoveItem(this);
-        Item = item;
+        base.ItemInsert(moveSlot);
+            
     }
 
     public override bool MoveItem(ItemSlot moveSlot)

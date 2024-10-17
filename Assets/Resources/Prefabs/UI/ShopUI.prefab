@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1535010799899607613}
   - component: {fileID: 3722602552450832581}
   m_Layer: 5
-  m_Name: Shop
+  m_Name: Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   _isSort: 1
   _itemTrs: {fileID: 0}
   _size: 0
-  _inventorySlots: []
+  _shopItemSlot: []
 --- !u!1 &5916581200109633820
 GameObject:
   m_ObjectHideFlags: 0

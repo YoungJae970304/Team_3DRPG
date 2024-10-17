@@ -39,9 +39,11 @@ public class QuickItemSlot : ItemSlot
     }
     public override bool MoveItem(ItemSlot moveSlot)
     {
-        Item = moveSlot.Item;
-
-        return true;
+        if (moveSlot.GetType() == GetType()) {
+            Item = moveSlot.Item;
+            return true;
+        }
+        return false;
     }
     
     public void Use()
