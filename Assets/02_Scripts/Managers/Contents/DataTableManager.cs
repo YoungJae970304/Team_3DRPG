@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DataTableManager
@@ -34,7 +35,7 @@ public class DataTableManager
     public List<DropData> _MonsterDropData = new List<DropData>();
     public List<DungeonData> _DungeonData = new List<DungeonData>();
     public List<QuestData> _QuestData = new List<QuestData>();
-    public List<PlayerStatManager> _PlayerStat = new List<PlayerStatManager>();
+    public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
 
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
@@ -48,45 +49,37 @@ public class DataTableManager
         DropDataTable(_DATA_PATH, _MONSTER_DROP_DATA_TABLE);
         QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
         DungeonDataTable(_DATA_PATH, _DUNGEON_DATA_TABLE);
-        //PlayerLevelDataTable(_DATA_PATH, _PLAYER_LEVEL_DATA_TABLE);
+        PlayerLevelDataTable(_DATA_PATH, _PLAYER_LEVEL_DATA_TABLE);
     }
     #endregion
 
     #region 플레이어 레벨 데이터테이블
     public void PlayerLevelDataTable(string dataPath, string playerLevelDataTable)
     {
-        _PlayerStat.Clear();
+        _PlayerLevelData.Clear();
 
         var parsedPlayerLevelDataTable = CSVReader.Read($"{dataPath}/{playerLevelDataTable}");
 
-        PlayerStatManager playerStat = null;
+        PlayerLevelData levelData = null;
 
         foreach ( var data in parsedPlayerLevelDataTable )
         {
-            //PlayerStatManager playerStat = Managers.Game._player._playerStatManager;
-            //playerStat.Level = Convert.ToInt32(data["Level"]);
-            //playerStat.MaxEXP = Convert.ToInt32(data["MaxExp"]);
-            //playerStat.SpAddAmount = Convert.ToInt32(data["SpAddAmount"]);
-
-            playerStat = new PlayerStatManager
+            levelData = new PlayerLevelData
             {
                 Level = Convert.ToInt32(data["Level"]),
                 MaxEXP = Convert.ToInt32(data["MaxEXP"]),
                 SpAddAmount = Convert.ToInt32(data["SpAddAmount"])
             };
-            if (playerStat != null)
+            if (levelData != null)
             {
-                _PlayerStat.Add(playerStat);
+                _PlayerLevelData.Add(levelData);
             }
         }
-
-        PlayerStatUpdate();
     }
 
-    public void PlayerStatUpdate()
+    public PlayerLevelData GetPlayerLevelData(int level)
     {
-        Managers.Game._player._playerStatManager.MaxEXP = _PlayerStat[Managers.Game._player._playerStatManager.Level - 1].MaxEXP;
-        Managers.Game._player._playerStatManager.SpAddAmount = _PlayerStat[Managers.Game._player._playerStatManager.Level - 1].SpAddAmount;
+        return _PlayerLevelData.FirstOrDefault(data => data.Level == level);
     }
     #endregion
 

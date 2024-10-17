@@ -175,8 +175,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStatManager._originStat.DodgeSpeed = 10f;
         _playerStatManager._originStat.ATK = 50;
         _playerStatManager._originStat.DEF = 50;
-        Managers.DataTable.PlayerLevelDataTable("CSVData", "Player_Level_Data_Table");
-        //Managers.DataTable.PlayerStatUpdate();
+
+        _playerStatManager.PlayerStatUpdate();
 
         // 공격 콜라이더 off
         SetColActive("Katana");

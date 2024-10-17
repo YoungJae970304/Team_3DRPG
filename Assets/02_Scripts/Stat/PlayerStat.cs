@@ -11,23 +11,13 @@ public class PlayerStat : Stat
 
     float _dodgeSpeed;
 
-    //int _level = 1;
-    //int _maxExp;
+    int _level = 1;
+    int _maxExp;
 
-    //int _sp;
-    //int _spAddAmount;
+    int _sp;
+    int _spAddAmount;
 
-    public int RecoveryHP 
-    { 
-        get 
-        { 
-            return _recoveryHp; 
-        } 
-        set 
-        {
-            _recoveryHp = value;
-        } 
-    }
+    public int RecoveryHP  { get { return _recoveryHp; } set {_recoveryHp = value;} }
 
     public int MP
     {
@@ -42,66 +32,48 @@ public class PlayerStat : Stat
 
     public float DodgeSpeed { get { return _dodgeSpeed; } set { _dodgeSpeed = value; } }
 
-    //public int Level
-    //{
-    //    get
-    //    {
-    //        return _level;
-    //    }
-    //    set
-    //    {
-    //        if (value < _level) return;
+    public int Level
+    {
+        get
+        {
+            return _level;
+        }
+        set
+        {
+            if (value < _level) return;
 
-    //        _level = value;
+            int oldLevel = _level;
+            _level = value;
 
-    //        Managers.DataTable.PlayerLevelDataTable("CSVData", "Player_Level_Data_Table");
+            for (int i = oldLevel + 1; i <= _level; i++)
+            {
+                Managers.Game._player._playerStatManager.PlayerStatUpdate();
+                SP += SpAddAmount;
+            }
+        }
+    }
 
-    //        HP = MaxHP;
-    //        MP = MaxMP;
-    //        SP += SpAddAmount;
-    //    }
-    //}
+    public override int EXP
+    {
+        get
+        {
+            return _exp;
+        }
+        set
+        {
+            _exp = value;
 
-    //public override int EXP
-    //{
-    //    get
-    //    {
-    //        return _exp;
-    //    }
-    //    set
-    //    {
-    //        _exp = value;
+            while (_exp >= MaxEXP)
+            {
+                _exp -= MaxEXP;
+                Level++;
+            }
+        }
+    }
 
-    //        if (EXP >= MaxEXP)
-    //        {
-    //            EXP = EXP - MaxEXP;
-    //            Level++;
-    //        }
-    //    }
-    //}
+    public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
 
-    //public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
-    //public int SP
-    //{
-    //    get
-    //    {
-    //        return _sp;
-    //    }
-    //    set
-    //    {
-    //        _sp = Mathf.Max(value, 0);
-    //    }
-    //}
+    public int SP { get { return _sp; } set { _sp = Mathf.Max(value, 0); } }
 
-    //public int SpAddAmount
-    //{
-    //    get
-    //    {
-    //        return _spAddAmount;
-    //    }
-    //    set
-    //    {
-    //        _spAddAmount = Mathf.Max(value, 0);
-    //    }
-    //}
+    public int SpAddAmount{ get { return _spAddAmount; } set { _spAddAmount = Mathf.Max(value, 0); } }
 }
