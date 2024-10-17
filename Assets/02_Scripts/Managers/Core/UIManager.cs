@@ -138,12 +138,15 @@ public class UIManager
         
         _sortingList.Remove(ui);
         _frontUI = null;
-        _order--;
-        if (_sortingList.Count>0)
+
+        if (_sortingList.Count > 0)
         {
             var lastChild = _sortingList.Last.Value;
             _frontUI = lastChild;
             _frontUI.OnIsCurrent();
+        }
+        else {
+            _order = 10;
         }
         ui.transform.SetParent(_closeUITrs);
     }

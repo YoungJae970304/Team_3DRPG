@@ -203,9 +203,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c550120bbf35dd74682190f4592b5227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLocked: 0
   _Image: {fileID: 1580263914356944586}
   _text: {fileID: 948305550275912812}
-  slotType: 4
+  _slotType: 4
   _inventory: {fileID: 0}
 --- !u!1 &1150539307231298257
 GameObject:
@@ -670,9 +671,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c550120bbf35dd74682190f4592b5227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLocked: 0
   _Image: {fileID: 3435543769593191556}
   _text: {fileID: 3242248880512079558}
-  slotType: 4
+  _slotType: 4
   _inventory: {fileID: 0}
 --- !u!1 &3034373462228777451
 GameObject:
