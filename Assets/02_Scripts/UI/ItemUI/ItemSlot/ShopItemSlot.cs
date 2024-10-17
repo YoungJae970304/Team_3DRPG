@@ -10,6 +10,7 @@ public class ShopItemSlot : ItemSlot
     {
         //판매 확인창이 뜸
         //판매 확인창에서 버튼을 누르면 아이템 가치에 맞는 돈을 획득
+        SellConfirm(moveSlot);
     }
 
     public void Init() { 
@@ -26,5 +27,11 @@ public class ShopItemSlot : ItemSlot
         //돈이 사려는 아이템보다 많으면
         //구매 확인 UI 출력
         //구매확인 UI 는 확인 버튼을 누를시 아이템을 insert하고 사라짐
+    }
+    public void SellConfirm(ItemSlot moveSlot)
+    {
+        //개수 채크
+        //여러개면 슬라이더 표시
+        //확인 버튼 누르면 그 개수만큼 차감 0이면삭제 그만큼 돈 증가
     }
 }
