@@ -51,9 +51,6 @@ public class DialogSystem : BaseUI
         //    //캐릭터 이미지는 보이도록 설정
         //    //speakers[i].spriteRenderer.gameObject.SetActive(true);
         //}
-        Bind<TextMeshProUGUI>(typeof(DialogTexts));
-        Bind<Image>(typeof(DialogImgs));
-        Bind<GameObject>(typeof(GameObjects));
 
         GetGameObject((int)GameObjects.Arrow).SetActive(false);
     }
@@ -131,7 +128,7 @@ public class DialogSystem : BaseUI
                 //    //speakers[i].spriteRenderer.gameObject.SetActive(false);
                 //}
                 _isFirst = true; 
-                _currentDialogIndex = -1; 
+                _currentDialogIndex = -1;
                 return true;
             }
         }

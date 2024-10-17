@@ -4,7 +4,6 @@ public class Interectable : MonoBehaviour
 {
     [SerializeField] public Canvas UI;
     [SerializeField] public Canvas DungeonDialogUI;
-    [SerializeField] public DialogActive _dialogActive;
     public virtual void Interection(GameObject gameObject)
     {
         Debug.Log(name);
@@ -22,10 +21,12 @@ public class Interectable : MonoBehaviour
         if (dialogDungeonUI != null)
         {
             Managers.UI.CloseUI(dialogDungeonUI);
+            Managers.Game._isActiveDialog = false;
         }
         else
         {
             Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
+            Managers.Game._isActiveDialog = true;
         }
     }
 }

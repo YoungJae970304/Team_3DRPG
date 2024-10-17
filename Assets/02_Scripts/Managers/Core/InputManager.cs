@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System;
 
 public class InputManager
 {
@@ -14,14 +12,17 @@ public class InputManager
 
     public void OnUpdate()
     {
+        if (Managers.Game._isActiveDialog) { return; }
+
         if (EventSystem.current.IsPointerOverGameObject())
         {
             UIMouseAction?.Invoke();
         }
-        else {
+        else
+        {
             MouseAction?.Invoke();
         }
-            
+
         if (KeyAction != null)
         {
             if (_isPress && !Input.anyKey)
@@ -34,6 +35,7 @@ public class InputManager
             }
             _isPress = Input.anyKey;
         }
+
         /*
         if (KeyAction != null)
         {

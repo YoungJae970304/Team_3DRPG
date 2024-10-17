@@ -17,7 +17,6 @@ public class DialogDungeonUI : BaseUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-        Bind<Button>(typeof(Buttons));
         StartCoroutine(DialogStart());
     }
 

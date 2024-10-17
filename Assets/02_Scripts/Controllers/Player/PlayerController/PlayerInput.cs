@@ -151,8 +151,8 @@ public class PlayerInput : MonoBehaviour
             CloseFrontUI();
         }else if (Input.GetKeyDown(KeyCode.F))
         {
-            if (_player._interectController._lastObj == null) { return; }
-
+            if (_player._interectController._lastObj == null && Managers.Game._isActiveDialog) { return; }
+            
             _player._interectController._lastObj.DungeonNpcDialog();
         }
     }

@@ -9,6 +9,8 @@ public class GameManager
 
     public List<Monster> _monsters = new List<Monster>();
 
+    public bool _isActiveDialog = false;
+
     public void AddMonsterOnNowScene()
     {
         _monsters.Clear();

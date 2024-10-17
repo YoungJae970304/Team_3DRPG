@@ -44,18 +44,19 @@ public class QuestLogUI : BaseUI
     {
         base.SetInfo(uiData);
     }
-
+    int _questID;
     private void Awake()
     {
         var questdataTable = Managers.DataTable._QuestData;
 
         _LoadQuestDataList.AddRange(questdataTable);
         _questScrollList = GetComponent<ScrollView>();
-        Bind<TextMeshProUGUI>((typeof(QuestLogTexts)));
-        Bind<Button>((typeof(Buttons)));
-        Bind<Image>((typeof(QuestImgs)));
 
         GetButton((int)Buttons.GiveupBtn).onClick.AddListener(GiveUpBtn);
+
+        QuestData questData = _LoadQuestDataList.Find(q => q.ID == _questID);
+
+        QuestInfoSet(_questID);
     }
 
     public void QuestInfoSet(int id)
