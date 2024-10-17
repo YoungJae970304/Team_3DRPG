@@ -61,6 +61,17 @@ public class QuestManager
             //현재 시작가능한 퀘스트를 새로운 퀘스트로 시작
             _ActiveQuests.Add(new Quest(questData));
             _state = QuestState.State.InProgress;
+            
+            QuestDisplay questHUDInfoUI = Managers.UI.GetActiveUI<QuestDisplay>() as QuestDisplay;
+
+            if(questHUDInfoUI != null)
+            {
+                Managers.UI.CloseUI(questHUDInfoUI);
+            }
+            else
+            {
+                Managers.UI.OpenUI<QuestDisplay>(new BaseUIData());
+            }
         }
     }
 

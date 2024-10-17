@@ -12,7 +12,6 @@ public class InputManager
     public Action AXis = null;
     bool _isPress = false;
 
-
     public void OnUpdate()
     {
         if (EventSystem.current.IsPointerOverGameObject())
