@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB358\uC804 \uC785\uC7A5"
+  m_text: "\uB358\uC804 \uC120\uD0DD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77b89916d86e11f449dd430ffdeb1b0b, type: 2}
   m_sharedMaterial: {fileID: -7985449786123482677, guid: 77b89916d86e11f449dd430ffdeb1b0b,
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 5445595060684425833}
   - component: {fileID: 4192826246697405307}
   m_Layer: 0
-  m_Name: DungeonNPClog
+  m_Name: DungeonDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,11 +186,11 @@ MonoBehaviour:
   _UIOpenAnimation: {fileID: 0}
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
-  _isSort: 1
+  _isSort: 0
   dialogs:
   - speakerIndex: 0
     name: "\uB358\uC804 NPC"
-    dialogue: "\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?"
+    dialogue: "\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?"
   _isAutoStart: 1
 --- !u!1 &3248593829709318713
 GameObject:
@@ -312,8 +312,6 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 0
-  _dialogSystem:
-  - {fileID: 4192826246697405307}
 --- !u!1 &4394327682497626911
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,7 +797,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC5B4\uCA4C\uAD6C \uC800\uCA4C\uAD6C \uD798\uB4DC\uB124;"
+  m_text: "\uC5B4\uCA4C\uAD6C \uC800\uCA4C\uC5B4\uCA4C\uAD6C \uC800\uCA4C\uC5B4\uCA4C\uAD6C
+    \uC800\uCA4C\uC5B4\uCA4C\uAD6C \uC800\uCA4C\uC5B4\uCA4C\uAD6C \uC800\uCA4C\uC5B4\uCA4C\uAD6C
+    \uC800"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77b89916d86e11f449dd430ffdeb1b0b, type: 2}
   m_sharedMaterial: {fileID: -7985449786123482677, guid: 77b89916d86e11f449dd430ffdeb1b0b,
@@ -843,9 +843,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 3
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1

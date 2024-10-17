@@ -51,12 +51,17 @@ public class DialogSystem : BaseUI
         //    //캐릭터 이미지는 보이도록 설정
         //    //speakers[i].spriteRenderer.gameObject.SetActive(true);
         //}
-
+        Bind<TextMeshProUGUI>(typeof(DialogTexts));
+        Bind<Image>(typeof(DialogImgs));
+        Bind<GameObject>(typeof(GameObjects));
         GetGameObject((int)GameObjects.Arrow).SetActive(false);
     }
 
     void SetActiveObjects(/*Speaker speaker,*/ bool visible)
     {
+        //GetImage((int)DialogImgs.DialogImage).gameObject.SetActive(visible);
+        //GetText((int)DialogTexts.NpcName).gameObject.SetActive(visible);
+        //GetText((int)DialogTexts.DialogText).gameObject.SetActive(visible);
         //speaker.imageDialog.gameObject.SetActive(visible);
         //speaker.textName.gameObject.SetActive(visible);
         //speaker.textDialog.gameObject.SetActive(visible);
@@ -117,6 +122,16 @@ public class DialogSystem : BaseUI
             }
             else
             {
+                _isFirst = true;
+                _currentDialogIndex = -1;
+                return true;
+
+                //for (int i = 0; i < dialogs.Length; ++i)
+                //{
+                //    SetActiveObjects(false);
+
+                //    GetGameObject((int)GameObjects.Arrow).gameObject.SetActive(false);
+                //}
                 //대사가 더 이상 없을 경우
                 //모든 오브젝트를 비활성화 하고 true 반환
                 //for (int i = 0; i < speakers.Length; ++i)
@@ -127,9 +142,6 @@ public class DialogSystem : BaseUI
                 //    //SetActiveObject()에 캐릭터 이미지를 보이지 않게 하는 부분이 없기 때문에 별도로 호출
                 //    //speakers[i].spriteRenderer.gameObject.SetActive(false);
                 //}
-                _isFirst = true; 
-                _currentDialogIndex = -1;
-                return true;
             }
         }
         return false;

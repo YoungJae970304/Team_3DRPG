@@ -17,16 +17,8 @@ public class Interectable : MonoBehaviour
     public virtual void DungeonNpcDialog()
     {
         DialogDungeonUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogDungeonUI>() as DialogDungeonUI;
-
-        if (dialogDungeonUI != null)
-        {
-            Managers.UI.CloseUI(dialogDungeonUI);
-            Managers.Game._isActiveDialog = false;
-        }
-        else
-        {
-            Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
-            Managers.Game._isActiveDialog = true;
-        }
+        
+        Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
+        Managers.Game._isActiveDialog = true;
     }
 }

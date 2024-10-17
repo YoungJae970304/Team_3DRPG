@@ -12,7 +12,6 @@ public class InputManager
 
     public void OnUpdate()
     {
-        if (Managers.Game._isActiveDialog) { return; }
 
         if (EventSystem.current.IsPointerOverGameObject())
         {
@@ -22,6 +21,8 @@ public class InputManager
         {
             MouseAction?.Invoke();
         }
+
+        if (Managers.Game._isActiveDialog) { return; }
 
         if (KeyAction != null)
         {

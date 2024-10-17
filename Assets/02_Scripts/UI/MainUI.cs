@@ -13,13 +13,6 @@ public class MainUI : ItemUI
         ItemSlot_2
     }
 
-    enum Buttons
-    {
-        Quest,
-        Inventory,
-        Skill,
-        Option,
-    }
 
     protected override void Awake()
     {
@@ -30,7 +23,6 @@ public class MainUI : ItemUI
     {
         _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         Bind<QuickItemSlot>(typeof(QuickItemSlots));
-        //GetButton((int)Buttons.Quest).onClick.AddListener();
  
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
         {
