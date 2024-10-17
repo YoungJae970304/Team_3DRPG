@@ -20,6 +20,7 @@ public class ShopUI : ItemUI
         Slots,
         Window
     }
+
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
@@ -27,7 +28,6 @@ public class ShopUI : ItemUI
         GetGameObject((int)GameObjects.Window).GetOrAddComponent<ItemProxy>().SetProxy((moveSlot) => {
             _shopItemSlot[0].ItemInsert(moveSlot);
         }); ;
-        SlotSetting();
     }
     //아이템 판매
     public void SellItem(Item item) { 
@@ -38,15 +38,16 @@ public class ShopUI : ItemUI
     {
         base.SetInfo(uiData);
         ShopUIData shopData = uiData as ShopUIData;
+        SlotSetting(shopData._itemCode.Count);
         for (int i = 0; i < shopData._itemCode.Count; i++) {
             _shopItemSlot[i].Setitem(Item.ItemSpawn(shopData._itemCode[i].Item1, shopData._itemCode[i].Item2)); 
         }
     }
 
-    void SlotSetting()
+    void SlotSetting(int size)
     {
         _shopItemSlot = new List<ShopItemSlot>();
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < size; i++)
         {
             ShopItemSlot slot = Managers.Resource.Instantiate("UI/ShopItemSlot",
                 GetGameObject((int)GameObjects.Slots).transform).GetComponent<ShopItemSlot>();
@@ -55,3 +56,41 @@ public class ShopUI : ItemUI
         }
     }
 }
+/*
+class savedata {
+    List<InventoryData> inventoryDatas;
+    List<SkillSaveData> SkillSaveDatas;
+    List<equipmentsaveData> equipmentsaveDatas;
+    PLayerPosition pLayerPosition;
+    //퀘스트 클리어 정보
+    List<QuestData> questList;
+    int level;
+    int exp;
+    int sp;
+}
+
+class PLayerPosition {
+    int x;
+    int y;
+    int z;
+}
+class QuestData {
+    string name;
+    int amount1;
+    int amount2;
+}
+
+class equipmentsaveData { 
+
+
+}
+class InventoryData {
+    int id;
+    int index;
+    int amount;
+}
+class SkillSaveData {
+    string name;
+    int level;
+}
+*/
