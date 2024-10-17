@@ -15,12 +15,12 @@ public class DialogActive : MonoBehaviour
         _isDialogOpen = isOpen;
         if (_isDialogOpen)
         {
-            _playerInput.enabled = false;
+            //_playerInput.enabled = false;
             //_playerInput.SetDialog(true);
         }
         else
         {
-            _playerInput.enabled = true;
+            //_playerInput.enabled = true;
             //_playerInput.SetDialog(false);
         }
     }

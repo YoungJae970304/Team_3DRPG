@@ -13,6 +13,7 @@ public class QuestLogUI : BaseUI
     //해당 퀘스트의 내용들을 표시해줄 예정
     [SerializeField] public ScrollView _questScrollList;
 
+    #region BIND
     enum QuestLogTexts
     {
         QuestLogTitle,
@@ -36,6 +37,7 @@ public class QuestLogUI : BaseUI
     {
         GiveupBtn,
     }
+    #endregion
 
     int _questID;
     List<QuestData> _LoadQuestDataList = new();
