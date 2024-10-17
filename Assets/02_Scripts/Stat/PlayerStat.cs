@@ -15,18 +15,9 @@ public class PlayerStat : Stat
     int _maxExp;
 
     int _sp;
+    int _spAddAmount;
 
-    public int RecoveryHP 
-    { 
-        get 
-        { 
-            return _recoveryHp; 
-        } 
-        set 
-        {
-            _recoveryHp = value;
-        } 
-    }
+    public int RecoveryHP  { get { return _recoveryHp; } set {_recoveryHp = value;} }
 
     public int MP
     {
@@ -51,15 +42,14 @@ public class PlayerStat : Stat
         {
             if (value < _level) return;
 
+            int oldLevel = _level;
             _level = value;
 
-            MaxHP += 50;
-            MaxMP += 50;
-            MaxEXP += 100;
-
-            HP = MaxHP;
-            MP = MaxMP;
-            SP += 5;
+            for (int i = oldLevel + 1; i <= _level; i++)
+            {
+                Managers.Game._player._playerStatManager.PlayerStatUpdate();
+                SP += SpAddAmount;
+            }
         }
     }
 
@@ -73,26 +63,17 @@ public class PlayerStat : Stat
         {
             _exp = value;
 
-            if (_exp >= MaxEXP)
+            while (_exp >= MaxEXP)
             {
-                _exp = _exp - MaxEXP;
+                _exp -= MaxEXP;
                 Level++;
             }
         }
     }
 
     public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
-    public int SP
-    {
-        get
-        {
-            return _sp;
-        }
-        set
-        {
-            _sp = Mathf.Max(value, 0);
-        }
-    }
 
+    public int SP { get { return _sp; } set { _sp = Mathf.Max(value, 0); } }
 
+    public int SpAddAmount{ get { return _spAddAmount; } set { _spAddAmount = Mathf.Max(value, 0); } }
 }

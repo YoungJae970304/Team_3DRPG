@@ -7,6 +7,8 @@ public class GameManager
 {
     public Player _player;
 
+    public Define.PlayerType _playerType;
+
     public List<Monster> _monsters = new List<Monster>();
 
     public bool _isActiveDialog = false;

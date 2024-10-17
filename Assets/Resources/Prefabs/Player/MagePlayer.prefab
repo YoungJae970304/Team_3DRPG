@@ -443,7 +443,6 @@ MonoBehaviour:
   _playerAnim: {fileID: 0}
   _playerModel: {fileID: 7925344388107736099}
   _cursorUI: {fileID: 0}
-  _playerType: 0
   _moveDir: {x: 0, y: 0, z: 0}
   _rotDir: {x: 0, y: 0, z: 0}
   _rotSpeed: 0.2

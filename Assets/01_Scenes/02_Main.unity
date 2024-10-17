@@ -1847,7 +1847,7 @@ PrefabInstance:
     - target: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2015,11 +2015,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagePlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 8312498464758197025, guid: ca485054dc4f410439e704b8252a351b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8796244127300489124, guid: ca485054dc4f410439e704b8252a351b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2102,11 +2097,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleePlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 1918571816801624183, guid: b717a8a5e2e7912419c9ad416b4b84a6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4041324828668755092, guid: b717a8a5e2e7912419c9ad416b4b84a6,
         type: 3}
