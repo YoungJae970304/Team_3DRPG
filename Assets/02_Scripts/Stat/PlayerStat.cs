@@ -11,10 +11,11 @@ public class PlayerStat : Stat
 
     float _dodgeSpeed;
 
-    int _level = 1;
-    int _maxExp;
+    //int _level = 1;
+    //int _maxExp;
 
-    int _sp;
+    //int _sp;
+    //int _spAddAmount;
 
     public int RecoveryHP 
     { 
@@ -41,58 +42,66 @@ public class PlayerStat : Stat
 
     public float DodgeSpeed { get { return _dodgeSpeed; } set { _dodgeSpeed = value; } }
 
-    public int Level
-    {
-        get
-        {
-            return _level;
-        }
-        set
-        {
-            if (value < _level) return;
+    //public int Level
+    //{
+    //    get
+    //    {
+    //        return _level;
+    //    }
+    //    set
+    //    {
+    //        if (value < _level) return;
 
-            _level = value;
+    //        _level = value;
 
-            MaxHP += 50;
-            MaxMP += 50;
-            MaxEXP += 100;
+    //        Managers.DataTable.PlayerLevelDataTable("CSVData", "Player_Level_Data_Table");
 
-            HP = MaxHP;
-            MP = MaxMP;
-            SP += 5;
-        }
-    }
+    //        HP = MaxHP;
+    //        MP = MaxMP;
+    //        SP += SpAddAmount;
+    //    }
+    //}
 
-    public override int EXP
-    {
-        get
-        {
-            return _exp;
-        }
-        set
-        {
-            _exp = value;
+    //public override int EXP
+    //{
+    //    get
+    //    {
+    //        return _exp;
+    //    }
+    //    set
+    //    {
+    //        _exp = value;
 
-            if (_exp >= MaxEXP)
-            {
-                _exp = _exp - MaxEXP;
-                Level++;
-            }
-        }
-    }
+    //        if (EXP >= MaxEXP)
+    //        {
+    //            EXP = EXP - MaxEXP;
+    //            Level++;
+    //        }
+    //    }
+    //}
 
-    public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
-    public int SP
-    {
-        get
-        {
-            return _sp;
-        }
-        set
-        {
-            _sp = Mathf.Max(value, 0);
-        }
-    }
+    //public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
+    //public int SP
+    //{
+    //    get
+    //    {
+    //        return _sp;
+    //    }
+    //    set
+    //    {
+    //        _sp = Mathf.Max(value, 0);
+    //    }
+    //}
 
-
+    //public int SpAddAmount
+    //{
+    //    get
+    //    {
+    //        return _spAddAmount;
+    //    }
+    //    set
+    //    {
+    //        _spAddAmount = Mathf.Max(value, 0);
+    //    }
+    //}
 }

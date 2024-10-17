@@ -41,7 +41,7 @@ public class PlayerInput : MonoBehaviour
 
         if (_player._dodgeing) return;
 
-        _player._rotDir = Vector3.zero;
+        _player._rotDir = _player._playerModel.forward;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -138,8 +138,22 @@ public class PlayerInput : MonoBehaviour
             _player.SkillSetR();
             _player.ChangeState(PlayerState.Skill);
         }
-    }
 
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            //_player._playerStatManager.EXP += 1000;
+            //Logger.LogError($"초기화 확인 {Managers.DataTable._PlayerStat[0]}");
+            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.HP}");
+            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.Level}");
+            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.SpAddAmount}");
+            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.MaxEXP}");
+        }
+        else if (Input.GetKeyDown(KeyCode.V))
+        {
+            _player._playerStatManager.EXP += 100;
+        }
+    }
+         
     void UIInput()
     {
         if (Input.GetKeyDown(KeyCode.I))

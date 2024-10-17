@@ -56,7 +56,7 @@ public class PlayerCam : MonoBehaviour
 
         var aim = _cmQuarterCam.GetCinemachineComponent<CinemachineComposer>();
 
-        switch (Managers.Game._player._playerType)
+        switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
                 aim.m_TrackedObjectOffset.y = 0.5f;

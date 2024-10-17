@@ -43,8 +43,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [Header("오브젝트 참조")]
     public Transform _playerModel;
     public UI_Cursor _cursorUI;
-    [HideInInspector]
-    public Define.PlayerType _playerType;
 
     // 이동 관련 변수
     [HideInInspector]
@@ -131,6 +129,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public InterectController _interectController;
     protected virtual void Awake()
     {
+        #region DontDestroy
+        //DontDestroyOnLoad(gameObject);
+
+        #endregion
+
         #region 컴포넌트 초기화
         _cc = gameObject.GetOrAddComponent<CharacterController>();
         _playerInput = gameObject.GetOrAddComponent<PlayerInput>();
@@ -172,6 +175,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerStatManager._originStat.DodgeSpeed = 10f;
         _playerStatManager._originStat.ATK = 50;
         _playerStatManager._originStat.DEF = 50;
+        Managers.DataTable.PlayerLevelDataTable("CSVData", "Player_Level_Data_Table");
+        //Managers.DataTable.PlayerStatUpdate();
 
         // 공격 콜라이더 off
         SetColActive("Katana");

@@ -67,7 +67,7 @@ public class QuestManager
     //시작 가능 체크
     public bool CheckUnlockQuest()
     {
-        int playeLevel = Managers.Game._player._playerStatManager._originStat.Level;
+        int playeLevel = Managers.Game._player._playerStatManager.Level;
 
         bool metRequireLevel = false;
 
