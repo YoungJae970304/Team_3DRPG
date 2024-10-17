@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/02_Scripts/Data/PlayerData.meta
 guid: d52a10407509a784f9254b47e1ad4e38
 folderAsset: yes
 DefaultImporter:
+========
+guid: c3212105f7bda7a46aaf7a880ee77a56
+PrefabImporter:
+>>>>>>>> Masters:Assets/Resources/Prefabs/UI/ShopItemSlot.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

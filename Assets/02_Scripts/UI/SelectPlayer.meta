@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/02_Scripts/UI/SelectPlayer.meta
 guid: c9c48b793cd7bb24a8ad78bd4a5bf148
 folderAsset: yes
 DefaultImporter:
+========
+guid: 8e8387d7813a33e45ba8d8336019b7c0
+PrefabImporter:
+>>>>>>>> Masters:Assets/Resources/Prefabs/UI/ItemConfirm.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

@@ -15,20 +15,24 @@ public abstract class SkillBase//전략 패턴 사용
     protected Sprite _icon;             //스킬 아이콘
 
     public float delay;                 //스킬의 후딜레이
+
+    public int _level;
+
+
     public virtual void SkillEnter(ITotalStat stat) {
-        Enter.Enter(stat);
+        Enter.Enter(stat, _level);
     }//스킬 시전시
     public virtual void SkillStay(ITotalStat stat) {
-        Stay.Stay(stat);
+        Stay.Stay(stat, _level);
     }//스킬 시전도중
 
     public virtual void SkillExit(ITotalStat stat) {
-        Stay.End(stat);
-        Exit.Exit(stat);
+        Stay.End(stat, _level);
+        Exit.Exit(stat, _level);
     }//스킬 시전종료시
 
     public virtual void PassiveEffect(ITotalStat stat) {
-        Passive.Passive(stat);
+        Passive.Passive(stat, _level);
     }//패시브 효과
 
 }
@@ -36,20 +40,20 @@ public abstract class SkillBase//전략 패턴 사용
 
 namespace SkillModule {//전략
     public interface SkillEnter {
-        public void Enter(ITotalStat stat);
+        public void Enter(ITotalStat stat,int level=0);
     }
     public interface SkillStay
     {
-        public void Stay(ITotalStat stat);
-        public void End(ITotalStat stat);
+        public void Stay(ITotalStat stat, int level = 0);
+        public void End(ITotalStat stat, int level = 0);
 
     }
     public interface SkillExit
     {
-        public void Exit(ITotalStat stat);
+        public void Exit(ITotalStat stat, int level = 0);
     }
     public interface SkillPassive
     {
-        public void Passive(ITotalStat stat);
+        public void Passive(ITotalStat stat, int level = 0);
     }
 }

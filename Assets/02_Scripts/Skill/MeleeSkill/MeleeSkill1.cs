@@ -13,7 +13,7 @@ public class MeleeSkill1 : SkillBase
 
 public class MeleeSkill1Enter : SkillEnter
 {
-    public void Enter(ITotalStat stat)
+    public void Enter(ITotalStat stat, int level = 0)
     {
         Managers.Game._player.SetColActive("Skill1");
 
@@ -29,7 +29,7 @@ public class MeleeSkill1Stay : SkillStay
 {
     Animator _anim = Managers.Game._player._playerAnim;
 
-    public void Stay(ITotalStat stat)
+    public void Stay(ITotalStat stat, int level = 0)
     {
 
         // 애니메이션 진행도 8&에서 30% 시점까지는 빠른 이동
@@ -45,7 +45,7 @@ public class MeleeSkill1Stay : SkillStay
         }
     }
 
-    public void End(ITotalStat stat)
+    public void End(ITotalStat stat, int level = 0)
     {
 
     }
@@ -53,7 +53,7 @@ public class MeleeSkill1Stay : SkillStay
 
 public class MeleeSkill1Exit : SkillExit
 {
-    public void Exit(ITotalStat stat)
+    public void Exit(ITotalStat stat, int level = 0)
     {
         Managers.Game._player.SetColActive("Katana");
 
@@ -67,7 +67,7 @@ public class MeleeSkill1Exit : SkillExit
 
 public class MeleeSkill1Passive : SkillPassive
 {
-    public void Passive(ITotalStat stat)
+    public void Passive(ITotalStat stat, int level = 0)
     {
         Debug.Log("TestSkill 패시브 효과");
 

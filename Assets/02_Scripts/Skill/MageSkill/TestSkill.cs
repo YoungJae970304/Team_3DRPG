@@ -27,7 +27,7 @@ public class TestSkill : SkillBase
 }
 public class TestSkillEnter : SkillEnter
 {
-    public void Enter(ITotalStat stat)
+    public void Enter(ITotalStat stat, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill1");
 
@@ -55,12 +55,12 @@ public class TestSkillEnter : SkillEnter
 
 public class TestSkillStay : SkillStay
 {
-    public void Stay(ITotalStat stat)
+    public void Stay(ITotalStat stat, int level = 0)
     {
 
     }
 
-    public void End(ITotalStat stat)
+    public void End(ITotalStat stat, int level = 0)
     {
 
     }
@@ -68,7 +68,7 @@ public class TestSkillStay : SkillStay
 
 public class TestSkillExit : SkillExit
 {
-    public void Exit(ITotalStat stat)
+    public void Exit(ITotalStat stat, int level = 0)
     {
         // 증가된 공격력 복구
 
@@ -81,7 +81,7 @@ public class TestSkillExit : SkillExit
 
 public class TestSkillPassive : SkillPassive
 {
-    public void Passive(ITotalStat stat)
+    public void Passive(ITotalStat stat, int level = 0)
     {
         Debug.Log("TestSkill 패시브 효과");
 

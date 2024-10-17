@@ -61,7 +61,7 @@ public class ItemGrab : MonoBehaviour
             _currnetSlot = GetUIRayCast<ItemSlot>();
 
             // 아이템을 갖고 있는 슬롯만 해당
-            if (_currnetSlot != null && _currnetSlot.Item != null)
+            if (_currnetSlot != null && _currnetSlot.Item != null&&!_currnetSlot.isLocked)
             {
 
                 // 위치 기억, 참조 등록
@@ -69,7 +69,7 @@ public class ItemGrab : MonoBehaviour
                 Icon.enabled = true;                        //마우스 따라다닐 이미지
                 Icon.sprite = _currnetSlot._Image.sprite;   //이미지 변경
                 _currnetSlot._Image.enabled = false;        //슬롯의 이미지 비활성화
-                _beginDragIconPoint = _currnetSlot._Image.transform.position;
+                _beginDragIconPoint = _currnetSlot._Image.transform.position;//초기위치저장
             }
             else
             {
