@@ -13,7 +13,7 @@ public class MeleeSkill3 : SkillBase
 
 public class MeleeSkill3Enter : SkillEnter
 {
-    public void Enter(ITotalStat stat)
+    public void Enter(ITotalStat stat, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill3");
 
@@ -27,12 +27,12 @@ public class MeleeSkill3Stay : SkillStay
 {
     Animator _anim = Managers.Game._player._playerAnim;
 
-    public void Stay(ITotalStat stat)
+    public void Stay(ITotalStat stat, int level = 0)
     {
 
     }
 
-    public void End(ITotalStat stat)
+    public void End(ITotalStat stat, int level = 0)
     {
 
     }
@@ -40,7 +40,7 @@ public class MeleeSkill3Stay : SkillStay
 
 public class MeleeSkill3Exit : SkillExit
 {
-    public void Exit(ITotalStat stat)
+    public void Exit(ITotalStat stat, int level = 0)
     {
         Managers.Game._player.SetColActive("Katana");
 
@@ -52,7 +52,7 @@ public class MeleeSkill3Exit : SkillExit
 
 public class MeleeSkill3Passive : SkillPassive
 {
-    public void Passive(ITotalStat stat)
+    public void Passive(ITotalStat stat, int level = 0)
     {
         Debug.Log("TestSkill 패시브 효과");
 

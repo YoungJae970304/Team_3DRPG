@@ -69,4 +69,8 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
     {
         //아이템 버리기 UI 출력
     }
+
+    public void Setitem(Item item) {
+        Item = item;
+    }
 }

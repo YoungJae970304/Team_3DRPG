@@ -19,20 +19,23 @@ public class ChainLightning : SkillBase
 
 public class ChainLightningEnter : SkillEnter
 {
-    public void Enter(ITotalStat stat)
+
+    public void Enter(ITotalStat stat, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill3");
+
+
     }
 }
 
 public class ChainLightningStay : SkillStay
 {
-    public void Stay(ITotalStat stat)
+    public void Stay(ITotalStat stat,int level=0)
     {
-
+        
     }
 
-    public void End(ITotalStat stat)
+    public void End(ITotalStat stat, int level = 0)
     {
 
     }
@@ -40,7 +43,7 @@ public class ChainLightningStay : SkillStay
 
 public class ChainLightningExit : SkillExit
 {
-    public void Exit(ITotalStat stat)
+    public void Exit(ITotalStat stat, int level = 0)
     {
 
     }
@@ -48,7 +51,7 @@ public class ChainLightningExit : SkillExit
 
 public class ChainLightningPassive : SkillPassive
 {
-    public void Passive(ITotalStat stat)
+    public void Passive(ITotalStat stat, int level = 0)
     {
         Debug.Log("TestSkill 패시브 효과");
 
