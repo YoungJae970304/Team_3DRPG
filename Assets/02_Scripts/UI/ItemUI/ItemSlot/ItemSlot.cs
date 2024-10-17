@@ -19,7 +19,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
     public bool isLocked=false;
     public Image _Image;
     [SerializeField] protected TextMeshProUGUI _text;
-    public ItemData.ItemType slotType = ItemData.ItemType.Weapon;
+    public ItemData.ItemType _slotType = ItemData.ItemType.Weapon;
 
     //슬롯 정보 갱신
     public virtual void UpdateSlotInfo()
@@ -72,7 +72,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
     //슬롯에 있는 아이템을 옮겼을때 해주어야할 일들
     public abstract bool MoveItem(ItemSlot moveSlot);
 
-    public void RemoveItem()
+    public virtual void RemoveItem()
     {
         Item = null;
     }

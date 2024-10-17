@@ -34,7 +34,7 @@ public class QuickItemSlot : ItemSlot
         if (!(moveSlot is InventorySlot))//인벤토리가 아니면 무시함
         { return; }
         Item item = moveSlot.Item;
-        if (item ==null|| item.Data.Type != slotType) { return; }
+        if (item ==null|| item.Data.Type != _slotType) { return; }
         Item = item;
     }
     public override bool MoveItem(ItemSlot moveSlot)

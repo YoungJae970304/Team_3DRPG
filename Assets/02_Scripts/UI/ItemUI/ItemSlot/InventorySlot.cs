@@ -11,19 +11,19 @@ public class InventorySlot : ItemSlot
     {
         _itemManager = itemManager;
         _inventory = inventory;
-        slotType = _inventory._currentType;
+        _slotType = _inventory._currentType;
         _index = transform.GetSiblingIndex();
     }
     public void UpdateInfo()
     {
         Item = _itemManager.GetItem(_index, _inventory._currentType);
-        slotType = _inventory._currentType;
+        _slotType = _inventory._currentType;
     }
     //아이템 드롭시
     public override void ItemInsert(ItemSlot moveSlot)
     {
         if (moveSlot is QuickItemSlot) { return; }                              //퀵슬롯이거나 타입이 다르면 리턴
-        if (!_itemManager.Containtype(slotType, moveSlot.slotType)) { return; }
+        if (!_itemManager.Containtype(_slotType, moveSlot._slotType)) { return; }
         base.ItemInsert(moveSlot);
         
     }
@@ -51,10 +51,10 @@ public class InventorySlot : ItemSlot
         
         if (item == null)
         {
-            _itemManager.Remove(_index, slotType);
+            _itemManager.Remove(_index, _slotType);
             base.Setitem(item);
         }
-        else if (_itemManager.Containtype(slotType, item.Data.Type))
+        else if (_itemManager.Containtype(_slotType, item.Data.Type))
         {
             _itemManager.Setitem(_index, item);
             base.Setitem(item);
@@ -72,6 +72,12 @@ public class InventorySlot : ItemSlot
         return true;
     }
 
+    public override void RemoveItem()
+    {
+        _itemManager.Remove(_index, _slotType);
+        base.RemoveItem();
+        
+    }
 
 
     public override void UpdateSlotInfo()
@@ -80,7 +86,7 @@ public class InventorySlot : ItemSlot
         //여러개 가질 수 있는 아이템일때 남은 개수가 0이면 삭제
         if (Item != null && Item is CountableItem) {
             if ((Item as CountableItem)._amount == 0) {
-                _itemManager.Remove(_index, slotType);
+                _itemManager.Remove(_index, _slotType);
                 Item = null;
             }
         }

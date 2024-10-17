@@ -62,12 +62,26 @@ public class ItemConfirm : ItemUI
         if (data.Item is CountableItem)
         {
             Get<Slider>((int)Sliders.ItemAmount).gameObject.SetActive(true);
+            if (!isBuy)
+            {
+
+                Get<Slider>((int)Sliders.ItemAmount).maxValue = (data.Item as CountableItem).GetCurrentAmount();
+            }
+            else {
+                Get<Slider>((int)Sliders.ItemAmount).maxValue =99;
+            }
+            Get<Slider>((int)Sliders.ItemAmount).onValueChanged.AddListener(OnSliderChanged);
+            OnSliderChanged(1);
         }
         else {
             Get<Slider>((int)Sliders.ItemAmount).gameObject.SetActive(false);
         }
     }
 
+    public void OnSliderChanged(float value) {
+        Get<TextMeshProUGUI>((int)Texts.ItemAmountTxt).text = $"{value}/{Get<Slider>((int)Sliders.ItemAmount).maxValue}";
+        
+    }
     public void OnConfirmBtn() {
         if (isBuy)//살때
         {
@@ -83,9 +97,23 @@ public class ItemConfirm : ItemUI
             }
         }
         else { //팔때
-        
-        
-        
+            int amount = (int)Get<Slider>((int)Sliders.ItemAmount).value;
+            int money = _inventorySlot.Item.Data.SellingPrice * amount;
+            if (_inventorySlot.Item is CountableItem)
+            {
+                CountableItem countable = (_inventorySlot.Item as CountableItem);
+                countable.AddAmount(-amount);
+                if (countable._amount == 0)
+                {
+                    _inventorySlot.RemoveItem();
+                }
+            }
+            else {
+                _inventorySlot.RemoveItem();
+            }
+            Logger.LogWarning(money.ToString());
+
+
         }
         CloseUI();
 
@@ -96,5 +124,6 @@ public class ItemConfirm : ItemUI
     {
         base.CloseUI(isCloseAll);
         GetButton((int)Buttons.ConfirmButton).onClick.RemoveAllListeners();
+        Get<Slider>((int)Sliders.ItemAmount).onValueChanged.RemoveAllListeners();
     }
 }

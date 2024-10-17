@@ -31,12 +31,10 @@ public class CountableItem : Item
         if (nextAmount > _maxAmount)
         {
             overAmount = nextAmount - _maxAmount;
-            _amount = _maxAmount;
+            nextAmount = _maxAmount;
+            
         }
-        else
-        {
-            _amount = nextAmount;
-        }
+        SetAmount(nextAmount);
         return overAmount;
     }
 
