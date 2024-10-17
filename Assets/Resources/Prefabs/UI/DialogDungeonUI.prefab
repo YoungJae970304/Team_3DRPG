@@ -190,7 +190,7 @@ MonoBehaviour:
   dialogs:
   - speakerIndex: 0
     name: "\uB358\uC804 NPC"
-    dialogue: "\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?"
+    dialogue: "\uB358\uC804?\uB358\uC804?\uB358\uC804?\uB358\uC804?"
   _isAutoStart: 1
 --- !u!1 &3248593829709318713
 GameObject:
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 50711
+    m_Bits: 4294967295
 --- !u!114 &3870719186428004309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +312,8 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 0
+  _dialogSystem:
+  - {fileID: 4192826246697405307}
 --- !u!1 &4394327682497626911
 GameObject:
   m_ObjectHideFlags: 0

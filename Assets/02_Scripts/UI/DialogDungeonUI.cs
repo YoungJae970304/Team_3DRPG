@@ -10,28 +10,32 @@ public class DialogDungeonUI : BaseUI
         OpenBtn,
     }
 
-    enum DialogSystems
+    public DialogSystem[] _dialogSystem;
+
+    public override void Init(Transform anchor)
     {
-        DungeonDialog,
+        base.Init(anchor);
+        if (!Managers.Game._isActiveDialog) // 대사가 진행 중이지 않을 때만 실행
+        {
+            StartCoroutine(DialogStart());
+        }
     }
 
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
-        Bind<DialogSystem>(typeof(DialogSystems));
 
-        //GetButton((int)Buttons.OpenBtn).onClick.AddListener(() => OpenDungeonUI());
-
-        //StartCoroutine(DialogStart());
+        GetButton((int)Buttons.OpenBtn).onClick.AddListener(() => OpenDungeonUI());
     }
 
-    IEnumerator Start()
+    IEnumerator DialogStart()
     {
         //대사 시작
-        yield return new WaitUntil(() => Get<DialogSystem>((int)DialogSystems.DungeonDialog).UpdateDialog());
+        Managers.Game._isActiveDialog = true;
+        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         GetButton((int)Buttons.OpenBtn).gameObject.SetActive(true);
-        Managers.Game._isActiveDialog = false;
         yield return new WaitForSeconds(0.2f);
+        Managers.Game._isActiveDialog = false;
         Managers.UI.CloseUI(this);
     }
 

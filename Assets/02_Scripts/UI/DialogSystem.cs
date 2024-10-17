@@ -38,7 +38,7 @@ public class DialogSystem : BaseUI
 
     private void Awake()
     {
-        //Setup();
+        Setup();
     }
 
     void Setup()
@@ -59,9 +59,6 @@ public class DialogSystem : BaseUI
 
     void SetActiveObjects(/*Speaker speaker,*/ bool visible)
     {
-        //GetImage((int)DialogImgs.DialogImage).gameObject.SetActive(visible);
-        //GetText((int)DialogTexts.NpcName).gameObject.SetActive(visible);
-        //GetText((int)DialogTexts.DialogText).gameObject.SetActive(visible);
         //speaker.imageDialog.gameObject.SetActive(visible);
         //speaker.textName.gameObject.SetActive(visible);
         //speaker.textDialog.gameObject.SetActive(visible);
@@ -80,6 +77,7 @@ public class DialogSystem : BaseUI
 
     public bool UpdateDialog()//부울 값을 반환해주는 함수 
     {
+        Logger.Log($"확인 {_isFirst}");
         //대사 분기가 시작될 때 1회만 호출
         if (_isFirst == true)
         {
@@ -90,10 +88,8 @@ public class DialogSystem : BaseUI
             //첫 번째 대사 재생
             if (_isAutoStart)
             { SetNextDialog(); }
-
             _isFirst = false;
         }
-
         if (Input.GetMouseButtonDown(0))
         {
             //텍스트 타이핑 효과를 재생중일때
@@ -125,13 +121,6 @@ public class DialogSystem : BaseUI
                 _isFirst = true;
                 _currentDialogIndex = -1;
                 return true;
-
-                //for (int i = 0; i < dialogs.Length; ++i)
-                //{
-                //    SetActiveObjects(false);
-
-                //    GetGameObject((int)GameObjects.Arrow).gameObject.SetActive(false);
-                //}
                 //대사가 더 이상 없을 경우
                 //모든 오브젝트를 비활성화 하고 true 반환
                 //for (int i = 0; i < speakers.Length; ++i)
