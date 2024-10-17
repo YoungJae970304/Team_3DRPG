@@ -56,25 +56,45 @@ public class ItemConfirm : ItemUI
         Get<ShowOnlySlot>((int)itemSlots.ItemSlot).Setitem(data.Item);
         Get<TextMeshProUGUI>((int)Texts.ItmeName).text = data.Item.Data.Name;
         Get<TextMeshProUGUI>((int)Texts.ConfirmButtonTxt).text = isBuy ? "구매" : "판매";
+        
         GetButton((int)Buttons.ConfirmButton).onClick.AddListener(OnConfirmBtn);
+        GetButton((int)Buttons.CancelButton).onClick.AddListener(()=>CloseUI());
+        if (data.Item is CountableItem)
+        {
+            Get<Slider>((int)Sliders.ItemAmount).gameObject.SetActive(true);
+        }
+        else {
+            Get<Slider>((int)Sliders.ItemAmount).gameObject.SetActive(false);
+        }
     }
 
     public void OnConfirmBtn() {
         if (isBuy)//살때
         {
+            //if() 구매조건
             Item item = Item.ItemSpawn(_shopSlot.Item.Data.ID);
-            if (item is CountableItem) {
+            if (item is CountableItem)
+            {
                 (item as CountableItem).SetAmount((int)Get<Slider>((int)Sliders.ItemAmount).value);
                 _inventorySlot.GetInventory().InsertItem(item);
             }
-
+            else {
+                _inventorySlot.GetInventory().InsertItem(item);
+            }
         }
         else { //팔때
         
         
         
         }
-    
-    
+        CloseUI();
+
+
+    }
+
+    public override void CloseUI(bool isCloseAll = false)
+    {
+        base.CloseUI(isCloseAll);
+        GetButton((int)Buttons.ConfirmButton).onClick.RemoveAllListeners();
     }
 }

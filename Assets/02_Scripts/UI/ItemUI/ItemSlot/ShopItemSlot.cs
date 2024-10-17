@@ -19,14 +19,16 @@ public class ShopItemSlot : ItemSlot
     }
     public override bool MoveItem(ItemSlot moveSlot)
     {
-        //구현할 필요 없음
-        return true;
+        if (moveSlot is InventorySlot) {
+            BuyConfirm(moveSlot as InventorySlot);
+        }
+        return false;
     }
 
     public void BuyConfirm(InventorySlot inventorySlot)
     {
         ItemConfirmData itemConfirmData = new ItemConfirmData();
-        itemConfirmData.isBuy = false;
+        itemConfirmData.isBuy = true;
         itemConfirmData.Item = Item;
         itemConfirmData.ShopSlot = this;
         itemConfirmData.InventorySlot = inventorySlot;
