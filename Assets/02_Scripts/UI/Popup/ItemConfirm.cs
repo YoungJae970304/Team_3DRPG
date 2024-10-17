@@ -75,7 +75,7 @@ public class ItemConfirm : ItemUI
             Item item = Item.ItemSpawn(_shopSlot.Item.Data.ID);
             if (item is CountableItem)
             {
-                (item as CountableItem).SetAmount((int)Get<Slider>((int)Sliders.ItemAmount).value);
+                (item as CountableItem).SetAmount(Mathf.Max(1,(int)Get<Slider>((int)Sliders.ItemAmount).value));
                 _inventorySlot.GetInventory().InsertItem(item);
             }
             else {
