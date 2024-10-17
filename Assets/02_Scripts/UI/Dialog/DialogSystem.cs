@@ -77,7 +77,6 @@ public class DialogSystem : BaseUI
 
     public bool UpdateDialog()//부울 값을 반환해주는 함수 
     {
-        Logger.Log($"확인 {_isFirst}");
         //대사 분기가 시작될 때 1회만 호출
         if (_isFirst == true)
         {
