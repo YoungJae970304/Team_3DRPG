@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TestScene : BaseScene
 {
     [SerializeField] Inventory ItemManager;
     [SerializeField] InventoryUI inventory;
+
+    [SerializeField] Transform SpawnPos;
+
     protected override void Init()
     {
         base.Init();
+        PlayerCreate();
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
@@ -27,6 +32,27 @@ public class TestScene : BaseScene
         
 
     }
+
+    // 타입에 맞는 캐릭터 생성
+    private void PlayerCreate()
+    {
+        switch (Managers.Game._playerType)
+        {
+            case Define.PlayerType.Melee:
+                GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
+                meleePlayer.transform.position = SpawnPos.position;
+                Logger.LogError("플레이어 생성 확인");
+                break;
+            case Define.PlayerType.Mage:
+                GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
+                magePlayer.transform.position = SpawnPos.position;
+                break;
+            default:
+                Logger.LogError("생성할 플레이어가 없습니다.");
+                break;
+        }
+    }
+
     [ContextMenu("OpenTest")]
     public void Opentest() {
         // 인벤토리 여는 것 I? ( 풀링 )

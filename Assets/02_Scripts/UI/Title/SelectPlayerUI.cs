@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngineInternal;
 
-public class SelectPlayer : BaseUI
+public class SelectPlayerUI : BaseUI
 {
     enum SelectToggles
     {
@@ -18,8 +19,6 @@ public class SelectPlayer : BaseUI
         TitleBtn
     }
 
-    SelectToggles _selectedPlayer;
-
     private void Awake()
     {
         Bind<Toggle>(typeof(SelectToggles));
@@ -27,8 +26,16 @@ public class SelectPlayer : BaseUI
     }
 
     // 선택되어 있는 토글에 따라 플레이어 타입을 결정 -> 이후 게임매니저에서 씬 로드될 때 마다 해당 플레이어 생성
-    public void OnClickSelectPlayer()
+    public void OnClickStartBtn()
     {
+        ConfirmUI confirmUI = Managers.UI.GetActiveUI<ConfirmUI>() as ConfirmUI;
+
+        if (confirmUI == null)
+        {
+            Managers.UI.OpenUI<ConfirmUI>(new BaseUIData());
+        }
+
+
         Toggle melee = GetToggle((int)SelectToggles.MeleePlayer);
         Toggle mage = GetToggle((int)SelectToggles.MagePlayer);
 
