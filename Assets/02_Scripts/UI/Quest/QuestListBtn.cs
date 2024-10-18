@@ -25,11 +25,19 @@ public class QuestListBtn : BaseUI, ISelectHandler
 
     UnityAction _onSelectAction;
 
-    private void Awake()
+    QuestLogUI _questLogUI;
+
+    QuestData _questData = new QuestData();
+
+    public override void Init(Transform anchor)
     {
+        base.Init(anchor);
+        _questLogUI = GetComponentInParent<QuestLogUI>();
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
-        GetButton((int)Buttons.QuestListBtn).onClick.AddListener(OpenQuestInfo);
+        GetButton((int)Buttons.QuestListBtn).onClick.AddListener(() => _questLogUI.OpenSetInfo());
+        //퀘스트의 데이터를 가지고있는애를 가져와서 오픈해줄거임
+        GetButton((int)Buttons.QuestListBtn).onClick.AddListener(() => _questLogUI.QuestInfoSet(_questData.ID));
     }
 
     //선택 처리 인터페이스함수
@@ -41,19 +49,10 @@ public class QuestListBtn : BaseUI, ISelectHandler
     //버튼 초기화 함수
     public void Initialize(string questInfoTilte, UnityAction selectAction)
     {
-        QuestData questData = new QuestData();
-
-        questInfoTilte = questData.Info;
-
+        questInfoTilte = _questData.Name;
         GetText((int)Texts.QuestListTxt).text = questInfoTilte;
         _onSelectAction = selectAction;
     }
-
-    public void OpenQuestInfo()
-    {
-        
-    }
-
 
     public void SetState(QuestState.State state)
     {
@@ -73,6 +72,17 @@ public class QuestListBtn : BaseUI, ISelectHandler
                 break;
             default:
                 Logger.LogWarning("존재하지 않는 퀘스트 상태입니다");
+                break;
+        }
+    }
+
+    public void SetQeustType(QuestData questData)
+    {
+        switch (questData.Type)
+        {
+            case Define.QuestType.Main:
+                break;
+            case Define.QuestType.Sub:
                 break;
         }
     }

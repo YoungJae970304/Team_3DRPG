@@ -21,13 +21,13 @@ public class QuestManager
         var questData = Managers.DataTable._QuestData;
 
         _AllQuestData.AddRange(questData);
+        Logger.LogWarning($"리스트 확인{questData}");
     }
 
     //시작 메서드
     public void OnStartQuest(int id)
     {
         QuestData questData = _AllQuestData.Find(q => q.ID == id);
-
         //현재 수락 가능한 상태인지 체크
         CheckUnlockQuest();
         if (questData != null)
