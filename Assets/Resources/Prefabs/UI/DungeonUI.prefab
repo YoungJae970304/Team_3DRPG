@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 5558677542287307668}
   - component: {fileID: 8237317975603459602}
   m_Layer: 5
-  m_Name: SelectDungeonImage
+  m_Name: SelectDungeonMainMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
