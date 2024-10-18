@@ -19,7 +19,7 @@ public class TestSkill2 : SkillBase
 
 public class TestSkill2Enter : SkillEnter
 {
-    public void Enter(ITotalStat stat)
+    public void Enter(ITotalStat stat, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill2");
 
@@ -29,12 +29,12 @@ public class TestSkill2Enter : SkillEnter
 
 public class TestSkill2Stay : SkillStay
 {
-    public void Stay(ITotalStat stat)
+    public void Stay(ITotalStat stat, int level = 0)
     {
 
     }
 
-    public void End(ITotalStat stat)
+    public void End(ITotalStat stat, int level = 0)
     {
 
     }
@@ -42,7 +42,7 @@ public class TestSkill2Stay : SkillStay
 
 public class TestSkill2Exit : SkillExit
 {
-    public void Exit(ITotalStat stat)
+    public void Exit(ITotalStat stat, int level = 0)
     {
 
     }
@@ -50,7 +50,7 @@ public class TestSkill2Exit : SkillExit
 
 public class TestSkill2Passive : SkillPassive
 {
-    public void Passive(ITotalStat stat)
+    public void Passive(ITotalStat stat, int level = 0)
     {
         Debug.Log("TestSkill 패시브 효과");
 

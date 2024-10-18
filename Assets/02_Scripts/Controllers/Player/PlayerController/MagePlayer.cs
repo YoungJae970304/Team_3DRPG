@@ -11,7 +11,7 @@ public class MagePlayer : Player
     {
         base.Awake();
 
-        _playerType = Define.PlayerType.Mage;
+        Managers.Game._playerType = Define.PlayerType.Mage;
     }
 
     public override void Attack()

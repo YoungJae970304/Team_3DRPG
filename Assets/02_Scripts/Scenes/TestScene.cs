@@ -10,11 +10,17 @@ public class TestScene : BaseScene
     {
         base.Init();
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        Logger.Log(Managers.Game._player.name);
+        //Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         Managers.UI.OpenUI<MainUI>(new BaseUIData(),false);
         //Opentest();
         Close();
+
+        ShopUIData shopUIData = new ShopUIData();
+        shopUIData._itemCode = new List<(int, int)>();
+        shopUIData._itemCode.Add((11001, 1));
+        shopUIData._itemCode.Add((43001, 2));
+        Managers.UI.OpenUI<ShopUI>(shopUIData);
     }
     public override void Clear()
     {

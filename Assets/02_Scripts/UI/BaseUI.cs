@@ -86,6 +86,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     protected TextMeshProUGUI GetText(int idx) { return Get<TextMeshProUGUI>(idx); }
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
+    protected Toggle GetToggle(int idx) { return Get<Toggle>(idx); }
     #endregion
 
     #region 클릭시 최상위로 변경

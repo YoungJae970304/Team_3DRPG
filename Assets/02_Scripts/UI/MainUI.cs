@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainUI : ItemUI
 {
@@ -12,6 +13,7 @@ public class MainUI : ItemUI
         ItemSlot_2
     }
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -21,7 +23,7 @@ public class MainUI : ItemUI
     {
         _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         Bind<QuickItemSlot>(typeof(QuickItemSlots));
-
+ 
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
         {
             Get<QuickItemSlot>((int)quickItemSlot)._inventory = _inventory;

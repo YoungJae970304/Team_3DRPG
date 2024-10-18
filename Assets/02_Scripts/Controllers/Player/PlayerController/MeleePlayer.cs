@@ -11,7 +11,7 @@ public class MeleePlayer : Player
     {
         base.Awake();
 
-        _playerType = Define.PlayerType.Melee;
+        Managers.Game._playerType = Define.PlayerType.Melee;
     }
 
     public override void Attack()

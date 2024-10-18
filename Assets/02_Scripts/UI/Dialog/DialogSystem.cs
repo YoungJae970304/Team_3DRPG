@@ -38,9 +38,7 @@ public class DialogSystem : BaseUI
 
     private void Awake()
     {
-        //Setup();
-  
-        
+        Setup();
     }
 
     void Setup()
@@ -56,7 +54,6 @@ public class DialogSystem : BaseUI
         Bind<TextMeshProUGUI>(typeof(DialogTexts));
         Bind<Image>(typeof(DialogImgs));
         Bind<GameObject>(typeof(GameObjects));
-
         GetGameObject((int)GameObjects.Arrow).SetActive(false);
     }
 
@@ -90,10 +87,8 @@ public class DialogSystem : BaseUI
             //첫 번째 대사 재생
             if (_isAutoStart)
             { SetNextDialog(); }
-
             _isFirst = false;
         }
-
         if (Input.GetMouseButtonDown(0))
         {
             //텍스트 타이핑 효과를 재생중일때
@@ -122,6 +117,9 @@ public class DialogSystem : BaseUI
             }
             else
             {
+                _isFirst = true;
+                _currentDialogIndex = -1;
+                return true;
                 //대사가 더 이상 없을 경우
                 //모든 오브젝트를 비활성화 하고 true 반환
                 //for (int i = 0; i < speakers.Length; ++i)
@@ -132,9 +130,6 @@ public class DialogSystem : BaseUI
                 //    //SetActiveObject()에 캐릭터 이미지를 보이지 않게 하는 부분이 없기 때문에 별도로 호출
                 //    //speakers[i].spriteRenderer.gameObject.SetActive(false);
                 //}
-                _isFirst = true; 
-                _currentDialogIndex = -1; 
-                return true;
             }
         }
         return false;
