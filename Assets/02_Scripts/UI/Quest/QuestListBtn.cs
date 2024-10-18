@@ -20,14 +20,15 @@ public class QuestListBtn : BaseUI, ISelectHandler
     {
         QuestListTxt,
     }
+
     #endregion
 
     UnityAction _onSelectAction;
+
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
-
         GetButton((int)Buttons.QuestListBtn).onClick.AddListener(OpenQuestInfo);
     }
 
@@ -40,15 +41,17 @@ public class QuestListBtn : BaseUI, ISelectHandler
     //버튼 초기화 함수
     public void Initialize(string questInfoTilte, UnityAction selectAction)
     {
-        
+        QuestData questData = new QuestData();
 
-        //_listBtnText.text = questInfoTilte;
+        questInfoTilte = questData.Info;
+
+        GetText((int)Texts.QuestListTxt).text = questInfoTilte;
         _onSelectAction = selectAction;
     }
 
     public void OpenQuestInfo()
     {
-
+        
     }
 
 
@@ -58,15 +61,15 @@ public class QuestListBtn : BaseUI, ISelectHandler
         {
             case QuestState.State.RequirementNot:
             case QuestState.State.CanStart:
-                //_listBtnText.color = Color.red;
+                
                 break;
             case QuestState.State.InProgress:
             case QuestState.State.CanFinish:
-                //_listBtnText.color = Color.yellow;
+              
                 break;
                 //완료된 퀘스트 표시 안함
             case QuestState.State.Finished:
-                //_button.gameObject.SetActive(false);
+                
                 break;
             default:
                 Logger.LogWarning("존재하지 않는 퀘스트 상태입니다");
