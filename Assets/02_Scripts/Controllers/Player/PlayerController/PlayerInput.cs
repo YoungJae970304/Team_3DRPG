@@ -39,9 +39,7 @@ public class PlayerInput : MonoBehaviour
     {
         _player._isMoving = false;
 
-        if (_player._dodgeing) return;
-
-        _player._rotDir = _player._playerModel.forward;
+        if (_player._dodgeing ) return;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -163,7 +161,8 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             CloseFrontUI();
-        }else if (Input.GetKeyDown(KeyCode.F))
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
         {
             if (_player._interectController._lastObj == null && Managers.Game._isActiveDialog) { return; }
             

@@ -9,6 +9,7 @@ public class PlayerIdleState : BaseState
     public override void OnStateEnter()
     {
         _player.AtkCount = 0;
+        _player._rotDir = _player._playerModel.forward;
     }
 
     public override void OnStateUpdate()

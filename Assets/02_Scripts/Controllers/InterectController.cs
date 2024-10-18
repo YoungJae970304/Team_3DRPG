@@ -22,6 +22,7 @@ public class InterectController : MonoBehaviour
         _currentDis = 100;
         _target=GameObject.FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
         _playerCam = GetComponent<PlayerCam>();
+        _main = Camera.main;
     }
 
     private void LateUpdate()
