@@ -150,6 +150,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     protected virtual void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         #region 딕셔너리 초기화
         States.Add(PlayerState.Idle, new PlayerIdleState(this, _monster, _playerStatManager));
         States.Add(PlayerState.Move, new PlayerMoveState(this, _monster, _playerStatManager));
