@@ -51,9 +51,9 @@ public class QuestManager
     public void OnStartQuest(int id)
     {
         QuestData questData = _AllQuestData.Find(q => q.ID == id);
+
         //현재 수락 가능한 상태인지 체크
         CheckUnlockQuest();
-
         if (questData != null)
         {
             // 퀘스트 시작 로직
@@ -62,6 +62,8 @@ public class QuestManager
             _ActiveQuests.Add(new Quest(questData));
             _state = QuestState.State.InProgress;
             
+            //수락 받으면 그 받은 퀘스트를 디스플레이에 표시하기
+            //여러개 받으면 예외처리 해야함
             QuestDisplay questHUDInfoUI = Managers.UI.GetActiveUI<QuestDisplay>() as QuestDisplay;
 
             if(questHUDInfoUI != null)
@@ -78,7 +80,7 @@ public class QuestManager
     //시작 가능 체크
     public bool CheckUnlockQuest()
     {
-        int playeLevel = Managers.Game._player._playerStatManager._originStat.Level;
+        int playeLevel = Managers.Game._player._playerStatManager.Level;
 
         bool metRequireLevel = false;
 

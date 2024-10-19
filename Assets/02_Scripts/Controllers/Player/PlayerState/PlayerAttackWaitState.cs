@@ -17,7 +17,7 @@ public class PlayerAttackWaitState : BaseState
 
         AnimatorStateInfo stateInfo = _player._playerAnim.GetCurrentAnimatorStateInfo(0);
 
-        switch (_player._playerType)
+        switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
                 // 현재 애니메이션이 공격 애니메이션인지 확인

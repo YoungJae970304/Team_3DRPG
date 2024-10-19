@@ -2,54 +2,55 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 
 public class DialogDungeonUI : BaseUI
 {
-    [SerializeField]
-    DialogSystem[] _dialogSystem;
-    
     enum Buttons
     {
         OpenBtn,
     }
 
+    public DialogSystem[] _dialogSystem;
+
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-        Bind<Button>(typeof(Buttons));
-        StartCoroutine(DialogStart());
+        if (!Managers.Game._isActiveDialog) // 대사가 진행 중이지 않을 때만 실행
+        {
+            StartCoroutine(DialogStart());
+        }
     }
 
-    public override void CloseUI(bool isCloseAll = false)
+    private void Awake()
     {
-        base.CloseUI(isCloseAll);
-        StopAllCoroutines();
+        Bind<Button>(typeof(Buttons));
+
+        GetButton((int)Buttons.OpenBtn).onClick.AddListener(() => OpenDungeonUI());
     }
 
     IEnumerator DialogStart()
     {
         //대사 시작
-        GetButton((int)Buttons.OpenBtn).gameObject.SetActive(true);
+        Managers.Game._isActiveDialog = true;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
-        GetButton((int)Buttons.OpenBtn).onClick.AddListener(() => OpenDungeonUI());
+        GetButton((int)Buttons.OpenBtn).gameObject.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-        GetButton((int)Buttons.OpenBtn).gameObject.SetActive(false);
+        Managers.Game._isActiveDialog = false;
         Managers.UI.CloseUI(this);
     }
 
     //던전 UI 오픈 함수 버튼 클릭시 생성
     public void OpenDungeonUI()
     {
-        DungeonType dungeonUi = Managers.UI.GetActiveUI<DungeonType>() as DungeonType;
+        DungeonUI dungeonUi = Managers.UI.GetActiveUI<DungeonUI>() as DungeonUI;
 
-        if(dungeonUi != null )
+        if (dungeonUi != null)
         {
             Managers.UI.CloseUI(dungeonUi);
         }
         else
         {
-            Managers.UI.OpenUI<DungeonType>(new BaseUIData());
+            Managers.UI.OpenUI<DungeonUI>(new BaseUIData());
         }
     }
 }

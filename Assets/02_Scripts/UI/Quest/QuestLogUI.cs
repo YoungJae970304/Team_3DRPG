@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro.Examples;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
@@ -37,13 +37,8 @@ public class QuestLogUI : BaseUI
         GiveupBtn,
     }
 
+    int _questID;
     List<QuestData> _LoadQuestDataList = new();
-
-
-    public override void SetInfo(BaseUIData uiData)
-    {
-        base.SetInfo(uiData);
-    }
 
     private void Awake()
     {
@@ -51,11 +46,16 @@ public class QuestLogUI : BaseUI
 
         _LoadQuestDataList.AddRange(questdataTable);
         _questScrollList = GetComponent<ScrollView>();
-        Bind<TextMeshProUGUI>((typeof(QuestLogTexts)));
-        Bind<Button>((typeof(Buttons)));
-        Bind<Image>((typeof(QuestImgs)));
+
+        Bind<TextMeshProUGUI>(typeof(QuestLogTexts));
+        Bind<Image>(typeof(QuestImgs));
+        Bind<Button>(typeof(Buttons));
 
         GetButton((int)Buttons.GiveupBtn).onClick.AddListener(GiveUpBtn);
+
+        QuestData questData = _LoadQuestDataList.Find(q => q.ID == _questID);
+
+        QuestInfoSet(_questID);
     }
 
     public void QuestInfoSet(int id)
@@ -71,15 +71,16 @@ public class QuestLogUI : BaseUI
         //보상은 데이터에있는 텍스트가 아니기에
         GetText((int)QuestLogTexts.RewardText).text = "보상";
         //테스트아이콘은 지워야함
+        var sprite = Managers.Resource.Load<Sprite>("Icon/TestIcon");/*($"Icon/{id}"*/
         //백그라운드 이미지
-        GetImage((int)QuestImgs.BackgroundPanel).sprite = Managers.Resource.Load<Sprite>/*($"Icon/{id}"*/("Icon/TestIcon");
+        GetImage((int)QuestImgs.BackgroundPanel).sprite = sprite;
         //오른쪽 패널 이미지
-        GetImage((int)QuestImgs.RightPanel).sprite = Managers.Resource.Load<Sprite>/*($"Icon/{id}"*/("Icon/TestIcon");
+        GetImage((int)QuestImgs.RightPanel).sprite = sprite;
         //각 아이템 이미지
-        GetImage((int)QuestImgs.EquipReward).sprite = Managers.Resource.Load<Sprite>/*($"Icon/{id}"*/("Icon/TestIcon");
-        GetImage((int)QuestImgs.PotionReward).sprite = Managers.Resource.Load<Sprite>/*($"Icon/{id}"*/("Icon/TestIcon");
-        GetImage((int)QuestImgs.GoldReward).sprite = Managers.Resource.Load<Sprite>/*($"Icon/{id}"*/("Icon/TestIcon");
-        GetImage((int)QuestImgs.ExpReward).sprite = Managers.Resource.Load<Sprite>/*($"Icon/{id}"*/("Icon/TestIcon");
+        GetImage((int)QuestImgs.EquipReward).sprite = sprite;
+        GetImage((int)QuestImgs.PotionReward).sprite = sprite;
+        GetImage((int)QuestImgs.GoldReward).sprite = sprite;
+        GetImage((int)QuestImgs.ExpReward).sprite = sprite;
     }
 
     //퀘스트 포기 버튼

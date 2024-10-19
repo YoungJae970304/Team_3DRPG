@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI.Table;
 
@@ -14,7 +15,7 @@ public class PlayerCam : MonoBehaviour
     CinemachineVirtualCamera _cmQuarterCam;
     [SerializeField]
     CinemachineVirtualCamera _cmZoomCam;
-    public CinemachineBrain _cmBrain;
+    //public CinemachineBrain _cmBrain;
 
     CinemachineVirtualCamera _curCam;
 
@@ -48,6 +49,9 @@ public class PlayerCam : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
 
+        _cmQuarterCam = GameObject.Find("CM_QuarterView").GetComponent<CinemachineVirtualCamera>();
+        _cmZoomCam = GameObject.Find("CM_ZoomView").GetComponent<CinemachineVirtualCamera>();
+
         // 어떤 플레이어가 들어오냐에 따라 추적해야 할 대상이 다르기 때문에 시작시 Follow와 LookAt 초기화
         _cmQuarterCam.Follow = Managers.Game._player.transform.Find("CameraArm");
         _cmQuarterCam.LookAt = Managers.Game._player.transform.Find("PlayerModel");
@@ -56,7 +60,7 @@ public class PlayerCam : MonoBehaviour
 
         var aim = _cmQuarterCam.GetCinemachineComponent<CinemachineComposer>();
 
-        switch (Managers.Game._player._playerType)
+        switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
                 aim.m_TrackedObjectOffset.y = 0.5f;

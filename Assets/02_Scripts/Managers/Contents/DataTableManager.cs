@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DataTableManager
 {
     //CSVData폴더 안에 있는 csv값을 스트링으로 가져오고 csv파일로 읽어올거임
-    const string _DATA_PATH = "CSVData";
+    public const string _DATA_PATH = "CSVData";
 
     public void Init()
     {
@@ -24,6 +25,9 @@ public class DataTableManager
     const string _DUNGEON_DATA_TABLE = "DungeonDataTable";
     //퀘스트 데이터 테이블 CSV 파일
     const string _QUEST_DATA_TABLE = "Quest_Data_Table";
+    // 플레이어 데이터 테이블 CSV 파일
+    public string _PLAYER_LEVEL_DATA_TABLE = "Player_Level_Data_Table";
+
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
     public List<ItemData> _PotionItemData = new List<ItemData>();
@@ -31,6 +35,8 @@ public class DataTableManager
     public List<DropData> _MonsterDropData = new List<DropData>();
     public List<DungeonData> _DungeonData = new List<DungeonData>();
     public List<QuestData> _QuestData = new List<QuestData>();
+    public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
+
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
 
@@ -43,6 +49,37 @@ public class DataTableManager
         DropDataTable(_DATA_PATH, _MONSTER_DROP_DATA_TABLE);
         QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
         DungeonDataTable(_DATA_PATH, _DUNGEON_DATA_TABLE);
+        PlayerLevelDataTable(_DATA_PATH, _PLAYER_LEVEL_DATA_TABLE);
+    }
+    #endregion
+
+    #region 플레이어 레벨 데이터테이블
+    public void PlayerLevelDataTable(string dataPath, string playerLevelDataTable)
+    {
+        _PlayerLevelData.Clear();
+
+        var parsedPlayerLevelDataTable = CSVReader.Read($"{dataPath}/{playerLevelDataTable}");
+
+        PlayerLevelData levelData = null;
+
+        foreach ( var data in parsedPlayerLevelDataTable )
+        {
+            levelData = new PlayerLevelData
+            {
+                Level = Convert.ToInt32(data["Level"]),
+                MaxEXP = Convert.ToInt32(data["MaxEXP"]),
+                SpAddAmount = Convert.ToInt32(data["SpAddAmount"])
+            };
+            if (levelData != null)
+            {
+                _PlayerLevelData.Add(levelData);
+            }
+        }
+    }
+
+    public PlayerLevelData GetPlayerLevelData(int level)
+    {
+        return _PlayerLevelData.FirstOrDefault(data => data.Level == level);
     }
     #endregion
 

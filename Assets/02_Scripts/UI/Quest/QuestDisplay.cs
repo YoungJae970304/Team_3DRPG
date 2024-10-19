@@ -36,6 +36,7 @@ public class QuestDisplay : BaseUI
     {
         Bind<TextMeshProUGUI>(typeof(DisplayTexts));
         Bind<Image>((typeof(DisplayImgs)));
+
         var questdataTable = Managers.DataTable._QuestData;
 
         _LoadQuestDataList.AddRange(questdataTable);
