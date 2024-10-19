@@ -28,9 +28,8 @@ public class DialogUI : BaseUI
         if (!Managers.Game._isActiveDialog) // 대사가 진행 중이지 않을 때만 실행
         {
             Managers.UI.CloseAllOpenUI();
-            _npcController._npcType = NpcController.NpcType.None;
             GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
-            StartCoroutine(DialogStart());
+            DialogStart();
         }
     }
 
@@ -41,20 +40,23 @@ public class DialogUI : BaseUI
         _npcController = GameObject.FindGameObjectWithTag("NPC").GetComponent<NpcController>();
     }
 
-    IEnumerator DialogStart()
+    void DialogStart()
     {
+
         //NPC 타입에 따라서 나오는 대사 다르게
         switch (_npcController._npcType)
         {
             case NpcController.NpcType.DungeonNpc:
                 StartCoroutine(DungeonNPC());
-                yield break;
+                break;
             case NpcController.NpcType.QuestNpc:
                 StartCoroutine(QuestNPC());
-                yield break;
+                break;
             case NpcController.NpcType.ShopNpc:
                 StartCoroutine(ShopNpc());
-                yield break;
+                break;
+            default:
+                break;
         }
     }
 
@@ -87,6 +89,7 @@ public class DialogUI : BaseUI
         }
     }
 
+
     public void AcceptBtn()
     {
         //퀘스트 새롭게 생성해서 퀘스트 로그 유아이스크롤뷰에 퀘스트리스트Btn생성
@@ -108,7 +111,6 @@ public class DialogUI : BaseUI
         yield return new WaitUntil(() => isOpen);
         GetButton((int)Buttons.YesBtn).onClick.RemoveListener(() => OpenDungeonUI());
         Managers.Game._isActiveDialog = false;
-        Managers.UI.CloseUI(this);
     }
 
     IEnumerator QuestNPC()
@@ -149,7 +151,6 @@ public class DialogUI : BaseUI
         yield return new WaitForSeconds(0.2f);
         GetButton((int)Buttons.YesBtn).onClick.RemoveListener(() => AcceptBtn());
         Managers.Game._isActiveDialog = false;
-        Managers.UI.CloseUI(this);
     }
 
     IEnumerator ShopNpc()
@@ -158,15 +159,9 @@ public class DialogUI : BaseUI
         yield return new WaitUntil(() => _dialogSystem[4].UpdateDialog());
         GetText((int)Texts.YesBtnTxt).text = "상점 이용";
         GetText((int)Texts.ExitBtnTxt).text = "아니?";
-        bool isOpen = false;
-        GetButton((int)Buttons.YesBtn).onClick.AddListener(() => {
-
-            isOpen = true;
-            OpenShopUI();
-        });
-        yield return new WaitUntil(() => isOpen);
+        GetButton((int)Buttons.YesBtn).onClick.AddListener(() => OpenShopUI());
+        yield return new WaitForSeconds(0.2f);
         GetButton((int)Buttons.YesBtn).onClick.RemoveListener(() => OpenShopUI());
         Managers.Game._isActiveDialog = false;
-        Managers.UI.CloseUI(this);
     }
 }

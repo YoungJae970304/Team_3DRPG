@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 697483932480134145}
   - component: {fileID: 1282406393396071828}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: DungeonNPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

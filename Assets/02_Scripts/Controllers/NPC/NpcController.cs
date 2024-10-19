@@ -19,8 +19,10 @@ public class NpcController : Interectable
                 
                 break;
             case NpcType.QuestNpc:
+
                 break;
             case NpcType.ShopNpc:
+
                 break;
         }
     }
