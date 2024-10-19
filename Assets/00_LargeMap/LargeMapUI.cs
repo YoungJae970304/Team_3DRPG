@@ -87,8 +87,25 @@ public class LargeMapUI : BaseUI
     private void SetupMaterial()
     {
         fogMaterial = new Material(Shader.Find("Custom/FogOfWar"));
-        fogMaterial.SetTexture("_FogTex", fogTexture);
-        mapDisplay.material = fogMaterial;
+        if (fogMaterial != null)
+        {
+            fogMaterial.SetTexture("_FogTex", fogTexture);
+
+            // UI 마스킹을 위한 프로퍼티 설정
+            fogMaterial.SetInt("_StencilComp", (int)UnityEngine.Rendering.CompareFunction.Always);
+            fogMaterial.SetInt("_Stencil", 0);
+            fogMaterial.SetInt("_StencilOp", (int)UnityEngine.Rendering.StencilOp.Keep);
+            fogMaterial.SetInt("_StencilWriteMask", 255);
+            fogMaterial.SetInt("_StencilReadMask", 255);
+            fogMaterial.SetInt("_ColorMask", 15);
+
+            mapDisplay.material = fogMaterial;
+            Debug.Log("Fog of War shader applied successfully with UI masking properties.");
+        }
+        else
+        {
+            Debug.LogError("Failed to find or create Custom/FogOfWar shader.");
+        }
     }
 
     public void RevealArea(Vector2 worldPosition, float radius)

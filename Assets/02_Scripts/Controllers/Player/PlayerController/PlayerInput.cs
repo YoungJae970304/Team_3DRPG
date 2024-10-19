@@ -32,6 +32,10 @@ public class PlayerInput : MonoBehaviour
 
         Managers.Input.MouseAction -= AttackInput;
         Managers.Input.MouseAction += AttackInput;
+
+        // 한번 실행시켰다 꺼줌으로써 맵 업데이트가 가능하도록
+        OpenLargeMap();
+        OpenLargeMap();
     }
 
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 

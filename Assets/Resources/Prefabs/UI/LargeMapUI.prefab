@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1101966561, guid: aad84795fce583c459ed0aaec55c2cc0, type: 3}
+  m_Sprite: {fileID: 1697553245, guid: aad84795fce583c459ed0aaec55c2cc0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -286,9 +286,9 @@ MonoBehaviour:
   _exitBtn: {fileID: 0}
   _isSort: 1
   textureSize: 1024
-  worldSize: 1000
+  worldSize: 1024
   exploredRadius: 15
-  minZoom: 5
+  minZoom: 1
   maxZoom: 20
   zoomSpeed: 0.1
 --- !u!1 &9135204858560215260
