@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Interectable : MonoBehaviour
 {
     [SerializeField] public Canvas UI;
     [SerializeField] public Canvas DialogCanvas;
+
     public virtual void Interection(GameObject gameObject)
     {
         Debug.Log(name);
@@ -16,9 +18,9 @@ public class Interectable : MonoBehaviour
 
     public virtual void Dialogues()
     {
-        DialogUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogUI>() as DialogUI;
+        DialogUI dialogUI = Managers.UI.GetActiveUI<DialogUI>() as DialogUI;
 
-        if(dialogDungeonUI == null)
+        if(dialogUI == null)
         {
             Managers.UI.OpenUI<DialogUI>(new BaseUIData());
             Managers.Game._isActiveDialog = true;
@@ -26,7 +28,7 @@ public class Interectable : MonoBehaviour
         }
         else
         {
-            Managers.UI.CloseCurrFrontUI(dialogDungeonUI);
+            Managers.UI.CloseAllOpenUI();
             Managers.Game._isActiveDialog = true;
         }
     }

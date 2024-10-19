@@ -17,7 +17,7 @@ public class DialogSystem : BaseUI
     bool _isFirst = true;          //최초 1회만 호출하기 위한 변수
     int _currentDialogIndex = -1;  //현재 대사 순번
     int _currentSpeakerIndex = 0;  //현재 말을 하는 회자(Speaker)의 speakers 배열 순번
-    float _typingSpeed = 0.03f;     //텍스트 타이핑 효과의 재생 속도
+    float _typingSpeed = 0.03f;    //텍스트 타이핑 효과의 재생 속도
     bool _isTypingEffect = false;  //텍스트 타이핑 효과를 재생중인지
 
     enum DialogTexts

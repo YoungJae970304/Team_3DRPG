@@ -1,21 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class NpcController : Interectable
 {
-    public override void Interection(GameObject gameObject)
+    public enum NpcType
     {
-        base.Interection(gameObject);
+        None,
+        DungeonNpc,
+        QuestNpc,
+        ShopNpc,
     }
 
-    public override void UIPopUp(bool active)
-    {
-        base.UIPopUp(active);
-    }
+    public NpcType _npcType = NpcType.None;
 
     public override void Dialogues()
     {
         base.Dialogues();
+        switch (_npcType)
+        {
+            case NpcType.DungeonNpc:
+                
+                break;
+            case NpcType.QuestNpc:
+                break;
+            case NpcType.ShopNpc:
+                break;
+        }
     }
+
 }
