@@ -73,23 +73,22 @@ public class DungeonUI : BaseUI
     public override void SetInfo(BaseUIData uiData)
     {
         base.SetInfo(uiData);
-        Logger.LogError("실행중");
         Bind<Button>(typeof(DungeonUIButton));
         Bind<TextMeshProUGUI>(typeof(DungeonUIText));
         Bind<Button>(typeof(DungeonUIButton));
         Bind<Image>(typeof(DungeonUIImage));
-        //Bind<Image>(typeof(InDungeonMonster));
        
         
-        GetButton((int)DungeonUIButton.EntryBtn).onClick.AddListener(() => _sceneBtnController.OnClickSceneChangeBtn("Dungeon"));//여기에 입장 관련 함수가 들어감
+        GetButton((int)DungeonUIButton.EntryBtn).onClick.AddListener(() => ExitDungeonUI());//여기에 입장 관련 함수가 들어감
         AllMonsterImageFalse();
         DungeonUITest(SwitchDungeonID((int)_deongeonLevel));
-        Logger.LogError("1");
-        //DungeonButtonBind();
-        Logger.LogError("2");
         
     }
-
+    public void ExitDungeonUI()
+    {
+        _sceneBtnController.OnClickSceneChangeBtn("Dungeon");
+        CloseUI();
+    }
     public void DungeonButtonBind()
     {
         GetButton((int)DungeonUIButton.Dungeon70001).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
@@ -186,14 +185,8 @@ public class DungeonUI : BaseUI
         }
         
         GetImage((int)DungeonUIImage.Monster1).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType1}");
-        Logger.LogError($"{GetImage((int)DungeonUIImage.Monster1).name}");
-        Logger.LogError($"여기는 들어옴?{_monsterType1}");
         GetImage((int)DungeonUIImage.Monster2).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType2}");
-        Logger.LogError($"{GetImage((int)DungeonUIImage.Monster2).name}");
-        Logger.LogError($"여기 들어옴?3{_monsterType2}");
         GetImage((int)DungeonUIImage.Monster3).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType3}");
-        Logger.LogError($"{GetImage((int)DungeonUIImage.Monster3).name}");
-        Logger.LogError($"여기 들어옴?3{_monsterType3}");
         //GetImage((int)InDungeonMonster.Monster4).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{i}");
 
 
