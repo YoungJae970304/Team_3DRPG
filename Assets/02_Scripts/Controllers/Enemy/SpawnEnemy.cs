@@ -39,14 +39,18 @@ public class SpawnEnemy : MonoBehaviour
                 Logger.LogError($"{_monsterData1},{_monsterData2},{_monsterData3}잘 들어감");
             }
 
-            Managers.Resource.Instantiate($"Prefabs/Enemy/{_monsterData1}", gameObject.transform);
-            //Logger.LogError("생성안됨");
-            Managers.Resource.Instantiate($"Prefabs/Enemy/{_monsterData2}", gameObject.transform);
-            // Logger.LogError("생성안됨2");
-            Managers.Resource.Instantiate($"Prefabs/Enemy/{_monsterData3}", gameObject.transform);
-            //Logger.LogError("생성안됨3");
+            
 
         }
+        GameObject test = Managers.Resource.Instantiate($"Enemy/{_monsterData1}", gameObject.transform);
+        //Logger.LogError("생성안됨");
+        test.transform.position = transform.position;
+        GameObject test1 = Managers.Resource.Instantiate($"Enemy/{_monsterData2}", gameObject.transform);
+        test1.transform.position = transform.position * 2;
+        // Logger.LogError("생성안됨2");
+        GameObject test2 = Managers.Resource.Instantiate($"Enemy/{_monsterData3}", gameObject.transform);
+        test2.transform.position = transform.position * -2;
+        //Logger.LogError("생성안됨3");
     }
 
 }
