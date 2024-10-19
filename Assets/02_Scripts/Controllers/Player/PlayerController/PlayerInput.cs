@@ -168,6 +168,23 @@ public class PlayerInput : MonoBehaviour
             
             _player._interectController._lastObj.DungeonNpcDialog();
         }
+        else if ( Input.GetKeyDown(KeyCode.M))
+        {
+            OpenLargeMap();
+        }
+    }
+
+    public void OpenLargeMap()
+    {
+        LargeMapUI mapUI = Managers.UI.GetActiveUI<LargeMapUI>() as LargeMapUI;
+        if (mapUI != null)
+        {
+            Managers.UI.CloseUI(mapUI);
+        }
+        else
+        {
+            Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
+        }
     }
 
     public void OpenInventory()
@@ -181,7 +198,6 @@ public class PlayerInput : MonoBehaviour
             // 인벤토리 여는 것 I? ( 풀링 )
             Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
         }
-        
     }
     public void CloseFrontUI()
     {
