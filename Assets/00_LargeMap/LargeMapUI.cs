@@ -26,6 +26,21 @@ public class LargeMapUI : BaseUI
     public float maxZoom = 100f;
     public float zoomSpeed = 0.5f;
     private float currentZoom = 1f;
+    [SerializeField] private RectTransform maskRectTransform; // Inspector에서 할당해주세요
+
+    // 지도 이동을 위한 변수
+    private bool isDragging = false;
+    private Vector2 lastMousePosition;
+
+    private void OnEnable()
+    {
+        Managers.Game._cantInputKey = true;
+    }
+
+    private void OnDisable()
+    {
+        Managers.Game._cantInputKey = false;
+    }
 
     public override void Init(Transform anchor)
     {
@@ -49,24 +64,78 @@ public class LargeMapUI : BaseUI
     {
         if (gameObject.activeSelf)
         {
-            float scrollDelta = Input.mouseScrollDelta.y;
-            if (scrollDelta != 0)
-            {
-                ZoomMap(scrollDelta);
-            }
+            HandleMapDrag();
+            HandleMapZoom();
+        }
+    }
+
+    private void HandleMapDrag()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            isDragging = true;
+            lastMousePosition = Input.mousePosition;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+        }
+
+        if (isDragging)
+        {
+            Vector2 deltaMouse = (Vector2)Input.mousePosition - lastMousePosition;
+            Vector2 newPosition = mapDisplay.rectTransform.anchoredPosition + deltaMouse;
+
+            // 새로운 위치를 마스크 영역 내로 제한
+            newPosition = ClampPositionToMask(newPosition);
+
+            mapDisplay.rectTransform.anchoredPosition = newPosition;
+            lastMousePosition = Input.mousePosition;
+        }
+    }
+
+    private void HandleMapZoom()
+    {
+        float scrollDelta = Input.mouseScrollDelta.y;
+        if (scrollDelta != 0)
+        {
+            ZoomMap(scrollDelta);
         }
     }
 
     private void ZoomMap(float zoomDelta)
     {
+        float previousZoom = currentZoom;
         currentZoom += zoomDelta * zoomSpeed;
         currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
 
         Vector3 newScale = Vector3.one * currentZoom;
         mapDisplay.rectTransform.localScale = newScale;
 
-        // 맵 중앙 유지
-        mapDisplay.rectTransform.anchoredPosition = Vector2.zero;
+        // 줌 중심점 조정
+        Vector2 mousePositionOnMap = Input.mousePosition - mapDisplay.rectTransform.position;
+        Vector2 newPosition = mapDisplay.rectTransform.anchoredPosition - (mousePositionOnMap * (currentZoom / previousZoom - 1));
+
+        // 새로운 위치를 마스크 영역 내로 제한
+        newPosition = ClampPositionToMask(newPosition);
+
+        mapDisplay.rectTransform.anchoredPosition = newPosition;
+    }
+
+    private Vector2 ClampPositionToMask(Vector2 position)
+    {
+        if (maskRectTransform == null) return position;
+
+        Rect maskRect = maskRectTransform.rect;
+        Rect mapRect = mapDisplay.rectTransform.rect;
+
+        float halfWidthDiff = (mapRect.width * currentZoom - maskRect.width) * 0.5f;
+        float halfHeightDiff = (mapRect.height * currentZoom - maskRect.height) * 0.5f;
+
+        position.x = Mathf.Clamp(position.x, -halfWidthDiff, halfWidthDiff);
+        position.y = Mathf.Clamp(position.y, -halfHeightDiff, halfHeightDiff);
+
+        return position;
     }
 
     private void InitializeFogTexture()

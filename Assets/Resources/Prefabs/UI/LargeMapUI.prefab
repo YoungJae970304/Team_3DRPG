@@ -285,12 +285,13 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
-  textureSize: 1024
+  textureSize: 2048
   worldSize: 1024
   exploredRadius: 15
   minZoom: 1
   maxZoom: 20
   zoomSpeed: 0.1
+  maskRectTransform: {fileID: 4797984641185440241}
 --- !u!1 &9135204858560215260
 GameObject:
   m_ObjectHideFlags: 0

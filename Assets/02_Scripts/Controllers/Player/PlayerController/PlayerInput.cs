@@ -43,7 +43,7 @@ public class PlayerInput : MonoBehaviour
     {
         _player._isMoving = false;
 
-        if (_player._dodgeing ) return;
+        if (_player._dodgeing || Managers.Game._cantInputKey) return;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -86,7 +86,7 @@ public class PlayerInput : MonoBehaviour
     // 회피 입력
     void DodgeInput()
     {
-        if (_player._skillUsing || _player._dodgeing) return;
+        if (_player._skillUsing || _player._dodgeing || Managers.Game._cantInputKey) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -122,7 +122,7 @@ public class PlayerInput : MonoBehaviour
     // 스킬입력
     void SkillInput()
     {
-        if (_player._dodgeing || _player._skillUsing) return;
+        if (_player._dodgeing || _player._skillUsing || Managers.Game._cantInputKey) return;
 
         // 추후 E,R 슬롯에 등록되어 있는 스킬을 가져와 _skillBase에 담아주면 될듯?
         if (Input.GetKeyDown(KeyCode.E))
