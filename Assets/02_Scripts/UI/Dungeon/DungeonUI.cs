@@ -87,6 +87,7 @@ public class DungeonUI : BaseUI
     public void ExitDungeonUI()
     {
         _sceneBtnController.OnClickSceneChangeBtn("Dungeon");
+        Managers.Game._selecDungeonLevel = _deongeonLevel;
         CloseUI();
     }
     public void DungeonButtonBind()

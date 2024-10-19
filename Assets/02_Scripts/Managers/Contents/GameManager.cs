@@ -13,6 +13,8 @@ public class GameManager
 
     public bool _isActiveDialog = false;
 
+    public DeongeonType _selecDungeonLevel;
+
     public void AddMonsterOnNowScene()
     {
         _monsters.Clear();
