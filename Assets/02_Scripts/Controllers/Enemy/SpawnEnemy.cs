@@ -51,6 +51,8 @@ public class SpawnEnemy : MonoBehaviour
         GameObject test2 = Managers.Resource.Instantiate($"Enemy/{_monsterData3}", gameObject.transform);
         test2.transform.position = transform.position * -2;
         //Logger.LogError("생성안됨3");
+
+
     }
 
 }
