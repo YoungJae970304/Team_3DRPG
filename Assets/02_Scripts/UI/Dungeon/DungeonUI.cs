@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,18 +9,16 @@ public class DungeonUI : BaseUI
     enum DungeonUIButton
     {
         EntryBtn,
-    }
-    enum DungeonUIText
-    {
-        SelectDungeonName,
-    }
-    enum SelectDungeonType
-    {
         Dungeon70001,
         Dungeon70002,
         Dungeon70003,
         Dungeon70004,
     }
+    enum DungeonUIText
+    {
+        SelectDungeonName,
+    }
+ 
     enum DungeonUIImage
     {
         SelectDungeonMainMonster,
@@ -62,9 +61,12 @@ public class DungeonUI : BaseUI
 
         if (!_Makecheck)
         {
-            MakeDungeUIElement();
+            StartCoroutine(MakeDungeUIElement());
         }
-
+        else
+        {
+            DungeonUITest(SwitchDungeonID((int)_deongeonLevel));
+        }
 
 
     }
@@ -74,27 +76,39 @@ public class DungeonUI : BaseUI
         Logger.LogError("실행중");
         Bind<Button>(typeof(DungeonUIButton));
         Bind<TextMeshProUGUI>(typeof(DungeonUIText));
-        Bind<Button>(typeof(SelectDungeonType));
+        Bind<Button>(typeof(DungeonUIButton));
         Bind<Image>(typeof(DungeonUIImage));
         //Bind<Image>(typeof(InDungeonMonster));
        
         
         GetButton((int)DungeonUIButton.EntryBtn).onClick.AddListener(() => _sceneBtnController.OnClickSceneChangeBtn("Dungeon"));//여기에 입장 관련 함수가 들어감
+        AllMonsterImageFalse();
         DungeonUITest(SwitchDungeonID((int)_deongeonLevel));
         Logger.LogError("1");
-        DungeonButtonBind();
+        //DungeonButtonBind();
         Logger.LogError("2");
-
+        
     }
 
     public void DungeonButtonBind()
     {
-        GetButton((int)SelectDungeonType.Dungeon70001).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[this.name])));
-        GetButton((int)SelectDungeonType.Dungeon70002).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[this.name])));
-        GetButton((int)SelectDungeonType.Dungeon70003).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[this.name])));
-        GetButton((int)SelectDungeonType.Dungeon70004).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[this.name])));
+        GetButton((int)DungeonUIButton.Dungeon70001).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
+        GetButton((int)DungeonUIButton.Dungeon70002).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
+        GetButton((int)DungeonUIButton.Dungeon70003).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
+        GetButton((int)DungeonUIButton.Dungeon70004).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
     }
-    public void MakeDungeUIElement()
+    public string ButtonName()
+    {
+        return UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
+    }
+    public void AllMonsterImageFalse()
+    {
+        for (int i = 0; i < _indungeonMonsterImage.Count; i++)
+        {
+            _indungeonMonsterImage[i].gameObject.SetActive(false);
+        }
+    }
+    IEnumerator MakeDungeUIElement()
     {
         foreach (var dungeon in _dataTableManager._DungeonData) //데이터 테이블 가져오기
         {
@@ -116,7 +130,8 @@ public class DungeonUI : BaseUI
 
 
         }
-
+        yield return new WaitForSeconds(1);
+        DungeonButtonBind();
         _Makecheck = true;
 
     }
@@ -165,7 +180,10 @@ public class DungeonUI : BaseUI
         
         GetImage((int)DungeonUIImage.SelectDungeonMainMonster).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_dungeonID}");//대표이미지가 던전아이디랬던거같음
                                                                                                                                              //밑에 생성은 빠질거임 로드만 남을거임
-        
+        for(int i = (_monsterType1%10)-1;  i <= (_monsterType3%10)-1; i++)
+        {
+            _indungeonMonsterImage[i].gameObject.SetActive(true);
+        }
         
         GetImage((int)DungeonUIImage.Monster1).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType1}");
         Logger.LogError($"{GetImage((int)DungeonUIImage.Monster1).name}");
