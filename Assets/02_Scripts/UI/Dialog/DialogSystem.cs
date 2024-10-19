@@ -51,6 +51,7 @@ public class DialogSystem : BaseUI
         //    //캐릭터 이미지는 보이도록 설정
         //    //speakers[i].spriteRenderer.gameObject.SetActive(true);
         //}
+
         Bind<TextMeshProUGUI>(typeof(DialogTexts));
         Bind<Image>(typeof(DialogImgs));
         Bind<GameObject>(typeof(GameObjects));
@@ -89,14 +90,14 @@ public class DialogSystem : BaseUI
             { SetNextDialog(); }
             _isFirst = false;
         }
-        if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
         {
             //텍스트 타이핑 효과를 재생중일때
             //마우스 왼쪽 클릭하면 타이핑 효과 종료
             if (_isTypingEffect == true)
             {
                 _isTypingEffect = false;
-
                 //타이핑 효과를 중지하고, 현재 대사 전체를 출력한다.
                 StopCoroutine("OnTypingText");
 

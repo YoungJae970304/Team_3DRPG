@@ -166,7 +166,7 @@ public class PlayerInput : MonoBehaviour
         {
             if (_player._interectController._lastObj == null && Managers.Game._isActiveDialog) { return; }
             
-            _player._interectController._lastObj.DungeonNpcDialog();
+            _player._interectController._lastObj.Dialogues();
         }
     }
 

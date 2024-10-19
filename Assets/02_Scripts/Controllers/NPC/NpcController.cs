@@ -14,8 +14,8 @@ public class NpcController : Interectable
         base.UIPopUp(active);
     }
 
-    public override void DungeonNpcDialog()
+    public override void Dialogues()
     {
-        base.DungeonNpcDialog();
+        base.Dialogues();
     }
 }

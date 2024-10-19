@@ -3,7 +3,7 @@ using UnityEngine;
 public class Interectable : MonoBehaviour
 {
     [SerializeField] public Canvas UI;
-    [SerializeField] public Canvas DungeonDialogUI;
+    [SerializeField] public Canvas DialogCanvas;
     public virtual void Interection(GameObject gameObject)
     {
         Debug.Log(name);
@@ -14,12 +14,13 @@ public class Interectable : MonoBehaviour
         UI.enabled = active;
     }
 
-    public virtual void DungeonNpcDialog()
+    public virtual void Dialogues()
     {
-        DialogDungeonUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogDungeonUI>() as DialogDungeonUI;
+        DialogUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogUI>() as DialogUI;
+
         if(dialogDungeonUI == null)
         {
-            Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
+            Managers.UI.OpenUI<DialogUI>(new BaseUIData());
             Managers.Game._isActiveDialog = true;
             Managers.Game._player._isMoving = false;
         }
@@ -29,4 +30,5 @@ public class Interectable : MonoBehaviour
             Managers.Game._isActiveDialog = true;
         }
     }
+
 }
