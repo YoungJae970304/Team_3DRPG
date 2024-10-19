@@ -23,14 +23,12 @@ public class DungeonUI : BaseUI
     enum DungeonUIImage
     {
         SelectDungeonMainMonster,
-    }
-    enum InDungeonMonster
-    {
         Monster1,
         Monster2,
         Monster3,
         Monster4,
     }
+
 
     [Header("버튼 관련 변수")]
     SceneBtnController _sceneBtnController;
@@ -78,7 +76,8 @@ public class DungeonUI : BaseUI
         Bind<TextMeshProUGUI>(typeof(DungeonUIText));
         Bind<Button>(typeof(SelectDungeonType));
         Bind<Image>(typeof(DungeonUIImage));
-        Bind<Image>(typeof(InDungeonMonster));
+        //Bind<Image>(typeof(InDungeonMonster));
+       
         
         GetButton((int)DungeonUIButton.EntryBtn).onClick.AddListener(() => _sceneBtnController.OnClickSceneChangeBtn("Dungeon"));//여기에 입장 관련 함수가 들어감
         DungeonUITest(SwitchDungeonID((int)_deongeonLevel));
@@ -166,16 +165,18 @@ public class DungeonUI : BaseUI
         
         GetImage((int)DungeonUIImage.SelectDungeonMainMonster).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_dungeonID}");//대표이미지가 던전아이디랬던거같음
                                                                                                                                              //밑에 생성은 빠질거임 로드만 남을거임
-        /*GetImage((int)InDungeonMonster.Monster1).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType1}");
-        Logger.LogError($"{GetImage((int)InDungeonMonster.Monster1).name}");
+        
+        
+        GetImage((int)DungeonUIImage.Monster1).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType1}");
+        Logger.LogError($"{GetImage((int)DungeonUIImage.Monster1).name}");
         Logger.LogError($"여기는 들어옴?{_monsterType1}");
-        GetImage((int)InDungeonMonster.Monster2).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType2}");
-        Logger.LogError($"{GetImage((int)InDungeonMonster.Monster2).name}");
+        GetImage((int)DungeonUIImage.Monster2).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType2}");
+        Logger.LogError($"{GetImage((int)DungeonUIImage.Monster2).name}");
         Logger.LogError($"여기 들어옴?3{_monsterType2}");
-        GetImage((int)InDungeonMonster.Monster3).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType3}");
-        Logger.LogError($"{GetImage((int)InDungeonMonster.Monster3).name}");
+        GetImage((int)DungeonUIImage.Monster3).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType3}");
+        Logger.LogError($"{GetImage((int)DungeonUIImage.Monster3).name}");
         Logger.LogError($"여기 들어옴?3{_monsterType3}");
-        //GetImage((int)InDungeonMonster.Monster4).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{i}");*/
+        //GetImage((int)InDungeonMonster.Monster4).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{i}");
 
 
     }
