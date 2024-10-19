@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using static Unity.VisualScripting.Dependencies.Sqlite.SQLite3;
+using UnityEngine;
 
 public class DungeonButton : BaseUI
 {
@@ -13,27 +10,30 @@ public class DungeonButton : BaseUI
     public GameObject _dungeonTypeview;
     private void Awake()
     {
-        _dataTableManager = Managers.DataTable;
+
     }
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
+
     }
+
 
     private void OnEnable()
     {
+        _dataTableManager = Managers.DataTable;
         MakeDungeonType();
+
     }
     public void MakeDungeonType()
     {
-        foreach(var dungeon in _dataTableManager._DungeonData)
+        foreach (var dungeon in _dataTableManager._DungeonData)
         {
-            GameObject dungeonType;
-            dungeonType = Managers.Resource.Instantiate("UI/DeongeonType", _dungeonTypeview.transform);
-            dungeonType.GetComponent<TextMeshProUGUI>().text = dungeon.DungeonName;
-
+            GameObject dungeonType = Managers.Resource.Instantiate("UI/DeongeonType", _dungeonTypeview.transform);
+            dungeonType.name = $"Dungeon{dungeon.ID}";
+            dungeonType.GetComponentInChildren<TextMeshProUGUI>().text = dungeon.DungeonName;
         }
-        
-        
+
+
     }
 }
