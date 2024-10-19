@@ -25,11 +25,15 @@ public class Interectable : MonoBehaviour
             Managers.UI.OpenUI<DialogUI>(new BaseUIData());
             Managers.Game._isActiveDialog = true;
             Managers.Game._player._isMoving = false;
+            Logger.Log($"플레이어 무브{Managers.Game._player._isMoving}");
         }
         else
         {
-            Managers.UI.CloseAllOpenUI();
-            Managers.Game._isActiveDialog = true;
+            Managers.UI.CloseUI(dialogUI);
+            Logger.LogWarning($"{dialogUI}닫힘");
+            Managers.Game._isActiveDialog = false;
+            Managers.Game._player._isMoving = true;
+            Logger.Log($"플레이어 무브{Managers.Game._player._isMoving}");
         }
     }
 

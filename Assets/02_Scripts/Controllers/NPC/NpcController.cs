@@ -10,21 +10,8 @@ public class NpcController : Interectable
 
     public NpcType _npcType = NpcType.None;
 
-    public override void Dialogues()
+    public NpcController(NpcType npcType)
     {
-        base.Dialogues();
-        switch (_npcType)
-        {
-            case NpcType.DungeonNpc:
-                
-                break;
-            case NpcType.QuestNpc:
-
-                break;
-            case NpcType.ShopNpc:
-
-                break;
-        }
+        _npcType = npcType;
     }
-
 }

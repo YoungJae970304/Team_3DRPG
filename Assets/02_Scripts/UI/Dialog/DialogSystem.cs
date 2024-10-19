@@ -1,7 +1,7 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class DialogSystem : BaseUI
 {
@@ -13,12 +13,12 @@ public class DialogSystem : BaseUI
     DialogData[] dialogs;         //현재 분기의 대사 목록 배열
 
     [SerializeField]
-    bool _isAutoStart = true;      //자동 시작 여부
-    bool _isFirst = true;          //최초 1회만 호출하기 위한 변수
-    int _currentDialogIndex = -1;  //현재 대사 순번
-    int _currentSpeakerIndex = 0;  //현재 말을 하는 회자(Speaker)의 speakers 배열 순번
-    float _typingSpeed = 0.03f;     //텍스트 타이핑 효과의 재생 속도
-    bool _isTypingEffect = false;  //텍스트 타이핑 효과를 재생중인지
+    bool _isAutoStart = true;           //자동 시작 여부
+    bool _isFirst = true;                    //최초 1회만 호출하기 위한 변수
+    int _currentDialogIndex = -1;    //현재 대사 순번
+    int _currentSpeakerIndex = 0;   //현재 말을 하는 회자(Speaker)의 speakers 배열 순번
+    float _typingSpeed = 0.03f;       //텍스트 타이핑 효과의 재생 속도
+    bool _isTypingEffect = false;     //텍스트 타이핑 효과를 재생중인지
 
     enum DialogTexts
     {
@@ -36,9 +36,12 @@ public class DialogSystem : BaseUI
         Arrow,
     }
 
-    private void Awake()
+    private void OnEnable()
     {
-        Setup();
+        Bind<TextMeshProUGUI>(typeof(DialogTexts));
+        Bind<Image>(typeof(DialogImgs));
+        Bind<GameObject>(typeof(GameObjects));
+        GetGameObject((int)GameObjects.Arrow).SetActive(false);
     }
 
     void Setup()
@@ -51,30 +54,26 @@ public class DialogSystem : BaseUI
         //    //캐릭터 이미지는 보이도록 설정
         //    //speakers[i].spriteRenderer.gameObject.SetActive(true);
         //}
-
-        Bind<TextMeshProUGUI>(typeof(DialogTexts));
-        Bind<Image>(typeof(DialogImgs));
-        Bind<GameObject>(typeof(GameObjects));
-        GetGameObject((int)GameObjects.Arrow).SetActive(false);
     }
 
-    void SetActiveObjects(/*Speaker speaker,*/ bool visible)
-    {
-        //speaker.imageDialog.gameObject.SetActive(visible);
-        //speaker.textName.gameObject.SetActive(visible);
-        //speaker.textDialog.gameObject.SetActive(visible);
+    //void SetActiveObjects(/*Speaker speaker,*/ bool visible)
+    //{
+    //    GetGameObject((int)GameObjects.Arrow).SetActive(false);
 
-        //화살표는 대사가 종료 되었을 때만 활성화 하기 때문에 항상 false
-        GetGameObject((int)GameObjects.Arrow).SetActive(false);
-        //speaker.objectArrow.SetActive(false);
+    //    //speaker.imageDialog.gameObject.SetActive(visible);
+    //    //speaker.textName.gameObject.SetActive(visible);
+    //    //speaker.textDialog.gameObject.SetActive(visible);
 
-        //캐릭터 알파 값 변경
-        //캐릭터의 대화 내용도 앞으로 땡겨주는 역할을 함
-        //트루면 1 펄스면 0.2f의 알파값을 갖도록 함
-        //Color color = speaker.spriteRenderer.color;
-        //color.a = visible == true ? 1 : 0.2f;
-        //speaker.spriteRenderer.color = color;
-    }
+    //    //화살표는 대사가 종료 되었을 때만 활성화 하기 때문에 항상 false
+    //    //speaker.objectArrow.SetActive(false);
+
+    //    //캐릭터 알파 값 변경
+    //    //캐릭터의 대화 내용도 앞으로 땡겨주는 역할을 함
+    //    //트루면 1 펄스면 0.2f의 알파값을 갖도록 함
+    //    //Color color = speaker.spriteRenderer.color;
+    //    //color.a = visible == true ? 1 : 0.2f;
+    //    //speaker.spriteRenderer.color = color;
+    //}
 
     public bool UpdateDialog()//부울 값을 반환해주는 함수 
     {
@@ -83,7 +82,7 @@ public class DialogSystem : BaseUI
         {
             //초기화. 캐릭터 이미지는 활성화 하고,
             //대사 관련 UI는 모두 비활성화
-            Setup();
+            //Setup();
             //자동 재생(isAutoStart = true)으로 설정되어 있으면
             //첫 번째 대사 재생
             if (_isAutoStart)
@@ -91,7 +90,7 @@ public class DialogSystem : BaseUI
             _isFirst = false;
         }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
+        if (Input.GetMouseButtonDown(0))
         {
             //텍스트 타이핑 효과를 재생중일때
             //마우스 왼쪽 클릭하면 타이핑 효과 종료
@@ -151,7 +150,7 @@ public class DialogSystem : BaseUI
         //speakers[_currentSpeakerIndex].textName.text = dialogs[_currentDialogIndex].name;
         //현재 화자의 대사 텍스트 설정
         //코루틴 텍스트 효과로 대처
-        StartCoroutine("OnTypingText");
+        StartCoroutine(OnTypingText());
         /*speakers[currentSpeakerIndex].textDialog.text=
        dialogs[currentDialogIndex].dialogue;*/
     }
@@ -178,7 +177,6 @@ public class DialogSystem : BaseUI
         //대사가 완료 되었을 때 출력 되는 커서 활성화
         GetGameObject((int)GameObjects.Arrow).SetActive(true);
         //speakers[_currentSpeakerIndex].objectArrow.SetActive(true);
-
     }
 }
 /*
