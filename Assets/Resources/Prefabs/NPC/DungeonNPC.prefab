@@ -122,7 +122,7 @@ MonoBehaviour:
   UI: {fileID: 2784349132712581450}
   DialogUI: {fileID: 2784003624122026532, guid: 68f84fe7b818f1f41a717e847d30458f,
     type: 3}
-  _npcType: 1
+  _npcType: 0
 --- !u!1 &5049787894862945306
 GameObject:
   m_ObjectHideFlags: 0

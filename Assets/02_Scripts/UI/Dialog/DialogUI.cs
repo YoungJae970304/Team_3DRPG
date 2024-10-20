@@ -19,9 +19,7 @@ public class DialogUI : BaseUI
 
     enum Dialogues
     {
-        DungeonDialog,
-        QuestDialog,
-        ShopDialog,
+       DialogSystem,
     }
 
     #endregion
@@ -50,12 +48,12 @@ public class DialogUI : BaseUI
         Bind<DialogSystem>(typeof(Dialogues));
     }
 
-    IEnumerator DungeonNPC()
+    public IEnumerator DungeonNPC()
     {
         Managers.Game._isActiveDialog = true;
         GetText((int)Texts.YesBtnTxt).text = "던전 선택";
         GetText((int)Texts.ExitBtnTxt).text = "아니?";
-        yield return new WaitUntil(() => Get<DialogSystem>((int)Dialogues.DungeonDialog).UpdateDialog());
+        yield return new WaitUntil(() => Get<DialogSystem>((int)Dialogues.DialogSystem).UpdateDialog());
         bool isOpen = false;
         GetButton((int)Buttons.YesBtn).onClick.AddListener(() =>
         {
