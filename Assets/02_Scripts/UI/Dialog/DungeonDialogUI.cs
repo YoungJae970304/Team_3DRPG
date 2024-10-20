@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogUI : BaseUI
+public class DungeonDialogUI : BaseUI
 {
     #region BIND
     enum Buttons

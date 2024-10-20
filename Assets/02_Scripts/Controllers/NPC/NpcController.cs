@@ -2,15 +2,6 @@ using UnityEngine;
 
 public class NpcController : Interectable
 {
-    public enum NpcTypes
-    {
-        DungeonNpc,
-        QuestNpc,
-        ShopNpc,
-    }
-
-   public NpcTypes _npcType;
-
     public override void Interection(GameObject gameObject)
     {
         base.Interection(gameObject);
@@ -24,20 +15,20 @@ public class NpcController : Interectable
 
     public virtual void NpcDialog()
     {
-        DialogUI dialogUI = Managers.UI.GetActiveUI<DialogUI>() as DialogUI;
+        DungeonDialogUI dungeonDialogUI = Managers.UI.GetActiveUI<DungeonDialogUI>() as DungeonDialogUI;
 
-        if (dialogUI == null)
-        {
-            Managers.UI.OpenUI<DialogUI>(new BaseUIData());
-            Managers.Game._player._isMoving = false;
-            Managers.Game._isActiveDialog = true;
-
-        }
-        else
+        if (dungeonDialogUI != null)
         {
             Managers.UI.CloseAllOpenUI();
             Managers.Game._isActiveDialog = false;
             Managers.Game._player._isMoving = true;
+           
+        }
+        else
+        {
+            Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
+            Managers.Game._player._isMoving = false;
+            Managers.Game._isActiveDialog = true;
         }
     }
 }
