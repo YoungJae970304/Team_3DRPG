@@ -29,7 +29,7 @@ public class ItemGrab : MonoBehaviour
     }
 
     #region Event
-
+    //UI 레이캐스트
     T GetUIRayCast<T>() where T : IItemDropAble
     {
         _result.Clear();
@@ -41,7 +41,7 @@ public class ItemGrab : MonoBehaviour
         return _result[0].gameObject.GetComponent<T>();
     }
 
-
+    //마우스 입력처리
     public void MouseInput()
     {
         if (Raycaster == null) { return; }
@@ -52,7 +52,7 @@ public class ItemGrab : MonoBehaviour
         OnPointerDrag();
         OnPointerUp();
     }
-
+    //마우스 좌클릭클릭시작시
     public ItemSlot OnPointDown()
     {
         if (Input.GetMouseButtonDown(0))
@@ -78,6 +78,7 @@ public class ItemGrab : MonoBehaviour
         }
         return null;
     }
+    //클릭하면서 움직이는도중
     public void OnPointerDrag()
     {
         if (_currnetSlot == null) { return; }
@@ -86,6 +87,7 @@ public class ItemGrab : MonoBehaviour
             Icon.transform.position = _beginDragIconPoint + (Input.mousePosition - _beginDragCursorPoint);
         }
     }
+    //드래그 종료시
     public void OnPointerUp()
     {
         if (_currnetSlot == null) { return; }
@@ -102,9 +104,10 @@ public class ItemGrab : MonoBehaviour
             _currnetSlot = null;
         }
     }
-
+    //드롭했을때 작업처리
     private void DragEnd()
     {
+        //마우스 밑의 UI 판단
         IItemDropAble target = GetUIRayCast<IItemDropAble>();
 
         if (target != null)
@@ -124,6 +127,7 @@ public class ItemGrab : MonoBehaviour
 
 
     }
+    //툴팁과 아이템 사용을 위해 슬롯을 인식하는 함수
     private void OnPointerEnterAndExit()
     {
         // 이전 프레임의 슬롯
@@ -154,8 +158,10 @@ public class ItemGrab : MonoBehaviour
                 OnCurrentEnter();
             }
         }
+        //선택된 슬롯이 없으면 리턴
         if (currSlot == null)
             return;
+        //더블 클릭 혹은 우클릭시
         if (Input.GetMouseButtonDown(1) || IsDoubleClick())
         {
             ItemUse();
@@ -178,6 +184,7 @@ public class ItemGrab : MonoBehaviour
             toolTip.gameObject.SetActive(false);
             //prevSlot
         }
+        //더블 클릭 채크
         bool IsDoubleClick()
         {
             if (currSlot != null && Input.GetMouseButtonDown(0))
@@ -190,15 +197,16 @@ public class ItemGrab : MonoBehaviour
             }
             return false;
         }
+        //아이템 사용
         void ItemUse()
         {
             if (currSlot.Item == null)
                 return;
             Logger.Log(currSlot.Item.Data.Name);
-            if (currSlot.Item is IUsableItem)
+            if (currSlot.Item is IUsableItem)//사용가능한 아이템이면
             {
-                (currSlot.Item as IUsableItem).Use();
-                currSlot.UpdateSlotInfo();
+                (currSlot.Item as IUsableItem).Use();//사용
+                currSlot.UpdateSlotInfo();//슬롯 갱신
                 (Managers.UI.GetActiveUI<InventoryUI>() as InventoryUI)?.UpdateSlot();
                 (Managers.UI.GetActiveUI<MainUI>() as MainUI)?.QuickslotUpdate();
             }

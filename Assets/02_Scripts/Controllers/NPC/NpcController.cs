@@ -1,17 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 public class NpcController : Interectable
 {
-    public enum NpcType
+    public override void Interection(GameObject gameObject)
     {
-        None,
-        DungeonNpc,
-        QuestNpc,
-        ShopNpc,
+        base.Interection(gameObject);
+        DungeonNpcDialog();
     }
 
-    public NpcType _npcType = NpcType.None;
-
-    public NpcController(NpcType npcType)
+    public override void UIPopUp(bool active)
     {
-        _npcType = npcType;
+        base.UIPopUp(active);
+    }
+
+    public virtual void DungeonNpcDialog()
+    {
+        DialogDungeonUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogDungeonUI>() as DialogDungeonUI;
+        if (dialogDungeonUI == null)
+        {
+            Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
+            Managers.Game._isActiveDialog = true;
+        }
+        else
+        {
+            Managers.UI.CloseCurrFrontUI(dialogDungeonUI);
+            Managers.Game._isActiveDialog = true;
+        }
     }
 }

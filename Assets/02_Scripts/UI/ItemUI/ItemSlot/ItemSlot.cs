@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
 {
-    protected Item _item;
-    public Action itemChangedAction;
-    public Item Item
+    protected Item _item;                                           //아이템
+    public Action itemChangedAction;                                //아이템 변경시 실행될 액션
+    public Item Item                                                //설정시 슬롯정보 갱신하는 프로퍼티
     {
         get => _item; protected set
         {
@@ -16,10 +16,10 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
             UpdateSlotInfo();
         }
     }
-    public bool isLocked=false;
-    public Image _Image;
-    [SerializeField] protected TextMeshProUGUI _text;
-    public ItemData.ItemType _slotType = ItemData.ItemType.Weapon;
+    public bool isLocked=false;                                     //슬롯잠금
+    public Image _Image;                                            //아이콘표시할 이미지
+    [SerializeField] protected TextMeshProUGUI _text;               //남은 개수 표시할 텍스트
+    public ItemData.ItemType _slotType = ItemData.ItemType.Weapon;  //슬롯이 담을 아이템 타입
 
     //슬롯 정보 갱신
     public virtual void UpdateSlotInfo()
