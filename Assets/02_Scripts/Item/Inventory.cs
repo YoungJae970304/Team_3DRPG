@@ -26,12 +26,14 @@ public class Inventory : MonoBehaviour//인벤토리
         }
     }
 
-
+    //새로운 아이템 그룹 추가
+    //크기,최대로 커질수 있는 크기,아이템의 타입
     public void AddGroup(int maxSize, int LimitSize, ItemData.ItemType type)
     {
         ItemDick.Add(type, new ItemGroup(maxSize, LimitSize, type));
 
     }
+    //여러가지의 타입이 한 그룹에 들어갈 수 있도록 추가하는 메서드
     public void AddGroup(ItemData.ItemType type, ItemData.ItemType type2)
     {
         ItemDick.Add(type2, ItemDick[type]);
@@ -59,13 +61,13 @@ public class Inventory : MonoBehaviour//인벤토리
         GetItemAction?.Invoke();
         return result;
     }
-    public Item Remove(int index, ItemData.ItemType type)
+    public Item Remove(int index, ItemData.ItemType type)//특정 타입의 인덱스 위치의 아이템을 제거
     {
         Item item = ItemDick[type].Remove(index);
         GetItemAction?.Invoke();
         return item;
     }
-    public bool SwitchItem(int index1, int index2, ItemData.ItemType type)
+    public bool SwitchItem(int index1, int index2, ItemData.ItemType type)//두 인덱스간 아이템을 교환.
     {
         bool result = ItemDick[type].SwitchItem(index1, index2);
         GetItemAction?.Invoke();
