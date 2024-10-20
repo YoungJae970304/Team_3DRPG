@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class DialogSystem : BaseUI
 {
-
     //[SerializeField]
     //Speaker[] speakers;           //대화에 참여하는 캐릭터들의 UI 배열
 

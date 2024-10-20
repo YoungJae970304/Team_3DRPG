@@ -17,16 +17,16 @@ public class NpcController : Interectable
 
     public virtual void DungeonNpcDialog()
     {
-        DialogDungeonUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogDungeonUI>() as DialogDungeonUI;
-        if (dialogDungeonUI == null)
+        DialogUI dialogUI = Managers.UI.GetActiveUI<DialogUI>() as DialogUI;
+        if (dialogUI == null)
         {
-            Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
+            Managers.UI.OpenUI<DialogUI>(new BaseUIData());
             Managers.Game._isActiveDialog = true;
         }
         else
         {
-            Managers.UI.CloseCurrFrontUI(dialogDungeonUI);
-            Managers.Game._isActiveDialog = true;
+            Managers.UI.CloseAllOpenUI();
+            Managers.Game._isActiveDialog = false;
         }
     }
 }
