@@ -25,7 +25,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
     #region 드래그 구현부
-    Vector2 correction;
+    protected Vector2 correction;
     protected virtual void BeginDrag(PointerEventData data)
     {
         correction =  _topBarImage.transform.parent.position - (Vector3)data.position;
@@ -87,6 +87,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     protected Button GetButton(int idx) { return Get<Button>(idx); }
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected Toggle GetToggle(int idx) { return Get<Toggle>(idx); }
+    protected RawImage GetRawImage(int idx) { return Get<RawImage>(idx); }
     #endregion
 
     #region 클릭시 최상위로 변경

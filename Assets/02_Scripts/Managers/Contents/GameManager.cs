@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameManager 
 {
@@ -12,6 +13,8 @@ public class GameManager
     public List<Monster> _monsters = new List<Monster>();
 
     public bool _isActiveDialog = false;
+    public bool _cantInputKey = false;
+
 
     public DeongeonType _selecDungeonLevel;
 

@@ -7,6 +7,7 @@ public class NpcController : Interectable
     public override void Interection(GameObject gameObject)
     {
         base.Interection(gameObject);
+        DungeonNpcDialog();
     }
 
     public override void UIPopUp(bool active)
@@ -14,8 +15,18 @@ public class NpcController : Interectable
         base.UIPopUp(active);
     }
 
-    public override void DungeonNpcDialog()
+    public virtual void DungeonNpcDialog()
     {
-        base.DungeonNpcDialog();
+        DialogDungeonUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogDungeonUI>() as DialogDungeonUI;
+        if (dialogDungeonUI == null)
+        {
+            Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
+            Managers.Game._isActiveDialog = true;
+        }
+        else
+        {
+            Managers.UI.CloseCurrFrontUI(dialogDungeonUI);
+            Managers.Game._isActiveDialog = true;
+        }
     }
 }
