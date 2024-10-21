@@ -19,10 +19,15 @@ public class InterectController : MonoBehaviour
     PlayerCam _playerCam;
     private void Start()
     {
+        Init();
+    }
+
+    public void Init()
+    {
         //변수 초기화
-        _player = GetComponent<Player>();
-        _target=GameObject.FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
-        _playerCam = GetComponent<PlayerCam>();
+        _player = Managers.Game._player;
+        _playerCam = _player._playerCam;
+        _target = FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
         _main = Camera.main;
     }
 

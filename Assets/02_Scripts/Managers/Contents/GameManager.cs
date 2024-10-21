@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 public class GameManager 
 {
-    public Player _player;
+    public Player _player = null;
 
     public Define.PlayerType _playerType;
 
@@ -40,6 +40,9 @@ public class GameManager
     // 타입에 맞는 캐릭터 생성
     public void PlayerCreate()
     {
+
+        Managers.Resource.Instantiate("Player/VirtualCameras");
+
         switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
