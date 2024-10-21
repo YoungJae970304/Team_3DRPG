@@ -22,6 +22,7 @@ public class NpcController : Interectable
         {
             Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
             Managers.Game._isActiveDialog = true;
+            Managers.Game._player._isMoving = false;
         }
         else
         {

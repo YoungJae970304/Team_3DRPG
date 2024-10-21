@@ -36,4 +36,30 @@ public class GameManager
 
         return _monsters;
     }
+
+    // 타입에 맞는 캐릭터 생성
+    public void PlayerCreate()
+    {
+        switch (Managers.Game._playerType)
+        {
+            case Define.PlayerType.Melee:
+                GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
+                break;
+            case Define.PlayerType.Mage:
+                GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
+                break;
+            default:
+                Logger.LogError("생성할 플레이어가 없습니다.");
+                break;
+        }
+    }
+
+    public void PlayerPosSet(Transform spawnPos)
+    {
+        _player._cc.enabled = false;
+
+        _player.transform.position = spawnPos.position;
+
+        _player._cc.enabled = true;
+    }
 }
