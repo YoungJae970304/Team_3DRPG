@@ -42,6 +42,7 @@ public class ShopDialogUI : BaseUI
 
     IEnumerator ShopNpc()
     {
+        Managers.Game._isActiveDialog = true;
         GetText((int)Texts.YesBtnTxt).text = "상점 이용";
         GetText((int)Texts.ExitBtnTxt).text = "아니?";
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
@@ -51,10 +52,11 @@ public class ShopDialogUI : BaseUI
             isOpen = true;
             OpenShopUI();
         });
+        Managers.Game._isActiveDialog = false;
         Logger.Log("샵 에드 리스너 확인");
         yield return new WaitUntil(() => isOpen);
-        ReomovedListeners();
         Managers.UI.CloseUI(this);
+        ReomovedListeners();
         Logger.Log("샵 에드 리스너 리므부 확인");
     }
 
