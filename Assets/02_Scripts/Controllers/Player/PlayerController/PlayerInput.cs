@@ -168,7 +168,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
-            if (_player._interectController._lastObj == null && Managers.Game._isActiveDialog) { return; }
+            if (Managers.Game._isActiveDialog) { return; }
 
             _player._interectController.Interection();
         }

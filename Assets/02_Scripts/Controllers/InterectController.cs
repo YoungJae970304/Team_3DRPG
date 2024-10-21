@@ -19,10 +19,15 @@ public class InterectController : MonoBehaviour
     PlayerCam _playerCam;
     private void Start()
     {
+        Init();
+    }
+
+    public void Init()
+    {
         //변수 초기화
-        _player = GetComponent<Player>();
-        _target=GameObject.FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
-        _playerCam = GetComponent<PlayerCam>();
+        _player = Managers.Game._player;
+        _playerCam = _player._playerCam;
+        _target = GameObject.FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
         _main = Camera.main;
     }
 
@@ -40,7 +45,6 @@ public class InterectController : MonoBehaviour
 
         for (i = 0; i < _target.Count; i++)
         {
-            if (_target[i] == null) { continue; }
             if (!CheckInCamera(_target[i].transform)) { continue; }
 
             float distance = Vector3.Distance(_player.transform.position, _target[i].transform.position);

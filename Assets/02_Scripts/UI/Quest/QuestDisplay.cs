@@ -14,7 +14,8 @@ public class QuestDisplay : BaseUI
     /// 퀘스트 시작 레벨 요구 사항은 굳이 보여줄 필요가 없다.
     /// 퀘스트 이름에 타입 까지 적어서 표시
     /// </summary>
-
+    
+    #region BIND
     enum DisplayTexts
     {
         //퀘스트 진행중
@@ -29,9 +30,11 @@ public class QuestDisplay : BaseUI
     {
         QuestInfo,
     }
+    #endregion
 
     List<QuestData> _LoadQuestDataList = new();
     int _questID;
+
     private void Awake()
     {
         Bind<TextMeshProUGUI>(typeof(DisplayTexts));
@@ -40,7 +43,6 @@ public class QuestDisplay : BaseUI
         var questdataTable = Managers.DataTable._QuestData;
 
         _LoadQuestDataList.AddRange(questdataTable);
-
 
         QuestData questData = _LoadQuestDataList.Find(q => q.ID == _questID);
 
