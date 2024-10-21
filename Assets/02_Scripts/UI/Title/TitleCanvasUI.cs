@@ -25,8 +25,11 @@ public class TitleCanvasUI : BaseUI
         }
     }
 
-    public void OnClickContinueBtn()
+    public void OnClickContinueBtn(string sceneName)
     {
+        Managers.Scene.SceneChange(sceneName);
 
+        //CloseUI(true);
+        Managers.UI.CloseAllOpenUI();
     }
 }

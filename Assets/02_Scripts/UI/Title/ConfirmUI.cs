@@ -33,7 +33,6 @@ public class ConfirmUI : BaseUI
 
     public void OnClickOKBtn(string sceneName)
     {
-        // 현재 열려있는 UI에 따라 다른 처리가 필요?
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
 
         if (selectPlayerUI != null)
