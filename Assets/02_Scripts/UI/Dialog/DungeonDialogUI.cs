@@ -21,18 +21,11 @@ public class DungeonDialogUI : BaseUI
 
     public DialogSystem[] _dialogSystem;
 
-    bool _isOpeningUI = false;
-
-    private void Awake()
-    {
-        Bind<Button>(typeof(Buttons));
-        Bind<TextMeshProUGUI>(typeof(Texts));
-    }
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-
-        Logger.Log($"{Managers.Game._isActiveDialog} 확인 ");
+        Bind<Button>(typeof(Buttons));
+        Bind<TextMeshProUGUI>(typeof(Texts));
         //대화 시작 시 모든 유아이 닫아버리기
         Managers.UI.CloseAllOpenUI();
         StartCoroutine(DungeonDialog());
@@ -50,10 +43,9 @@ public class DungeonDialogUI : BaseUI
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.YesBtn).onClick.AddListener(() => { OpenDungeonUI(); });
-        yield return new WaitUntil(() => _isOpeningUI);
         Managers.Game._isActiveDialog = false;
         Managers.Game._player._isMoving = true;
-        Managers.UI.CloseAllOpenUI();
+        Managers.UI.CloseUI(this);
     }
 
     #region 버튼 함수들
@@ -64,13 +56,11 @@ public class DungeonDialogUI : BaseUI
 
         if (dungeonUI != null)
         {
-            _isOpeningUI = false;
             Managers.UI.CloseUI(dungeonUI);
         }
         else
         {
             Managers.UI.OpenUI<DungeonUI>(new BaseUIData());
-            _isOpeningUI = true;
         }
     }
     #endregion

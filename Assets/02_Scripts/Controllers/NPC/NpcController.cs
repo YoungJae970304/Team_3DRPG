@@ -16,7 +16,7 @@ public class NpcController : Interectable
 
     public override void Interection(GameObject gameObject)
     {
-        Debug.Log($"npc 타입은: {_npcType}");
+        Debug.Log($"npc 타입은: {_npcType}"); 
         base.Interection(gameObject);
 
         switch (_npcType)

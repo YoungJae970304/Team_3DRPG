@@ -20,18 +20,12 @@ public class ShopDialogUI : BaseUI
     #endregion
 
     public DialogSystem[] _dialogSystem;
-    bool _isOpeningUI = false;
 
-    private void Awake()
-    {
-        Bind<Button>(typeof(Buttons));
-        Bind<TextMeshProUGUI>(typeof(Texts));
-    }
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-
-        Logger.Log($"{Managers.Game._isActiveDialog} 확인 ");
+        Bind<Button>(typeof(Buttons));
+        Bind<TextMeshProUGUI>(typeof(Texts));
         //대화 시작 시 모든 유아이 닫아버리기
         Managers.UI.CloseAllOpenUI();
         StartCoroutine(ShopDialog());
@@ -48,10 +42,9 @@ public class ShopDialogUI : BaseUI
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.YesBtn).onClick.AddListener(() => { OpenShopUI(); });
-        yield return new WaitUntil(() => _isOpeningUI);
         Managers.Game._isActiveDialog = false;
         Managers.Game._player._isMoving = true;
-        Managers.UI.CloseAllOpenUI();
+        Managers.UI.CloseUI(this);
     }
 
     #region 버튼 함수들
@@ -63,14 +56,12 @@ public class ShopDialogUI : BaseUI
         if (shopUI != null)
         {
             Managers.UI.CloseUI(shopUI);
-            _isOpeningUI = false;
         }
         else
         {
             BaseUIData uiData = new BaseUIData();
             ShopUIData shopData = uiData as ShopUIData;
             Managers.UI.OpenUI<ShopUI>(shopData);
-            _isOpeningUI = true;
         }
     }
     #endregion
