@@ -16,9 +16,14 @@ public class NpcController : Interectable
 
     public override void Interection(GameObject gameObject)
     {
+        Debug.Log($"npc 타입은: {_npcType}");
         base.Interection(gameObject);
+
         switch (_npcType)
         {
+            case NpcTypes.None:
+                Logger.LogError("맞지 않는 타입 입니다.");
+                break;
             case NpcTypes.DungeonNpc:
                 DungeonNpcDialog();
                 break;
@@ -26,9 +31,6 @@ public class NpcController : Interectable
                 ShopNpcDialog();
                 break;
                 case NpcTypes.QuestNpc:
-                break;
-            default:
-                Logger.LogError("맞지 않는 타입 입니다.");
                 break;
         }
     }
@@ -44,30 +46,31 @@ public class NpcController : Interectable
 
         if( dungeonDialogUI != null )
         {
-            Managers.UI.CloseAllOpenUI();
-            Managers.Game._isActiveDialog = false;
+            Managers.UI.CloseUI(dungeonDialogUI);
+            //Managers.Game._isActiveDialog = false;
         }
         else
         {
-            Managers.Game._player._isMoving = false;
-            Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
+            //Managers.Game._player._isMoving = false;
             Managers.Game._isActiveDialog = true;
+            Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
         }
     }
+
     public virtual void ShopNpcDialog()
     {
         ShopDialogUI shopDialogUI = Managers.UI.GetActiveUI<ShopDialogUI>() as ShopDialogUI;
 
         if (shopDialogUI != null)
         {
-            Managers.UI.CloseAllOpenUI();
+            Managers.UI.CloseUI(shopDialogUI);
             Managers.Game._isActiveDialog = false;
         }
         else
         {
-            Managers.Game._player._isMoving = false;
-            Managers.UI.OpenUI<ShopDialogUI>(new BaseUIData());
+            //Managers.Game._player._isMoving = false;
             Managers.Game._isActiveDialog = true;
+            Managers.UI.OpenUI<ShopDialogUI>(new BaseUIData());
         }
     }
 }

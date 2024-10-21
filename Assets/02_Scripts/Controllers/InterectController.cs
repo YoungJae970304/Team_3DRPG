@@ -27,7 +27,7 @@ public class InterectController : MonoBehaviour
         //변수 초기화
         _player = Managers.Game._player;
         _playerCam = _player._playerCam;
-        _target = FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
+        _target = GameObject.FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
         _main = Camera.main;
     }
 

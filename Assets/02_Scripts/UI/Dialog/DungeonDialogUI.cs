@@ -21,41 +21,38 @@ public class DungeonDialogUI : BaseUI
 
     public DialogSystem[] _dialogSystem;
 
-    public override void Init(Transform anchor)
-    {
-        base.Init(anchor);
-
-        if (!Managers.Game._isActiveDialog) // 대사가 진행 중이지 않을 때만 실행ㅔ
-        {
-            //대화 시작 시 모든 유아이 닫아버리기
-            Managers.UI.CloseAllOpenUI();
-            StartCoroutine(DungeonNPC());
-        }
-    }
+    bool _isOpeningUI = false;
 
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
     }
+    public override void Init(Transform anchor)
+    {
+        base.Init(anchor);
 
-    public IEnumerator DungeonNPC()
+        Logger.Log($"{Managers.Game._isActiveDialog} 확인 ");
+        //대화 시작 시 모든 유아이 닫아버리기
+        Managers.UI.CloseAllOpenUI();
+        StartCoroutine(DungeonDialog());
+    }
+
+    IEnumerator DungeonDialog()
     {
         Managers.Game._isActiveDialog = true;
+        Managers.Game._player._isMoving = false;
+        GetButton((int)Buttons.YesBtn).interactable = false;
         GetText((int)Texts.YesBtnTxt).text = "던전 선택";
         GetText((int)Texts.ExitBtnTxt).text = "아니?";
+        yield return new WaitForSeconds(0.2f);
+        GetButton((int)Buttons.YesBtn).interactable = true;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
-        bool isOpen = false;
-        GetButton((int)Buttons.YesBtn).onClick.AddListener(() =>
-        {
-            isOpen = true;
-            OpenDungeonUI();
-            Logger.Log("던전 에드 리스너 확인");
-        });
+        GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
+        GetButton((int)Buttons.YesBtn).onClick.AddListener(() => { OpenDungeonUI(); });
+        yield return new WaitUntil(() => _isOpeningUI);
         Managers.Game._isActiveDialog = false;
-        yield return new WaitUntil(() => isOpen);
-        ReomovedListeners();
-        Logger.Log("던전 에드 리스너 리무브 확인");
+        Managers.Game._player._isMoving = true;
         Managers.UI.CloseAllOpenUI();
     }
 
@@ -65,16 +62,16 @@ public class DungeonDialogUI : BaseUI
     {
         DungeonUI dungeonUI = Managers.UI.GetActiveUI<DungeonUI>() as DungeonUI;
 
-        if (dungeonUI == null)
+        if (dungeonUI != null)
+        {
+            _isOpeningUI = false;
+            Managers.UI.CloseUI(dungeonUI);
+        }
+        else
         {
             Managers.UI.OpenUI<DungeonUI>(new BaseUIData());
+            _isOpeningUI = true;
         }
     }
-
-    public void ReomovedListeners()
-    {
-        GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
-    }
-
     #endregion
 }

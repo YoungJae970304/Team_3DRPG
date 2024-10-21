@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 2784349132712581450}
-  DialogUI: {fileID: 2784003624122026532, guid: 68f84fe7b818f1f41a717e847d30458f,
-    type: 3}
-  _npcTypes: 2
+  DungeonDialogUI: {fileID: 0}
+  ShopDialogUI: {fileID: 0}
+  _npcType: 3
 --- !u!1 &5049787894862945306
 GameObject:
   m_ObjectHideFlags: 0

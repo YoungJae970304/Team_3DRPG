@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,42 +20,37 @@ public class ShopDialogUI : BaseUI
     #endregion
 
     public DialogSystem[] _dialogSystem;
-
-    public override void Init(Transform anchor)
-    {
-        base.Init(anchor);
-
-        if (!Managers.Game._isActiveDialog) // 대사가 진행 중이지 않을 때만 실행
-        {
-            //대화 시작 시 모든 유아이 닫아버리기
-            Managers.UI.CloseAllOpenUI();
-            StartCoroutine(ShopNpc());
-        }
-    }
+    bool _isOpeningUI = false;
 
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
     }
+    public override void Init(Transform anchor)
+    {
+        base.Init(anchor);
 
-    IEnumerator ShopNpc()
+        Logger.Log($"{Managers.Game._isActiveDialog} 확인 ");
+        //대화 시작 시 모든 유아이 닫아버리기
+        Managers.UI.CloseAllOpenUI();
+        StartCoroutine(ShopDialog());
+    }
+    IEnumerator ShopDialog()
     {
         Managers.Game._isActiveDialog = true;
+        Managers.Game._player._isMoving = false;
+        GetButton((int)Buttons.YesBtn).interactable = false;
         GetText((int)Texts.YesBtnTxt).text = "상점 이용";
         GetText((int)Texts.ExitBtnTxt).text = "아니?";
+        yield return new WaitForSeconds(0.2f);
+        GetButton((int)Buttons.YesBtn).interactable = true;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
-        bool isOpen = false;
-        GetButton((int)Buttons.YesBtn).onClick.AddListener(() =>
-        {
-            isOpen = true;
-            OpenShopUI();
-        });
+        GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
+        GetButton((int)Buttons.YesBtn).onClick.AddListener(() => { OpenShopUI(); });
+        yield return new WaitUntil(() => _isOpeningUI);
         Managers.Game._isActiveDialog = false;
-        Logger.Log("샵 에드 리스너 확인");
-        yield return new WaitUntil(() => isOpen);
-        ReomovedListeners();
-        Logger.Log("샵 에드 리스너 리므부 확인");
+        Managers.Game._player._isMoving = true;
         Managers.UI.CloseAllOpenUI();
     }
 
@@ -69,16 +63,15 @@ public class ShopDialogUI : BaseUI
         if (shopUI != null)
         {
             Managers.UI.CloseUI(shopUI);
+            _isOpeningUI = false;
         }
         else
         {
-            Managers.UI.OpenUI<ShopUI>(new BaseUIData());
+            BaseUIData uiData = new BaseUIData();
+            ShopUIData shopData = uiData as ShopUIData;
+            Managers.UI.OpenUI<ShopUI>(shopData);
+            _isOpeningUI = true;
         }
-    }
-
-    public void ReomovedListeners()
-    {
-        GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
     }
     #endregion
 }

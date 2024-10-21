@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5192120283780874669}
   - component: {fileID: 7624892395325495080}
   - component: {fileID: 697483932480134145}
-  - component: {fileID: 1282406393396071828}
+  - component: {fileID: 1888719075091263218}
   m_Layer: 0
   m_Name: DungeonNPC
   m_TagString: NPC
@@ -107,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1282406393396071828
+--- !u!114 &1888719075091263218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
