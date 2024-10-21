@@ -1,9 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DungeonDialogUI : BaseUI
+public class ShopDialogUI : BaseUI
 {
     #region BIND
     enum Buttons
@@ -29,7 +30,7 @@ public class DungeonDialogUI : BaseUI
         {
             //대화 시작 시 모든 유아이 닫아버리기
             Managers.UI.CloseAllOpenUI();
-            StartCoroutine(DungeonNPC());
+            StartCoroutine(ShopNpc());
         }
     }
 
@@ -39,35 +40,33 @@ public class DungeonDialogUI : BaseUI
         Bind<TextMeshProUGUI>(typeof(Texts));
     }
 
-    public IEnumerator DungeonNPC()
+    IEnumerator ShopNpc()
     {
-        Managers.Game._isActiveDialog = true;
-        GetText((int)Texts.YesBtnTxt).text = "던전 선택";
+        GetText((int)Texts.YesBtnTxt).text = "상점 이용";
         GetText((int)Texts.ExitBtnTxt).text = "아니?";
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         bool isOpen = false;
         GetButton((int)Buttons.YesBtn).onClick.AddListener(() =>
         {
             isOpen = true;
-            OpenDungeonUI();
-            Logger.Log("던전 에드 리스너 확인");
+            OpenShopUI();
         });
-        Managers.Game._isActiveDialog = false;
+        Logger.Log("샵 에드 리스너 확인");
         yield return new WaitUntil(() => isOpen);
         ReomovedListeners();
-        Logger.Log("던전 에드 리스너 리무브 확인");
         Managers.UI.CloseUI(this);
+        Logger.Log("샵 에드 리스너 리므부 확인");
     }
 
     #region 버튼 함수들
     //던전 UI 오픈 함수 버튼 클릭시 생성
-    public void OpenDungeonUI()
+    public void OpenShopUI()
     {
-        DungeonUI dungeonUI = Managers.UI.GetActiveUI<DungeonUI>() as DungeonUI;
+        ShopUI shopUI = Managers.UI.GetActiveUI<ShopUI>() as ShopUI;
 
-        if (dungeonUI == null)
+        if (shopUI == null)
         {
-            Managers.UI.OpenUI<DungeonUI>(new BaseUIData());
+            Managers.UI.OpenUI<ShopUI>(new BaseUIData());
         }
     }
 

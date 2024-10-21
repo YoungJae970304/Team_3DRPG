@@ -506,9 +506,9 @@ GameObject:
   - component: {fileID: 2784003624122026532}
   - component: {fileID: 3761090086491151074}
   - component: {fileID: 2106089529187994733}
-  - component: {fileID: 8877689760188781928}
+  - component: {fileID: 3240247840517317130}
   m_Layer: 5
-  m_Name: DungeonDialogUI
+  m_Name: ShopDialogUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8877689760188781928
+--- !u!114 &3240247840517317130
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -609,13 +609,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3248593829709318713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a123efd8215dbc47994b352fabf63e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 59a81b25fc8caad468dbb7bf6ab82cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _UIOpenAnimation: {fileID: 0}
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 6006703077729811773}
-  _isSort: 0
+  _isSort: 1
   _dialogSystem:
   - {fileID: 7399043146769649934}
 --- !u!1 &5952788644330208210
@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 8336125279274440526}
   - component: {fileID: 7399043146769649934}
   m_Layer: 5
-  m_Name: DungeonDialog
+  m_Name: DialogSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -984,8 +984,8 @@ MonoBehaviour:
   _isSort: 0
   dialogs:
   - speakerIndex: 0
-    name: "\uB358\uC804 NPC"
-    dialogue: "\uB358\uC804???\uB358\uC804???\uB358\uC804???\uB358\uC804???"
+    name: "\uC0C1\uC810 NPC"
+    dialogue: "\uACE8\uB77C \uACE8\uB77C~ \uC5C6\uC5B4\uB3C4 \uACE8\uB77C~"
   _isAutoStart: 1
 --- !u!1 &7918758658464212738
 GameObject:
