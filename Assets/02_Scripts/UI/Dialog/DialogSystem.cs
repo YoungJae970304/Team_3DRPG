@@ -35,7 +35,7 @@ public class DialogSystem : BaseUI
         Arrow,
     }
 
-    private void OnEnable()
+    private void Awake()
     {
         Bind<TextMeshProUGUI>(typeof(DialogTexts));
         Bind<Image>(typeof(DialogImgs));

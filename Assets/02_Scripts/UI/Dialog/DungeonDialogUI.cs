@@ -25,7 +25,7 @@ public class DungeonDialogUI : BaseUI
     {
         base.Init(anchor);
 
-        if (!Managers.Game._isActiveDialog) // 대사가 진행 중이지 않을 때만 실행
+        if (!Managers.Game._isActiveDialog) // 대사가 진행 중이지 않을 때만 실행ㅔ
         {
             //대화 시작 시 모든 유아이 닫아버리기
             Managers.UI.CloseAllOpenUI();
@@ -56,7 +56,7 @@ public class DungeonDialogUI : BaseUI
         yield return new WaitUntil(() => isOpen);
         ReomovedListeners();
         Logger.Log("던전 에드 리스너 리무브 확인");
-        Managers.UI.CloseUI(this);
+        Managers.UI.CloseAllOpenUI();
     }
 
     #region 버튼 함수들
@@ -75,5 +75,6 @@ public class DungeonDialogUI : BaseUI
     {
         GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
     }
+
     #endregion
 }

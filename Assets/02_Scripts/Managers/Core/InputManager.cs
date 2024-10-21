@@ -23,7 +23,7 @@ public class InputManager
         }
 
         // 다이얼로그에 ESC로 창닫기 적용 시킬거면 주석처리, ESC안먹게 하려면 주석 해제
-        //if (Managers.Game._isActiveDialog) { return; }
+        if (Managers.Game._isActiveDialog) { return; }
 
         if (KeyAction != null)
         {

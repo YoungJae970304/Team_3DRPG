@@ -55,9 +55,9 @@ public class ShopDialogUI : BaseUI
         Managers.Game._isActiveDialog = false;
         Logger.Log("샵 에드 리스너 확인");
         yield return new WaitUntil(() => isOpen);
-        Managers.UI.CloseUI(this);
         ReomovedListeners();
         Logger.Log("샵 에드 리스너 리므부 확인");
+        Managers.UI.CloseAllOpenUI();
     }
 
     #region 버튼 함수들
@@ -66,7 +66,11 @@ public class ShopDialogUI : BaseUI
     {
         ShopUI shopUI = Managers.UI.GetActiveUI<ShopUI>() as ShopUI;
 
-        if (shopUI == null)
+        if (shopUI != null)
+        {
+            Managers.UI.CloseUI(shopUI);
+        }
+        else
         {
             Managers.UI.OpenUI<ShopUI>(new BaseUIData());
         }
