@@ -8,7 +8,7 @@ public class InterectController : MonoBehaviour
 {
     Player _player;                                                         //타겟 플레이어
     [SerializeField] float _interectRange;                                    //상호작용 범위
-    [SerializeField] Camera _main;                                          //판정할 카메라
+    public Camera _main;                                          //판정할 카메라
     [SerializeField] Interectable _current = null;                                           //현재 선택된 상호작용대상
     [SerializeField] List<Interectable> _target = new List<Interectable>(); //상호작용대상을 저장하고 관리할 리스트
     public Interectable _lastObj;                                           //이전에 선택된 상호작용대상                                    

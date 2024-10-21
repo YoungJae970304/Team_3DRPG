@@ -13,14 +13,14 @@ public class TestScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        Managers.Game.PlayerCreate();
+        //Managers.Game.PlayerCreate();
         Managers.Game.PlayerPosSet(SpawnPos);
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         Managers.UI.OpenUI<MainUI>(new BaseUIData(),false);
         //Opentest();
-        Close();
+        //Close();
 
         ShopUIData shopUIData = new ShopUIData();
         shopUIData._itemCode = new List<(int, int)>();

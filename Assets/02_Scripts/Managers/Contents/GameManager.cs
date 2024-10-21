@@ -62,4 +62,9 @@ public class GameManager
 
         _player._cc.enabled = true;
     }
+
+    public void PlayerInterectSet()
+    {
+        _player._interectController._main = Camera.main;
+    }
 }

@@ -16,6 +16,10 @@ public class LoadingScene : BaseScene
     private void Start()
     {
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
+
+        Managers.Resource.Instantiate("Player/VirtualCameras");
+
+        Managers.Game.PlayerCreate();
     }
 
     // 비동기 신
