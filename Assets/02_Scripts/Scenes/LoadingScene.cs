@@ -17,8 +17,7 @@ public class LoadingScene : BaseScene
     {
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
 
-        Managers.Resource.Instantiate("Player/VirtualCameras");
-
+        if (Managers.Game._player != null) return;
         Managers.Game.PlayerCreate();
     }
 

@@ -8,7 +8,7 @@ public class InterectController : MonoBehaviour
 {
     Player _player;                                                         //타겟 플레이어
     [SerializeField] float _interectRange;                                    //상호작용 범위
-    public Camera _main;                                          //판정할 카메라
+    [SerializeField] Camera _main;                                          //판정할 카메라
     [SerializeField] Interectable _current = null;                                           //현재 선택된 상호작용대상
     [SerializeField] List<Interectable> _target = new List<Interectable>(); //상호작용대상을 저장하고 관리할 리스트
     public Interectable _lastObj;                                           //이전에 선택된 상호작용대상                                    
@@ -19,10 +19,15 @@ public class InterectController : MonoBehaviour
     PlayerCam _playerCam;
     private void Start()
     {
+        Init();
+    }
+
+    public void Init()
+    {
         //변수 초기화
-        _player = GetComponent<Player>();
-        _target=GameObject.FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
-        _playerCam = GetComponent<PlayerCam>();
+        _player = Managers.Game._player;
+        _playerCam = _player._playerCam;
+        _target = FindObjectsByType<Interectable>(FindObjectsSortMode.None).ToList();
         _main = Camera.main;
     }
 
