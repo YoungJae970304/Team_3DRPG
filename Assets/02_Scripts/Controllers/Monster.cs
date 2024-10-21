@@ -236,7 +236,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 죽었을 때
     public virtual void Die(GameObject mob)
     {
-        Destroy(mob, 4f);
+        Managers.Resource.Destroy(mob);//mob은 풀링오브젝트에 들어가는거
     }
  
     #endregion

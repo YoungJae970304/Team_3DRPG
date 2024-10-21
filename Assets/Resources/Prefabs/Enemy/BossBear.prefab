@@ -705,6 +705,7 @@ GameObject:
   - component: {fileID: 154266064507566643}
   - component: {fileID: 1117802376601331531}
   - component: {fileID: 8137741077927977769}
+  - component: {fileID: 1322586414604402643}
   m_Layer: 10
   m_Name: BossBear
   m_TagString: Monster
@@ -859,6 +860,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1322586414604402643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231100289048953305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96090ca1a4956324a9e21391dff6edbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
 --- !u!1 &2241571436699941859
 GameObject:
   m_ObjectHideFlags: 0

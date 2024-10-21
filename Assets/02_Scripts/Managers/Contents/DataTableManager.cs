@@ -23,6 +23,8 @@ public class DataTableManager
     const string _MONSTER_DROP_DATA_TABLE = "Monster_Drop_Data_Table";
     //던전 데이터 테이블 CSV파일
     const string _DUNGEON_DATA_TABLE = "DungeonDataTable";
+    //몬스터 데이터 테이블 CSV파일
+    const string _MONSTER_DATA_TABLE = "Monster_Manager_Table";
     //퀘스트 데이터 테이블 CSV 파일
     const string _QUEST_DATA_TABLE = "Quest_Data_Table";
     // 플레이어 데이터 테이블 CSV 파일
@@ -34,6 +36,7 @@ public class DataTableManager
     public List<ItemData> _GoodsItemData = new List<ItemData>();
     public List<DropData> _MonsterDropData = new List<DropData>();
     public List<DungeonData> _DungeonData = new List<DungeonData>();
+    public List<MonsterData> _MonsterData = new List<MonsterData>();
     public List<QuestData> _QuestData = new List<QuestData>();
     public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
 
@@ -50,6 +53,7 @@ public class DataTableManager
         QuestDataTable(_DATA_PATH, _QUEST_DATA_TABLE);
         DungeonDataTable(_DATA_PATH, _DUNGEON_DATA_TABLE);
         PlayerLevelDataTable(_DATA_PATH, _PLAYER_LEVEL_DATA_TABLE);
+        MonsterDataTable(_DATA_PATH, _MONSTER_DATA_TABLE);
     }
     #endregion
 
@@ -296,6 +300,36 @@ public class DataTableManager
     }
     #endregion
 
+    #region 몬스터 데이터테이블 함수
+    void MonsterDataTable(string dataPath, string monsterDataTable)
+    {
+        var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{monsterDataTable}");
+        foreach (var data in parsedDungeonDataTable)
+        {
+            MonsterData monsterData = null;
+            monsterData = new MonsterData
+            {
+                //인덱스
+                Index = Convert.ToInt32(data["Index"]),
+                //아이디
+                ID = Convert.ToInt32(data["ID"]),
+                //던전 이름
+                MonsterName = data["MonsterName"].ToString(),
+                //몬스터 타입1
+                MinSpawn = Convert.ToInt32(data["MinSpawnCount"]),
+                //몬스터 타입2
+                MaxSpawn = Convert.ToInt32(data["MaxSpawnCount"]),
+                //몬스터 타입3
+                MonsterType = Convert.ToInt32(data["MonsterType"]),
+            };
+            if (monsterData != null)
+            {
+                Logger.Log($"{monsterData} 저장됨");
+                _MonsterData.Add(monsterData);
+            }
+        }
+    }
+    #endregion
     #region 퀘스트 데이터테이블 함수
     void QuestDataTable(string dataPath, string questDataTable)
     {

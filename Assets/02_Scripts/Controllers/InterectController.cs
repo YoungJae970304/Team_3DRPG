@@ -40,6 +40,7 @@ public class InterectController : MonoBehaviour
 
         for (i = 0; i < _target.Count; i++)
         {
+            if (_target[i] == null) { continue; }
             if (!CheckInCamera(_target[i].transform)) { continue; }
 
             float distance = Vector3.Distance(_player.transform.position, _target[i].transform.position);

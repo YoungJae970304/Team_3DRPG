@@ -24740,6 +24740,7 @@ GameObject:
   - component: {fileID: 5315005541309282942}
   - component: {fileID: 8490924055836090306}
   - component: {fileID: 9149110229313521132}
+  - component: {fileID: 3145486752209126848}
   m_Layer: 10
   m_Name: Ork
   m_TagString: Monster
@@ -24892,6 +24893,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3145486752209126848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7606122396081344728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96090ca1a4956324a9e21391dff6edbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
 --- !u!1 &7608129542519631279
 GameObject:
   m_ObjectHideFlags: 0
