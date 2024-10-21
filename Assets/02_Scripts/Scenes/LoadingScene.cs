@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoadingScene : MonoBehaviour
+public class LoadingScene : BaseScene
 {
     public Slider _loadingBar;
 
@@ -52,5 +52,10 @@ public class LoadingScene : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public override void Clear()
+    {
+        
     }
 }
