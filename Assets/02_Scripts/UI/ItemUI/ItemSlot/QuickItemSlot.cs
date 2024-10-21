@@ -29,11 +29,11 @@ public class QuickItemSlot : ItemSlot
             _text.text = "";
         }
     }
-    public override void ItemInsert(ItemSlot moveSlot)
+    public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
         if (!(moveSlot is InventorySlot))//인벤토리가 아니면 무시함
         { return; }
-        Item item = moveSlot.Item;
+        Item item = (moveSlot as InventorySlot).Item;
         if (item ==null|| item.Data.Type != _slotType) { return; }
         Item = item;
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUI : BaseUI, IPointerEnterHandler,IPointerExitHandler
+public class ItemDragUI : BaseUI, IPointerEnterHandler,IPointerExitHandler
 {
     protected GraphicRaycaster _raycaster;
 
