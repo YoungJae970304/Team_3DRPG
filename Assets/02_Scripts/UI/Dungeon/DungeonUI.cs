@@ -30,7 +30,7 @@ public class DungeonUI : BaseUI
 
 
     [Header("버튼 관련 변수")]
-    SceneBtnController _sceneBtnController;
+    //SceneBtnController _sceneBtnController;
     Dictionary<string, int> _buttonType = new Dictionary<string, int>();
     [Header("던전 내 몬스터 이미지 관련 변수")]
     List<Image> _indungeonMonsterImage = new List<Image>();
@@ -56,7 +56,7 @@ public class DungeonUI : BaseUI
         //시작 작업을 실행(버튼생성, 이 오브젝트 파괴불가, 우측 UI level_easy로 초기설정)
         _dataTableManager = Managers.DataTable;
         _deongeonLevel = DeongeonType.Easy;
-        _sceneBtnController = new SceneBtnController();
+        //_sceneBtnController = new SceneBtnController();
         //여기에 button, 이미지 생성 들어갈거임 //필요한거 List에 버튼하고 이미지 담아두기
 
         if (!_Makecheck)
@@ -86,7 +86,7 @@ public class DungeonUI : BaseUI
     }
     public void ExitDungeonUI()
     {
-        _sceneBtnController.OnClickSceneChangeBtn("Dungeon");
+        Managers.Scene.SceneChange("dungeon");
         Managers.Game._selecDungeonLevel = _deongeonLevel;
         CloseUI();
     }
