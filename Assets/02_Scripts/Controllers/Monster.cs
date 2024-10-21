@@ -238,7 +238,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         Managers.Resource.Destroy(mob);//mob은 풀링오브젝트에 들어가는거
     }
- 
+
     #endregion
     #region 상태 변환 조건
     public bool DamageToPlayer()

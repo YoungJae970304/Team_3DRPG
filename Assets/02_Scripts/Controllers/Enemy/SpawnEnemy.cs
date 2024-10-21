@@ -23,7 +23,8 @@ public class SpawnEnemy : MonoBehaviour
     {
 
         _curLevel = Managers.Game._selecDungeonLevel;
-        _player.transform.position = transform.position;
+        //_player.transform.position = transform.position;
+        Managers.Game.PlayerPosSet(transform);
         SetMonsterType();
         MonsterSpawn();
     }

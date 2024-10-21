@@ -18,11 +18,11 @@ public class MonsterDieState : BaseState
         _monster._monsterDrop.DropItemSelect(_monster._deongeonLevel, _monster.sample);//임시 설정 추후 던전에서 받아오도록 변경
         _monster.MakeItem();
         _monster.Die(_monster.gameObject);
-
+     
         // 영재 : 임시로 죽었을 때 게임매니저에서 제거하는 부분 추가
         Managers.Game._monsters.Remove(_monster);
     }
-    //
+   
     public override void OnStateExit()
     {
         
