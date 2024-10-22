@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SpawnEnemy : MonoBehaviour
 {
     DeongeonType _curLevel;
     DataTableManager _tableManager;
+    DungeonManager _dungeonManager;
     HashSet<int> _monsterType = new HashSet<int>();
     public Dictionary<int, int> _monsterMinValue = new Dictionary<int, int>();
     public Dictionary<int, int> _monsterMaxValue = new Dictionary<int, int>();
@@ -21,12 +23,13 @@ public class SpawnEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        _dungeonManager = FindObjectOfType<DungeonManager>();
         _curLevel = Managers.Game._selecDungeonLevel;
         //_player.transform.position = transform.position;
         Managers.Game.PlayerPosSet(transform);
         SetMonsterType();
         MonsterSpawn();
+
     }
 
     // Update is called once per frame
@@ -73,7 +76,7 @@ public class SpawnEnemy : MonoBehaviour
         for (int i = _monsterType.Min(); i <= _monsterType.Max() - 1; i++)
         {
             Logger.LogError($"{_monsterType.Min().ToString()},{_monsterType.Max().ToString()}최소 최댓값");
-            int randomSpawn = Random.Range(_monsterMinValue[i], _monsterMaxValue[i]);
+            int randomSpawn = UnityEngine.Random.Range(_monsterMinValue[i], _monsterMaxValue[i]);
             Logger.LogError($"{randomSpawn.ToString()}랜덤 숫자");
             switch (i)
             {
@@ -107,8 +110,13 @@ public class SpawnEnemy : MonoBehaviour
             if (mon == null)
             {
                 Logger.LogError($"Failed to instantiate monster: {monsterName}");
+                
                 return; // null인 경우 메서드 종료
             }
+            Monster monster = mon.GetComponent<Monster>();
+            monster._makeMonster += _dungeonManager.CountPlus;
+            monster._makeMonster?.Invoke();
+            monster._dieMonster += _dungeonManager.CountMinus;
             mon.transform.position = new Vector3(transform.position.x + i, transform.position.y, transform.position.z);
             Logger.LogError($"{mon.transform.position}");
         }
