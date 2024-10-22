@@ -20,10 +20,12 @@ public class InventorySlot : ItemSlot
         _slotType = _inventory._currentType;
     }
     //아이템 드롭시
-    public override void ItemInsert(ItemSlot moveSlot)
+    public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
+        if (!(moveSlot is ItemSlot)) { return; }
         if (moveSlot is QuickItemSlot) { return; }                              //퀵슬롯이거나 타입이 다르면 리턴
-        if (!_itemManager.Containtype(_slotType, moveSlot._slotType)) { return; }
+        
+        if (!_itemManager.Containtype(_slotType, (moveSlot as ItemSlot)._slotType)) { return; }
         base.ItemInsert(moveSlot);
         
     }
@@ -79,7 +81,11 @@ public class InventorySlot : ItemSlot
         
     }
 
+    public override void NullTarget()
+    {
+        base.NullTarget();
 
+    }
     public override void UpdateSlotInfo()
     {
         base.UpdateSlotInfo();

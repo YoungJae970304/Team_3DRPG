@@ -176,6 +176,13 @@ public class PlayerInput : MonoBehaviour
         {
             OpenLargeMap();
         }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            //임시
+            SkillTreeData skillTreeData = new SkillTreeData();
+            skillTreeData.path = "test";
+            Managers.UI.OpenUI<SkillTree>(skillTreeData);
+        }
     }
 
     public void OpenLargeMap()

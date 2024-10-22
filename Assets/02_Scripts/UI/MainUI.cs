@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainUI : ItemUI
+public class MainUI : ItemDragUI
 {
     Inventory _inventory;
 
