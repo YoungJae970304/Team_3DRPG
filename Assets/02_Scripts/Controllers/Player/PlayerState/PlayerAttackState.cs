@@ -35,9 +35,6 @@ public class PlayerAttackState : BaseState
                 Logger.LogError("지정한 공격이 아님");
                 break;
         }
-
-        //Quaternion targetRot = Quaternion.LookRotation(_player._rotDir);
-        //_player._playerModel.rotation = targetRot;
     }
 
     public override void OnStateUpdate()

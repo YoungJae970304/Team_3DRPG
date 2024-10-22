@@ -127,6 +127,9 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public PlayerStatManager _playerStatManager;
     [HideInInspector]
     public InterectController _interectController;
+    [HideInInspector]
+    public EffectController _effectController;
+
     protected virtual void Awake()
     {
         #region DontDestroy
@@ -140,7 +143,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerCam = gameObject.GetOrAddComponent<PlayerCam>();
         _interectController = gameObject.GetOrAddComponent<InterectController>();
         _playerAnim = GetComponentInChildren<Animator>();
-        _playerStatManager = new PlayerStatManager();
+        _effectController = GetComponentInChildren<EffectController>();
+        _playerStatManager = gameObject.GetOrAddComponent<PlayerStatManager>();
         #endregion
 
         _playerStatManager._originStat = new PlayerStat();

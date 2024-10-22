@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Cinemachine.DocumentationSortingAttribute;
 
-public class Stat : MonoBehaviour
+public class Stat
 {
     protected int _hp;
     protected int _maxHp;

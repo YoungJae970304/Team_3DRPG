@@ -80,7 +80,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Start is called before the first frame update
     public virtual void Start()
     {
-        _mStat = new MonsterStatManager();
+        _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
         _mStat._buffStat = new MonsterStat();
         _player = Managers.Game._player;

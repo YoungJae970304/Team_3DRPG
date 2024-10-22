@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 7999316620019485694}
   - component: {fileID: 3322713625194072580}
   - component: {fileID: 9024554977287331986}
-  - component: {fileID: 5068212463655096710}
+  - component: {fileID: 5821427715223465448}
   - component: {fileID: 4459902747821146588}
   m_Layer: 0
   m_Name: MagePlayer
@@ -463,7 +463,9 @@ MonoBehaviour:
   _cc: {fileID: 0}
   _playerInput: {fileID: 0}
   _playerCam: {fileID: 0}
+  _playerStatManager: {fileID: 0}
   _interectController: {fileID: 0}
+  _effectController: {fileID: 0}
   _mageBallPos: {fileID: 867853495206885531}
 --- !u!114 &3322713625194072580
 MonoBehaviour:
@@ -499,7 +501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dir: {x: 0, y: 0, z: 0}
---- !u!114 &5068212463655096710
+--- !u!114 &5821427715223465448
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -508,9 +510,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8312498464758197025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d8331f3bfb48d448c949b2a263e3b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 658642e428b11d242a42b4c239171565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _originStat: {fileID: 0}
+  _equipStat: {fileID: 0}
+  _buffStat: {fileID: 0}
 --- !u!114 &4459902747821146588
 MonoBehaviour:
   m_ObjectHideFlags: 0
