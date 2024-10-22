@@ -62,6 +62,9 @@ public class Item
     //스프라이트 이미지를 이름으로 저장하고 있기에 이미지 이름을 Resource.load로 경로에서 이미지아이콘 찾아오기
     public Sprite LoadIcon()
     {
+        //플레이어 타입에따라 아이디는 같은데 로드 되는 이미지 다르게적용
+        //MeleeIcon, MageIcon 폴더에서 로드
+        //포션이랑 기타아이템은 EtcIcon폴더에서 로드
         string iconName = "Icon/" + Data.ID.ToString();
         Sprite icon = Resources.Load<Sprite>(iconName);
 

@@ -813,19 +813,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5734257390820008336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8877689760188781928}
-        m_TargetAssemblyTypeName: DungeonDialogUI, Assembly-CSharp
-        m_MethodName: OpenDungeonUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &6971906591450585320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _UIOpenAnimation: {fileID: 0}
   _topBarImage: {fileID: 0}
-  _exitBtn: {fileID: 6006703077729811773}
+  _exitBtn: {fileID: 0}
   _isSort: 0
   dialogs:
   - speakerIndex: 0
