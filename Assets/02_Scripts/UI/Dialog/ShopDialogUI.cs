@@ -66,9 +66,9 @@ public class ShopDialogUI : BaseUI
         {
             ShopUIData shopUIData = new ShopUIData();
             shopUIData._itemCode = new List<(int,int)>();
-            shopUIData._itemCode.Add((11001, 1));
-            shopUIData._itemCode.Add((12001, 1));
-            shopUIData._itemCode.Add((13001, 1));
+            shopUIData._itemCode.Add((11005, 1));
+            shopUIData._itemCode.Add((11006, 1));
+            shopUIData._itemCode.Add((11007, 1));
             Managers.UI.OpenUI<ShopUI>(shopUIData);
             _isOpenUI = true;
         }
