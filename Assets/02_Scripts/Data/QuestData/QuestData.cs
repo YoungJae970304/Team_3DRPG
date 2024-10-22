@@ -98,7 +98,6 @@ public class QuestData : IData
             Logger.Log($"저장 실패(" + e.Message + ")");
         }
         return result;
-
     }
 
     public bool LoadData()

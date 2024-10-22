@@ -13,7 +13,8 @@ public class TestScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        PlayerCreate();
+        Managers.Game.PlayerCreate();
+        Managers.Game.PlayerPosSet(SpawnPos);
         Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
@@ -27,37 +28,12 @@ public class TestScene : BaseScene
 
         Managers.UI.OpenUI<SkillTree>(skillTreeData);
 
-        /*
-        ShopUIData shopUIData = new ShopUIData();
-        shopUIData._itemCode = new List<(int, int)>();
-        shopUIData._itemCode.Add((11001, 1));
-        shopUIData._itemCode.Add((43001, 2));
-        Managers.UI.OpenUI<ShopUI>(shopUIData);*/
+        
     }
     public override void Clear()
     {
         
 
-    }
-
-    // 타입에 맞는 캐릭터 생성
-    private void PlayerCreate()
-    {
-        switch (Managers.Game._playerType)
-        {
-            case Define.PlayerType.Melee:
-                GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
-                meleePlayer.transform.position = SpawnPos.position;
-                Logger.LogError("플레이어 생성 확인");
-                break;
-            case Define.PlayerType.Mage:
-                GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
-                magePlayer.transform.position = SpawnPos.position;
-                break;
-            default:
-                Logger.LogError("생성할 플레이어가 없습니다.");
-                break;
-        }
     }
 
     [ContextMenu("OpenTest")]

@@ -13,10 +13,11 @@ public class Managers : MonoBehaviour
     GameManager _game = new GameManager();
     DataTableManager _dataTable = new DataTableManager();
     QuestManager _questManager = new QuestManager();
-
+    //DungeonManager _dungeonManager = new DungeonManager();
     public static GameManager Game { get { return Instance._game; } }
     public static DataTableManager DataTable { get { return Instance._dataTable; } }
     public static QuestManager QuestManager { get { return Instance._questManager; } }
+    //public static DungeonManager DungeonManager { get { return Instance._dungeonManager;} } 
     #endregion
 
     #region Core
@@ -79,6 +80,7 @@ public class Managers : MonoBehaviour
             s_instance._dataTable.Init();
             s_instance._questManager.Init();
             s_instance._scene.Init();
+            //s_instance._dungeonManager.Init();
         }
     }
 

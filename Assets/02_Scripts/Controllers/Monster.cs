@@ -59,7 +59,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Animator _anim;
     public virtual void Awake()
     {
-        _deongeonLevel = DeongeonType.Hard; // 추후 던젼에서 받아오도록 설정
+        _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
@@ -236,9 +236,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
     #region 죽었을 때
     public virtual void Die(GameObject mob)
     {
-        Destroy(mob, 4f);
+        Managers.Resource.Destroy(mob);//mob은 풀링오브젝트에 들어가는거
     }
- 
+
     #endregion
     #region 상태 변환 조건
     public bool DamageToPlayer()

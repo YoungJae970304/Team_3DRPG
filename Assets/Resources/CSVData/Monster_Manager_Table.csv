@@ -1,0 +1,11 @@
+﻿Index,ID,MonsterName,MinSpawnCount,MaxSpawnCount,MonsterType
+1,91001,SlimeEasy,2,5,1
+2,91002,GoblinEasy,3,4,2
+3,91003,OrkEasy,1,2,3
+4,92001,SlimeNormal,2,5,1
+5,92002,GoblinNormal,3,4,2
+6,92003,OrkNormal,1,2,3
+7,93001,SlimeHard,2,5,1
+8,93001,GoblinHard,3,4,2
+9,93001,OrkHard,1,2,3
+10,99999,Bear,1,1,4

@@ -4,10 +4,35 @@ using UnityEngine;
 
 public class NpcController : Interectable
 {
+    public enum NpcTypes
+    {
+        None,
+        DungeonNpc,
+        ShopNpc,
+        QuestNpc,
+    }
+
+    public NpcTypes _npcType;
+
     public override void Interection(GameObject gameObject)
     {
+        Debug.Log($"npc 타입은: {_npcType}"); 
         base.Interection(gameObject);
-        DungeonNpcDialog();
+
+        switch (_npcType)
+        {
+            case NpcTypes.None:
+                Logger.LogError("맞지 않는 타입 입니다.");
+                break;
+            case NpcTypes.DungeonNpc:
+                DungeonNpcDialog();
+                break;
+                case NpcTypes.ShopNpc:
+                ShopNpcDialog();
+                break;
+                case NpcTypes.QuestNpc:
+                break;
+        }
     }
 
     public override void UIPopUp(bool active)
@@ -17,16 +42,35 @@ public class NpcController : Interectable
 
     public virtual void DungeonNpcDialog()
     {
-        DialogDungeonUI dialogDungeonUI = Managers.UI.GetActiveUI<DialogDungeonUI>() as DialogDungeonUI;
-        if (dialogDungeonUI == null)
+        DungeonDialogUI dungeonDialogUI = Managers.UI.GetActiveUI<DungeonDialogUI>() as DungeonDialogUI;
+
+        if( dungeonDialogUI != null )
         {
-            Managers.UI.OpenUI<DialogDungeonUI>(new BaseUIData());
-            Managers.Game._isActiveDialog = true;
+            Managers.UI.CloseUI(dungeonDialogUI);
+            //Managers.Game._isActiveDialog = false;
         }
         else
         {
-            Managers.UI.CloseCurrFrontUI(dialogDungeonUI);
+            //Managers.Game._player._isMoving = false;
             Managers.Game._isActiveDialog = true;
+            Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
+        }
+    }
+
+    public virtual void ShopNpcDialog()
+    {
+        ShopDialogUI shopDialogUI = Managers.UI.GetActiveUI<ShopDialogUI>() as ShopDialogUI;
+
+        if (shopDialogUI != null)
+        {
+            Managers.UI.CloseUI(shopDialogUI);
+            Managers.Game._isActiveDialog = false;
+        }
+        else
+        {
+            //Managers.Game._player._isMoving = false;
+            Managers.Game._isActiveDialog = true;
+            Managers.UI.OpenUI<ShopDialogUI>(new BaseUIData());
         }
     }
 }
