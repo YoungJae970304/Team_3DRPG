@@ -31,7 +31,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Player _player;
     public NavMeshAgent _nav;
     public MonsterStatManager _mStat;
-    public MonsterStat _dropStat;
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
@@ -88,7 +87,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _player = Managers.Game._player;
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
-        _dropStat = GetComponent<MonsterStat>();
         _nav = GetComponent<NavMeshAgent>();
 
         _originPos = transform.position;
@@ -398,9 +396,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
         if (dropData != null)
         {
-            _dropStat.EXP = dropData.Value5;
+            _mStat.EXP = dropData.Value5;
             _monsterProduct = dropData.Value6;
-            _dropStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
+            _mStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
         }
         else
         {
