@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
+public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
 {
     protected Item _item;                                           //아이템
     public Action itemChangedAction;                                //아이템 변경시 실행될 액션
@@ -46,15 +46,16 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
         }
     }
     //아이템 슬롯에 넣기
-    public virtual void ItemInsert(ItemSlot moveSlot)
+    public virtual void ItemInsert(IItemDragAndDropAble moveSlot)
     {
         if (moveSlot.GetType() == GetType())//같은종류의 슬롯이면
         {
-            EqualSlot(moveSlot);
+            EqualSlot(moveSlot as ItemSlot);
         }
-        else {
-            Item item = moveSlot.Item;
-            if (moveSlot.MoveItem(this))//리턴한 값이 ture일때만
+        else if(moveSlot is ItemSlot) {
+            ItemSlot moveitemSlot = moveSlot as ItemSlot;
+            Item item = moveitemSlot.Item;
+            if (moveitemSlot.MoveItem(this))//리턴한 값이 ture일때만
             {
                 Setitem(item);
             }
@@ -95,4 +96,20 @@ public abstract class ItemSlot : MonoBehaviour, IItemDropAble, IItemDragAble
         }
         Item = item;
     }
+
+    public bool DragEnter(Image icon)
+    {
+        if (Item == null || isLocked) { return false; }
+        icon.enabled = true;                        //마우스 따라다닐 이미지
+        icon.sprite = _Image.sprite;   //이미지 변경
+        _Image.enabled = false;        //슬롯의 이미지 비활성화
+        return true;
+    }
+
+    public void DragExit(Image icon)
+    {
+        icon.enabled = false;
+        _Image.enabled = true;
+    }
+
 }

@@ -22,11 +22,12 @@ public class TestScene : BaseScene
         //Opentest();
         //Close();
 
-        ShopUIData shopUIData = new ShopUIData();
-        shopUIData._itemCode = new List<(int, int)>();
-        shopUIData._itemCode.Add((11001, 1));
-        shopUIData._itemCode.Add((43001, 2));
-        //Managers.UI.OpenUI<ShopUI>(shopUIData);
+
+        SkillTreeData skillTreeData = new SkillTreeData();
+        skillTreeData.path = "test";
+        Managers.UI.OpenUI<SkillTree>(skillTreeData);
+
+        
     }
     public override void Clear()
     {

@@ -43,7 +43,7 @@ public class ResourceManager
 
         if (original == null)
         {
-            Debug.Log($"Failed to load prefab : {path}");
+            Debug.LogError($"Failed to load prefab : {path}");
             return null;
         }
 
@@ -59,13 +59,10 @@ public class ResourceManager
         {
             go.name = go.name.Substring(0, index);  // UI_Inven_Item//(Clone)
         }
-
         return go;
-        // Object를 붙이지 않으면 재귀하려고 할 거라서 // 설명이 부족하지만 지금은 그냥 이렇게 사용
-        //return Object.Instantiate(prefab, parent);
+
     }
 
-    // Object.Destroy(go);를 Destroy()로 랩핑 해본것일 뿐 실제로는 필요 없음
     public void Destroy(GameObject go)
     {
         if (go == null)

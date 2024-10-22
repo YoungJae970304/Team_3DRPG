@@ -6,11 +6,12 @@ public class EquipmentSlot : ItemSlot
 {
     EquipMentUI _equipMentUI;
 
-    public override void ItemInsert(ItemSlot moveSlot)
+    public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
+        if (!(moveSlot is ItemSlot)) { return; }
         if (moveSlot is ShopItemSlot)//상점창이면 무시함
         { return; }
-        Item item = moveSlot.Item;
+        Item item = (moveSlot as ItemSlot).Item;
         if (item.Data.Type != _slotType) { return; }
         base.ItemInsert(moveSlot);
             
