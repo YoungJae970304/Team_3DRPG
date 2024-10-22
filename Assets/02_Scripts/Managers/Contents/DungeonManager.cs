@@ -12,16 +12,33 @@ public class DungeonManager : MonoBehaviour
     //죽을 때 감소하는 변수 (0이되면 클리어가됨) //
     //-- 바로클리어를 막기위해 bool변수 추가해주면좋을듯
     public bool _startCheck = false;
-
+    
     private void Start()
     {
-      
+        
     }
     private void Update()
     {
-      
+        ClearDungeon();
     }
 
+    public void ClearDungeon()
+    {
+        if (_monsterCount <= 0 && _startCheck == true)
+        {
+            //던전 UI활성화
+            InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
+            if(inDungeonUI != null)
+            {
+                Managers.UI.CloseUI(inDungeonUI);
+            }
+            else
+            {
+                Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
+            }
+            _startCheck = false;
+        }
+    }
     public void CountPlus()
     {
         _monsterCount++;

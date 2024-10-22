@@ -9,6 +9,7 @@ public class GoblemSpawn : SpawnEnemy
     {
         base.Start();
         MonsterSpawn(2);
+        _dungeonManager._startCheck = true;
     }
 
 }

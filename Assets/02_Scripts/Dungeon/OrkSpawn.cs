@@ -8,5 +8,6 @@ public class OrkSpawn : SpawnEnemy
     {
         base.Start();
         MonsterSpawn(3);
+        _dungeonManager._startCheck = true;
     }
 }

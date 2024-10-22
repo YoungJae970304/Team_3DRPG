@@ -8,6 +8,7 @@ public class SlimeSpawn : SpawnEnemy
     {
         base.Start();
         MonsterSpawn(1);
+        _dungeonManager._startCheck = true;
     }
 
 }

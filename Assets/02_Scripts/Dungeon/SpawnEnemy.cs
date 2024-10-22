@@ -8,7 +8,7 @@ public class SpawnEnemy : MonoBehaviour
 {
     DeongeonType _curLevel;
     DataTableManager _tableManager;
-    DungeonManager _dungeonManager;
+    public DungeonManager _dungeonManager;
     HashSet<int> _monsterType = new HashSet<int>();
     public Dictionary<int, int> _monsterMinValue = new Dictionary<int, int>();
     public Dictionary<int, int> _monsterMaxValue = new Dictionary<int, int>();
@@ -28,7 +28,7 @@ public class SpawnEnemy : MonoBehaviour
         //_player.transform.position = transform.position;
         Managers.Game.PlayerPosSet(transform);
         SetMonsterType();
-       
+        
 
     }
 
