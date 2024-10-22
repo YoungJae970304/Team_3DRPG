@@ -16,21 +16,21 @@ public class MonsterStatManager : ITotalStat
         }
     }
 
-    public int MaxHP { get { return Mathf.Max(0, _mStat.MaxHP  + _buffStat.MaxHP); } }
+    public int MaxHP { get { return Mathf.Max(0, _mStat.MaxHP  + _buffStat.MaxHP); } set { _buffStat.MaxHP = value; } }
 
-    public int ATK { get { return Mathf.Max(0, _mStat.ATK + _buffStat.ATK); } }
+    public int ATK { get { return Mathf.Max(0, _mStat.ATK + _buffStat.ATK); } set { _buffStat.ATK = value; } }
 
-    public int DEF { get { return Mathf.Max(0, _mStat.DEF + _buffStat.DEF); } }
+    public int DEF { get { return Mathf.Max(0, _mStat.DEF + _buffStat.DEF); } set { _buffStat.DEF = value; } }
 
-    public float MoveSpeed { get { return Mathf.Max(0, _mStat.MoveSpeed + _buffStat.MoveSpeed); } }
+    public float MoveSpeed { get { return Mathf.Max(0, _mStat.MoveSpeed + _buffStat.MoveSpeed); } set { _buffStat.MoveSpeed = value; } }
 
-    public int RecoveryHP { get { return Mathf.Max(0, _mStat.RecoveryHP + _buffStat.RecoveryHP); } }
+    public int RecoveryHP { get { return Mathf.Max(0, _mStat.RecoveryHP + _buffStat.RecoveryHP); } set { _buffStat.RecoveryHP = value; } }
 
     public int MP { get { return Mathf.Max(0, _mStat.MP); } set { _mStat.MP = value; } }
 
-    public int MaxMP { get { return Mathf.Max(0, _mStat.MaxMP + _buffStat.MaxMP); } }
+    public int MaxMP { get { return Mathf.Max(0, _mStat.MaxMP + _buffStat.MaxMP); } set { _buffStat.MaxMP = value; } }
 
-    public int RecoveryMP { get { return Mathf.Max(0, _mStat.RecoveryMP + _buffStat.RecoveryMP); } }
+    public int RecoveryMP { get { return Mathf.Max(0, _mStat.RecoveryMP + _buffStat.RecoveryMP); } set { _buffStat.RecoveryMP = value; } }
 
     public int EXP { get { return _mStat.EXP; }  set { _mStat.EXP = value; } }
 

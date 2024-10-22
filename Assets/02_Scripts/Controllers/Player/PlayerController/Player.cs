@@ -142,7 +142,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerAnim = GetComponentInChildren<Animator>();
         _playerStatManager = new PlayerStatManager();
         #endregion
-
+        GetComponent<StatusEffectManager>()._totalStat = _playerStatManager;
         _playerStatManager._originStat = new PlayerStat();
         _playerStatManager._equipStat = new PlayerStat();
         _playerStatManager._buffStat = new PlayerStat();
