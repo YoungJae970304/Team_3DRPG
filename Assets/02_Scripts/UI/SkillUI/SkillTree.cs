@@ -82,6 +82,12 @@ public class SkillTree : ItemDragUI
         GetText((int)Texts.SpTxt).text = $"sp소모:{5}";
 
     }
+    public override void CloseUI(bool isCloseAll = false)
+    {
+        base.CloseUI(isCloseAll);
+        GetButton((int)Buttons.PlusBtn).onClick.RemoveAllListeners();
+        GetButton((int)Buttons.MinusBtn).onClick.RemoveAllListeners();
+    }
     //스킬레벨 증가
     public void OnSkillLevelPlusBtn() {
         if (_currentItem == null) { return; }
