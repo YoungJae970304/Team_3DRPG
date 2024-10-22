@@ -47,11 +47,9 @@ public class NpcController : Interectable
         if( dungeonDialogUI != null )
         {
             Managers.UI.CloseUI(dungeonDialogUI);
-            //Managers.Game._isActiveDialog = false;
         }
         else
         {
-            //Managers.Game._player._isMoving = false;
             Managers.Game._isActiveDialog = true;
             Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
         }
@@ -68,7 +66,6 @@ public class NpcController : Interectable
         }
         else
         {
-            //Managers.Game._player._isMoving = false;
             Managers.Game._isActiveDialog = true;
             Managers.UI.OpenUI<ShopDialogUI>(new BaseUIData());
         }
