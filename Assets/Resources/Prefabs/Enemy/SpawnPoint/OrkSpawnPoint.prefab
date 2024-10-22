@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8168395258516104053}
-  - component: {fileID: 5628966579543367662}
+  - component: {fileID: -1923021877598836429}
   m_Layer: 0
   m_Name: OrkSpawnPoint
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5628966579543367662
+--- !u!114 &-1923021877598836429
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7670083076639169807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e52c1498a0c03b499a31dd22fbaf66f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b6fc1b8f2a504940ae04f450a87b7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _monsterData1: 0
