@@ -35,8 +35,11 @@ public class MonsterMoveState : BaseState
 
         //플레이어 추격
         //_timer += _monster
-
-        _monster.SetDestinationTimer(1);
+        if (_monster._nav.enabled)
+        {
+            _monster.SetDestinationTimer(1);
+        }
+        
        
 
     }
