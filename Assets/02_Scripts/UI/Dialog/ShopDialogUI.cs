@@ -60,11 +60,18 @@ public class ShopDialogUI : BaseUI
 
         if (shopUI != null)
         {
+            ShopUIData shopUIData = new ShopUIData();
+            //_TEMP
+            shopUIData._itemCode = new List<(int, int)>();
+            shopUIData._itemCode.Remove((11005, 1));
+            shopUIData._itemCode.Remove((11006, 1));
+            shopUIData._itemCode.Remove((11007, 1));
             Managers.UI.CloseUI(shopUI);
         }
         else
         {
             ShopUIData shopUIData = new ShopUIData();
+            //_TEMP
             shopUIData._itemCode = new List<(int,int)>();
             shopUIData._itemCode.Add((11005, 1));
             shopUIData._itemCode.Add((11006, 1));
