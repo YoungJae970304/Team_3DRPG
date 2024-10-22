@@ -25,7 +25,6 @@ public class TestScene : BaseScene
 
         SkillTreeData skillTreeData = new SkillTreeData();
         skillTreeData.path = "test";
-
         Managers.UI.OpenUI<SkillTree>(skillTreeData);
 
         
