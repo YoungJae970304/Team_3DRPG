@@ -14,6 +14,7 @@ public class SpawnEnemy : MonoBehaviour
     public Dictionary<int, int> _monsterMaxValue = new Dictionary<int, int>();
     public int _monsterData1;
     public int _monsterData2;
+    public GameObject[] _spawnPoint;
     Player _player;
     private void Awake()
     {
@@ -83,17 +84,17 @@ public class SpawnEnemy : MonoBehaviour
                 case 1:
                     monstername = "Slime";
                     Logger.LogError($"{monstername}이름은들어가?");
-                    MakeMonster(monstername,randomSpawn);
+                    MakeMonster(monstername,randomSpawn,_spawnPoint[0].transform);
                     
                     break;
                 case 2:
                     monstername = "Goblem";
-                    MakeMonster(monstername, randomSpawn);
+                    MakeMonster(monstername, randomSpawn, _spawnPoint[1].transform);
                     Logger.LogError($"{monstername}이름은들어가?2");
                     break;
                 case 3:
                     monstername = "Ork";
-                    MakeMonster(monstername, randomSpawn);
+                    MakeMonster(monstername, randomSpawn, _spawnPoint[2].transform);
                     Logger.LogError($"{monstername}이름은들어가?3");
                     break;
             }
@@ -102,11 +103,11 @@ public class SpawnEnemy : MonoBehaviour
 
 
     }
-    public void MakeMonster(string monsterName, int randomValue)
+    public void MakeMonster(string monsterName, int randomValue, Transform spawnPos)
     {
         for(int i = 0; i < randomValue; i++)
         {
-            GameObject mon = Managers.Resource.Instantiate($"Enemy/{monsterName}",gameObject.transform);
+            GameObject mon = Managers.Resource.Instantiate($"Enemy/{monsterName}",spawnPos);
             if (mon == null)
             {
                 Logger.LogError($"Failed to instantiate monster: {monsterName}");
@@ -117,7 +118,7 @@ public class SpawnEnemy : MonoBehaviour
             monster._makeMonster += _dungeonManager.CountPlus;
             monster._makeMonster?.Invoke();
             monster._dieMonster += _dungeonManager.CountMinus;
-            mon.transform.position = new Vector3(transform.position.x + i, transform.position.y, transform.position.z);
+            mon.transform.position = new Vector3(spawnPos.position.x + i, spawnPos.position.y, spawnPos.position.z);
             Logger.LogError($"{mon.transform.position}");
         }
     }
