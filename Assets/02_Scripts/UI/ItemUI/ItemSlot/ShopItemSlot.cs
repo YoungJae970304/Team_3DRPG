@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShopItemSlot : ItemSlot
 {//상점 아이템 슬롯 클래스
     //이동이 되지 않으며 사고 파는기능만 있음
-    public override void ItemInsert(ItemSlot moveSlot)
+    public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
         if (moveSlot is InventorySlot) { SellConfirm(moveSlot as InventorySlot); }
         //판매 확인창이 뜸

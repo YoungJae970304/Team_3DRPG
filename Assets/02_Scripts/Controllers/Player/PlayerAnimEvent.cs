@@ -12,6 +12,25 @@ public class PlayerAnimEvent : MonoBehaviour
         _player = Managers.Game._player;
     }
 
+    public void MeleeComboEffect(int combo)
+    {
+        switch (combo)
+        {
+            case 0:
+
+                break;
+            case 1:
+                _player._effectController.MeleeEffectOn(EffectController.MeleeEffects.MeleeCombo1);
+                break;
+            case 2:
+                _player._effectController.MeleeEffectOn(EffectController.MeleeEffects.MeleeCombo2);
+                break;
+            case 3:
+                _player._effectController.MeleeEffectOn(EffectController.MeleeEffects.MeleeCombo3);
+                break;
+        }
+    }
+
     // 평타 애니메이션 시작부
     public void AttackStart()
     {

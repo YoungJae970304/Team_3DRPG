@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4747138439297018842}
   - component: {fileID: 4548036171585476497}
   - component: {fileID: 2581863909052154431}
-  - component: {fileID: 3333236529157362961}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Monster
@@ -170,26 +169,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5750073aaaa57854e833c7c0b7186bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _curState: 0
   _originPos: {x: 0, y: 0, z: 0}
   _player: {fileID: 0}
   _nav: {fileID: 0}
   _mStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
---- !u!114 &3333236529157362961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3636524983878215047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab24970a48883949afcddf26a43f0f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chaseRange: 20
-  _returnRange: 20
-  _attackRange: 2
-  _awayRange: 20
-  _atkDelay: 3
+  _characterController: {fileID: 0}
+  sample: []
+  _monsterDrop: {fileID: 0}
+  _deongeonLevel: 0
+  _dropData:
+    _id: 0
+    _name: 
+    _dropType1: 0
+    _startValue1: 0
+    _endValue1: 0
+    _dropType2: 0
+    _startValue2: 0
+    _endValue2: 0
+    _dropType3: 0
+    _startValue3: 0
+    _endValue3: 0
+    _dropType4: 0
+    _startValue4: 0
+    _endValue4: 0
+    _itemType5: 0
+    _value5: 0
+    _itemType6: 0
+    _value6: 0
+    ID: 0
+    Name: 
+    DropType1: 0
+    StartValue1: 0
+    EndValue1: 0
+    DropType2: 0
+    StartValue2: 0
+    EndValue2: 0
+    DropType3: 0
+    StartValue3: 0
+    EndValue3: 0
+    DropType4: 0
+    StartValue4: 0
+    EndValue4: 0
+    ItemValue5: 0
+    Value5: 0
+    ItemValue6: 0
+    Value6: 0
+  _monsterProduct: 0
+  _attackCompleted: 0
+  _anim: {fileID: 0}
+  _bossBearID: 99999
+  _roarRange: {fileID: 0}
+  _maxRoarRange: {fileID: 0}

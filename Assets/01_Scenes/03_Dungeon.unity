@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 124008131}
   - component: {fileID: 124008130}
   - component: {fileID: 124008132}
+  - component: {fileID: 124008133}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -183,6 +184,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deongeonLevel: 1
+--- !u!114 &124008133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124008129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55469b9676ce9048a51e5c00fd09560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startCheck: 0
 --- !u!1 &512792770
 GameObject:
   m_ObjectHideFlags: 0

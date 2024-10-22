@@ -11,7 +11,7 @@ public class ItemGrab : MonoBehaviour
     public static GraphicRaycaster Raycaster { get; set; }  //레이캐스트를 위한 레이캐스터
     PointerEventData _pointerEvent;                         //포인트 이벤트
     List<RaycastResult> _result = new List<RaycastResult>();//레이캐스트 결과물을 담을 리스트
-    ItemSlot _currnetSlot;                                  //클릭을 시작한 슬롯
+    IItemDragAndDropAble _currnetSlot;                                  //클릭을 시작한 슬롯
     private Vector3 _beginDragIconPoint;                    // 드래그 시작 시 슬롯의 위치
     private Vector3 _beginDragCursorPoint;                  // 드래그 시작 시 커서의 위치
     public ToolTipUI toolTip;           //아이템 정보를 표시할 UI
@@ -30,7 +30,7 @@ public class ItemGrab : MonoBehaviour
 
     #region Event
     //UI 레이캐스트
-    T GetUIRayCast<T>() where T : IItemDropAble
+    T GetUIRayCast<T>() where T : IItemDragAndDropAble
     {
         _result.Clear();
         _pointerEvent.position = Input.mousePosition;
@@ -53,38 +53,31 @@ public class ItemGrab : MonoBehaviour
         OnPointerUp();
     }
     //마우스 좌클릭클릭시작시
-    public ItemSlot OnPointDown()
+    public void OnPointDown()
     {
         if (Input.GetMouseButtonDown(0))
         {
 
-            _currnetSlot = GetUIRayCast<ItemSlot>();
+            _currnetSlot = GetUIRayCast<IItemDragAndDropAble>();
 
-            // 아이템을 갖고 있는 슬롯만 해당
-            if (_currnetSlot != null && _currnetSlot.Item != null&&!_currnetSlot.isLocked)
+            // 슬롯이 검사되면
+            if (_currnetSlot != null)
             {
-
-                // 위치 기억, 참조 등록
-                _beginDragCursorPoint = Input.mousePosition;//마우스 드래그 시작위치
-                Icon.enabled = true;                        //마우스 따라다닐 이미지
-                Icon.sprite = _currnetSlot._Image.sprite;   //이미지 변경
-                _currnetSlot._Image.enabled = false;        //슬롯의 이미지 비활성화
-                _beginDragIconPoint = _currnetSlot._Image.transform.position;//초기위치저장
-            }
-            else
-            {
-                _currnetSlot = null;
+                // 슬롯의 드래그 시작 처리
+                //드래그 가능한 상태가 아니면 false 리턴
+                if (!_currnetSlot.DragEnter(Icon)) {
+                    _currnetSlot = null;
+                }
             }
         }
-        return null;
     }
     //클릭하면서 움직이는도중
     public void OnPointerDrag()
     {
         if (_currnetSlot == null) { return; }
         if (Input.GetMouseButton(0))
-        {//변화량으로 위치변경
-            Icon.transform.position = _beginDragIconPoint + (Input.mousePosition - _beginDragCursorPoint);
+        {//마우스 위치로 아이콘 위치변경
+            Icon.transform.position = Input.mousePosition ;
         }
     }
     //드래그 종료시
@@ -95,8 +88,7 @@ public class ItemGrab : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             //Down에서 한 처리 다시 초기화
-            Icon.enabled = false;
-            _currnetSlot._Image.enabled = true;
+            _currnetSlot.DragExit(Icon);
 
             DragEnd();
             _pointerOverSlot = null;
@@ -108,7 +100,7 @@ public class ItemGrab : MonoBehaviour
     private void DragEnd()
     {
         //마우스 밑의 UI 판단
-        IItemDropAble target = GetUIRayCast<IItemDropAble>();
+        IItemDragAndDropAble target = GetUIRayCast<IItemDragAndDropAble>();
 
         if (target != null)
         {

@@ -31866,7 +31866,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6500717925918048567}
-  - component: {fileID: 5397584123299130039}
   - component: {fileID: 8780025053460433393}
   - component: {fileID: 8392780419757323449}
   - component: {fileID: 1389766860850997121}
@@ -31894,23 +31893,6 @@ Transform:
   - {fileID: 2075480154192163843}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5397584123299130039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8784990582049915282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab24970a48883949afcddf26a43f0f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chaseRange: 20
-  _returnRange: 20
-  _attackRange: 2
-  _awayRange: 20
-  _atkDelay: 3
 --- !u!114 &8780025053460433393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31927,7 +31909,7 @@ MonoBehaviour:
   _originPos: {x: 0, y: 0, z: 0}
   _player: {fileID: 0}
   _nav: {fileID: 0}
-  _dropStat: {fileID: 0}
+  _mStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
   _characterController: {fileID: 0}

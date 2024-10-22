@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class EquipMentUI : ItemUI
+public class EquipMentUI : ItemDragUI
 {//장비 슬롯의 아이템 정보를 담고 관리할 딕셔너리
     Dictionary<string, EquipmentItemData> _equipMentsDick = new Dictionary<string, EquipmentItemData>();
     [SerializeField] List<EquipmentSlot> _slots = new List<EquipmentSlot>();//미리 지정해둔 슬롯

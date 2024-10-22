@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 
@@ -51,9 +52,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     int startValue3;
     int endValue3;
     [Header("몬스터 공격")]
- 
     public bool _attackCompleted = false;
-
+    [Header("몬스터 사망")]
+    public Action _makeMonster;
+    public Action _dieMonster;
     //[HideInInspector]
     //public List<GameObject> _hitPlayer;
     public Animator _anim;
@@ -80,14 +82,13 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Start is called before the first frame update
     public virtual void Start()
     {
-        _mStat = new MonsterStatManager();
+        _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
         _mStat._buffStat = new MonsterStat();
         _player = Managers.Game._player;
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
         _dropStat = GetComponent<MonsterStat>();
-
         _nav = GetComponent<NavMeshAgent>();
 
         _originPos = transform.position;
