@@ -7,7 +7,7 @@ public class ShopUIData : BaseUIData {
     public List<(int,int)> _itemCode;
 }
 
-public class ShopUI : ItemUI
+public class ShopUI : ItemDragUI
 {
     public Transform _itemTrs;
     [SerializeField] int _size;

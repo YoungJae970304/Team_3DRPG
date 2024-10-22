@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class InventoryUI : ItemUI
+public class InventoryUI : ItemDragUI
 {
     public ItemData.ItemType _currentType= ItemData.ItemType.Potion;
 
@@ -34,15 +34,16 @@ public class InventoryUI : ItemUI
         _inventory.GetItemAction += UpdateSlot;
         //ItemGrap.endGrapAction += UpdateSlot;
         GetGameObject((int)GameObjects.Inventory).GetOrAddComponent<ItemProxy>().SetProxy((moveSlot) => {
+            if (!(moveSlot is ItemSlot)) { return; }
             if (moveSlot is InventorySlot|| moveSlot is QuickItemSlot) { return; }
             if (moveSlot is ShopItemSlot) { (moveSlot as ShopItemSlot).BuyConfirm(_inventorySlots[0]); return; }
-            if (_inventory.InsertItem(moveSlot.Item)==0)
+            if (_inventory.InsertItem((moveSlot as ItemSlot).Item)==0)
             {
-                moveSlot.RemoveItem();
+                (moveSlot as ItemSlot).RemoveItem();
             }
             else
             {
-                moveSlot.UpdateSlotInfo();
+                (moveSlot as ItemSlot).UpdateSlotInfo();
             }
         }); ;
         SlotSetting(_currentType);

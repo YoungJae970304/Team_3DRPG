@@ -11,7 +11,7 @@ public class ItemConfirmData : BaseUIData
 }
 
 
-public class ItemConfirm : ItemUI
+public class ItemConfirm : ItemDragUI
 {// 오브젝트 바인드
     #region bind
     enum Buttons

@@ -10,7 +10,7 @@ public class ShowOnlySlot : ItemSlot
         return false;
     }
 
-    public override void ItemInsert(ItemSlot moveSlot)
+    public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
         
         return;
