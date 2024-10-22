@@ -13,12 +13,14 @@ public class MonsterDieState : BaseState
 
     public override void OnStateEnter()
     {
-        _monster._anim.SetTrigger("Die");
         _monster._nav.enabled = false;
+        _monster._anim.SetTrigger("Die");
+        
         Logger.Log("몬스터 사망");
         //_monster.GetComponent<BoxCollider>().enabled = false;
         _monster._monsterDrop.DropItemSelect(_monster._deongeonLevel, _monster.sample);//임시 설정 추후 던전에서 받아오도록 변경
         _monster.MakeItem();
+        _monster._dieMonster?.Invoke();
         //_monster.StartCoroutine(IvokeDie());
         Action invokeDie = async () =>
         {
@@ -32,6 +34,7 @@ public class MonsterDieState : BaseState
     }
     public IEnumerator IvokeDie()
     {
+        
         yield return new WaitForSeconds(2);
         GameObject mob = _monster.gameObject;
         _monster.Die(mob);

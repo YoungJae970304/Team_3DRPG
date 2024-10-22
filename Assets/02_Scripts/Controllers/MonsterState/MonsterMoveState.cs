@@ -9,13 +9,18 @@ public class MonsterMoveState : BaseState
     {
         Logger.LogError("3");
         _monster.StopAllCoroutines();
-        //_monster._nav.enabled = true;
-        //플레이어 찾기(슬라임에서 찾아둠)
-        _monster._anim.SetBool("BeforeChase", true);
-       
-        _monster._nav.stoppingDistance = _monster._mStat.AttackRange - 0.5f;
-        _monster._nav.destination = _monster._player.transform.position;
-        _monster._nav.SetDestination(_monster._nav.destination);
+        if (_monster._nav.enabled)
+        {
+            //_monster._nav.enabled = true;
+            //플레이어 찾기(슬라임에서 찾아둠)
+            _monster._anim.SetBool("BeforeChase", true);
+
+            _monster._nav.stoppingDistance = _monster._mStat.AttackRange - 0.5f;
+            _monster._nav.destination = _monster._player.transform.position;
+            _monster._nav.SetDestination(_monster._nav.destination);
+        }
+        
+        
     }
 
     public override void OnStateExit()
