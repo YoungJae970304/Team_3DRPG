@@ -1,5 +1,3 @@
-using System.IO;
-using System.Linq;
 using UnityEngine;
 
 public class Item
@@ -12,7 +10,7 @@ public class Item
     }
 
     #region ID로
-    public static Item ItemSpawn(int id,int amount =1)
+    public static Item ItemSpawn(int id, int amount = 1)
     {
         //데이터테이블매니저 인스턴스
         DataTableManager dataTableManager = Managers.DataTable;
@@ -24,32 +22,32 @@ public class Item
             Logger.Log($"선택된아이템 아이디 {newItem.ID}");
             if (newItem.ID == id)
             {
-                
+
                 itemData = newItem;
                 break;
             }
         }
-        Logger.Log("EquipmentItemData" + (itemData is EquipmentItemData).ToString()) ;
+        Logger.Log("EquipmentItemData" + (itemData is EquipmentItemData).ToString());
         Logger.Log(itemData.GetType().ToString());
         if (itemData != null)
         {
-                switch (itemData.Type)
-                {
-                    //장착 아이템
-                    case ItemData.ItemType.Weapon:
-                    case ItemData.ItemType.Armor:
-                    case ItemData.ItemType.Accessories:
-                        return new EquipmentItem(itemData);
-                    //사용 가능 아이템
-                    case ItemData.ItemType.Potion:
-                        return new ConsumableItem(itemData, amount);
-                    //수량만 있는 아이템
-                    case ItemData.ItemType.Booty:
-                        return new CountableItem(itemData, amount);
+            switch (itemData.Type)
+            {
+                //장착 아이템
+                case ItemData.ItemType.Weapon:
+                case ItemData.ItemType.Armor:
+                case ItemData.ItemType.Accessories:
+                    return new EquipmentItem(itemData);
+                //사용 가능 아이템
+                case ItemData.ItemType.Potion:
+                    return new ConsumableItem(itemData, amount);
+                //수량만 있는 아이템
+                case ItemData.ItemType.Booty:
+                    return new CountableItem(itemData, amount);
                 default:
-                        Logger.Log($"알 수 없는 아이템 타입 : {itemData.Type}");
-                        return null;
-                }
+                    Logger.Log($"알 수 없는 아이템 타입 : {itemData.Type}");
+                    return null;
+            }
         }
         else
         {
@@ -62,12 +60,36 @@ public class Item
     //스프라이트 이미지를 이름으로 저장하고 있기에 이미지 이름을 Resource.load로 경로에서 이미지아이콘 찾아오기
     public Sprite LoadIcon()
     {
-        string iconName = "Icon/" + Data.ID.ToString();
-        Sprite icon = Resources.Load<Sprite>(iconName);
-
-        if (icon == null) 
+        string iconPath = string.Empty;
+        //플레이어 타입에따라 아이디는 같은데 로드 되는 이미지 다르게적용
+        //MeleeIcon, MageIcon 폴더에서 로드
+        //포션이랑 기타아이템은 EtcIcon폴더에서 로드
+        switch (Data.Type)
         {
-            Logger.LogError("icon 로드 실패 ");
+            case ItemData.ItemType.Weapon:
+                    if (Managers.Game._playerType.GetType().Name == Define.PlayerType.Melee.GetType().Name)
+                    {
+                        iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
+                    }
+                    else if (Managers.Game._playerType.GetType().Name == Define.PlayerType.Mage.GetType().Name)
+                {
+                        iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
+                }
+                else
+                {
+                    iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
+                }
+                break;
+            default:
+                iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
+                break;
+        }
+
+        Sprite icon = Resources.Load<Sprite>(iconPath);
+
+        if (icon == null)
+        {
+            Logger.LogError($"icon 로드 실패: {iconPath}");
             return null;
         }
 

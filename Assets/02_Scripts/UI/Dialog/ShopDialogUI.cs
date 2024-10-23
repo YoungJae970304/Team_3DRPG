@@ -1,34 +1,55 @@
 using System.Collections;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopDialogUI : BaseUI
 {
+    enum Buttons
+    {
+        YesBtn,
+    }
+
     public DialogSystem[] _dialogSystem;
+
+    bool _isOpenUI = false;
 
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
+
         //대화 시작 시 모든 유아이 닫아버리기
         Managers.UI.CloseAllOpenUI();
         StartCoroutine(ShopDialog());
     }
 
-    public override void CloseUI(bool isCloseAll = false)
+    private void Awake()
     {
-        base.CloseUI(isCloseAll);
-        CloseUI(this);
+        Bind<Button>(typeof(Buttons));
+    }
+
+    private void OnEnable()
+    {
+        GetButton((int)Buttons.YesBtn).onClick.AddListener(() =>
+        {
+            OpenShopUI();
+            _isOpenUI = true;
+        });
+    }
+
+    private void OnDisable()
+    {
+        GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
+        Managers.Game._isActiveDialog = false;
+        Managers.Game._player._isMoving = true;
     }
 
     IEnumerator ShopDialog()
     {
-        Managers.Game._isActiveDialog = true;
         Managers.Game._player._isMoving = false;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
-        Managers.Game._isActiveDialog = false;
-        Managers.Game._player._isMoving = true;
-        yield return new WaitForSeconds(0.2f);
+        _isOpenUI = false;
+        yield return new WaitUntil(() => _isOpenUI);
         Managers.UI.CloseUI(this);
     }
 
@@ -43,10 +64,13 @@ public class ShopDialogUI : BaseUI
         }
         else
         {
-            BaseUIData uiData = new BaseUIData();
-            ShopUIData shopData = uiData as ShopUIData;
-            Managers.UI.OpenUI<ShopUI>(shopData);
-            Managers.UI.CloseUI(this);
+            ShopUIData shopUIData = new ShopUIData();
+            shopUIData._itemCode = new List<(int,int)>();
+            shopUIData._itemCode.Add((11005, 1));
+            shopUIData._itemCode.Add((11006, 1));
+            shopUIData._itemCode.Add((11007, 1));
+            Managers.UI.OpenUI<ShopUI>(shopUIData);
+            _isOpenUI = true;
         }
     }
 }
