@@ -16,10 +16,6 @@ public abstract class StatusEffect : MonoBehaviour
     protected TextMeshProUGUI _effectTimerTxt;
 
     public Action<StatusEffect> _removeEffectAction;
-    private void Awake()
-    {
-        
-    }
     public virtual void Init(ITotalStat target,float duration, params int[] value ) {
         _duration = duration;
         _target = target; 
