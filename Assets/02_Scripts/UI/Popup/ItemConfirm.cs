@@ -87,15 +87,27 @@ public class ItemConfirm : ItemDragUI
 
     public void OnSliderChanged(float value)
     {
+        int money = 0;
         Get<TextMeshProUGUI>((int)Texts.ItemAmountTxt).text = $"{value}/{Get<Slider>((int)Sliders.ItemAmount).maxValue}";
-
+        if (isBuy)
+        {
+            
+            GetButton((int)Buttons.ConfirmButton).interactable = _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold <
+                    value * _shopSlot.Item.Data.BuyingPrice;
+            money = Get<ShowOnlySlot>((int)itemSlots.ItemSlot).Item.Data.BuyingPrice * (int)value;
+        }
+        else {
+            money = Get<ShowOnlySlot>((int)itemSlots.ItemSlot).Item.Data.SellingPrice * (int)value;
+        }
+        GetText((int)Texts.MoneyAmountTxt).text = money.ToString();
+        GetText((int)Texts.MoneyAmountTxt).color = GetButton((int)Buttons.ConfirmButton).interactable ? Color.black : Color.red;
     }
     public void OnConfirmBtn()
     {
         if (isBuy)//살때
         {
             int amount = 1;
-            //if() 구매조건
+            
             Item item = Item.ItemSpawn(_shopSlot.Item.Data.ID);
             
             if (item is CountableItem)//쌓일수있는 아이템은 갯수 설정후 구매
@@ -104,8 +116,10 @@ public class ItemConfirm : ItemDragUI
                 (item as CountableItem).SetAmount(Mathf.Max(1, amount));
             }
             //쌓이지 않는 아이템은 그냥 구매
+            
             int overAmount =  _inventorySlot.GetInventory().InsertItem(item);
             int money = item.Data.BuyingPrice * (amount - overAmount);
+            _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold -= money;
         }
         else
         { //팔때
