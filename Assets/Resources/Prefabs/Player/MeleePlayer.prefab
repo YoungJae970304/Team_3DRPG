@@ -164,6 +164,7 @@ GameObject:
   - component: {fileID: 7383795550920942868}
   - component: {fileID: 7730115033510396560}
   - component: {fileID: 4041324828668755092}
+  - component: {fileID: 8581644530299857614}
   m_Layer: 9
   m_Name: MeleePlayer
   m_TagString: Player
@@ -321,6 +322,18 @@ MonoBehaviour:
   _current: {fileID: 0}
   _target: []
   _lastObj: {fileID: 0}
+--- !u!114 &8581644530299857614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918571816801624183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0608956b0949fb349ae2a124ac547a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2509168502048895412
 GameObject:
   m_ObjectHideFlags: 0
