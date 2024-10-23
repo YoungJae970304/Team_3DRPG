@@ -67,19 +67,25 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.3507669
-        functionName: SkillAttack
+      - time: 0
+        functionName: AttackCompleteCheck
         data: 
-        objectReferenceParameter: {fileID: 593171618488029809, guid: 81a2d66d25faee147af5888e0182ee4a,
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.011142061
+        functionName: SwitchAttackEffect
+        data: 
+        objectReferenceParameter: {fileID: 8784990582049915282, guid: e4458f539e3c8d449b1d64cb9ef7cdc4,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: AttackCompleteCheck
+      - time: 0.3507669
+        functionName: SkillAttack
         data: 
-        objectReferenceParameter: {fileID: 593171618488029809, guid: 81a2d66d25faee147af5888e0182ee4a,
-          type: 3}
+        objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

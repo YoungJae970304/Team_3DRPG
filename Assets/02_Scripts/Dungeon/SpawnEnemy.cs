@@ -97,6 +97,8 @@ public class SpawnEnemy : MonoBehaviour
             monster._makeMonster += _dungeonManager.CountPlus;
             monster._makeMonster?.Invoke();
             monster._dieMonster += _dungeonManager.CountMinus;
+            monster.Init();
+            
             mon.transform.position = new Vector3(transform.position.x + i, transform.position.y, transform.position.z);
             Logger.LogError($"{mon.transform.position}");
         }
