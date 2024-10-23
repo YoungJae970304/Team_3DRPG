@@ -15,6 +15,7 @@ public enum PlayerState
     AttackWait,
     Skill,
     Damaged,
+    StatusEffect,
     Dead
 }
 
@@ -87,6 +88,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             }
         }
     }
+
     [HideInInspector]
     public int _curAtkCount;
     [Header("공격 콜라이더 리스트")]
@@ -131,7 +133,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public EffectController _effectController;
     [HideInInspector]
     StatusEffectManager statusEffectManager;
-    public StatusEffectManager StatusEffect { get=> statusEffectManager; }
+    public StatusEffectManager StatusEffect { get => statusEffectManager; }
+
     protected virtual void Awake()
     {
         #region DontDestroy
@@ -148,10 +151,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _effectController = GetComponentInChildren<EffectController>();
         _playerStatManager = gameObject.GetOrAddComponent<PlayerStatManager>();
         #endregion
-        statusEffectManager= GetComponent<StatusEffectManager>();
-        statusEffectManager._totalStat = _playerStatManager;
 
-        
         _playerStatManager._originStat = new PlayerStat();
         _playerStatManager._equipStat = new PlayerStat();
         _playerStatManager._buffStat = new PlayerStat();
@@ -168,6 +168,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         States.Add(PlayerState.Damaged, new PlayerDamagedState(this, _monster, _playerStatManager));
         States.Add(PlayerState.Dead, new PlayerDeadState(this, _monster, _playerStatManager));
         States.Add(PlayerState.AttackWait, new PlayerAttackWaitState(this, _monster, _playerStatManager));
+        States.Add(PlayerState.StatusEffect, new PlayerStatusEffectState(this, _monster, _playerStatManager));
         #endregion
 
         #region 변수 초기화
@@ -190,7 +191,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         // 공격 콜라이더 off
         SetColActive("Katana");
         #endregion  
-        
     }
 
     protected virtual void Update()
@@ -324,6 +324,18 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
                     ChangeState(PlayerState.Move);
                 }
                 break;
+            case PlayerState.StatusEffect:
+                if (_hitting) return;
+
+                if (!_isMoving)
+                {
+                    ChangeState(PlayerState.Idle);
+                }
+                else
+                {
+                    ChangeState(PlayerState.Move);
+                }
+                break;
             case PlayerState.Dead:
                 // Dead에서 다른 상태로 이동하기 위한 조건
                 break;
@@ -389,14 +401,12 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             _hitting = true;
             _invincible = true;
 
-            if (_playerHitState == PlayerHitState.SkillAttack || _playerHitState == PlayerHitState.StunAttack)
+            if (_playerHitState == PlayerHitState.SkillAttack)
             {
                 ChangeState(PlayerState.Damaged);
             }
-            else
-            {
-                InvincibleDelay();
-            }
+
+            InvincibleDelay();
         }
         else
         {
