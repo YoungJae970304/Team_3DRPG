@@ -330,6 +330,7 @@ public class DataTableManager
         }
     }
     #endregion
+
     #region 퀘스트 데이터테이블 함수
     void QuestDataTable(string dataPath, string questDataTable)
     {

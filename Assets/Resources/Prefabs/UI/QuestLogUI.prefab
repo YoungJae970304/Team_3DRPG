@@ -407,7 +407,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 210079826022959851}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4481419673494986707}
+        m_TargetAssemblyTypeName: QuestLogUI, Assembly-CSharp
+        m_MethodName: GiveUpBtn
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4620097682523864138, guid: 75ce98b696bc31841b2d81a131cb6adb,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3156015852762635626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,6 +1313,9 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 6582660709560786134}
   _isSort: 1
+  _questList: {fileID: 7788219289296005419}
+  contentRectTrs: {fileID: 1384479135810243605}
+  scrollRectTrs: {fileID: 8164782858439168375}
 --- !u!1 &5712618807043281880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2374,7 +2390,7 @@ PrefabInstance:
     - target: {fileID: 4620097682523864138, guid: 75ce98b696bc31841b2d81a131cb6adb,
         type: 3}
       propertyPath: m_Name
-      value: QuestListBtn_1
+      value: QuestListBtn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

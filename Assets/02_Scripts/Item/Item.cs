@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using static Define;
 
@@ -66,39 +65,56 @@ public class Item
         //플레이어 타입에따라 아이디는 같은데 로드 되는 이미지 다르게적용
         //MeleeIcon, MageIcon 폴더에서 로드
         //포션이랑 기타아이템은 EtcIcon폴더에서 로드
-        var getPlayerType = Managers.Game._playerType.GetType();
-        Logger.LogWarning($"현재 {getPlayerType.ToString()} 타입 입니다.");
-        bool isOpenShop = GameObject.FindObjectOfType<ShopUI>()?.gameObject.activeSelf ?? false;
-        Logger.Log($"상점 상태 ? {isOpenShop.ToString()}");
+        // var getPlayerType = Managers.Game._playerType.GetType();
         switch (Data.Type)
         {
-            case ItemData.ItemType.Weapon:
-            case ItemData.ItemType.Armor:
-            case ItemData.ItemType.Accessories:
-                if (!isOpenShop)
-                {
-                    if (getPlayerType == typeof(MeleePlayer))
-                    {
-                        iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
-                    }
-                    else if (getPlayerType == typeof(MagePlayer))
-                    {
-                        iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
-                    }
-                }
-                else
-                {
-                    // 상점 열려 있을 때는 EtcIcon 경로(상점에 아이템 배치할거면 사용 안할거면 주석)
-                    iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
-                }
-                break;
-            default:
-                //그외 나머지 것들 로드
+            case ItemData.ItemType.Potion:
+            case ItemData.ItemType.Booty:
+                Logger.Log("스위치문 진입 확인");
                 iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
                 break;
+            default:
+                if (Managers.Game._playerType == PlayerType.Melee)
+                {
+                    Logger.LogWarning("현재 타입 확인" + Data.Type);
+                    iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
+                }
+                else if (Managers.Game._playerType == PlayerType.Mage)
+                {
+                    iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
+                }
+                break;
+
+            //case ItemData.ItemType.Weapon:
+            //case ItemData.ItemType.Armor:
+            //case ItemData.ItemType.Accessories:
+            //    if (Managers.Game._playerType == PlayerType.Melee)
+            //    {
+            //        Logger.LogWarning("현재 타입 확인");
+            //        iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
+            //    }
+            //    else if (Managers.Game._playerType == PlayerType.Mage)
+            //    {
+            //        iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
+            //    }
+            //    if (getPlayerType == typeof(MeleePlayer))
+            //    {
+            //        Logger.LogWarning($"현재 {getPlayerType} 타입 입니다.");
+            //        iconPath = "ItemIcon/MeleeIcon" + Data.ID;
+            //    }
+            //    else if (getPlayerType == typeof(MagePlayer))
+            //    {
+            //        Logger.LogWarning($"현재 {getPlayerType} 타입 입니다.");
+            //        iconPath = "ItemIcon/MageIcon" + Data.ID;
+            //    }
+            //    break;
+            //default:
+            //    //그외 나머지 것들 로드
+            //    iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
+            //    break;
         }
 
-        Sprite icon =  Managers.Resource.Load<Sprite>(iconPath);
+        Sprite icon = Managers.Resource.Load<Sprite>(iconPath);
 
         if (icon == null)
         {

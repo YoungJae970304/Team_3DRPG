@@ -89,7 +89,7 @@ public class DialogSystem : BaseUI
             _isFirst = false;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
         {
             //텍스트 타이핑 효과를 재생중일때
             //마우스 왼쪽 클릭하면 타이핑 효과 종료

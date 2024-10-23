@@ -42,6 +42,13 @@ public class ShopDialogUI : BaseUI
         GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
         Managers.Game._isActiveDialog = false;
         Managers.Game._player._isMoving = true;
+        //_TEMP
+        ShopUIData shopUIData = new ShopUIData();
+        //_TEMP
+        shopUIData._itemCode = new List<(int, int)>();
+        shopUIData._itemCode.Remove((11001, 1));
+        shopUIData._itemCode.Remove((11002, 1));
+        shopUIData._itemCode.Remove((11003, 1));
     }
 
     IEnumerator ShopDialog()
@@ -60,12 +67,6 @@ public class ShopDialogUI : BaseUI
 
         if (shopUI != null)
         {
-            ShopUIData shopUIData = new ShopUIData();
-            //_TEMP
-            shopUIData._itemCode = new List<(int, int)>();
-            shopUIData._itemCode.Remove((11005, 1));
-            shopUIData._itemCode.Remove((11006, 1));
-            shopUIData._itemCode.Remove((11007, 1));
             Managers.UI.CloseUI(shopUI);
         }
         else
@@ -73,9 +74,9 @@ public class ShopDialogUI : BaseUI
             ShopUIData shopUIData = new ShopUIData();
             //_TEMP
             shopUIData._itemCode = new List<(int,int)>();
-            shopUIData._itemCode.Add((11005, 1));
-            shopUIData._itemCode.Add((11006, 1));
-            shopUIData._itemCode.Add((11007, 1));
+            shopUIData._itemCode.Add((11001, 1));
+            shopUIData._itemCode.Add((11002, 1));
+            shopUIData._itemCode.Add((11003, 1));
             Managers.UI.OpenUI<ShopUI>(shopUIData);
             _isOpenUI = true;
         }
