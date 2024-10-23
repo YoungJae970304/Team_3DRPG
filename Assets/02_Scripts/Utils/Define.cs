@@ -59,4 +59,13 @@ public class Define
         Main,
         Sub,
     }
+
+    public enum StatusEffectType { 
+        Buff,
+        DeBuff,
+    }
+    public enum StatusEffects
+    {
+        Slow,
+    }
 }

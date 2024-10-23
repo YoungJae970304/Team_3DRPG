@@ -59,6 +59,9 @@ public class Monster : MonoBehaviour, IDamageAlbe
     //[HideInInspector]
     //public List<GameObject> _hitPlayer;
     public Animator _anim;
+
+    public StatusEffectManager StatusEffect { get => null; }
+
     public virtual void Awake()
     {
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
