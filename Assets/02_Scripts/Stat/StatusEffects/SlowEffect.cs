@@ -9,27 +9,29 @@ public class SlowEffect : StatusEffect
 
     public override void Init(ITotalStat target, float duration, params int[] value)
     {
-        base.Init(target, duration, value);
+        
         _slowAmount =  value[0];
+        base.Init(target, duration, value);
+        Logger.LogError(_slowAmount.ToString());
     }
 
     public override void AddEffect(float duration, params int[] value)
     {
         duration += duration;
         _slowAmount += value[0];
-        _target.MoveSpeed -= value[0];
+        _target.MoveSpeed = -value[0];
         Logger.LogError(_slowAmount.ToString());
     }
 
     public override void Effect()
     {
-        _target.MoveSpeed -= _slowAmount;
+        _target.MoveSpeed = -_slowAmount;
         Logger.LogError(_slowAmount.ToString());
     }
 
     public override void UnEffect()
     {
-        _target.MoveSpeed += _slowAmount;
+        _target.MoveSpeed = _slowAmount;
     }
 
 }

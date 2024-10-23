@@ -8,7 +8,7 @@ public class StatusEffectManager : MonoBehaviour
     List<StatusEffect> _buff=new List<StatusEffect>();
     List<StatusEffect> _deBuff = new List<StatusEffect>();
     public ITotalStat _totalStat;
-    [SerializeField]RectTransform _iconTr;
+    public RectTransform _iconTr;
 
     public void SpawnEffect<T>(int duration,params int[] value) where T : StatusEffect
     {

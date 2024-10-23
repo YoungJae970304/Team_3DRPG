@@ -129,7 +129,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     public InterectController _interectController;
     [HideInInspector]
     public EffectController _effectController;
-
+    [HideInInspector]
+    public StatusEffectManager statusEffectManager;
     protected virtual void Awake()
     {
         #region DontDestroy
@@ -146,7 +147,10 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _effectController = GetComponentInChildren<EffectController>();
         _playerStatManager = gameObject.GetOrAddComponent<PlayerStatManager>();
         #endregion
-        GetComponent<StatusEffectManager>()._totalStat = _playerStatManager;
+        statusEffectManager= GetComponent<StatusEffectManager>();
+        statusEffectManager._totalStat = _playerStatManager;
+
+        
         _playerStatManager._originStat = new PlayerStat();
         _playerStatManager._equipStat = new PlayerStat();
         _playerStatManager._buffStat = new PlayerStat();
@@ -185,6 +189,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         // 공격 콜라이더 off
         SetColActive("Katana");
         #endregion  
+        
     }
 
     protected virtual void Update()
