@@ -24,6 +24,20 @@ public class EnemyAnimEvent : MonoBehaviour
         _monster.AttackPlayer();
 
     }
+    public void SwitchAttackEffect(int attack)
+    {
+        switch (attack)
+        {
+            case 0:
+                Logger.LogError("1번이펙트");
+                _monster._enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.LeftAttack);
+                break;
+            case 1:
+                Logger.LogError("2번이펙트");
+                _monster._enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.RightAttack);
+                break;
+        }
+    }
     public void SkillAttack() // 이벤트 2번
     {
 
