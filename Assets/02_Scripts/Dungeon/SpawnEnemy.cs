@@ -26,7 +26,7 @@ public class SpawnEnemy : MonoBehaviour
         _dungeonManager = FindObjectOfType<DungeonManager>();
         _curLevel = Managers.Game._selecDungeonLevel;
         //_player.transform.position = transform.position;
-        Managers.Game.PlayerPosSet(transform);
+        //Managers.Game.PlayerPosSet(transform);
         SetMonsterType();
         
 
