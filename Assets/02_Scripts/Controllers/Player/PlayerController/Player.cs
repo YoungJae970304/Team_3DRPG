@@ -146,7 +146,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _effectController = GetComponentInChildren<EffectController>();
         _playerStatManager = gameObject.GetOrAddComponent<PlayerStatManager>();
         #endregion
-
+        GetComponent<StatusEffectManager>()._totalStat = _playerStatManager;
         _playerStatManager._originStat = new PlayerStat();
         _playerStatManager._equipStat = new PlayerStat();
         _playerStatManager._buffStat = new PlayerStat();
