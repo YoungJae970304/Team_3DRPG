@@ -25,7 +25,6 @@ public abstract class StatusEffect : MonoBehaviour
         _target = target; 
         _effectIcon = GetComponent<Image>();
         _effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
-        //_effectTimerImg = transform.GetChild(0).GetComponent<Image>();
         _effectTimerTxt=GetComponentInChildren<TextMeshProUGUI>();
         _effectTimerTxt.text = _duration.ToString(); ;
         Effect();
