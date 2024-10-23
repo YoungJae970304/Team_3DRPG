@@ -12,10 +12,14 @@ public class DungeonManager : MonoBehaviour
     //죽을 때 감소하는 변수 (0이되면 클리어가됨) //
     //-- 바로클리어를 막기위해 bool변수 추가해주면좋을듯
     public bool _startCheck = false;
-    
+
+    public void Awake()
+    {
+        _monsterCount = 0;
+    }
     private void Start()
     {
-      
+        
         
     }
     private void Update()
@@ -42,12 +46,12 @@ public class DungeonManager : MonoBehaviour
     }
     public void CountPlus()
     {
-        _monsterCount++;
+        _monsterCount += 1;
         Logger.LogError($"{_monsterCount.ToString()}일단 더한숫자확인");
     }
     public void CountMinus()
     {
-        _monsterCount--;
+        _monsterCount -= 1;
         Logger.LogError($"{_monsterCount.ToString()}일단 뺀숫자확인");
     }
     public void DecideMonster(int ID)

@@ -24,8 +24,10 @@ public class MonsterDieState : BaseState
         //_monster.StartCoroutine(IvokeDie());
         Action invokeDie = async () =>
         {
-            await Task.Delay(3000);
+            await Task.Delay(2000);
             GameObject mob = _monster.gameObject;
+            _monster._nav.enabled = true;
+            _monster._anim.enabled = true;
             _monster.Die(mob);
         };
         invokeDie.Invoke();

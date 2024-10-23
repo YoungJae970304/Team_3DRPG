@@ -19,7 +19,6 @@ public class Slime : Monster
     }
     public override void AttackStateSwitch()
     {
-    
         _anim.SetTrigger("Attack");
     }
 
