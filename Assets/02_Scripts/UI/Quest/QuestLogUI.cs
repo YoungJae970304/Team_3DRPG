@@ -141,7 +141,6 @@ public class QuestLogUI : BaseUI
         return questListBtn;
     }
 
-
     public void UpdateScrolling(RectTransform btnRectTransform)
     {
         //선택된 버튼의 최소 y 최대 y 계산

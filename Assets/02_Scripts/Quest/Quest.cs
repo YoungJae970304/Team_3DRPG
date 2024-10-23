@@ -41,6 +41,11 @@ public class Quest
         return _currentProgress >= _QuestData.TargetCount;
     }
 
+    //public void NextMainQuest(Quest quest)
+    //{
+       
+    //}
+
     //서브퀘스트 반복퀘스트되도록 리셋
     public void ResetSubQuest()
     {
@@ -56,9 +61,22 @@ public class Quest
         DataTableManager dataTableManager = Managers.DataTable;
         QuestData questData = dataTableManager._QuestData.Find(q => q.ID == id);
 
+        switch (questData.Type)
+        {
+            case Define.QuestType.Main:
+                //메인 퀘스트는 일단 던전별로 몬스터 처치
+                return new KillQuest(questData);
+                case Define.QuestType.Sub:
+                //퀘스트타입이 서브인데컬랙터 퀘스트인지 처치 퀘스트인지 구분지어서 퀘스트를 생성
+                return new CollectQuest(questData);
+            default:
+                Logger.LogError("이벤트 퀘스트가 있을경우 추가할래~");
+                break;
+        }
+
         if(questData == null)
         {
-            Logger.LogError($"해당 {id} 를 찾을 수 없습니다");
+            Logger.LogError($"해당 {id}의 퀘스트를 찾을 수 없습니다");
             return null;
         }
         return new Quest(questData);
