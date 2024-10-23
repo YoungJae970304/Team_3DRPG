@@ -82,6 +82,7 @@ public class ItemConfirm : ItemDragUI
         else
         {
             Get<Slider>((int)Sliders.ItemAmount).gameObject.SetActive(false);
+            GetText((int)Texts.MoneyAmountTxt).text = (isBuy ? data.Item.Data.BuyingPrice: data.Item.Data.SellingPrice).ToString();
         }
     }
 
@@ -92,7 +93,7 @@ public class ItemConfirm : ItemDragUI
         if (isBuy)
         {
             
-            GetButton((int)Buttons.ConfirmButton).interactable = _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold <
+            GetButton((int)Buttons.ConfirmButton).interactable = _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold >
                     value * _shopSlot.Item.Data.BuyingPrice;
             money = Get<ShowOnlySlot>((int)itemSlots.ItemSlot).Item.Data.BuyingPrice * (int)value;
         }

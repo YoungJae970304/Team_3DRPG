@@ -178,6 +178,7 @@ public class UIManager
     //가장 최상단에 있는 UI화면 인스턴스를 닫는 함수
     public void CloseCurrFrontUI(bool delete=false)
     {
+        if (_frontUI == null) { return; }
         if (delete)
         {
             DeleteUI(_frontUI);
