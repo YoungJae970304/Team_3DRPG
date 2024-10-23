@@ -540,15 +540,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.31428573
-        functionName: SecondSkillDamage
+      - time: 0.9760956
+        functionName: SkillEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9760956
-        functionName: SkillEnd
+      - time: 0.32978722
+        functionName: SecondSkill
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

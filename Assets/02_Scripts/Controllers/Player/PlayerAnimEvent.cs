@@ -20,9 +20,14 @@ public class PlayerAnimEvent : MonoBehaviour
         {
             _player._effectController.MeleeEffectOn(effect);
         }
-        else
+    }
+
+    public void MageEffect(string effectName)
+    {
+        // 대소문자 구분 없이 enum으로 변환 시도
+        if (Enum.TryParse<EffectController.MageEffects>(effectName, true, out EffectController.MageEffects effect))
         {
-            Debug.LogWarning($"Invalid effect name: {effectName}");
+            _player._effectController.MageEffectOn(effect);
         }
     }
 
@@ -92,16 +97,24 @@ public class PlayerAnimEvent : MonoBehaviour
         }
     }
 
-    public void SecondSkillDamage()
+    public void SecondSkill()
     {
-        Collider[] hitMobs = Physics.OverlapBox(Managers.Game._player.transform.position + (Vector3.forward * 2), new Vector3(1.5f,1f,1f), Quaternion.identity, 1 << LayerMask.NameToLayer("Monster"));
-        foreach (Collider col in hitMobs)
-        {
-            if (col.TryGetComponent<IDamageAlbe>(out var damageable))
-            {
-                damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
-            }
-        }
+        //Collider[] hitMobs = Physics.OverlapBox(Managers.Game._player.transform.position + (Vector3.forward * 2), new Vector3(1.5f,1f,1f), Quaternion.identity, 1 << LayerMask.NameToLayer("Monster"));
+        //foreach (Collider col in hitMobs)
+        //{
+        //    if (col.TryGetComponent<IDamageAlbe>(out var damageable))
+        //    {
+        //        damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+        //    }
+        //}
+
+        MagePlayer magePlayer = (MagePlayer)_player;
+
+        // 검기 생성
+        GameObject go = Managers.Resource.Instantiate("Player/MageSkill2");
+        go.transform.forward = magePlayer._playerModel.forward;
+        go.transform.position = new Vector3(_player._playerModel.position.x, 0, _player._playerModel.position.z);
+        
     }
 
     public void ChainLightningDamage()
