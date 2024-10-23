@@ -89,6 +89,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     // Start is called before the first frame update
     public virtual void Start()
     {
+        Init();
+    }
+    public void Init()
+    {
         _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
         _mStat._buffStat = new MonsterStat();
@@ -117,7 +121,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat._mStat.AwayRange = 20;
         _mStat._mStat.AtkDelay = 3;
     }
-
     // Update is called once per frame
     public virtual void Update()
     {

@@ -30,7 +30,7 @@ public class MonsterDieState : BaseState
         };
         invokeDie.Invoke();
         // 영재 : 임시로 죽었을 때 게임매니저에서 제거하는 부분 추가
-        Managers.Game._monsters.Remove(_monster);
+        //Managers.Game._monsters.Remove(_monster);
     }
     public IEnumerator IvokeDie()
     {
@@ -41,7 +41,7 @@ public class MonsterDieState : BaseState
     }
     public override void OnStateExit()
     {
-        
+       
     }
 
     public override void OnStateUpdate()

@@ -15,6 +15,7 @@ public class DungeonManager : MonoBehaviour
     
     private void Start()
     {
+      
         
     }
     private void Update()
