@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterStatManager : ITotalStat
+public class MonsterStatManager : MonoBehaviour, ITotalStat
 {
     public MonsterStat _mStat;
     public MonsterStat _buffStat;

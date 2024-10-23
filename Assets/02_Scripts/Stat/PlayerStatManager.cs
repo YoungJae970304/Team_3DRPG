@@ -4,10 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatManager : ITotalStat
+public class PlayerStatManager : MonoBehaviour, ITotalStat
 {
+    [HideInInspector]
     public PlayerStat _originStat;
+    [HideInInspector]
     public PlayerStat _equipStat;
+    [HideInInspector]
     public PlayerStat _buffStat;
 
 

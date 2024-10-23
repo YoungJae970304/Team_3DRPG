@@ -24736,7 +24736,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 576286668922688802}
-  - component: {fileID: 1727925207329162341}
+  - component: {fileID: 2776480639564802930}
   - component: {fileID: 5315005541309282942}
   - component: {fileID: 8490924055836090306}
   - component: {fileID: 9149110229313521132}
@@ -24764,7 +24764,7 @@ Transform:
   - {fileID: 2738026606608847495}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1727925207329162341
+--- !u!114 &2776480639564802930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24773,14 +24773,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7606122396081344728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab24970a48883949afcddf26a43f0f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 40a27538eafb15740873d1fefc25109a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chaseRange: 20
-  _returnRange: 20
-  _attackRange: 2
-  _awayRange: 20
-  _atkDelay: 3
 --- !u!114 &5315005541309282942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24797,7 +24792,7 @@ MonoBehaviour:
   _originPos: {x: 0, y: 0, z: 0}
   _player: {fileID: 0}
   _nav: {fileID: 0}
-  _dropStat: {fileID: 0}
+  _mStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
   _characterController: {fileID: 0}

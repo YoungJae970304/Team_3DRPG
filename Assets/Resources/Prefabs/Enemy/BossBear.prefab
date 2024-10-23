@@ -701,11 +701,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5073856785744776537}
-  - component: {fileID: 1653320894558948246}
   - component: {fileID: 154266064507566643}
   - component: {fileID: 1117802376601331531}
   - component: {fileID: 8137741077927977769}
   - component: {fileID: 1322586414604402643}
+  - component: {fileID: 4554929903427957680}
   m_Layer: 10
   m_Name: BossBear
   m_TagString: Monster
@@ -729,23 +729,6 @@ Transform:
   - {fileID: 2012010507651135898}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1653320894558948246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2231100289048953305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab24970a48883949afcddf26a43f0f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chaseRange: 20
-  _returnRange: 20
-  _attackRange: 3
-  _awayRange: 20
-  _atkDelay: 2
 --- !u!114 &154266064507566643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,7 +745,7 @@ MonoBehaviour:
   _originPos: {x: 0, y: 0, z: 0}
   _player: {fileID: 0}
   _nav: {fileID: 0}
-  _dropStat: {fileID: 0}
+  _mStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
   _characterController: {fileID: 0}
@@ -873,6 +856,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
+--- !u!114 &4554929903427957680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231100289048953305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a27538eafb15740873d1fefc25109a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2241571436699941859
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,7 +29,6 @@ public class QuestManager
     {
         QuestData questData = _AllQuestData.Find(q => q.ID == id);
         //현재 수락 가능한 상태인지 체크
-        CheckUnlockQuest();
         if (questData != null)
         {
             // 퀘스트 시작 로직
@@ -52,26 +51,26 @@ public class QuestManager
         }
     }
 
-    //시작 가능 체크
-    public bool CheckUnlockQuest()
-    {
-        int playeLevel = Managers.Game._player._playerStatManager.Level;
+    ////시작 가능 체크
+    //public bool CheckUnlockQuest()
+    //{
+    //    int playeLevel = Managers.Game._player._playerStatManager.Level;
 
-        bool metRequireLevel = false;
+    //    bool metRequireLevel = false;
 
-        foreach (var quest in _AllQuestData)
-        {
-            //현재 플레이어 레벨이 데이터안에있는 시작 가능레벨로 설정
-            _currPlayerLevel = quest.PlayerLevelRequirement;
-            //실제 플레이어 레벨이 데이터안에있는 시작가능 레벨보다 크거나 작으면
-            if (playeLevel >= _currPlayerLevel)
-            {
-                //퀘스트 시작 가능
-                metRequireLevel = true;
-            }
-        }
-        return metRequireLevel;
-    }
+    //    foreach (var quest in _AllQuestData)
+    //    {
+    //        //현재 플레이어 레벨이 데이터안에있는 시작 가능레벨로 설정
+    //        _currPlayerLevel = quest.PlayerLevelRequirement;
+    //        //실제 플레이어 레벨이 데이터안에있는 시작가능 레벨보다 크거나 작으면
+    //        if (playeLevel >= _currPlayerLevel)
+    //        {
+    //            //퀘스트 시작 가능
+    //            metRequireLevel = true;
+    //        }
+    //    }
+    //    return metRequireLevel;
+    //}
 
     //진행 메서드
     public void OnAdvanceQuest(int targetId, int amount)

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MainUI : ItemDragUI
 {
     Inventory _inventory;
-
+    [SerializeField] RectTransform _icontr;
     enum QuickItemSlots {
         ItemSlot_1,
         ItemSlot_2
@@ -39,6 +39,7 @@ public class MainUI : ItemDragUI
         Bind<Slider>(typeof(Sliders));
         base.Init(anchor);
         _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
+        Managers.Game._player.statusEffectManager._iconTr = _icontr;
         MaxHpChange(Managers.Game._player._playerStatManager.MaxHP);
         HpChanged(Managers.Game._player._playerStatManager.HP);
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
