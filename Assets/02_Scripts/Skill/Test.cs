@@ -15,6 +15,10 @@ public class Test : MonoBehaviour
     {
         _lineRenderer.startWidth = 1f;
         _lineRenderer.endWidth = 1f;
+        Quaternion rot = Quaternion.Euler(0, 0, 90);
+        Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, rot, Vector3.one);
+       
+        _lineRenderer.materials[0].SetMatrix("_TextureRotation", m);
     }
 
     // Update is called once per frame
