@@ -21,8 +21,6 @@ public class TestScene : BaseScene
         Managers.UI.OpenUI<MainUI>(new BaseUIData(),false);
         //Opentest();
         //Close();
-
-
         SkillTreeData skillTreeData = new SkillTreeData();
         skillTreeData.path = "test";
         Managers.UI.OpenUI<SkillTree>(skillTreeData);
@@ -58,9 +56,9 @@ public class TestScene : BaseScene
         // 오브젝트 자체를 삭제 ( 1번만 쓰는 UI 같은거 )
         Managers.UI.CloseCurrFrontUI(true);
     }
-    [ContextMenu("Close")]
+    [ContextMenu("피격 테스트")]
     public void Close() {
-        // 버튼 이벤트
+        Managers.Game._player._playerStatManager.HP -= 5000;
     }
     [ContextMenu("CloseLast")]
     public void CloseLast()

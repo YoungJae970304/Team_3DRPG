@@ -1,4 +1,5 @@
 using Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,22 +13,16 @@ public class PlayerAnimEvent : MonoBehaviour
         _player = Managers.Game._player;
     }
 
-    public void MeleeComboEffect(int combo)
+    public void MeleeEffect(string effectName)
     {
-        switch (combo)
+        // 대소문자 구분 없이 enum으로 변환 시도
+        if (Enum.TryParse<EffectController.MeleeEffects>(effectName, true, out EffectController.MeleeEffects effect))
         {
-            case 0:
-
-                break;
-            case 1:
-                _player._effectController.MeleeEffectOn(EffectController.MeleeEffects.MeleeCombo1);
-                break;
-            case 2:
-                _player._effectController.MeleeEffectOn(EffectController.MeleeEffects.MeleeCombo2);
-                break;
-            case 3:
-                _player._effectController.MeleeEffectOn(EffectController.MeleeEffects.MeleeCombo3);
-                break;
+            _player._effectController.MeleeEffectOn(effect);
+        }
+        else
+        {
+            Debug.LogWarning($"Invalid effect name: {effectName}");
         }
     }
 
@@ -179,6 +174,7 @@ public class PlayerAnimEvent : MonoBehaviour
 
         // 검기 생성
         GameObject go = Managers.Resource.Instantiate("Player/SwordAura");
+        go.transform.forward = meleePlayer._playerModel.forward;
         go.transform.position = meleePlayer._swordAuraPos.position;
     }
     #endregion

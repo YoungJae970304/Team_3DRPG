@@ -9,10 +9,13 @@ public class EffectController : BaseUI
         MeleeCombo1,
         MeleeCombo2,
         MeleeCombo3,
-        //StrongAttack,
-        //Skill1,
-        //Skill2,
-        //Skill3,
+        PowerAttack1,
+        PowerAttack2,
+        MeleeSkill1,
+        MeleeSkill2,
+        MeleeSkill3,
+        Hit,
+        PowerAttackHit,
         Count,
     }
 
@@ -53,23 +56,5 @@ public class EffectController : BaseUI
     {
         Get<ParticleSystem>((int)name).gameObject.SetActive(true);
         Get<ParticleSystem>((int)name).Play();
-        //switch (name)
-        //{
-        //    case MeleeEffects.Combo1:
-
-        //        break;
-        //    case MeleeEffects.Combo2:
-        //        break;
-        //    case MeleeEffects.Combo3:
-        //        break;
-        //    case MeleeEffects.StrongAttack:
-        //        break;
-        //    case MeleeEffects.Skill1:
-        //        break;
-        //    case MeleeEffects.Skill2:
-        //        break;
-        //    case MeleeEffects.Skill3:
-        //        break;
-        //}
     }
 }
