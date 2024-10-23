@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class MeleePlayer : Player
@@ -34,6 +35,23 @@ public class MeleePlayer : Player
 
     public override void SkillSetR()
     {
-        _skillBase = new MeleeSkill3();
+        // 임시로 모든 스킬 테스트 해보기 위해 구현 나중에는 E처럼 바꿀것
+        int rand = Random.Range(3, 4);
+
+        switch (rand)
+        {
+            case 1:
+                _skillBase = new MeleeSkill1();
+                break;
+            case 2:
+                _skillBase = new MeleeSkill2();
+                break;
+            case 3:
+                _skillBase = new MeleeSkill3();
+                break;
+            default:
+                break;
+        }
+        //_skillBase = new MeleeSkill2();
     }
 }
