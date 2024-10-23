@@ -23,12 +23,8 @@ public class SlowEffect : StatusEffect
 
     public override void Effect()
     {
-<<<<<<< Updated upstream
-        _target.MoveSpeed -= _slowAmount;
-=======
         
         _target.MoveSpeed = -_slowAmount;
->>>>>>> Stashed changes
         Logger.LogError(_slowAmount.ToString());
     }
 

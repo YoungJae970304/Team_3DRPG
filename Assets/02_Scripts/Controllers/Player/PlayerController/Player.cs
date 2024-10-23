@@ -130,7 +130,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public EffectController _effectController;
     [HideInInspector]
-    public StatusEffectManager statusEffectManager;
+    StatusEffectManager statusEffectManager;
+    public StatusEffectManager StatusEffect { get=> statusEffectManager; }
     protected virtual void Awake()
     {
         #region DontDestroy

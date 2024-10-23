@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamageAlbe {
     public void Damaged(int amount);
-    public StatusEffectManager StatusEffect {get;set;}
+    public StatusEffectManager StatusEffect {get;}
 }
