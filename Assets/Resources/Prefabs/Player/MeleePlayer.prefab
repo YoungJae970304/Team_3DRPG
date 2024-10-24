@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0608956b0949fb349ae2a124ac547a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _iconTr: {fileID: 0}
 --- !u!1 &2509168502048895412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2851,6 +2852,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5500691676333340478}
     m_Modifications:
+    - target: {fileID: 484368387861551534, guid: c2e3fb8fe7b95854384025c765816119,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1758473627833946668, guid: c2e3fb8fe7b95854384025c765816119,
         type: 3}
       propertyPath: m_Name
@@ -2904,6 +2910,21 @@ PrefabInstance:
     - target: {fileID: 2452082064152055796, guid: c2e3fb8fe7b95854384025c765816119,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4090720259843648864, guid: c2e3fb8fe7b95854384025c765816119,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164935075519820021, guid: c2e3fb8fe7b95854384025c765816119,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8892985425029079655, guid: c2e3fb8fe7b95854384025c765816119,
+        type: 3}
+      propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
