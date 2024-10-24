@@ -24,7 +24,7 @@ public class InventorySlot : ItemSlot
     {
         if (!(moveSlot is ItemSlot)) { return; }
         if (moveSlot is QuickItemSlot) { return; }                              //퀵슬롯이거나 타입이 다르면 리턴
-        
+        if (moveSlot is ShopItemSlot) { (moveSlot as ShopItemSlot).BuyConfirm(this); return; }
         if (!_itemManager.Containtype(_slotType, (moveSlot as ItemSlot)._slotType)) { return; }
         base.ItemInsert(moveSlot);
         

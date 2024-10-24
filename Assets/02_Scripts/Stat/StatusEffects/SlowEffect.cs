@@ -17,7 +17,7 @@ public class SlowEffect : StatusEffect
     {
         duration += duration;
         _slowAmount += value[0];
-        _target.MoveSpeed -= value[0];
+        _target.MoveSpeed = -value[0];
         Logger.LogError(_slowAmount.ToString());
     }
 
