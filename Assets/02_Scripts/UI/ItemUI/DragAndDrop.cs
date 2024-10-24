@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemGrab : MonoBehaviour
+public class DragAndDrop : MonoBehaviour
 {
     public Image Icon;
-    public static Action endGrapAction;
     public static GraphicRaycaster Raycaster { get; set; }  //레이캐스트를 위한 레이캐스터
     PointerEventData _pointerEvent;                         //포인트 이벤트
     List<RaycastResult> _result = new List<RaycastResult>();//레이캐스트 결과물을 담을 리스트
@@ -19,6 +18,7 @@ public class ItemGrab : MonoBehaviour
     float _lastClicktime = 0;
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         Raycaster = GetComponent<GraphicRaycaster>();
         _pointerEvent = new PointerEventData(EventSystem.current);
     }
@@ -92,7 +92,6 @@ public class ItemGrab : MonoBehaviour
 
             DragEnd();
             _pointerOverSlot = null;
-            endGrapAction?.Invoke();
             _currnetSlot = null;
         }
     }
