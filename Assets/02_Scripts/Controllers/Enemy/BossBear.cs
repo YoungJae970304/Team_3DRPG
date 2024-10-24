@@ -167,6 +167,7 @@ public class BossBear : Monster
     {
         
         _player._playerHitState = PlayerHitState.StunAttack;
+        //로어 애니메이션
         Roar();
 
       
