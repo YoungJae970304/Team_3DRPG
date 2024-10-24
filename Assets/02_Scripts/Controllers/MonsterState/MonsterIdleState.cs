@@ -14,8 +14,7 @@ public class MonsterIdleState : BaseState
     float awayRangeZ;
     public override void OnStateEnter()
     {
-        _monster._nav.enabled = true;
-        _monster._anim.enabled = true;
+
         awayRangeX = Random.Range(-_monster._mStat.AwayRange, _monster._mStat.AwayRange);
         //float awayRangeY = Random.Range(0, _sStat.AwayRange);
         awayRangeZ = Random.Range(-_monster._mStat.AwayRange, _monster._mStat.AwayRange);
