@@ -14,7 +14,7 @@ public class ItemDragUI : BaseUI, IPointerEnterHandler,IPointerExitHandler
     }
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
-        ItemGrab.Raycaster = _raycaster;
+        DragAndDrop.Raycaster = _raycaster;
     }
 
     public virtual void OnPointerExit(PointerEventData eventData)
