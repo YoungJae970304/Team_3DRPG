@@ -66,18 +66,19 @@ public class QuestDialogUI : BaseUI
         Managers.Game._player._isMoving = false;
         _dialogSystem[0].gameObject.SetActive(true);
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
-        _dialogSystem[0].gameObject.SetActive(false);
 
         _isAccepted = false; _isDone = false; _isRefuse = false;
         yield return new WaitUntil(() => _isAccepted || _isRefuse);
         //거절 버튼을 눌렀을경우 다이얼 로그 인덱스 번호 1번 실행 후 유아이 닫기
         if (_isAccepted)
         {
+            _dialogSystem[0].gameObject.SetActive(false);
             yield return RunDialog(1);
         }
         //거절 버튼을 눌렀을경우 다이얼 로그 인덱스 번호 2 번 실행 후 유아이 닫기
         else if (_isRefuse)
         {
+            _dialogSystem[0].gameObject.SetActive(false);
             yield return RunDialog(2);
         }
         yield return new WaitUntil(() => _isDone);
