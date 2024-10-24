@@ -25,32 +25,4 @@ public class MagePlayer : Player
     {
         _playerCam.CamModeChange();
     }
-
-    public override void SkillSetE()
-    {
-        _skillBase = new TestSkill();
-    }
-
-    public override void SkillSetR()
-    {
-        //_skillBase = new ChainLightning();
-
-        // 임시로 모든 스킬 테스트 해보기 위해 구현 나중에는 E처럼 바꿀것
-        int rand = Random.Range(1, 4);
-
-        switch (rand)
-        {
-            case 1:
-                _skillBase = new TestSkill();
-                break;
-            case 2:
-                _skillBase = new TestSkill2();
-                break;
-            case 3:
-                _skillBase = new ChainLightning();
-                break;
-            default:
-                break;
-        }
-    }
 }

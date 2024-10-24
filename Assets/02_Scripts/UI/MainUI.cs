@@ -24,6 +24,9 @@ public class MainUI : ItemDragUI
 
     }
 
+    public SkillQuickSlot SkillSlot_E { get { return Get<SkillQuickSlot>((int)SkillSlots.SkillSlot_E); } }
+    public SkillQuickSlot SkillSlot_R { get { return Get<SkillQuickSlot>((int)SkillSlots.SkillSlot_R); } }
+
     private void Start()
     {
         

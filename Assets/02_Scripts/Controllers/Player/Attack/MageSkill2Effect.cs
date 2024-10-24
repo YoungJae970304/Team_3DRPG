@@ -5,28 +5,28 @@ using UnityEngine;
 public class MageSkill2Effect : MonoBehaviour
 {
     [Header("콜라이더 Center")]
-    [SerializeField] private Vector3 centerStart = new Vector3(0, 1, 1);  // 시작 위치
-    [SerializeField] private Vector3 centerIncrement = new Vector3(0, 0, 1);  // 증가값
+    [SerializeField] private Vector3 _centerStart = new Vector3(0, 1, 1);  // 시작 위치
+    [SerializeField] private Vector3 _centerIncrement = new Vector3(0, 0, 1);  // 증가값
 
     [Header("콜라이더 Size")]
-    [SerializeField] private Vector3 sizeStart = new Vector3(2, 4, 2);  // 시작 크기
-    [SerializeField] private Vector3 sizeIncrement = new Vector3(0, 0, 2);  // 증가값
+    [SerializeField] private Vector3 _sizeStart = new Vector3(2, 4, 2);  // 시작 크기
+    [SerializeField] private Vector3 _sizeIncrement = new Vector3(0, 0, 2);  // 증가값
 
     [Header("진행 관련")]
-    [SerializeField] private int steps = 12;  // 총 단계 수
-    [SerializeField] private float stepInterval = 0.1f;  // 단계 간 간격
+    [SerializeField] private int _steps = 12;  // 총 단계 수
+    [SerializeField] private float _stepInterval = 0.1f;  // 단계 간 간격
 
-    private BoxCollider boxCollider;
-    private int currentStep;
-    private float timer;
+    private BoxCollider _boxCollider;
+    private int _currentStep;
+    private float _timer;
 
     // 파티클 시스템 수명 관련 변수
-    ParticleSystem particle;
+    ParticleSystem _particle;
 
     private void Awake()
     {
-        boxCollider = gameObject.GetOrAddComponent<BoxCollider>();
-        particle = GetComponentInParent<ParticleSystem>();
+        _boxCollider = gameObject.GetOrAddComponent<BoxCollider>();
+        _particle = GetComponentInParent<ParticleSystem>();
     }
 
     private void OnEnable()
@@ -38,42 +38,42 @@ public class MageSkill2Effect : MonoBehaviour
     private void Start()
     {
         // 초기 상태 설정
-        boxCollider.center = centerStart;
-        boxCollider.size = sizeStart;
+        _boxCollider.center = _centerStart;
+        _boxCollider.size = _sizeStart;
     }
 
     private void Update()
     {
-        if (currentStep >= steps) return;
+        if (_currentStep >= _steps) return;
 
-        timer += Time.deltaTime;
-        if (timer >= stepInterval)
+        _timer += Time.deltaTime;
+        if (_timer >= _stepInterval)
         {
-            timer = 0f;
-            currentStep++;
+            _timer = 0f;
+            _currentStep++;
 
             // 현재 단계에 맞는 값 계산
-            boxCollider.center = centerStart + (centerIncrement * currentStep);
-            boxCollider.size = sizeStart + (sizeIncrement * currentStep);
+            _boxCollider.center = _centerStart + (_centerIncrement * _currentStep);
+            _boxCollider.size = _sizeStart + (_sizeIncrement * _currentStep);
         }
     }
 
     IEnumerator ParticleDestroy()
     {
-        if (particle == null) yield break;
+        if (_particle == null) yield break;
 
-        yield return new WaitForSeconds(particle.main.duration);
+        yield return new WaitForSeconds(_particle.main.duration);
 
-        Managers.Resource.Destroy(particle.gameObject);
+        Managers.Resource.Destroy(_particle.gameObject);
     }
 
     // 시작 위치로 리셋
     public void Reset()
     {
-        currentStep = 0;
-        timer = 0f;
-        boxCollider.center = centerStart;
-        boxCollider.size = sizeStart;
+        _currentStep = 0;
+        _timer = 0f;
+        _boxCollider.center = _centerStart;
+        _boxCollider.size = _sizeStart;
     }
 
     private void OnDisable()

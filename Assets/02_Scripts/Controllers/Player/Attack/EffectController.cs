@@ -20,8 +20,6 @@ public class EffectController : BaseUI
     public enum MageEffects
     {
         MageSkill1,
-        //MageSkill2,
-        //Skill3,
         Count,
     }
 
