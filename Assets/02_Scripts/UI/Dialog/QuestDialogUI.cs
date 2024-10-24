@@ -34,7 +34,7 @@ public class QuestDialogUI : BaseUI
         ActiveBtn();
         GetButton((int)Buttons.YesBtn).onClick.AddListener(() =>
         {
-            QuestListAdd();
+            AcceptQuest();
             _isAccepted = true;
         });
         _exitBtn.onClick.AddListener(() =>
@@ -56,21 +56,26 @@ public class QuestDialogUI : BaseUI
         Managers.Game._player._isMoving = false;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
 
+        bool _dialogDone = false;
+
         yield return new WaitUntil(() => _isAccepted || _isRefuse);
         //거절 버튼을 눌렀을경우 다이얼 로그 인덱스 번호 1번 실행 후 유아이 닫기
         if (_isAccepted)
         {
-            yield return new WaitUntil(() => _dialogSystem[1].UpdateDialog());
             HideBtn();
-            Managers.UI.CloseUI(this);
+            yield return new WaitUntil(() => _dialogSystem[1].UpdateDialog());
+            _dialogDone = true;
         }
         //거절 버튼을 눌렀을경우 다이얼 로그 인덱스 번호 2 번 실행 후 유아이 닫기
         else if (_isRefuse)
         {
             HideBtn();
             yield return new WaitUntil(() => _dialogSystem[2].UpdateDialog());
-            Managers.UI.CloseUI(this);
+            _dialogDone = true;
         }
+
+        yield return new WaitUntil(() => _dialogDone);
+        Managers.UI.CloseUI(this);
     }
 
     void HideBtn()
@@ -87,7 +92,7 @@ public class QuestDialogUI : BaseUI
 
 
     //수락 버튼 눌렀을 때 발행 해줄거  구독 시켜줄거  퀘스트 창이 켜지는게아니라 퀘스트창 안에 리스트버튼이 생성 되어야하니까...
-    public void QuestListAdd()
+    public void AcceptQuest()
     {
         //QuestLogUI questLogUI;
         

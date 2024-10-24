@@ -31,7 +31,7 @@ public class NpcController : Interectable
                 ShopNpcDialog();
                 break;
                 case NpcTypes.QuestNpc:
-                //퀘스트는 조건(PlayerLevel >= QuestStartLVRequire) 달성됐을 때 대화한 후 수락 또는 거절하기 처리
+                QuestNpcDialog();
                 break;
         }
     }
@@ -50,17 +50,6 @@ public class NpcController : Interectable
             Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
             Managers.Game._isActiveDialog = true;
         }
-
-        //if( dungeonDialogUI != null )
-        //{
-        //    Managers.UI.CloseUI(dungeonDialogUI);
-        //    Managers.Game._isActiveDialog = false;
-        //}
-        //else
-        //{
-        //    Managers.Game._isActiveDialog = true;
-        //    Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
-        //}
     }
 
     public virtual void ShopNpcDialog()
@@ -72,17 +61,16 @@ public class NpcController : Interectable
             Managers.UI.OpenUI<ShopDialogUI>(new BaseUIData());
             Managers.Game._isActiveDialog = true;
         }
+    }
 
+    public virtual void QuestNpcDialog()
+    {
+        QuestDialogUI questDialogUI = Managers.UI.GetActiveUI<QuestDialogUI>() as QuestDialogUI;
 
-        //if (shopDialogUI != null)
-        //{
-        //    Managers.UI.CloseUI(shopDialogUI);
-        //    Managers.Game._isActiveDialog = false;
-        //}
-        //else
-        //{
-        //    Managers.Game._isActiveDialog = true;
-        //    Managers.UI.OpenUI<ShopDialogUI>(new BaseUIData());
-        //}
+        if (questDialogUI == null)
+        {
+            Managers.UI.OpenUI<QuestDialogUI>(new BaseUIData());
+            Managers.Game._isActiveDialog = true;
+        }
     }
 }
