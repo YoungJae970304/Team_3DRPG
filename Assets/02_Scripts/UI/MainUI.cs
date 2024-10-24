@@ -29,8 +29,9 @@ public class MainUI : ItemDragUI
         
         
         PubAndSub.Subscrib<int>("HP", HpChanged);
+        PubAndSub.Subscrib<int>("MP", MpChanged);
 
-        
+
     }
     public override void Init(Transform anchor)
     {
@@ -59,6 +60,10 @@ public class MainUI : ItemDragUI
 
     private void HpChanged(int value) {
         Get<Slider>((int)Sliders.HpBar).value = value;
+    }
+    private void MpChanged(int value)
+    {
+        Get<Slider>((int)Sliders.MpBar).value = value;
     }
     private void MaxHpChange(int value)
     {

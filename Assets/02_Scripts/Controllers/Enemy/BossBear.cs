@@ -27,7 +27,21 @@ public class BossBear : Monster
         _roarRange.SetActive(false);
         _mStat._mStat.AttackRange = 4;
     }
+    public override void Update()
+    {
+        _mFSM.UpdateState();
 
+
+        if (_curState == MonsterState.Damage)
+        {
+
+            return;
+        }
+        else
+        {
+            BaseState();
+        }
+    }
     IEnumerator PlusRoarRange()
     {
         _roarTimer = 0;

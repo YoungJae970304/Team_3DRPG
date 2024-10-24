@@ -5,7 +5,7 @@ using System;
 public static class PubAndSub 
 {
     static Hashtable Actions= new Hashtable();
-
+    #region 발행
     public static void Publish(string name) {
         if (Actions.ContainsKey(name))
         {
@@ -21,6 +21,8 @@ public static class PubAndSub
             (Actions[name] as Action<T>)?.Invoke(parameter);
         }
     }
+    #endregion
+    #region 구독
     public static void Subscrib(string name, Action action)
     {
         if (Actions.ContainsKey(name))
@@ -50,6 +52,8 @@ public static class PubAndSub
             Actions.Add(name, action);
         }
     }
+    #endregion
+    #region 구독해제
     public static void UnSubscrib(string name, Action action)
     {
         if (Actions.ContainsKey(name))
@@ -70,4 +74,5 @@ public static class PubAndSub
             Actions[name] = action1;
         }
     }
+    #endregion
 }

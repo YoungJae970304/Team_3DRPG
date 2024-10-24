@@ -6,7 +6,7 @@ using System;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    DeongeonType _curLevel;
+    
     DataTableManager _tableManager;
     public DungeonManager _dungeonManager;
     HashSet<int> _monsterType = new HashSet<int>();
@@ -24,7 +24,7 @@ public class SpawnEnemy : MonoBehaviour
     public virtual void Start()
     {
         _dungeonManager = FindObjectOfType<DungeonManager>();
-        _curLevel = Managers.Game._selecDungeonLevel;
+        
         //_player.transform.position = transform.position;
         //Managers.Game.PlayerPosSet(transform);
         SetMonsterType();
@@ -74,9 +74,14 @@ public class SpawnEnemy : MonoBehaviour
                 case 3:
                     monstername = "Ork";
                     MakeMonster(monstername, randomSpawn);
-                    Logger.LogError($"{monstername}이름은들어가?3");
+                    
                     break;
-            }
+                case 4:
+                    monstername = "BossBear";
+                    MakeMonster(monstername, randomSpawn);
+                    Logger.LogError($"{monstername}이름은들어가?3");
+                break;
+        }
         
 
 
@@ -94,6 +99,7 @@ public class SpawnEnemy : MonoBehaviour
                 return; // null인 경우 메서드 종료
             }
             Monster monster = mon.GetComponent<Monster>();
+            Managers.Game._monsters.Add(monster);
             monster._makeMonster += _dungeonManager.CountPlus;
             monster._makeMonster?.Invoke();
             monster._dieMonster += _dungeonManager.CountMinus;

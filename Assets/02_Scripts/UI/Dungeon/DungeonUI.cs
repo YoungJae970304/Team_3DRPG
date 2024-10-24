@@ -44,6 +44,7 @@ public class DungeonUI : BaseUI
     public int _monsterType1;
     public int _monsterType2;
     public int _monsterType3;
+    public int _dungeonIndex;
     [Header("UI이미지 관련 변수")]
     public GameObject _monsterImageType;
     [Header("UI 관련 변수")]
@@ -87,7 +88,7 @@ public class DungeonUI : BaseUI
     public void ExitDungeonUI()
     {
         Managers.Scene.SceneChange("dungeon");
-        Managers.Game._selecDungeonLevel = _deongeonLevel;
+        //Managers.Game._selecDungeonLevel = _deongeonLevel;
         CloseUI();
     }
     public void DungeonButtonBind()
@@ -172,6 +173,7 @@ public class DungeonUI : BaseUI
                 _monsterType1 = dungeonType.MonsterType1; //세팅
                 _monsterType2 = dungeonType.MonsterType2; //세팅
                 _monsterType3 = dungeonType.MonsterType3; //세팅
+                _dungeonIndex = dungeonType.Index;
                 break;
             }
         }
@@ -189,8 +191,25 @@ public class DungeonUI : BaseUI
         GetImage((int)DungeonUIImage.Monster2).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType2}");
         GetImage((int)DungeonUIImage.Monster3).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType3}");
         //GetImage((int)InDungeonMonster.Monster4).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{i}");
-
-
+        Managers.Game._selecDungeonLevel = SwitchDungeonType(_dungeonIndex);
+        Logger.LogError($"{Managers.Game._selecDungeonLevel}왜안들어감?");
+    }
+    public DeongeonType SwitchDungeonType(int index)
+    {
+        switch (index)
+        {
+            case 1:
+                return DeongeonType.Easy;
+            case 2:
+                return DeongeonType.Normal;
+            case 3:
+                return DeongeonType.Hard;
+            case 4:
+                return DeongeonType.Boss;
+            default:
+                return DeongeonType.Easy;
+        }
+        
     }
 }
 

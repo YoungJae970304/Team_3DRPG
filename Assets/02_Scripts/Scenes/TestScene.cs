@@ -8,13 +8,15 @@ public class TestScene : BaseScene
     [SerializeField] Inventory ItemManager;
     [SerializeField] InventoryUI inventory;
 
-    [SerializeField] Transform SpawnPos;
-
+    [SerializeField] Transform SpawnPos;   
+    [SerializeField] Transform BossDungeonSpawnPos;
+    [SerializeField] DeongeonType _curtype;
     protected override void Init()
     {
         base.Init();
         //Managers.Game.PlayerCreate();
         Managers.Game.PlayerPosSet(SpawnPos);
+        
         //Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //Logger.Log(Managers.Game._player.name);
         ItemManager = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
@@ -29,6 +31,7 @@ public class TestScene : BaseScene
     private void OnEnable()
     {
         Managers.Game.PlayerPosSet(SpawnPos);
+       
     }
 
     public override void Clear()
@@ -36,7 +39,7 @@ public class TestScene : BaseScene
         
 
     }
-
+   
     [ContextMenu("OpenTest")]
     public void Opentest() {
         // 인벤토리 여는 것 I? ( 풀링 )

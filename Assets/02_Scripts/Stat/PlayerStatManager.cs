@@ -15,7 +15,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
 
 
 
-    #region 값을 받을 수 있는 프로퍼티들 및 변경시 작동할 콜백
+    #region 값을 받을 수 있는 프로퍼티
     // 값을 받을 수 있는 프로퍼티들 및 각각의 액션
 
 
