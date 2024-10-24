@@ -149,7 +149,7 @@ public class DungeonUI : BaseUI
             if (dungeonType.Index == index) //인덱스 값이 현재foreach로 돌아가고있는 index값과 같다면
             {
                 _dungeonID = dungeonType.ID; //아이디는 그 당시에 들어갈 ID로 셋팅
-                Logger.LogError($"{_dungeonID}값은 들어감");
+                //Logger.LogError($"{_dungeonID}값은 들어감");
             }
         }
         return _dungeonID;
@@ -165,7 +165,7 @@ public class DungeonUI : BaseUI
                 return;
             }
 
-            Logger.LogError($"{dungeonType.ID},{ID} 다른가?");
+            //Logger.LogError($"{dungeonType.ID},{ID} 다른가?");
             if (dungeonType.ID == ID) //던전아이디가 돌아가고있는 foreach문의 id와 같다면
             {
                 _dungeonName = dungeonType.DungeonName; //세팅

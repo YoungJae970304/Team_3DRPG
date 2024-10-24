@@ -55,9 +55,9 @@ public class SpawnEnemy : MonoBehaviour
         string monstername;
  
         
-            Logger.LogError($"{_monsterType.Min().ToString()},{_monsterType.Max().ToString()}최소 최댓값");
+            //Logger.LogError($"{_monsterType.Min().ToString()},{_monsterType.Max().ToString()}최소 최댓값");
             int randomSpawn = UnityEngine.Random.Range(_monsterMinValue[i], _monsterMaxValue[i]);
-            Logger.LogError($"{randomSpawn.ToString()}랜덤 숫자");
+            //Logger.LogError($"{randomSpawn.ToString()}랜덤 숫자");
             switch (i)
             {
                 case 1:

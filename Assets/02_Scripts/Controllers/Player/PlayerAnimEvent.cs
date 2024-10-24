@@ -123,19 +123,12 @@ public class PlayerAnimEvent : MonoBehaviour
 
         // 체인 라이트닝 데미지, 범위 내의 적들에게 플레이어와 가까운 순서대로 데미지를 가함
         Managers.Game.SortMonsterList();
-        for (int i = 0; i < Managers.Game._monsters.Count; i++)
+
+        GameObject go = Managers.Resource.Instantiate("Player/ChainLightingEffect");
+        go.transform.position = playerPos;
+        if (go.TryGetComponent<ChainLightingEffect>(out var effect))
         {
-            if (Vector3.Distance(playerPos, Managers.Game._monsters[i].transform.position) < 10)
-            {
-                if (Managers.Game._monsters[i].TryGetComponent<IDamageAlbe>(out var damageable))
-                {
-                    Logger.LogWarning(Managers.Game._monsters[i].name);
-                    damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
-                }
-            }
-
-            // 추후 다음 에너미에게 데미지를 가하기까지 딜레이를 줘야함
-
+            effect.Init(playerPos);
         }
     }
     #endregion

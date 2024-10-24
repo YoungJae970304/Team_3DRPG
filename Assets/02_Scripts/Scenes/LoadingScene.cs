@@ -46,7 +46,6 @@ public class LoadingScene : BaseScene
             if (ao.progress >= 0.9f)
             {
                 _skipTxt.enabled = true;
-                // 비디오가 종료되거나 엔터키를 누르면 다음씬 활성화
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     ao.allowSceneActivation = true;

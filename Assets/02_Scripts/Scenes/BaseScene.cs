@@ -15,16 +15,16 @@ public abstract class BaseScene : MonoBehaviour
 
     protected virtual void Init()
     {
-        // Å¸ÀÔÀ¸·Î ¿ÀºêÁ§Æ®¸¦ Ã£°í
+        // íƒ€ì…ìœ¼ë¡œ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ê³ 
         Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
 
-        // ¾øÀ¸¸é »ı¼º
+        // ì—†ìœ¼ë©´ ìƒì„±
         if (obj == null)
         {
             Managers.Resource.Instantiate("UI/EventSystem").name = "@EventSystem";
         }
     }
 
-    // ¿©±â¼­ Á¤ÀÇÇÏÁö ¾ÊÀ» °ÍÀÌ¶ó abstract·Î Á¦ÀÛ
+    // ì—¬ê¸°ì„œ ì •ì˜í•˜ì§€ ì•Šì„ ê²ƒì´ë¼ abstractë¡œ ì œì‘
     public abstract void Clear();
 }

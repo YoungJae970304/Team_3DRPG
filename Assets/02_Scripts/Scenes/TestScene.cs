@@ -21,14 +21,19 @@ public class TestScene : BaseScene
         Managers.UI.OpenUI<MainUI>(new BaseUIData(),false);
         //Opentest();
         //Close();
-        SkillTreeData skillTreeData = new SkillTreeData();
-        skillTreeData.path = "test";
-        Managers.UI.OpenUI<SkillTree>(skillTreeData);
+        //SkillTreeData skillTreeData = new SkillTreeData();
+        //skillTreeData.path = "test";
+        //Managers.UI.OpenUI<SkillTree>(skillTreeData);
     }
 
     private void OnEnable()
     {
-        Managers.Game.PlayerPosSet(SpawnPos);
+        //Managers.Game.PlayerPosSet(SpawnPos);
+    }
+
+    private void Start()
+    {
+        Managers.Game.AddMonsterOnNowScene();
     }
 
     public override void Clear()

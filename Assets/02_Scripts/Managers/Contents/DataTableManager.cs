@@ -130,7 +130,7 @@ public class DataTableManager
             };
             if (itemData != null)
             {
-                Logger.Log($"{itemData.ID} 저장됨");
+                //Logger.Log($"{itemData.ID} 저장됨");
                 _EquipeedItemData.Add(itemData);
                 _AllItemData.Add(itemData);
             }
