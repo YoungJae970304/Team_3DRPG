@@ -38,7 +38,7 @@ public class MagePlayer : Player
         // 임시로 모든 스킬 테스트 해보기 위해 구현 나중에는 E처럼 바꿀것
         int rand = Random.Range(1, 4);
 
-        switch (rand)
+        switch (3)
         {
             case 1:
                 _skillBase = new TestSkill();
