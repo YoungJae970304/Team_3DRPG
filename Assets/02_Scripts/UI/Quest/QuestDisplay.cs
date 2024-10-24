@@ -58,4 +58,10 @@ public class QuestDisplay : BaseUI
         GetText((int)DisplayTexts.QuestRequireText).text = questData.TargetCount.ToString();
         GetImage((int)DisplayImgs.QuestInfo).sprite = Managers.Resource.Load<Sprite>("sptrite/UI/T_TPI_UiQuest1_UIAtlas_1");
     }
+
+    public void UpdateDisplay()
+    {
+        //모으거나 처치할 경우 업데이트 시켜주기..
+        AmountCheck(_questID);
+    }
 }

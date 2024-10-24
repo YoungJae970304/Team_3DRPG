@@ -110,10 +110,9 @@ public class PlayerAnimEvent : MonoBehaviour
 
         MagePlayer magePlayer = (MagePlayer)_player;
 
-        // 검기 생성
         GameObject go = Managers.Resource.Instantiate("Player/MageSkill2");
         go.transform.forward = magePlayer._playerModel.forward;
-        go.transform.position = new Vector3(_player._playerModel.position.x, 0, _player._playerModel.position.z);
+        go.transform.position = new Vector3(_player._playerModel.position.x, _player.transform.position.y, _player._playerModel.position.z);
         
     }
 
