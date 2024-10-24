@@ -48,7 +48,7 @@ public class NpcController : Interectable
         if (dungeonDialogUI == null)
         {
             Managers.UI.OpenUI<DungeonDialogUI>(new BaseUIData());
-            Managers.Game._isActiveDialog = true;
+            Managers.Game._cantInputKey = true;
         }
     }
 
@@ -59,7 +59,7 @@ public class NpcController : Interectable
         if(shopDialogUI == null)
         {
             Managers.UI.OpenUI<ShopDialogUI>(new BaseUIData());
-            Managers.Game._isActiveDialog = true;
+            Managers.Game._cantInputKey = true;
         }
     }
 
@@ -70,7 +70,7 @@ public class NpcController : Interectable
         if (questDialogUI == null)
         {
             Managers.UI.OpenUI<QuestDialogUI>(new BaseUIData());
-            Managers.Game._isActiveDialog = true;
+            Managers.Game._cantInputKey = true;
         }
     }
 }

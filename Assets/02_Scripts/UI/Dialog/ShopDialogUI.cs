@@ -40,8 +40,8 @@ public class ShopDialogUI : BaseUI
     private void OnDisable()
     {
         GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
-        Managers.Game._isActiveDialog = false;
-        Managers.Game._player._isMoving = true;
+        Managers.Game._cantInputKey = false;
+        //Managers.Game._player._isMoving = true;
         //_TEMP
         ShopUIData shopUIData = new ShopUIData();
         //_TEMP
@@ -53,7 +53,7 @@ public class ShopDialogUI : BaseUI
 
     IEnumerator ShopDialog()
     {
-        Managers.Game._player._isMoving = false;
+        //Managers.Game._player._isMoving = false;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);

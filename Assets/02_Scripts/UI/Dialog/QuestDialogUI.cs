@@ -53,8 +53,8 @@ public class QuestDialogUI : BaseUI
 
     private void OnDisable()
     {
-        Managers.Game._isActiveDialog = false;
-        Managers.Game._player._isMoving = true;
+        Managers.Game._cantInputKey = false;
+        //Managers.Game._player._isMoving = true;
     }
 
     IEnumerator QuestDialog()
@@ -63,7 +63,7 @@ public class QuestDialogUI : BaseUI
         {
             dialog.gameObject.SetActive(false);
         }
-        Managers.Game._player._isMoving = false;
+        //Managers.Game._player._isMoving = false;
         _dialogSystem[0].gameObject.SetActive(true);
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
 
