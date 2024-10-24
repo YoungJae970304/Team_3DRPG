@@ -28,30 +28,32 @@ public class ChainLightingEffect : MonoBehaviour
 
     IEnumerator DrawLine(List<Monster> positions)
     {
-        yield return new WaitForSeconds(0.5f);
-        if (_lineRenderer.enabled == false)
+        if (!_lineRenderer.enabled)
             _lineRenderer.enabled = true;
 
-        // 플레이어도 포함해야 하니 +1 해줌
+        // 처음에는 모든 포인트를 시작 위치로 설정
         _lineRenderer.positionCount = positions.Count + 1;
-        _lineRenderer.loop = false;
+        Vector3 startPos = Managers.Game._player.transform.position + Managers.Game._player._cc.center;
 
-        _lineRenderer.SetPosition(0, Managers.Game._player.transform.position + Managers.Game._player._cc.center);
-        //prevPos = Managers.Game._player.transform.position + Managers.Game._player._cc.center;
+        // 모든 포인트를 시작 위치로 초기화
+        for (int i = 0; i <= positions.Count; i++)
+        {
+            _lineRenderer.SetPosition(i, startPos);
+        }
 
+        // 그 다음 순차적으로 위치 업데이트
         for (int i = 0; i < positions.Count; i++)
         {
-            if (Vector3.Distance(Managers.Game._player.transform.position, Managers.Game._monsters[i].transform.position) < 10)
+            if (Vector3.Distance(Managers.Game._player.transform.position, positions[i].transform.position) < 10)
             {
                 if (positions[i].TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    _lineRenderer.SetPosition(i + 1, positions[i].transform.position + positions[i]._characterController.center);
+                    Vector3 targetPos = positions[i].transform.position + positions[i]._characterController.center;
+                    _lineRenderer.SetPosition(i + 1, targetPos);
                     damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
                 }
             }
-
-
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
