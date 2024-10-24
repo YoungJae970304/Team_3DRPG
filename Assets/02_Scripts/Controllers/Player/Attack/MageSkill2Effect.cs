@@ -4,22 +4,81 @@ using UnityEngine;
 
 public class MageSkill2Effect : MonoBehaviour
 {
-    private ParticleSystem _particleSystem;
-    // 리스트를 멤버 변수로 선언하여 매번 새로 생성하지 않도록 함
-    private List<ParticleSystem.Particle> _enterParticles = new List<ParticleSystem.Particle>();
+    [Header("콜라이더 Center")]
+    [SerializeField] private Vector3 centerStart = new Vector3(0, 1, 1);  // 시작 위치
+    [SerializeField] private Vector3 centerIncrement = new Vector3(0, 0, 1);  // 증가값
 
-    private void Start()
+    [Header("콜라이더 Size")]
+    [SerializeField] private Vector3 sizeStart = new Vector3(2, 4, 2);  // 시작 크기
+    [SerializeField] private Vector3 sizeIncrement = new Vector3(0, 0, 2);  // 증가값
+
+    [Header("진행 관련")]
+    [SerializeField] private int steps = 12;  // 총 단계 수
+    [SerializeField] private float stepInterval = 0.1f;  // 단계 간 간격
+
+    private BoxCollider boxCollider;
+    private int currentStep;
+    private float timer;
+
+    // 파티클 시스템 수명 관련 변수
+    ParticleSystem particle;
+
+    private void Awake()
     {
-        _particleSystem = GetComponent<ParticleSystem>();
+        boxCollider = gameObject.GetOrAddComponent<BoxCollider>();
+        particle = GetComponentInParent<ParticleSystem>();
     }
-
-    Transform _originPlayerPos;
 
     private void OnEnable()
     {
-        _originPlayerPos = Managers.Game._player._playerModel.transform;
-
         Managers.Game._player._damageAlbes.Clear();
+        StartCoroutine(ParticleDestroy());
+    }
+
+    private void Start()
+    {
+        // 초기 상태 설정
+        boxCollider.center = centerStart;
+        boxCollider.size = sizeStart;
+    }
+
+    private void Update()
+    {
+        if (currentStep >= steps) return;
+
+        timer += Time.deltaTime;
+        if (timer >= stepInterval)
+        {
+            timer = 0f;
+            currentStep++;
+
+            // 현재 단계에 맞는 값 계산
+            boxCollider.center = centerStart + (centerIncrement * currentStep);
+            boxCollider.size = sizeStart + (sizeIncrement * currentStep);
+        }
+    }
+
+    IEnumerator ParticleDestroy()
+    {
+        if (particle == null) yield break;
+
+        yield return new WaitForSeconds(particle.main.duration);
+
+        Managers.Resource.Destroy(particle.gameObject);
+    }
+
+    // 시작 위치로 리셋
+    public void Reset()
+    {
+        currentStep = 0;
+        timer = 0f;
+        boxCollider.center = centerStart;
+        boxCollider.size = sizeStart;
+    }
+
+    private void OnDisable()
+    {
+        Reset();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,36 +94,6 @@ public class MageSkill2Effect : MonoBehaviour
                 }
                 // 콜라이더로 담을 때
                 Managers.Game._player._damageAlbes.Add(damageAlbe);
-            }
-        }
-    }
-
-    private void OnParticleTrigger()
-    {
-        List<ParticleSystem.Particle> enterParticles = new List<ParticleSystem.Particle>();
-        int numEnter = GetComponent<ParticleSystem>().GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enterParticles);
-
-        for (int i = 0; i < numEnter; i++)
-        {
-            // 파티클 주변의 콜라이더 검출
-            Collider[] hits = Physics.OverlapSphere(enterParticles[i].position, 0.1f, LayerMask.NameToLayer("Monster"));
-
-            foreach (Collider other in hits)
-            {
-                if (other.CompareTag("Monster"))
-                {
-                    if (other.TryGetComponent<IDamageAlbe>(out var damageAlbe))
-                    {
-                        // 데미지 적용
-                        if (!Managers.Game._player._damageAlbes.Contains(damageAlbe))
-                        {
-                            damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
-                            Logger.LogWarning("데미지 적용");
-                        }
-                        // 콜라이더로 담을 때
-                        Managers.Game._player._damageAlbes.Add(damageAlbe);
-                    }
-                }
             }
         }
     }
