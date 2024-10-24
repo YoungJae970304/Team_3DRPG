@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01_Scenes/04_Boss.unity
     guid: 10f184bd5d6d4d546ad5c283efc1187a
+  - enabled: 1
+    path: Assets/01_Scenes/02_MainTest.unity
+    guid: 3fec0124994db094380976132c29d403
+  - enabled: 1
+    path: Assets/01_Scenes/03_DungeonTest.unity
+    guid: 7987fb0ad8cbc2548834ae3f77c0d393
   m_configObjects: {}

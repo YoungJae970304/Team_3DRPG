@@ -52,6 +52,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
     int endValue3;
     [Header("몬스터 공격")]
     public bool _attackCompleted = false;
+    public EnemyEffect _enemyEffect;
     [Header("몬스터 사망")]
     public Action _makeMonster;
     public Action _dieMonster;
@@ -78,11 +79,19 @@ public class Monster : MonoBehaviour, IDamageAlbe
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
-
+        if(GetComponentInChildren<EnemyEffect>() != null)
+        {
+            Logger.LogError("이팩트저장됨");
+            _enemyEffect = GetComponentInChildren<EnemyEffect>();
+        }
 
     }
     // Start is called before the first frame update
     public virtual void Start()
+    {
+        Init();
+    }
+    public void Init()
     {
         _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
@@ -112,7 +121,6 @@ public class Monster : MonoBehaviour, IDamageAlbe
         _mStat._mStat.AwayRange = 20;
         _mStat._mStat.AtkDelay = 3;
     }
-
     // Update is called once per frame
     public virtual void Update()
     {
@@ -312,6 +320,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
                 }
             }
         }
+
 
     }
   
