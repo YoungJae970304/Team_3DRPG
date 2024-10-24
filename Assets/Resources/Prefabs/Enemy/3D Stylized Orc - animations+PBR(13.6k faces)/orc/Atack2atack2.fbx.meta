@@ -95,6 +95,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0
+        functionName: SwitchAttackEffect
+        data: 
+        objectReferenceParameter: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

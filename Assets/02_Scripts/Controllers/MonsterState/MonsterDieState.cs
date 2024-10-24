@@ -24,13 +24,15 @@ public class MonsterDieState : BaseState
         //_monster.StartCoroutine(IvokeDie());
         Action invokeDie = async () =>
         {
-            await Task.Delay(3000);
+            await Task.Delay(2000);
             GameObject mob = _monster.gameObject;
+            _monster._nav.enabled = true;
+            _monster._anim.enabled = true;
             _monster.Die(mob);
         };
         invokeDie.Invoke();
         // 영재 : 임시로 죽었을 때 게임매니저에서 제거하는 부분 추가
-        Managers.Game._monsters.Remove(_monster);
+        //Managers.Game._monsters.Remove(_monster);
     }
     public IEnumerator IvokeDie()
     {
@@ -41,7 +43,7 @@ public class MonsterDieState : BaseState
     }
     public override void OnStateExit()
     {
-        
+       
     }
 
     public override void OnStateUpdate()
