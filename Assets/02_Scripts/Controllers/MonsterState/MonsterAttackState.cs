@@ -41,7 +41,7 @@ public class MonsterAttackState : BaseState
     {
         yield return new WaitForSeconds(delay);
         //_monster._nav.enabled = false;
-        Logger.LogError("1");
+        //Logger.LogError("1");
         _monster._anim.SetBool("AfterAttackMotion", true);
 
         

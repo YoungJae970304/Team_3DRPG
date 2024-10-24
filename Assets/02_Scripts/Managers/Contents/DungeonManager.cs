@@ -51,6 +51,7 @@ public class DungeonManager : MonoBehaviour
     private void Update()
     {
         ClearDungeon();
+       // Logger.LogError($"{Managers.Game._monsters.Count}");
     }
     public void SpawnCheck()
     {
