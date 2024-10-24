@@ -37,14 +37,15 @@ public class DialogSystem : BaseUI
 
     private void Awake()
     {
-        Bind<TextMeshProUGUI>(typeof(DialogTexts));
-        Bind<Image>(typeof(DialogImgs));
-        Bind<GameObject>(typeof(GameObjects));
-        GetGameObject((int)GameObjects.Arrow).SetActive(false);
+       
     }
 
     void Setup()
     {
+        Bind<TextMeshProUGUI>(typeof(DialogTexts));
+        Bind<Image>(typeof(DialogImgs));
+        Bind<GameObject>(typeof(GameObjects));
+        GetGameObject((int)GameObjects.Arrow).SetActive(false);
         //모든 대화 관련 게임오브젝트 비활성화
         //for (int i = 0; i < speakers.Length; ++i)
         //{
@@ -81,7 +82,7 @@ public class DialogSystem : BaseUI
         {
             //초기화. 캐릭터 이미지는 활성화 하고,
             //대사 관련 UI는 모두 비활성화
-            //Setup();
+            Setup();
             //자동 재생(isAutoStart = true)으로 설정되어 있으면
             //첫 번째 대사 재생
             if (_isAutoStart)
@@ -89,7 +90,7 @@ public class DialogSystem : BaseUI
             _isFirst = false;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
         {
             //텍스트 타이핑 효과를 재생중일때
             //마우스 왼쪽 클릭하면 타이핑 효과 종료
