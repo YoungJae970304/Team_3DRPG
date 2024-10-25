@@ -389,13 +389,12 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
 
     public void SkillSetE()
     {
-        MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
+        MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
         _skillBase = mainUI.SkillSlot_E.Skill;
     }
     public void SkillSetR()
     {
         MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
-        //_skillBase = mainUI.SkillSlot_R.Skill;
         _skillBase = new ChainLightning();
     }
 

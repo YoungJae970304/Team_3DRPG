@@ -26,6 +26,7 @@ public class DungeonManager : MonoBehaviour
         _curLevel = _game._selecDungeonLevel;
         DungeonCheck();
         SpawnCheck();
+        DungeonCheck();
     }
     private void OnDisable()
     {

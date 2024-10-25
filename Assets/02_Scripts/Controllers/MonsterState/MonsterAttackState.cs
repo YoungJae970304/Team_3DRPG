@@ -31,7 +31,7 @@ public class MonsterAttackState : BaseState
         //_monster._nav.enabled = true;
         _monster._nav.isStopped = false;
         _monster._timer = _monster._mStat.AtkDelay;
-        _monster._nav.stoppingDistance = 0;
+        _monster._nav.stoppingDistance = _monster._mStat.AttackRange/2;
         
        
         _monster._anim.SetBool("BeforeChase", true);

@@ -36,6 +36,10 @@ public class EnemyAnimEvent : MonoBehaviour
                 Logger.LogError("2번이펙트");
                 _monster._enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.RightAttack);
                 break;
+            case 2:
+                Logger.LogError("3번 이펙트");
+                _monster._enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.Roar);
+                break;
         }
     }
     public void SkillAttack() // 이벤트 2번
@@ -66,6 +70,8 @@ public class EnemyAnimEvent : MonoBehaviour
     }
     public void MonsterAttackCheck()
     {
+        //Logger.LogError("실행중bool124");
         _monster._attackCompleted = true;
+        //Logger.LogError("실행중bool");
     }
 }

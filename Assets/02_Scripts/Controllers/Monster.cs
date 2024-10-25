@@ -95,7 +95,11 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
     {
         Init();
     }
-    public void Init()
+    public virtual void OnEnable()
+    {
+        Init();
+    }
+    public virtual void Init()
     {
         _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
@@ -131,7 +135,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
 
         _mFSM.UpdateState();
 
-
+       // Logger.LogError($"슬라임위치확인{transform.position}");
         if (_curState == MonsterState.Damage)
         {
 
@@ -304,6 +308,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         if(_timer >= targetTIme)
         {
             _nav.destination = _player.transform.position;
+            _nav.stoppingDistance = _mStat.AttackRange / 2;
             _nav.SetDestination(_nav.destination);
             _timer = 0;
         }

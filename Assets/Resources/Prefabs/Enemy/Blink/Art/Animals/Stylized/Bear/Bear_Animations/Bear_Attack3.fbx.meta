@@ -106,7 +106,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 1
+      - time: 0.84415585
         functionName: MonsterAttackCheck
         data: 
         objectReferenceParameter: {fileID: 2231100289048953305, guid: 0d75a8766ed77fb47adb550a875dfedf,
