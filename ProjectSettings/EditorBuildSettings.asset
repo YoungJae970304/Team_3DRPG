@@ -12,18 +12,18 @@ EditorBuildSettings:
     path: Assets/01_Scenes/01_Title.unity
     guid: d6b7180d58a86f140a9fad1a3f0ad278
   - enabled: 1
-    path: Assets/01_Scenes/02_Main.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/01_Scenes/03_Dungeon.unity
-    guid: 51088880bca0f9b4b8e2b3fb5ae5145e
-  - enabled: 1
-    path: Assets/01_Scenes/04_Boss.unity
-    guid: 10f184bd5d6d4d546ad5c283efc1187a
-  - enabled: 1
     path: Assets/01_Scenes/02_MainTest.unity
     guid: 3fec0124994db094380976132c29d403
   - enabled: 1
     path: Assets/01_Scenes/03_DungeonTest.unity
     guid: 7987fb0ad8cbc2548834ae3f77c0d393
+  - enabled: 1
+    path: Assets/01_Scenes/04_Boss.unity
+    guid: 10f184bd5d6d4d546ad5c283efc1187a
+  - enabled: 1
+    path: Assets/01_Scenes/02_Main.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/01_Scenes/03_Dungeon.unity
+    guid: 51088880bca0f9b4b8e2b3fb5ae5145e
   m_configObjects: {}
