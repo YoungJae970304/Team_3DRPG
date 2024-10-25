@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5192120283780874669}
   - component: {fileID: 7624892395325495080}
   - component: {fileID: 697483932480134145}
-  - component: {fileID: 1888719075091263218}
+  - component: {fileID: 865451953347749920}
   m_Layer: 0
   m_Name: DungeonNPC
   m_TagString: NPC
@@ -107,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1888719075091263218
+--- !u!114 &865451953347749920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2390683838968090313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd7ebfefd37d3454cbbb0bac7bb39552, type: 3}
+  m_Script: {fileID: 11500000, guid: 4251386e6ecf5c441a66d9665bda3a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 2784349132712581450}

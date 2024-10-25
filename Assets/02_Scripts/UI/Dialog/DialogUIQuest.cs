@@ -11,31 +11,24 @@ public class DialogUIQuest : DialogUI
     bool _isRefuse = false;
     bool _isDone = false;
 
-    protected override void  Awake()
+    protected override void Awake()
     {
         base.Awake();
         InitButtons();
     }
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        ActiveBtn();
-    }
-
-    protected override void OnButton()
+    protected override void OnClickedButton()
     {
         //이 추상클래스에서 퀘스트 수락로직 작성
         AcceptQuest();
     }
 
-
     void InitButtons()
     {
-        _Button[Buttons.YesBtn] = GetButton((int)Buttons.YesBtn);
+        _Button[Buttons.CheckBtn] = GetButton((int)Buttons.CheckBtn);
         _Button[Buttons.RefuseBtn] = GetButton((int)Buttons.RefuseBtn);
 
-        _Button[Buttons.YesBtn].onClick.AddListener(() => OnButtonClicked(Buttons.YesBtn));
+        _Button[Buttons.CheckBtn].onClick.AddListener(() => OnButtonClicked(Buttons.CheckBtn));
         _Button[Buttons.RefuseBtn].onClick.AddListener(() => OnButtonClicked(Buttons.RefuseBtn));
     }
 
@@ -43,7 +36,7 @@ public class DialogUIQuest : DialogUI
     {
         switch (buttons)
         {
-            case Buttons.YesBtn:
+            case Buttons.CheckBtn:
                 _isAccepted = true;
                 break;
             case Buttons.RefuseBtn:
@@ -63,8 +56,11 @@ public class DialogUIQuest : DialogUI
         }
         _dialogSystem[0].gameObject.SetActive(true);
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
-
-        _isAccepted = false; _isDone = false; _isRefuse = false;
+        ActiveBtns(Buttons.CheckBtn);
+        ActiveBtns(Buttons.RefuseBtn);
+        _isAccepted = false; 
+        _isDone = false;
+        _isRefuse = false;
         yield return new WaitUntil(() => _isAccepted || _isRefuse);
         //거절 버튼을 눌렀을경우 다이얼 로그 인덱스 번호 1번 실행 후 유아이 닫기
         if (_isAccepted)
@@ -93,14 +89,8 @@ public class DialogUIQuest : DialogUI
 
     void HideBtn()
     {
-        GetButton((int)Buttons.YesBtn).gameObject.SetActive(false);
+        GetButton((int)Buttons.CheckBtn).gameObject.SetActive(false);
         GetButton((int)Buttons.RefuseBtn).gameObject.SetActive(false);
-    }
-
-    void ActiveBtn()
-    {
-        GetButton((int)Buttons.YesBtn).gameObject.SetActive(true);
-        GetButton((int)Buttons.RefuseBtn).gameObject.SetActive(true);
     }
 
     //수락 버튼 눌렀을 때 퀘스트 창이 켜지는게아니라 퀘스트창 안에 리스트버튼이 생성
