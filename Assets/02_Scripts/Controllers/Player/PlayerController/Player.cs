@@ -377,14 +377,25 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
             if (mob.TryGetComponent<IDamageAlbe>(out var damageable))
             {
                 damageable.Damaged(damage);
+                GameObject go = Managers.Resource.Instantiate("HitEffect/MeleeNormalHit");
+                go.transform.position = mob.transform.position;
             }
         }
 
         _hitMobs.Clear();
     }
 
-    public abstract void SkillSetE();
-    public abstract void SkillSetR();
+    public void SkillSetE()
+    {
+        MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
+        _skillBase = mainUI.SkillSlot_E.Skill;
+    }
+    public void SkillSetR()
+    {
+        MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
+        //_skillBase = mainUI.SkillSlot_R.Skill;
+        _skillBase = new ChainLightning();
+    }
 
     // 우클릭 시 발생하는 행동
     public abstract void Special();

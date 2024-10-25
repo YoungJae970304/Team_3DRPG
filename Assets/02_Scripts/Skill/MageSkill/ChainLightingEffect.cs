@@ -56,30 +56,33 @@ public class ChainLightingEffect : MonoBehaviour
         if (!_lineRenderer.enabled)
             _lineRenderer.enabled = true;
 
+        // 중간에 몬스터가 죽게되면 실시간으로 for문의 반복 횟수에 영향을 받기때문에 스킬 사용시 저장용으로 리스트 생성
+        List<Monster> monstersCopy = new List<Monster>(positions);
+
         // 처음에는 모든 포인트를 시작 위치로 설정
-        _lineRenderer.positionCount = positions.Count + 1;
+        _lineRenderer.positionCount = 1;
         Vector3 startPos = Managers.Game._player.transform.position + Managers.Game._player._cc.center;
 
-        // 모든 포인트를 시작 위치로 초기화
-        for (int i = 0; i <= positions.Count; i++)
-        {
-            _lineRenderer.SetPosition(i, startPos);
-        }
+        _lineRenderer.SetPosition(0, startPos);
+
         // 그 다음 순차적으로 위치 업데이트
-        for (int i = 0; i < positions.Count; i++)
+        for (int i = 0; i < monstersCopy.Count; i++)
         {
-            if (Vector3.Distance(Managers.Game._player.transform.position, positions[i].transform.position) < 10)
+            if (Vector3.Distance(Managers.Game._player.transform.position, monstersCopy[i].transform.position) < 10)
             {
-                if (positions[i].TryGetComponent<IDamageAlbe>(out var damageable))
+                // 새로운 포인트를 추가할 때마다 positionCount 증가
+                _lineRenderer.positionCount = i + 2;
+
+                //Vector3 targetPos = monstersCopy[i].transform.position + (Vector3.up * monstersCopy[i]._characterController.height * 0.5f);
+                Vector3 targetPos = monstersCopy[i].transform.position + monstersCopy[i]._characterController.center;
+                _lineRenderer.SetPosition(i + 1, targetPos);
+
+                if (monstersCopy[i].TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    Vector3 targetPos = positions[i].transform.position + positions[i]._characterController.center;
-                    _lineRenderer.SetPosition(i + 1, targetPos);
                     damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
-
-
                 }
             }
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
         }
         /*
         Monster monster=new Monster();

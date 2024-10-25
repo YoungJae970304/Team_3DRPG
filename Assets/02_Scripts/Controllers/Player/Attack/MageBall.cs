@@ -31,6 +31,7 @@ public class MageBall : MonoBehaviour
     void Update()
     {
         transform.position += _ballDir * _ballSpeed * Time.deltaTime;
+        transform.forward = _ballDir;
 
         float distance = Vector3.Distance(_originPlayerPos.position, transform.position);
 
