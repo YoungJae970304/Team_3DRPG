@@ -70,6 +70,8 @@ public class EnemyAnimEvent : MonoBehaviour
     }
     public void MonsterAttackCheck()
     {
+        //Logger.LogError("실행중bool124");
         _monster._attackCompleted = true;
+        //Logger.LogError("실행중bool");
     }
 }

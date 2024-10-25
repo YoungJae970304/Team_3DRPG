@@ -99,7 +99,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
     {
         Init();
     }
-    public void Init()
+    public virtual void Init()
     {
         _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
@@ -277,18 +277,18 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
     {
         //사정거리 체크 구현
         //여기에 타이머넣어서 변환까지 시간걸리게
-        bool rangeCheck = _mStat.AttackRange > (_player.transform.position.normalized - transform.position.normalized).magnitude;
-        bool angleCheck = Vector3.Angle(transform.forward.normalized, _player.transform.position.normalized - transform.position.normalized)<45;
+        bool rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position)<45;
         return rangeCheck && angleCheck;
     }
     public bool CanSeePlayer()
     {
 
-        return _mStat.ChaseRange > (_player.transform.position.normalized - transform.position.normalized).magnitude;
+        return _mStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
     }
     public bool ReturnOrigin()
     {
-        return _mStat.ReturnRange < (_originPos.normalized - transform.position.normalized).magnitude;
+        return _mStat.ReturnRange < (_originPos - transform.position).magnitude;
     }
     #endregion
     #region 타이머
@@ -308,6 +308,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         if(_timer >= targetTIme)
         {
             _nav.destination = _player.transform.position;
+            _nav.stoppingDistance = _mStat.AttackRange / 2;
             _nav.SetDestination(_nav.destination);
             _timer = 0;
         }
