@@ -712,7 +712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5073856785744776537
 Transform:
   m_ObjectHideFlags: 0
@@ -727,7 +727,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2012010507651135898}
-  - {fileID: 8348803047198462409}
+  - {fileID: 1256528952677297168}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &154266064507566643
@@ -797,6 +797,10 @@ MonoBehaviour:
   _bossBearID: 99999
   _roarRange: {fileID: 4638996236515068095}
   _maxRoarRange: {fileID: 9118458476557615392}
+  _roarList:
+  - 0.7
+  - 0.4
+  - 0.1
 --- !u!143 &1117802376601331531
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1038,7 +1042,7 @@ GameObject:
   - component: {fileID: 510329904522288195}
   - component: {fileID: 3586612675166966289}
   m_Layer: 0
-  m_Name: Guard_01
+  m_Name: Roar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1057,7 +1061,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5073856785744776537}
+  m_Father: {fileID: 1256528952677297168}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &510329904522288195
 ParticleSystem:
@@ -1069,12 +1073,12 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1.5
   simulationSpeed: 0.7
-  stopAction: 2
+  stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -6849,6 +6853,55 @@ Transform:
   - {fileID: 4832864277499731421}
   m_Father: {fileID: 380647902126428699}
   m_LocalEulerAnglesHint: {x: -1.4281373, y: 0.6188016, z: -0.04577195}
+--- !u!1 &6401657293667587433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1256528952677297168}
+  - component: {fileID: 4489201750179480934}
+  m_Layer: 10
+  m_Name: Effects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1256528952677297168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401657293667587433}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8348803047198462409}
+  m_Father: {fileID: 5073856785744776537}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4489201750179480934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401657293667587433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed7a4ce6c8a3c04987d054091651e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UIOpenAnimation: {fileID: 0}
+  _topBarImage: {fileID: 0}
+  _exitBtn: {fileID: 0}
+  _isSort: 1
 --- !u!1 &6545885959528436468
 GameObject:
   m_ObjectHideFlags: 0
@@ -7727,7 +7780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7200652104611269439
 Transform:
   m_ObjectHideFlags: 0

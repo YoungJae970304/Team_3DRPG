@@ -8,12 +8,11 @@ public class EnemyEffect : BaseUI
     {
         LeftAttack,
         RightAttack,
+        Roar,
+        MonsterHit,
         Count,
     }
-    public enum HitEffect
-    {
-       MonsterHit,
-    }
+
     private void Awake()
     {
         Bind<ParticleSystem>(typeof(GoblemOrkEffects));

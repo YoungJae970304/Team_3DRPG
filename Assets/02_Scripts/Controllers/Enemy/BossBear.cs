@@ -20,12 +20,24 @@ public class BossBear : Monster
     public override void Start()
     {
         base.Start();
+        
+    }
+    public override void OnEnable()
+    {
+        base.Init();
         itemtest(_deongeonLevel, _bossBearID);
         _monsterProduct = 61004;
         _startScale = _roarRange.transform.localScale;
-
+        skillCount = 0;
+        _maxRoarRange.SetActive(false);
         _roarRange.SetActive(false);
         _mStat._mStat.AttackRange = 4;
+        _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
+        
+    }
+    public void OnDisable()
+    {
+        
     }
     public override void Update()
     {
@@ -122,6 +134,8 @@ public class BossBear : Monster
                 {
                     _anim.SetTrigger("NonPlayerChase");
                     MChangeState(MonsterState.Idle);
+                    skillCount = 0;
+                    _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
                 }
                 break;
             case MonsterState.Die:
@@ -193,7 +207,7 @@ public class BossBear : Monster
         }
     }
 
-    private List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
+    public List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
     public override void Damaged(int amount)
     {
         

@@ -91,6 +91,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         Init();
     }
+    public virtual void OnEnable()
+    {
+        Init();
+    }
     public void Init()
     {
         _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
