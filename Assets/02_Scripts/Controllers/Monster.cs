@@ -131,7 +131,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
         _mFSM.UpdateState();
 
-
+       // Logger.LogError($"슬라임위치확인{transform.position}");
         if (_curState == MonsterState.Damage)
         {
 
@@ -263,18 +263,18 @@ public class Monster : MonoBehaviour, IDamageAlbe
     {
         //사정거리 체크 구현
         //여기에 타이머넣어서 변환까지 시간걸리게
-        bool rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
-        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position)<45;
+        bool rangeCheck = _mStat.AttackRange > (_player.transform.position.normalized - transform.position.normalized).magnitude;
+        bool angleCheck = Vector3.Angle(transform.forward.normalized, _player.transform.position.normalized - transform.position.normalized)<45;
         return rangeCheck && angleCheck;
     }
     public bool CanSeePlayer()
     {
 
-        return _mStat.ChaseRange > (_player.transform.position - transform.position).magnitude;
+        return _mStat.ChaseRange > (_player.transform.position.normalized - transform.position.normalized).magnitude;
     }
     public bool ReturnOrigin()
     {
-        return _mStat.ReturnRange < (_originPos - transform.position).magnitude;
+        return _mStat.ReturnRange < (_originPos.normalized - transform.position.normalized).magnitude;
     }
     #endregion
     #region 타이머
