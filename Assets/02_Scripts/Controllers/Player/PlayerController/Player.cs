@@ -132,8 +132,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public EffectController _effectController;
     [HideInInspector]
-    StatusEffectManager statusEffectManager;
-    public StatusEffectManager StatusEffect { get => statusEffectManager; }
+    StatusEffectManager _statusEffectManager;
+    public StatusEffectManager StatusEffect { get => _statusEffectManager; }
 
     protected virtual void Awake()
     {
@@ -150,6 +150,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerAnim = GetComponentInChildren<Animator>();
         _effectController = GetComponentInChildren<EffectController>();
         _playerStatManager = gameObject.GetOrAddComponent<PlayerStatManager>();
+        _statusEffectManager = gameObject.GetOrAddComponent<StatusEffectManager>();
         #endregion
 
         _playerStatManager._originStat = new PlayerStat();
@@ -386,13 +387,12 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
 
     public void SkillSetE()
     {
-        MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
+        MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
         _skillBase = mainUI.SkillSlot_E.Skill;
     }
     public void SkillSetR()
     {
         MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
-        //_skillBase = mainUI.SkillSlot_R.Skill;
         _skillBase = new ChainLightning();
     }
 
