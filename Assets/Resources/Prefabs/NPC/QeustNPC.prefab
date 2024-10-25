@@ -196,13 +196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 2784349132712581450}
-  DungeonDialogUI: {fileID: 2784003624122026532, guid: 68f84fe7b818f1f41a717e847d30458f,
+  DialogUI: {fileID: 2784003624122026532, guid: 1e54275333c649c469b2e5d5592fb204,
     type: 3}
-  ShopDialogUI: {fileID: 2784003624122026532, guid: b90af8b2750f222409602936df57d415,
-    type: 3}
-  QuestDialogUI: {fileID: 2784003624122026532, guid: 1e54275333c649c469b2e5d5592fb204,
-    type: 3}
-  _npcType: 3
 --- !u!114 &2287528749801957338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,8 +214,6 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
-  _startQuestIcon: {fileID: 924572753199452830}
-  _finishQuestIcon: {fileID: 0}
 --- !u!1 &5049787894862945306
 GameObject:
   m_ObjectHideFlags: 0
