@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 
 
-public class Monster : MonoBehaviour, IDamageAlbe
+public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
 {
 
 
@@ -61,6 +61,10 @@ public class Monster : MonoBehaviour, IDamageAlbe
     public Animator _anim;
 
     public StatusEffectManager StatusEffect { get => null; }
+
+    public ITotalStat Targetstat => _mStat;
+
+    public Transform TargetTr => transform;
 
     public virtual void Awake()
     {
@@ -198,6 +202,16 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
 
         }
+    }
+    public bool ChangeStateToString(string state)
+    {
+        MonsterState changeState;
+        if (Enum.TryParse<MonsterState>(state, out changeState))
+        {
+            MChangeState(changeState);
+            return true;
+        }
+        return false;
     }
     #endregion
     #region 상태 변환 FSM 사용
@@ -493,5 +507,7 @@ public class Monster : MonoBehaviour, IDamageAlbe
 
 
     }
+
+    
     #endregion
 }

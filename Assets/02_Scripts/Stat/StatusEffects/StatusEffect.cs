@@ -7,7 +7,7 @@ using System;
 public abstract class StatusEffect : MonoBehaviour
 {
     public Define.StatusEffectType type;
-    protected ITotalStat _target;
+    protected IStatusEffectAble _target;
     protected float _duration;
     public bool isNovation = true;
     protected abstract string IconPath { get; set; }
@@ -16,7 +16,7 @@ public abstract class StatusEffect : MonoBehaviour
     protected TextMeshProUGUI _effectTimerTxt;
 
     public Action<StatusEffect> _removeEffectAction;
-    public virtual void Init(ITotalStat target,float duration, params int[] value ) {
+    public virtual void Init(IStatusEffectAble target,float duration, params int[] value ) {
         _duration = duration;
         _target = target; 
         _effectIcon = GetComponent<Image>();
