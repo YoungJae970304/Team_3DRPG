@@ -418,7 +418,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _playerStatManager.HP -= (int)(atk * (100f/(_playerStatManager.DEF+100f)));
         if (_playerStatManager.HP > 0)
         {
-            _hitting = true;
             _invincible = true;
 
             if (_playerHitState == PlayerHitState.SkillAttack)

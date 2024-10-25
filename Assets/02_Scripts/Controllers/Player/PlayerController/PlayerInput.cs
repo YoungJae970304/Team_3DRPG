@@ -43,7 +43,7 @@ public class PlayerInput : MonoBehaviour
     {
         _player._isMoving = false;
 
-        if (_player._dodgeing || Managers.Game._cantInputKey) return;
+        if (_player._hitting || _player._dodgeing || Managers.Game._cantInputKey) return;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -97,7 +97,7 @@ public class PlayerInput : MonoBehaviour
     // 공격 입력
     void AttackInput()
     {
-        if (_player._invincible || _player._skillUsing || !_player._canAtkInput) return;
+        if (_player._hitting || _player._skillUsing || !_player._canAtkInput) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -122,7 +122,7 @@ public class PlayerInput : MonoBehaviour
     // 스킬입력
     void SkillInput()
     {
-        if (_player._dodgeing || _player._skillUsing || Managers.Game._cantInputKey) return;
+        if (_player._hitting || _player._dodgeing || _player._skillUsing || Managers.Game._cantInputKey) return;
 
         if (Input.GetKeyDown(KeyCode.E))
         {
