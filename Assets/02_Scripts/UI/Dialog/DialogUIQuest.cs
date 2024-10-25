@@ -3,43 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestDialogUI : BaseUI
+public class DialogUIQuest : DialogUI
 {
-    enum Buttons
-    {
-        YesBtn,
-        RefuseBtn,
-    }
-
     Dictionary<Buttons, Button> _Button = new Dictionary<Buttons, Button>();
-
-    public DialogSystem[] _dialogSystem;
 
     bool _isAccepted = false;
     bool _isRefuse = false;
     bool _isDone = false;
 
-    public override void Init(Transform anchor)
+    protected override void  Awake()
     {
-        base.Init(anchor);
-
-        //대화 시작 시 모든 유아이 닫아버리기
-        Managers.UI.CloseAllOpenUI();
-
-
-        StartCoroutine(QuestDialog());
-    }
-
-    private void Awake()
-    {
-        Bind<Button>(typeof(Buttons));
+        base.Awake();
         InitButtons();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         ActiveBtn();
     }
+
+    protected override void OnButton()
+    {
+        //이 추상클래스에서 퀘스트 수락로직 작성
+        AcceptQuest();
+    }
+
 
     void InitButtons()
     {
@@ -50,20 +39,28 @@ public class QuestDialogUI : BaseUI
         _Button[Buttons.RefuseBtn].onClick.AddListener(() => OnButtonClicked(Buttons.RefuseBtn));
     }
 
-
-    private void OnDisable()
+    void OnButtonClicked(Buttons buttons)
     {
-        Managers.Game._cantInputKey = false;
-        //Managers.Game._player._isMoving = true;
+        switch (buttons)
+        {
+            case Buttons.YesBtn:
+                _isAccepted = true;
+                break;
+            case Buttons.RefuseBtn:
+                _isRefuse = true;
+                break;
+            default:
+                Logger.Log("버튼이 없습니다. 버튼을 추가해주세요");
+                break;
+        }
     }
 
-    IEnumerator QuestDialog()
+    protected override IEnumerator DialogStart()
     {
         foreach (var dialog in _dialogSystem)
         {
             dialog.gameObject.SetActive(false);
         }
-        //Managers.Game._player._isMoving = false;
         _dialogSystem[0].gameObject.SetActive(true);
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
 
@@ -83,21 +80,6 @@ public class QuestDialogUI : BaseUI
         }
         yield return new WaitUntil(() => _isDone);
         Managers.UI.CloseUI(this);
-    }
-    void OnButtonClicked(Buttons buttons)
-    {
-        switch (buttons)
-        {
-            case Buttons.YesBtn:
-                _isAccepted = true;
-                break;
-            case Buttons.RefuseBtn:
-                _isRefuse = true;
-                break;
-            default:
-                Logger.Log("버튼이 없습니다. 버튼을 추가해주세요");
-                break;
-        }
     }
 
     IEnumerator RunDialog(int idx)
@@ -121,10 +103,9 @@ public class QuestDialogUI : BaseUI
         GetButton((int)Buttons.RefuseBtn).gameObject.SetActive(true);
     }
 
-    //수락 버튼 눌렀을 때 발행 해줄거  구독 시켜줄거  퀘스트 창이 켜지는게아니라 퀘스트창 안에 리스트버튼이 생성 되어야하니까...
+    //수락 버튼 눌렀을 때 퀘스트 창이 켜지는게아니라 퀘스트창 안에 리스트버튼이 생성
     public void AcceptQuest()
     {
-        //QuestLogUI questLogUI;
 
     }
 }

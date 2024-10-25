@@ -3,45 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopDialogUI : BaseUI
+public class DialogUIShop : DialogUI
 {
-    enum Buttons
+    protected override void OnDisable()
     {
-        YesBtn,
-    }
-
-    public DialogSystem[] _dialogSystem;
-
-    bool _isOpenUI = false;
-
-    public override void Init(Transform anchor)
-    {
-        base.Init(anchor);
-
-        //대화 시작 시 모든 유아이 닫아버리기
-        Managers.UI.CloseAllOpenUI();
-        StartCoroutine(ShopDialog());
-    }
-
-    private void Awake()
-    {
-        Bind<Button>(typeof(Buttons));
-    }
-
-    private void OnEnable()
-    {
-        GetButton((int)Buttons.YesBtn).onClick.AddListener(() =>
-        {
-            OpenShopUI();
-            _isOpenUI = true;
-        });
-    }
-
-    private void OnDisable()
-    {
-        GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
-        Managers.Game._cantInputKey = false;
-        //Managers.Game._player._isMoving = true;
+        base.OnDisable();
         //_TEMP
         ShopUIData shopUIData = new ShopUIData();
         //_TEMP
@@ -51,13 +17,17 @@ public class ShopDialogUI : BaseUI
         shopUIData._itemCode.Remove((11003, 1));
     }
 
-    IEnumerator ShopDialog()
+  protected override  IEnumerator DialogStart()
     {
-        //Managers.Game._player._isMoving = false;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);
         Managers.UI.CloseUI(this);
+    }
+
+    protected override void OnButton()
+    {
+        OpenShopUI();
     }
 
     //던전 UI 오픈 함수 버튼 클릭시 생성

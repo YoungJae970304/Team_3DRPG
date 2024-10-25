@@ -32,8 +32,8 @@ public class CollectQuest : Quest
                 GetSatus();
                 if (data.Type == Define.QuestType.Sub)
                 {
-                    ResetSubQuest();
                     SetSatus(_questState = QuestState.State.Finished);
+                    ResetSubQuest();
                 }
             }
         }

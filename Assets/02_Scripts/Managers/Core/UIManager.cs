@@ -162,6 +162,12 @@ public class UIManager
 
     }
 
+    public bool IsActiveUI<T>() 
+    {
+        var uiType = typeof(T);
+        return _OpenUIPool.ContainsKey(uiType);
+    }
+
     //UI화면이 열린것이 하나라도 있는지 확인하는 함수
     public bool ExistsOpenUI()
     {
