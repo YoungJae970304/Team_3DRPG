@@ -158,6 +158,7 @@ public class UIManager
     {
         var uiType = typeof(T);
         //_OpenUIPool에 특정 화면 인스턴스가 존재한다면 그 화면 인스턴스를 리턴해 주고 그렇지 않으면 널 리턴
+        Logger.LogError($"OpenUIPoll 확인 : {_OpenUIPool.ContainsKey(typeof(MainUI))}");
         return _OpenUIPool.ContainsKey(uiType) ? _OpenUIPool[uiType].GetComponent<BaseUI>() : null;
 
     }
