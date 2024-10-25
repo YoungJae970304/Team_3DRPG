@@ -170,6 +170,13 @@ public class UIManager
         return _OpenUIPool.ContainsKey(uiType);
     }
 
+    // 닫혀있는 UI중에 특정한 UI 참조용
+    public BaseUI IsClosedUI<T>()
+    {
+        var uiType = typeof(T);
+        return _CloseUIPool.ContainsKey(uiType) ? _CloseUIPool[uiType].GetComponent<BaseUI>() : null;
+    }
+
     //UI화면이 열린것이 하나라도 있는지 확인하는 함수
     public bool ExistsOpenUI()
     {

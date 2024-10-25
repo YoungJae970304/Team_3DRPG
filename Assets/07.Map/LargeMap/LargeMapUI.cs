@@ -20,7 +20,7 @@ public class LargeMapUI : BaseUI
     private static Texture2D _fogTexture;
     public float _worldSize = 300;
     public int _textureSize = 1024;
-    public float _exploredRadius = 15f;
+    public float _exploredRadius = 45f;
 
     // 지도 줌아웃을 위한 변수
     public float _minZoom = 1f;
@@ -35,7 +35,7 @@ public class LargeMapUI : BaseUI
 
     private void Awake()
     {
-        _currentZoom = 1f;
+        _currentZoom = 3f;
     }
 
     private void OnDisable()

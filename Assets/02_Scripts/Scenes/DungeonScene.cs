@@ -4,16 +4,37 @@ using UnityEngine;
 
 public class DungeonScene : BaseScene
 {
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField] Transform _playerSpawnPos;
+    [SerializeField] Transform _largeMapCamPos;
 
+    Camera _largeMapCam;
+
+    protected override void Init()
+    {
+        base.Init();
+
+        Managers.Game.PlayerPosSet(_playerSpawnPos);
+        Managers.UI.OpenUI<MainUI>(new BaseUIData(), false);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
+        // LargeMap world size, LargeMap카메라 정의
+        LargeMapUI largeMapUI = Managers.UI.IsClosedUI<LargeMapUI>() as LargeMapUI;
+        if (largeMapUI == null) return;
+        largeMapUI._worldSize = 90f;
 
+        if (GameObject.FindWithTag("LargeMapCam").TryGetComponent<Camera>(out var cam))
+        {
+            _largeMapCam = cam;
+            _largeMapCam.orthographicSize = largeMapUI._worldSize * 0.5f;
+            _largeMapCam.transform.position = _largeMapCamPos.position;
+            Logger.LogError($"라지맵 카메라 초기화 성공");
+        }
+        else
+        {
+            Logger.LogError($"라지맵 카메라 초기화 실패");
+        }
     }
 
     public override void Clear()
