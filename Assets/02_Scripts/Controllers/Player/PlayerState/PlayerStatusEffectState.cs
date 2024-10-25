@@ -8,6 +8,7 @@ public class PlayerStatusEffectState : BaseState
 
     public override void OnStateEnter()
     {
+        _player._hitting = true;
         // 스턴 애니메이션 재생
         _player._playerAnim.SetTrigger("doStun");
     }

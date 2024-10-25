@@ -25,7 +25,7 @@ public class MonsterMoveState : BaseState
 
     public override void OnStateExit()
     {
-        _monster._nav.stoppingDistance = 0;
+        _monster._nav.stoppingDistance = _monster._mStat.AttackRange/2;
     }
 
     public override void OnStateUpdate()

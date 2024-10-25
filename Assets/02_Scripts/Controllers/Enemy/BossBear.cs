@@ -15,17 +15,34 @@ public class BossBear : Monster
    
     private Vector2 _startScale; // 초기 크기
     float _stageRoarPlus = 10f;
-    float _roarTimer;
+    public float _roarTimer;
     public GameObject _maxRoarRange;
     public override void Start()
     {
         base.Start();
+        
+    }
+    public override void OnEnable()
+    {
+        Init();
+
+
+    }
+    public override void Init()
+    {
+        base.Init();
         itemtest(_deongeonLevel, _bossBearID);
         _monsterProduct = 61004;
         _startScale = _roarRange.transform.localScale;
-
+        skillCount = 0;
+        _maxRoarRange.SetActive(false);
         _roarRange.SetActive(false);
         _mStat._mStat.AttackRange = 4;
+        _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
+    }
+    public void OnDisable()
+    {
+        
     }
     public override void Update()
     {
@@ -44,11 +61,14 @@ public class BossBear : Monster
     }
     IEnumerator PlusRoarRange()
     {
+        Logger.LogError("여긴 들어옴?");
         _roarTimer = 0;
         _roarRange.transform.localScale = _startScale;
         _maxRoarRange.SetActive(true);
+        Logger.LogError("여긴 들어옴?2");
         while (_roarRange.transform.localScale.x < _mStat.AtkDelay)
-        { 
+        {
+            Logger.LogError("여긴 들어옴?3");
             _roarRange.SetActive(true);
             //Logger.LogError(_roarRange.activeSelf.ToString());
             _roarRange.transform.localScale = _startScale * (0.1f + _roarTimer * _stageRoarPlus);
@@ -56,16 +76,17 @@ public class BossBear : Monster
             _roarTimer += Time.deltaTime;
             if (_roarRange.transform.localScale.x >= _mStat.AtkDelay)
             {
-               
+                Logger.LogError("여긴 들어옴?4");
                 _roarTimer = 0;
                 _anim.SetBool("AfterStay", true);
+                _roarRange.transform.localScale = _startScale;
                 _roarRange.SetActive(false);//애니메이션이 끝나는 시점에 꺼지도록 따로 함수작성
                 BearRoar();
                 _maxRoarRange.SetActive(false);//애니메이션이 끝나는 시점에 꺼지도록 따로 함수작성
                 break;
             }
             _anim.SetBool("AfterStay", false);
-           
+            Logger.LogError("여긴 들어옴?5");
             yield return null;
         }
         
@@ -122,6 +143,8 @@ public class BossBear : Monster
                 {
                     _anim.SetTrigger("NonPlayerChase");
                     MChangeState(MonsterState.Idle);
+                    skillCount = 0;
+                    _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
                 }
                 break;
             case MonsterState.Die:
@@ -167,6 +190,7 @@ public class BossBear : Monster
     {
         
         _player._playerHitState = PlayerHitState.StunAttack;
+        //로어 애니메이션
         Roar();
 
       
@@ -192,7 +216,7 @@ public class BossBear : Monster
         }
     }
 
-    private List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
+    public List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
     public override void Damaged(int amount)
     {
         
