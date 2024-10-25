@@ -7,7 +7,7 @@ public class SlowEffect : StatusEffect
     float _slowAmount;
     protected override string IconPath { get; set; } = "Icon/11012.png";
 
-    public override void Init(ITotalStat target, float duration, params int[] value)
+    public override void Init(IStatusEffectAble target, float duration, params int[] value)
     {
         base.Init(target, duration, value);
         _slowAmount =  value[0];
@@ -17,20 +17,20 @@ public class SlowEffect : StatusEffect
     {
         duration += duration;
         _slowAmount += value[0];
-        _target.MoveSpeed = -value[0];
+        _target.Targetstat.MoveSpeed = -value[0];
         Logger.LogError(_slowAmount.ToString());
     }
 
     public override void Effect()
     {
-        
-        _target.MoveSpeed = -_slowAmount;
+
+        _target.Targetstat.MoveSpeed = -_slowAmount;
         Logger.LogError(_slowAmount.ToString());
     }
 
     public override void UnEffect()
     {
-        _target.MoveSpeed += _slowAmount;
+        _target.Targetstat.MoveSpeed += _slowAmount;
     }
 
 }

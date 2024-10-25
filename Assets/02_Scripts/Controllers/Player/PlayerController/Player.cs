@@ -26,7 +26,7 @@ public enum PlayerHitState
     StunAttack,
 }
 
-public abstract class Player : MonoBehaviour, IDamageAlbe
+public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
 {
     // 참조용 변수
     Monster _monster;
@@ -134,6 +134,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     StatusEffectManager _statusEffectManager;
     public StatusEffectManager StatusEffect { get => _statusEffectManager; }
+    public ITotalStat Targetstat { get => _playerStatManager; }
+    public Transform TargetTr { get => transform; }
 
     protected virtual void Awake()
     {
@@ -436,5 +438,15 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         yield return new WaitForSeconds(_hitDelay);
 
         _invincible = false;
+    }
+
+    public bool ChangeStateToString(string state)
+    {
+        PlayerState changeState;
+        if (Enum.TryParse<PlayerState>(state, out changeState)) {
+            ChangeState(changeState);
+            return true;
+        }
+        return false;
     }
 }
