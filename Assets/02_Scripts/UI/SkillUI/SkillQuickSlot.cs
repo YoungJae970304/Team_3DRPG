@@ -53,7 +53,7 @@ public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
             Skill = skillTreeItem.Skill;
             
             
-            Logger.LogWarning("23");
+            Logger.LogWarning(Skill.GetType().ToString());
         }
         else if (moveSlot is SkillQuickSlot) {
             SkillQuickSlot skillQuickSlot = moveSlot as SkillQuickSlot;

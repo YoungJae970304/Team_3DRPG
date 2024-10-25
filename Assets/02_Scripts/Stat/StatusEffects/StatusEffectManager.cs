@@ -9,9 +9,12 @@ public class StatusEffectManager : MonoBehaviour
     List<StatusEffect> _buff=new List<StatusEffect>();
     List<StatusEffect> _deBuff = new List<StatusEffect>();
     List<Type> _immunitys = new List<Type>();
-    public ITotalStat _totalStat;
+    public IStatusEffectAble _target;
     public RectTransform _iconTr;
-
+    private void Awake()
+    {
+        _target = GetComponent<IStatusEffectAble>();
+    }
     public void SpawnEffect<T>(int duration,params int[] value) where T : StatusEffect
     {
         if (_immunitys.Contains(typeof(T))) { return;}
@@ -23,7 +26,7 @@ public class StatusEffectManager : MonoBehaviour
         else{
             GameObject effectIcon = Managers.Resource.Instantiate("StatusEffect", _iconTr);
             newEffect = effectIcon.AddComponent<T>();
-            newEffect.Init(_totalStat, duration, value);
+            newEffect.Init(_target, duration, value);
             newEffect._removeEffectAction += DeleteEffect;
             switch (newEffect.type)
             {
@@ -39,7 +42,7 @@ public class StatusEffectManager : MonoBehaviour
     }
     [ContextMenu("슬로우 테스트")]
     public void test() {
-        SpawnEffect<SlowEffect>(100,5);
+        SpawnEffect<StunEffect>(3);
     }
 
     //상태이상이 삭제될때 실행될 함수
