@@ -287,10 +287,10 @@ MonoBehaviour:
   _isSort: 1
   _worldSize: 300
   _textureSize: 1024
-  _exploredRadius: 45
+  _exploredRadius: 100
   _minZoom: 1
   _maxZoom: 20
-  _zoomSpeed: 0.5
+  _zoomSpeed: 0.2
   _maskRectTransform: {fileID: 4797984641185440241}
 --- !u!1 &9135204858560215260
 GameObject:

@@ -22,18 +22,7 @@ public class MainScene : BaseScene
         // LargeMap world size, LargeMap카메라 정의
         LargeMapUI largeMapUI = Managers.UI.IsClosedUI<LargeMapUI>() as LargeMapUI;
         if (largeMapUI == null) return;
-        largeMapUI._worldSize = 90f;
-
-        if (GameObject.FindWithTag("LargeMapCam").TryGetComponent<Camera>(out var cam))
-        {
-            _largeMapCam = cam;
-            _largeMapCam.orthographicSize = largeMapUI._worldSize * 0.5f;
-            Logger.LogError($"라지맵 카메라 초기화 성공");
-        }
-        else
-        {
-            Logger.LogError($"라지맵 카메라 초기화 실패");
-        }
+        largeMapUI.InitSceneMapInfo(90f, _largeMapCamPos);
     }
 
     public override void Clear()

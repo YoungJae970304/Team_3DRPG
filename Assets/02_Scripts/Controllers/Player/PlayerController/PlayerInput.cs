@@ -124,21 +124,13 @@ public class PlayerInput : MonoBehaviour
     {
         if (_player._dodgeing || _player._skillUsing || Managers.Game._cantInputKey) return;
 
-        // 추후 E,R 슬롯에 등록되어 있는 스킬을 가져와 _skillBase에 담아주면 될듯?
         if (Input.GetKeyDown(KeyCode.E))
         {
-            // 스킬테스트
-            //_player._skillBase = new TestSkill();
-
             _player.SkillSetE();
-            _player.ChangeState(PlayerState.Skill);
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            //_player._skillBase = new ChainLightning();
-
             _player.SkillSetR();
-            _player.ChangeState(PlayerState.Skill);
         }
 
         else if (Input.GetKeyDown(KeyCode.B))

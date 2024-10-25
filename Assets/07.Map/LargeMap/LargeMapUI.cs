@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ public class LargeMapUI : BaseUI
     private static Texture2D _fogTexture;
     public float _worldSize = 300;
     public int _textureSize = 1024;
-    public float _exploredRadius = 45f;
+    public float _exploredRadius = 100f;
 
     // 지도 줌아웃을 위한 변수
     public float _minZoom = 1f;
@@ -32,6 +33,10 @@ public class LargeMapUI : BaseUI
     // 지도 이동을 위한 변수
     private bool _isDragging = false;
     private Vector2 _lastMousePosition;
+
+    // 씬별 안개 관리 변수
+    private Dictionary<string, Texture2D> _sceneFogTextures = new Dictionary<string, Texture2D>();
+    private string _currentSceneName;
 
     private void Awake()
     {
@@ -61,7 +66,6 @@ public class LargeMapUI : BaseUI
                 Logger.LogError("LargeMapCamera not found!");
         }
 
-        InitializeFogTexture();
         SetupMaterial();
         CenterMapOnPlayer();
 
@@ -170,19 +174,39 @@ public class LargeMapUI : BaseUI
         }
     }
 
-    private void InitializeFogTexture()
+    public void InitSceneMapInfo(float worldSize, Transform camPos)
     {
-        if (_fogTexture == null)
+        // 맵 크기 설정
+        _worldSize = worldSize;
+        _currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+        // 맵 크기에 맞게 카메라 설정
+        _largeMapCamera.orthographicSize = _worldSize * 0.5f;
+        _largeMapCamera.transform.position = camPos.position;
+
+        // 해당 씬의 텍스처가 없으면 새로 생성
+        if (!_sceneFogTextures.ContainsKey(_currentSceneName))
         {
-            _fogTexture = new Texture2D(_textureSize, _textureSize);
-            _fogTexture.filterMode = FilterMode.Bilinear;
+            Texture2D newFogTexture = new Texture2D(_textureSize, _textureSize);
+            newFogTexture.filterMode = FilterMode.Bilinear;
             Color[] colors = new Color[_textureSize * _textureSize];
             for (int i = 0; i < colors.Length; i++)
             {
                 colors[i] = Color.black;
             }
-            _fogTexture.SetPixels(colors);
-            _fogTexture.Apply();
+            newFogTexture.SetPixels(colors);
+            newFogTexture.Apply();
+            
+            _sceneFogTextures[_currentSceneName] = newFogTexture;
+        }
+
+        // 현재 씬의 텍스처로 설정
+        _fogTexture = _sceneFogTextures[_currentSceneName];
+        
+        // 머티리얼 업데이트
+        if (_fogMaterial != null)
+        {
+            _fogMaterial.SetTexture("_FogTex", _fogTexture);
         }
     }
 
