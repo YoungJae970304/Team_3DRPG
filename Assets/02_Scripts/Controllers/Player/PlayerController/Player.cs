@@ -132,8 +132,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
     [HideInInspector]
     public EffectController _effectController;
     [HideInInspector]
-    StatusEffectManager statusEffectManager;
-    public StatusEffectManager StatusEffect { get => statusEffectManager; }
+    StatusEffectManager _statusEffectManager;
+    public StatusEffectManager StatusEffect { get => _statusEffectManager; }
 
     protected virtual void Awake()
     {
@@ -150,6 +150,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe
         _playerAnim = GetComponentInChildren<Animator>();
         _effectController = GetComponentInChildren<EffectController>();
         _playerStatManager = gameObject.GetOrAddComponent<PlayerStatManager>();
+        _statusEffectManager = gameObject.GetOrAddComponent<StatusEffectManager>();
         #endregion
 
         _playerStatManager._originStat = new PlayerStat();
