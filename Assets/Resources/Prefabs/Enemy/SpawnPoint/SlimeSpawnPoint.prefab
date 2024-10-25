@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: SlimeSpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9de9077b997e2e48b588be5b360e366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dungeonManager: {fileID: 0}
   _monsterData1: 0
   _monsterData2: 0

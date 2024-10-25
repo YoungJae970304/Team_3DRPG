@@ -155,16 +155,14 @@ public class UIManager
         UnityEngine.Object.Destroy(ui.gameObject);
     }
     //특정 UI화면이 열려있는지 확인하고 그 열려있는 UI화면을 가져오는 함수
-    public BaseUI GetActiveUI<T>()
+    public BaseUI GetActiveUI<T>() 
     {
         var uiType = typeof(T);
         //_OpenUIPool에 특정 화면 인스턴스가 존재한다면 그 화면 인스턴스를 리턴해 주고 그렇지 않으면 널 리턴
         return _OpenUIPool.ContainsKey(uiType) ? _OpenUIPool[uiType].GetComponent<BaseUI>() : null;
-
     }
-
     //특정 UI화면이 열려있는지 확인
-    public bool IsActiveUI<T>()
+    public bool IsActiveUI<T>() 
     {
         var uiType = typeof(T);
         return _OpenUIPool.ContainsKey(uiType);
