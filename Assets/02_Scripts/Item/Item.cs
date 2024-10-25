@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Define;
 
 public class Item
 {
@@ -22,7 +23,6 @@ public class Item
             Logger.Log($"선택된아이템 아이디 {newItem.ID}");
             if (newItem.ID == id)
             {
-
                 itemData = newItem;
                 break;
             }
@@ -57,6 +57,7 @@ public class Item
     }
     #endregion
 
+    #region 아이템 아이콘 로드
     //스프라이트 이미지를 이름으로 저장하고 있기에 이미지 이름을 Resource.load로 경로에서 이미지아이콘 찾아오기
     public Sprite LoadIcon()
     {
@@ -64,28 +65,56 @@ public class Item
         //플레이어 타입에따라 아이디는 같은데 로드 되는 이미지 다르게적용
         //MeleeIcon, MageIcon 폴더에서 로드
         //포션이랑 기타아이템은 EtcIcon폴더에서 로드
+        // var getPlayerType = Managers.Game._playerType.GetType();
         switch (Data.Type)
         {
-            case ItemData.ItemType.Weapon:
-                    if (Managers.Game._playerType.GetType().Name == Define.PlayerType.Melee.GetType().Name)
-                    {
-                        iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
-                    }
-                    else if (Managers.Game._playerType.GetType().Name == Define.PlayerType.Mage.GetType().Name)
-                {
-                        iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
-                }
-                else
-                {
-                    iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
-                }
-                break;
-            default:
+            case ItemData.ItemType.Potion:
+            case ItemData.ItemType.Booty:
+                Logger.Log("스위치문 진입 확인");
                 iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
                 break;
+            default:
+                if (Managers.Game._playerType == PlayerType.Melee)
+                {
+                    Logger.LogWarning("현재 타입 확인" + Data.Type);
+                    iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
+                }
+                else if (Managers.Game._playerType == PlayerType.Mage)
+                {
+                    iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
+                }
+                break;
+
+            //case ItemData.ItemType.Weapon:
+            //case ItemData.ItemType.Armor:
+            //case ItemData.ItemType.Accessories:
+            //    if (Managers.Game._playerType == PlayerType.Melee)
+            //    {
+            //        Logger.LogWarning("현재 타입 확인");
+            //        iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
+            //    }
+            //    else if (Managers.Game._playerType == PlayerType.Mage)
+            //    {
+            //        iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
+            //    }
+            //    if (getPlayerType == typeof(MeleePlayer))
+            //    {
+            //        Logger.LogWarning($"현재 {getPlayerType} 타입 입니다.");
+            //        iconPath = "ItemIcon/MeleeIcon" + Data.ID;
+            //    }
+            //    else if (getPlayerType == typeof(MagePlayer))
+            //    {
+            //        Logger.LogWarning($"현재 {getPlayerType} 타입 입니다.");
+            //        iconPath = "ItemIcon/MageIcon" + Data.ID;
+            //    }
+            //    break;
+            //default:
+            //    //그외 나머지 것들 로드
+            //    iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
+            //    break;
         }
 
-        Sprite icon = Resources.Load<Sprite>(iconPath);
+        Sprite icon = Managers.Resource.Load<Sprite>(iconPath);
 
         if (icon == null)
         {
@@ -95,6 +124,7 @@ public class Item
 
         return icon;
     }
+    #endregion
 
     #region type에따른 id로 생성 시키기
     //public static Item ItemSpawn(ItemData.ItemType itemType, int id)

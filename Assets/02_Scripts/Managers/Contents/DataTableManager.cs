@@ -130,7 +130,7 @@ public class DataTableManager
             };
             if (itemData != null)
             {
-                Logger.Log($"{itemData.ID} 저장됨");
+                //Logger.Log($"{itemData.ID} 저장됨");
                 _EquipeedItemData.Add(itemData);
                 _AllItemData.Add(itemData);
             }
@@ -330,6 +330,7 @@ public class DataTableManager
         }
     }
     #endregion
+
     #region 퀘스트 데이터테이블 함수
     void QuestDataTable(string dataPath, string questDataTable)
     {

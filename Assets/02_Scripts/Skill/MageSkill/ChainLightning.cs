@@ -23,8 +23,7 @@ public class ChainLightningEnter : SkillEnter
     public void Enter(ITotalStat stat, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill3");
-
-
+        Managers.Game.AddMonsterOnNowScene();
     }
 }
 

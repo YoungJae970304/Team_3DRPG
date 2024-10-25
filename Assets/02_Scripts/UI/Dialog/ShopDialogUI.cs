@@ -40,13 +40,20 @@ public class ShopDialogUI : BaseUI
     private void OnDisable()
     {
         GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
-        Managers.Game._isActiveDialog = false;
-        Managers.Game._player._isMoving = true;
+        Managers.Game._cantInputKey = false;
+        //Managers.Game._player._isMoving = true;
+        //_TEMP
+        ShopUIData shopUIData = new ShopUIData();
+        //_TEMP
+        shopUIData._itemCode = new List<(int, int)>();
+        shopUIData._itemCode.Remove((11001, 1));
+        shopUIData._itemCode.Remove((11002, 1));
+        shopUIData._itemCode.Remove((11003, 1));
     }
 
     IEnumerator ShopDialog()
     {
-        Managers.Game._player._isMoving = false;
+        //Managers.Game._player._isMoving = false;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);
@@ -65,10 +72,11 @@ public class ShopDialogUI : BaseUI
         else
         {
             ShopUIData shopUIData = new ShopUIData();
+            //_TEMP
             shopUIData._itemCode = new List<(int,int)>();
-            shopUIData._itemCode.Add((11005, 1));
-            shopUIData._itemCode.Add((11006, 1));
-            shopUIData._itemCode.Add((11007, 1));
+            shopUIData._itemCode.Add((11001, 1));
+            shopUIData._itemCode.Add((11002, 1));
+            shopUIData._itemCode.Add((11003, 1));
             Managers.UI.OpenUI<ShopUI>(shopUIData);
             _isOpenUI = true;
         }

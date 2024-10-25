@@ -38,13 +38,13 @@ public class DungeonDialogUI : BaseUI
     private void OnDisable()
     {
         GetButton((int)Buttons.YesBtn).onClick.RemoveAllListeners();
-        Managers.Game._isActiveDialog = false;
-        Managers.Game._player._isMoving = true;
+        Managers.Game._cantInputKey = false;
+        //Managers.Game._player._isMoving = true;
     }
 
     IEnumerator DungeonDialog()
     {
-        Managers.Game._player._isMoving = false;
+        //Managers.Game._player._isMoving = false;
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);

@@ -17,21 +17,12 @@ public class MagePlayer : Player
     public override void Attack()
     {
         GameObject go = Managers.Resource.Instantiate("Player/MageBall");
+        go.transform.forward = _playerModel.forward;
         go.transform.position = _mageBallPos.position;
     }
 
     public override void Special()
     {
         _playerCam.CamModeChange();
-    }
-
-    public override void SkillSetE()
-    {
-        _skillBase = new TestSkill();
-    }
-
-    public override void SkillSetR()
-    {
-        _skillBase = new ChainLightning();
     }
 }

@@ -14,45 +14,57 @@ public class EffectController : BaseUI
         MeleeSkill1,
         MeleeSkill2,
         MeleeSkill3,
-        Hit,
-        PowerAttackHit,
         Count,
     }
 
     public enum MageEffects
     {
-        NormalAttack,
-        Skill1,
-        Skill2,
-        Skill3,
+        MageSkill1,
         Count,
     }
 
     public enum CommonEffects
     {
-        Hit,
-    }
-
-    private void Awake()
-    {
-        Bind<ParticleSystem>(typeof(MeleeEffects));
-        //Bind<ParticleSystem>(typeof(MageEffects));
-        //Bind<ParticleSystem>(typeof(CommonEffects));
-
-        //Get<ParticleSystem>((int)Effects.Combo1).Play();
-
-        for (int i = 0; i < (int)MeleeEffects.Count; i++)
-        {
-            Get<ParticleSystem>(i).gameObject.SetActive(false);
-        }
+        SlashHit,
     }
 
     private void Start()
     {
+        Init();
+    }
 
+    public void Init()
+    {
+        if (Managers.Game._playerType == Define.PlayerType.Melee)
+        {
+            Bind<ParticleSystem>(typeof(MeleeEffects));
+
+            for (int i = 0; i < (int)MeleeEffects.Count; i++)
+            {
+                Get<ParticleSystem>(i).gameObject.SetActive(false);
+            }
+        }
+        else if (Managers.Game._playerType == Define.PlayerType.Mage)
+        {
+            Bind<ParticleSystem>(typeof(MageEffects));
+
+            for (int i = 0; i < (int)MageEffects.Count; i++)
+            {
+                Get<ParticleSystem>(i).gameObject.SetActive(false);
+            }
+        }
+
+
+        //Bind<ParticleSystem>(typeof(CommonEffects));
     }
 
     public void MeleeEffectOn(MeleeEffects name)
+    {
+        Get<ParticleSystem>((int)name).gameObject.SetActive(true);
+        Get<ParticleSystem>((int)name).Play();
+    }
+
+    public void MageEffectOn(MageEffects name)
     {
         Get<ParticleSystem>((int)name).gameObject.SetActive(true);
         Get<ParticleSystem>((int)name).Play();
