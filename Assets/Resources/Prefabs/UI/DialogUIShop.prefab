@@ -1253,7 +1253,7 @@ MonoBehaviour:
   - speakerIndex: 0
     name: "\uC0C1\uC810 NPC"
     dialogue: "\uACE8\uB77C \uACE8\uB77C~ \uC5C6\uC5B4\uB3C4 \uACE8\uB77C~"
-  _isAutoStart: 0
+  _isAutoStart: 1
 --- !u!1 &8140591899966386692
 GameObject:
   m_ObjectHideFlags: 0

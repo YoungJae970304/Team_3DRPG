@@ -12,17 +12,15 @@ public class DialogUIShop : DialogUI
         ShopUIData shopUIData = new ShopUIData();
         //_TEMP
         shopUIData._itemCode = new List<(int, int)>();
-        shopUIData._itemCode.Remove((11001, 1));
-        shopUIData._itemCode.Remove((11002, 1));
-        shopUIData._itemCode.Remove((11003, 1));
+        shopUIData._itemCode.Clear();
     }
 
     protected override  IEnumerator DialogStart()
     {
-        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         ActiveBtns(Buttons.CheckBtn);
         ActiveBtns(Buttons.RefuseBtn);
         ActiveBtns(Buttons.SynthesisBtn);
+        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);
         Managers.UI.CloseUI(this);

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class DialogUIQuest : DialogUI
 {
-    Dictionary<Buttons, Button> _Button = new Dictionary<Buttons, Button>();
-
     bool _isAccepted = false;
     bool _isRefuse = false;
     bool _isDone = false;
@@ -14,7 +12,6 @@ public class DialogUIQuest : DialogUI
     protected override void Awake()
     {
         base.Awake();
-        InitButtons();
     }
 
     protected override void OnClickedButton()
@@ -22,30 +19,22 @@ public class DialogUIQuest : DialogUI
         //이 추상클래스에서 퀘스트 수락로직 작성
         AcceptQuest();
     }
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        GetButton((int)Buttons.RefuseBtn).onClick.RemoveAllListeners();
+        InitButtons();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
 
     void InitButtons()
     {
-        _Button[Buttons.CheckBtn] = GetButton((int)Buttons.CheckBtn);
-        _Button[Buttons.RefuseBtn] = GetButton((int)Buttons.RefuseBtn);
-
-        _Button[Buttons.CheckBtn].onClick.AddListener(() => OnButtonClicked(Buttons.CheckBtn));
-        _Button[Buttons.RefuseBtn].onClick.AddListener(() => OnButtonClicked(Buttons.RefuseBtn));
-    }
-
-    void OnButtonClicked(Buttons buttons)
-    {
-        switch (buttons)
-        {
-            case Buttons.CheckBtn:
-                _isAccepted = true;
-                break;
-            case Buttons.RefuseBtn:
-                _isRefuse = true;
-                break;
-            default:
-                Logger.Log("버튼이 없습니다. 버튼을 추가해주세요");
-                break;
-        }
+        GetButton((int)Buttons.CheckBtn).onClick.AddListener(() => _isAccepted = true);
+        GetButton((int)Buttons.RefuseBtn).onClick.AddListener(() => _isRefuse = true);
     }
 
     protected override IEnumerator DialogStart()
@@ -55,13 +44,14 @@ public class DialogUIQuest : DialogUI
             dialog.gameObject.SetActive(false);
         }
         _dialogSystem[0].gameObject.SetActive(true);
-        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         ActiveBtns(Buttons.CheckBtn);
         ActiveBtns(Buttons.RefuseBtn);
-        _isAccepted = false; 
+        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
+        _isAccepted = false;
         _isDone = false;
         _isRefuse = false;
         yield return new WaitUntil(() => _isAccepted || _isRefuse);
+        HideBtn();
         //거절 버튼을 눌렀을경우 다이얼 로그 인덱스 번호 1번 실행 후 유아이 닫기
         if (_isAccepted)
         {
@@ -80,7 +70,6 @@ public class DialogUIQuest : DialogUI
 
     IEnumerator RunDialog(int idx)
     {
-        HideBtn();
         _dialogSystem[idx].gameObject.SetActive(true);
         yield return new WaitUntil(() => _dialogSystem[idx].UpdateDialog());
         _dialogSystem[idx].gameObject.SetActive(false);

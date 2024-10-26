@@ -6,9 +6,9 @@ public class DialogUIDungeon : DialogUI
 {
     protected override IEnumerator DialogStart()
     {
-        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         ActiveBtns(Buttons.CheckBtn);
         ActiveBtns(Buttons.RefuseBtn);
+        yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);
         Managers.UI.CloseUI(this);

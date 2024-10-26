@@ -56,13 +56,12 @@ public class DialogSystem : BaseUI
     public bool UpdateDialog()
     {
         //대사 분기가 시작될 때 1회만 호출
-        if (_isFirst || Managers.Game._isActiveDialog)
+        if (_isFirst)
         {
             Setup();
             if (_isAutoStart)
             { SetNextDialog(); }
             _isFirst = false;
-            Managers.Game._isActiveDialog = false;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F))
@@ -75,18 +74,17 @@ public class DialogSystem : BaseUI
                 StopCoroutine(OnTypingText());
                 GetText((int)DialogTexts.DialogText).text = dialogs[_currentDialogIndex].dialogue;
                 GetGameObject((int)GameObjects.Arrow).SetActive(true);
-                return false;//false값을 반환 함
+                //return false;
             }
-
             //대사가 남아 있을경우 다음 대사 진행
-            if (_currentDialogIndex + 1 < dialogs.Length)
+            if (dialogs.Length > _currentDialogIndex + 1)
             {
                 SetNextDialog();
             }
             else
             {
+                //대사가 더이상 없을 경우 처음으로 되돌림
                 _isFirst = true;
-                Managers.Game._isActiveDialog = true;
                 _currentDialogIndex = -1;
                 return true;
             }
@@ -109,12 +107,18 @@ public class DialogSystem : BaseUI
 
     IEnumerator OnTypingText()
     {
+        if (_currentDialogIndex < 0 || _currentDialogIndex >= dialogs.Length)
+        {
+            yield break;
+        }
+
         int index = 0;
         _isTypingEffect = true;
+        string currDIalogue = dialogs[_currentDialogIndex].dialogue;
         //텍스트를 한글자씩 타이핑 치듯 재생
-        while (index <= dialogs[_currentDialogIndex].dialogue.Length)
+        while (index <= currDIalogue.Length)
         {
-            GetText((int)DialogTexts.DialogText).text = dialogs[_currentDialogIndex].dialogue.Substring(0, index);
+            GetText((int)DialogTexts.DialogText).text = currDIalogue.Substring(0, index);
             index++;
             yield return new WaitForSeconds(_typingSpeed);
         }
