@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 // 상태 
 public enum PlayerState
@@ -391,11 +392,17 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
     {
         MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
         _skillBase = mainUI.SkillSlot_E.Skill;
+
+        if (_skillBase == null) return;
+        ChangeState(PlayerState.Skill);
     }
     public void SkillSetR()
     {
         MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
-        _skillBase = new ChainLightning();
+        _skillBase = mainUI.SkillSlot_R.Skill;
+
+        if (_skillBase == null) return;
+        ChangeState(PlayerState.Skill);
     }
 
     // 우클릭 시 발생하는 행동
@@ -411,7 +418,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _playerStatManager.HP -= (int)(atk * (100f/(_playerStatManager.DEF+100f)));
         if (_playerStatManager.HP > 0)
         {
-            _hitting = true;
             _invincible = true;
 
             if (_playerHitState == PlayerHitState.SkillAttack)

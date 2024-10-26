@@ -12,7 +12,7 @@ public class GameManager
 
     public List<Monster> _monsters = new List<Monster>();
 
-    public bool _isActiveDialog = false;
+    public bool _isActiveDialog = true;
     public bool _cantInputKey = false;
 
     public DeongeonType _selecDungeonLevel;
