@@ -677,7 +677,7 @@ MonoBehaviour:
   _UIOpenAnimation: {fileID: 0}
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
-  _isSort: 1
+  _isSort: 0
   _dialogSystem:
   - {fileID: 7399043146769649934}
   _isOpenUI: 0

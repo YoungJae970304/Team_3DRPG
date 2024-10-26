@@ -44,6 +44,7 @@ public class DialogSystem : BaseUI
         Arrow,
     }
 
+
     void Setup()
     {
         Bind<TextMeshProUGUI>(typeof(DialogTexts));
