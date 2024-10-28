@@ -20,12 +20,13 @@ public class SceneManagerEx
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //Managers.Game.AddMonsterOnNowScene();
+        Managers.Game.AddMonsterOnNowScene();
 
         if (Managers.Game._player == null) return;
         Managers.Game._player._interectController.Init();
         Managers.Game._player._playerInput.OpenLargeMap();
         Managers.Game._player._playerInput.OpenLargeMap();
+        Managers.Game._player.PlayerStatInit();
     }
 
     string GetSceneName(Define.Scene type)

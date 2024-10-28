@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 // 상태 
 public enum PlayerState
@@ -369,23 +368,38 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
 
     }
 
-    public void ApplyDamage()
+    public void ApplyDamage(int damage)
     {
         if (_hitMobs.Count == 0) return;
-
-        int damage = _playerStatManager.ATK;
 
         foreach(var mob in _hitMobs)
         {
             if (mob.TryGetComponent<IDamageAlbe>(out var damageable))
             {
                 damageable.Damaged(damage);
-                GameObject go = Managers.Resource.Instantiate("HitEffect/MeleeNormalHit");
-                go.transform.position = mob.transform.position;
+                //GameObject go = Managers.Resource.Instantiate("HitEffect/MeleeNormalHit");
+                //go.transform.position = mob.transform.position;
+                Logger.LogError(" 데미지 확인 ");
             }
         }
 
         _hitMobs.Clear();
+    }
+
+    public void AreaDamage(float range, int damage)
+    {
+        Vector3 playerPos = Managers.Game._player.transform.position;
+
+        for (int i = 0; i < Managers.Game._monsters.Count; i++)
+        {
+            if (Vector3.Distance(playerPos, Managers.Game._monsters[i].transform.position) < range)
+            {
+                if (Managers.Game._monsters[i].TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    damageable.Damaged(damage);
+                }
+            }
+        }
     }
 
     public void SkillSetE()
@@ -454,5 +468,16 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
             return true;
         }
         return false;
+    }
+
+    public void PlayerStatInit()
+    {
+        _playerStatManager.HP = _playerStatManager.MaxHP;
+        _playerStatManager.MP = _playerStatManager.MaxMP;
+    }
+
+    public void PlayerEXPGain(int exp)
+    {
+        _playerStatManager.EXP += exp;
     }
 }

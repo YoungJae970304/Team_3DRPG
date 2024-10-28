@@ -43,9 +43,6 @@ public class MonsterAttackState : BaseState
         //_monster._nav.enabled = false;
         //Logger.LogError("1");
         _monster._anim.SetBool("AfterAttackMotion", true);
-
-        
-        Logger.LogError("2");
         
         //_monster._nav.enabled = true;
     }

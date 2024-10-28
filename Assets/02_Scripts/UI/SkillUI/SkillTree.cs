@@ -110,7 +110,7 @@ public class SkillTree : ItemDragUI
         }
         
     }
-    //스킬 레벨 
+    //스킬 레벨 증가시 sp 조건 확인 
     private bool SpCheck() {
         return true;
     }

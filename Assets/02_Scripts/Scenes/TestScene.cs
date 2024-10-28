@@ -26,6 +26,7 @@ public class TestScene : BaseScene
         //SkillTreeData skillTreeData = new SkillTreeData();
         //skillTreeData.path = "test";
         //Managers.UI.OpenUI<SkillTree>(skillTreeData);
+       
     }
 
     private void OnEnable()
@@ -39,11 +40,12 @@ public class TestScene : BaseScene
         
 
     }
-   
-    [ContextMenu("OpenTest")]
-    public void Opentest() {
+
+    [MenuItem("Test/UIOpen")]
+    public static void Opentest() {
         // 인벤토리 여는 것 I? ( 풀링 )
         Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
+        Managers.UI.OpenUI<FusionUI>(new BaseUIData());
     }
     [ContextMenu("OpenNewTest")]
     public void OpenNewtest()
@@ -52,10 +54,11 @@ public class TestScene : BaseScene
         Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
     }
 
-    [ContextMenu("Inserttest")]
-    public void Inserttest() {
-        ItemManager.InsertItem(Item.ItemSpawn(42001,15));
-        ItemManager.InsertItem(Item.ItemSpawn(11010, 15));
+    [MenuItem("Test/ItemInsert")]
+    public static void Inserttest() {
+        Inventory inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
+        inventory.InsertItem(Item.ItemSpawn(42001,15));
+        inventory.InsertItem(Item.ItemSpawn(11010, 15));
     }
     [ContextMenu("Removetest")]
     public void Remove()
