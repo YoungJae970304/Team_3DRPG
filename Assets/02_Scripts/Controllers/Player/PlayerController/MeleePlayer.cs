@@ -17,7 +17,7 @@ public class MeleePlayer : Player
 
     public override void Attack()
     {
-        ApplyDamage();
+        ApplyDamage(_playerStatManager.ATK);
     }
 
     public override void Special()

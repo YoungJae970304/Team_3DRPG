@@ -7,7 +7,6 @@ public class MonsterMoveState : BaseState
     float _timer = 0;
     public override void OnStateEnter()
     {
-        Logger.LogError("3");
         _monster.StopAllCoroutines();
         if (_monster._nav.enabled)
         {

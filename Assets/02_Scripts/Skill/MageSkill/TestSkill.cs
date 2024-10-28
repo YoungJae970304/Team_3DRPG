@@ -31,37 +31,35 @@ public class TestSkillEnter : SkillEnter
     {
         Managers.Game._player._playerAnim.Play("Skill1");
 
-        PlayerStatManager pStat = (PlayerStatManager)stat;
-        pStat._buffStat.ATK += 10;
-
-        //Managers.Game._player._playerStatManager._buffStat.ATK += 10;
-
-        //Logger.LogError(" 데미지 확인 : " + stat.ATK);
-
-        // 자기 주위로 광역 데미지
-        /* 애니메이션 이벤트로 옮김
-        Collider[] hitMobs = Physics.OverlapSphere(Managers.Game._player.transform.position, 30f, 1 << LayerMask.NameToLayer("Monster"));
-        foreach (Collider col in hitMobs)
-        {
-            if (col.TryGetComponent<IDamageAlbe>(out var damageable))
-            {
-                damageable.Damaged(stat.ATK);
-            }
-        }
-        */
+        stat.ATK = 10;
     }
 }
 
 public class TestSkillStay : SkillStay
 {
+    Animator _anim = Managers.Game._player._playerAnim;
+    bool _damageApply = false;
+
     public void Stay(ITotalStat stat, int level = 0)
     {
+        // 애니메이션 진행도 8&에서 30% 시점까지는 빠른 이동
+        if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Skill1"))
+        {
+            float normalizedTime = _anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1;
 
+            // 8% 진행 지점에서 이벤트 트리거
+            if (normalizedTime >= 0.44f && normalizedTime <= 0.46f && !_damageApply)
+            {
+                Managers.Game._player.AreaDamage(15f, stat.ATK);
+
+                _damageApply = true;
+            }
+        }
     }
 
     public void End(ITotalStat stat, int level = 0)
     {
-
+        _damageApply = false;
     }
 }
 
@@ -70,11 +68,7 @@ public class TestSkillExit : SkillExit
     public void Exit(ITotalStat stat, int level = 0)
     {
         // 증가된 공격력 복구
-
-        PlayerStatManager pStat = (PlayerStatManager)stat;
-        pStat._buffStat.ATK -= 10;
-
-        //Managers.Game._player._playerStatManager._buffStat.ATK -= 10;
+        stat.ATK = -10;
     }
 }
 
@@ -84,9 +78,6 @@ public class TestSkillPassive : SkillPassive
     {
         Debug.Log("TestSkill 패시브 효과");
 
-        PlayerStatManager pStat = (PlayerStatManager)stat;
-        pStat._buffStat.MaxHP += 50;
-
-        //Managers.Game._player._playerStatManager._buffStat.MaxHP += 50;
+        stat.MaxHP = 50;
     }
 }

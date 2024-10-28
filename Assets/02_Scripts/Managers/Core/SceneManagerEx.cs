@@ -20,7 +20,7 @@ public class SceneManagerEx
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //Managers.Game.AddMonsterOnNowScene();
+        Managers.Game.AddMonsterOnNowScene();
 
         if (Managers.Game._player == null) return;
         Managers.Game._player._interectController.Init();

@@ -19,6 +19,5 @@ public class PlayerIdleState : BaseState
 
     public override void OnStateExit()
     {
-        Logger.Log("대기상태 Exit");
     }
 }

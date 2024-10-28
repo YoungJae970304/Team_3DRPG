@@ -23,7 +23,6 @@ public class ChainLightningEnter : SkillEnter
     public void Enter(ITotalStat stat, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill3");
-        Managers.Game.AddMonsterOnNowScene();
     }
 }
 
@@ -54,8 +53,7 @@ public class ChainLightningPassive : SkillPassive
     {
         Debug.Log("TestSkill 패시브 효과");
 
-        PlayerStatManager pStat = (PlayerStatManager)stat;
-        pStat._buffStat.MaxHP += 50;
-        pStat._buffStat.ATK += 30;
+        stat.MaxHP = 50;
+        stat.ATK = 30;
     }
 }
