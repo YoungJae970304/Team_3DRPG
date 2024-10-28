@@ -274,6 +274,7 @@ public class DataTableManager
     #region 던전 데이터테이블 함수
     void DungeonDataTable(string dataPath, string dungeonDataTable)
     {
+      
         var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
         foreach (var data in parsedDungeonDataTable)
         {

@@ -4,7 +4,7 @@ public class MonsterMoveState : BaseState
     {
     }
 
-    float _timer = 0;
+    //float _timer = 0;
     public override void OnStateEnter()
     {
         Logger.LogError("3");

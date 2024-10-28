@@ -1984,11 +1984,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ork
       objectReference: {fileID: 0}
-    - target: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2129,11 +2124,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BossBear
-      objectReference: {fileID: 0}
-    - target: {fileID: 2231100289048953305, guid: 0d75a8766ed77fb47adb550a875dfedf,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5073856785744776537, guid: 0d75a8766ed77fb47adb550a875dfedf,
         type: 3}
@@ -2320,11 +2310,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Goblem
-      objectReference: {fileID: 0}
-    - target: {fileID: 8784990582049915282, guid: e4458f539e3c8d449b1d64cb9ef7cdc4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
