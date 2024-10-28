@@ -44,10 +44,12 @@ public class Managers : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        Init();
     }
     void Start()
     {
-        Init();
+        
         
     }
 

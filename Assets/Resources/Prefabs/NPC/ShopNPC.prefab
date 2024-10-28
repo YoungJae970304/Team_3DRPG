@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5192120283780874669}
   - component: {fileID: 7624892395325495080}
   - component: {fileID: 697483932480134145}
-  - component: {fileID: 1282406393396071828}
+  - component: {fileID: 8277352027320416219}
   m_Layer: 0
   m_Name: ShopNPC
   m_TagString: NPC
@@ -107,7 +107,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1282406393396071828
+--- !u!114 &8277352027320416219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,17 +116,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2390683838968090313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd7ebfefd37d3454cbbb0bac7bb39552, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c57f7f48cb0b474288cba8a0667b2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 2784349132712581450}
-  DungeonDialogUI: {fileID: 2784003624122026532, guid: 68f84fe7b818f1f41a717e847d30458f,
+  DialogUI: {fileID: 2784003624122026532, guid: b90af8b2750f222409602936df57d415,
     type: 3}
-  ShopDialogUI: {fileID: 2784003624122026532, guid: b90af8b2750f222409602936df57d415,
-    type: 3}
-  QuestDialogUI: {fileID: 2784003624122026532, guid: 1e54275333c649c469b2e5d5592fb204,
-    type: 3}
-  _npcType: 2
 --- !u!1 &5049787894862945306
 GameObject:
   m_ObjectHideFlags: 0
