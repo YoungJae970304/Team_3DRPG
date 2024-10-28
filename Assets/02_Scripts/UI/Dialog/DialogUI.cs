@@ -62,7 +62,13 @@ public abstract class DialogUI : BaseUI
     {
         GetButton((int)Buttons.CheckBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.RefuseBtn).onClick.RemoveAllListeners();
-       Managers.Game._cantInputKey = false;
+        foreach (Buttons btns in Enum.GetValues(typeof(Buttons)))
+        {
+            var btn = GetButton((int)btns);
+            if (btn != null)
+                btn.gameObject.SetActive(false);
+        }
+        Managers.Game._cantInputKey = false;
     }
 
     protected abstract void OnClickedButton();

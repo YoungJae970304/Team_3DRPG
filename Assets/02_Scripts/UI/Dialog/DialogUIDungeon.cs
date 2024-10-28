@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DialogUIDungeon : DialogUI
 {
@@ -17,11 +16,23 @@ public class DialogUIDungeon : DialogUI
     protected override void OnClickedButton()
     {
         OpenDungeonUI();
+        Logger.LogWarning("버튼 클릭");
     }
 
     //던전 UI 오픈 함수 버튼 클릭시 생성
     public void OpenDungeonUI()
     {
+        //DungeonUI dungeonUI = Managers.UI.GetActiveUI<DungeonUI>() as DungeonUI;
+
+        //if (dungeonUI != null)
+        //{
+        //    Managers.UI.CloseUI(dungeonUI);
+        //}
+        //else
+        //{
+        //    Managers.UI.OpenUI<DungeonUI>(new BaseUIData());
+        //}
+
         if (!Managers.UI.IsActiveUI<DungeonUI>())
         {
             Managers.UI.OpenUI<DungeonUI>(new BaseUIData());
