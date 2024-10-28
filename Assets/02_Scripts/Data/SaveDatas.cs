@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
+using System.IO;
+using UnityEngine;
 
 [Serializable]
 public class SaveDatas : IData
@@ -8,35 +9,71 @@ public class SaveDatas : IData
     public List<InventorySaveData> _InventorySaveDatas;
     public List<SkillSaveData> _SkillSaveDatas;
     public List<EquipmentSaveData> _EquipmentSaveDatas;
-    public List<QuestClearData> _QuestClearDatas;
-    public Vector3 _PlayerPosition;
-    Define.PlayerType _PlayerTypes;
+    public List<PlayerSaveData> _PlayerSaveDatas;
+    //public List<QuestSaveData> _QuestSaveData;
+    //[SerializeField] Transform _PlayerPosition;
+    public Define.PlayerType _PlayerTypes;
 
-    int _level;
-    int _exp;
-    int _sp;
+    static readonly string _SavePath = $"{Application.persistentDataPath}/SaveData.json";
 
     public bool LoadData()
     {
-        throw new NotImplementedException();
+        if (!File.Exists(_SavePath))
+        {
+            Logger.LogWarning("저장된 데이터가 없습니다.");
+            return false;
+        }
+
+        try
+        {
+            string json = File.ReadAllText(_SavePath);
+            JsonUtility.FromJsonOverwrite(json, this);
+            Logger.Log("게임 데이터 로드 성공");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"데이터 로드 실패: {e.Message}");
+            return false;
+        }
     }
 
     public bool SaveData()
     {
-        throw new NotImplementedException();
+        try
+        {
+            string json = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, json);
+            Logger.Log("게임 데이터 저장 성공");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"데이터 저장 실패: {e.Message}");
+            return false;
+        }
     }
 
     public void SetDefaultData()
     {
-        throw new NotImplementedException();
+        _InventorySaveDatas = new List<InventorySaveData>();
+        _SkillSaveDatas = new List<SkillSaveData>();
+        _EquipmentSaveDatas = new List<EquipmentSaveData>();
+        _PlayerTypes =  Managers.Game._playerType;
+        Logger.Log("새로하기 되었습니다.");
     }
 }
 
-public class PlayerPosSaveData : IData
+public class PlayerSaveData : IData
 {
     int x;
     int y;
     int z;
+    int _level;
+    int _exp;
+    int _maxExp;
+    int _sp;
+    int _gold;
 
     public bool SaveData()
     {
@@ -80,6 +117,7 @@ public class SkillSaveData : IData
 {
     string _name;
     int _level;
+    int _type;
 
     public bool SaveData()
     {
@@ -118,7 +156,7 @@ public class EquipmentSaveData : IData
     }
 }
 
-public class QuestClearData : IData
+public class QuestSaveData : IData
 {
     string _name;
     int _amount1;

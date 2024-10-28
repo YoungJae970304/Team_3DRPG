@@ -55,6 +55,8 @@ public class SelectPlayerUI : BaseUI
         {
             Managers.Game._playerType = Define.PlayerType.Mage;
         }
-       
+        //SaveDatas saveData = new SaveDatas();
+        //saveData.SetDefaultData();
     }
 }
+   
