@@ -8,6 +8,7 @@ TagManager:
   - NPC
   - PlayerModel
   - LargeMapCam
+  - SceneManager
   layers:
   - Default
   - TransparentFX

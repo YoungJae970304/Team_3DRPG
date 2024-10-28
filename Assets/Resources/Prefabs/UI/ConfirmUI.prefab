@@ -569,6 +569,7 @@ GameObject:
   - component: {fileID: 6126312623880321502}
   - component: {fileID: 6363867904884771918}
   - component: {fileID: 1266693353879029569}
+  - component: {fileID: 1323549729200810245}
   m_Layer: 5
   m_Name: ConfirmUI
   m_TagString: Untagged
@@ -675,6 +676,22 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+--- !u!111 &1323549729200810245
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3635430834085538311}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 07d43be064370744a8f0dc520bd87d6d, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 07d43be064370744a8f0dc520bd87d6d, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &3725736803329221719
 GameObject:
   m_ObjectHideFlags: 0

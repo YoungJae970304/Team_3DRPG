@@ -9,6 +9,7 @@ public class TitleCanvasUI : BaseUI
     {
         BeginBtn,
         ContinueBtn,
+        ShutDownBtn,
     }
 
     private void Awake()
@@ -31,5 +32,14 @@ public class TitleCanvasUI : BaseUI
 
         //CloseUI(true);
         Managers.UI.CloseAllOpenUI();
+    }
+
+    public void OnClickShutDownBtn()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
     }
 }

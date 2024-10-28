@@ -29,15 +29,12 @@ public class EnemyAnimEvent : MonoBehaviour
         switch (attack)
         {
             case 0:
-                Logger.LogError("1번이펙트");
                 _monster._enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.LeftAttack);
                 break;
             case 1:
-                Logger.LogError("2번이펙트");
                 _monster._enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.RightAttack);
                 break;
             case 2:
-                Logger.LogError("3번 이펙트");
                 _monster._enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.Roar);
                 break;
         }

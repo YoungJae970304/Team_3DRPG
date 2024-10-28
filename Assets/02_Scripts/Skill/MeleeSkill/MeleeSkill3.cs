@@ -17,9 +17,7 @@ public class MeleeSkill3Enter : SkillEnter
     {
         Managers.Game._player._playerAnim.Play("Skill3");
 
-        // 상준님한테 피드백 받아보기
-        PlayerStatManager pStat = (PlayerStatManager)stat;
-        pStat._buffStat.ATK += 10;
+        stat.ATK = 10;
     }
 }
 
@@ -44,9 +42,7 @@ public class MeleeSkill3Exit : SkillExit
     {
         Managers.Game._player.SetColActive("Katana");
 
-        // 증가된 속도 복구
-        PlayerStatManager pStat = (PlayerStatManager)stat;
-        pStat._buffStat.ATK -= 10;
+        stat.ATK = -10;
     }
 }
 
@@ -56,9 +52,6 @@ public class MeleeSkill3Passive : SkillPassive
     {
         Debug.Log("TestSkill 패시브 효과");
 
-        PlayerStatManager pStat = (PlayerStatManager)stat;
-        pStat._buffStat.MaxHP += 50;
-
-        //Managers.Game._player._playerStatManager._buffStat.MaxHP += 50;
+        stat.MaxHP = 50;
     }
 }

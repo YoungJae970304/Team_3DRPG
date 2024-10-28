@@ -8,8 +8,27 @@ public class FusionSlot : ItemSlot
     public Inventory _inventory;
     public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
-        if (!(moveSlot is InventorySlot)) { return; }
-        base.ItemInsert(moveSlot);
+        
+        //base.ItemInsert(moveSlot);
+        if (moveSlot.GetType() == GetType())//같은종류의 슬롯이면
+        {
+            EqualSlot(moveSlot as ItemSlot);
+        }
+        else {
+            if (!(moveSlot is InventorySlot)) { return; }
+            InventorySlot moveitemSlot = moveSlot as InventorySlot;
+            Item item = moveitemSlot.Item;
+            if (item != null)
+            {
+
+                moveitemSlot.Setitem(null);
+                if (Item != null) {
+                    _inventory.InsertItem(Item);
+                }
+                
+                Setitem(item);
+            }
+        }
     }
 
     public override bool DragEnter(Image icon)

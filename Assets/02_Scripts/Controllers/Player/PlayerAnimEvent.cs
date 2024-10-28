@@ -84,30 +84,8 @@ public class PlayerAnimEvent : MonoBehaviour
     }
 
     #region 원거리 플레이어 스킬
-    // 1번째 스킬 ( 주위로 광역 데미지 )
-    public void FirstSkillDamage()
-    {
-        Collider[] hitMobs = Physics.OverlapSphere(Managers.Game._player.transform.position, 30f, 1 << LayerMask.NameToLayer("Monster"));
-        foreach (Collider col in hitMobs)
-        {
-            if (col.TryGetComponent<IDamageAlbe>(out var damageable))
-            {
-                damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
-            }
-        }
-    }
-
     public void SecondSkill()
     {
-        //Collider[] hitMobs = Physics.OverlapBox(Managers.Game._player.transform.position + (Vector3.forward * 2), new Vector3(1.5f,1f,1f), Quaternion.identity, 1 << LayerMask.NameToLayer("Monster"));
-        //foreach (Collider col in hitMobs)
-        //{
-        //    if (col.TryGetComponent<IDamageAlbe>(out var damageable))
-        //    {
-        //        damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
-        //    }
-        //}
-
         MagePlayer magePlayer = (MagePlayer)_player;
 
         GameObject go = Managers.Resource.Instantiate("Player/MageSkill2");
@@ -133,10 +111,6 @@ public class PlayerAnimEvent : MonoBehaviour
     #endregion
 
     #region 근거리 플레이어 스킬
-    public void MeleeFirstSkillDamage()
-    {
-        _player.ApplyDamage();
-    }
     public void PhysicsLayerOff()
     {
         // 플레이어와 몬스터의 충돌을 잠시 off
@@ -147,30 +121,6 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         // 플레이어와 몬스터의 충돌을 원래대로 되돌림
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Monster"), false);
-    }
-
-    public void MeleeSecondSkillDamage(float range)
-    {
-        // 주변을 넓게 베는 스킬, 발도같은 느낌
-        Logger.LogWarning("근거리 플레이어 2번째 스킬");
-
-        Vector3 playerPos = Managers.Game._player.transform.position;
-
-        for (int i = 0; i < Managers.Game._monsters.Count; i++)
-        {
-            if (Vector3.Distance(playerPos, Managers.Game._monsters[i].transform.position) < range)
-            {
-                if (Managers.Game._monsters[i].TryGetComponent<IDamageAlbe>(out var damageable))
-                {
-                    damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
-                }
-            }
-        }
-    }
-
-    public void MeleeThirdSkillDamage()
-    {
-        Logger.LogWarning("근거리 플레이어 3번째 스킬");
     }
 
     public void SwordAuraCreate()
