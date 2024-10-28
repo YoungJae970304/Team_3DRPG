@@ -31,7 +31,6 @@ public class TestSkillEnter : SkillEnter
     {
         Managers.Game._player._playerAnim.Play("Skill1");
 
-        // 상준님한테 피드백 받아보기
         PlayerStatManager pStat = (PlayerStatManager)stat;
         pStat._buffStat.ATK += 10;
 

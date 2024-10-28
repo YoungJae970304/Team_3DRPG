@@ -22,10 +22,14 @@ public class ConfirmUI : BaseUI
         CancelBtn,
     }
 
+    Animator _fadeAnim;
+
     private void Awake()
     {
         Bind<TextMeshProUGUI>(typeof(ConfirmTexts));
         Bind<Button>(typeof(ConfirmButtons));
+
+        _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
 
         GetText((int)ConfirmTexts.DescTxt).text = "게임 진입 후 캐릭터의 변경이 불가능 합니다!\r\n선택한 캐릭터로 진행 하시겠습니까?";
         GetButton((int)ConfirmButtons.OKBtn).onClick.AddListener(() => OnClickOKBtn("main"));
@@ -33,14 +37,6 @@ public class ConfirmUI : BaseUI
 
     public void OnClickOKBtn(string sceneName)
     {
-        SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
-
-        if (selectPlayerUI != null)
-        {
-            Managers.Scene.SceneChange(sceneName);
-        }
-
-        //CloseUI(true);
-        Managers.UI.CloseAllOpenUI();
+        _fadeAnim.SetTrigger("doFade");
     }
 }
