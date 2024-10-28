@@ -39,7 +39,6 @@ public class ConfirmUI : BaseUI
         base.SetInfo(uiData);
         ConfirmUIData confirmData = uiData as ConfirmUIData;
         GetText((int)ConfirmTexts.DescTxt).text = confirmData.DescTxt;
-        //GetText((int)ConfirmTexts.DescTxt).text = "게임 진입 후 캐릭터의 변경이 불가능 합니다!\r\n선택한 캐릭터로 진행 하시겠습니까?";
         GetButton((int)ConfirmButtons.OKBtn).onClick.AddListener(() => OnClickOKBtn(confirmData.confimAction));
     }
     public void OnClickOKBtn(Action confirm)
