@@ -469,4 +469,15 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         }
         return false;
     }
+
+    public void PlayerStatInit()
+    {
+        _playerStatManager.HP = _playerStatManager.MaxHP;
+        _playerStatManager.MP = _playerStatManager.MaxMP;
+    }
+
+    public void PlayerEXPGain(int exp)
+    {
+        _playerStatManager.EXP += exp;
+    }
 }

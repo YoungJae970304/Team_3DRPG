@@ -26,6 +26,7 @@ public class SceneManagerEx
         Managers.Game._player._interectController.Init();
         Managers.Game._player._playerInput.OpenLargeMap();
         Managers.Game._player._playerInput.OpenLargeMap();
+        Managers.Game._player.PlayerStatInit();
     }
 
     string GetSceneName(Define.Scene type)
