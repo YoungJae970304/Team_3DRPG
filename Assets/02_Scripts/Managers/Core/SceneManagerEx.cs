@@ -35,6 +35,11 @@ public class SceneManagerEx
         return name;
     }
 
+    public bool LoadingSceneCheck()
+    {
+        return SceneManager.GetActiveScene().buildIndex == 0;
+    }
+
     public void LoadScene(Define.Scene type)
     {
         Time.timeScale = 1f;

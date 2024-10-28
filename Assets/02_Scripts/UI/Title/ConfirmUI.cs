@@ -44,5 +44,6 @@ public class ConfirmUI : BaseUI
     public void OnClickOKBtn(Action confirm)
     {
         confirm?.Invoke();
+        CloseUI();
     }
 }

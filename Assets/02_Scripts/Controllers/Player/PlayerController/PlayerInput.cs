@@ -157,7 +157,15 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CloseFrontUI();
+            if (Managers.UI.ExistsOpenUI())
+            {
+                CloseFrontUI();
+            }
+            else
+            {
+                OpenPlayerUI<OptionUI>();
+            }
+            
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
@@ -174,7 +182,8 @@ public class PlayerInput : MonoBehaviour
             //임시
             SkillTreeData skillTreeData = new SkillTreeData();
             skillTreeData.path = "test";
-            Managers.UI.OpenUI<SkillTree>(skillTreeData);
+            //Managers.UI.OpenUI<SkillTree>(skillTreeData);
+            OpenPlayerUI<SkillTree>(skillTreeData);
         }
         else if (Input.GetKeyDown(KeyCode.U))
         {
@@ -182,16 +191,34 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // 데이터 입력 없는 디폴트
     public void OpenPlayerUI<T>() where T : BaseUI
     {
-        T equipUI = Managers.UI.GetActiveUI<T>() as T;
-        if (equipUI != null)
+        T playerUI = Managers.UI.GetActiveUI<T>() as T;
+        if (playerUI != null)
         {
-            Managers.UI.CloseUI(equipUI);
+            Managers.UI.CloseUI(playerUI);
         }
         else
         {
+            if (Managers.Scene.LoadingSceneCheck()) return;
+
             Managers.UI.OpenUI<T>(new BaseUIData());
+        }
+    }
+    // 데이터 입력을 받는 함수 오버로딩
+    public void OpenPlayerUI<T>(BaseUIData baseUIData) where T : BaseUI
+    {
+        T playerUI = Managers.UI.GetActiveUI<T>() as T;
+        if (playerUI != null)
+        {
+            Managers.UI.CloseUI(playerUI);
+        }
+        else
+        {
+            if (Managers.Scene.LoadingSceneCheck()) return;
+
+            Managers.UI.OpenUI<T>(baseUIData);
         }
     }
 
