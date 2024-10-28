@@ -112,7 +112,6 @@ public class DungeonUI : BaseUI
     IEnumerator MakeDungeUIElement()
     {
         GameObject dungeonType;
-        List<GameObject> checkButton = new List<GameObject>();
         Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
         foreach (var dungeon in _dataTableManager._DungeonData) //데이터 테이블 가져오기
         {

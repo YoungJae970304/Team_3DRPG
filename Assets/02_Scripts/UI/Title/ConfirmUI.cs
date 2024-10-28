@@ -11,7 +11,7 @@ public enum ConfirmType {
 
 public class ConfirmUIData : BaseUIData {
     public string DescTxt;
-    public Action confimAction;
+    public static Action confirmAction;
 }
 
 public class ConfirmUI : BaseUI
@@ -39,10 +39,11 @@ public class ConfirmUI : BaseUI
         base.SetInfo(uiData);
         ConfirmUIData confirmData = uiData as ConfirmUIData;
         GetText((int)ConfirmTexts.DescTxt).text = confirmData.DescTxt;
-        GetButton((int)ConfirmButtons.OKBtn).onClick.AddListener(() => OnClickOKBtn(confirmData.confimAction));
+        GetButton((int)ConfirmButtons.OKBtn).onClick.AddListener(() => OnClickOKBtn(ConfirmUIData.confirmAction));
     }
     public void OnClickOKBtn(Action confirm)
     {
         confirm?.Invoke();
+        CloseUI();
     }
 }
