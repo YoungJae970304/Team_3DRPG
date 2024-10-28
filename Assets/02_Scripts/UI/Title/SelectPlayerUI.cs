@@ -13,7 +13,7 @@ public class SelectPlayerUI : BaseUI
         MeleePlayer,
         MagePlayer,
     }
-
+    ConfirmUIData confirmUIData = new ConfirmUIData();
     enum SelectButtons
     {
         StartBtn,
@@ -25,15 +25,15 @@ public class SelectPlayerUI : BaseUI
         Bind<Toggle>(typeof(SelectToggles));
         Bind<Button>(typeof(SelectButtons));
     }
-
+   
     // 선택되어 있는 토글에 따라 플레이어 타입을 결정 -> 이후 게임매니저에서 씬 로드될 때 마다 해당 플레이어 생성
     public void OnClickStartBtn()
     {
         ConfirmUI confirmUI = Managers.UI.GetActiveUI<ConfirmUI>() as ConfirmUI;
-        ConfirmUIData confirmUIData = new ConfirmUIData();
+        
 
         confirmUIData.DescTxt = descTxt;// "게임 진입 후 캐릭터의 변경이 불가능 합니다!\r\n선택한 캐릭터로 진행 하시겠습니까?";
-        confirmUIData.confimAction += () => {
+        ConfirmUIData.confirmAction += () => {
             Animator _fadeAnim= GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
             _fadeAnim.SetTrigger("doFade");
         };
@@ -55,5 +55,6 @@ public class SelectPlayerUI : BaseUI
         {
             Managers.Game._playerType = Define.PlayerType.Mage;
         }
+       
     }
 }
