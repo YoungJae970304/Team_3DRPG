@@ -11322,7 +11322,7 @@ Transform:
   m_GameObject: {fileID: 4638996236515068095}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16697,10 +16697,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed7a4ce6c8a3c04987d054091651e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _UIOpenAnimation: {fileID: 0}
-  _topBarImage: {fileID: 0}
-  _exitBtn: {fileID: 0}
-  _isSort: 1
 --- !u!1 &6545885959528436468
 GameObject:
   m_ObjectHideFlags: 0
