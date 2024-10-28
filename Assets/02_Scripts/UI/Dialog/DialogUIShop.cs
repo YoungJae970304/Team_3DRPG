@@ -54,8 +54,9 @@ public class DialogUIShop : DialogUI
                 _itemCode = new List<(int, int)>
         {
             (11001, 1),
-            (11002, 1),
-            (11003, 1)
+            (11006, 1),
+            (11005, 1),
+            (41001, 95)
         }
             };
             Managers.UI.OpenUI<ShopUI>(shopUIData);
