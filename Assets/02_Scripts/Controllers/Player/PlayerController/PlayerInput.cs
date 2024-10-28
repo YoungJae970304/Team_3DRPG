@@ -157,7 +157,15 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CloseFrontUI();
+            if (Managers.UI.ExistsOpenUI())
+            {
+                CloseFrontUI();
+            }
+            else
+            {
+                OpenPlayerUI<OptionUI>();
+            }
+            
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {

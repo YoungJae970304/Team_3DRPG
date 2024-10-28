@@ -34,13 +34,13 @@ public class OptionUI : BaseUI
         ConfirmUI confirmUI = Managers.UI.GetActiveUI<ConfirmUI>() as ConfirmUI;
         
         descTxt = "던전을 포기 \n 하시겠습니까?";
-      
+       
         confirmUIData.DescTxt = descTxt;
 
-        ConfirmUIData.confirmAction = async () =>
+        ConfirmUIData.confirmAction = () =>
         {
-            await Task.Delay(2000);
             Managers.Scene.SceneChange("main");
+            CloseUI();
         };
         if (confirmUI == null)
         {
@@ -56,9 +56,10 @@ public class OptionUI : BaseUI
         confirmUIData.DescTxt = descTxt;
         ConfirmUIData.confirmAction = () =>
         {
-           // Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
+            // Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
             //_fadeAnim.SetTrigger("doFade");
             //await Task.Delay(2000);
+            CloseUI();
             Application.Quit();
         };
         if (confirmUI == null)
