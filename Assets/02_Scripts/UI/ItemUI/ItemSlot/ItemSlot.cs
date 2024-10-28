@@ -71,7 +71,11 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
     }
 
     //슬롯에 있는 아이템을 옮겼을때 해주어야할 일들
-    public abstract bool MoveItem(ItemSlot moveSlot);
+    public virtual bool MoveItem(ItemSlot moveSlot)
+    {
+        Item = moveSlot.Item;
+        return true;
+    }
 
     public virtual void RemoveItem()
     {
@@ -84,6 +88,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
     }
     //아이템을 변경해줄 경우
     public virtual void Setitem(Item item) {
+        if(item == null) { Item = null; return; }
         if (Item != null && Item.Data.ID == item.Data.ID)
         {
             if (Item is CountableItem)
@@ -97,7 +102,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
         Item = item;
     }
 
-    public bool DragEnter(Image icon)
+    public virtual bool DragEnter(Image icon)
     {
         if (Item == null || isLocked) { return false; }
         icon.enabled = true;                        //마우스 따라다닐 이미지
@@ -106,7 +111,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
         return true;
     }
 
-    public void DragExit(Image icon)
+    public virtual void DragExit(Image icon)
     {
         icon.enabled = false;
         _Image.enabled = true;

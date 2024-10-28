@@ -39,6 +39,7 @@ public class EquipMentUI : ItemDragUI
         Managers.Game._player._playerStatManager._equipStat = equipStat;
     }
     public void AddSlot(EquipmentSlot equipmentSlot) {//장비 슬롯 추가
+        if (_equipMentsDick.ContainsKey(equipmentSlot.name)) { return; }//중복 방지
         _equipMentsDick.Add(equipmentSlot.name, new EquipmentItemData());
        equipmentSlot.itemChangedAction += ()=>ChangedItem(equipmentSlot);
         if (equipmentSlot.Item != null) {
