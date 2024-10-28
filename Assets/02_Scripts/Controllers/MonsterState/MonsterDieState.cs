@@ -14,6 +14,8 @@ public class MonsterDieState : BaseState
     public override void OnStateEnter()
     {
         _monster._nav.enabled = false;
+        _monster._player.PlayerEXPGain(_monster._mStat._mStat.EXP);
+        Logger.LogError($"{_monster._mStat.EXP.ToString()}");
         _monster._anim.SetTrigger("Die");
         Managers.Game._monsters.Remove(_monster);
         Logger.Log("몬스터 사망");
