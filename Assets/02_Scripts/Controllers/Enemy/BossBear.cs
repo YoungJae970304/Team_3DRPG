@@ -199,7 +199,7 @@ public class BossBear : Monster
     }
     public void Roar()
     {
-        int damage = 0;
+        //int damage = 0;
         Collider[] checkColliders = Physics.OverlapSphere(transform.position, _maxRoarRange.transform.localScale.x*2);
         Logger.LogError($"{_maxRoarRange.transform.localScale.x}");
         foreach (Collider collider in checkColliders)
@@ -208,7 +208,7 @@ public class BossBear : Monster
             {
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    damageable.Damaged(damage);
+                    damageable.StatusEffect.SpawnEffect<StunEffect>(1);
                     //_player.Damaged(_mStat.ATK);
                     Logger.LogError($"{_player._playerStatManager.HP}");
                 }

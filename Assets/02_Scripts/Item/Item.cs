@@ -71,17 +71,17 @@ public class Item
             case ItemData.ItemType.Potion:
             case ItemData.ItemType.Booty:
                 Logger.Log("스위치문 진입 확인");
-                iconPath = "ItemIcon/EtcIcon/" + Data.ID.ToString();
+                iconPath = $"ItemIcon/EtcIcon/{Data.ID}";
                 break;
             default:
                 if (Managers.Game._playerType == PlayerType.Melee)
                 {
                     Logger.LogWarning("현재 타입 확인" + Data.Type);
-                    iconPath = "ItemIcon/MeleeIcon/" + Data.ID.ToString();
+                    iconPath = $"ItemIcon/MeleeIcon/{Data.ID}";
                 }
                 else if (Managers.Game._playerType == PlayerType.Mage)
                 {
-                    iconPath = "ItemIcon/MageIcon/" + Data.ID.ToString();
+                    iconPath = $"ItemIcon/MageIcon/{Data.ID}";
                 }
                 break;
 
