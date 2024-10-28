@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public abstract class DialogUI : BaseUI
         CheckBtn,//확인
         RefuseBtn,//거절
         SynthesisBtn,//합성
+        //Etc....
     }
 
     public DialogSystem[] _dialogSystem;
@@ -49,7 +51,6 @@ public abstract class DialogUI : BaseUI
         GetButton((int)Buttons.CheckBtn).onClick.AddListener(() =>
         {
             OnClickedButton();
-            _isOpenUI = true;
         });
 
         GetButton((int)Buttons.RefuseBtn).onClick.AddListener(() =>
@@ -62,7 +63,25 @@ public abstract class DialogUI : BaseUI
     {
         GetButton((int)Buttons.CheckBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.RefuseBtn).onClick.RemoveAllListeners();
-       Managers.Game._cantInputKey = false;
+        GetButton((int)Buttons.SynthesisBtn).onClick.RemoveAllListeners();
+        Logger.Log("Button_RemoveAllListenersCheck");
+        foreach (Buttons btns in Enum.GetValues(typeof(Buttons)))
+        {
+            var btn = GetButton((int)btns);
+            if (btn != null)
+                btn.gameObject.SetActive(false);
+        }
+        Managers.Game._cantInputKey = false;
+    }
+
+    protected virtual void UITypeOpen<T>() where T : BaseUI
+    {
+        if (!Managers.UI.IsActiveUI<T>())
+        {
+            BaseUIData baseUIdata = new BaseUIData();
+            Managers.UI.OpenUI<T>(baseUIdata);
+            _isOpenUI = true;
+        }
     }
 
     protected abstract void OnClickedButton();

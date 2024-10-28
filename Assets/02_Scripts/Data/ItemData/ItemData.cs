@@ -73,10 +73,14 @@ public class ItemData : IData
         bool result = false;
         try
         {
-            string key = "ItemData_" + ID;
+            //string key = "ItemData_" + ID;
             string itemDataJson = JsonUtility.ToJson(this);
-            PlayerPrefs.SetString(key, itemDataJson);
-            PlayerPrefs.Save();
+            string fileName = "Items";
+            string path = Application.dataPath + "/" + fileName + ".Json";
+            File.WriteAllText(path, itemDataJson);
+            Logger.Log(itemDataJson);
+            //PlayerPrefs.SetString(key, itemDataJson);
+            //PlayerPrefs.Save();
             result = true;
            
         }catch(Exception e)
@@ -97,7 +101,12 @@ public class ItemData : IData
             string key = "ItemData_" + ID;
             if (PlayerPrefs.HasKey(key))
             {
-                string itemDataJson = PlayerPrefs.GetString(key);
+                //JsonFile
+                string fileName = "Items";
+                string path = Application.dataPath + "/" + fileName + "itemDataJson";
+                string itemDataJson = File.ReadAllText(path);
+                //Player
+                //string itemDataJson = PlayerPrefs.GetString(key);
                 JsonUtility.FromJsonOverwrite(itemDataJson, this);
                 result = true;
             }

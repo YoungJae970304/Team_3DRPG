@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
         _nav = GetComponent<NavMeshAgent>();
-
+       
         _originPos = transform.position;
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
@@ -333,9 +333,17 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
             {
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    damageable.Damaged(damage);
+                    
+                    if (!collider.GetComponent<Player>()._hitting) 
+                    {
+                        //맞는 이펙트 실행(플레이어 위치에)
+                        _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit,collider.transform);
+                        Logger.LogError(_player.transform.position.ToString());
+                        
+                    }
                     //_player.Damaged(_mStat.ATK);
                     Logger.LogError($"{_player._playerStatManager.HP}");
+                    damageable.Damaged(damage);
                 }
             }
         }
