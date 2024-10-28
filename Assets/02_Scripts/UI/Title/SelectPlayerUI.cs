@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using UnityEngineInternal;
 
 public class SelectPlayerUI : BaseUI
-{
+{   [Multiline(5)]
+    [SerializeField] string descTxt;
     enum SelectToggles
     {
         MeleePlayer,
@@ -31,15 +32,15 @@ public class SelectPlayerUI : BaseUI
         ConfirmUI confirmUI = Managers.UI.GetActiveUI<ConfirmUI>() as ConfirmUI;
         ConfirmUIData confirmUIData = new ConfirmUIData();
 
-        confirmUIData.DescTxt = "게임 진입 후 캐릭터의 변경이 불가능 합니다!\r\n선택한 캐릭터로 진행 하시겠습니까?";
-        confirmUIData.confimAction = () => {
+        confirmUIData.DescTxt = descTxt;// "게임 진입 후 캐릭터의 변경이 불가능 합니다!\r\n선택한 캐릭터로 진행 하시겠습니까?";
+        confirmUIData.confimAction += () => {
             Animator _fadeAnim= GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
             _fadeAnim.SetTrigger("doFade");
         };
 
         if (confirmUI == null)
         {
-            Managers.UI.OpenUI<ConfirmUI>(new BaseUIData());
+            Managers.UI.OpenUI<ConfirmUI>(confirmUIData);
         }
 
 
