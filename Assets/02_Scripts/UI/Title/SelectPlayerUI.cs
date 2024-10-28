@@ -32,7 +32,7 @@ public class SelectPlayerUI : BaseUI
         ConfirmUIData confirmUIData = new ConfirmUIData();
 
         confirmUIData.DescTxt = "게임 진입 후 캐릭터의 변경이 불가능 합니다!\r\n선택한 캐릭터로 진행 하시겠습니까?";
-        confirmUIData.confimAction += () => {
+        confirmUIData.confimAction = () => {
             Animator _fadeAnim= GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
             _fadeAnim.SetTrigger("doFade");
         };
