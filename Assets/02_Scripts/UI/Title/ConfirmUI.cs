@@ -9,6 +9,11 @@ public enum ConfirmType {
     OK_CANCEL,//유저 선택지 제시
 }
 
+public class ConfirmUIData : BaseUIData {
+    public string DescTxt;
+    public Action confimAction;
+}
+
 public class ConfirmUI : BaseUI
 {
     enum ConfirmTexts
@@ -23,20 +28,21 @@ public class ConfirmUI : BaseUI
     }
 
     Animator _fadeAnim;
-
-    private void Awake()
+    public override void Init(Transform anchor)
     {
+        base.Init(anchor);
         Bind<TextMeshProUGUI>(typeof(ConfirmTexts));
         Bind<Button>(typeof(ConfirmButtons));
-
-        _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
-
-        GetText((int)ConfirmTexts.DescTxt).text = "게임 진입 후 캐릭터의 변경이 불가능 합니다!\r\n선택한 캐릭터로 진행 하시겠습니까?";
-        GetButton((int)ConfirmButtons.OKBtn).onClick.AddListener(() => OnClickOKBtn("main"));
     }
-
-    public void OnClickOKBtn(string sceneName)
+    public override void SetInfo(BaseUIData uiData)
     {
-        _fadeAnim.SetTrigger("doFade");
+        base.SetInfo(uiData);
+        ConfirmUIData confirmData = uiData as ConfirmUIData;
+        GetText((int)ConfirmTexts.DescTxt).text = confirmData.DescTxt;
+        GetButton((int)ConfirmButtons.OKBtn).onClick.AddListener(() => OnClickOKBtn(confirmData.confimAction));
+    }
+    public void OnClickOKBtn(Action confirm)
+    {
+        confirm?.Invoke();
     }
 }
