@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3474845006119149844}
   - component: {fileID: 6098954057701398197}
   - component: {fileID: 2842023858839465311}
-  - component: {fileID: 3914459085943971457}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -80,23 +79,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3914459085943971457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81427131351804812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24ce666b857dc1148a67f3f3ad4490a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _UIOpenAnimation: {fileID: 0}
-  _topBarImage: {fileID: 0}
-  _exitBtn: {fileID: 0}
-  _isSort: 1
-  descTxt: 
 --- !u!1 &361217525398575064
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +227,7 @@ GameObject:
   - component: {fileID: 4112621364106631978}
   - component: {fileID: 402494470069551588}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -352,7 +334,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4112621364106631978}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1949727751066166937}
+        m_TargetAssemblyTypeName: BaseUI, Assembly-CSharp
+        m_MethodName: OnClosedButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2275814756126749071
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,7 +814,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3914459085943971457}
+      - m_Target: {fileID: 1949727751066166937}
         m_TargetAssemblyTypeName: OptionUI, Assembly-CSharp
         m_MethodName: OnClickShutDownBtn
         m_Mode: 1
@@ -953,7 +947,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3914459085943971457}
+      - m_Target: {fileID: 1949727751066166937}
         m_TargetAssemblyTypeName: OptionUI, Assembly-CSharp
         m_MethodName: OnClickOptionBtn
         m_Mode: 1
@@ -1086,7 +1080,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3914459085943971457}
+      - m_Target: {fileID: 1949727751066166937}
         m_TargetAssemblyTypeName: OptionUI, Assembly-CSharp
         m_MethodName: OnClickGiveUpBtn
         m_Mode: 1
@@ -1246,8 +1240,9 @@ GameObject:
   - component: {fileID: 6550983056621609051}
   - component: {fileID: 4453318821414919577}
   - component: {fileID: 6330914134334799225}
+  - component: {fileID: 1949727751066166937}
   m_Layer: 5
-  m_Name: OptionCanvas
+  m_Name: OptionUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1352,3 +1347,20 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1949727751066166937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194771473616875331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ce666b857dc1148a67f3f3ad4490a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UIOpenAnimation: {fileID: 0}
+  _topBarImage: {fileID: 0}
+  _exitBtn: {fileID: 0}
+  _isSort: 1
+  descTxt: 
