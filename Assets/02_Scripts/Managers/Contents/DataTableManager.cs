@@ -29,7 +29,8 @@ public class DataTableManager
     const string _QUEST_DATA_TABLE = "Quest_Data_Table";
     // 플레이어 데이터 테이블 CSV 파일
     public string _PLAYER_LEVEL_DATA_TABLE = "Player_Level_Data_Table";
-
+    // 아이템 조합 데이터 테이블 CSV 파일
+    const string _SYNTHESIS_DATA_TABLE = "Fusion_List_Data_Table";
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
     public List<ItemData> _PotionItemData = new List<ItemData>();
@@ -39,7 +40,7 @@ public class DataTableManager
     public List<MonsterData> _MonsterData = new List<MonsterData>();
     public List<QuestData> _QuestData = new List<QuestData>();
     public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
-
+    public List<FusionData> _FusionData = new List<FusionData>();
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
 
@@ -54,6 +55,7 @@ public class DataTableManager
         DungeonDataTable(_DATA_PATH, _DUNGEON_DATA_TABLE);
         PlayerLevelDataTable(_DATA_PATH, _PLAYER_LEVEL_DATA_TABLE);
         MonsterDataTable(_DATA_PATH, _MONSTER_DATA_TABLE);
+        FusionDataTable(_DATA_PATH, _SYNTHESIS_DATA_TABLE);
     }
     #endregion
 
@@ -361,5 +363,30 @@ public class DataTableManager
         }
     }
 
+    #endregion
+
+    #region 조합 데이터테이블 함수
+    void FusionDataTable(string dataPath, string FusionDataTable)
+    {
+        var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{FusionDataTable}");
+        foreach (var data in parsedDungeonDataTable)
+        {
+            FusionData fusionData = null;
+            fusionData = new FusionData
+            {
+                FusionItemID1 = Convert.ToInt32(data["FusionItemID1"]),
+                FusionItemAmount1= Convert.ToInt32(data["FusionItemAmount1"]),
+                FusionItemID2 = Convert.ToInt32(data["FusionItemID2"]),
+                FusionItemAmount2 = Convert.ToInt32(data["FusionItemAmount2"]),
+                ResultItemID = Convert.ToInt32(data["ResultItemID"]),
+
+            };
+            if (fusionData != null)
+            {
+                Logger.Log($"{fusionData} 저장됨");
+                _FusionData.Add(fusionData);
+            }
+        }
+    }
     #endregion
 }

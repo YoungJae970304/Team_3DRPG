@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EquipmentSlot : ItemSlot
 {
-    EquipMentUI _equipMentUI;
 
     public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
@@ -14,8 +13,8 @@ public class EquipmentSlot : ItemSlot
         Item item = (moveSlot as ItemSlot).Item;
         if (item.Data.Type != _slotType) { return; }
         base.ItemInsert(moveSlot);
-            
     }
+
 
     public override bool MoveItem(ItemSlot moveSlot)
     {

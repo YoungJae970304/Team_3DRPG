@@ -45,7 +45,6 @@ public class Managers : MonoBehaviour
             Destroy(gameObject);
         }
 
-   
     }
     void Start()
     {
