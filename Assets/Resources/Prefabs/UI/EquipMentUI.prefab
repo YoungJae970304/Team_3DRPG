@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3782271162828252680}
   - component: {fileID: 7596882183592225186}
   - component: {fileID: 6223684516317951957}
+  - component: {fileID: 9083649720846141769}
   m_Layer: 5
   m_Name: EquipMentUI
   m_TagString: Untagged
@@ -123,6 +124,22 @@ MonoBehaviour:
   - {fileID: 7411668492195702471}
   - {fileID: 3605173694153656218}
   Atk: {fileID: 9214368515681745111}
+--- !u!111 &9083649720846141769
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603737217534494207}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 864affe38664d2c4eb23e05fe1fffe0a, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 864affe38664d2c4eb23e05fe1fffe0a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &3113595692609798462
 GameObject:
   m_ObjectHideFlags: 0
