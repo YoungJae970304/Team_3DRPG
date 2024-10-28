@@ -87,8 +87,10 @@ public class DungeonUI : BaseUI
     }
     public void ExitDungeonUI()
     {
-        Managers.Scene.SceneChange("dungeon");
+        //Managers.Scene.SceneChange("dungeon");
         //Managers.Game._selecDungeonLevel = _deongeonLevel;
+        Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
+        _fadeAnim.SetTrigger("doFadeDungeon");
         CloseUI();
     }
     public void DungeonButtonBind()

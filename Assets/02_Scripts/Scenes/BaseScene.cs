@@ -27,4 +27,11 @@ public abstract class BaseScene : MonoBehaviour
 
     // 여기서 정의하지 않을 것이라 abstract로 제작
     public abstract void Clear();
+
+    public void OnSceneChange(string sceneName)
+    {
+        Managers.Scene.SceneChange(sceneName);
+
+        Managers.UI.CloseAllOpenUI();
+    }
 }
