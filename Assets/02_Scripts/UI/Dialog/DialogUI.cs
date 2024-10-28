@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public abstract class DialogUI : BaseUI
         CheckBtn,//확인
         RefuseBtn,//거절
         SynthesisBtn,//합성
+        //Etc....
     }
 
     public DialogSystem[] _dialogSystem;
@@ -62,6 +64,8 @@ public abstract class DialogUI : BaseUI
     {
         GetButton((int)Buttons.CheckBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.RefuseBtn).onClick.RemoveAllListeners();
+        GetButton((int)Buttons.SynthesisBtn).onClick.RemoveAllListeners();
+        Logger.Log("Button_RemoveAllListenersCheck");
         foreach (Buttons btns in Enum.GetValues(typeof(Buttons)))
         {
             var btn = GetButton((int)btns);
