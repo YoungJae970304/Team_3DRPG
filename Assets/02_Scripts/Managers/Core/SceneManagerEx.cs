@@ -24,8 +24,8 @@ public class SceneManagerEx
 
         if (Managers.Game._player == null) return;
         Managers.Game._player._interectController.Init();
-        Managers.Game._player._playerInput.OpenLargeMap();
-        Managers.Game._player._playerInput.OpenLargeMap();
+        Managers.Game._player._playerInput.OpenPlayerUI<LargeMapUI>();
+        Managers.Game._player._playerInput.OpenPlayerUI<LargeMapUI>();
         Managers.Game._player.PlayerStatInit();
     }
 

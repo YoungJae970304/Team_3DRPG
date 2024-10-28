@@ -145,6 +145,7 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.V))
         {
             _player._playerStatManager.EXP += 100;
+            _player._playerStatManager.Gold += 100000;
         }
     }
          
@@ -152,7 +153,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            OpenInventory();
+            OpenPlayerUI<InventoryUI>();
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -166,7 +167,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if ( Input.GetKeyDown(KeyCode.M))
         {
-            OpenLargeMap();
+            OpenPlayerUI<LargeMapUI>();
         }
         else if (Input.GetKeyDown(KeyCode.K))
         {
@@ -175,33 +176,25 @@ public class PlayerInput : MonoBehaviour
             skillTreeData.path = "test";
             Managers.UI.OpenUI<SkillTree>(skillTreeData);
         }
+        else if (Input.GetKeyDown(KeyCode.U))
+        {
+            OpenPlayerUI<EquipMentUI>();
+        }
     }
 
-    public void OpenLargeMap()
+    public void OpenPlayerUI<T>() where T : BaseUI
     {
-        LargeMapUI mapUI = Managers.UI.GetActiveUI<LargeMapUI>() as LargeMapUI;
-        if (mapUI != null)
+        T equipUI = Managers.UI.GetActiveUI<T>() as T;
+        if (equipUI != null)
         {
-            Managers.UI.CloseUI(mapUI);
+            Managers.UI.CloseUI(equipUI);
         }
         else
         {
-            Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
+            Managers.UI.OpenUI<T>(new BaseUIData());
         }
     }
 
-    public void OpenInventory()
-    {
-        InventoryUI inventoryUI = Managers.UI.GetActiveUI<InventoryUI>() as InventoryUI;
-        if (inventoryUI != null)
-        {
-            Managers.UI.CloseUI(inventoryUI);
-        }
-        else {
-            // 인벤토리 여는 것 I? ( 풀링 )
-            Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
-        }
-    }
     public void CloseFrontUI()
     {
         //ESC
