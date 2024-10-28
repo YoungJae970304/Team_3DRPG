@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 7444794540496867235}
   - component: {fileID: 6452190709165574588}
   - component: {fileID: 317607246356716450}
+  - component: {fileID: 6335901449622899705}
   m_Layer: 5
   m_Name: ShopUI
   m_TagString: Untagged
@@ -364,6 +365,22 @@ MonoBehaviour:
   _itemTrs: {fileID: 4474417698874426370}
   _size: 0
   _shopItemSlot: []
+--- !u!111 &6335901449622899705
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3450620066851102340}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 05279f7ca16197149b8b2c0c1ecc7d18, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 05279f7ca16197149b8b2c0c1ecc7d18, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &5916581200109633820
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,7 +50,6 @@ public class Drop : MonoBehaviour
             { 3, 10 },
         };
         _deongeonLevel = Managers.Game._selecDungeonLevel;
-        Logger.LogError(Managers.Game._selecDungeonLevel.ToString());
     }
     private void Update()
     {

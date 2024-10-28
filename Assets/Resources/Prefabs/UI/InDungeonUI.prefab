@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 6344052551187700570}
   - component: {fileID: 6856076667503503672}
   - component: {fileID: 7148572775897574631}
+  - component: {fileID: 4461131172637348042}
   m_Layer: 5
   m_Name: InDungeonUI
   m_TagString: Untagged
@@ -466,6 +467,22 @@ MonoBehaviour:
   _exitBtn: {fileID: 0}
   _isSort: 1
   _loadText: {fileID: 4010108356025137457}
+--- !u!111 &4461131172637348042
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5772953886386568885}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 20a5d851c0fbbbc49a579bb97b55d985, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 20a5d851c0fbbbc49a579bb97b55d985, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &6698799561584498859
 GameObject:
   m_ObjectHideFlags: 0
