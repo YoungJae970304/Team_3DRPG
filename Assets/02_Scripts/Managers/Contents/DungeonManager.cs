@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class DungeonManager : MonoBehaviour
     //죽을 때 감소하는 변수 (0이되면 클리어가됨) //
     //-- 바로클리어를 막기위해 bool변수 추가해주면좋을듯
     public bool _startCheck = false;
+    Player _player;
     [SerializeField] DeongeonType _curLevel;
     public GameObject _bossSpawn;
     public GameObject _dungeonSpawn;
@@ -22,6 +24,7 @@ public class DungeonManager : MonoBehaviour
     GameManager _game;
     private void OnEnable()
     {
+        _player = Managers.Game._player;
         _game = Managers.Game;
         _curLevel = _game._selecDungeonLevel;
         DungeonCheck();
@@ -52,7 +55,8 @@ public class DungeonManager : MonoBehaviour
     private void Update()
     {
         ClearDungeon();
-       // Logger.LogError($"{Managers.Game._monsters.Count}");
+        // Logger.LogError($"{Managers.Game._monsters.Count}");
+        FalseDungeon();
     }
     public void SpawnCheck()
     {
@@ -89,7 +93,26 @@ public class DungeonManager : MonoBehaviour
             }
             else
             {
-                Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
+                inDungeonUI = Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
+                inDungeonUI._loadText.text = "Clear";
+            }
+            _startCheck = false;
+        }
+    }
+    public void FalseDungeon()
+    {
+        if(_monsterCount > 0 && _player._playerStatManager._originStat.HP <= 0 && _startCheck == true)
+        {
+            //던전 UI활성화
+            InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
+            if (inDungeonUI != null)
+            {
+                Managers.UI.CloseUI(inDungeonUI);
+            }
+            else
+            {
+                inDungeonUI = Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
+                inDungeonUI._loadText.text = "Lose";
             }
             _startCheck = false;
         }

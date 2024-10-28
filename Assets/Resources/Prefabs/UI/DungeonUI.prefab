@@ -313,7 +313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.000014841557, y: 32}
+  m_AnchoredPosition: {x: -0.0003211792, y: 32}
   m_SizeDelta: {x: 0, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5329220367774353549
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8778972845134780274}
   m_HandleRect: {fileID: 2184752452405639459}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -495,6 +495,7 @@ GameObject:
   - component: {fileID: 3784709730746011965}
   - component: {fileID: 2318405771976588788}
   - component: {fileID: 1990479919876617055}
+  - component: {fileID: 4355239574942152775}
   m_Layer: 5
   m_Name: DungeonUI
   m_TagString: Untagged
@@ -606,7 +607,24 @@ MonoBehaviour:
   _monsterType1: 0
   _monsterType2: 0
   _monsterType3: 0
+  _dungeonIndex: 0
   _monsterImageType: {fileID: 1266310099434306830}
+--- !u!111 &4355239574942152775
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2338164303099282149}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 9db49f507c9f40e42af1848976fee104, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 9db49f507c9f40e42af1848976fee104, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &2748392706938485239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,7 +1237,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5279816303567796219}
   - {fileID: 7558918621429215269}
