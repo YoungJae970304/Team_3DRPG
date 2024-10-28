@@ -122,6 +122,8 @@ public class FusionUI : ItemDragUI
         {
             _inventory.InsertItem(Get<ItemSlot>((int)ItemSlots.ItemSlot_2).Item);
         }
+        Get<ItemSlot>((int)ItemSlots.ItemSlot_1).Setitem(null);
+        Get<ItemSlot>((int)ItemSlots.ItemSlot_2).Setitem(null);
     }
     public override void CloseUI(bool isCloseAll = false)
     {
