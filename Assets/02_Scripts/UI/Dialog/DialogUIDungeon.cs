@@ -15,16 +15,6 @@ public class DialogUIDungeon : DialogUI
 
     protected override void OnClickedButton()
     {
-        OpenDungeonUI();
-    }
-
-    //던전 UI 오픈 함수 버튼 클릭시 생성
-    public void OpenDungeonUI()
-    {
-        if (!Managers.UI.IsActiveUI<DungeonUI>())
-        {
-            Managers.UI.OpenUI<DungeonUI>(new BaseUIData());
-            //_isOpenUI = true;
-        }
+        UITypeOpen<DungeonUI>();
     }
 }

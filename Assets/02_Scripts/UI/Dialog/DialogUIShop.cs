@@ -7,10 +7,13 @@ public class DialogUIShop : DialogUI
     protected override void OnEnable()
     {
         base.OnEnable();
-        GetButton((int)Buttons.CheckBtn).onClick.AddListener(() => ShopOpenUI());
+        GetButton((int)Buttons.CheckBtn).onClick.AddListener(() => {
+            ShopOpenUI();
+            UITypeOpen<InventoryUI>();
+        });
         GetButton((int)Buttons.SynthesisBtn).onClick.AddListener(() => {
-            FusionOpenUI<FusionUI>();
-            FusionOpenUI<InventoryUI>();
+            UITypeOpen<FusionUI>();
+            UITypeOpen<InventoryUI>();
         });
     }
 
@@ -56,16 +59,6 @@ public class DialogUIShop : DialogUI
         }
             };
             Managers.UI.OpenUI<ShopUI>(shopUIData);
-            //_isOpenUI = true;
-        }
-    }
-
-    void FusionOpenUI<T>() where T : BaseUI
-    {
-        if (!Managers.UI.IsActiveUI<T>())
-        {
-            Managers.UI.OpenUI<T>(new BaseUIData());
-            _isOpenUI = true;
         }
     }
 }

@@ -51,7 +51,6 @@ public abstract class DialogUI : BaseUI
         GetButton((int)Buttons.CheckBtn).onClick.AddListener(() =>
         {
             OnClickedButton();
-            _isOpenUI = true;
         });
 
         GetButton((int)Buttons.RefuseBtn).onClick.AddListener(() =>
@@ -73,6 +72,16 @@ public abstract class DialogUI : BaseUI
                 btn.gameObject.SetActive(false);
         }
         Managers.Game._cantInputKey = false;
+    }
+
+    protected virtual void UITypeOpen<T>() where T : BaseUI
+    {
+        if (!Managers.UI.IsActiveUI<T>())
+        {
+            BaseUIData baseUIdata = new BaseUIData();
+            Managers.UI.OpenUI<T>(baseUIdata);
+            _isOpenUI = true;
+        }
     }
 
     protected abstract void OnClickedButton();
