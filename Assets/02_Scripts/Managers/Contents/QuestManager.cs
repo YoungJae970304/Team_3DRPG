@@ -25,7 +25,6 @@ public class QuestManager
         var questData = Managers.DataTable._QuestData;
 
         _AllQuestData.AddRange(questData);
-        Logger.LogWarning($"리스트 확인{questData}");
     }
 
     //시작 메서드

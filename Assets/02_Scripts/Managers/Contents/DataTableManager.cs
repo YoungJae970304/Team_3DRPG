@@ -31,6 +31,9 @@ public class DataTableManager
     public string _PLAYER_LEVEL_DATA_TABLE = "Player_Level_Data_Table";
     // 아이템 조합 데이터 테이블 CSV 파일
     const string _SYNTHESIS_DATA_TABLE = "Fusion_List_Data_Table";
+    // 스킬 데이터 테이블 CSV 파일
+    const string _SKILL_DATA_TABLE = "Skill_Data_Table";
+
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
     public List<ItemData> _PotionItemData = new List<ItemData>();
@@ -41,6 +44,8 @@ public class DataTableManager
     public List<QuestData> _QuestData = new List<QuestData>();
     public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
     public List<FusionData> _FusionData = new List<FusionData>();
+    public List<SkillData> _SkillData = new List<SkillData>();
+    
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
 
@@ -56,6 +61,7 @@ public class DataTableManager
         PlayerLevelDataTable(_DATA_PATH, _PLAYER_LEVEL_DATA_TABLE);
         MonsterDataTable(_DATA_PATH, _MONSTER_DATA_TABLE);
         FusionDataTable(_DATA_PATH, _SYNTHESIS_DATA_TABLE);
+        SkillDataTable(_DATA_PATH, _SKILL_DATA_TABLE);
     }
     #endregion
 
@@ -86,6 +92,42 @@ public class DataTableManager
     public PlayerLevelData GetPlayerLevelData(int level)
     {
         return _PlayerLevelData.FirstOrDefault(data => data.Level == level);
+    }
+    #endregion
+
+    #region 스킬 데이터테이블
+    public void SkillDataTable(string dataPath, string skillDataTable)
+    {
+        var parsedSkillDataTable = CSVReader.Read($"{dataPath}/{skillDataTable}");
+        foreach ( var data in parsedSkillDataTable )
+        {
+            SkillData skillData = null;
+            skillData = new SkillData
+            {
+                ID = Convert.ToInt32(data["ID"]),
+                SkillName = data["SkillName"].ToString(),
+                SkillType = (SkillData.SkillTypeE)Enum.Parse(typeof(SkillData.SkillTypeE), data["SkillType"].ToString()),
+                StatType = (SkillData.StatTypeE)Enum.Parse(typeof(SkillData.StatTypeE), data["StatType"].ToString()),
+                //SkillType = Convert.ToInt32(data["SkillType"]), // 타입들 어떻게 사용할지
+                //StatType = Convert.ToInt32(data["StatType"]),   // enum으로?
+                StatValue = Convert.ToInt32(data["StatValue"]),
+                BaseDamage = Convert.ToInt32(data["BaseDamage"]),
+                DamageValue = Convert.ToInt32(data["DamageValue"]),
+                UseingMP = Convert.ToInt32(data["UseingMP"]),
+                NeedSkillPoint = Convert.ToInt32(data["NeedSkillPoint"]),
+                MaxLevel = Convert.ToInt32(data["MaxLevel"]),
+            };
+            if (skillData != null)
+            {
+                Logger.Log($"{skillData.StatType} 저장됨");
+                _SkillData.Add(skillData);
+            }
+        }
+    }
+
+    public SkillData GetSkillData(int id)
+    {
+        return _SkillData.FirstOrDefault(data => data.ID == id);
     }
     #endregion
 
