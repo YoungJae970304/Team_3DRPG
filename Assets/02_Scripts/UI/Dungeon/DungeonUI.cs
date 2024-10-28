@@ -111,24 +111,33 @@ public class DungeonUI : BaseUI
     }
     IEnumerator MakeDungeUIElement()
     {
+        GameObject dungeonType;
+        List<GameObject> checkButton = new List<GameObject>();
+        Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
         foreach (var dungeon in _dataTableManager._DungeonData) //데이터 테이블 가져오기
         {
-            GameObject dungeonType = Managers.Resource.Instantiate("UI/DeongeonType", _dungeonTypeview.transform);
+           
+            dungeonType = Managers.Resource.Instantiate("UI/DeongeonType", _dungeonTypeview.transform);
+      
             // resource에 있는 instantiate호출. inspector창에 넣어놓은 부모 하위로 생성
             dungeonType.name = $"Dungeon{dungeon.ID}";
+            
             //던전 이름 바꾸기 (Datatable의 ID값
             dungeonType.GetComponentInChildren<TextMeshProUGUI>().text = dungeon.DungeonName;
-            _buttonType.Add(dungeonType.name, dungeon.Index);//딕셔너리에 오브젝트이름으로 키값설정. value는 index값 가져오기
-
+            if (!_buttonType.ContainsKey(dungeonType.name))
+            {
+                _buttonType.Add(dungeonType.name, dungeon.Index);//딕셔너리에 오브젝트이름으로 키값설정. value는 index값 가져오기
+            }
+            
 
             GameObject monster = Managers.Resource.Instantiate("UI/MonsterImage", _monsterImageType.transform);
             monster.name = $"Monster{dungeon.Index}";
-            //Logger.LogError(monster.name);
+            Logger.LogError(monster.name);
             Image monsterImage = monster.GetComponent<Image>();
             _indungeonMonsterImage.Add(monsterImage);
             // 몬스터 이미지 리스트에 추가 
             //monster.SetActive(false);
-
+           
 
         }
         yield return new WaitForSeconds(1);

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,8 +11,8 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
     {
         LeftAttack,
         RightAttack,
-        Roar,
         MonsterHit,
+        Roar,
         Count,
     }
     private void OnEnable()
@@ -24,22 +23,57 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
 
     public void EffectOff()
     {
-        for (int i = 0; i < (int)GoblemOrkEffects.Count; i++)
+        string ex = GetComponentInParent<CharacterController>().gameObject.name;
+        if(ex == "BossBear")
         {
-            Get<ParticleSystem>(i).gameObject.SetActive(false);
-            Logger.LogError("이펙트 꺼짐");
+            for (int i = 2; i < (int)GoblemOrkEffects.Count; i++)
+            {
+                if (Get<ParticleSystem>(i).gameObject != null)
+                {
+                    Get<ParticleSystem>(i).gameObject.SetActive(false);
+                }
+
+                Logger.LogError("이펙트 꺼짐");
+            }
+
         }
+        else if(ex == "Slime")
+        {
+            for (int i = 2; i <= 2; i++)
+            {
+                if (Get<ParticleSystem>(i).gameObject != null)
+                {
+                    Get<ParticleSystem>(i).gameObject.SetActive(false);
+                }
+
+                Logger.LogError("이펙트 꺼짐");
+            }
+        }
+        else
+        {
+            for (int i = 0; i < (int)GoblemOrkEffects.Count; i++)
+            {
+                if (Get<ParticleSystem>(i).gameObject != null)
+                {
+                    Get<ParticleSystem>(i).gameObject.SetActive(false);
+                }
+
+                Logger.LogError("이펙트 꺼짐");
+            }
+        }
+        
+
     }
     public void MonsterAttack(GoblemOrkEffects name, Transform playerTransform = null)
     {
         Get<ParticleSystem>((int)name).gameObject.SetActive(true);
         Logger.LogError($"{Get<ParticleSystem>((int)name).gameObject.name}켜진 이펙트 이름임");
-        if (playerTransform != null) 
+        if (playerTransform != null)
         {
             Get<ParticleSystem>((int)name).gameObject.transform.position = playerTransform.position;
             Logger.LogError($"{Get<ParticleSystem>((int)name).gameObject.transform.position}바뀐위치임");
         }
-        Get<ParticleSystem>((int)name).Play();
+        Get<ParticleSystem>((int)name).Play(); //너무 이펙트가 다터짐 수정 필요
         Logger.LogError("이팩트 켜짐");
     }
     #region Bind구현부
