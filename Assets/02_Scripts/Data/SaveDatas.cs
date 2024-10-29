@@ -1,3 +1,4 @@
+using Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ public class SaveDatas : IData
     //[SerializeField] Transform _PlayerPosition;
     public Define.PlayerType _PlayerTypes;
 
-    static readonly string _SavePath = $"{Application.persistentDataPath}/SaveData.json";
+    static readonly string _SavePath = $"{Application.dataPath}Data/SaveDatas.json";
 
     public bool LoadData()
     {
@@ -56,46 +57,97 @@ public class SaveDatas : IData
 
     public void SetDefaultData()
     {
+        //초기인벤토리
         _InventorySaveDatas = new List<InventorySaveData>();
+        //초기 스킬
         _SkillSaveDatas = new List<SkillSaveData>();
+        //초기 장비
         _EquipmentSaveDatas = new List<EquipmentSaveData>();
+        //처음 플레이어의 정보
+        PlayerSaveData playerData = new PlayerSaveData();
+        _PlayerSaveDatas = new List<PlayerSaveData> { playerData};
+        //선택한 플레이어의 타입은?
         _PlayerTypes =  Managers.Game._playerType;
-        Logger.Log("새로하기 되었습니다.");
+        Logger.Log("처음부터 시작 되었습니다.");
     }
 }
 
+[Serializable]
 public class PlayerSaveData : IData
 {
-    int x;
-    int y;
-    int z;
-    int _level;
-    int _exp;
-    int _maxExp;
-    int _sp;
-    int _gold;
+    //플레이어 레벨
+    public int _level;
+    //플레이어 현재 경험치
+    public int _exp;
+    //플레이어 최대 경험치
+    public int _maxExp;
+    //플레이어 스킬포인트
+    public int _sp;
+    //현재 골드
+    public int _gold;
+    //플레이어 초기 위치 저장
+    public int x;
+    public int y;
+    public int z;
+
+    static readonly string _SavePath = $"{Application.dataPath}Data/SavePlayerData.json";
 
     public bool SaveData()
     {
-        throw new NotImplementedException();
+        try
+        {
+            string directory = Path.GetDirectoryName(_SavePath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            string playerJson = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, playerJson);
+            Logger.Log("플레이어 데이터 저장");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"플레이어 데이터 저장 실패: {e.Message}");
+            return false;
+        }
     }
 
     public bool LoadData()
     {
-        throw new NotImplementedException();
+        if (!File.Exists(_SavePath))
+        {
+            Logger.LogWarning("저장된 플레이어의 데이터가 없습니다.");
+            return false;
+        }
+
+        try
+        {
+            string playerJson = File.ReadAllText(_SavePath);
+            JsonUtility.FromJsonOverwrite(playerJson, this);
+            Logger.Log("플레이어 데이터 로드 성공");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"플레이어 데이터로드 실패: {e.Message}");
+            return false;
+        }
     }
 
     public void SetDefaultData()
     {
-        throw new NotImplementedException();
+
     }
 }
 
+[Serializable]
 public class InventorySaveData : IData
 {
-    int _id;
-    int _index;
-    int _amount;
+    public int _id;
+    public int _index;
+    public int _amount;
 
     public bool SaveData()
     {
@@ -113,11 +165,12 @@ public class InventorySaveData : IData
     }
 }
 
+[Serializable]
 public class SkillSaveData : IData
 {
-    string _name;
-    int _level;
-    int _type;
+    public string _name;
+    public int _level;
+    public int _type;
 
     public bool SaveData()
     {
@@ -135,10 +188,11 @@ public class SkillSaveData : IData
     }
 }
 
+[Serializable]
 public class EquipmentSaveData : IData
 {
-    int _id;
-    int _type;
+    public int _id;
+    public int _type;
 
     public bool SaveData()
     {
@@ -156,11 +210,12 @@ public class EquipmentSaveData : IData
     }
 }
 
+[Serializable]
 public class QuestSaveData : IData
 {
-    string _name;
-    int _amount1;
-    int _amount2;
+    public string _name;
+    public int _amount1;
+    public int _amount2;
 
     public bool SaveData()
     {

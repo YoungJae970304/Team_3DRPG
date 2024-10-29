@@ -30,4 +30,6 @@ public class PotionItemData : ItemData
     float _coolTime;
     //아이템 지속 시간
     float _durationTime;
+
+
 }

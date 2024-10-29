@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Unity.VisualScripting;
 
 public class DataTableManager
 {
@@ -45,7 +45,7 @@ public class DataTableManager
     public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
     public List<FusionData> _FusionData = new List<FusionData>();
     public List<SkillData> _SkillData = new List<SkillData>();
-    
+
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
 
@@ -74,7 +74,7 @@ public class DataTableManager
 
         PlayerLevelData levelData = null;
 
-        foreach ( var data in parsedPlayerLevelDataTable )
+        foreach (var data in parsedPlayerLevelDataTable)
         {
             levelData = new PlayerLevelData
             {
@@ -99,7 +99,7 @@ public class DataTableManager
     public void SkillDataTable(string dataPath, string skillDataTable)
     {
         var parsedSkillDataTable = CSVReader.Read($"{dataPath}/{skillDataTable}");
-        foreach ( var data in parsedSkillDataTable )
+        foreach (var data in parsedSkillDataTable)
         {
             SkillData skillData = null;
             skillData = new SkillData
@@ -316,7 +316,7 @@ public class DataTableManager
     #region 던전 데이터테이블 함수
     void DungeonDataTable(string dataPath, string dungeonDataTable)
     {
-      
+
         var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
         foreach (var data in parsedDungeonDataTable)
         {
@@ -391,20 +391,47 @@ public class DataTableManager
                 Type = (Define.QuestType)Enum.Parse(typeof(Define.QuestType), data["QuestType"].ToString()),
                 Name = data["QuestName"].ToString(),
                 Info = data["QuestInfo"].ToString(),
-                PlayerLevelRequirement = Convert.ToInt32(data["Requriment"]),
+                PlayerLevelRequirement = Convert.ToInt32(data["Requirement"]),
                 TargetID = Convert.ToInt32(data["TargetID"]),
                 TargetCount = Convert.ToInt32(data["TargetCount"]),
-                RewardValue1 = Convert.ToInt32(data["QuestRewardType1"]),
-                ValType1 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue1"].ToString()),
-                RewardValue2 = Convert.ToInt32(data["QuestRewardType2"]),
-                ValType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue2"].ToString()),
-                RewardValue3 = Convert.ToInt32(data["QuestRewardType3"]),
-                ValType3 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue3"].ToString()),
+                RewardType1 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType1"].ToString()),
+                RewardValue1 = Convert.ToInt32(data["QuestRewardValue1"]),
+                RewardType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType2"].ToString()),
+                RewardValue2 = Convert.ToInt32(data["QuestRewardValue2"]),
+                //리워드 타입 3은 포션 ID으로 불러와야하는데..
+                RewardValue3 = Convert.ToInt32(data["QuestRewardValue3"]),
             };
+            var rewardType3 = data["QuestRewardType3"].ToString();
+           
+            if (rewardType3 == ItemData.ItemType.Potion.ToString())
+            {
+                questData.RewardType3 = QuestData.RewardType.Potion;
+                int potionID = Convert.ToInt32(data["QuestRewardValue3"]);
+                var potionItem = GetPotionItemID(potionID);
+                if(potionItem != null )
+                {
+                    questData.RewardValue3 = potionItem.ID;
+                }
+                else
+                {
+                    Logger.LogError("포션ID 못찾았습니다");
+                    questData.RewardValue3 = 0;
+                }
+            }
             _QuestData.Add(questData);
         }
     }
-
+   ItemData GetPotionItemID(int id)
+    {
+        foreach (var data in _PotionItemData)
+        {
+            if(data.ID == id)
+            {
+                return data;
+            }
+        } 
+        return null;
+    }
     #endregion
 
     #region 조합 데이터테이블 함수
@@ -417,7 +444,7 @@ public class DataTableManager
             fusionData = new FusionData
             {
                 FusionItemID1 = Convert.ToInt32(data["FusionItemID1"]),
-                FusionItemAmount1= Convert.ToInt32(data["FusionItemAmount1"]),
+                FusionItemAmount1 = Convert.ToInt32(data["FusionItemAmount1"]),
                 FusionItemID2 = Convert.ToInt32(data["FusionItemID2"]),
                 FusionItemAmount2 = Convert.ToInt32(data["FusionItemAmount2"]),
                 ResultItemID = Convert.ToInt32(data["ResultItemID"]),

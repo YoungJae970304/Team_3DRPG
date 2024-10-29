@@ -79,13 +79,11 @@ public class QuestLogUI : BaseUI
         GetImage((int)QuestImgs.BackgroundPanel).sprite = Managers.Resource.Load<Sprite>(default);
         //오른쪽 패널 이미지(바꿔주면됨)
         GetImage((int)QuestImgs.RightPanel).sprite = Managers.Resource.Load<Sprite>(default);
-        //1번 아이콘을 장비이미지로 변경
-        if (questData.ValType1 == QuestData.RewardType.Equipped) { GetImage((int)QuestImgs.ItemReward).sprite = sprite; }
         //1번 아이콘에 포션이미지로 변경
-        if (questData.ValType1 == QuestData.RewardType.Potion) { GetImage((int)QuestImgs.ItemReward).sprite = sprite; }
+        if (questData.RewardType1 == QuestData.RewardType.Potion) { GetImage((int)QuestImgs.ItemReward).sprite = sprite; }
         //리워드 타입 2 또는 3의 이미지
-        if (questData.ValType2 == QuestData.RewardType.Gold) { GetImage((int)QuestImgs.GoldReward).sprite = sprite; }
-        if (questData.ValType3 == QuestData.RewardType.Exp) { GetImage((int)QuestImgs.ExpReward).sprite = sprite; }
+        if (questData.RewardType2 == QuestData.RewardType.Gold) { GetImage((int)QuestImgs.GoldReward).sprite = sprite; }
+        if (questData.RewardType3 == QuestData.RewardType.Exp) { GetImage((int)QuestImgs.ExpReward).sprite = sprite; }
     }
 
     public void OpenSetInfo()

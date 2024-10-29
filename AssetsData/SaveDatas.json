@@ -1,0 +1,18 @@
+{
+    "_InventorySaveDatas": [],
+    "_SkillSaveDatas": [],
+    "_EquipmentSaveDatas": [],
+    "_PlayerSaveDatas": [
+        {
+            "_level": 0,
+            "_exp": 0,
+            "_maxExp": 0,
+            "_sp": 0,
+            "_gold": 0,
+            "x": 0,
+            "y": 0,
+            "z": 0
+        }
+    ],
+    "_PlayerTypes": 0
+}
