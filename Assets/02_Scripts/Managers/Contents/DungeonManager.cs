@@ -75,6 +75,7 @@ public class DungeonManager : MonoBehaviour
         {
             _bossSpawn.SetActive(true);
             _bossDungeonWall.SetActive(true);
+            Logger.LogError("벽체크");
         }
         else
         {

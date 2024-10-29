@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class DataTableManager
 {
@@ -33,6 +33,8 @@ public class DataTableManager
     const string _SYNTHESIS_DATA_TABLE = "Fusion_List_Data_Table";
     // 스킬 데이터 테이블 CSV 파일
     const string _SKILL_DATA_TABLE = "Skill_Data_Table";
+    // 몬스터 스텟 데이터 테이블 CSV 파일
+    const string _MONSTERSTAT_DATA_TABLE = "Monster_Stat_Data_Table";//추가 전
 
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
@@ -45,6 +47,7 @@ public class DataTableManager
     public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
     public List<FusionData> _FusionData = new List<FusionData>();
     public List<SkillData> _SkillData = new List<SkillData>();
+    public List<MonsterStatData> _MonsterStatData = new List<MonsterStatData>();
 
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
@@ -62,6 +65,7 @@ public class DataTableManager
         MonsterDataTable(_DATA_PATH, _MONSTER_DATA_TABLE);
         FusionDataTable(_DATA_PATH, _SYNTHESIS_DATA_TABLE);
         SkillDataTable(_DATA_PATH, _SKILL_DATA_TABLE);
+        MonsterStatDataTable(_DATA_PATH, _MONSTERSTAT_DATA_TABLE);
     }
     #endregion
 
@@ -74,7 +78,7 @@ public class DataTableManager
 
         PlayerLevelData levelData = null;
 
-        foreach (var data in parsedPlayerLevelDataTable)
+        foreach ( var data in parsedPlayerLevelDataTable )
         {
             levelData = new PlayerLevelData
             {
@@ -99,7 +103,7 @@ public class DataTableManager
     public void SkillDataTable(string dataPath, string skillDataTable)
     {
         var parsedSkillDataTable = CSVReader.Read($"{dataPath}/{skillDataTable}");
-        foreach (var data in parsedSkillDataTable)
+        foreach ( var data in parsedSkillDataTable )
         {
             SkillData skillData = null;
             skillData = new SkillData
@@ -316,7 +320,7 @@ public class DataTableManager
     #region 던전 데이터테이블 함수
     void DungeonDataTable(string dataPath, string dungeonDataTable)
     {
-
+      
         var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
         foreach (var data in parsedDungeonDataTable)
         {
@@ -391,47 +395,20 @@ public class DataTableManager
                 Type = (Define.QuestType)Enum.Parse(typeof(Define.QuestType), data["QuestType"].ToString()),
                 Name = data["QuestName"].ToString(),
                 Info = data["QuestInfo"].ToString(),
-                PlayerLevelRequirement = Convert.ToInt32(data["Requirement"]),
+                PlayerLevelRequirement = Convert.ToInt32(data["Requriment"]),
                 TargetID = Convert.ToInt32(data["TargetID"]),
                 TargetCount = Convert.ToInt32(data["TargetCount"]),
-                RewardType1 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType1"].ToString()),
-                RewardValue1 = Convert.ToInt32(data["QuestRewardValue1"]),
-                RewardType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType2"].ToString()),
-                RewardValue2 = Convert.ToInt32(data["QuestRewardValue2"]),
-                //리워드 타입 3은 포션 ID으로 불러와야하는데..
-                RewardValue3 = Convert.ToInt32(data["QuestRewardValue3"]),
+                RewardValue1 = Convert.ToInt32(data["QuestRewardType1"]),
+                ValType1 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue1"].ToString()),
+                RewardValue2 = Convert.ToInt32(data["QuestRewardType2"]),
+                ValType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue2"].ToString()),
+                RewardValue3 = Convert.ToInt32(data["QuestRewardType3"]),
+                ValType3 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue3"].ToString()),
             };
-            var rewardType3 = data["QuestRewardType3"].ToString();
-           
-            if (rewardType3 == ItemData.ItemType.Potion.ToString())
-            {
-                questData.RewardType3 = QuestData.RewardType.Potion;
-                int potionID = Convert.ToInt32(data["QuestRewardValue3"]);
-                var potionItem = GetPotionItemID(potionID);
-                if(potionItem != null )
-                {
-                    questData.RewardValue3 = potionItem.ID;
-                }
-                else
-                {
-                    Logger.LogError("포션ID 못찾았습니다");
-                    questData.RewardValue3 = 0;
-                }
-            }
             _QuestData.Add(questData);
         }
     }
-   ItemData GetPotionItemID(int id)
-    {
-        foreach (var data in _PotionItemData)
-        {
-            if(data.ID == id)
-            {
-                return data;
-            }
-        } 
-        return null;
-    }
+
     #endregion
 
     #region 조합 데이터테이블 함수
@@ -444,7 +421,7 @@ public class DataTableManager
             fusionData = new FusionData
             {
                 FusionItemID1 = Convert.ToInt32(data["FusionItemID1"]),
-                FusionItemAmount1 = Convert.ToInt32(data["FusionItemAmount1"]),
+                FusionItemAmount1= Convert.ToInt32(data["FusionItemAmount1"]),
                 FusionItemID2 = Convert.ToInt32(data["FusionItemID2"]),
                 FusionItemAmount2 = Convert.ToInt32(data["FusionItemAmount2"]),
                 ResultItemID = Convert.ToInt32(data["ResultItemID"]),
@@ -454,6 +431,55 @@ public class DataTableManager
             {
                 Logger.Log($"{fusionData} 저장됨");
                 _FusionData.Add(fusionData);
+            }
+        }
+    }
+    #endregion
+    
+    #region 몬스터 스텟데이터테이블 함수
+    void MonsterStatDataTable(string dataPath, string monsterStatDataTable)
+    {
+        var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{monsterStatDataTable}");
+        foreach (var data in parsedDungeonDataTable)
+        {
+            MonsterStatData monsterStatData = null;
+            monsterStatData = new MonsterStatData
+            {
+                //아이디
+                ID = Convert.ToInt32(data["ID"]),
+                //몬스터 이름
+                Name = data["Name"].ToString(),
+                //최대 체력
+                MaxHp = Convert.ToInt32(data["MaxHp"]),
+                //공격력
+                ATK = Convert.ToInt32(data["ATK"]),
+                //방어력
+                DEF = Convert.ToInt32(data["DEF"]),
+                //이동 속도
+                MoveSpeed = Convert.ToInt32(data["MoveSpeed"]),
+                //공격 속도
+                AtkSpeed = Convert.ToInt32(data["AtkDelay"]),
+                //체력 회복 량
+                RecoveryHP = Convert.ToInt32(data["RecoveryHP"]),//
+                //마나
+                MP = Convert.ToInt32(data["MP"]),
+                //최대 마나
+                MaxMP = Convert.ToInt32(data["MaxMP"]),
+                //마나 회복 량
+                RecoveryMP = Convert.ToInt32(data["RecoveryMP"]),
+                //추적 범위
+                ChaseRange = Convert.ToInt32(data["ChaseRange"]),
+                //복귀 범위
+                ReturnRange = Convert.ToInt32(data["ReturnRange"]),
+                //공격 범위
+                AttackRange = Convert.ToInt32(data["AttackRange"]),
+                //이동 범위
+                AwayRange = Convert.ToInt32(data["AwayRange"]),
+            };
+            if (monsterStatData != null)
+            {
+                Logger.Log($"{monsterStatData} 저장됨");
+                _MonsterStatData.Add(monsterStatData);
             }
         }
     }
