@@ -33,12 +33,8 @@ public class DataManager
     void InitializeGameState()
     {
         SaveDatas saveDatas = new SaveDatas();
-        PlayerSaveData saveplayerData = new PlayerSaveData();
-        Logger.Log("데이터 저장 Init");
-        saveDatas.SetDefaultData();
+        Logger.Log("처음 시작 데이터 저장");
         saveDatas.SaveData();
-        saveplayerData.SetDefaultData();
-        saveplayerData.SaveData();
     }
 
 

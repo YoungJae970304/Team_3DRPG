@@ -43,7 +43,6 @@ public class SelectPlayerUI : BaseUI
             Managers.UI.OpenUI<ConfirmUI>(confirmUIData);
         }
 
-
         Toggle melee = GetToggle((int)SelectToggles.MeleePlayer);
         Toggle mage = GetToggle((int)SelectToggles.MagePlayer);
 
@@ -55,8 +54,6 @@ public class SelectPlayerUI : BaseUI
         {
             Managers.Game._playerType = Define.PlayerType.Mage;
         }
-        //SaveDatas saveData = new SaveDatas();
-        //saveData.SetDefaultData();
     }
 }
    

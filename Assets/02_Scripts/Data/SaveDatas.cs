@@ -7,12 +7,16 @@ using UnityEngine;
 [Serializable]
 public class SaveDatas : IData
 {
+    //인벤토리 저장 데이터
     public List<InventorySaveData> _InventorySaveDatas;
+    //스킬 저장 데이터
     public List<SkillSaveData> _SkillSaveDatas;
+    //장비 저장 데이터
     public List<EquipmentSaveData> _EquipmentSaveDatas;
+    //플레이어 초기 값 저장 데이터
     public List<PlayerSaveData> _PlayerSaveDatas;
     //public List<QuestSaveData> _QuestSaveData;
-    //[SerializeField] Transform _PlayerPosition;
+    //선택한 플레이어타입
     public Define.PlayerType _PlayerTypes;
 
     static readonly string _SavePath = $"{Application.dataPath}Data/SaveDatas.json";
@@ -24,7 +28,6 @@ public class SaveDatas : IData
             Logger.LogWarning("저장된 데이터가 없습니다.");
             return false;
         }
-
         try
         {
             string json = File.ReadAllText(_SavePath);
@@ -43,6 +46,11 @@ public class SaveDatas : IData
     {
         try
         {
+            string directory = Path.GetDirectoryName(_SavePath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
             string json = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, json);
             Logger.Log("게임 데이터 저장 성공");
@@ -68,6 +76,7 @@ public class SaveDatas : IData
         _PlayerSaveDatas = new List<PlayerSaveData> { playerData};
         //선택한 플레이어의 타입은?
         _PlayerTypes =  Managers.Game._playerType;
+        Logger.Log($"현재 {_PlayerTypes} 타입 입니다.");
         Logger.Log("처음부터 시작 되었습니다.");
     }
 }
@@ -85,10 +94,6 @@ public class PlayerSaveData : IData
     public int _sp;
     //현재 골드
     public int _gold;
-    //플레이어 초기 위치 저장
-    public int x;
-    public int y;
-    public int z;
 
     static readonly string _SavePath = $"{Application.dataPath}Data/SavePlayerData.json";
 
@@ -96,6 +101,14 @@ public class PlayerSaveData : IData
     {
         try
         {
+            var stats = Managers.Game._player._playerStatManager;
+
+            _level = stats.Level;
+            _exp = stats.EXP;
+            _maxExp = stats.MaxEXP;
+            _sp = stats.SpAddAmount;
+            _gold = stats.Gold;
+
             string directory = Path.GetDirectoryName(_SavePath);
             if (!Directory.Exists(directory))
             {
@@ -104,6 +117,7 @@ public class PlayerSaveData : IData
 
             string playerJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, playerJson);
+        
             Logger.Log("플레이어 데이터 저장");
             return true;
         }
