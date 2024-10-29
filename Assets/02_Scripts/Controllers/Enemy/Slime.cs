@@ -1,21 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Jobs;
 
 public class Slime : Monster
 {
-    
+
     public int _slimeID;
     public override void Start()
     {
         base.Start();
+        
+    }
+    public override void Init()
+    {
+        base.Init();
         SlimeIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _slimeID);
+        StatCheck(_deongeonLevel, _slimeID);
     }
     public override void AttackStateSwitch()
     {
@@ -75,12 +74,13 @@ public class Slime : Monster
             GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
             productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
-            
+
         }
     }
+    
     public void SlimeIDCheck(DeongeonType curLevel)
     {
-        foreach(var sID in _dataTableManager._MonsterDropData)
+        foreach (var sID in _dataTableManager._MonsterDropData)
         {
             string iDCheck = sID.ID.ToString();
             char lastDigit = iDCheck[iDCheck.Length - 1];
@@ -94,7 +94,7 @@ public class Slime : Monster
                 switch (curLevel)
                 {
                     case DeongeonType.Easy:
-                        if(SID == '1')
+                        if (SID == '1')
                         {
                             _slimeID = sID.ID;
                         }
@@ -112,12 +112,12 @@ public class Slime : Monster
                         }
                         break;
                 }
-                
-                
+
+
             }
-            
+
         }
-       
+
     }
- 
+
 }

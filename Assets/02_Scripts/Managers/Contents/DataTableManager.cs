@@ -33,6 +33,8 @@ public class DataTableManager
     const string _SYNTHESIS_DATA_TABLE = "Fusion_List_Data_Table";
     // 스킬 데이터 테이블 CSV 파일
     const string _SKILL_DATA_TABLE = "Skill_Data_Table";
+    // 몬스터 스텟 데이터 테이블 CSV 파일
+    const string _MONSTERSTAT_DATA_TABLE = "Monster_Stat_Data_Table";//추가 전
 
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
@@ -45,7 +47,8 @@ public class DataTableManager
     public List<PlayerLevelData> _PlayerLevelData = new List<PlayerLevelData>();
     public List<FusionData> _FusionData = new List<FusionData>();
     public List<SkillData> _SkillData = new List<SkillData>();
-    
+    public List<MonsterStatData> _MonsterStatData = new List<MonsterStatData>();
+
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
 
@@ -62,6 +65,7 @@ public class DataTableManager
         MonsterDataTable(_DATA_PATH, _MONSTER_DATA_TABLE);
         FusionDataTable(_DATA_PATH, _SYNTHESIS_DATA_TABLE);
         SkillDataTable(_DATA_PATH, _SKILL_DATA_TABLE);
+        MonsterStatDataTable(_DATA_PATH, _MONSTERSTAT_DATA_TABLE);
     }
     #endregion
 
@@ -427,6 +431,55 @@ public class DataTableManager
             {
                 Logger.Log($"{fusionData} 저장됨");
                 _FusionData.Add(fusionData);
+            }
+        }
+    }
+    #endregion
+    
+    #region 몬스터 스텟데이터테이블 함수
+    void MonsterStatDataTable(string dataPath, string monsterStatDataTable)
+    {
+        var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{monsterStatDataTable}");
+        foreach (var data in parsedDungeonDataTable)
+        {
+            MonsterStatData monsterStatData = null;
+            monsterStatData = new MonsterStatData
+            {
+                //아이디
+                ID = Convert.ToInt32(data["ID"]),
+                //몬스터 이름
+                Name = data["Name"].ToString(),
+                //최대 체력
+                MaxHp = Convert.ToInt32(data["MaxHp"]),
+                //공격력
+                ATK = Convert.ToInt32(data["ATK"]),
+                //방어력
+                DEF = Convert.ToInt32(data["DEF"]),
+                //이동 속도
+                MoveSpeed = Convert.ToInt32(data["MoveSpeed"]),
+                //공격 속도
+                AtkSpeed = Convert.ToInt32(data["AtkDelay"]),
+                //체력 회복 량
+                RecoveryHP = Convert.ToInt32(data["RecoveryHP"]),//
+                //마나
+                MP = Convert.ToInt32(data["MP"]),
+                //최대 마나
+                MaxMP = Convert.ToInt32(data["MaxMP"]),
+                //마나 회복 량
+                RecoveryMP = Convert.ToInt32(data["RecoveryMP"]),
+                //추적 범위
+                ChaseRange = Convert.ToInt32(data["ChaseRange"]),
+                //복귀 범위
+                ReturnRange = Convert.ToInt32(data["ReturnRange"]),
+                //공격 범위
+                AttackRange = Convert.ToInt32(data["AttackRange"]),
+                //이동 범위
+                AwayRange = Convert.ToInt32(data["AwayRange"]),
+            };
+            if (monsterStatData != null)
+            {
+                Logger.Log($"{monsterStatData} 저장됨");
+                _MonsterStatData.Add(monsterStatData);
             }
         }
     }
