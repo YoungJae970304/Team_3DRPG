@@ -45,7 +45,9 @@ public class SpawnEnemy : MonoBehaviour
             if (!_monsterMinValue.ContainsKey(data.MonsterType))
             {
                 _monsterMinValue.Add(data.MonsterType, data.MinSpawn);
+                //Logger.LogError($"{data.MonsterType.ToString()}"+_monsterMinValue[data.MonsterType].ToString()+"최소값");
                 _monsterMaxValue.Add(data.MonsterType, data.MaxSpawn);
+                //Logger.LogError($"{data.MonsterType.ToString()}"+_monsterMaxValue[data.MonsterType].ToString()+"맥스값");
             }
         }
     }
