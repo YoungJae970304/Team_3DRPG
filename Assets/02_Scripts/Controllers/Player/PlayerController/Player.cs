@@ -407,7 +407,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
         _skillBase = mainUI.SkillSlot_E.Skill;
 
-        if (_skillBase == null) return;
+        if (_skillBase == null || _playerStatManager.MP < _skillBase._usingMP) return;
         ChangeState(PlayerState.Skill);
     }
     public void SkillSetR()
@@ -415,7 +415,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         MainUI mainUI = (MainUI)Managers.UI.GetActiveUI<MainUI>();
         _skillBase = mainUI.SkillSlot_R.Skill;
 
-        if (_skillBase == null) return;
+        if (_skillBase == null || _playerStatManager.MP < _skillBase._usingMP) return;
         ChangeState(PlayerState.Skill);
     }
 

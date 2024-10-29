@@ -13,9 +13,6 @@ public class ManaBurst : SkillBase
         Stay = new ManaBurstStay();
         Exit = new ManaBurstExit();
         Passive = new NoneSkillPassive();
-
-        skillType = Define.SkillType.Normal;
-        delay = 2f;
     }
 }
 public class ManaBurstEnter : SkillEnter

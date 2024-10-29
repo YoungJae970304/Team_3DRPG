@@ -13,9 +13,6 @@ public class ShatterEarth: SkillBase
         Stay = new ShatterEarthStay();
         Exit = new ShatterEarthExit();
         Passive = new NoneSkillPassive();
-
-        skillType = Define.SkillType.Normal;
-        delay = 2f;
     }
 }
 

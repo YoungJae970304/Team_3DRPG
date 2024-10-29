@@ -13,10 +13,6 @@ public class DrawSword : SkillBase
         Stay = new DrawSwordStay();
         Exit = new DrawSwordExit();
         Passive = new NoneSkillPassive();
-
-        // 추가적인 스킬 초기화
-        skillType = Define.SkillType.Normal;
-        delay = 2f;
     }
 }
 
@@ -25,8 +21,6 @@ public class DrawSwordEnter : SkillEnter
     public void Enter(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill2");
-
-        stat.ATK = 10;
     }
 }
 
@@ -62,18 +56,5 @@ public class DrawSwordExit : SkillExit
     public void Exit(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player.SetColActive("Katana");
-
-        // 복구
-        stat.ATK = -10;
-    }
-}
-
-public class MeleeSkill2Passive : SkillPassive
-{
-    public void Passive(ITotalStat stat, SkillData skillData, int level = 0)
-    {
-        Debug.Log("TestSkill 패시브 효과");
-
-        stat.MaxHP = 50;
     }
 }

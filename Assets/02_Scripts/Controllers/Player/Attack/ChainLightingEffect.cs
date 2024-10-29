@@ -59,8 +59,6 @@ public class ChainLightingEffect : MonoBehaviour
         // 중간에 몬스터가 죽게되면 실시간으로 for문의 반복 횟수에 영향을 받기때문에 스킬 사용시 저장용으로 리스트 생성
         List<Monster> monstersCopy = new List<Monster>(positions);
 
-        Logger.LogError($"입력받은 스킬 데미지 확인 : {Managers.Game._player._skillBase._damage}");
-
         // 처음에는 모든 포인트를 시작 위치로 설정
         _lineRenderer.positionCount = 1;
         Vector3 startPos = Managers.Game._player.transform.position + Managers.Game._player._cc.center;

@@ -13,10 +13,6 @@ public class ThunderSlash : SkillBase
         Stay = new ThunderSlashStay();
         Exit = new ThunderSlashExit();
         Passive = new NoneSkillPassive();
-
-        // 추가적인 스킬 초기화
-        skillType = Define.SkillType.Normal;
-        delay = 2f;
     }
 }
 

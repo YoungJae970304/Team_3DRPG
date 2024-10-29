@@ -106,8 +106,8 @@ public class DataTableManager
             {
                 ID = Convert.ToInt32(data["ID"]),
                 SkillName = data["SkillName"].ToString(),
-                SkillType = (SkillData.SkillTypeE)Enum.Parse(typeof(SkillData.SkillTypeE), data["SkillType"].ToString()),
-                StatType = (SkillData.StatTypeE)Enum.Parse(typeof(SkillData.StatTypeE), data["StatType"].ToString()),
+                SkillType = (SkillData.SkillTypes)Enum.Parse(typeof(SkillData.SkillTypes), data["SkillType"].ToString()),
+                StatType = (SkillData.StatTypes)Enum.Parse(typeof(SkillData.StatTypes), data["StatType"].ToString()),
                 //SkillType = Convert.ToInt32(data["SkillType"]), // 타입들 어떻게 사용할지
                 //StatType = Convert.ToInt32(data["StatType"]),   // enum으로?
                 StatValue = Convert.ToInt32(data["StatValue"]),
