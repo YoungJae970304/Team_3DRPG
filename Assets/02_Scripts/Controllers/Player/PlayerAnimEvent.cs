@@ -88,7 +88,7 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         MagePlayer magePlayer = (MagePlayer)_player;
 
-        GameObject go = Managers.Resource.Instantiate("Player/MageSkill2");
+        GameObject go = Managers.Resource.Instantiate("Player/ShatterEarthEffect");
         go.transform.forward = magePlayer._playerModel.forward;
         go.transform.position = new Vector3(_player._playerModel.position.x, _player.transform.position.y, _player._playerModel.position.z);
         

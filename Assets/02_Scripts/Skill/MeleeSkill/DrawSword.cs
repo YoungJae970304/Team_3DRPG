@@ -3,17 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeSkill2 : SkillBase
+public class DrawSword : SkillBase
 {
-    public override SkillEnter Enter { get; set; } = new MeleeSkill2Enter();
-    public override SkillStay Stay { get; set; } = new MeleeSkill2Stay();
-    public override SkillExit Exit { get; set; } = new MeleeSkill2Exit();
-    public override SkillPassive Passive { get; set; } = new MeleeSkill2Passive();
+    private const int SKILL_ID = 2;
+
+    public DrawSword() : base(SKILL_ID)
+    {
+        Enter = new DrawSwordEnter();
+        Stay = new DrawSwordStay();
+        Exit = new DrawSwordExit();
+        Passive = new NoneSkillPassive();
+
+        // 추가적인 스킬 초기화
+        skillType = Define.SkillType.Normal;
+        delay = 2f;
+    }
 }
 
-public class MeleeSkill2Enter : SkillEnter
+public class DrawSwordEnter : SkillEnter
 {
-    public void Enter(ITotalStat stat, int level = 0)
+    public void Enter(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill2");
 
@@ -21,12 +30,12 @@ public class MeleeSkill2Enter : SkillEnter
     }
 }
 
-public class MeleeSkill2Stay : SkillStay
+public class DrawSwordStay : SkillStay
 {
     Animator _anim = Managers.Game._player._playerAnim;
     bool _damageApply = false;
 
-    public void Stay(ITotalStat stat, int level = 0)
+    public void Stay(ITotalStat stat, SkillData skillData, int level = 0)
     {
         // 애니메이션 진행도 8&에서 30% 시점까지는 빠른 이동
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Skill2"))
@@ -42,15 +51,15 @@ public class MeleeSkill2Stay : SkillStay
         }
     }
 
-    public void End(ITotalStat stat, int level = 0)
+    public void End(ITotalStat stat, SkillData skillData, int level = 0)
     {
         _damageApply = false;
     }
 }
 
-public class MeleeSkill2Exit : SkillExit
+public class DrawSwordExit : SkillExit
 {
-    public void Exit(ITotalStat stat, int level = 0)
+    public void Exit(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player.SetColActive("Katana");
 
@@ -61,7 +70,7 @@ public class MeleeSkill2Exit : SkillExit
 
 public class MeleeSkill2Passive : SkillPassive
 {
-    public void Passive(ITotalStat stat, int level = 0)
+    public void Passive(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Debug.Log("TestSkill 패시브 효과");
 

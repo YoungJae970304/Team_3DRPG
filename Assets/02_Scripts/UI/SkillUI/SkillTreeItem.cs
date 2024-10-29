@@ -21,10 +21,12 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     public SkillBase Skill { get => _skill; }//프로퍼티
     [SerializeField] int _skillLevel = 0;   //스킬의 레벨
     [SerializeField] public int _maxLevel = 5;//최대레벨
+    //public int _maxLevel { get { return Skill._level; } }
     public int SkillLevel { get => _skillLevel;set {//최대 레벨 제한이걸린 스킬 레펠 프로퍼티
             if (Skill == null|| value> _maxLevel) { return; }
             _skillLevel = value;
-            Skill._level = value;
+            //Skill._level = value;   // 이곳에서 해당 스킬의 현재 레벨도 적용을 시켜주네
+            Skill._level = _skillLevel;
         } }
     [SerializeField] bool isActive = false;         //슬롯 활성화 및 비활성화 표시
     [SerializeField] Image _image;                  //스킬 이미지
@@ -37,7 +39,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
         var typecClass = Activator.CreateInstance(_skillScript.GetClass());
         if (typecClass is SkillBase)
         { 
-            
+
             _skill = typecClass as SkillBase;
             if (!gameObject.activeSelf) { gameObject.SetActive(true); }
             return true;
