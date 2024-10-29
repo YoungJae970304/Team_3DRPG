@@ -21,7 +21,8 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     public SkillBase Skill { get => _skill; }//프로퍼티
     [SerializeField] int _skillLevel = 0;   //스킬의 레벨
     [SerializeField] public int _maxLevel = 5;//최대레벨
-    //public int _maxLevel { get { return Skill._level; } }
+    [SerializeField] SkillData.SkillTypes _skillType;
+    [SerializeField] SkillData.StatTypes _statType;
     public int SkillLevel { get => _skillLevel;set {//최대 레벨 제한이걸린 스킬 레펠 프로퍼티
             if (Skill == null|| value> _maxLevel) { return; }
             _skillLevel = value;
@@ -36,12 +37,14 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     {
         _skillScript = skillScript;
         if (_skill != null&& _skillScript.GetClass() == _skill.GetType()) { return false; }//이전과 같으면 무시
+        _skill._skillType = _skillType;
+        _skill._statType = _statType;
         var typecClass = Activator.CreateInstance(_skillScript.GetClass());
         if (typecClass is SkillBase)
         { 
-
             _skill = typecClass as SkillBase;
             if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+            _maxLevel = _skill._maxLevel;
             return true;
         }
         else {
@@ -74,6 +77,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     }
     //선행조건을 확인하고 달성시 스킬 활성화
     protected virtual bool CheckCondition() {
+        //if (_skillType == SkillData.SkillTypes.Passive) { return false; }
         if (_conditions.Count == 0) {
             Logger.LogWarning("조건없음");
             return true; 
