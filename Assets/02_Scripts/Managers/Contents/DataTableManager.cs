@@ -398,17 +398,44 @@ public class DataTableManager
                 PlayerLevelRequirement = Convert.ToInt32(data["Requriment"]),
                 TargetID = Convert.ToInt32(data["TargetID"]),
                 TargetCount = Convert.ToInt32(data["TargetCount"]),
-                RewardValue1 = Convert.ToInt32(data["QuestRewardType1"]),
-                ValType1 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue1"].ToString()),
-                RewardValue2 = Convert.ToInt32(data["QuestRewardType2"]),
-                ValType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue2"].ToString()),
-                RewardValue3 = Convert.ToInt32(data["QuestRewardType3"]),
-                ValType3 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardValue3"].ToString()),
+                RewardType1 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType1"].ToString()),
+                RewardValue1 = Convert.ToInt32(data["QuestRewardValue1"]),
+                RewardType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType2"].ToString()),
+                RewardValue2 = Convert.ToInt32(data["QuestRewardValue2"]),
+                //리워드 타입 3은 포션 ID으로 불러와야하는데..
+                RewardValue3 = Convert.ToInt32(data["QuestRewardValue3"]),
             };
+            var rewardType3 = data["QuestRewardType3"].ToString();
+
+            if (rewardType3 == ItemData.ItemType.Potion.ToString())
+            {
+                questData.RewardType3 = QuestData.RewardType.Potion;
+                int potionID = Convert.ToInt32(data["QuestRewardValue3"]);
+                var potionItem = GetPotionItemID(potionID);
+                if (potionItem != null)
+                {
+                    questData.RewardValue3 = potionItem.ID;
+                }
+                else
+                {
+                    Logger.LogError("포션ID 못찾았습니다");
+                    questData.RewardValue3 = 0;
+                }
+            }
             _QuestData.Add(questData);
         }
     }
-
+    ItemData GetPotionItemID(int id)
+    {
+        foreach (var data in _PotionItemData)
+        {
+            if (data.ID == id)
+            {
+                return data;
+            }
+        }
+        return null;
+    }
     #endregion
 
     #region 조합 데이터테이블 함수
