@@ -243,7 +243,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
             return;
         }
       
-        _mStat.HP -= (amount - _mStat.DEF);
+        _mStat.HP -= (int)(amount * (100f / (_mStat.DEF + 100f)));
         if (_mStat.HP > 0)
         {
 
