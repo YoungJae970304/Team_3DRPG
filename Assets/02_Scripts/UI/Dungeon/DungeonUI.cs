@@ -134,7 +134,7 @@ public class DungeonUI : BaseUI
 
 
             GameObject backmonster = Managers.Resource.Instantiate("UI/MonsterImage", _monsterImageType.transform);
-            GameObject monster = backmonster.GetComponentInChildren<Poolable>().gameObject;
+            GameObject monster = Util.FindChild(backmonster, "Image");
             monster.name = $"Monster{dungeon.Index}";
             //Logger.LogError(monster.name);
             Image monsterImage = monster.GetComponent<Image>();
