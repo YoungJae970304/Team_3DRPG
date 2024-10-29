@@ -94,7 +94,9 @@ public class PlayerSaveData : IData
     public int _sp;
     //현재 골드
     public int _gold;
-
+    float _x;
+    float _y;
+    float _z;
     static readonly string _SavePath = $"{Application.dataPath}Data/SavePlayerData.json";
 
     public bool SaveData()
@@ -102,13 +104,17 @@ public class PlayerSaveData : IData
         try
         {
             var stats = Managers.Game._player._playerStatManager;
-
+            var player = Managers.Game._player;
             _level = stats.Level;
             _exp = stats.EXP;
             _maxExp = stats.MaxEXP;
             _sp = stats.SpAddAmount;
             _gold = stats.Gold;
-
+            _x = player.transform.position.x;
+            _y = player.transform.position.y;
+            _z = player.transform.position.z;
+            //현재 0 1 0 으로 저장되는데 실제 위치는 뭐 600어쩌구임;;
+            Logger.Log($"현재 플레이어 저장 위치 확인{_x}{_y}{_z}");
             string directory = Path.GetDirectoryName(_SavePath);
             if (!Directory.Exists(directory))
             {

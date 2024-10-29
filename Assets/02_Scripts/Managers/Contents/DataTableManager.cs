@@ -395,7 +395,7 @@ public class DataTableManager
                 Type = (Define.QuestType)Enum.Parse(typeof(Define.QuestType), data["QuestType"].ToString()),
                 Name = data["QuestName"].ToString(),
                 Info = data["QuestInfo"].ToString(),
-                PlayerLevelRequirement = Convert.ToInt32(data["Requriment"]),
+                PlayerLevelRequirement = Convert.ToInt32(data["Requirement"]),
                 TargetID = Convert.ToInt32(data["TargetID"]),
                 TargetCount = Convert.ToInt32(data["TargetCount"]),
                 RewardType1 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType1"].ToString()),
