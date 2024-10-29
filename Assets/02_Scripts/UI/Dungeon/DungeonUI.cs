@@ -87,10 +87,10 @@ public class DungeonUI : BaseUI
     }
     public void ExitDungeonUI()
     {
-        //Managers.Scene.SceneChange("dungeon");
+        Managers.Scene.SceneChange("dungeon");
         //Managers.Game._selecDungeonLevel = _deongeonLevel;
-        Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
-        _fadeAnim.SetTrigger("doFadeDungeon");
+        //Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
+        //_fadeAnim.SetTrigger("doFadeDungeon");
         CloseUI();
     }
     public void DungeonButtonBind()
@@ -114,7 +114,7 @@ public class DungeonUI : BaseUI
     IEnumerator MakeDungeUIElement()
     {
         GameObject dungeonType;
-        Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
+        //Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
         foreach (var dungeon in _dataTableManager._DungeonData) //데이터 테이블 가져오기
         {
            
@@ -133,7 +133,7 @@ public class DungeonUI : BaseUI
 
             GameObject monster = Managers.Resource.Instantiate("UI/MonsterImage", _monsterImageType.transform);
             monster.name = $"Monster{dungeon.Index}";
-            Logger.LogError(monster.name);
+            //Logger.LogError(monster.name);
             Image monsterImage = monster.GetComponent<Image>();
             _indungeonMonsterImage.Add(monsterImage);
             // 몬스터 이미지 리스트에 추가 

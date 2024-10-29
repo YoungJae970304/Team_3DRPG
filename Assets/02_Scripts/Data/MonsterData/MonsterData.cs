@@ -76,9 +76,9 @@ public class MonsterData
         Index = _index;
         ID = _id;
         MonsterName = _monsterName;
-        _minSpawn = MinSpawn;
-        _maxSpawn = MaxSpawn;
-        _monsterType = MonsterType;
+        MinSpawn = _minSpawn;
+        MaxSpawn = _maxSpawn;
+        MonsterType = _monsterType;
 
     }
 }
