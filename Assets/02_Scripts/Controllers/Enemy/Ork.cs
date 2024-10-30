@@ -24,7 +24,7 @@ public class Ork : Monster
     }
     public override void AttackStateSwitch()
     {
-        if (_randomAttack <= 100)
+        if (_randomAttack <= 50)
         {
             //_atkColliders[0].gameObject.SetActive(true);
             _anim.SetTrigger("Attack");
