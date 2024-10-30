@@ -34,6 +34,7 @@ public class PlayerAnimEvent : MonoBehaviour
     // 평타 애니메이션 시작부
     public void AttackStart()
     {
+        _player._playerAnim.SetBool("isAttacking", true);
         _player._canAtkInput = false;
         _player._attacking = true;
     }
