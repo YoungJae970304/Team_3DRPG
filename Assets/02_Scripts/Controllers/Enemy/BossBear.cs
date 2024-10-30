@@ -1,10 +1,6 @@
-using Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using System.Threading.Tasks;
-using System;
 
 public class BossBear : Monster
 {
@@ -12,7 +8,7 @@ public class BossBear : Monster
     int skillCount = 0;
     public GameObject _roarRange; // 장판 오브젝트
 
-   
+
     private Vector2 _startScale; // 초기 크기
     float _stageRoarPlus = 10f;
     public float _roarTimer;
@@ -20,7 +16,7 @@ public class BossBear : Monster
     public override void Start()
     {
         base.Start();
-        
+
     }
     public override void OnEnable()
     {
@@ -32,6 +28,7 @@ public class BossBear : Monster
     {
         base.Init();
         itemtest(_deongeonLevel, _bossBearID);
+        StatCheck(_deongeonLevel, _bossBearID);
         _monsterProduct = 61004;
         _startScale = _roarRange.transform.localScale;
         skillCount = 0;
@@ -39,10 +36,11 @@ public class BossBear : Monster
         _roarRange.SetActive(false);
         _mStat._mStat.AttackRange = 4;
         _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
+        
     }
     public void OnDisable()
     {
-        
+
     }
     public override void Update()
     {
@@ -89,8 +87,8 @@ public class BossBear : Monster
             Logger.LogError("여긴 들어옴?5");
             yield return null;
         }
-        
-        
+
+
     }
 
     protected override void BaseState()
@@ -120,7 +118,7 @@ public class BossBear : Monster
                 }
                 break;
             case MonsterState.Attack:
-                if(_attackCompleted == true)
+                if (_attackCompleted == true)
                 {
                     if (!CanAttackPlayer())
                     {
@@ -136,7 +134,7 @@ public class BossBear : Monster
                         }
                     }
                 }
-                
+
                 break;
             case MonsterState.Return:
                 if ((_originPos - transform.position).magnitude <= 3f)
@@ -152,16 +150,16 @@ public class BossBear : Monster
             case MonsterState.Skill:
                 break;
         }
-        }
+    }
     public override void AttackStateSwitch()
     {
-        
+
         if (_randomAttack <= 30)
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
             _anim.SetTrigger("Bite");
-           // BiteAttack();
-            
+            // BiteAttack();
+
         }
         else if (_randomAttack <= 60)
         {
@@ -174,33 +172,33 @@ public class BossBear : Monster
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
             _anim.SetTrigger("RightHandAttack");
-           // RightHandAttack();
-            
+            // RightHandAttack();
+
         }
         else
         {
             _player._playerHitState = PlayerHitState.SkillAttack;
             _anim.SetTrigger("Earthquake");
-           // EarthquakeAttack();
-            
+            // EarthquakeAttack();
+
         }
     }
     //bool RoarOn = false;
     public void BearRoar()
     {
-        
+
         _player._playerHitState = PlayerHitState.StunAttack;
         //로어 애니메이션
         Roar();
 
-      
+
 
 
     }
     public void Roar()
     {
         //int damage = 0;
-        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _maxRoarRange.transform.localScale.x*2);
+        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _maxRoarRange.transform.localScale.x * 2);
         Logger.LogError($"{_maxRoarRange.transform.localScale.x}");
         foreach (Collider collider in checkColliders)
         {
@@ -216,10 +214,10 @@ public class BossBear : Monster
         }
     }
 
-    public List<float> _roarList = new List<float> {0.7f, 0.4f, 0.1f};
+    public List<float> _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
     public override void Damaged(int amount)
     {
-        
+
         if (_mStat == null)
         {
             Logger.LogError("MonsterStat이 null입니다");
@@ -233,7 +231,7 @@ public class BossBear : Monster
         float hpPercentage = (float)_mStat.HP / _mStat.MaxHP;
 
 
-        if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount] && _mStat.HP >0)
+        if (skillCount < _roarList.Count && hpPercentage <= _roarList[skillCount] && _mStat.HP > 0)
         {
             _anim.SetTrigger("BossRoar");
             MChangeState(MonsterState.Skill);
@@ -245,7 +243,7 @@ public class BossBear : Monster
             //다 커졌을 때 로어와 함께 장판 삭제
             StartCoroutine(PlusRoarRange());
             skillCount++;
-            
+
 
         }
         else
@@ -261,44 +259,44 @@ public class BossBear : Monster
                 MChangeState(MonsterState.Move);
             }
         }
-        
+
     }
-   
+
 
     public void EarthquakeAttack()
     {
         Logger.Log("EarthquakeAttack");
         AttackPlayer();
-      
+
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
-    
+
     public void BiteAttack()
     {
         Logger.Log("BiteAttack");
         AttackPlayer();
-       
+
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void LeftHandAttack()
     {
         Logger.Log("LeftHandAttack");
         AttackPlayer();
-      
+
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
     public void RightHandAttack()
     {
         Logger.Log("RightHandAttack");
         AttackPlayer();
-       
+
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
 
     public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         LookPlayer();
-      
+
     }
     public override void MakeItem()
     {
@@ -309,7 +307,7 @@ public class BossBear : Monster
             GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
             productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
-            
+
         }
     }
 }

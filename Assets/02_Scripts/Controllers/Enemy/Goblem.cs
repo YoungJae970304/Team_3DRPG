@@ -11,8 +11,14 @@ public class Goblem : Monster
     public override void Start()
     {
         base.Start();
+        
+    }
+    public override void Init()
+    {
+        base.Init();
         GoblemIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _goblemID);
+        StatCheck(_deongeonLevel, _goblemID);
     }
     public override void AttackStateSwitch()
     {

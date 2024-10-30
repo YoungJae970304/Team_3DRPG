@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OptionUI : BaseUI
@@ -22,12 +23,24 @@ public class OptionUI : BaseUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-        
+        Get<Button>((int)SelectButtons.GiveUp).interactable = false; ;
+        CheckInDungeon();
     }
-   
+    public void CheckInDungeon()
+    {
+        if (Managers.Scene.DungeonSceneCheck())
+        {
+            Get<Button>((int)SelectButtons.GiveUp).interactable = true;
+        }
+    }
     public void OnClickOptionBtn()
     {
-
+        VolumeUI volumeUI = Managers.UI.GetActiveUI<VolumeUI>() as VolumeUI;
+        VolumeUIData volumeUIData = new VolumeUIData();
+        if(volumeUI == null)
+        {
+            Managers.UI.OpenUI<VolumeUI>(volumeUIData);
+        }
     }
     public void OnClickGiveUpBtn()
     {
@@ -40,6 +53,7 @@ public class OptionUI : BaseUI
         ConfirmUIData.confirmAction = () =>
         {
             Managers.Scene.SceneChange("main");
+            Get<Button>((int)SelectButtons.GiveUp).interactable = false;
             CloseUI();
         };
         if (confirmUI == null)
@@ -67,4 +81,5 @@ public class OptionUI : BaseUI
             Managers.UI.OpenUI<ConfirmUI>(confirmUIData);
         }
     }
+
 }

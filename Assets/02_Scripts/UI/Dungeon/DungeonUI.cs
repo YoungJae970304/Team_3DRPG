@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ public class DungeonUI : BaseUI
     {
         SelectDungeonName,
     }
- 
+
     enum DungeonUIImage
     {
         SelectDungeonMainMonster,
@@ -34,6 +35,7 @@ public class DungeonUI : BaseUI
     Dictionary<string, int> _buttonType = new Dictionary<string, int>();
     [Header("던전 내 몬스터 이미지 관련 변수")]
     List<Image> _indungeonMonsterImage = new List<Image>();
+    List<GameObject> _backGroundImage = new List<GameObject>();
     [Header("Dungeon관련 변수")]
     public DataTableManager _dataTableManager;
     public DeongeonType _deongeonLevel;
@@ -78,12 +80,12 @@ public class DungeonUI : BaseUI
         Bind<TextMeshProUGUI>(typeof(DungeonUIText));
         Bind<Button>(typeof(DungeonUIButton));
         Bind<Image>(typeof(DungeonUIImage));
-       
-        
+
+
         GetButton((int)DungeonUIButton.EntryBtn).onClick.AddListener(() => ExitDungeonUI());//여기에 입장 관련 함수가 들어감
         AllMonsterImageFalse();
         DungeonUITest(SwitchDungeonID((int)_deongeonLevel));
-        
+
     }
     public void ExitDungeonUI()
     {
@@ -106,7 +108,7 @@ public class DungeonUI : BaseUI
     }
     public void AllMonsterImageFalse()
     {
-        for (int i = 0; i < _indungeonMonsterImage.Count; i++)
+        for (int i = 0; i < _backGroundImage.Count; i++)
         {
             _indungeonMonsterImage[i].gameObject.SetActive(false);
         }
@@ -114,31 +116,33 @@ public class DungeonUI : BaseUI
     IEnumerator MakeDungeUIElement()
     {
         GameObject dungeonType;
-        Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
+        //Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
         foreach (var dungeon in _dataTableManager._DungeonData) //데이터 테이블 가져오기
         {
-           
+
             dungeonType = Managers.Resource.Instantiate("UI/DeongeonType", _dungeonTypeview.transform);
-      
+
             // resource에 있는 instantiate호출. inspector창에 넣어놓은 부모 하위로 생성
             dungeonType.name = $"Dungeon{dungeon.ID}";
-            
+
             //던전 이름 바꾸기 (Datatable의 ID값
             dungeonType.GetComponentInChildren<TextMeshProUGUI>().text = dungeon.DungeonName;
             if (!_buttonType.ContainsKey(dungeonType.name))
             {
                 _buttonType.Add(dungeonType.name, dungeon.Index);//딕셔너리에 오브젝트이름으로 키값설정. value는 index값 가져오기
             }
-            
 
-            GameObject monster = Managers.Resource.Instantiate("UI/MonsterImage", _monsterImageType.transform);
+
+            GameObject backmonster = Managers.Resource.Instantiate("UI/MonsterImage", _monsterImageType.transform);
+            GameObject monster = Util.FindChild(backmonster, "Image");
             monster.name = $"Monster{dungeon.Index}";
-            Logger.LogError(monster.name);
+            //Logger.LogError(monster.name);
             Image monsterImage = monster.GetComponent<Image>();
             _indungeonMonsterImage.Add(monsterImage);
+            _backGroundImage.Add(backmonster);
             // 몬스터 이미지 리스트에 추가 
             //monster.SetActive(false);
-           
+
 
         }
         yield return new WaitForSeconds(1);
@@ -187,16 +191,30 @@ public class DungeonUI : BaseUI
                 break;
             }
         }
-
+        
         GetText((int)DungeonUIText.SelectDungeonName).text = _dungeonName;
-        
+
         GetImage((int)DungeonUIImage.SelectDungeonMainMonster).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_dungeonID}");//대표이미지가 던전아이디랬던거같음
-                                                                                                                                             //밑에 생성은 빠질거임 로드만 남을거임
-        for(int i = (_monsterType1%10)-1;  i <= (_monsterType3%10)-1; i++)
+          for (int i = 0; i < _backGroundImage.Count; i++)
         {
-            _indungeonMonsterImage[i].gameObject.SetActive(true);
+            _backGroundImage[i].gameObject.SetActive(false);
+        }                                                                                                                                   //밑에 생성은 빠질거임 로드만 남을거임
+        if (_dungeonIndex == 4)
+        {
+
+            _backGroundImage[0].gameObject.SetActive(true);
+            _indungeonMonsterImage[0].gameObject.SetActive(true);
         }
-        
+        else
+        {
+            for (int i = (_monsterType1 % 10) - 1; i <= (_monsterType3 % 10) - 1; i++)
+            {
+                _backGroundImage[i].gameObject.SetActive(true);
+                _indungeonMonsterImage[i].gameObject.SetActive(true);
+            }
+        }
+
+        Logger.LogError((_monsterType3 % 10 - 1).ToString() + "곰값얼마냐");
         GetImage((int)DungeonUIImage.Monster1).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType1}");
         GetImage((int)DungeonUIImage.Monster2).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType2}");
         GetImage((int)DungeonUIImage.Monster3).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType3}");
@@ -219,7 +237,7 @@ public class DungeonUI : BaseUI
             default:
                 return DeongeonType.Easy;
         }
-        
+
     }
 }
 

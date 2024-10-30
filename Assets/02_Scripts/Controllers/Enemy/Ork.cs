@@ -13,8 +13,14 @@ public class Ork : Monster
     public override void Start()
     {
         base.Start();
+        
+    }
+    public override void Init()
+    {
+        base.Init();
         OrkIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _OrkID);
+        StatCheck(_deongeonLevel, _OrkID);
     }
     public override void AttackStateSwitch()
     {
