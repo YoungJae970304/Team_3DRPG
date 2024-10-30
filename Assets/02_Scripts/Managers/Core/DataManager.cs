@@ -18,9 +18,7 @@ public class DataManager
     public void Init()
     {
         InitializeGameState();
-        _saveDatas.Init();
-        _inventorySaveData.Init();
-        _playerSaveData.Init();
+       
         //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         // Json을 사용하기 위한 타입은 TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
@@ -38,6 +36,9 @@ public class DataManager
 
     void InitializeGameState()
     {
+        _saveDatas.Init();
+        _inventorySaveData.Init();
+        _playerSaveData.Init();
         SaveData<SaveDatas>();
         Logger.Log("처음 시작 데이터 저장");
     }

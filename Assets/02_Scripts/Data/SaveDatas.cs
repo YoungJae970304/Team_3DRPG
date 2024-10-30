@@ -23,7 +23,31 @@ public class SaveDatas : IData
 
     public void Init()
     {
-        _SavePath = $"{Application.dataPath}Data/SaveDatas.json";
+        _SavePath = $"{Application.persistentDataPath}Data/SaveDatas.json";
+    }
+
+    public bool SaveData()
+    {
+        try
+        {
+            string directory = Path.GetDirectoryName(_SavePath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            string json = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, json);
+            _InventorySaveDatas ??= new List<InventorySaveData>();
+            _SkillSaveDatas ??= new List<SkillSaveData>();
+            _EquipmentSaveDatas ??= new List<EquipmentSaveData>();
+            _PlayerSaveDatas ??= new List<PlayerSaveData>();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"데이터 저장 실패: {e.Message}");
+            return false;
+        }
     }
 
     public bool LoadData()
@@ -37,37 +61,12 @@ public class SaveDatas : IData
         {
             string json = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(json, this);
-            _InventorySaveDatas ??= new List<InventorySaveData>();
-            _SkillSaveDatas ??= new List<SkillSaveData>();
-            _EquipmentSaveDatas ??= new List<EquipmentSaveData>();
-            _PlayerSaveDatas ??= new List<PlayerSaveData>();
             Logger.Log("게임 데이터 로드 성공");
             return true;
         }
         catch (Exception e)
         {
             Logger.LogError($"데이터 로드 실패: {e.Message}");
-            return false;
-        }
-    }
-
-    public bool SaveData()
-    {
-        try
-        {
-
-            string directory = Path.GetDirectoryName(_SavePath);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-            string json = JsonUtility.ToJson(this, true);
-            File.WriteAllText(_SavePath, json);
-            return true;
-        }
-        catch (Exception e)
-        {
-            Logger.LogError($"데이터 저장 실패: {e.Message}");
             return false;
         }
     }
@@ -110,7 +109,6 @@ public class PlayerSaveData : IData
     {
         try
         {
-
             var stats = Managers.Game._player._playerStatManager;
             var player = Managers.Game._player;
             _level = stats.Level;
