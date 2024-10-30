@@ -34,7 +34,8 @@ public class QuestDisplay : BaseUI
 
     List<QuestData> _LoadQuestDataList = new();
     int _questID;
-
+    int _targerCount;
+    bool isFinished = false;
     private void Awake()
     {
         Bind<TextMeshProUGUI>(typeof(DisplayTexts));

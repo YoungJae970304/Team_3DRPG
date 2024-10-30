@@ -29,7 +29,8 @@ public class TitleCanvasUI : BaseUI
     public void OnClickContinueBtn(string sceneName)
     {
         Managers.Scene.SceneChange(sceneName);
-
+        Managers.Game.LoadData<InventorySaveData>();
+        Managers.Game.LoadData<PlayerSaveData>();
         //CloseUI(true);
         Managers.UI.CloseAllOpenUI();
     }

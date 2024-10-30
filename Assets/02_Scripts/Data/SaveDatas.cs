@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
-using static ItemData;
+using static UnityEngine.Rendering.VolumeComponent;
 
 [Serializable]
 public class SaveDatas : IData
@@ -34,6 +34,8 @@ public class SaveDatas : IData
         {
             string json = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(json, this);
+            SetupInventory();
+            Logger.Log("인벤토리 로드");
             Logger.Log("게임 데이터 로드 성공");
             return true;
         }
@@ -44,6 +46,13 @@ public class SaveDatas : IData
         }
     }
 
+    void SetupInventory()
+    {
+        foreach (var invenSaveData in _InventorySaveDatas)
+        {
+            Managers.Game.LoadData<InventorySaveData>();
+        }
+    }
     public bool SaveData()
     {
         try
@@ -55,6 +64,15 @@ public class SaveDatas : IData
             }
             string json = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, json);
+            //초기인벤토리
+            _InventorySaveDatas = new List<InventorySaveData>();
+            //처음 플레이어의 정보
+            PlayerSaveData playerData = new PlayerSaveData();
+            _PlayerSaveDatas = new List<PlayerSaveData> { playerData };
+            //선택한 플레이어의 타입
+            _PlayerTypes = Managers.Game._playerType;
+            Logger.Log($"현재 {_PlayerTypes} 타입 입니다.");
+            Logger.Log("처음부터 시작 되었습니다.");
             Logger.Log("게임 데이터 저장 성공");
             return true;
         }
@@ -67,19 +85,10 @@ public class SaveDatas : IData
 
     public void SetDefaultData()
     {
-        //초기인벤토리
-        _InventorySaveDatas = new List<InventorySaveData>();
-        //초기 스킬
-        _SkillSaveDatas = new List<SkillSaveData>();
-        //초기 장비
-        _EquipmentSaveDatas = new List<EquipmentSaveData>();
-        //처음 플레이어의 정보
-        PlayerSaveData playerData = new PlayerSaveData();
-        _PlayerSaveDatas = new List<PlayerSaveData> { playerData };
-        //선택한 플레이어의 타입은?
-        _PlayerTypes = Managers.Game._playerType;
-        Logger.Log($"현재 {_PlayerTypes} 타입 입니다.");
-        Logger.Log("처음부터 시작 되었습니다.");
+        ////초기 스킬
+        //_SkillSaveDatas = new List<SkillSaveData>();
+        ////초기 장비
+        //_EquipmentSaveDatas = new List<EquipmentSaveData>();
     }
 }
 
@@ -171,6 +180,10 @@ public class InventoryItemData
     public int _id;
     //얻었던 아이템의 갯수(포션, 기타아이템 등, 장비는 1개 가 99개임 1칸에 Max99해놓았음)
     public int _amount;
+    //인덱스
+    public int _index;
+    //타입
+    public int _type;
 }
 
 [Serializable]
@@ -178,7 +191,7 @@ public class InventorySaveData : IData
 {
     public List<InventoryItemData> _InvenItemList = new List<InventoryItemData>();
 
-    Inventory _inventory;
+    public Inventory _inventory;
 
     static readonly string _SavePath = $"{Application.dataPath}/Data/InvenSaveData.Json";
 
@@ -187,37 +200,37 @@ public class InventorySaveData : IData
         try
         {
             _InvenItemList.Clear();
-            foreach(var itemGroup in _inventory.ItemDick)
+            foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
-                var itemType = itemGroup.Key;
-                var itemGroupInstance = itemGroup.Value;
-                for (int i = 0; i < itemGroupInstance._maxSize; i++)
+                var itemTpye = (ItemData.ItemType)itemSaveType;
+                int _maxGroupSize = _inventory.GetGroupSize(itemTpye);
+                for (int index= 0; index < _maxGroupSize; index++)
                 {
-                    var item = itemGroupInstance.GetItem(i);
+                    var item = _inventory.GetItem(index, itemTpye);
                     if(item != null)
                     {
-                        InventoryItemData insertItemData = new InventoryItemData
+                        InventoryItemData itemData = new InventoryItemData
                         {
                             _id = item.Data.ID,
-                            _amount = item is CountableItem countable ? countable.GetCurrentAmount() : 1,
+                            _amount = item is CountableItem ? ((CountableItem)item).GetCurrentAmount() : 1,
+                            _index = index,
+                            _type = (int)itemTpye
                         };
-                        _InvenItemList.Add(insertItemData);
+                        _InvenItemList.Add(itemData);
                     }
                 }
             }
-
             string directory = Path.GetDirectoryName(_SavePath);
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
-
             string invenJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, invenJson);
-           
             Logger.Log("인벤토리 세이브");
             return true;
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             Logger.LogError($"저장된 아이템이 없습니다.{e.Message}");
             return false;
@@ -231,49 +244,36 @@ public class InventorySaveData : IData
             Logger.LogWarning("저장된 아이템이 없습니다.");
             return false;
         }
-
         try
         {
             string invenJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(invenJson, this);
             foreach (var itemData in _InvenItemList)
             {
-                var item = Item.ItemSpawn(itemData._id, itemData._amount);
-                if (item != null)
+                //아이템 검증
+                Item newSaveItem = _inventory.GetItemToId(itemData._id);
+                if (newSaveItem == null)
                 {
-                    var itemType = item.Data.Type;
-                    if (_inventory.ItemDick.ContainsKey(itemType))
-                    {
-                        var itemTypeToCount = _inventory.ItemDick[itemType];
-                        bool itemExists = false;
-                        for(int i = 0; i< itemTypeToCount._maxSize; i++)
-                        {
-                            var countItem = itemTypeToCount.GetItem(i);
-                            if(countItem != null && countItem.Data.ID == item.Data.ID)
-                            {
-                                if(countItem is CountableItem countableItem)
-                                {
-                                    countableItem.AddAmount(itemData._amount);
-                                }
-                                itemExists = true;
-                                Logger.Log($"중복 아이템 갯수 증가{countItem.Data.Name}");
-                                break;
-                            }
-                        }
-                        if (!itemExists)
-                        {
-                            _inventory.InsertItem(item);
-                            Logger.Log($"{item.Data.Name}있던 아이템 로드");
-                        }
-                    }
-                    else
-                    {
-                        _inventory.InsertItem(item);
-                        Logger.Log($"{item.Data.Name}있던 아이템 로드");
-                    }
+                    Logger.LogWarning($"유효하지 않은 아이템 ID: {itemData._id}");
+                    
+                    continue;
+                }
+
+                if (newSaveItem is CountableItem countableItem)
+                {
+                    countableItem.AddAmount(itemData._amount);
+                }
+
+                // 빈 슬롯인지 확인 후 아이템 설정
+                if (_inventory.GetItem(itemData._index, (ItemData.ItemType)itemData._type) == null)
+                {
+                    _inventory.Setitem(itemData._index, newSaveItem);
+                }
+                else
+                {
+                    Logger.LogWarning($"인벤토리 인덱스 {itemData._index}에 이미 아이템이 존재합니다.");
                 }
             }
-            Logger.Log("Insert인벤토리 아이템 로드 성공");
             return true;
         }
         catch (Exception e)
