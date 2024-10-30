@@ -45,8 +45,8 @@ public class Inventory : MonoBehaviour//인벤토리
     {
         Logger.Log(item.Data.Type.ToString());
         int result = ItemDick[item.Data.Type].Insert(item);
+        Managers.Data.SaveData<InventorySaveData>();
         GetItemAction?.Invoke();
-        Managers.Game.SaveData<InventorySaveData>();
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }

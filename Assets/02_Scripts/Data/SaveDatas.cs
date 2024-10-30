@@ -4,93 +4,83 @@ using System.IO;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.VolumeComponent;
 
-[Serializable]
-public class SaveDatas : IData
-{
-    //인벤토리 저장 데이터
-    public List<InventorySaveData> _InventorySaveDatas;
-    //스킬 저장 데이터
-    public List<SkillSaveData> _SkillSaveDatas;
-    //장비 저장 데이터
-    public List<EquipmentSaveData> _EquipmentSaveDatas;
-    //플레이어 초기 값 저장 데이터
-    public List<PlayerSaveData> _PlayerSaveDatas;
-    //public List<QuestSaveData> _QuestSaveData;
-    //선택한 플레이어타입
-    public Define.PlayerType _PlayerTypes;
+//[Serializable]
+//public class SaveDatas : IData
+//{
+//    //인벤토리 저장 데이터
+//    public List<InventorySaveData> _InventorySaveDatas;
+//    //스킬 저장 데이터
+//    public List<SkillSaveData> _SkillSaveDatas;
+//    //장비 저장 데이터
+//    public List<EquipmentSaveData> _EquipmentSaveDatas;
+//    //플레이어 초기 값 저장 데이터
+//    public List<PlayerSaveData> _PlayerSaveDatas;
+//    //public List<QuestSaveData> _QuestSaveData;
+//    //선택한 플레이어타입
+//    public Define.PlayerType _PlayerTypes;
 
-    static readonly string _SavePath = $"{Application.dataPath}Data/SaveDatas.json";
+//    static readonly string _SavePath = $"{Application.dataPath}Data/SaveDatas.json";
 
-    public bool LoadData()
-    {
-        if (!File.Exists(_SavePath))
-        {
-            Logger.LogWarning("저장된 데이터가 없습니다.");
-            return false;
-        }
-        try
-        {
-            string json = File.ReadAllText(_SavePath);
-            JsonUtility.FromJsonOverwrite(json, this);
-            SetupInventory();
-            Logger.Log("인벤토리 로드");
-            Logger.Log("게임 데이터 로드 성공");
-            return true;
-        }
-        catch (Exception e)
-        {
-            Logger.LogError($"데이터 로드 실패: {e.Message}");
-            return false;
-        }
-    }
+//    public bool LoadData()
+//    {
+//        if (!File.Exists(_SavePath))
+//        {
+//            Logger.LogWarning("저장된 데이터가 없습니다.");
+//            return false;
+//        }
+//        try
+//        {
+//            string json = File.ReadAllText(_SavePath);
+//            JsonUtility.FromJsonOverwrite(json, this);
+//            if (_InventorySaveDatas == null) _InventorySaveDatas = new List<InventorySaveData>();
+//            if (_PlayerSaveDatas == null) _PlayerSaveDatas = new List<PlayerSaveData>();
+//            Logger.Log("인벤토리 로드");
+//            Logger.Log("게임 데이터 로드 성공");
+//            return true;
+//        }
+//        catch (Exception e)
+//        {
+//            Logger.LogError($"데이터 로드 실패: {e.Message}");
+//            return false;
+//        }
+//    }
 
-    void SetupInventory()
-    {
-        foreach (var invenSaveData in _InventorySaveDatas)
-        {
-            Managers.Game.LoadData<InventorySaveData>();
-        }
-    }
-    public bool SaveData()
-    {
-        try
-        {
-            string directory = Path.GetDirectoryName(_SavePath);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-            string json = JsonUtility.ToJson(this, true);
-            File.WriteAllText(_SavePath, json);
-            //초기인벤토리
-            _InventorySaveDatas = new List<InventorySaveData>();
-            //처음 플레이어의 정보
-            PlayerSaveData playerData = new PlayerSaveData();
-            _PlayerSaveDatas = new List<PlayerSaveData> { playerData };
-            //선택한 플레이어의 타입
-            _PlayerTypes = Managers.Game._playerType;
-            Logger.Log($"현재 {_PlayerTypes} 타입 입니다.");
-            Logger.Log("처음부터 시작 되었습니다.");
-            Logger.Log("게임 데이터 저장 성공");
-            return true;
-        }
-        catch (Exception e)
-        {
-            Logger.LogError($"데이터 저장 실패: {e.Message}");
-            return false;
-        }
-    }
+  
+//    public bool SaveData()
+//    {
+//        try
+//        {
+//            string directory = Path.GetDirectoryName(_SavePath);
+//            if (!Directory.Exists(directory))
+//            {
+//                Directory.CreateDirectory(directory);
+//            }
+//            string json = JsonUtility.ToJson(this, true);
+//            File.WriteAllText(_SavePath, json);
+//            //초기인벤토리
+//            _InventorySaveDatas = new List<InventorySaveData>();
+//            //처음 플레이어의 정보
+//            PlayerSaveData playerData = new PlayerSaveData();
+//            _PlayerSaveDatas = new List<PlayerSaveData> { playerData };
+//            //선택한 플레이어의 타입
+//            _PlayerTypes = Managers.Game._playerType;
+//            Logger.Log($"현재 {_PlayerTypes} 타입 입니다.");
+//            Logger.Log("처음부터 시작 되었습니다.");
+//            Logger.Log("게임 데이터 저장 성공");
+//            return true;
+//        }
+//        catch (Exception e)
+//        {
+//            Logger.LogError($"데이터 저장 실패: {e.Message}");
+//            return false;
+//        }
+//    }
 
-    public void SetDefaultData()
-    {
-        ////초기 스킬
-        //_SkillSaveDatas = new List<SkillSaveData>();
-        ////초기 장비
-        //_EquipmentSaveDatas = new List<EquipmentSaveData>();
-    }
-}
+//    public void SetDefaultData()
+//    {
+//    }
+//}
 
 [Serializable]
 public class PlayerSaveData : IData
@@ -200,30 +190,30 @@ public class InventorySaveData : IData
         try
         {
             _InvenItemList.Clear();
+            string directory = Path.GetDirectoryName(_SavePath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
             foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
-                var itemTpye = (ItemData.ItemType)itemSaveType;
-                int _maxGroupSize = _inventory.GetGroupSize(itemTpye);
-                for (int index= 0; index < _maxGroupSize; index++)
+                var itemType = (ItemData.ItemType)itemSaveType;
+                int _maxGroupSize = _inventory.GetGroupSize(itemType);
+                for (int index = 0; index < _maxGroupSize; index++)
                 {
-                    var item = _inventory.GetItem(index, itemTpye);
-                    if(item != null)
+                    var item = _inventory.GetItem(index, itemType);
+                    if (item != null)
                     {
                         InventoryItemData itemData = new InventoryItemData
                         {
                             _id = item.Data.ID,
                             _amount = item is CountableItem ? ((CountableItem)item).GetCurrentAmount() : 1,
                             _index = index,
-                            _type = (int)itemTpye
+                            _type = (int)itemType
                         };
                         _InvenItemList.Add(itemData);
                     }
                 }
-            }
-            string directory = Path.GetDirectoryName(_SavePath);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
             }
             string invenJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, invenJson);

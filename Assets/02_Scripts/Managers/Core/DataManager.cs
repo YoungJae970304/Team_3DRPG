@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +8,10 @@ public interface ILoader<Key, Value>
 
 public class DataManager
 {
-    public Dictionary<int, Data.Stat> StatDict {  get; private set; } = new Dictionary<int, Data.Stat>();
+    public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
+
+    public InventorySaveData _inventorySaveData = new InventorySaveData();
+    public PlayerSaveData _playerSaveData = new PlayerSaveData();
 
     public void Init()
     {
@@ -32,9 +33,9 @@ public class DataManager
 
     void InitializeGameState()
     {
-        SaveDatas saveDatas = new SaveDatas();
+        SaveData<PlayerSaveData>();
+        SaveData<InventorySaveData>();
         Logger.Log("처음 시작 데이터 저장");
-        saveDatas.SaveData();
     }
 
 
@@ -43,5 +44,69 @@ public class DataManager
         TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
         return JsonUtility.FromJson<Loader>(textAsset.text);
     }
-}
 
+    public void SaveData<T>() where T : class, IData
+    {
+        T dataToSave = GetData<T>();
+        if (dataToSave != null)
+        {
+            bool success = dataToSave.SaveData();
+            if (success)
+            {
+                Logger.Log($"{typeof(T).Name} 저장");
+            }
+            else
+            {
+                Logger.LogError($"{typeof(T).Name} 저장 실패");
+            }
+        }
+        else
+        {
+            Logger.LogWarning($"{typeof(T).Name} 저장할 데이터가 없음");
+        }
+    }
+
+    public void LoadData<T>() where T : class, IData
+    {
+        T dataToLoad = GetData<T>();
+        if (dataToLoad != null)
+        {
+            bool success = dataToLoad.LoadData();
+            if (success)
+            {
+                Logger.Log($"{typeof(T).Name} 로드");
+            }
+            else
+            {
+                Logger.LogError($"{typeof(T).Name} 로드 실패");
+            }
+        }
+        else
+        {
+            Logger.LogWarning($"{typeof(T).Name} 로드할 데이터가 없음");
+        }
+    }
+
+    T GetData<T>() where T : class, IData
+    {
+        if (typeof(T) == typeof(InventorySaveData))
+        {
+            if (_inventorySaveData == null)
+            {
+                _inventorySaveData = new InventorySaveData();
+            }
+
+            return _inventorySaveData as T;
+        }
+        else if (typeof(T) == typeof(PlayerSaveData))
+        {
+            if (_playerSaveData == null)
+            {
+                _playerSaveData = new PlayerSaveData();
+            }
+
+            return _playerSaveData as T;
+        }
+        return null;
+    }
+}

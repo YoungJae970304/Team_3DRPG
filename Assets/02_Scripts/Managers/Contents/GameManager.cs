@@ -17,9 +17,6 @@ public class GameManager
     public bool _cantInputKey = false;
 
     public DeongeonType _selecDungeonLevel;
-    //인벤토리는 세이브 따로 해줄 예정이라 게임매니저에서 해줄
-    public InventorySaveData _inventorySaveData = new InventorySaveData();
-    public PlayerSaveData _playerSave = new PlayerSaveData();
 
     public void AddMonsterOnNowScene()
     {
@@ -47,21 +44,20 @@ public class GameManager
     {
         Managers.Resource.Instantiate("Player/VirtualCameras");
         
-
         switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
                 GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
                 if(meleePlayer != null)
                 {
-                    _playerSave.SaveData();
+                    Managers.Data.SaveData<PlayerSaveData>();
                 }
                 break;
             case Define.PlayerType.Mage:
                 GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
                 if(magePlayer != null)
                 {
-                    _playerSave.SaveData();
+                    Managers.Data.SaveData<PlayerSaveData>();
                 }
                 break;
             default:
@@ -77,60 +73,5 @@ public class GameManager
         _player.transform.position = spawnPos.position;
 
         _player._cc.enabled = true;
-    }
-
-    public void SaveData<T>() where T : class, IData
-    {
-        T dataToSave = GetData<T>();
-        if(dataToSave != null)
-        {
-            bool success = dataToSave.SaveData();
-            if (success)
-            {
-                Logger.Log($"{typeof(T).Name} 저장");
-            }
-            else
-            {
-                Logger.LogError($"{typeof(T).Name} 저장 실패");
-            }
-        }
-        else
-        {
-            Logger.LogWarning($"{typeof(T).Name} 저장할 데이터가 없음");
-        }
-    }
-
-    public void LoadData<T>() where T : class, IData
-    {
-        T dataToLoad = GetData<T>();
-        if (dataToLoad != null)
-        {
-            bool success = dataToLoad.LoadData();
-            if (success)
-            {
-                Logger.Log($"{typeof(T).Name} 로드");
-            }
-            else
-            {
-                Logger.LogError($"{typeof(T).Name} 로드 실패");
-            }
-        }
-        else
-        {
-            Logger.LogWarning($"{typeof(T).Name} 로드할 데이터가 없음");
-        }
-    }
-
-    T GetData<T>() where T : class, IData
-    {
-        if (typeof(T) == typeof(InventorySaveData))
-        {
-            return _inventorySaveData as T;
-        }
-        else if (typeof(T) == typeof(PlayerSaveData))
-        {
-            return _playerSave as T;
-        }
-        return null;
     }
 }
