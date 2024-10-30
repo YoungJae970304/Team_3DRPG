@@ -35,6 +35,7 @@ public class SkillTreeItemEditor : Editor // 스킬트리 아이템을 위한 �
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillLevel")); 
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_maxLevel"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillId"));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("_skillInfo"));
         }
         
         

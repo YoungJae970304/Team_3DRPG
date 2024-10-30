@@ -871,6 +871,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
+      propertyPath: _skillInfo
+      value: "\uC774\uB984 \uADC0\uC601\uC12C\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
       propertyPath: _skillType
       value: 1
       objectReference: {fileID: 0}
@@ -1036,6 +1042,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _statType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
+      propertyPath: _skillInfo
+      value: "\uC774\uB984\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
@@ -1212,6 +1224,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
+      propertyPath: _skillInfo
+      value: "\uC774\uB984\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
       propertyPath: _skillType
       value: 2
       objectReference: {fileID: 0}
@@ -1383,6 +1401,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
+      propertyPath: _skillInfo
+      value: "\uC774\uB984\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
       propertyPath: _skillType
       value: 2
       objectReference: {fileID: 0}
@@ -1549,6 +1573,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
+      propertyPath: _skillInfo
+      value: "\uAC80\uAE30\uBC29\uCD9C\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
       propertyPath: _skillType
       value: 1
       objectReference: {fileID: 0}
@@ -1712,6 +1742,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _statType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
+      propertyPath: _skillInfo
+      value: "\uC774\uB984\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
@@ -1888,6 +1924,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
+      propertyPath: _skillInfo
+      value: "\uC774\uB984\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
       propertyPath: _skillType
       value: 2
       objectReference: {fileID: 0}
@@ -2054,6 +2096,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}
+      propertyPath: _skillInfo
+      value: "\uBC1C\uB3C4\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
       propertyPath: _skillType
       value: 1
       objectReference: {fileID: 0}
@@ -2217,6 +2265,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _statType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
+        type: 3}
+      propertyPath: _skillInfo
+      value: "\uC774\uB984\n\uC120\uD589\uC2A4\uD0AC\n\uC2A4\uD0AC\uD0C0\uC785\nMP\uC18C\uBAA8\uB7C9\n\uC2A4\uD0AC
+        \uC635\uC158"
       objectReference: {fileID: 0}
     - target: {fileID: 4236361267126618930, guid: b801cc5a9e1f6d34b939a2dc10c61dc4,
         type: 3}

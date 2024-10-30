@@ -22,6 +22,8 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     [SerializeField] int _skillLevel = 0;   //스킬의 레벨
     [SerializeField] public int _maxLevel = 5;//최대레벨
     [SerializeField] int _skillId;
+    [Multiline]
+    [SerializeField] string _skillInfo;
     public int SkillLevel 
     {
         get
@@ -117,6 +119,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
         
         isActive = CheckCondition();
         if (_skill == null) { return; }
+        _skill._skillInfo = _skillInfo;
     }
     //선행조건을 확인하고 달성시 스킬 활성화
     protected virtual bool CheckCondition() {

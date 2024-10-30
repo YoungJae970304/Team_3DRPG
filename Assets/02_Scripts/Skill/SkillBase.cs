@@ -40,6 +40,8 @@ public class SkillBase//전략 패턴 사용
 
     public int _prevLevel;
 
+    public string _skillInfo;
+
     // 플레이어의 공격력 스탯이 오를때, 스킬의 레벨이 오를때마다 호출 -> 하는줄 알았으니 그냥 이곳 Enter에서 데미지를 미리 계산하면 그럴 필요가 없어짐
     public void UpdateSkill(ITotalStat stat)
     {

@@ -94,7 +94,7 @@ public class SkillTree : ItemDragUI
     {
         if (_skillTreeItems == null) return;
 
-        GetText((int)Texts.SkillTxt).text = _currentItem == null ? "": _currentItem.Skill.GetType().ToString();//우선 정보 대신 이름 표시 -> 추후 스킬설명으로 변경
+        GetText((int)Texts.SkillTxt).text = _currentItem == null ? "" : _currentItem.Skill._skillInfo;//GetType().ToString();//우선 정보 대신 이름 표시 -> 추후 스킬설명으로 변경
         if (_currentItem == null)
         {
             GetText((int)Texts.LevelTxt).gameObject.SetActive(false);
@@ -109,6 +109,7 @@ public class SkillTree : ItemDragUI
         GetText((int)Texts.SpTxt).text = $"sp소모:{5}";
 
     }
+
     public override void CloseUI(bool isCloseAll = false)
     {
         base.CloseUI(isCloseAll);
