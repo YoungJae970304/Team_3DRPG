@@ -56,5 +56,6 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
         PlayerLevelData playerLevelData = Managers.DataTable.GetPlayerLevelData(Level);
         MaxEXP = playerLevelData.MaxEXP;
         SpAddAmount = playerLevelData.SpAddAmount;
+        Managers.Data.SaveData<PlayerSaveData>();
     }
 }

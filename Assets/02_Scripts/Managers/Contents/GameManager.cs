@@ -50,6 +50,7 @@ public class GameManager
                 GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
                 if(meleePlayer != null)
                 {
+                    //첫 시작 플레이어 데이터 저장
                     Managers.Data.SaveData<PlayerSaveData>();
                 }
                 break;
@@ -57,6 +58,7 @@ public class GameManager
                 GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
                 if(magePlayer != null)
                 {
+                    //첫 시작 플레이어 데이터 저장
                     Managers.Data.SaveData<PlayerSaveData>();
                 }
                 break;

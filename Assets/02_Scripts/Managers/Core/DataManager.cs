@@ -10,13 +10,18 @@ public class DataManager
 {
     public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
 
+
+    public SaveDatas _saveDatas = new SaveDatas();
     public InventorySaveData _inventorySaveData = new InventorySaveData();
     public PlayerSaveData _playerSaveData = new PlayerSaveData();
 
     public void Init()
     {
-        //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         InitializeGameState();
+        _saveDatas.Init();
+        _inventorySaveData.Init();
+        _playerSaveData.Init();
+        //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         // Json을 사용하기 위한 타입은 TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
         //StatData data = JsonUtility.FromJson<StatData>(textAsset.text);
@@ -33,8 +38,7 @@ public class DataManager
 
     void InitializeGameState()
     {
-        SaveData<PlayerSaveData>();
-        SaveData<InventorySaveData>();
+        SaveData<SaveDatas>();
         Logger.Log("처음 시작 데이터 저장");
     }
 
@@ -89,7 +93,14 @@ public class DataManager
 
     T GetData<T>() where T : class, IData
     {
-        if (typeof(T) == typeof(InventorySaveData))
+        if(typeof(T) == typeof(SaveDatas))
+        {
+            if(_saveDatas == null)
+            {
+                _saveDatas = new SaveDatas();
+            }
+            return _saveDatas as T;
+        }else if (typeof(T) == typeof(InventorySaveData))
         {
             if (_inventorySaveData == null)
             {
@@ -108,5 +119,21 @@ public class DataManager
             return _playerSaveData as T;
         }
         return null;
+    }
+
+    void LoadedData<T>(List<T> values)
+    {
+        foreach(var value in values)
+        {
+            if(value is PlayerSaveData playerData)
+            {
+                _playerSaveData = playerData;
+                Logger.Log("플레이어 데이터 적용");
+            }else if (value is InventorySaveData inventorySaveData)
+            {
+                _inventorySaveData = inventorySaveData;
+                Logger.Log("인벤토리 데이터 적용");
+            }
+        }
     }
 }
