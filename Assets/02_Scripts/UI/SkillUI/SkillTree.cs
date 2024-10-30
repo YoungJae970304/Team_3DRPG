@@ -102,11 +102,11 @@ public class SkillTree : ItemDragUI
         else {
             GetText((int)Texts.LevelTxt).text = _currentItem.SkillLevel.ToString();
             GetText((int)Texts.LevelTxt).gameObject.SetActive(true);
-            GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0;
-            GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel;
+            GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition();
+            GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition();
         }
         
-        GetText((int)Texts.SpTxt).text = $"sp소모:{5}";
+        GetText((int)Texts.SpTxt).text = $"sp소모:{_currentItem.Skill._needSP}";
 
     }
 

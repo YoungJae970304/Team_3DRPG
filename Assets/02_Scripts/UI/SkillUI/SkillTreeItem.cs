@@ -122,7 +122,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
         _skill._skillInfo = _skillInfo;
     }
     //선행조건을 확인하고 달성시 스킬 활성화
-    protected virtual bool CheckCondition() {
+    public virtual bool CheckCondition() {
         if (_conditions.Count == 0) {
             Logger.LogWarning("조건없음");
             return true; 
