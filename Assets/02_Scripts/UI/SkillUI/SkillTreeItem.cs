@@ -10,12 +10,12 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     ScrollRect _parent; //드래그시 스크롤 렉트 비활성화를 위한 부모
     SkillTree _skillTree;//이 스킬이 담길 스킬트리
     [Serializable]
-    class SkillCondition {//선행조건을 위한 클래스 선행스킬,조건레벨로 구성
+    public class SkillCondition {//선행조건을 위한 클래스 선행스킬,조건레벨로 구성
         public SkillTreeItem _Item;
         public int _conditionLevel;
     }
 
-    [SerializeField] List<SkillCondition> _conditions = new List<SkillCondition>();//선행조건을 모아둔 리스트
+    [SerializeField] public List<SkillCondition> _conditions = new List<SkillCondition>();//선행조건을 모아둔 리스트
     SkillBase _skill ;//담을 스킬
     [SerializeField]public MonoScript _skillScript;//스크립트를 넣으면 그 타입의 스킬로 설정
     public SkillBase Skill { get => _skill; }//프로퍼티
@@ -102,9 +102,23 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
 
     }
 
+    public int GetMinLevel()
+    {
+        int minLevel = 0;
+        foreach (var item in _skillTree._skillTreeItems)
+        {
+            foreach (var condition in item._conditions)
+            {
+                if (condition._Item == this && item.SkillLevel > 0)
+                {
+                    minLevel = Mathf.Max(minLevel, condition._conditionLevel);
+                }
+            }
+        }
+        return minLevel;
+    }
 
-    
-    
+
     //초기화 함수
     public virtual void Init(SkillTree skillTree ) {
         _skillTree = skillTree;
@@ -129,7 +143,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
         }
         bool result = false;
         foreach (var condition in _conditions) {
-            result = condition._Item._skillLevel>= condition._conditionLevel;//스킬레벨이 저장한것보다 크면
+            result = condition._Item._skillLevel>= condition._conditionLevel;   //스킬레벨이 저장한것보다 크면
         }  
         return result;
     }
