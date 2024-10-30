@@ -63,4 +63,10 @@ public class Define
     {
         Slow,
     }
+
+    public enum QuestInput
+    {
+        Q,
+        Dialog,
+    }
 }

@@ -1,24 +1,34 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
 public class QuestManager
 {
-    //현재 플레이어 레벨
-    public int _currPlayerLevel;
+    //현재 플레이어 레벨 // 사용중
+    public int _currPlayerLevel = 1;
     //현재 활성화된 퀘스트 리스트
     public List<Quest> _ActiveQuests = new List<Quest>();
     //전체 퀘스트를 일단 가지고있는 리스트
     public List<QuestData> _AllQuestData = new List<QuestData>();
-
     public bool _metRequireLevel = false;
-
-
-
+    ///////////////////////// 여기 밑부터 새로 작성한 부분
+    public Dictionary<int,int> _questList = new Dictionary<int,int>();
+    public Dictionary<int,int> _questrequirements = new Dictionary<int, int>();
+    public List<int> _questID = new List<int>();
+    public List<int> _activeQuest = new List<int>();
+    public Action _curLevelCountPlus;
+    public Action _completeCheck;
+    DataTableManager _dataTableManager;
+    public Define.QuestInput _questInput;
     public void Init()
     {
-        LoadQuestData();
+        _dataTableManager = Managers.DataTable;
+       // LoadQuestData();
+        _curLevelCountPlus += LevelCountPlus;
+        
     }
-
+    
     //퀘스트 데이터를 매니저에서 다시 불러와줌
     void LoadQuestData()
     {
@@ -89,5 +99,29 @@ public class QuestManager
     {
         //보상 처리
 
+    }
+    /////////////////////////////////////
+    ///여기 밑부터 내가 작성한 부분
+    public void LevelCountPlus()
+    {
+        _currPlayerLevel++;
+        for (int i = _questID[0]; i < _questID.Count; i++)
+        {
+            if(_questList[i] <= _currPlayerLevel)
+            {
+                _activeQuest.Add(_questList[i]);
+                Managers.UI.Init();
+            }
+        }
+    }
+    
+    void QuestListInput()
+    {
+        foreach(var questdata in _dataTableManager._QuestData)
+        {
+            _questList.Add(questdata.ID, questdata.PlayerLevelRequirement);
+            _questID.Add(questdata.ID);
+            _questrequirements.Add(questdata.ID, questdata.TargetCount);
+        }
     }
 }

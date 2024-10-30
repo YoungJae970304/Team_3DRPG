@@ -49,6 +49,7 @@ public class PlayerStat : Stat
             {
                 Managers.Game._player._playerStatManager.PlayerStatUpdate();
                 SP += SpAddAmount;
+                Managers.QuestManager._curLevelCountPlus?.Invoke(); //수정된곳
             }
         }
     }

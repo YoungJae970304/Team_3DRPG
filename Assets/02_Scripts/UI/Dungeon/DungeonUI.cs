@@ -78,7 +78,7 @@ public class DungeonUI : BaseUI
         base.SetInfo(uiData);
         Bind<Button>(typeof(DungeonUIButton));
         Bind<TextMeshProUGUI>(typeof(DungeonUIText));
-        Bind<Button>(typeof(DungeonUIButton));
+        //Bind<Button>(typeof(DungeonUIButton));
         Bind<Image>(typeof(DungeonUIImage));
 
 
