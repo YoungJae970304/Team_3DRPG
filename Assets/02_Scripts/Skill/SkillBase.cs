@@ -12,7 +12,6 @@ public class SkillBase//전략 패턴 사용
         // 데이터테이블로 받은 데이터들 이곳에서 초기화
         _skillData = Managers.DataTable.GetSkillData(skillId);
 
-        _level = 0;
         _skillName = _skillData.SkillName;
         _skillType = _skillData.SkillType;
         _statType = _skillData.StatType;

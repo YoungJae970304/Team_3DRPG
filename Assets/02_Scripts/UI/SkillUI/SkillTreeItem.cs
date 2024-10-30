@@ -22,13 +22,27 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     [SerializeField] int _skillLevel = 0;   //스킬의 레벨
     [SerializeField] public int _maxLevel = 5;//최대레벨
     [SerializeField] int _skillId;
-    public int SkillLevel { get => _skillLevel;set {//최대 레벨 제한이걸린 스킬 레펠 프로퍼티
+    public int SkillLevel 
+    {
+        get
+        {
+            return _skillLevel;
+        }
+        set 
+        {
+            //최대 레벨 제한이걸린 스킬 레펠 프로퍼티
             if (Skill == null|| value> _maxLevel) { return; }
             _skillLevel = value;
-            //Skill._level = value;   // 이곳에서 해당 스킬의 현재 레벨도 적용을 시켜주네
             Skill._level = _skillLevel;
+
+            if (_skillLevel == 0)
+            {
+                PubAndSub.Publish<SkillBase>("QuickSlotRemove", Skill);
+            }
+
             UpdateInfo();
-        } }
+        } 
+    }
     [SerializeField] bool isActive = false;         //슬롯 활성화 및 비활성화 표시
     [SerializeField] Image _image;                  //스킬 이미지
     public Image Icon { get => _image; }            //외부 접근용 프로퍼티
@@ -99,11 +113,10 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
         
     }
     //정보 갱신용 함수 
-    protected virtual void UpdateInfo() {
+    public virtual void UpdateInfo() {
         
         isActive = CheckCondition();
         if (_skill == null) { return; }
-        _skill._level = _skillLevel;
     }
     //선행조건을 확인하고 달성시 스킬 활성화
     protected virtual bool CheckCondition() {
@@ -126,6 +139,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
 
     public void NullTarget()
     {
+        
         return;
     }
     //드래그 시작시 및 클릭시

@@ -51,16 +51,40 @@ public class SkillTree : ItemDragUI
     //데이터에서 스킬트리 프리팹의 경로를 받아 초기화
     public override void SetInfo(BaseUIData uiData)
     {
-        base.SetInfo(uiData);
-        if (uiData is SkillTreeData) {
-            
-            var tree = Managers.Resource.Instantiate("UI/"+(uiData as SkillTreeData).path, _scrollRect.content).GetComponent<RectTransform>(); 
+        //base.SetInfo(uiData);
+        //if (uiData is SkillTreeData) {
 
-            _scrollRect.content.sizeDelta = tree.sizeDelta;
-            tree.transform.localPosition = Vector3.zero;
-            _skillTreeItems = new List<SkillTreeItem>( _scrollRect.content.transform.GetComponentsInChildren<SkillTreeItem>());
-            foreach (var item in _skillTreeItems) {
-                item.Init(this);
+        //    var tree = Managers.Resource.Instantiate("UI/"+(uiData as SkillTreeData).path, _scrollRect.content).GetComponent<RectTransform>(); 
+
+        //    _scrollRect.content.sizeDelta = tree.sizeDelta;
+        //    tree.transform.localPosition = Vector3.zero;
+        //    _skillTreeItems = new List<SkillTreeItem>( _scrollRect.content.transform.GetComponentsInChildren<SkillTreeItem>());
+        //    foreach (var item in _skillTreeItems) {
+        //        item.Init(this);
+        //    }
+        //    UpdateInfo();
+        //}
+        base.SetInfo(uiData);
+        if (uiData is SkillTreeData)
+        {
+            if (_skillTreeItems.Count == 0) // 처음 생성할 때만 실행
+            {
+                var tree = Managers.Resource.Instantiate("UI/" + (uiData as SkillTreeData).path, _scrollRect.content).GetComponent<RectTransform>();
+                _scrollRect.content.sizeDelta = tree.sizeDelta;
+                tree.transform.localPosition = Vector3.zero;
+                _skillTreeItems = new List<SkillTreeItem>(_scrollRect.content.transform.GetComponentsInChildren<SkillTreeItem>());
+                foreach (var item in _skillTreeItems)
+                {
+                    item.Init(this);
+                }
+            }
+            else
+            {
+                // 기존 아이템 재사용, 필요한 경우 업데이트
+                foreach (var item in _skillTreeItems)
+                {
+                    item.UpdateInfo();
+                }
             }
             UpdateInfo();
         }
