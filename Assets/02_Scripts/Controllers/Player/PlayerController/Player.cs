@@ -475,6 +475,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
     {
         _playerStatManager.HP = _playerStatManager.MaxHP;
         _playerStatManager.MP = _playerStatManager.MaxMP;
+        ChangeState(PlayerState.Idle);
+        _playerAnim.Play("Idle");
     }
 
     public void PlayerEXPGain(int exp)

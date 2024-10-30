@@ -22,7 +22,7 @@ public class SkillTree : ItemDragUI
             _currentItem = value;
             UpdateInfo();
         } }
-    List<SkillTreeItem> _skillTreeItems = new List<SkillTreeItem>();//스킬들을 모아둔 리스트
+    public List<SkillTreeItem> _skillTreeItems = new List<SkillTreeItem>();//스킬들을 모아둔 리스트
     #region bind
     enum ScrollView {
         Skills
@@ -94,7 +94,7 @@ public class SkillTree : ItemDragUI
     {
         if (_skillTreeItems == null) return;
 
-        GetText((int)Texts.SkillTxt).text = _currentItem == null ? "": _currentItem.Skill.GetType().ToString();//우선 정보 대신 이름 표시 -> 추후 스킬설명으로 변경
+        GetText((int)Texts.SkillTxt).text = _currentItem == null ? "" : _currentItem.Skill._skillInfo;//GetType().ToString();//우선 정보 대신 이름 표시 -> 추후 스킬설명으로 변경
         if (_currentItem == null)
         {
             GetText((int)Texts.LevelTxt).gameObject.SetActive(false);
@@ -102,13 +102,15 @@ public class SkillTree : ItemDragUI
         else {
             GetText((int)Texts.LevelTxt).text = _currentItem.SkillLevel.ToString();
             GetText((int)Texts.LevelTxt).gameObject.SetActive(true);
-            GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0;
-            GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel;
+
+            int minLevel = _currentItem.GetMinLevel();
+            GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition() && _currentItem.SkillLevel > minLevel;
+            GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition();
         }
         
-        GetText((int)Texts.SpTxt).text = $"sp소모:{5}";
-
+        GetText((int)Texts.SpTxt).text = $"sp소모:{_currentItem.Skill._needSP}";
     }
+
     public override void CloseUI(bool isCloseAll = false)
     {
         base.CloseUI(isCloseAll);

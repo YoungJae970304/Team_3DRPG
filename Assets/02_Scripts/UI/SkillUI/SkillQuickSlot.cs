@@ -52,14 +52,19 @@ public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
         {
             SkillTreeItem skillTreeItem = moveSlot as SkillTreeItem;
             Skill = skillTreeItem.Skill;
-            
-            
+            _image.sprite = skillTreeItem.Icon.sprite; // 아이콘 업데이트
+            _image.enabled = true;  // 아이콘 활성화
+
             Logger.LogWarning(Skill.GetType().ToString());
         }
         else if (moveSlot is SkillQuickSlot) {
             SkillQuickSlot skillQuickSlot = moveSlot as SkillQuickSlot;
             SkillBase skill = _skill;
             Skill = skillQuickSlot._skill;
+
+            _image.sprite = skillQuickSlot._image.sprite; // 아이콘 업데이트
+            _image.enabled = true; // 아이콘 활성화
+
             skillQuickSlot.Skill = skill;
             Logger.LogWarning("14");
 

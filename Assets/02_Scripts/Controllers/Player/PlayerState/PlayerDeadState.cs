@@ -15,11 +15,12 @@ public class PlayerDeadState : BaseState
 
     public override void OnStateUpdate()
     {
-        Logger.Log("사망상태 Update");
+        
     }
 
     public override void OnStateExit()
     {
-        Logger.Log("사망상태 Exit");
+        _player._cc.enabled = true;
+        _player.enabled = true;
     }
 }
