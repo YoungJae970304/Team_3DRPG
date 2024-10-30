@@ -141,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -171889433, guid: a8a94878e234b7a4fb5b27d77d7c554c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -203,20 +203,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _conditions: []
-  _skill:
-    skillType: 1
-    _icon: {fileID: 0}
-    delay: 2
-    _level: 0
-  Mono: {fileID: 11500000, guid: 1503bcc81bfe17443a6fabe20a2e5dbb, type: 3}
+  _skillScript: {fileID: 0}
   _skillLevel: 0
+  _maxLevel: 5
+  _skillId: 0
   isActive: 1
   _image: {fileID: 4675607562349057577}
-  SkillName:
-    skillType: 0
-    _icon: {fileID: 0}
-    delay: 0
-    _level: 0
 --- !u!222 &7162461612123033401
 CanvasRenderer:
   m_ObjectHideFlags: 0
