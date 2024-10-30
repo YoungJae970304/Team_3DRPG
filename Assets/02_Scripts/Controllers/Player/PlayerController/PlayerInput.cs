@@ -179,11 +179,11 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.K))
         {
-            //임시
-            SkillTreeData skillTreeData = new SkillTreeData();
-            skillTreeData.path = "test";
-            //Managers.UI.OpenUI<SkillTree>(skillTreeData);
+            SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
             OpenPlayerUI<SkillTree>(skillTreeData);
+
+            //skillTreeData.path = "test";
+            //Managers.UI.OpenUI<SkillTree>(skillTreeData);
         }
         else if (Input.GetKeyDown(KeyCode.U))
         {

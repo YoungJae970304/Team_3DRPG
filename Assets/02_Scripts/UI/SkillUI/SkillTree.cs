@@ -7,7 +7,10 @@ using System;
 
 public class SkillTreeData : BaseUIData {
     public string path;
-
+    public SkillTreeData(Define.PlayerType playerType)
+    {
+        path = playerType == Define.PlayerType.Melee ? "MeleeSkillTree" : "MageSkillTree";
+    }
 }
 
 
