@@ -49,9 +49,6 @@ public class PlayerAttackWaitState : BaseState
             default:
                 break;
         }
-
-
-        
     }
 
     public override void OnStateExit()

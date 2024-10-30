@@ -79,7 +79,8 @@ public class ChainLightingEffect : MonoBehaviour
 
                 if (monstersCopy[i].TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    //damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    damageable.Damaged(Managers.Game._player._skillBase._damage);
                 }
             }
             yield return new WaitForSeconds(0.1f);

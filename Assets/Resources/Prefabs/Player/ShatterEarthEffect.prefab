@@ -4643,7 +4643,7 @@ GameObject:
   - component: {fileID: 199528594520767084}
   - component: {fileID: 5902172136691719807}
   m_Layer: 0
-  m_Name: MageSkill2
+  m_Name: ShatterEarthEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38331,12 +38331,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ae538169be45844bd84794f859b23a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerStart: {x: 0, y: 1, z: 1}
-  centerIncrement: {x: 0, y: 0, z: 1}
-  sizeStart: {x: 2, y: 4, z: 2}
-  sizeIncrement: {x: 0, y: 0, z: 2}
-  steps: 12
-  stepInterval: 0.1
+  _centerStart: {x: 0, y: 1, z: 1}
+  _centerIncrement: {x: 0, y: 0, z: 1}
+  _sizeStart: {x: 2, y: 4, z: 2}
+  _sizeIncrement: {x: 0, y: 0, z: 2}
+  _steps: 12
+  _stepInterval: 0.1
 --- !u!65 &1149987222832806721
 BoxCollider:
   m_ObjectHideFlags: 0

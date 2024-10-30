@@ -52,6 +52,11 @@ public class OptionUI : BaseUI
 
         ConfirmUIData.confirmAction = () =>
         {
+           for(int i = 0; i < Managers.Game._monsters.Count; i++)
+            {
+                Managers.Resource.Destroy(Managers.Game._monsters[i].gameObject);
+            }
+            
             Managers.Scene.SceneChange("main");
             Get<Button>((int)SelectButtons.GiveUp).interactable = false;
             CloseUI();

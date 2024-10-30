@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SkillData
 {
-    public enum SkillTypeE
+    public enum SkillTypes
     {
         Active = 1,
         Passive
     }
 
-    public enum StatTypeE
+    public enum StatTypes
     {
         None,
         HP,
@@ -23,8 +23,8 @@ public class SkillData
 
     public int ID;
     public string SkillName;
-    public SkillTypeE SkillType;
-    public StatTypeE StatType;
+    public SkillTypes SkillType;
+    public StatTypes StatType;
     //public int SkillType;
     //public int StatType;
     public int StatValue;

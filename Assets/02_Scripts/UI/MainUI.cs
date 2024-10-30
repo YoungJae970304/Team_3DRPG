@@ -44,8 +44,8 @@ public class MainUI : ItemDragUI
         base.Init(anchor);
         _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         Managers.Game._player.StatusEffect._iconTr = _icontr;
-        MaxHpChange(Managers.Game._player._playerStatManager.MaxHP);
         HpChanged(Managers.Game._player._playerStatManager.HP);
+        MpChanged(Managers.Game._player._playerStatManager.MP);
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
         {
             Get<QuickItemSlot>((int)quickItemSlot)._inventory = _inventory;
@@ -62,14 +62,10 @@ public class MainUI : ItemDragUI
     }
 
     private void HpChanged(int value) {
-        Get<Slider>((int)Sliders.HpBar).value = value;
+        Get<Slider>((int)Sliders.HpBar).value = (float)value / (float)Managers.Game._player._playerStatManager.MaxHP;
     }
     private void MpChanged(int value)
     {
-        Get<Slider>((int)Sliders.MpBar).value = value;
-    }
-    private void MaxHpChange(int value)
-    {
-        Get<Slider>((int)Sliders.HpBar).maxValue = value;
+        Get<Slider>((int)Sliders.MpBar).value = (float)value / (float)Managers.Game._player._playerStatManager.MaxMP;
     }
 }

@@ -34,6 +34,7 @@ public class PlayerAnimEvent : MonoBehaviour
     // 평타 애니메이션 시작부
     public void AttackStart()
     {
+        _player._playerAnim.SetBool("isAttacking", true);
         _player._canAtkInput = false;
         _player._attacking = true;
     }
@@ -88,7 +89,7 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         MagePlayer magePlayer = (MagePlayer)_player;
 
-        GameObject go = Managers.Resource.Instantiate("Player/MageSkill2");
+        GameObject go = Managers.Resource.Instantiate("Player/ShatterEarthEffect");
         go.transform.forward = magePlayer._playerModel.forward;
         go.transform.position = new Vector3(_player._playerModel.position.x, _player.transform.position.y, _player._playerModel.position.z);
         

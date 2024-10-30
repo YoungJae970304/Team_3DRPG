@@ -40,7 +40,8 @@ public class SwordAura : MonoBehaviour
                 // 데미지 적용
                 if (!Managers.Game._player._damageAlbes.Contains(damageAlbe))
                 {
-                    damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    //damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    damageAlbe.Damaged(Managers.Game._player._skillBase._damage);
                 }
                 // 콜라이더로 담을 때
                 Managers.Game._player._damageAlbes.Add(damageAlbe);

@@ -106,7 +106,7 @@ public class PlayerInput : MonoBehaviour
             // Queue에 Enqueue함으로써 선입력 처리
             InputBufferInsert(_player.AtkCount);
         }
-        else if (Input.GetMouseButtonDown(1) && !_player._attacking)
+        else if (Input.GetMouseButtonDown(1))
         {
             _player.Special();
         }
@@ -189,11 +189,11 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.K))
         {
-            //임시
-            SkillTreeData skillTreeData = new SkillTreeData();
-            skillTreeData.path = "test";
-            //Managers.UI.OpenUI<SkillTree>(skillTreeData);
+            SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
             OpenPlayerUI<SkillTree>(skillTreeData);
+
+            //skillTreeData.path = "test";
+            //Managers.UI.OpenUI<SkillTree>(skillTreeData);
         }
         else if (Input.GetKeyDown(KeyCode.U))
         {

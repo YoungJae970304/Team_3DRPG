@@ -49,11 +49,6 @@ public class Define
         Mage  // 원거리
     }
 
-    public enum SkillType { 
-        KeyDown,
-        Normal,
-    }
-
     public enum QuestType
     {
         Main,

@@ -3,17 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeSkill1 : SkillBase
+public class ThunderSlash : SkillBase
 {
-    public override SkillEnter Enter { get; set; } = new MeleeSkill1Enter();
-    public override SkillStay Stay { get; set; } = new MeleeSkill1Stay();
-    public override SkillExit Exit { get; set; } = new MeleeSkill1Exit();
-    public override SkillPassive Passive { get; set; } = new MeleeSkill1Passive();
+    //private const int SKILL_ID = 1;
+
+    public ThunderSlash(int skillId) : base (skillId)
+    {
+        Enter = new ThunderSlashEnter();
+        Stay = new ThunderSlashStay();
+        Exit = new ThunderSlashExit();
+        Passive = new NoneSkillPassive();
+    }
 }
 
-public class MeleeSkill1Enter : SkillEnter
+public class ThunderSlashEnter : SkillEnter
 {
-    public void Enter(ITotalStat stat, int level = 0)
+    public void Enter(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player.SetColActive("Skill1");
 
@@ -23,12 +28,12 @@ public class MeleeSkill1Enter : SkillEnter
     }
 }
 
-public class MeleeSkill1Stay : SkillStay
+public class ThunderSlashStay : SkillStay
 {
     Animator _anim = Managers.Game._player._playerAnim;
     bool _damageApply = false;
 
-    public void Stay(ITotalStat stat, int level = 0)
+    public void Stay(ITotalStat stat, SkillData skillData, int level = 0)
     {
         // 애니메이션 진행도 8&에서 30% 시점까지는 빠른 이동
         if (_anim.GetCurrentAnimatorStateInfo(0).IsName("Skill1"))
@@ -48,27 +53,19 @@ public class MeleeSkill1Stay : SkillStay
         }
     }
 
-    public void End(ITotalStat stat, int level = 0)
+    public void End(ITotalStat stat, SkillData skillData, int level = 0)
     {
         _damageApply = false;
     }
 }
 
-public class MeleeSkill1Exit : SkillExit
+public class ThunderSlashExit : SkillExit
 {
-    public void Exit(ITotalStat stat, int level = 0)
+    public void Exit(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player.SetColActive("Katana");
 
         // 증가된 속도 복구
         stat.MoveSpeed = -10;
-    }
-}
-
-public class MeleeSkill1Passive : SkillPassive
-{
-    public void Passive(ITotalStat stat, int level = 0)
-    {
-        stat.MaxHP = 50;
     }
 }
