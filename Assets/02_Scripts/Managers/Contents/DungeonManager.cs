@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.Linq;
-using UnityEngine.SceneManagement;
-using TMPro;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -34,17 +28,18 @@ public class DungeonManager : MonoBehaviour
     private void OnDisable()
     {
         _monsterCount = 0;
-        if (_bossSpawn.activeSelf)
+        if (_bossSpawn != null || _dungeonSpawn != null)
         {
-            _bossSpawn.SetActive(false);
-            _bossDungeonWall.SetActive(false);
+            if (_bossSpawn.activeSelf)
+            {
+                _bossSpawn.SetActive(false);
+                _bossDungeonWall.SetActive(false);
+            }
+            else if (_dungeonSpawn.activeSelf)
+            {
+                _dungeonSpawn.SetActive(false);
+            }
         }
-        else if (_dungeonSpawn.activeSelf)
-        {
-            _dungeonSpawn.SetActive(false);
-        }
-        
-        
     }
     private void Start()
     {
@@ -88,7 +83,7 @@ public class DungeonManager : MonoBehaviour
         {
             //던전 UI활성화
             InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
-            if(inDungeonUI != null)
+            if (inDungeonUI != null)
             {
                 Managers.UI.CloseUI(inDungeonUI);
             }
@@ -102,7 +97,7 @@ public class DungeonManager : MonoBehaviour
     }
     public void FalseDungeon()
     {
-        if(_monsterCount > 0 && _player._playerStatManager._originStat.HP <= 0 && _startCheck == true)
+        if (_monsterCount > 0 && _player._playerStatManager._originStat.HP <= 0 && _startCheck == true)
         {
             //던전 UI활성화
             InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
