@@ -182,11 +182,6 @@ public class InventorySaveData : IData
 
     static readonly string _SavePath = $"{Application.dataPath}/Data/InvenSaveData.Json";
 
-    public InventorySaveData(Inventory inventory)
-    {
-        _inventory = inventory;
-    }
-
     public bool SaveData()
     {
         try
