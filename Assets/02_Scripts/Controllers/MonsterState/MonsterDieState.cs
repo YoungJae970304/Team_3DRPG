@@ -27,10 +27,15 @@ public class MonsterDieState : BaseState
         Action invokeDie = async () =>
         {
             await Task.Delay(2000);
-            GameObject mob = _monster.gameObject;
-            _monster._nav.enabled = true;
-            _monster._anim.enabled = true;
-            _monster.Die(mob);
+            
+            if(_monster.gameObject != null)
+            {
+                GameObject mob = _monster.gameObject;
+                _monster._nav.enabled = true;
+                _monster._anim.enabled = true;
+                _monster.Die(mob);
+            }
+            
         };
         invokeDie.Invoke();
         // 영재 : 임시로 죽었을 때 게임매니저에서 제거하는 부분 추가
