@@ -45,14 +45,15 @@ public class Inventory : MonoBehaviour//인벤토리
     {
         Logger.Log(item.Data.Type.ToString());
         int result = ItemDick[item.Data.Type].Insert(item);
-        Managers.Data.SaveData<InventorySaveData>();
         GetItemAction?.Invoke();
+        Managers.Data.SaveData<InventorySaveData>();
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }
 
     public Item GetItem(int index, ItemData.ItemType type)//인덱스와 타입으로 아이템을 인벤토리에서 가져온다
     {
+        Managers.Data.SaveData<InventorySaveData>();
         return ItemDick[type].GetItem(index);
     }
     public Item Setitem(int index, Item item)//특정인덱스의 아이템에 특정아이템으로 변경한다
