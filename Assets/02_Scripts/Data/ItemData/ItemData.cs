@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.IO;
 
 [Serializable]
 public class ItemDataListWrapper
@@ -11,7 +10,7 @@ public class ItemDataListWrapper
 }
 
 [Serializable]
-public class ItemData : IData
+public class ItemData
 {
     //아이템이 공용으로 사용할 정보들
     [Serializable]
@@ -53,72 +52,4 @@ public class ItemData : IData
     [SerializeField] int _maxAmount = 99;
     //착용 가능 레벨
     [SerializeField] int _limitLevel;
-
-    //아이템 데이터 초기화
-    public void SetDefaultData()
-    {
-        ID = _id;
-        Name = _name;
-        Grade = _grade;
-        Type = _itemType;
-        BuyingPrice = _buyingPrice;
-        SellingPrice = _sellingPrice;
-        MaxAmount = _maxAmount;
-        LimitLevel = _limitLevel;
-    }
-
-    public bool SaveData()
-    {
-        Logger.Log($"{GetType()}::세이브 데이터");
-        bool result = false;
-        try
-        {
-            //string key = "ItemData_" + ID;
-            string itemDataJson = JsonUtility.ToJson(this);
-            string fileName = "Items";
-            string path = Application.dataPath + "/" + fileName + ".Json";
-            File.WriteAllText(path, itemDataJson);
-            Logger.Log(itemDataJson);
-            //PlayerPrefs.SetString(key, itemDataJson);
-            //PlayerPrefs.Save();
-            result = true;
-           
-        }catch(Exception e)
-        {
-            Logger.Log($"저장 실패(" + e.Message + ")");
-        }
-        return result;
-
-    }
-
-    public bool LoadData()
-    {
-        Logger.Log($"{GetType()}::로드 데이터");
-
-        bool result = false;
-        try
-        {
-            string key = "ItemData_" + ID;
-            if (PlayerPrefs.HasKey(key))
-            {
-                //JsonFile
-                string fileName = "Items";
-                string path = Application.dataPath + "/" + fileName + "itemDataJson";
-                string itemDataJson = File.ReadAllText(path);
-                //Player
-                //string itemDataJson = PlayerPrefs.GetString(key);
-                JsonUtility.FromJsonOverwrite(itemDataJson, this);
-                result = true;
-            }
-            else
-            {
-                Logger.LogWarning("저장된 데이터가 없음");
-            }
-        }
-        catch(Exception e)
-        {
-            Logger.Log("로드 실패(" + e.Message + ")");
-        }
-        return result;
-    }
 }
