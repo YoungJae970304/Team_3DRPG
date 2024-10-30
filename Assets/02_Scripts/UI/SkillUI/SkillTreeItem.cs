@@ -27,6 +27,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
             _skillLevel = value;
             //Skill._level = value;   // 이곳에서 해당 스킬의 현재 레벨도 적용을 시켜주네
             Skill._level = _skillLevel;
+            UpdateInfo();
         } }
     [SerializeField] bool isActive = false;         //슬롯 활성화 및 비활성화 표시
     [SerializeField] Image _image;                  //스킬 이미지
@@ -106,7 +107,6 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     }
     //선행조건을 확인하고 달성시 스킬 활성화
     protected virtual bool CheckCondition() {
-        //if (_skillType == SkillData.SkillTypes.Passive) { return false; }
         if (_conditions.Count == 0) {
             Logger.LogWarning("조건없음");
             return true; 
@@ -132,7 +132,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     public bool DragEnter(Image icon)
     {
         _skillTree.CurrentItem = this;
-        if (!isActive || _skillTree.CurrentItem.Skill._skillType == SkillData.SkillTypes.Passive ) { return false; }
+        if ( !isActive || _skillTree.CurrentItem.Skill._skillType == SkillData.SkillTypes.Passive || SkillLevel == 0 ) { return false; }
 
         _parent.enabled = false;
         icon.enabled = true;                        //마우스 따라다닐 이미지

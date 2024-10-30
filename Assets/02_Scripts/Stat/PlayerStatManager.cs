@@ -21,8 +21,8 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
 
     public int Level { get {  return Mathf.Max(0, _originStat.Level); } set { _originStat.Level = value; PubAndSub.Publish<int>("Level", value); } }
 
-    public int HP { get { return Mathf.Max(0, _originStat.HP); } set { _originStat.HP = value; PubAndSub.Publish<int>("HP", value); } }
-    public int MP { get { return Mathf.Max(0, _originStat.MP); } set { _originStat.MP = value; PubAndSub.Publish<int>("MP", value); } }
+    public int HP { get { return Mathf.Max(0, _originStat.HP); } set { _originStat.HP = value; PubAndSub.Publish<int>("HP", HP); } }
+    public int MP { get { return Mathf.Max(0, _originStat.MP); } set { _originStat.MP = value; PubAndSub.Publish<int>("MP", MP); } }
     public int EXP { get { return Mathf.Max(0, _originStat.EXP); } set { _originStat.EXP = value; PubAndSub.Publish<int>("EXP", value); } }
     public int MaxEXP { get { return Mathf.Max(0, _originStat.MaxEXP); } set { _originStat.MaxEXP = value; PubAndSub.Publish<int>("MaxEXP", value); } }
 
@@ -35,7 +35,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
     #region 합산 프로퍼티 설정시 그 값만큼 버프수치가 증가
     // 읽기 전용, 합산 프로퍼티들
     //public int MaxHP { get { return (int)(Mathf.Max(0, _originStat.MaxHP + _equipStat.MaxHP + _buffStat.MaxHP)*1.1f); } set { _buffStat.MaxHP += value; } }
-    public int MaxHP { get { return Mathf.Max(0, _originStat.MaxHP + _equipStat.MaxHP + _buffStat.MaxHP); } set { _buffStat.MaxHP += value; } }
+    public int MaxHP { get { return Mathf.Max(0, _originStat.MaxHP + _equipStat.MaxHP + _buffStat.MaxHP); } set { _buffStat.MaxHP += value; PubAndSub.Publish<int>("HP", HP); } }
 
     public int ATK { get { return Mathf.Max(0, _originStat.ATK + _equipStat.ATK + _buffStat.ATK); } set { _buffStat.ATK += value; } }
 
@@ -45,7 +45,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
 
     public int RecoveryHP { get { return Mathf.Max(0, _originStat.RecoveryHP + _equipStat.RecoveryHP + _buffStat.RecoveryHP); } set { _buffStat.RecoveryHP += value; } }
 
-    public int MaxMP { get { return Mathf.Max(0, _originStat.MaxMP + _equipStat.MaxMP + _buffStat.MaxMP); } set { _buffStat.MaxMP += value; } }
+    public int MaxMP { get { return Mathf.Max(0, _originStat.MaxMP + _equipStat.MaxMP + _buffStat.MaxMP); } set { _buffStat.MaxMP += value; PubAndSub.Publish<int>("MP", MP); } }
 
     public int RecoveryMP { get { return Mathf.Max(0, _originStat.RecoveryMP + _equipStat.RecoveryMP + _buffStat.RecoveryMP); } set { _buffStat.RecoveryMP += value; } }
 
