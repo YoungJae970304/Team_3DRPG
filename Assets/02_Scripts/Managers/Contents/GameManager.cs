@@ -44,14 +44,23 @@ public class GameManager
     {
 
         Managers.Resource.Instantiate("Player/VirtualCameras");
+        PlayerSaveData playerSave = new PlayerSaveData();
 
         switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
                 GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
+                if(meleePlayer != null)
+                {
+                    playerSave.SaveData();
+                }
                 break;
             case Define.PlayerType.Mage:
                 GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
+                if(magePlayer != null)
+                {
+                    playerSave.SaveData();
+                }
                 break;
             default:
                 Logger.LogError("생성할 플레이어가 없습니다.");

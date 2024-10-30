@@ -11,9 +11,12 @@ public interface ILoader<Key, Value>
 public class DataManager
 {
     public Dictionary<int, Data.Stat> StatDict {  get; private set; } = new Dictionary<int, Data.Stat>();
+
     public void Init()
     {
-        // JsonÀ» »ç¿ëÇÏ±â À§ÇÑ Å¸ÀÔÀº TextAsset
+        //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
+        InitializeGameState();
+        // Jsonì„ ì‚¬ìš©í•˜ê¸° ìœ„í•œ íƒ€ì…ì€ TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
         //StatData data = JsonUtility.FromJson<StatData>(textAsset.text);
 
@@ -26,6 +29,14 @@ public class DataManager
         }
         */
     }
+
+    void InitializeGameState()
+    {
+        SaveDatas saveDatas = new SaveDatas();
+        Logger.Log("ì²˜ìŒ ì‹œì‘ ë°ì´í„° ì €ì¥");
+        saveDatas.SaveData();
+    }
+
 
     Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
     {

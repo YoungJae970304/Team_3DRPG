@@ -6,11 +6,15 @@ using UnityEngine;
 namespace Data
 {
     #region Stat
-    [Serializable]  // ¸Ş¸ğ¸®¿¡¼­ µé°í ÀÖ´Â °ÍÀ» ÆÄÀÏ·Î º¯È¯ÇÒ ¼ö ÀÖ´Ù´Â ÀÇ¹Ì
+    [Serializable]  // ë©”ëª¨ë¦¬ì—ì„œ ë“¤ê³  ìˆëŠ” ê²ƒì„ íŒŒì¼ë¡œ ë³€í™˜í•  ìˆ˜ ìˆë‹¤ëŠ” ì˜ë¯¸
     public class Stat
     {
-        // Json¿¡¼­ ¾²°íÀÖ´Â ¼ø¼­ ±×´ë·Î Àû¾îÁà¾ß ÇÔ
-        public int level;
+        // Jsonì—ì„œ ì“°ê³ ìˆëŠ” ìˆœì„œ ê·¸ëŒ€ë¡œ ì ì–´ì¤˜ì•¼ í•¨
+        public int _level;
+        public int _exp;
+        public int _maxExp;
+        public int _sp;
+        public int _gold;
     }
 
     [Serializable]
@@ -18,14 +22,14 @@ namespace Data
     {
         public List<Stat> stats = new List<Stat>();
 
-        // º¯È¯ÇÏ´Â ÀÛ¾÷
+        // ë³€í™˜í•˜ëŠ” ì‘ì—…
         public Dictionary<int, Stat> MakeDict()
         {
             Dictionary<int, Stat> dict = new Dictionary<int, Stat>();
 
             foreach (Stat stat in stats)
             {
-                dict.Add(stat.level, stat);
+                dict.Add(stat._level, stat);
             }
 
             return dict;

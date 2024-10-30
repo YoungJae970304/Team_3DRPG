@@ -68,12 +68,7 @@ public class Item
         // var getPlayerType = Managers.Game._playerType.GetType();
         switch (Data.Type)
         {
-            case ItemData.ItemType.Potion:
-            case ItemData.ItemType.Booty:
-                Logger.Log("스위치문 진입 확인");
-                iconPath = $"ItemIcon/EtcIcon/{Data.ID}";
-                break;
-            default:
+            case ItemData.ItemType.Weapon:
                 if (Managers.Game._playerType == PlayerType.Melee)
                 {
                     Logger.LogWarning("현재 타입 확인" + Data.Type);
@@ -84,41 +79,15 @@ public class Item
                     iconPath = $"ItemIcon/MageIcon/{Data.ID}";
                 }
                 break;
-
-            //case ItemData.ItemType.Weapon:
-            //case ItemData.ItemType.Armor:
-            //case ItemData.ItemType.Accessories:
-            //    if (Managers.Game._playerType == PlayerType.Melee)
-            //    {
-            //        Logger.LogWarning("현재 타입 확인");
-            //        iconPath = "ItemIcon/MeleeIcon" + Data.ID.ToString();
-            //    }
-            //    else if (Managers.Game._playerType == PlayerType.Mage)
-            //    {
-            //        iconPath = "ItemIcon/MageIcon" + Data.ID.ToString();
-            //    }
-            //    if (getPlayerType == typeof(MeleePlayer))
-            //    {
-            //        Logger.LogWarning($"현재 {getPlayerType} 타입 입니다.");
-            //        iconPath = "ItemIcon/MeleeIcon" + Data.ID;
-            //    }
-            //    else if (getPlayerType == typeof(MagePlayer))
-            //    {
-            //        Logger.LogWarning($"현재 {getPlayerType} 타입 입니다.");
-            //        iconPath = "ItemIcon/MageIcon" + Data.ID;
-            //    }
-            //    break;
-            //default:
-            //    //그외 나머지 것들 로드
-            //    iconPath = "ItemIcon/EtcIcon" + Data.ID.ToString();
-            //    break;
+            default:
+                iconPath = $"ItemIcon/EtcIcon/{Data.ID}";
+                break;
         }
-
-        Sprite icon = Managers.Resource.Load<Sprite>(iconPath);
-
+        Sprite icon = Resources.Load<Sprite>(iconPath);
+        Logger.Log($"{iconPath} 불러옴");
         if (icon == null)
         {
-            Logger.LogError($"icon 로드 실패: {iconPath}");
+            Logger.LogError($"icon 로드 실패 : {iconPath}");
             return null;
         }
 

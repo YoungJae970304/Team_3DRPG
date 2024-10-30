@@ -141,11 +141,21 @@ public class PlayerInput : MonoBehaviour
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.Level}");
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.SpAddAmount}");
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.MaxEXP}");
+            
         }
         else if (Input.GetKeyDown(KeyCode.V))
         {
             _player._playerStatManager.EXP += 100;
             _player._playerStatManager.Gold += 100000;
+            PlayerSaveData playerSave = new PlayerSaveData();
+            if (playerSave.SaveData())
+            {
+                Logger.Log($"데이터 저장{_player._playerStatManager.EXP}{_player._playerStatManager.Gold}");
+            }
+            else
+            {
+                Logger.LogError("데이터 저장을 할 수가 없습니다");
+            }
         }
     }
          

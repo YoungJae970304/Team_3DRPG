@@ -23,9 +23,9 @@ public class QuestData : IData
     public int RewardValue1;
     public int RewardValue2;
     public int RewardValue3;
-    public RewardType ValType1;
-    public RewardType ValType2;
-    public RewardType ValType3;
+    public RewardType RewardType1;
+    public RewardType RewardType2;
+    public RewardType RewardType3;
 
     //퀘스트 아이디
    [SerializeField] int _id;
@@ -45,7 +45,7 @@ public class QuestData : IData
     [SerializeField] int _rewardValue1;
     [SerializeField] int _rewardValue2;
     [SerializeField] int _rewardValue3;
-    //리워드 밸류타입
+    //리워드 밸류타입(1 = 골드)
     [SerializeField] RewardType _rewardType1;
     [SerializeField] RewardType _rewardType2;
     [SerializeField] RewardType _rewardType3;
@@ -54,14 +54,12 @@ public class QuestData : IData
     [Serializable]
     public enum RewardType
     {
-        //장비 1번중 선택
-        Equipped = 1,
-        //포션
-        Potion,
         //골드
-        Gold,
+        Gold = 1,
         //경험치
         Exp,
+        //포션
+        Potion,
     }
 
     public void SetDefaultData()
@@ -76,9 +74,9 @@ public class QuestData : IData
         RewardValue1 = _rewardValue1;
         RewardValue2 = _rewardValue2;
         RewardValue3 = _rewardValue3;
-        ValType1 = _rewardType1;
-        ValType2 = _rewardType2;
-        ValType3 = _rewardType3;
+        RewardType1 = _rewardType1;
+        RewardType2 = _rewardType2;
+        RewardType3 = _rewardType3;
     }
 
     public bool SaveData()
