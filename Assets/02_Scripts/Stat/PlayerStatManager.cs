@@ -34,7 +34,8 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
 
     #region 합산 프로퍼티 설정시 그 값만큼 버프수치가 증가
     // 읽기 전용, 합산 프로퍼티들
-    public int MaxHP { get { return (int)(Mathf.Max(0, _originStat.MaxHP + _equipStat.MaxHP + _buffStat.MaxHP)*1.1f); } set { _buffStat.MaxHP += value; } }
+    //public int MaxHP { get { return (int)(Mathf.Max(0, _originStat.MaxHP + _equipStat.MaxHP + _buffStat.MaxHP)*1.1f); } set { _buffStat.MaxHP += value; } }
+    public int MaxHP { get { return Mathf.Max(0, _originStat.MaxHP + _equipStat.MaxHP + _buffStat.MaxHP); } set { _buffStat.MaxHP += value; } }
 
     public int ATK { get { return Mathf.Max(0, _originStat.ATK + _equipStat.ATK + _buffStat.ATK); } set { _buffStat.ATK += value; } }
 

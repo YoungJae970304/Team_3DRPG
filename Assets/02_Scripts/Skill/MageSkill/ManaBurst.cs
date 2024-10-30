@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ManaBurst : SkillBase
 {
-    private const int SKILL_ID = 10;
+    //private const int SKILL_ID = 10;
 
-    public ManaBurst() : base(SKILL_ID)
+    public ManaBurst(int skillId) : base(skillId)
     {
         Enter = new ManaBurstEnter();
         Stay = new ManaBurstStay();
@@ -20,8 +20,6 @@ public class ManaBurstEnter : SkillEnter
     public void Enter(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player._playerAnim.Play("Skill1");
-
-        stat.ATK = 10;
     }
 }
 
@@ -62,6 +60,5 @@ public class ManaBurstExit : SkillExit
     public void Exit(ITotalStat stat, SkillData skillData, int level = 0)
     {
         // 증가된 공격력 복구
-        stat.ATK = -10;
     }
 }

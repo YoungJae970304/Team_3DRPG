@@ -39,6 +39,8 @@ public class SkillBase//전략 패턴 사용
 
     public int _damage;
 
+    public int _prevLevel;
+
     // 플레이어의 공격력 스탯이 오를때, 스킬의 레벨이 오를때마다 호출 -> 하는줄 알았으니 그냥 이곳 Enter에서 데미지를 미리 계산하면 그럴 필요가 없어짐
     public void UpdateSkill(ITotalStat stat)
     {
@@ -71,7 +73,7 @@ public class SkillBase//전략 패턴 사용
     }//스킬 시전종료시
 
     public virtual void PassiveEffect(ITotalStat stat) {
-        Passive.Passive(stat, _skillData, _level);
+        Passive.Passive(stat, _skillData, _level, _prevLevel);
     }//패시브 효과
 }
 
@@ -94,6 +96,6 @@ namespace SkillModule {//전략
     public interface SkillPassive
     {
         // 여긴 StatType, StatValue 매개변수 추가, 패시브는 switch문으로 statType을 받게? 그럼 하나로 다 관리 가능?
-        public void Passive(ITotalStat stat, SkillData skillData, int level = 0);
+        public void Passive(ITotalStat stat, SkillData skillData, int curLevel, int prevLevel);
     }
 }

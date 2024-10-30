@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class DrawSword : SkillBase
 {
-    private const int SKILL_ID = 2;
+    //private const int SKILL_ID = 2;
 
-    public DrawSword() : base(SKILL_ID)
+    public DrawSword(int skillId) : base(skillId)
     {
         Enter = new DrawSwordEnter();
         Stay = new DrawSwordStay();

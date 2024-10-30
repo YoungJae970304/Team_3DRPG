@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class SwordBurst : SkillBase
 {
-    private const int SKILL_ID = 3;
+    //private const int SKILL_ID = 3;
 
-    public SwordBurst() : base(SKILL_ID)
+    public SwordBurst(int skillId) : base(skillId)
     {
         Enter = new SwordBurstEnter();
         Stay = new SwordBurstStay();

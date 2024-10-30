@@ -21,8 +21,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     public SkillBase Skill { get => _skill; }//프로퍼티
     [SerializeField] int _skillLevel = 0;   //스킬의 레벨
     [SerializeField] public int _maxLevel = 5;//최대레벨
-    [SerializeField] SkillData.SkillTypes _skillType;
-    [SerializeField] SkillData.StatTypes _statType;
+    [SerializeField] int _skillId;
     public int SkillLevel { get => _skillLevel;set {//최대 레벨 제한이걸린 스킬 레펠 프로퍼티
             if (Skill == null|| value> _maxLevel) { return; }
             _skillLevel = value;
@@ -35,24 +34,54 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     //스크립트 타입으로 새로운 클래스 생성해서 스킬에 할당하는 함수
     internal bool SetSkill(MonoScript skillScript)
     {
+        //_skillScript = skillScript;
+        //if (_skill != null&& _skillScript.GetClass() == _skill.GetType()) { return false; }//이전과 같으면 무시
+        //var typecClass = Activator.CreateInstance(_skillScript.GetClass());
+        //if (typecClass is SkillBase)
+        //{ 
+        //    _skill = typecClass as SkillBase;
+        //    if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+        //    _maxLevel = _skill._maxLevel;
+        //    return true;
+        //}
+        //else {
+        //    _skillScript = null;
+        //    Logger.LogError("Type ERROR");
+        //    gameObject.SetActive(false);
+        //    return false;
+        //}
+
         _skillScript = skillScript;
-        if (_skill != null&& _skillScript.GetClass() == _skill.GetType()) { return false; }//이전과 같으면 무시
-        _skill._skillType = _skillType;
-        _skill._statType = _statType;
-        var typecClass = Activator.CreateInstance(_skillScript.GetClass());
-        if (typecClass is SkillBase)
-        { 
-            _skill = typecClass as SkillBase;
-            if (!gameObject.activeSelf) { gameObject.SetActive(true); }
-            _maxLevel = _skill._maxLevel;
-            return true;
+        if (_skill != null && _skillScript.GetClass() == _skill.GetType()) { return false; }
+
+        SkillData skillData = Managers.DataTable.GetSkillData(_skillId);
+        if (skillData != null)
+        {
+            if (skillData.SkillType == SkillData.SkillTypes.Passive)
+            {
+                _skill = new PassiveSkill(_skillId);
+            }
+            else
+            {
+                Type skillType = _skillScript.GetClass();
+                if (typeof(SkillBase).IsAssignableFrom(skillType))
+                {
+                    _skill = Activator.CreateInstance(skillType, _skillId) as SkillBase;
+                }
+            }
+
+            if (_skill != null)
+            {
+                if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+                _maxLevel = skillData.MaxLevel;
+                return true;
+            }
         }
-        else {
-            _skillScript = null;
-            Logger.LogError("Type ERROR");
-            gameObject.SetActive(false);
-            return false;
-        }
+
+        _skillScript = null;
+        Logger.LogError("Skill creation failed");
+        gameObject.SetActive(false);
+        return false;
 
     }
 
@@ -103,7 +132,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     public bool DragEnter(Image icon)
     {
         _skillTree.CurrentItem = this;
-        if (!isActive) { return false; }
+        if (!isActive || _skillTree.CurrentItem.Skill._skillType == SkillData.SkillTypes.Passive ) { return false; }
 
         _parent.enabled = false;
         icon.enabled = true;                        //마우스 따라다닐 이미지

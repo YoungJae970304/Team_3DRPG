@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ThunderSlash : SkillBase
 {
-    private const int SKILL_ID = 1;
+    //private const int SKILL_ID = 1;
 
-    public ThunderSlash() : base (SKILL_ID)
+    public ThunderSlash(int skillId) : base (skillId)
     {
         Enter = new ThunderSlashEnter();
         Stay = new ThunderSlashStay();

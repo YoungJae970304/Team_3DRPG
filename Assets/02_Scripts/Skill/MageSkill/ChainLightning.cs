@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ChainLightning : SkillBase
 {
-    private const int SKILL_ID = 12;
+    //private const int SKILL_ID = 12;
 
-    public ChainLightning() : base(SKILL_ID)
+    public ChainLightning(int skillId) : base(skillId)
     {
         Enter = new ChainLightningEnter();
         Stay = new ChainLightningStay();

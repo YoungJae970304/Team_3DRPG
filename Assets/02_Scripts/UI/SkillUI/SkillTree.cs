@@ -20,7 +20,7 @@ public class SkillTree : ItemDragUI
             UpdateInfo();
         } }
     List<SkillTreeItem> _skillTreeItems = new List<SkillTreeItem>();//스킬들을 모아둔 리스트
-#region bind
+    #region bind
     enum ScrollView {
         Skills
     }
@@ -93,8 +93,11 @@ public class SkillTree : ItemDragUI
         if (_currentItem == null) { return; }
         if (SpCheck())
         {
+            Logger.LogError($"플러스 진입 확인 : {_currentItem.Skill._skillName}");
             //sp 수치 감소 처리 필요
+            _currentItem.Skill._prevLevel = _currentItem.SkillLevel;
             _currentItem.SkillLevel += 1;
+            _currentItem.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
             UpdateInfo();
         }
         
@@ -104,7 +107,10 @@ public class SkillTree : ItemDragUI
     {
         if (_currentItem == null) { return; }
         if (_currentItem.SkillLevel > 0) {
+            Logger.LogError($"마이너스 진입 확인:{_currentItem.Skill._skillName}");
+            _currentItem.Skill._prevLevel = _currentItem.SkillLevel;
             _currentItem.SkillLevel -= 1;
+            _currentItem.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
             //sp 수치 증가 처리 필요
             UpdateInfo();
         }

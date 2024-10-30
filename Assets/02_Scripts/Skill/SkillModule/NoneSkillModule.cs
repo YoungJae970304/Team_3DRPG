@@ -27,10 +27,11 @@ public class NoneSkillExit : SkillExit
     {
     }
 }
-public class NoneSkillPassive :SkillPassive
+public class NoneSkillPassive : SkillPassive
 {
-    public void Passive(ITotalStat stat, SkillData skillData, int level = 0)
+    public void Passive(ITotalStat stat, SkillData skillData, int curLevel, int prevLevel)
     {
+        
     }
 }
 

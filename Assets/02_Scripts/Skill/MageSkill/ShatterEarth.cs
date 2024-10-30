@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ShatterEarth: SkillBase
 {
-    private const int SKILL_ID = 11;
-    public ShatterEarth() : base(SKILL_ID)
+    //private const int SKILL_ID = 11;
+    public ShatterEarth(int skillId) : base(skillId)
     {
         Enter = new ShatterEarthEnter();
         Stay = new ShatterEarthStay();
