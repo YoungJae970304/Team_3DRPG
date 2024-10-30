@@ -34,6 +34,12 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
             if (Skill == null|| value> _maxLevel) { return; }
             _skillLevel = value;
             Skill._level = _skillLevel;
+
+            if (_skillLevel == 0)
+            {
+                PubAndSub.Publish<SkillBase>("QuickSlotRemove", Skill);
+            }
+
             UpdateInfo();
         } 
     }

@@ -13,6 +13,7 @@ public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
         } }
     private void Awake()
     {
+        PubAndSub.Subscrib<SkillBase>("QuickSlotRemove", RemoveQuickSlot);
         UpdateInfo();
     }
     public void UpdateInfo()
@@ -71,5 +72,12 @@ public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
         Skill = null;
     }
 
-   
+    private void RemoveQuickSlot(SkillBase skill)
+    {
+        if (this.Skill == skill)
+        {
+            NullTarget();
+        }
+    }
+
 }
