@@ -1812,7 +1812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8030996563880477406}
   - component: {fileID: 495533967385241586}
-  m_Layer: 10
+  m_Layer: 14
   m_Name: MonsterIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25075,10 +25075,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed7a4ce6c8a3c04987d054091651e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _UIOpenAnimation: {fileID: 0}
-  _topBarImage: {fileID: 0}
-  _exitBtn: {fileID: 0}
-  _isSort: 1
 --- !u!1 &3122047001058399747
 GameObject:
   m_ObjectHideFlags: 0
