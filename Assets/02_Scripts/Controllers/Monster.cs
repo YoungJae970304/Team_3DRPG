@@ -101,6 +101,18 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
     }
     public virtual void Init()
     {
+        _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
+        //_anim = GetComponent<Animator>();
+        _anim = GetComponentInChildren<Animator>();
+        _characterController = GetComponent<CharacterController>();
+        //_characterController.enabled = false;
+        _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
+        if (GetComponentInChildren<EnemyEffect>() != null)
+        {
+            Logger.LogError("이팩트저장됨");
+            _enemyEffect = GetComponentInChildren<EnemyEffect>();
+        }
+        _deongeonLevel = Managers.Game._selecDungeonLevel;
         _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
         _mStat._buffStat = new MonsterStat();

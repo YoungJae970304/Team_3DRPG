@@ -13,6 +13,10 @@ public class Goblem : Monster
         base.Start();
         
     }
+    public override void OnEnable()
+    {
+        Init();
+    }
     public override void Init()
     {
         base.Init();

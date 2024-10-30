@@ -4,10 +4,11 @@ public class Slime : Monster
 {
 
     public int _slimeID;
-    public override void Start()
+ 
+    public override void OnEnable()
     {
-        base.Start();
-        
+       
+        Init();
     }
     public override void Init()
     {
