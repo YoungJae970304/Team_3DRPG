@@ -22,6 +22,7 @@ public class QuestManager
     public Action _completeCheck;
     DataTableManager _dataTableManager;
     public Define.QuestInput _questInput;
+    public int test123;
     public void Init()
     {
         _dataTableManager = Managers.DataTable;
@@ -36,12 +37,13 @@ public class QuestManager
     public void LevelCountPlus()
     {
         _currPlayerLevel++;
-        for (int i = _questID[0]; i < _questID.Count; i++)
+        for (int i = _questID[0]; i <= _questID[_questID.Count-1]; i++)
         {
-            if(_questList[i] <= _currPlayerLevel)
+            if (_questList[i] <= _currPlayerLevel)
             {
-                _activeQuest.Add(_questID[i]);
-                Managers.UI.Init();
+                _activeQuest.Add(i);
+                //Managers.UI.Init();
+   
             }
         }
     }

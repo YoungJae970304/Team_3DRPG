@@ -9,10 +9,6 @@ public class DialogUIQuest : DialogUI
     bool _isRefuse = false;
     bool _isDone = false;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
     protected override void OnClickedButton()
     {
@@ -85,6 +81,8 @@ public class DialogUIQuest : DialogUI
     //수락 버튼 눌렀을 때 퀘스트 창이 켜지는게아니라 퀘스트창 안에 리스트버튼이 생성
     public void AcceptQuest()
     {
-
+        Managers.QuestManager._questInput = Define.QuestInput.Dialog;
+        UITypeOpen<QuestUI>();
+        
     }
 }

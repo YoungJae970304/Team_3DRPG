@@ -23,6 +23,7 @@ public class MonsterDieState : BaseState
         _monster._monsterDrop.DropItemSelect(_monster._deongeonLevel, _monster.sample);//임시 설정 추후 던전에서 받아오도록 변경
         _monster.MakeItem();
         _monster._dieMonster?.Invoke();
+        QuestCheck();
         //_monster.StartCoroutine(IvokeDie());
         Action invokeDie = async () =>
         {
@@ -47,7 +48,7 @@ public class MonsterDieState : BaseState
         {
             if(Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]] == _monster._monsterID)
             {
-                PubAndSub.Publish<int>($"{Managers.QuestManager._progressQuest[i].ToString()}", Managers.QuestManager._progressQuest[i]);
+                PubAndSub.Publish<int>($"{Managers.QuestManager._progressQuest[i]}", Managers.QuestManager._progressQuest[i]);
             }
         }
     }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,21 +14,19 @@ public class QuestUI : BaseUI
         QuestName,
         QuestInfo,
         TargetCount,
-        Count,
     }
     enum RewardImage
     {
         ItemReward,
         GoldReward,
         ExpReward,
-        Count,
     }
     enum Buttons
     {
         AllowBtn,
         GiveupBtn,
         CompleteBtn,
-        ExitBtn,
+        //ExitBtn,
 
     }
     #region 데이터받아올변수
@@ -53,6 +53,7 @@ public class QuestUI : BaseUI
     public Dictionary<string, int> _buttonType = new Dictionary<string, int>();
     public Dictionary<int, int> _completeCheck = new Dictionary<int, int>();
     public Dictionary<int, bool> _questComplete = new Dictionary<int, bool>();
+    public Dictionary<int, GameObject> _getButtons = new Dictionary<int, GameObject>();
     public GameObject _questView;
     GameObject _simpleQuestUI;
     GameObject _simpleText;
@@ -63,12 +64,14 @@ public class QuestUI : BaseUI
         _questInput = Managers.QuestManager._questInput;
         _dataTableManager = Managers.DataTable;
         _activeObject = false;
+        Bind<TextMeshProUGUI>(typeof(NowQuestText));
+        Bind<Image>(typeof(RewardImage));
+        Bind<Button>(typeof(Buttons));
         AddList();
         ButtonSet();
-
-        MakeButton();
-
-        GetButton((int)Buttons.ExitBtn).onClick.AddListener(() => CloseUI());
+        MakeButton(_questInput);
+        
+        //GetButton((int)Buttons.ExitBtn).onClick.AddListener(() => CloseUI());
         GetButton((int)Buttons.AllowBtn).onClick.AddListener(() => AllowQuest());
         GetButton((int)Buttons.GiveupBtn).onClick.AddListener(() => GiveUpQuest());
 
@@ -77,9 +80,7 @@ public class QuestUI : BaseUI
     public override void SetInfo(BaseUIData uiData)
     {
         base.SetInfo(uiData);
-        Bind<TextMeshProUGUI>(typeof(NowQuestText));
-        Bind<Image>(typeof(RewardImage));
-        Bind<Button>(typeof(Buttons));
+        
 
         //이미지 바꿀 함수 //완
     }
@@ -101,18 +102,18 @@ public class QuestUI : BaseUI
         _uiButtons.Add(GetButton((int)Buttons.AllowBtn).gameObject);
         _uiButtons.Add(GetButton((int)Buttons.GiveupBtn).gameObject);
         _uiButtons.Add(GetButton((int)Buttons.CompleteBtn).gameObject);
-        for (int i = 0; i < _uiButtons.Count - 1; i++)
+        for (int i = 0; i < _uiButtons.Count; i++)
         {
             _uiButtons[i].SetActive(false);
         }
     }
     public void AddList()
     {
-        for (int i = 0; i < (int)NowQuestText.Count; i++)
+        for (int i = 0; i <= (int)NowQuestText.TargetCount; i++)
         {
             _questObject.Add(Get<TextMeshProUGUI>(i).gameObject);
         }
-        for (int i = 0; i < (int)RewardImage.Count; i++)
+        for (int i = 0; i <= (int)RewardImage.ExpReward; i++)
         {
             _questObject.Add(Get<Image>(i).gameObject);
         }
@@ -121,40 +122,51 @@ public class QuestUI : BaseUI
             _questObject[i].SetActive(false);
         }
     }
-    public void MakeButton()
+    public void MakeButton(Define.QuestInput input)
     {
-        switch (_questInput)
+        input = _questInput;
+        switch (input)
         {
             case Define.QuestInput.Q:
                 StartCoroutine(OpenProgressQuest());
 
                 break;
             case Define.QuestInput.Dialog:
+        
                 StartCoroutine(OpenPossibleQuest());
                 break;
         }
     }
     public IEnumerator OpenPossibleQuest()
     {
+       
         GameObject possibleQuest;
+        _questButtons.Clear();
+        //Logger.LogError($"{Managers.QuestManager._activeQuest.Count}몇이니");
         for (int i = 0; i < Managers.QuestManager._activeQuest.Count; i++)
         {
+            if(_buttonType.ContainsKey(Managers.QuestManager._activeQuest[i].ToString()))
+            {
+                break;
+            }
             possibleQuest = Managers.Resource.Instantiate("UI/QuestListBtn", _questView.transform);
-            //버튼을 미리 생성시킨걸 로드하는 방식이 날듯?
-            possibleQuest.GetOrAddComponent<QuestButton>();
+            possibleQuest.GetOrAddComponent<QuestButton>()._questID = Managers.QuestManager._activeQuest[i];
             possibleQuest.GetOrAddComponent<Poolable>();
             possibleQuest.name = Managers.QuestManager._activeQuest[i].ToString();
             _buttonType.Add(possibleQuest.name, Managers.QuestManager._activeQuest[i]);
             _questButtons.Add(possibleQuest);
+            _getButtons.Add(Managers.QuestManager._activeQuest[i], possibleQuest);
         }
         yield return new WaitForSeconds(0.5f);
-        OpenPossibleQuestBtnBind();
+        OpenPossibleQuestBtnListner();
+        yield return null;
     }
-    public void OpenPossibleQuestBtnBind()
+    public void OpenPossibleQuestBtnListner()
     {
-        for (int i = 0; i < Managers.QuestManager._activeQuest.Count; i++)
+        //Logger.LogError(_questButtons.Count.ToString() + "sdafa");
+        for (int i = 0; i < _questButtons.Count; i++)
         {
-            GetButton(Managers.QuestManager._activeQuest[i]).onClick.AddListener(() => QuestUITest(_buttonType[ButtonName()]));
+            _questButtons[i].GetComponent<Button>().onClick.AddListener(() => QuestUITest(_buttonType[ButtonName()]));
         }
     }
     public void AllowQuest()
@@ -166,27 +178,46 @@ public class QuestUI : BaseUI
         QuestButton testID = test.GetComponent<QuestButton>();
         _test = testID._questID;
         Managers.QuestManager._progressQuest.Add(_test);
-        //이거 생각해보니 눌리는 버튼은 퀘스트 수락 거절임. 값 받아오게해야함 //완
         Managers.QuestManager._activeQuest.Remove(_test);
         //수락한 버튼 삭제 // 완
-        Managers.Resource.Destroy(GetButton(_test).gameObject);
-        PubAndSub.Subscrib<int>($"{_test.ToString()}", CheckTest);
+        Managers.Resource.Destroy(_getButtons[_test]);
+        PubAndSub.Subscrib<int>($"{_test}", CheckTest);
         //몬스터 죽는쪽에 몬스터아이디랑 타켓이름이랑 비교해서 같다면 실행되도록 하면될듯 // 완
         //중간 관리 액션으로 할지 아니면 추가 액션을 하나 더할지 고민은 해야할듯 // 완
-        if(Managers.UI.GetActiveUI<SimpleQuestUI>() == null)
+        
+        if (Managers.UI.GetActiveUI<SimpleQuestUI>() == null)
         {
            OpenQuestUI<SimpleQuestUI>();
             GameObject simpleUI = Managers.UI.GetActiveUI<SimpleQuestUI>().gameObject;
             GameObject content = Util.FindChild(simpleUI, "QuestInfo");
-            if(content.transform.childCount < 3)
+            if (content.transform.childCount < 3)
             {
+                Managers.QuestManager.test123 = _test;
                 _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", content.transform);
-                _simpleText.GetComponent<SimpleQuestText>().TextChange(_test);
+                var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
+                Managers.QuestManager._countCheck.Add(_test, 0);
+                text.Init(content.transform);
                 //퀘스트 생성
                 //이 조건은 완료문에도 해야함
             }
             //값 전달하는부분
         }
+        else
+        {
+            GameObject simpleUI = Managers.UI.GetActiveUI<SimpleQuestUI>().gameObject;
+            GameObject content = Util.FindChild(simpleUI, "QuestInfo");
+            if (content.transform.childCount < 3)
+            {
+                Managers.QuestManager.test123 = _test;
+                _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", content.transform);
+                //퀘스트 생성
+                //이 조건은 완료문에도 해야함
+                var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
+                Managers.QuestManager._countCheck.Add(_test, 0);
+                text.Init(content.transform);
+            }
+        }
+
     }
     public void OpenQuestUI<T>() where T : BaseUI
     {
@@ -197,12 +228,13 @@ public class QuestUI : BaseUI
             Managers.UI.OpenUI<T>(baseUIData);
         }
     }
+
     public void CheckTest(int test)
     {
         //위에 두줄 수정필요
-
+        
         int currentint;
-        if (Managers.QuestManager._countCheck.Count == 0)
+        /*if (Managers.QuestManager._countCheck.Count == 0)
         {
             currentint = 0;
         }
@@ -214,8 +246,17 @@ public class QuestUI : BaseUI
         {
             currentint = 0;
             Managers.QuestManager._countCheck.Add(test, currentint);
+        }*/
+        // _countCheck에 test 인덱스가 존재하는지 확인
+        if (Managers.QuestManager._countCheck.ContainsKey(test))
+        {
+            currentint = Managers.QuestManager._countCheck[test];
         }
-
+        else
+        {
+            currentint = 0; // 초기화
+            Managers.QuestManager._countCheck.Add(test, currentint);
+        }
 
         if (currentint < _completeCheck[test])//컴플리트 체크 변수 수정 필요 // 완
         {
@@ -239,7 +280,7 @@ public class QuestUI : BaseUI
         for (int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
         {
             progressQuest = Managers.Resource.Instantiate("UI/QuestListBtn", _questView.transform);
-            progressQuest.GetOrAddComponent<QuestButton>();
+            progressQuest.GetOrAddComponent<QuestButton>()._questID = Managers.QuestManager._progressQuest[i];
             progressQuest.GetOrAddComponent<Poolable>();
             progressQuest.name = Managers.QuestManager._progressQuest[i].ToString();
             _buttonType.Add(progressQuest.name, Managers.QuestManager._progressQuest[i]);
@@ -302,11 +343,11 @@ public class QuestUI : BaseUI
         {
             _uiButtons[0].SetActive(true);
         }
-        for (int i = 0; i < _uiButtons.Count - 1; i++)
+        for (int i = 0; i < _uiButtons.Count; i++)
         {
             if (_uiButtons[i].activeSelf)
             {
-                _uiButtons[i].GetComponent<QuestButton>()._questID = ID;
+               _uiButtons[i].GetOrAddComponent<QuestButton>()._questID = ID;
             }
         }
 
@@ -335,15 +376,20 @@ public class QuestUI : BaseUI
                 _questRewardValue2 = questdata.RewardValue2;
                 _questRewardType3 = questdata.RewardType3;
                 _questRewardValue3 = questdata.RewardValue3;
-                _completeCheck.Add(_questID, _targetCount);
-                Managers.QuestManager._targetCheck.Add(_questID, _targetID);
+                if (!_completeCheck.ContainsKey(_questID) && !Managers.QuestManager._targetCheck.ContainsKey(_questID))
+                {
+                    _completeCheck.Add(_questID, _targetCount);
+                    Managers.QuestManager._targetCheck.Add(_questID, _targetID);
+                }
+                
+                
                 break;
             }
         }
 
         Get<TextMeshProUGUI>((int)NowQuestText.QuestName).text = _questName;
         Get<TextMeshProUGUI>((int)NowQuestText.QuestInfo).text = _questInfo;
-        Get<TextMeshProUGUI>((int)NowQuestText.TargetCount).text = _targetCount.ToString();
+        Get<TextMeshProUGUI>((int)NowQuestText.TargetCount).text = $"{0} / {_targetCount}";
         GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"{_questRewardValue1}");//밑에 추후 경로 입력
         GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"{_questRewardValue2}");
         GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"{_questRewardValue3}");

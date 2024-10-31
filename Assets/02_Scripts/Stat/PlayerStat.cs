@@ -43,6 +43,7 @@ public class PlayerStat : Stat
                 Managers.Game._player._playerStatManager.PlayerStatUpdate();
                 SP += SpAddAmount;
                 Managers.Sound.Play("ETC/levelup");
+                Managers.QuestManager._curLevelCountPlus?.Invoke();
             }
         }
     }
