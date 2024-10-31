@@ -9,8 +9,10 @@ public class PlayerDeadState : BaseState
     {
         Logger.Log("플레이어 사망");
         _player._playerAnim.SetTrigger("doDead");
+
         _player._cc.enabled = false;
         _player.enabled = false;
+        _player._playerStatManager.enabled = false;
     }
 
     public override void OnStateUpdate()
@@ -22,5 +24,6 @@ public class PlayerDeadState : BaseState
     {
         _player._cc.enabled = true;
         _player.enabled = true;
+        _player._playerStatManager.enabled = true;
     }
 }

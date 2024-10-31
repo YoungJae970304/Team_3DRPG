@@ -19,14 +19,7 @@ public class PlayerStat : Stat
 
     public int RecoveryHP  { get { return _recoveryHp; } set {_recoveryHp = value;} }
 
-    public int MP
-    {
-        get { return _mp; }
-        set
-        {
-            _mp = Mathf.Clamp(value, 0, _maxMp);
-        }
-    }
+    public int MP { get { return _mp; } set { _mp = value; } }
     public int MaxMP { get { return _maxMp; } set { _maxMp = value; } }
     public int RecoveryMP { get { return _recoveryMp; } set { _recoveryMp = value; } }
 
@@ -73,7 +66,7 @@ public class PlayerStat : Stat
 
     public int MaxEXP { get { return _maxExp; } set { _maxExp = value; } }
 
-    public int SP { get { return _sp; } set { _sp = Mathf.Max(value, 0); } }
+    public int SP { get { return _sp; } set { _sp = value; } }
 
-    public int SpAddAmount{ get { return _spAddAmount; } set { _spAddAmount = Mathf.Max(value, 0); } }
+    public int SpAddAmount{ get { return _spAddAmount; } set { _spAddAmount = value; } }
 }

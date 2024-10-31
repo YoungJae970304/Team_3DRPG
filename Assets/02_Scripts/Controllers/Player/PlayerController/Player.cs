@@ -189,6 +189,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _playerStatManager._originStat.ATK = 50;
         _playerStatManager._originStat.DEF = 50;
         _playerStatManager.SP = 10;
+        _playerStatManager._originStat.RecoveryHP = 10;
+        _playerStatManager._originStat.RecoveryMP = 5;
 
         _playerStatManager.PlayerStatUpdate();
 
