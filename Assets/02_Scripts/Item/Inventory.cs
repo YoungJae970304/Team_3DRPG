@@ -9,7 +9,7 @@ public struct ItemTypeComparer : IEqualityComparer<ItemData.ItemType>
 }
 public class Inventory : MonoBehaviour//인벤토리
 {   //아이템 그룹을 담을 딕셔너리 타입 하나당 인벤토리 탭 1개가 된다.
-   public Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>(new ItemTypeComparer());
+   Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>(new ItemTypeComparer());
 
     public Action GetItemAction;
 
@@ -46,7 +46,6 @@ public class Inventory : MonoBehaviour//인벤토리
         Logger.Log(item.Data.Type.ToString());
         int result = ItemDick[item.Data.Type].Insert(item);
         GetItemAction?.Invoke();
-
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -16,7 +17,6 @@ public class GameManager
     public bool _cantInputKey = false;
 
     public DeongeonType _selecDungeonLevel;
-
 
     public void AddMonsterOnNowScene()
     {
@@ -42,24 +42,26 @@ public class GameManager
     // 타입에 맞는 캐릭터 생성
     public void PlayerCreate()
     {
-
         Managers.Resource.Instantiate("Player/VirtualCameras");
-        PlayerSaveData playerSave = new PlayerSaveData();
-
+        
         switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
                 GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
                 if(meleePlayer != null)
                 {
-                    playerSave.SaveData();
+                    //첫 시작 플레이어 데이터 저장
+                    Managers.Data.SaveData<SaveDatas>();
+                    Logger.Log("첫 시작 데이터 근접 저장");
                 }
                 break;
             case Define.PlayerType.Mage:
                 GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
                 if(magePlayer != null)
                 {
-                    playerSave.SaveData();
+                    //첫 시작 플레이어 데이터 저장
+                    Managers.Data.SaveData<SaveDatas>();
+                    Logger.Log("첫 시작 데이터 원거리 저장");
                 }
                 break;
             default:

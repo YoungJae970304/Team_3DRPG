@@ -82,6 +82,8 @@ public class ItemPickup : MonoBehaviour
                         {
                             _isPickup = true;
                             _inventory.InsertItem(_newItem);
+                            Managers.Data.SaveData<InventorySaveData>();
+                            Logger.Log("인벤토리 저장 확인");
                             Logger.Log($"{_newItem.Data.Name} 인벤토리에 추가");
                         }
                         else

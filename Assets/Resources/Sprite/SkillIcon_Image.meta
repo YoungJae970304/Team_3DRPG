@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Data/InvenSaveData.Json.meta
+guid: 059a7315c16e7924ab33e4b787629f1a
+TextScriptImporter:
+========
 guid: 24e80bff59aa4544f9db852f76e1958e
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> Masters:Assets/Resources/Sprite/SkillIcon_Image.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

@@ -147,15 +147,15 @@ public class PlayerInput : MonoBehaviour
         {
             _player._playerStatManager.EXP += 100;
             _player._playerStatManager.Gold += 100000;
-            PlayerSaveData playerSave = new PlayerSaveData();
-            if (playerSave.SaveData())
-            {
-                Logger.Log($"데이터 저장{_player._playerStatManager.EXP}{_player._playerStatManager.Gold}");
-            }
-            else
-            {
-                Logger.LogError("데이터 저장을 할 수가 없습니다");
-            }
+            //try
+            //{
+            //    Managers.Data.SaveData<PlayerSaveData>();
+            //    Logger.Log($"플레이어 데이터 저장{_player._playerStatManager.EXP}\n{_player._playerStatManager.Gold}");
+            //}catch(System.Exception e)
+            //{
+            //    Logger.LogError($"플레이어 데이터 저장 실패{e.Message}");
+            //}
+             
         }
     }
          

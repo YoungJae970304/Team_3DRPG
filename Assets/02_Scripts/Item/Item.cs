@@ -87,7 +87,7 @@ public class Item
         Logger.Log($"{iconPath} 불러옴");
         if (icon == null)
         {
-            Logger.LogError($"icon 로드 실패 : {iconPath}");
+            Logger.LogWarning($"icon 로드 실패 : {iconPath} 없을 수도?");
             return null;
         }
 
