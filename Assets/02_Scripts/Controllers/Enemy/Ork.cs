@@ -25,6 +25,7 @@ public class Ork : Monster
         OrkIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _OrkID);
         StatCheck(_deongeonLevel, _OrkID);
+        _monsterID = _OrkID;
     }
     public override void AttackStateSwitch()
     {

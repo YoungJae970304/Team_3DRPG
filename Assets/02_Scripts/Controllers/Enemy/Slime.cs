@@ -16,6 +16,7 @@ public class Slime : Monster
         SlimeIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _slimeID);
         StatCheck(_deongeonLevel, _slimeID);
+        _monsterID = _slimeID;
     }
     public override void AttackStateSwitch()
     {

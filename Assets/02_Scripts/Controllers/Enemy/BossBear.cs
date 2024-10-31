@@ -21,7 +21,7 @@ public class BossBear : Monster
     public override void OnEnable()
     {
         Init();
-
+        _monsterID = _bossBearID;
 
     }
     public override void Init()

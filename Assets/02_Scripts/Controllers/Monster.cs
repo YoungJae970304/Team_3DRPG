@@ -59,6 +59,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
     //[HideInInspector]
     //public List<GameObject> _hitPlayer;
     public Animator _anim;
+    public int _monsterID;
 
     public StatusEffectManager StatusEffect { get => null; }
 

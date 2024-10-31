@@ -23,6 +23,7 @@ public class Goblem : Monster
         GoblemIDCheck(_deongeonLevel);
         itemtest(_deongeonLevel, _goblemID);
         StatCheck(_deongeonLevel, _goblemID);
+        _monsterID = _goblemID;
     }
     public override void AttackStateSwitch()
     {

@@ -5,7 +5,6 @@ using UnityEngine;
 public class QuestButton : MonoBehaviour
 {
     public int _questID;
-    
     void Start()
     {
         

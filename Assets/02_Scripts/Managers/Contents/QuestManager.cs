@@ -15,8 +15,13 @@ public class QuestManager
     ///////////////////////// 여기 밑부터 새로 작성한 부분
     public Dictionary<int,int> _questList = new Dictionary<int,int>();
     public Dictionary<int,int> _questrequirements = new Dictionary<int, int>();
+    public Dictionary<int, int> _targetCheck = new Dictionary<int, int>();
+    public Dictionary<int, int> _countCheck = new Dictionary<int, int>();
+    public Dictionary<int, string> _questName = new Dictionary<int, string>();
     public List<int> _questID = new List<int>();
     public List<int> _activeQuest = new List<int>();
+    public List<int> _progressQuest = new List<int>();
+    public List<int> _completeQuest = new List<int>();
     public Action _curLevelCountPlus;
     public Action _completeCheck;
     DataTableManager _dataTableManager;
@@ -24,7 +29,8 @@ public class QuestManager
     public void Init()
     {
         _dataTableManager = Managers.DataTable;
-       // LoadQuestData();
+        // LoadQuestData();
+        QuestListInput();
         _curLevelCountPlus += LevelCountPlus;
         
     }
@@ -109,7 +115,7 @@ public class QuestManager
         {
             if(_questList[i] <= _currPlayerLevel)
             {
-                _activeQuest.Add(_questList[i]);
+                _activeQuest.Add(_questID[i]);
                 Managers.UI.Init();
             }
         }
@@ -120,6 +126,7 @@ public class QuestManager
         foreach(var questdata in _dataTableManager._QuestData)
         {
             _questList.Add(questdata.ID, questdata.PlayerLevelRequirement);
+            _questName.Add(questdata.ID, questdata.Name);
             _questID.Add(questdata.ID);
             _questrequirements.Add(questdata.ID, questdata.TargetCount);
         }
