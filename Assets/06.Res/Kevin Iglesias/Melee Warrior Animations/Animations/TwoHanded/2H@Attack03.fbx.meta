@@ -792,16 +792,30 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1
-        functionName: SkillEnd
+      - time: 0.079757184
+        functionName: PhysicsLayerOff
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.079757184
-        functionName: PhysicsLayerOff
-        data: 
+      - time: 0.13571429
+        functionName: MeleeEffect
+        data: MeleeSkill1
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.13571429
+        functionName: PlayEffectSound
+        data: Melee/melee_atk_1
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.13571429
+        functionName: PlayEffectSound
+        data: Melee/melee_skill1_voice
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -813,9 +827,9 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: MeleeEffect
-        data: MeleeSkill1
+      - time: 1
+        functionName: SkillEnd
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

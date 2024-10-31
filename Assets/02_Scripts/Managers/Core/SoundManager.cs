@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class SoundManager
 {
-    //AudioSource¸¦ BGM, ÀÌÆåÆ®¿ëÀ¸·Î ¸¸µé±â À§ÇØ
+    //AudioSourceë¥¼ BGM, ì´í™íŠ¸ìš©ìœ¼ë¡œ ë§Œë“¤ê¸° ìœ„í•´
     AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
 
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
 
     AudioClip GetOrAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
     {
-        // »ç¿îµå´Â »ç¿îÁîÆú´õ¿¡ ÀÖ¾î¾ß ÇÏ´Âµ¥ È¤½Ã °æ·Î¸¦ ±î¸Ô°Å³ª »ı·«Çß´Ù¸é ÀÚµ¿À¸·Î Ãß°¡
+        // ì‚¬ìš´ë“œëŠ” ì‚¬ìš´ì¦ˆí´ë”ì— ìˆì–´ì•¼ í•˜ëŠ”ë° í˜¹ì‹œ ê²½ë¡œë¥¼ ê¹Œë¨¹ê±°ë‚˜ ìƒëµí–ˆë‹¤ë©´ ìë™ìœ¼ë¡œ ì¶”ê°€
         if (!path.Contains("Sounds/"))
         {
             path = $"Sounds/{path}";
@@ -26,7 +26,7 @@ public class SoundManager
         }
         else
         {
-            // ¸¸¾à ±âÁ¸¿¡ ÆĞ½º°¡ ¾ø´Ù¸é Resource.Load·Î °¡Á®¿Í¼­ µñ¼Å³Ê¸®¿¡ Ãß°¡
+            // ë§Œì•½ ê¸°ì¡´ì— íŒ¨ìŠ¤ê°€ ì—†ë‹¤ë©´ Resource.Loadë¡œ ê°€ì ¸ì™€ì„œ ë”•ì…”ë„ˆë¦¬ì— ì¶”ê°€
             if (!_audioClips.TryGetValue(path, out audioClip))
             {
                 audioClip = Managers.Resource.Load<AudioClip>(path);
@@ -39,15 +39,15 @@ public class SoundManager
             Debug.Log($"AudioClip Missing {path}");
         }
 
-        // ¾ø¾úÀ¸¸é °¡Á®¿Í¼­ ¸®ÅÏ, ÀÖ¾úÀ¸¸é ÀÖ´ø°Å ¸®ÅÏ
+        // ì—†ì—ˆìœ¼ë©´ ê°€ì ¸ì™€ì„œ ë¦¬í„´, ìˆì—ˆìœ¼ë©´ ìˆë˜ê±° ë¦¬í„´
         return audioClip;
     }
 
-    // °æ·Î¸¦ ÅëÇØ Ã£´Â °æ¿ì
+    // ê²½ë¡œë¥¼ í†µí•´ ì°¾ëŠ” ê²½ìš°
     public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
-        /*  ////////////////// ºôµå¾÷ ////////////////
-        // »ç¿îµå´Â »ç¿îÁîÆú´õ¿¡ ÀÖ¾î¾ß ÇÏ´Âµ¥ È¤½Ã °æ·Î¸¦ ±î¸Ô°Å³ª »ı·«Çß´Ù¸é ÀÚµ¿À¸·Î Ãß°¡
+        /*  ////////////////// ë¹Œë“œì—… ////////////////
+        // ì‚¬ìš´ë“œëŠ” ì‚¬ìš´ì¦ˆí´ë”ì— ìˆì–´ì•¼ í•˜ëŠ”ë° í˜¹ì‹œ ê²½ë¡œë¥¼ ê¹Œë¨¹ê±°ë‚˜ ìƒëµí–ˆë‹¤ë©´ ìë™ìœ¼ë¡œ ì¶”ê°€
         if (!path.Contains("Sounds/"))
         {
             path = $"Sounds/{path}";
@@ -62,9 +62,9 @@ public class SoundManager
                 return;
             }
 
-            /* ÀÌ¹Ì ±¸ÇöµÈ ºÎºĞÀÌ´Ï±î ´ëÃ¼ °¡´É
+            /* ì´ë¯¸ êµ¬í˜„ëœ ë¶€ë¶„ì´ë‹ˆê¹Œ ëŒ€ì²´ ê°€ëŠ¥
             AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
-            // ¸¸¾à ÀÌ¹Ì ½ÇÇàÁßÀÎ BGMÀÌ ÀÖ´Ù¸é Á¤Áö
+            // ë§Œì•½ ì´ë¯¸ ì‹¤í–‰ì¤‘ì¸ BGMì´ ìˆë‹¤ë©´ ì •ì§€
             if (audioSource.isPlaying) { audioSource.Stop(); }
 
             audioSource.pitch = pitch;
@@ -94,7 +94,7 @@ public class SoundManager
         Play(audioClip, type, pitch);
     }
 
-    // AudioClipÀ» Á÷Á¢ ÀÔ·ÂÇÏ´Â °æ¿ì
+    // AudioClipì„ ì§ì ‘ ì…ë ¥í•˜ëŠ” ê²½ìš°
     public void Play(AudioClip audioClip, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
         if (audioClip == null)
@@ -106,17 +106,19 @@ public class SoundManager
         {
             AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
 
-            // ¸¸¾à ÀÌ¹Ì ½ÇÇàÁßÀÎ BGMÀÌ ÀÖ´Ù¸é Á¤Áö
+            // ë§Œì•½ ì´ë¯¸ ì‹¤í–‰ì¤‘ì¸ BGMì´ ìˆë‹¤ë©´ ì •ì§€
             if (audioSource.isPlaying) { audioSource.Stop(); }
 
-            audioSource.pitch = pitch;
+            //audioSource.pitch = pitch;
+            audioSource.volume = pitch;
             audioSource.clip = audioClip;
             audioSource.Play();
         }
         else
         {
             AudioSource audioSource = _audioSources[(int)Define.Sound.Effect];
-            audioSource.pitch = pitch;
+            //audioSource.pitch = pitch;
+            audioSource.volume = pitch;
             audioSource.PlayOneShot(audioClip);
         }
     }

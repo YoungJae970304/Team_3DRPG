@@ -799,7 +799,28 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.32222223
+      - time: 0.25233644
+        functionName: MeleeEffect
+        data: MeleeCombo2
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.25233644
+        functionName: PlayEffectSound
+        data: Melee/melee_atk_2
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.25233644
+        functionName: PlayEffectSound
+        data: Melee/melee_atk_voice_2
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.37362412
         functionName: PlayerNormalAttack
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -815,20 +836,6 @@ ModelImporter:
         messageOptions: 0
       - time: 1
         functionName: AttackEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: MeleeEffect
-        data: MeleeCombo2
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: AttackStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

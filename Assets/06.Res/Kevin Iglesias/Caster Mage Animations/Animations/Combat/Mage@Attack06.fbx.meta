@@ -535,6 +535,20 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.60714287
+        functionName: PlayEffectSound
+        data: Mage/mage_skill3
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.60714287
+        functionName: PlayEffectSound
+        data: Mage/mage_skill3_voice
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 1
         functionName: SkillEnd
         data: 
