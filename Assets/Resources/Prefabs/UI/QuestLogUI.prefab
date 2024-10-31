@@ -409,7 +409,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4481419673494986707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: QuestLogUI, Assembly-CSharp
         m_MethodName: GiveUpBtn
         m_Mode: 2
@@ -543,7 +543,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4481419673494986707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: QuestLogUI, Assembly-CSharp
         m_MethodName: GiveUpBtn
         m_Mode: 2
@@ -949,7 +949,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 553}
   m_SizeDelta: {x: 0, y: 553}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1699246851945479382
@@ -1476,7 +1476,6 @@ GameObject:
   - component: {fileID: 3168083866824311775}
   - component: {fileID: 6051551655911755612}
   - component: {fileID: 4012993500838281729}
-  - component: {fileID: 4481419673494986707}
   - component: {fileID: 3893407903702316192}
   m_Layer: 5
   m_Name: QuestLogUI
@@ -1568,25 +1567,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4481419673494986707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5556067668574886052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd679df7cecaac649b6e52607a7d5bd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _UIOpenAnimation: {fileID: 0}
-  _topBarImage: {fileID: 0}
-  _exitBtn: {fileID: 6582660709560786134}
-  _isSort: 1
-  _questList: {fileID: 7788219289296005419}
-  contentRectTrs: {fileID: 1384479135810243605}
-  scrollRectTrs: {fileID: 8164782858439168375}
 --- !u!111 &3893407903702316192
 Animation:
   m_ObjectHideFlags: 0
@@ -1724,7 +1704,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4481419673494986707}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: QuestLogUI, Assembly-CSharp
         m_MethodName: GiveUpBtn
         m_Mode: 2
