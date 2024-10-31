@@ -19,16 +19,15 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
     // 값을 받을 수 있는 프로퍼티들 및 각각의 액션
 
 
-    public int Level { get {  return Mathf.Max(0, _originStat.Level); } set { _originStat.Level = value; PubAndSub.Publish<int>("Level", value); } }
+    public int Level { get {  return _originStat.Level; } set { _originStat.Level = value; PubAndSub.Publish<int>("Level", value); } }
 
-    public int HP { get { return Mathf.Max(0, _originStat.HP); } set { _originStat.HP = value; PubAndSub.Publish<int>("HP", HP); } }
-    public int MP { get { return Mathf.Max(0, _originStat.MP); } set { _originStat.MP = value; PubAndSub.Publish<int>("MP", MP); } }
-    public int EXP { get { return Mathf.Max(0, _originStat.EXP); } set { _originStat.EXP = value; PubAndSub.Publish<int>("EXP", value); } }
-    public int MaxEXP { get { return Mathf.Max(0, _originStat.MaxEXP); } set { _originStat.MaxEXP = value; PubAndSub.Publish<int>("MaxEXP", value); } }
-
-    public int Gold { get { return Mathf.Max(0, _originStat.Gold); } set { _originStat.Gold = value; PubAndSub.Publish<int>("Gold", value); } }
-    public int SpAddAmount { get { return Mathf.Max(0, _originStat.SpAddAmount); } set { _originStat.SpAddAmount = value; PubAndSub.Publish<int>("SpAddAmount", value); } }
-    public int SP { get { return Mathf.Max(0, _originStat.SP); } set { _originStat.SP = value; PubAndSub.Publish<int>("SP", value); } }
+    public int HP { get { return _originStat.HP; } set { _originStat.HP = Mathf.Clamp(value, 0, MaxHP); PubAndSub.Publish<int>("HP", HP); } }
+    public int MP { get { return _originStat.MP; } set { _originStat.MP = Mathf.Clamp(value, 0, MaxMP); PubAndSub.Publish<int>("MP", MP); } }
+    public int EXP { get { return _originStat.EXP; } set { _originStat.EXP = value; PubAndSub.Publish<int>("EXP", value); } }
+    public int MaxEXP { get { return _originStat.MaxEXP; } set { _originStat.MaxEXP = Mathf.Max(0, value); PubAndSub.Publish<int>("MaxEXP", value); } }
+    public int Gold { get { return _originStat.Gold; } set { _originStat.Gold = Mathf.Max(0, value); PubAndSub.Publish<int>("Gold", value); } }
+    public int SpAddAmount { get { return _originStat.SpAddAmount; } set { _originStat.SpAddAmount = Mathf.Max(0, value); PubAndSub.Publish<int>("SpAddAmount", value); } }
+    public int SP { get { return _originStat.SP; } set { _originStat.SP = Mathf.Max(0, value); PubAndSub.Publish<int>("SP", value); } }
     #endregion
 
 
@@ -43,14 +42,31 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
 
     public float MoveSpeed { get { return Mathf.Max(0, _originStat.MoveSpeed + _equipStat.MoveSpeed + _buffStat.MoveSpeed); } set { _buffStat.MoveSpeed += value; } }
 
-    public int RecoveryHP { get { return Mathf.Max(0, _originStat.RecoveryHP + _equipStat.RecoveryHP + _buffStat.RecoveryHP); } set { _buffStat.RecoveryHP += value; } }
+    public int RecoveryHP { get { return _originStat.RecoveryHP + _equipStat.RecoveryHP + _buffStat.RecoveryHP; } set { _buffStat.RecoveryHP += value; } }
 
     public int MaxMP { get { return Mathf.Max(0, _originStat.MaxMP + _equipStat.MaxMP + _buffStat.MaxMP); } set { _buffStat.MaxMP += value; PubAndSub.Publish<int>("MP", MP); } }
 
-    public int RecoveryMP { get { return Mathf.Max(0, _originStat.RecoveryMP + _equipStat.RecoveryMP + _buffStat.RecoveryMP); } set { _buffStat.RecoveryMP += value; } }
+    public int RecoveryMP { get { return _originStat.RecoveryMP + _equipStat.RecoveryMP + _buffStat.RecoveryMP; } set { _buffStat.RecoveryMP += value; } }
 
     public float DodgeSpeed { get { return Mathf.Max(0, _originStat.DodgeSpeed + _equipStat.DodgeSpeed + _buffStat.DodgeSpeed); } set { _buffStat.DodgeSpeed += value; } }
     #endregion
+
+    #region 스탯 관련 함수
+    [Header("자동 회복 시간 설정")]
+    public float _recoveryInterval = 0.5f;
+    public float _lastTime = 0;
+
+    private void Update()
+    {
+        if (Time.time - _lastTime >= _recoveryInterval && Time.timeScale > 0)
+        {
+            Logger.Log($"HP 재생 : {RecoveryHP} / MP 재생 : {RecoveryMP}");
+            HP += RecoveryHP;
+            MP += RecoveryMP;
+
+            _lastTime = Time.time;
+        }
+    }
 
     public void PlayerStatUpdate()
     {
@@ -59,4 +75,5 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
         SpAddAmount = playerLevelData.SpAddAmount;
         Managers.Data.SaveData<PlayerSaveData>();
     }
+    #endregion
 }
