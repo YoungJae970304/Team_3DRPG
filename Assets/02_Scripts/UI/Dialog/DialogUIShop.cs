@@ -36,6 +36,7 @@ public class DialogUIShop : DialogUI
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);
+        Managers.Data.SaveData<InventorySaveData>();
         Managers.UI.CloseUI(this);
     }
 

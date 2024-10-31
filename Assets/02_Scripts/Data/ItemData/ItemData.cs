@@ -24,32 +24,22 @@ public class ItemData
         DropData,
     }
 
-    public string paths;
-
-    public int ID;
-    public string Name; 
-    public int Grade;
-    public ItemType Type;
-    public int BuyingPrice;
-    public int SellingPrice;
-    public int MaxAmount;
-    public int LimitLevel;
-    public string IconSprite;
-
     //아이템 번호
-    [SerializeField] int _id;
+    public int ID;
     //아이템 이름
-    [SerializeField] string _name;
+    public string Name;
     //아이템 등급
-    [SerializeField] int _grade;
+    public int Grade;
     //아이템 타입
-    [SerializeField] ItemType _itemType;
+    public ItemType Type;
     //구매 가격
-    [SerializeField] int _buyingPrice;
+    public int BuyingPrice;
     //판매 가격
-    [SerializeField] int _sellingPrice;
+    public int SellingPrice;
     //최대 소지 갯수
-    [SerializeField] int _maxAmount = 99;
+    public int MaxAmount;
     //착용 가능 레벨
-    [SerializeField] int _limitLevel;
+    public int LimitLevel;
+    //이미지 로드용 변수
+    public string IconSprite;
 }

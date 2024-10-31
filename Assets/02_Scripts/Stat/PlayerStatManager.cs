@@ -74,6 +74,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
         MaxEXP = playerLevelData.MaxEXP;
         SpAddAmount = playerLevelData.SpAddAmount;
         Managers.Data.SaveData<PlayerSaveData>();
+        Logger.Log($"스텟 저장{MaxEXP}\n{SpAddAmount}\n{Level}\n{MaxHP}\n{ATK}");
     }
     #endregion
 }

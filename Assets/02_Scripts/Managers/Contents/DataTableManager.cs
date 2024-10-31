@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class DataTableManager
 {
@@ -78,7 +77,7 @@ public class DataTableManager
 
         PlayerLevelData levelData = null;
 
-        foreach ( var data in parsedPlayerLevelDataTable )
+        foreach (var data in parsedPlayerLevelDataTable)
         {
             levelData = new PlayerLevelData
             {
@@ -103,7 +102,7 @@ public class DataTableManager
     public void SkillDataTable(string dataPath, string skillDataTable)
     {
         var parsedSkillDataTable = CSVReader.Read($"{dataPath}/{skillDataTable}");
-        foreach ( var data in parsedSkillDataTable )
+        foreach (var data in parsedSkillDataTable)
         {
             SkillData skillData = null;
             skillData = new SkillData
@@ -320,7 +319,7 @@ public class DataTableManager
     #region 던전 데이터테이블 함수
     void DungeonDataTable(string dataPath, string dungeonDataTable)
     {
-      
+
         var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
         foreach (var data in parsedDungeonDataTable)
         {
@@ -402,39 +401,20 @@ public class DataTableManager
                 RewardValue1 = Convert.ToInt32(data["QuestRewardValue1"]),
                 RewardType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType2"].ToString()),
                 RewardValue2 = Convert.ToInt32(data["QuestRewardValue2"]),
-                //리워드 타입 3은 포션 ID으로 불러와야하는데..
-                RewardValue3 = Convert.ToInt32(data["QuestRewardValue3"]),
             };
-            var rewardType3 = data["QuestRewardType3"].ToString();
-
-            if (rewardType3 == ItemData.ItemType.Potion.ToString())
+            if (data["QuestRewardType3"].ToString() == ItemData.ItemType.Potion.ToString())
             {
                 questData.RewardType3 = QuestData.RewardType.Potion;
-                int potionID = Convert.ToInt32(data["QuestRewardValue3"]);
-                var potionItem = GetPotionItemID(potionID);
-                if (potionItem != null)
+                int potionID = Convert.ToInt32(data["QuestReawrdValue3"]);
+                var potionItem = _PotionItemData.FirstOrDefault(p => p.ID == potionID);
+                questData.RewardValue3 = potionItem?.ID ?? 0;
+                if (potionItem == null)
                 {
-                    questData.RewardValue3 = potionItem.ID;
-                }
-                else
-                {
-                    Logger.LogError("포션ID 못찾았습니다");
-                    questData.RewardValue3 = 0;
+                    Logger.LogError($"포션ID{potionID}를 찾을 수 없습니다.");
                 }
             }
             _QuestData.Add(questData);
         }
-    }
-    ItemData GetPotionItemID(int id)
-    {
-        foreach (var data in _PotionItemData)
-        {
-            if (data.ID == id)
-            {
-                return data;
-            }
-        }
-        return null;
     }
     #endregion
 
@@ -448,7 +428,7 @@ public class DataTableManager
             fusionData = new FusionData
             {
                 FusionItemID1 = Convert.ToInt32(data["FusionItemID1"]),
-                FusionItemAmount1= Convert.ToInt32(data["FusionItemAmount1"]),
+                FusionItemAmount1 = Convert.ToInt32(data["FusionItemAmount1"]),
                 FusionItemID2 = Convert.ToInt32(data["FusionItemID2"]),
                 FusionItemAmount2 = Convert.ToInt32(data["FusionItemAmount2"]),
                 ResultItemID = Convert.ToInt32(data["ResultItemID"]),
@@ -462,7 +442,7 @@ public class DataTableManager
         }
     }
     #endregion
-    
+
     #region 몬스터 스텟데이터테이블 함수
     void MonsterStatDataTable(string dataPath, string monsterStatDataTable)
     {

@@ -51,7 +51,8 @@ public class GameManager
                 if(meleePlayer != null)
                 {
                     //첫 시작 플레이어 데이터 저장
-                    Managers.Data.SaveData<PlayerSaveData>();
+                    Managers.Data.SaveData<SaveDatas>();
+                    Logger.Log("첫 시작 데이터 근접 저장");
                 }
                 break;
             case Define.PlayerType.Mage:
@@ -59,7 +60,8 @@ public class GameManager
                 if(magePlayer != null)
                 {
                     //첫 시작 플레이어 데이터 저장
-                    Managers.Data.SaveData<PlayerSaveData>();
+                    Managers.Data.SaveData<SaveDatas>();
+                    Logger.Log("첫 시작 데이터 원거리 저장");
                 }
                 break;
             default:

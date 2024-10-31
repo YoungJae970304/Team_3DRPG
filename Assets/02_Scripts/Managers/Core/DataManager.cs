@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,14 +11,11 @@ public class DataManager
 {
     public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
 
-    public SaveDatas _saveDatas;
-    public InventorySaveData _inventorySaveData;
-    public PlayerSaveData _playerSaveData;
-    public SkillSaveData _skillSaveData;
+    public Dictionary<Type, IData> _dataInstances = new Dictionary<Type, IData>();
+
     public void Init()
     {
         InitializeGameState();
-       
         //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         // Json을 사용하기 위한 타입은 TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
@@ -33,16 +31,40 @@ public class DataManager
         */
     }
 
-    void InitializeGameState()
+    void DataTpyes()
     {
-        _saveDatas.Init();
-        _inventorySaveData.Init();
-        _playerSaveData.Init();
-        _skillSaveData.Init();
-        SaveData<SaveDatas>();
-        Logger.Log("처음 시작 데이터 저장");
+        var dataType = typeof(IData);
+        Logger.Log($"{dataType.Name}타입 입니다.");
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+        foreach (var assembly in assemblies)
+        {
+            var types = assembly.GetTypes();
+            foreach (var type in types)
+            {
+                if (dataType.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract)
+                {
+                    Logger.Log($"타입 찾기{type.Name}");
+                    if (!_dataInstances.ContainsKey(type))
+                    {
+                        _dataInstances[type] = (IData)Activator.CreateInstance(type);
+                    }
+                }
+            }
+        }
     }
 
+    void InitializeGameState()
+    {
+        DataTpyes();
+        Logger.Log("타입 체크");
+        SaveData<SaveDatas>();
+        GetData<SaveDatas>()?.Init();
+        GetData<InventorySaveData>()?.Init();
+        GetData<PlayerSaveData>()?.Init();
+        GetData<SkillSaveData>()?.Init();
+        GetData<QuestSaveData>()?.Init();
+        Logger.Log("처음 시작 데이터 저장");
+    }
 
     Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
     {
@@ -94,31 +116,13 @@ public class DataManager
 
     T GetData<T>() where T : class, IData
     {
-        if(typeof(T) == typeof(SaveDatas))
-        {
-            if(_saveDatas == null)
-            {
-                _saveDatas = new SaveDatas();
-            }
-            return _saveDatas as T;
-        }else if (typeof(T) == typeof(InventorySaveData))
-        {
-            if (_inventorySaveData == null)
-            {
-                _inventorySaveData = new InventorySaveData();
-            }
+        Type type = typeof(T);
 
-            return _inventorySaveData as T;
-        }
-        else if (typeof(T) == typeof(PlayerSaveData))
+        if (_dataInstances.TryGetValue(type, out IData dataInstance))
         {
-            if (_playerSaveData == null)
-            {
-                _playerSaveData = new PlayerSaveData();
-            }
-
-            return _playerSaveData as T;
+            return dataInstance as T;
         }
+        Logger.LogError($"{type.Name}의 타입이 등록되지 않았습니다.");
         return null;
     }
 }
