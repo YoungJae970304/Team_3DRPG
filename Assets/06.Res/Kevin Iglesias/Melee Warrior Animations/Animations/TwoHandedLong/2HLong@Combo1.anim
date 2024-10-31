@@ -94870,9 +94870,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0
+  - time: 0.43333334
+    functionName: PlayEffectSound
+    data: Melee/melee_atk_voice_1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.43333334
     functionName: MeleeEffect
     data: MeleeCombo1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.43333334
+    functionName: PlayEffectSound
+    data: Melee/melee_atk_1
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
