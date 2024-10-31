@@ -793,15 +793,29 @@ ModelImporter:
       curves: []
       events:
       - time: 0
+        functionName: AttackStart
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.28898075
         functionName: MeleeEffect
         data: PowerAttack1
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: AttackStart
-        data: 
+      - time: 0.28898075
+        functionName: PlayEffectSound
+        data: Melee/melee_atk_1
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.28898075
+        functionName: PlayEffectSound
+        data: Melee/melee_atk_voice_4
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

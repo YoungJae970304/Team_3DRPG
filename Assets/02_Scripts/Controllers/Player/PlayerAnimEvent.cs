@@ -12,7 +12,7 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         _player = Managers.Game._player;
     }
-
+    #region 이펙트 이벤트
     public void MeleeEffect(string effectName)
     {
         // 대소문자 구분 없이 enum으로 변환 시도
@@ -30,7 +30,32 @@ public class PlayerAnimEvent : MonoBehaviour
             _player._effectController.MageEffectOn(effect);
         }
     }
+    #endregion
 
+    #region 사운드 이벤트
+
+    public void PlayEffectSound(string soundPath)
+    {
+        //Managers.Sound.Play(soundPath);
+        string[] parts = soundPath.Split(',');
+        if (parts.Length >= 2 && float.TryParse(parts[1], out float volume))
+        {
+            Managers.Sound.Play(parts[0], Define.Sound.Effect, volume);
+        }
+        else
+        {
+            Managers.Sound.Play(parts[0], Define.Sound.Effect);
+        }
+    }
+
+    public void PlayBGMSound(string soundPath)
+    {
+        Managers.Sound.Play(soundPath, Define.Sound.Bgm);
+    }
+
+    #endregion
+
+    #region 평타
     // 평타 애니메이션 시작부
     public void AttackStart()
     {
@@ -60,7 +85,9 @@ public class PlayerAnimEvent : MonoBehaviour
             _player._playerAnim.SetBool("isAttacking", false);
         }
     }
+    #endregion
 
+    #region 스킬
     // 스킬
     public void SkillEnd()
     {
@@ -135,6 +162,9 @@ public class PlayerAnimEvent : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
+    #region 기타
     // 회피 애니메이션 시작부
     public void DodgeStart()
     {
@@ -158,4 +188,6 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         _player._hitting = false;
     }
+    #endregion
+
 }
