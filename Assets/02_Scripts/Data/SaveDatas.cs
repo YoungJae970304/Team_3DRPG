@@ -23,7 +23,8 @@ public class SaveDatas : IData
 
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}Data/SaveDatas.json";
+        _SavePath = $"{Application.persistentDataPath}/Data/SaveDatas.json";
+        Logger.Log($"저장 경로 확인 {_SavePath}");
     }
 
     public bool SaveData()
@@ -185,7 +186,7 @@ public class InventorySaveData : IData
 {
     public List<InventoryItemData> _InvenItemList = new List<InventoryItemData>();
 
-    public Inventory _inventory;
+    Inventory _inventory;
 
     string _SavePath;
 
@@ -196,20 +197,16 @@ public class InventorySaveData : IData
 
     public bool SaveData()
     {
+        if(_inventory == null) { Logger.LogWarning("인벤토리가 초기화 되지 않고 있음"); return false; }
         try
         {
             _InvenItemList.Clear();
-
-            string directory = Path.GetDirectoryName(_SavePath);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
             foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
                 var itemType = (ItemData.ItemType)itemSaveType;
-                int _maxGroupSize = _inventory.GetGroupSize(itemType);
-                for (int index = 0; index < _maxGroupSize; index++)
+                int maxGroupSize = _inventory.GetGroupSize(itemType);
+
+                for (int index = 0; index < maxGroupSize; index++)
                 {
                     var item = _inventory.GetItem(index, itemType);
                     if (item != null)
@@ -219,12 +216,18 @@ public class InventorySaveData : IData
                             _id = item.Data.ID,
                             _amount = item is CountableItem ? ((CountableItem)item).GetCurrentAmount() : 1,
                             _index = index,
-                            _type = (int)itemType
+                            _type = (int)itemType,
                         };
                         _InvenItemList.Add(itemData);
                     }
                 }
             }
+            string directory = Path.GetDirectoryName(_SavePath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+           
             string invenJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, invenJson);
             Logger.Log("인벤토리 세이브");
@@ -289,6 +292,7 @@ public class InventorySaveData : IData
         _inventory = player.GetOrAddComponent<Inventory>();
         if (_inventory == null)
         {
+            Logger.LogError("인벤토리가 null 입니다.");
             player.GetOrAddComponent<Inventory>();
         }
     }
@@ -297,29 +301,55 @@ public class InventorySaveData : IData
 [Serializable]
 public class SkillSaveData : IData
 {
-    public string _name;
-    public int _level;
-    public int _type;
+    public List<SkillData> _skills = new();
+
     string _SavePath;
 
     public void Init()
     {
         _SavePath = $"{Application.persistentDataPath}/Data/SkillSaveData.Json";
+        LoadData();
     }
 
     public bool SaveData()
     {
-        throw new NotImplementedException();
+        try
+        {
+            string skillJson = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, skillJson);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"저장할 스킬이 없습니다.{e.Message}");
+            return false;
+        }
     }
 
     public bool LoadData()
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (File.Exists(_SavePath))
+            {
+                string skillJson = File.ReadAllText(_SavePath);
+                JsonUtility.FromJsonOverwrite(skillJson, this);
+                Logger.Log("스킬 데이터 로드");
+                return true;
+            }
+            //파일 없을 시 그냥 펄스로 리턴
+            return false;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"스킬 데이터 로드 실패 : {e.Message}");
+            return false;
+        }
     }
 
     public void SetDefaultData()
     {
-        throw new NotImplementedException();
+        
     }
 }
 
@@ -381,6 +411,3 @@ public class QuestSaveData : IData
         throw new NotImplementedException();
     }
 }
-
-//추가 클래스 필요한가?
-

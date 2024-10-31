@@ -78,7 +78,6 @@ public class InventorySlot : ItemSlot
     {
         _itemManager.Remove(_index, _slotType);
         base.RemoveItem();
-        
     }
 
     public override void NullTarget()

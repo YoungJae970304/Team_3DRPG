@@ -10,11 +10,10 @@ public class DataManager
 {
     public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
 
-
-    public SaveDatas _saveDatas = new SaveDatas();
-    public InventorySaveData _inventorySaveData = new InventorySaveData();
-    public PlayerSaveData _playerSaveData = new PlayerSaveData();
-
+    public SaveDatas _saveDatas;
+    public InventorySaveData _inventorySaveData;
+    public PlayerSaveData _playerSaveData;
+    public SkillSaveData _skillSaveData;
     public void Init()
     {
         InitializeGameState();
@@ -39,6 +38,7 @@ public class DataManager
         _saveDatas.Init();
         _inventorySaveData.Init();
         _playerSaveData.Init();
+        _skillSaveData.Init();
         SaveData<SaveDatas>();
         Logger.Log("처음 시작 데이터 저장");
     }
@@ -120,21 +120,5 @@ public class DataManager
             return _playerSaveData as T;
         }
         return null;
-    }
-
-    void LoadedData<T>(List<T> values)
-    {
-        foreach(var value in values)
-        {
-            if(value is PlayerSaveData playerData)
-            {
-                _playerSaveData = playerData;
-                Logger.Log("플레이어 데이터 적용");
-            }else if (value is InventorySaveData inventorySaveData)
-            {
-                _inventorySaveData = inventorySaveData;
-                Logger.Log("인벤토리 데이터 적용");
-            }
-        }
     }
 }
