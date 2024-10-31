@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 1904120141298166840}
   - component: {fileID: 5374985121688030098}
   - component: {fileID: 3962545096505895706}
+  - component: {fileID: 4296044608856088372}
   m_Layer: 5
   m_Name: SimpleQuestText
   m_TagString: Untagged
@@ -271,3 +272,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4296044608856088372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2712894162065450743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88dbe8f36c111a42a5ce92a5e5918c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _UIOpenAnimation: {fileID: 0}
+  _topBarImage: {fileID: 0}
+  _exitBtn: {fileID: 0}
+  _isSort: 1
