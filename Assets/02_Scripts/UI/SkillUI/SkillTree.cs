@@ -108,7 +108,10 @@ public class SkillTree : ItemDragUI
             GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition();
         }
         
-        GetText((int)Texts.SpTxt).text = $"sp소모:{_currentItem.Skill._needSP}";
+        if (_currentItem != null)
+        {
+            GetText((int)Texts.SpTxt).text = $"sp소모:{_currentItem.Skill._needSP}";
+        }
     }
 
     public override void CloseUI(bool isCloseAll = false)
