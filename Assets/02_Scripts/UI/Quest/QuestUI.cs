@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -86,16 +87,15 @@ public class QuestUI : BaseUI
     }
     private void OnDisable()
     {
-        StartCoroutine(ClearList());
+        ClearList();
     }
-    public IEnumerator ClearList()
+    public void ClearList()
     {
         for (int i = 0; i < _questButtons.Count; i++)
         {
             Managers.Resource.Destroy(_questButtons[i]);
         }
-        yield return new WaitForSeconds(0.1f);
-        _questButtons.Clear();
+    
     }
     public void ButtonSet()
     {
@@ -145,21 +145,22 @@ public class QuestUI : BaseUI
         //Logger.LogError($"{Managers.QuestManager._activeQuest.Count}몇이니");
         for (int i = 0; i < Managers.QuestManager._activeQuest.Count; i++)
         {
-            if(_buttonType.ContainsKey(Managers.QuestManager._activeQuest[i].ToString()))
-            {
-                break;
-            }
+            
             possibleQuest = Managers.Resource.Instantiate("UI/QuestListBtn", _questView.transform);
             possibleQuest.GetOrAddComponent<QuestButton>()._questID = Managers.QuestManager._activeQuest[i];
             possibleQuest.GetOrAddComponent<Poolable>();
             possibleQuest.name = Managers.QuestManager._activeQuest[i].ToString();
+            if (_buttonType.ContainsKey(Managers.QuestManager._activeQuest[i].ToString()))
+            {
+                continue;
+            }
             _buttonType.Add(possibleQuest.name, Managers.QuestManager._activeQuest[i]);
             _questButtons.Add(possibleQuest);
             _getButtons.Add(Managers.QuestManager._activeQuest[i], possibleQuest);
         }
         yield return new WaitForSeconds(0.5f);
         OpenPossibleQuestBtnListner();
-        yield return null;
+        yield break;
     }
     public void OpenPossibleQuestBtnListner()
     {
