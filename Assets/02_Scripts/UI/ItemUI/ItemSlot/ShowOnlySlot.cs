@@ -19,6 +19,6 @@ public class ShowOnlySlot : ItemSlot
     public override void UpdateSlotInfo()
     {
         base.UpdateSlotInfo();
-        isLocked = true;
+        _isLocked = true;
     }
 }
