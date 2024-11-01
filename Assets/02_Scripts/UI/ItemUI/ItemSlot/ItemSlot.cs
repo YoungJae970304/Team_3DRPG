@@ -118,4 +118,8 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
         _Image.enabled = true;
     }
 
+    public virtual void Use() {
+        if (!_isUsealbe) return;
+    
+    }
 }
