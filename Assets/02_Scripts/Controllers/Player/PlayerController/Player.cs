@@ -371,7 +371,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
 
     }
 
-    public void ApplyDamage(int damage)
+    public virtual void ApplyDamage(int damage)
     {
         if (_hitMobs.Count == 0) return;
 
@@ -380,8 +380,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
             if (mob.TryGetComponent<IDamageAlbe>(out var damageable))
             {
                 damageable.Damaged(damage);
-                //GameObject go = Managers.Resource.Instantiate("HitEffect/MeleeNormalHit");
-                //go.transform.position = mob.transform.position;
                 Logger.LogError(" 데미지 확인 ");
             }
         }
@@ -389,7 +387,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _hitMobs.Clear();
     }
 
-    public void AreaDamage(float range, int damage)
+    public virtual void AreaDamage(float range, int damage)
     {
         Vector3 playerPos = Managers.Game._player.transform.position;
 

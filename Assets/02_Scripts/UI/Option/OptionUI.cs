@@ -56,8 +56,10 @@ public class OptionUI : BaseUI
             {
                 Managers.Resource.Destroy(Managers.Game._monsters[i].gameObject);
             }
-            
-            Managers.Scene.SceneChange("main");
+
+            //Managers.Scene.SceneChange("main");
+            Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
+            _fadeAnim.SetTrigger("doFade");
             Get<Button>((int)SelectButtons.GiveUp).interactable = false;
             CloseUI();
         };
