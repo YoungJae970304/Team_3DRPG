@@ -180,17 +180,17 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
 
-        _playerStatManager._originStat.MaxHP = 100;
+        _playerStatManager._originStat.MaxHP = 150;
         _playerStatManager.HP = _playerStatManager._originStat.MaxHP;
         _playerStatManager._originStat.MaxMP = 100;
         _playerStatManager.MP = _playerStatManager._originStat.MaxMP;
         _playerStatManager._originStat.MoveSpeed = 5f;
         _playerStatManager._originStat.DodgeSpeed = 10f;
-        _playerStatManager._originStat.ATK = 50;
-        _playerStatManager._originStat.DEF = 50;
+        _playerStatManager._originStat.ATK = 30;
+        _playerStatManager._originStat.DEF = 10;
         _playerStatManager.SP = 0;
-        _playerStatManager._originStat.RecoveryHP = 10;
-        _playerStatManager._originStat.RecoveryMP = 5;
+        _playerStatManager._originStat.RecoveryHP = 2;
+        _playerStatManager._originStat.RecoveryMP = 2;
 
         _playerStatManager.PlayerStatUpdate();
 
