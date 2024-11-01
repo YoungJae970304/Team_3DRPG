@@ -13,12 +13,22 @@ public class LoadingScene : BaseScene
     public TextMeshProUGUI _loadingTxt;
     public TextMeshProUGUI _skipTxt;
 
+    Animator _fadeAnim;
+    AsyncOperation ao;
+
     private void Start()
     {
+        _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
+
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
 
         if (Managers.Game._player != null) return;
         Managers.Game.PlayerCreate();
+    }
+
+    public void ChangeScene()
+    {
+        ao.allowSceneActivation = true;
     }
 
     // 비동기 신
@@ -27,7 +37,7 @@ public class LoadingScene : BaseScene
         yield return null;
 
         // 지정된 씬을 비동기 형식으로 로드한다
-        AsyncOperation ao = Managers.Scene.LoadSceneAsync(sceneType);
+        ao = Managers.Scene.LoadSceneAsync(sceneType);
 
         // 준비가 완료되어도 다음 씬으로 넘어가지 않게
         // 단, 이걸 사용하면 progree는 0.9까지밖에 안됨 -> 유니티 내부 구조의 문제
@@ -48,7 +58,8 @@ public class LoadingScene : BaseScene
                 _skipTxt.enabled = true;
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    ao.allowSceneActivation = true;
+                    //ao.allowSceneActivation = true;
+                    _fadeAnim.SetTrigger("doFade");
                 }
             }
 
