@@ -45,6 +45,9 @@ public class SkillTree : ItemDragUI
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
         _scrollRect = Get<ScrollRect>((int)ScrollView.Skills);
+
+        GetButton((int)Buttons.PlusBtn).onClick.RemoveAllListeners();
+        GetButton((int)Buttons.MinusBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.PlusBtn).onClick.AddListener(OnSkillLevelPlusBtn);
         GetButton((int)Buttons.MinusBtn).onClick.AddListener(OnSkillLevelMinusBtn);
     }

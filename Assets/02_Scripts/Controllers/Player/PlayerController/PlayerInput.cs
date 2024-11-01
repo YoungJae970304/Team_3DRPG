@@ -204,6 +204,16 @@ public class PlayerInput : MonoBehaviour
             Managers.QuestManager._questInput = Define.QuestInput.Q;
             OpenPlayerUI<QuestUI>();
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))//퀵슬롯 사용
+        {
+            MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
+            mainUI.ItemSlot_1.Use();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
+            mainUI.ItemSlot_2.Use();
+        }
     }
 
     // 데이터 입력 없는 디폴트

@@ -20,16 +20,7 @@ public class MagePlayer : Player
         go.transform.forward = _playerModel.forward;
         go.transform.position = _mageBallPos.position;
 
-        int randVal = Random.Range(1, 3);
-
-        if (randVal == 1)
-        {
-            Managers.Sound.Play("Mage/mage_atk_voice_1", Define.Sound.Effect);
-        }
-        else
-        {
-            Managers.Sound.Play("Mage/mage_atk_voice_2", Define.Sound.Effect);
-        }
+        RandSoundsPlay("Mage/mage_atk_voice_1", "Mage/mage_atk_voice_2");
     }
 
     public override void AreaDamage(float range, int damage)
@@ -44,6 +35,7 @@ public class MagePlayer : Player
                 {
                     damageable.Damaged(damage);
                     _effectController.HitEffectsOn("MageSnowhit", Managers.Game._monsters[i].transform);
+                    Managers.Sound.Play("Mage/mage_skill1_hit");
                 }
             }
         }

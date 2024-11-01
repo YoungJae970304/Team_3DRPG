@@ -52,6 +52,7 @@ public class MageBall : MonoBehaviour
                 {
                     damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
                     Managers.Game._player._effectController.HitEffectsOn("MageNormalhit", other.transform);
+                    Managers.Sound.Play("Mage/mage_atk_hit");
                     Managers.Resource.Destroy(gameObject);
                 }
                 // 콜라이더로 담을 때

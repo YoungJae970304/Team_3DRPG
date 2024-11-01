@@ -180,17 +180,17 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _pFsm = new FSM(States[PlayerState.Idle]);
         _canAtkInput = true;
 
-        _playerStatManager._originStat.MaxHP = 100;
+        _playerStatManager._originStat.MaxHP = 150;
         _playerStatManager.HP = _playerStatManager._originStat.MaxHP;
         _playerStatManager._originStat.MaxMP = 100;
         _playerStatManager.MP = _playerStatManager._originStat.MaxMP;
         _playerStatManager._originStat.MoveSpeed = 5f;
         _playerStatManager._originStat.DodgeSpeed = 10f;
-        _playerStatManager._originStat.ATK = 50;
-        _playerStatManager._originStat.DEF = 50;
-        _playerStatManager.SP = 10;
-        _playerStatManager._originStat.RecoveryHP = 10;
-        _playerStatManager._originStat.RecoveryMP = 5;
+        _playerStatManager._originStat.ATK = 30;
+        _playerStatManager._originStat.DEF = 10;
+        _playerStatManager.SP = 0;
+        _playerStatManager._originStat.RecoveryHP = 2;
+        _playerStatManager._originStat.RecoveryMP = 2;
 
         _playerStatManager.PlayerStatUpdate();
 
@@ -362,6 +362,20 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         foreach (var col in _atkColliders)
         {
             col.enabled = (col.name == colName);
+        }
+    }
+
+    public void RandSoundsPlay(string path1, string path2, float volume = 1)
+    {
+        int randVal = UnityEngine.Random.Range(1, 3);
+
+        if (randVal == 1)
+        {
+            Managers.Sound.Play(path1, Define.Sound.Effect, volume);
+        }
+        else
+        {
+            Managers.Sound.Play(path2, Define.Sound.Effect, volume);
         }
     }
 
