@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SimpleQuestText : BaseUI
 {
-    int test123;
+    public int test123;
     enum QuestText
     {
         SimpleQuestText,

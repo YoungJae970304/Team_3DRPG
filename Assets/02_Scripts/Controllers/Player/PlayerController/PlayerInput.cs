@@ -199,6 +199,11 @@ public class PlayerInput : MonoBehaviour
         {
             OpenPlayerUI<EquipMentUI>();
         }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Managers.QuestManager._questInput = Define.QuestInput.Q;
+            OpenPlayerUI<QuestUI>();
+        }
     }
 
     // 데이터 입력 없는 디폴트
