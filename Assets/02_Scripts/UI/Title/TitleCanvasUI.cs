@@ -22,13 +22,16 @@ public class TitleCanvasUI : BaseUI
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
         if (selectPlayerUI == null)
         {
-            Managers.UI.OpenUI<SelectPlayerUI>(new BaseUIData());
+            Managers.UI.OpenUI<SelectPlayerUI>(new BaseUIData(), false);
         }
     }
 
     public void OnClickContinueBtn(string sceneName)
     {
-        Managers.Scene.SceneChange(sceneName);
+        //Managers.Scene.SceneChange(sceneName);
+        Animator fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
+        fadeAnim.SetTrigger("doFade");
+
         Managers.Data.LoadData<PlayerSaveData>();
         Managers.Data.LoadData<InventorySaveData>();
         //CloseUI(true);

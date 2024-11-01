@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 658642e428b11d242a42b4c239171565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _recoveryInterval: 0.5
+  _recoveryInterval: 5
   _lastTime: 0
 --- !u!114 &7730115033510396560
 MonoBehaviour:
@@ -3099,7 +3099,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.002
+  m_Radius: 0.005
   m_Height: 0.015
   m_Direction: 0
   m_Center: {x: 0.001, y: 0, z: 0}

@@ -25,6 +25,7 @@ public class MeleePlayer : Player
             {
                 damageable.Damaged(damage);
                 _effectController.HitEffectsOn("MeleeNormalHit", mob.transform);
+                RandSoundsPlay("Melee/melee_atk_hit_1", "Melee/melee_atk_hit_2");
             }
         }
 
@@ -43,6 +44,7 @@ public class MeleePlayer : Player
                 {
                     damageable.Damaged(damage);
                     _effectController.HitEffectsOn("MeleeNormalHit", Managers.Game._monsters[i].transform);
+                    RandSoundsPlay("Melee/melee_atk_hit_1", "Melee/melee_atk_hit_2");
                 }
             }
         }

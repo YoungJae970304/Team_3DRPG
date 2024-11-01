@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//»ç¿ë ¾ÆÀÌÅÛ ÀÎÅÍÆäÀÌ½º(Æ÷¼Ç)
+//ì‚¬ìš© ì•„ì´í…œ ì¸í„°í˜ì´ìŠ¤(í¬ì…˜)
 public interface IUsableItem
 {
-    //¾ÆÀÌÅÛ »ç¿ë ¼º°ø ¿©ºÎ·Î
-    bool Use();
+    //ì•„ì´í…œ ì‚¬ìš© ì„±ê³µ ì—¬ë¶€ë¡œ
+    bool Use(IDamageAlbe target);
 }
