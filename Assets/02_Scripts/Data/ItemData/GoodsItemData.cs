@@ -6,8 +6,7 @@ using UnityEngine;
 [Serializable]
 public class GoodsItemData : ItemData
 {
-    public string FlavorText;
-    //기타 아이템 설명
     [Multiline]
-    string _flavorText;
+    //기타 아이템 설명
+    public string FlavorText;
 }

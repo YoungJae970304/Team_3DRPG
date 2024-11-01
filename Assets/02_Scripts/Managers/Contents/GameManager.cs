@@ -48,21 +48,9 @@ public class GameManager
         {
             case Define.PlayerType.Melee:
                 GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
-                if(meleePlayer != null)
-                {
-                    //첫 시작 플레이어 데이터 저장
-                    Managers.Data.SaveData<SaveDatas>();
-                    Logger.Log("첫 시작 데이터 근접 저장");
-                }
                 break;
             case Define.PlayerType.Mage:
                 GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
-                if(magePlayer != null)
-                {
-                    //첫 시작 플레이어 데이터 저장
-                    Managers.Data.SaveData<SaveDatas>();
-                    Logger.Log("첫 시작 데이터 원거리 저장");
-                }
                 break;
             default:
                 Logger.LogError("생성할 플레이어가 없습니다.");

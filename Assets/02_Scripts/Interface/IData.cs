@@ -7,5 +7,5 @@ public interface IData
     //데이터 로드
     bool LoadData();
     //데이터 세이브
-    bool SaveData();
+    void SaveData();
 }

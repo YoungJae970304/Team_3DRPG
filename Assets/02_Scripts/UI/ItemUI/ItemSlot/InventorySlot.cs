@@ -27,7 +27,6 @@ public class InventorySlot : ItemSlot
         if (moveSlot is ShopItemSlot) { (moveSlot as ShopItemSlot).BuyConfirm(this); return; }
         if (!_itemManager.Containtype(_slotType, (moveSlot as ItemSlot)._slotType)) { return; }
         base.ItemInsert(moveSlot);
-        
     }
     public override void EqualSlot(ItemSlot moveSlot)
     {

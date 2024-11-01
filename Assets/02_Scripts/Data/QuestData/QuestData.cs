@@ -79,23 +79,22 @@ public class QuestData : IData
         RewardType3 = _rewardType3;
     }
 
-    public bool SaveData()
+    public void SaveData()
     {
-        bool result = false;
+        //bool result = false;
         try
         {
             string key = "QusetData_" + ID;
             string questDataJson = JsonUtility.ToJson(this);
             PlayerPrefs.SetString(key, questDataJson);
             PlayerPrefs.Save();
-            result = true;
-
+            //result = true;
         }
         catch (Exception e)
         {
             Logger.Log($"저장 실패(" + e.Message + ")");
         }
-        return result;
+        //return result;
     }
 
     public bool LoadData()

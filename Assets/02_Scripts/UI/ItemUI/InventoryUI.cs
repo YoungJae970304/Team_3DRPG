@@ -52,7 +52,6 @@ public class InventoryUI : ItemDragUI
     {
         base.Init(anchor);
         UpdateSlot();
-        Managers.Data.SaveData<InventorySaveData>();
     }
     void SlotSetting(ItemData.ItemType type) {
        int size= _inventory.GetGroupSize(type);

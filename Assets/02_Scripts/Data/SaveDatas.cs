@@ -16,6 +16,7 @@ public class SaveDatas : IData
     public List<EquipmentSaveData> _EquipmentSaveDatas;
     //플레이어 초기 값 저장 데이터
     public List<PlayerSaveData> _PlayerSaveDatas;
+    //퀘스트 초기 값 저장 데이터
     public List<QuestSaveData> _QuestSaveData;
     //선택한 플레이어타입
     public Define.PlayerType _PlayerTypes;
@@ -25,11 +26,27 @@ public class SaveDatas : IData
     public void Init()
     {
         _SavePath = $"{Application.persistentDataPath}/SaveDatas.json";
+
+        if (string.IsNullOrEmpty(_SavePath))
+        {
+            return;
+        }
+        string directory = Path.GetDirectoryName(_SavePath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        _InventorySaveDatas = new List<InventorySaveData>();
+        _SkillSaveDatas = new List<SkillSaveData>();
+        _EquipmentSaveDatas = new List<EquipmentSaveData>();
+        _PlayerSaveDatas = new List<PlayerSaveData>();
+        _QuestSaveData = new List<QuestSaveData>();
         SetDefaultData();
         Logger.Log($"저장 경로 확인 {_SavePath}");
     }
 
-    public bool SaveData()
+    public void SaveData()
     {
         try
         {
@@ -45,30 +62,18 @@ public class SaveDatas : IData
             }
             string json = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, json);
-            return true;
         }
         catch (Exception e)
         {
             Logger.LogError($"데이터 저장 실패: {e.Message}");
-            return false;
         }
     }
 
     public bool LoadData()
     {
-        string[] files = Directory.GetFiles(Path.GetDirectoryName(_SavePath),"*.json");
-
-        if (files.Length == 0)
-        {
-            Logger.LogWarning("가장 최근에 저장된 데이터가 없습니다");
-            return false;
-        }
-
-        string lastSaveFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
-
         try
         {
-            string json = File.ReadAllText(lastSaveFile);
+            string json = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(json, this);
             Logger.Log("게임 데이터 로드 성공");
             return true;
@@ -107,6 +112,9 @@ public class PlayerSaveData : IData
     float _x;
     float _y;
     float _z;
+    //선택한 플레이어타입
+    public Define.PlayerType _PlayerTypes;
+
     string _SavePath;
 
     public void Init()
@@ -114,7 +122,7 @@ public class PlayerSaveData : IData
         _SavePath = $"{Application.persistentDataPath}/SavePlayerData.json";
     }
 
-    public bool SaveData()
+    public void SaveData()
     {
         try
         {
@@ -128,42 +136,31 @@ public class PlayerSaveData : IData
             _x = player.transform.position.x;
             _y = player.transform.position.y;
             _z = player.transform.position.z;
-            //현재 0 1 0 으로 저장되는데 실제 위치는 뭐 600어쩌구임;;
+            _PlayerTypes = Managers.Game._playerType;
             Logger.Log($"현재 플레이어 저장 위치 확인{_x}{_y}{_z}");
+
             string directory = Path.GetDirectoryName(_SavePath);
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
-
             string playerJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, playerJson);
 
             Logger.Log("플레이어 데이터 저장");
-            return true;
         }
         catch (Exception e)
         {
             Logger.LogError($"플레이어 데이터 저장 실패: {e.Message}");
-            return false;
         }
     }
 
     public bool LoadData()
     {
-        string[] files = Directory.GetFiles(Path.GetDirectoryName(_SavePath),"*.json");
-
-        if (files.Length == 0)
-        {
-            Logger.LogWarning("가장 최근에 저장된 데이터가 없습니다");
-            return false;
-        }
-
-        string lastSaveFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
-
+        Managers.Game.PlayerCreate();
         try
         {
-            string playerJson = File.ReadAllText(lastSaveFile);
+            string playerJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(playerJson, this);
             Logger.Log("플레이어 데이터 로드 성공");
             return true;
@@ -206,17 +203,24 @@ public class InventorySaveData : IData
     public void Init()
     {
         _SavePath = $"{Application.persistentDataPath}/InvenSaveData.Json";
+        PubAndSub.Subscrib("InvenSave", SaveData);
     }
 
-    public bool SaveData()
+    public void SaveData()
     {
-        if (_inventory == null) { Logger.LogWarning("인벤토리가 초기화 되지 않고 있음"); return false; }
+        SetDefaultData();
         try
         {
+            if (_inventory == null)
+            {
+                Logger.LogWarning("인벤토리 널 값");
+            }
+
             _InvenItemList.Clear();
             foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
                 var itemType = (ItemData.ItemType)itemSaveType;
+                if (itemType == ItemData.ItemType.DropData) continue;
                 int maxGroupSize = _inventory.GetGroupSize(itemType);
 
                 for (int index = 0; index < maxGroupSize; index++)
@@ -227,7 +231,7 @@ public class InventorySaveData : IData
                         InventoryItemData itemData = new InventoryItemData
                         {
                             _id = item.Data.ID,
-                            _amount = item is CountableItem ? ((CountableItem)item).GetCurrentAmount() : 1,
+                            _amount = item is CountableItem countableItem ? countableItem.GetCurrentAmount() : 1,
                             _index = index,
                             _type = (int)itemType,
                         };
@@ -236,7 +240,7 @@ public class InventorySaveData : IData
                 }
             }
             string directory = Path.GetDirectoryName(_SavePath);
-            if (!Directory.Exists(directory))
+            if (!Directory.Exists(directory) && directory != null)
             {
                 Directory.CreateDirectory(directory);
             }
@@ -244,50 +248,39 @@ public class InventorySaveData : IData
             string invenJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, invenJson);
             Logger.Log("인벤토리 세이브");
-            return true;
         }
         catch (Exception e)
         {
-            Logger.LogError($"저장된 아이템이 없습니다.{e.Message}");
-            return false;
+            Logger.LogError($"인벤토리 세이브 실패 : .{e.Message}");
         }
     }
 
     public bool LoadData()
     {
-        string[] files = Directory.GetFiles(Path.GetDirectoryName(_SavePath),"*.json");
-
-        if (files.Length == 0)
-        {
-            Logger.LogWarning("가장 최근에 저장된 데이터가 없습니다");
-            return false;
-        }
-
-        string lastSaveFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
-
+        SetDefaultData();
         try
         {
-            string invenJson = File.ReadAllText(lastSaveFile);
+            string invenJson = File.ReadAllText(_SavePath);
+            Logger.LogError(invenJson);
             JsonUtility.FromJsonOverwrite(invenJson, this);
             foreach (var itemData in _InvenItemList)
             {
+
                 //아이템 검증
-                Item newSaveItem = _inventory.GetItemToId(itemData._id);
+                Item newSaveItem = Item.ItemSpawn(itemData._id, itemData._amount);
+
                 if (newSaveItem == null)
                 {
                     Logger.LogWarning($"유효하지 않은 아이템 ID: {itemData._id}");
 
                     continue;
                 }
-
-                if (newSaveItem is CountableItem countableItem)
-                {
-                    countableItem.AddAmount(itemData._amount);
-                }
+                //_inventory.Setitem(itemData._index, newSaveItem);
 
                 // 빈 슬롯인지 확인 후 아이템 설정
-                if (_inventory.GetItem(itemData._index, (ItemData.ItemType)itemData._type) == null)
+                if (_inventory.GetItem(itemData._index, newSaveItem.Data.Type) == null)
                 {
+                    Logger.LogError("546");
                     _inventory.Setitem(itemData._index, newSaveItem);
                 }
                 else
@@ -307,11 +300,11 @@ public class InventorySaveData : IData
     public void SetDefaultData()
     {
         var player = Managers.Game._player;
-        _inventory = player.GetOrAddComponent<Inventory>();
+        _inventory = player.GetComponent<Inventory>();
         if (_inventory == null)
         {
+            player.AddComponent<Inventory>();
             Logger.LogError("인벤토리가 null 입니다.");
-            player.GetOrAddComponent<Inventory>();
         }
     }
 }
@@ -328,7 +321,7 @@ public class SkillSaveData : IData
         _skills.AddRange(Managers.DataTable._SkillData);
     }
 
-    public bool SaveData()
+    public void SaveData()
     {
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
@@ -339,30 +332,18 @@ public class SkillSaveData : IData
         {
             string skillJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, skillJson);
-            return true;
         }
         catch (Exception e)
         {
             Logger.LogError($"저장할 스킬이 없습니다.{e.Message}");
-            return false;
         }
     }
 
     public bool LoadData()
     {
-        string[] files = Directory.GetFiles(Path.GetDirectoryName(_SavePath),"*.json");
-
-        if (files.Length == 0)
-        {
-            Logger.LogWarning("가장 최근에 저장된 데이터가 없습니다");
-            return false;
-        }
-
-        string lastSaveFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
-
         try
         {
-            string skillJson = File.ReadAllText(lastSaveFile);
+            string skillJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(skillJson, this);
             Logger.Log("스킬 데이터 로드");
             return true;
@@ -397,7 +378,7 @@ public class EquipmentSaveData : IData
         _goodsItemData.AddRange(Managers.DataTable._GoodsItemData);
     }
 
-    public bool SaveData()
+    public void SaveData()
     {
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
@@ -408,29 +389,18 @@ public class EquipmentSaveData : IData
         {
             string equipJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, equipJson);
-            return true;
         }
         catch (Exception e)
         {
             Logger.LogError($"저장할 아이템이 없습니다.{e.Message}");
-            return false;
         }
     }
 
     public bool LoadData()
     {
-        string[] files = Directory.GetFiles(Path.GetDirectoryName(_SavePath),"*.json");
-
-        if (files.Length == 0)
-        {
-            Logger.LogWarning("가장 최근에 저장된 데이터가 없습니다");
-            return false;
-        }
-
-        string lastSaveFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
         try
         {
-            string equipJson = File.ReadAllText(lastSaveFile);
+            string equipJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(equipJson, this);
             Logger.Log("아이템 데이터 로드");
             return true;
@@ -461,7 +431,7 @@ public class QuestSaveData : IData
         _questDatas.AddRange(Managers.DataTable._QuestData);
     }
 
-    public bool SaveData()
+    public void SaveData()
     {
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
@@ -472,30 +442,18 @@ public class QuestSaveData : IData
         {
             string questJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, questJson);
-            return true;
         }
         catch (Exception e)
         {
             Logger.LogError($"저장할 퀘스트 없습니다.{e.Message}");
-            return false;
         }
     }
 
     public bool LoadData()
     {
-        string[] files = Directory.GetFiles(Path.GetDirectoryName(_SavePath),"*.json");
-
-        if(files.Length == 0)
-        {
-            Logger.LogWarning("가장 최근에 저장된 데이터가 없습니다");
-            return false;
-        }
-
-        string lastSaveFile = files.OrderByDescending(f => new FileInfo(f).LastWriteTime).First();
-
         try
         {
-            string questJson = File.ReadAllText(lastSaveFile);
+            string questJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(questJson, this);
             Logger.Log("퀘스트 데이터 로드");
             return true;
