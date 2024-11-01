@@ -28,10 +28,14 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickContinueBtn(string sceneName)
     {
-        Managers.Scene.SceneChange(sceneName);
+        //Managers.Scene.SceneChange(sceneName);
+        Animator fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
+        fadeAnim.SetTrigger("doFade");
+
+        Managers.Data.LoadData<PlayerSaveData>();
+        Managers.Data.LoadData<InventorySaveData>();
         //CloseUI(true);
         Managers.UI.CloseAllOpenUI();
-       
     }
 
     public void OnClickShutDownBtn()

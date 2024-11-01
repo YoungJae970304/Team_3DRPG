@@ -82,6 +82,7 @@ public class ChainLightingEffect : MonoBehaviour
                     //damageable.Damaged(Managers.Game._player._playerStatManager.ATK); MageElectrohit
                     damageable.Damaged(Managers.Game._player._skillBase._damage);
                     Managers.Game._player._effectController.HitEffectsOn("MageElectrohit", monstersCopy[i].transform);
+                    Managers.Sound.Play("Mage/mage_skill3_hit");
                 }
             }
             yield return new WaitForSeconds(0.1f);
