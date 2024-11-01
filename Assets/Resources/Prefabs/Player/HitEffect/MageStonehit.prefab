@@ -4908,10 +4908,8 @@ GameObject:
   - component: {fileID: 2452082064152055796}
   - component: {fileID: 484368387861551534}
   - component: {fileID: 8206432625395753029}
-  - component: {fileID: 8345522508501291922}
-  - component: {fileID: 4861781113403094778}
   m_Layer: 0
-  m_Name: MeleePowerHit
+  m_Name: MageStonehit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9799,31 +9797,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &8345522508501291922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1758473627833946668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96090ca1a4956324a9e21391dff6edbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsUsing: 0
---- !u!114 &4861781113403094778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1758473627833946668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e38afbd57679d242a8efc9917879c7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3195425902662666683
 GameObject:
   m_ObjectHideFlags: 0

@@ -828,7 +828,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.4361111
-        functionName: AreaDamage
+        functionName: MeleePowerAttackDamage
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 5

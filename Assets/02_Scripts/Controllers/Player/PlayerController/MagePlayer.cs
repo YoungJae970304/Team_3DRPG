@@ -32,6 +32,23 @@ public class MagePlayer : Player
         }
     }
 
+    public override void AreaDamage(float range, int damage)
+    {
+        Vector3 playerPos = Managers.Game._player.transform.position;
+
+        for (int i = 0; i < Managers.Game._monsters.Count; i++)
+        {
+            if (Vector3.Distance(playerPos, Managers.Game._monsters[i].transform.position) < range)
+            {
+                if (Managers.Game._monsters[i].TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    damageable.Damaged(damage);
+                    _effectController.HitEffectsOn("MageSnowhit", Managers.Game._monsters[i].transform);
+                }
+            }
+        }
+    }
+
     public override void Special()
     {
         _playerCam.CamModeChange();

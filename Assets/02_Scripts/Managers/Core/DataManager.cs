@@ -58,12 +58,14 @@ public class DataManager
         DataTpyes();
         Logger.Log("타입 체크");
         SaveData<SaveDatas>();
+        Logger.Log($"처음 시작 데이터 저장 확인");
         GetData<SaveDatas>()?.Init();
         GetData<InventorySaveData>()?.Init();
+        GetData<EquipmentSaveData>()?.Init();
         GetData<PlayerSaveData>()?.Init();
         GetData<SkillSaveData>()?.Init();
         GetData<QuestSaveData>()?.Init();
-        Logger.Log("처음 시작 데이터 저장");
+        Logger.Log("각 데이터 Init 실행 확인");
     }
 
     Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>

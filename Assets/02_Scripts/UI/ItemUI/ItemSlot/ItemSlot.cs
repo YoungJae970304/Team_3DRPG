@@ -16,7 +16,8 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
             UpdateSlotInfo();
         }
     }
-    public bool isLocked=false;                                     //슬롯잠금
+    public bool _isUsealbe = true;
+    public bool _isLocked=false;                                     //슬롯잠금
     public Image _Image;                                            //아이콘표시할 이미지
     [SerializeField] protected TextMeshProUGUI _text;               //남은 개수 표시할 텍스트
     public ItemData.ItemType _slotType = ItemData.ItemType.Weapon;  //슬롯이 담을 아이템 타입
@@ -104,7 +105,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
 
     public virtual bool DragEnter(Image icon)
     {
-        if (Item == null || isLocked) { return false; }
+        if (Item == null || _isLocked) { return false; }
         icon.enabled = true;                        //마우스 따라다닐 이미지
         icon.sprite = _Image.sprite;   //이미지 변경
         _Image.enabled = false;        //슬롯의 이미지 비활성화
@@ -117,4 +118,8 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
         _Image.enabled = true;
     }
 
+    public virtual void Use() {
+        if (!_isUsealbe) return;
+    
+    }
 }

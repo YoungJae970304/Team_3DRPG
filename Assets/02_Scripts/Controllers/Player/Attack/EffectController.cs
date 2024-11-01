@@ -23,9 +23,10 @@ public class EffectController : BaseUI
         Count,
     }
 
-    public enum CommonEffects
+    public enum HitEffects
     {
-        SlashHit,
+        MeleeNormalHit,
+        MeleePowerHit,
     }
 
     private void Start()
@@ -68,5 +69,13 @@ public class EffectController : BaseUI
     {
         Get<ParticleSystem>((int)name).gameObject.SetActive(true);
         Get<ParticleSystem>((int)name).Play();
+    }
+
+    public void HitEffectsOn(string effectName, Transform pos)
+    {
+        //Vector3 effectPos = pos.transform.position + pos.GetComponent<CharacterController>().center;
+        Vector3 effectPos = pos.GetComponentInChildren<Renderer>().bounds.center;
+        GameObject go = Managers.Resource.Instantiate($"Player/HitEffect/{effectName}");
+        go.transform.position = effectPos;
     }
 }

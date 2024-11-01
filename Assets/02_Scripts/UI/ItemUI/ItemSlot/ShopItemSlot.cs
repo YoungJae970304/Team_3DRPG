@@ -14,8 +14,8 @@ public class ShopItemSlot : ItemSlot
        
     }
 
-    public void Init() { 
-    
+    public void Init() {
+        _isUsealbe = false;
     }
     public override bool MoveItem(ItemSlot moveSlot)
     {

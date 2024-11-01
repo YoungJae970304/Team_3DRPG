@@ -95,7 +95,7 @@ public class PlayerAnimEvent : MonoBehaviour
     }
 
     // 광역으로 일괄 데미지를 넣을 때 사용하는 이벤트 range로 범위 조절
-    public void AreaDamage(float range)
+    public void MeleePowerAttackDamage(float range)
     {
         Vector3 playerPos = Managers.Game._player.transform.position;
 
@@ -105,6 +105,7 @@ public class PlayerAnimEvent : MonoBehaviour
             {
                 if (Managers.Game._monsters[i].TryGetComponent<IDamageAlbe>(out var damageable))
                 {
+                    _player._effectController.HitEffectsOn("MeleePowerHit", Managers.Game._monsters[i].transform);
                     damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
                 }
             }
