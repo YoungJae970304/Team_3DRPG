@@ -96,4 +96,15 @@ public class InventorySlot : ItemSlot
             }
         }
     }
+    public override void Use()
+    {
+        base.Use();
+        if (Item is ConsumableItem)
+        {
+            (Item as ConsumableItem).Use(_itemManager.GetComponent<Player>());
+        }
+        else if(Item is EquipmentItem) { 
+            //장비 장착 기능 넣으면 좋을것같음
+        }
+    }
 }

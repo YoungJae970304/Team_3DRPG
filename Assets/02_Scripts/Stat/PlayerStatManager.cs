@@ -77,4 +77,9 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
         Logger.Log($"스텟 저장{MaxEXP}\n{SpAddAmount}\n{Level}\n{MaxHP}\n{ATK}");
     }
     #endregion
+
+    [ContextMenu("체력소모 테스트")]
+    public void Hp() {
+        HP -= 50;
+    }
 }

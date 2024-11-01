@@ -20,9 +20,14 @@ public abstract class StatusEffect : MonoBehaviour
         _duration = duration;
         _target = target; 
         _effectIcon = GetComponent<Image>();
+        
         _effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
         _effectTimerTxt=GetComponentInChildren<TextMeshProUGUI>();
         _effectTimerTxt.text = _duration.ToString(); ;
+        if (duration <= 0) {
+            _effectIcon.enabled = false;
+            _effectTimerTxt.text = "";
+        }
         Effect();
     }
     private void Update()

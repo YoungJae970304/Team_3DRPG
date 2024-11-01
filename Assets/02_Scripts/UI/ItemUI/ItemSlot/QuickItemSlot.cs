@@ -45,14 +45,24 @@ public class QuickItemSlot : ItemSlot
         }
         return false;
     }
-    
-    public void Use()
+
+    public override void Use()
     {
-        (Item as IUsableItem).Use();
-        if ((Item as CountableItem).GetCurrentAmount() == 0) {
+        base.Use();
+        (Item as IUsableItem).Use(_inventory.GetComponent<Player>());
+        if ((Item as CountableItem).GetCurrentAmount() == 0)
+        {
             Item = _inventory.GetItemToId(Item.Data.ID);
         }
     }
+    /*
+public void Use()
+{
+    (Item as IUsableItem).Use();
+    if ((Item as CountableItem).GetCurrentAmount() == 0) {
+        Item = _inventory.GetItemToId(Item.Data.ID);
+    }
+}*/
     [ContextMenu("사용 테스트")]
     public void UseText()
     {
