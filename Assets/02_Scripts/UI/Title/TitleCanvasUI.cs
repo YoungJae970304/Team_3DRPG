@@ -22,7 +22,7 @@ public class TitleCanvasUI : BaseUI
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
         if (selectPlayerUI == null)
         {
-            Managers.UI.OpenUI<SelectPlayerUI>(new BaseUIData(), false);
+            Managers.UI.OpenUI<SelectPlayerUI>(new BaseUIData());
         }
     }
 
