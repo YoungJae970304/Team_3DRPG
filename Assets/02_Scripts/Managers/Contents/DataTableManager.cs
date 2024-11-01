@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UIElements;
 
 public class DataTableManager
 {
@@ -34,6 +35,8 @@ public class DataTableManager
     const string _SKILL_DATA_TABLE = "Skill_Data_Table";
     // 몬스터 스텟 데이터 테이블 CSV 파일
     const string _MONSTERSTAT_DATA_TABLE = "Monster_Stat_Data_Table";//추가 전
+    //상점 항목 데이터 테이블 CSV 파일
+    const string _SHOP_DATA_TABLE = "Shop_ItemList_Data_Table";
 
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
@@ -47,6 +50,7 @@ public class DataTableManager
     public List<FusionData> _FusionData = new List<FusionData>();
     public List<SkillData> _SkillData = new List<SkillData>();
     public List<MonsterStatData> _MonsterStatData = new List<MonsterStatData>();
+    public List<ShopUIData> _ShopUIData = new List<ShopUIData>();
 
     //실질적인 아이템만의 데이터 리스트의 전체 리스트
     public List<ItemData> _AllItemData = new List<ItemData>();
@@ -65,6 +69,7 @@ public class DataTableManager
         FusionDataTable(_DATA_PATH, _SYNTHESIS_DATA_TABLE);
         SkillDataTable(_DATA_PATH, _SKILL_DATA_TABLE);
         MonsterStatDataTable(_DATA_PATH, _MONSTERSTAT_DATA_TABLE);
+        ShopDataTable(_DATA_PATH, _SHOP_DATA_TABLE);
     }
     #endregion
 
@@ -489,6 +494,26 @@ public class DataTableManager
                 _MonsterStatData.Add(monsterStatData);
             }
         }
+    }
+    #endregion
+
+    #region
+    void ShopDataTable(string dataPath, string shopDataTable)
+    {
+        var parsedShopDataTable = CSVReader.Read($"{dataPath}/{shopDataTable}");
+
+        ShopUIData shopUIData = new ShopUIData { _itemCode = new List<(int, int)>() };
+        foreach (var data in parsedShopDataTable)
+        {
+            int itemId = Convert.ToInt32(data["ItemID"]);
+            int itemCount = Convert.ToInt32(data["ItemCount"]);
+            shopUIData._itemCode.Add((itemId, itemCount));
+        }
+        _ShopUIData.Add(shopUIData);
+    }
+    public ShopUIData GetShopData()
+    {
+        return _ShopUIData.FirstOrDefault();
     }
     #endregion
 }

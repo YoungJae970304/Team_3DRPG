@@ -17,8 +17,10 @@ public class ConsumableItem : CountableItem,IUsableItem
         return true;
     }
 
-    public virtual void ItemEffect() { 
-    
+    public virtual void ItemEffect() {
+        if (Data is PotionItemData) { 
+            
+        }
     
     }
 }

@@ -43,7 +43,7 @@ public class PlayerInput : MonoBehaviour
     {
         _player._isMoving = false;
 
-        if (_player._hitting || _player._dodgeing || Managers.Game._cantInputKey) return;
+        if (_player._hitting || _player._dodgeing || Managers.Game._cantInputKey || !_player._canAtkInput) return;
 
         if (Input.GetKey(KeyCode.W))
         {

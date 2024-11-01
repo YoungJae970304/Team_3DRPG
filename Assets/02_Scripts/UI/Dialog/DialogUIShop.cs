@@ -17,16 +17,6 @@ public class DialogUIShop : DialogUI
         });
     }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        //_TEMP
-        ShopUIData shopUIData = new ShopUIData();
-        //_TEMP
-        shopUIData._itemCode = new List<(int, int)>();
-        shopUIData._itemCode.Clear();
-    }
-
     protected override IEnumerator DialogStart()
     {
         ActiveBtns(Buttons.CheckBtn);
@@ -49,17 +39,7 @@ public class DialogUIShop : DialogUI
     {
         if (!Managers.UI.IsActiveUI<ShopUI>())
         {
-            ShopUIData shopUIData = new()
-            {
-                //_TEMP
-                _itemCode = new List<(int, int)>
-        {
-            (11001, 1),
-            (11006, 1),
-            (11005, 1),
-            (41001, 95)
-        }
-            };
+            ShopUIData shopUIData = Managers.DataTable.GetShopData();
             Managers.UI.OpenUI<ShopUI>(shopUIData);
         }
     }
