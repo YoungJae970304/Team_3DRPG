@@ -28,6 +28,7 @@ public class QuickItemSlot : ItemSlot
         {
             _text.text = "";
         }
+        
     }
     public override void ItemInsert(IItemDragAndDropAble moveSlot)
     {
@@ -36,11 +37,19 @@ public class QuickItemSlot : ItemSlot
         Item item = (moveSlot as InventorySlot).Item;
         if (item ==null|| item.Data.Type != _slotType) { return; }
         Item = item;
+        if (Item is ConsumableItem)
+        {
+            _isUsealbe = true;
+        }
     }
     public override bool MoveItem(ItemSlot moveSlot)
     {
         if (moveSlot.GetType() == GetType()) {
             Item = moveSlot.Item;
+            if (Item is ConsumableItem)
+            {
+                _isUsealbe = true;
+            }
             return true;
         }
         return false;
@@ -50,6 +59,10 @@ public class QuickItemSlot : ItemSlot
     {
         base.Use();
         (Item as IUsableItem).Use(_inventory.GetComponent<Player>());
+        if (Item is CountableItem)
+        {
+            _text.text = _inventory.GetItemAmount(Item.Data.ID).ToString(); ;
+        }
         if ((Item as CountableItem).GetCurrentAmount() == 0)
         {
             Item = _inventory.GetItemToId(Item.Data.ID);

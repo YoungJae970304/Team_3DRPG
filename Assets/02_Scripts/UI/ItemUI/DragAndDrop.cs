@@ -196,8 +196,7 @@ public class DragAndDrop : MonoBehaviour
             Logger.Log(currSlot.Item.Data.Name);
             if (currSlot.Item is IUsableItem)//사용가능한 아이템이면
             {
-                currSlot.Use();//사용
-                currSlot.UpdateSlotInfo();//슬롯 갱신
+                currSlot.Use();//사용 및 슬롯 갱신
                 (Managers.UI.GetActiveUI<InventoryUI>() as InventoryUI)?.UpdateSlot();
                 (Managers.UI.GetActiveUI<MainUI>() as MainUI)?.QuickslotUpdate();
             }
