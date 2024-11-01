@@ -5217,7 +5217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1732436524799069286
 Transform:
   m_ObjectHideFlags: 0
@@ -5311,6 +5311,7 @@ MonoBehaviour:
   _attackCompleted: 0
   _enemyEffect: {fileID: 0}
   _anim: {fileID: 0}
+  _monsterID: 0
   _slimeID: 0
 --- !u!143 &843867408368323215
 CharacterController:
