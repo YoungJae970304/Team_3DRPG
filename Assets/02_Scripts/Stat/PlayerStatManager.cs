@@ -53,7 +53,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
 
     #region 스탯 관련 함수
     [Header("자동 회복 시간 설정")]
-    public float _recoveryInterval = 0.5f;
+    public float _recoveryInterval = 5f;
     public float _lastTime = 0;
 
     private void Update()
