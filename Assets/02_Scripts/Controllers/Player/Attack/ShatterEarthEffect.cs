@@ -93,6 +93,7 @@ public class ShatterEarthEffect : MonoBehaviour
                     //damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
                     damageAlbe.Damaged(Managers.Game._player._skillBase._damage);
                     Managers.Game._player._effectController.HitEffectsOn("MageStonehit", other.transform);
+                    Managers.Sound.Play("Mage/mage_skill2_hit");
                 }
                 // 콜라이더로 담을 때
                 Managers.Game._player._damageAlbes.Add(damageAlbe);
