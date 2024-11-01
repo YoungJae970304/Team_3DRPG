@@ -15,13 +15,13 @@ public class StatusEffectManager : MonoBehaviour
     {
         _target = GetComponent<IStatusEffectAble>();
     }
-    public void SpawnEffect<T>(int duration,params int[] value) where T : StatusEffect
+    public void SpawnEffect<T>(float duration,params int[] value) where T : StatusEffect
     {
         if (_immunitys.Contains(typeof(T))) { return;}
         //버프와디버프를 합산하고 그 안에 새로 생성하려는 타입이 이미 있으면 효과를 더하고 없을경우 새로 생성한다.
         StatusEffect newEffect =  _buff.Union(_deBuff).Where(effect => effect.GetType() == typeof(T)).FirstOrDefault();
         if (newEffect != null) {
-            newEffect.AddEffect(duration, value);
+                newEffect.AddEffect(duration, value);
         }
         else{
             GameObject effectIcon = Managers.Resource.Instantiate("StatusEffect", _iconTr);

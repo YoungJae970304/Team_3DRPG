@@ -37,6 +37,9 @@ public class ShopUI : ItemDragUI
     public override void SetInfo(BaseUIData uiData)
     {
         base.SetInfo(uiData);
+        foreach (var slot in _shopItemSlot) { 
+            Destroy(slot.gameObject);
+        }
         ShopUIData shopData = uiData as ShopUIData;
         SlotSetting(shopData._itemCode.Count);
         for (int i = 0; i < shopData._itemCode.Count; i++) {
