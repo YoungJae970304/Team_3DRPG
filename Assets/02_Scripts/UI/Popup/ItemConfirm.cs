@@ -77,6 +77,7 @@ public class ItemConfirm : ItemDragUI
                 Get<Slider>((int)Sliders.ItemAmount).maxValue = 99;
             }
             Get<Slider>((int)Sliders.ItemAmount).onValueChanged.AddListener(OnSliderChanged);
+            Get<Slider>((int)Sliders.ItemAmount).value = 1;
             OnSliderChanged(1);
         }
         else

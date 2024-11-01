@@ -191,7 +191,7 @@ public class DragAndDrop : MonoBehaviour
         //아이템 사용
         void ItemUse()
         {
-            if (currSlot.Item == null)
+            if(!currSlot._isUsealbe|| currSlot.Item == null)
                 return;
             Logger.Log(currSlot.Item.Data.Name);
             if (currSlot.Item is IUsableItem)//사용가능한 아이템이면
