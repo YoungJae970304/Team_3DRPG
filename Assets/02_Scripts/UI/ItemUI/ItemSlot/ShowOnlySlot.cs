@@ -20,5 +20,6 @@ public class ShowOnlySlot : ItemSlot
     {
         base.UpdateSlotInfo();
         _isLocked = true;
+        _isUsealbe = false;
     }
 }
