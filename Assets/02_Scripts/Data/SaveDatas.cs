@@ -90,6 +90,8 @@ public class SaveDatas : IData
         // 초기 데이터 세팅
         _InventorySaveDatas = new List<InventorySaveData> { new InventorySaveData() };
         _PlayerSaveDatas = new List<PlayerSaveData> { new PlayerSaveData() };
+        _QuestSaveData = new List<QuestSaveData> { new QuestSaveData() };
+        _EquipmentSaveDatas = new List<EquipmentSaveData> { new EquipmentSaveData() };
         _PlayerTypes = Managers.Game._playerType;
         Logger.Log($"현재 플레이어 타입: {_PlayerTypes}");
         Logger.Log("기본 데이터 설정 완료");
@@ -137,6 +139,7 @@ public class PlayerSaveData : IData
             _y = player.transform.position.y;
             _z = player.transform.position.z;
             _PlayerTypes = Managers.Game._playerType;
+            Logger.Log($"현재 플레이 중인데 타입 {_PlayerTypes}");
             Logger.Log($"현재 플레이어 저장 위치 확인{_x}{_y}{_z}");
 
             string directory = Path.GetDirectoryName(_SavePath);
@@ -209,14 +212,13 @@ public class InventorySaveData : IData
     public void SaveData()
     {
         SetDefaultData();
+        _InvenItemList.Clear();
         try
         {
             if (_inventory == null)
             {
                 Logger.LogWarning("인벤토리 널 값");
             }
-
-            _InvenItemList.Clear();
             foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
                 var itemType = (ItemData.ItemType)itemSaveType;
@@ -275,12 +277,11 @@ public class InventorySaveData : IData
 
                     continue;
                 }
-                //_inventory.Setitem(itemData._index, newSaveItem);
-
+                
                 // 빈 슬롯인지 확인 후 아이템 설정
                 if (_inventory.GetItem(itemData._index, newSaveItem.Data.Type) == null)
                 {
-                    Logger.LogError("546");
+                    Logger.LogError("543");
                     _inventory.Setitem(itemData._index, newSaveItem);
                 }
                 else
@@ -301,6 +302,7 @@ public class InventorySaveData : IData
     {
         var player = Managers.Game._player;
         _inventory = player.GetComponent<Inventory>();
+        
         if (_inventory == null)
         {
             player.AddComponent<Inventory>();

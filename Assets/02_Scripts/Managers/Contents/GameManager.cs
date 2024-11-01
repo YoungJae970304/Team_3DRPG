@@ -48,9 +48,11 @@ public class GameManager
         {
             case Define.PlayerType.Melee:
                 GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
+                Managers.Data.SaveData<SaveDatas>();
                 break;
             case Define.PlayerType.Mage:
                 GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
+                Managers.Data.SaveData<SaveDatas>();
                 break;
             default:
                 Logger.LogError("생성할 플레이어가 없습니다.");
