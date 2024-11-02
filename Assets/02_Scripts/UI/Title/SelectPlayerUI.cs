@@ -68,6 +68,7 @@ public class SelectPlayerUI : BaseUI
 
         // Camera Activated Event에 리스너 추가
         _brain.m_CameraActivatedEvent.AddListener(OnCameraActivated);
+        GetButton((int)SelectButtons.TitleBtn).onClick.AddListener(CloseSelectUI);
     }
 
     void InitCams()
@@ -126,6 +127,7 @@ public class SelectPlayerUI : BaseUI
             case CameraType.Center:
                 _meleeCol.enabled = true;
                 _mageCol.enabled = true;
+                GetButton((int)SelectButtons.TitleBtn).interactable = true;
                 break;
         }
     }
@@ -150,6 +152,7 @@ public class SelectPlayerUI : BaseUI
                     ChangeVCam(CameraType.Mage);
                 }
 
+                GetButton((int)SelectButtons.TitleBtn).interactable = false;
                 Logger.LogWarning($"캐릭터 선택 확인 {Managers.Game._playerType}");
             }
         }
@@ -173,6 +176,16 @@ public class SelectPlayerUI : BaseUI
             };
 
             Managers.UI.OpenUI<ConfirmUI>(confirmUIData);
+        }
+    }
+
+    public void CloseSelectUI()
+    {
+        TitleCanvasUI titleUI = Managers.UI.GetActiveUI<TitleCanvasUI>() as TitleCanvasUI;
+
+        if (titleUI == null)
+        {
+            Managers.UI.OpenUI<TitleCanvasUI>(new BaseUIData());
         }
     }
 
