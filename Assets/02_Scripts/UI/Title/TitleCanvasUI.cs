@@ -19,6 +19,7 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickBeginBtn()
     {
+        Managers.UI.CloseUI(this);
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
         if (selectPlayerUI == null)
         {
