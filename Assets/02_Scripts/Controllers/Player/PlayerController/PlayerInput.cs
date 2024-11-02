@@ -141,6 +141,7 @@ public class PlayerInput : MonoBehaviour
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.Level}");
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.SpAddAmount}");
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.MaxEXP}");
+            Logger.LogError($"돈 확인 {Managers.Game._player._playerStatManager.Gold}");
             
         }
         else if (Input.GetKeyDown(KeyCode.V))
