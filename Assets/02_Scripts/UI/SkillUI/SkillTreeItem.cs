@@ -21,7 +21,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     public SkillBase Skill { get => _skill; }//프로퍼티
     [SerializeField] int _skillLevel = 0;   //스킬의 레벨
     [SerializeField] public int _maxLevel = 5;//최대레벨
-    [SerializeField] int _skillId;
+    [SerializeField] public int _skillId;
     [Multiline]
     [SerializeField] string _skillInfo;
     public int SkillLevel 

@@ -12,7 +12,6 @@ public class EquipmentItem : Item
 
     public virtual void Equip(EquipMentUI equipMentUI)
     {
-        // 기본 장비 장착 로직
         equipMentUI.StatSum();
     }
 }

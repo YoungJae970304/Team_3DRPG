@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [Serializable]
@@ -206,7 +204,7 @@ public class InventorySaveData : IData
     public void Init()
     {
         _SavePath = $"{Application.persistentDataPath}/InvenSaveData.json";
-        
+
         //PubAndSub.Subscrib("InvenSave", SaveData);
     }
 
@@ -279,7 +277,7 @@ public class InventorySaveData : IData
 
                     continue;
                 }
-                
+
                 // 빈 슬롯인지 확인 후 아이템 설정
                 if (_inventory.GetItem(itemData._index, newSaveItem.Data.Type) == null)
                 {
@@ -304,7 +302,7 @@ public class InventorySaveData : IData
     {
         var player = Managers.Game._player;
         _inventory = player.GetComponent<Inventory>();
-        
+
         if (_inventory == null)
         {
             player.AddComponent<Inventory>();

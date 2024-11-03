@@ -87,7 +87,7 @@ public class DataManager
         T dataToSave = GetData<T>();
         if (dataToSave != null)
         {
-             dataToSave.SaveData();
+            dataToSave.SaveData();
         }
         else
         {
@@ -125,6 +125,16 @@ public class DataManager
             return dataInstance as T;
         }
         Logger.LogError($"{type.Name}의 타입이 등록되지 않았습니다.");
+        return null;
+    }
+
+    public T GetDatas<T>() where T : class
+    {
+        Type type = typeof(T);
+        if (_IDataDict.TryGetValue(type, out IData dataInstance))
+        {
+            return dataInstance as T;
+        }
         return null;
     }
 }
