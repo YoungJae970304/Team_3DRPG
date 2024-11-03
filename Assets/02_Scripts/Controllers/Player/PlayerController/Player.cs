@@ -365,20 +365,6 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         }
     }
 
-    public void RandSoundsPlay(string path1, string path2, float volume = 1)
-    {
-        int randVal = UnityEngine.Random.Range(1, 3);
-
-        if (randVal == 1)
-        {
-            Managers.Sound.Play(path1, Define.Sound.Effect, volume);
-        }
-        else
-        {
-            Managers.Sound.Play(path2, Define.Sound.Effect, volume);
-        }
-    }
-
     // 자식(Melee, Ranged Player)의 공격 부분 구현
     public virtual void Attack()
     {

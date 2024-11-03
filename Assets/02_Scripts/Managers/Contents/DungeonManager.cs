@@ -93,6 +93,7 @@ public class DungeonManager : MonoBehaviour
                 inDungeonUI._loadText.text = "Clear";
             }
             _startCheck = false;
+            Managers.Sound.Play("ETC/ui_dungeon_clear");
         }
     }
     public void FalseDungeon()
