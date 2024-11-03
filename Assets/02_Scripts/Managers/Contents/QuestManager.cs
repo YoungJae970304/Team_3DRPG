@@ -41,7 +41,13 @@ public class QuestManager
         {
             if (_questList[i] <= _currPlayerLevel)
             {
-                _activeQuest.Add(i);
+                if(!_progressQuest.Contains(i) && !_completeQuest.Contains(i) && !_activeQuest.Contains(i))
+                {
+                    _activeQuest.Add(i);
+                }
+                    
+                
+                
                 //Managers.UI.Init();
    
             }

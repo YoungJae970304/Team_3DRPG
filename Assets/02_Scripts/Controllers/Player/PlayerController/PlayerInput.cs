@@ -199,6 +199,11 @@ public class PlayerInput : MonoBehaviour
         {
             OpenPlayerUI<EquipMentUI>();
         }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Managers.QuestManager._questInput = Define.QuestInput.Q;
+            OpenPlayerUI<QuestUI>();
+        }
         else if (Input.GetKeyDown(KeyCode.Alpha1))//퀵슬롯 사용
         {
             MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
