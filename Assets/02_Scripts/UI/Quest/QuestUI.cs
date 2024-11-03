@@ -60,13 +60,15 @@ public class QuestUI : BaseUI
     GameObject _simpleText;
     public int _test;
     MainUI mainUI;
-    
+    Player _player;
+    Inventory _inventory;
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
         mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
         _simpleQuestUI = Util.FindChild(mainUI.gameObject, "SimpleQuestUI");
-
+        _player = Managers.Game._player;
+        _inventory = _player.gameObject.GetOrAddComponent<Inventory>();
         ClearList();
         _questButtons.Clear();
         _questInput = Managers.QuestManager._questInput;
@@ -354,9 +356,15 @@ public class QuestUI : BaseUI
         QuestButton testID = test.GetComponent<QuestButton>();
         _test = testID._questID;
         Managers.QuestManager._progressQuest.Remove(_test);
+        Managers.QuestManager._progressQuest.Sort();
+        _player.PlayerEXPGain(_questRewardValue2);//추후 지석님께 여쭤보고 변경
+        _player.PlayerGOLDGain(_questRewardValue1);//추후 지석님께 여쭤보고 변경
+        Item questItem = Item.ItemSpawn(_questRewardValue3);
+        _inventory.InsertItem(questItem);
         if (!Managers.QuestManager._completeQuest.Contains(_test))
         {
             Managers.QuestManager._completeQuest.Add(_test);
+            Managers.QuestManager._completeQuest.Sort();
         }
         PubAndSub.UnSubscrib<int>($"{_test}", CheckTest);
         if (_simpleQuestUI.activeSelf)
@@ -378,9 +386,11 @@ public class QuestUI : BaseUI
         QuestButton testID = test.GetComponent<QuestButton>();
         _test = testID._questID;
         Managers.QuestManager._progressQuest.Remove(_test);
+        Managers.QuestManager._progressQuest.Sort();
         if (!Managers.QuestManager._activeQuest.Contains(_test))
         {
             Managers.QuestManager._activeQuest.Add(_test);
+            Managers.QuestManager._activeQuest.Sort();
         }
         //Logger.LogError($"{_getProgressButtons[_test].name}이름뭐냐");
 
