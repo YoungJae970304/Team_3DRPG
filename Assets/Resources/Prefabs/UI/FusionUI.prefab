@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2781030112597771579}
   - component: {fileID: 3922163470451459688}
   - component: {fileID: 5645797926088662851}
+  - component: {fileID: 8147434436948056110}
   m_Layer: 5
   m_Name: FusionUI
   m_TagString: Untagged
@@ -136,6 +137,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &8147434436948056110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420856869027845871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9619e25a991344c9d6eed4c2b61d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &666176874098181963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76126c299cfc1514fb88cae87a37a856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 0
+  _isUsealbe: 1
+  _isLocked: 0
   _Image: {fileID: 6276763962124708133}
   _text: {fileID: 0}
   _slotType: 1

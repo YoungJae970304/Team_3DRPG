@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 2318405771976588788}
   - component: {fileID: 1990479919876617055}
   - component: {fileID: 4355239574942152775}
+  - component: {fileID: 1648985612839607558}
   m_Layer: 5
   m_Name: DungeonUI
   m_TagString: Untagged
@@ -703,6 +704,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1648985612839607558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2338164303099282149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9619e25a991344c9d6eed4c2b61d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2748392706938485239
 GameObject:
   m_ObjectHideFlags: 0
