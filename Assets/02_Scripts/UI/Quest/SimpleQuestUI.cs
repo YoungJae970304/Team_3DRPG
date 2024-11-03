@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleQuestUI : BaseUI
+public class SimpleQuestUI : MonoBehaviour
 {
   
 }

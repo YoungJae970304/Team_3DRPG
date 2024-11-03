@@ -176,7 +176,6 @@ public class PlayerInput : MonoBehaviour
             {
                 OpenPlayerUI<OptionUI>();
             }
-            
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
@@ -199,6 +198,11 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.U))
         {
             OpenPlayerUI<EquipMentUI>();
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Managers.QuestManager._questInput = Define.QuestInput.Q;
+            OpenPlayerUI<QuestUI>();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))//퀵슬롯 사용
         {
