@@ -125,6 +125,7 @@ public class FusionUI : ItemDragUI
         ResetData();
         Get<ItemSlot>((int)ItemSlots.ItemSlot_1).Setitem(null);
         Get<ItemSlot>((int)ItemSlots.ItemSlot_2).Setitem(null);
+        Managers.Sound.Play("ETC/ui_equip_upgrade_success");
     }
     void OnCancelBtn() {
         CloseUI();

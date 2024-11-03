@@ -56,5 +56,6 @@ public class EquipMentUI : ItemDragUI
             _equipMentsDick[equipmentSlot.name] = null;
         }
         StatSum();
+        Managers.Sound.Play("ETC/ui_equipped_item");
     }
 }
