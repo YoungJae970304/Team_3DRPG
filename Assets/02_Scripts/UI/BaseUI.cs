@@ -171,6 +171,18 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
         {
             button.onClick?.RemoveListener(() => Managers.Sound.Play("ETC/ui_click"));
             button.onClick.AddListener(() => Managers.Sound.Play("ETC/ui_click"));
+
+            // 마우스 오버 소리 설정
+            EventTrigger trigger = button.gameObject.GetComponent<EventTrigger>();
+            if (trigger == null)
+            {
+                trigger = button.gameObject.AddComponent<EventTrigger>();
+            }
+
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((data) => { Managers.Sound.Play("ETC/ui_button_on_mouse"); });
+            trigger.triggers.Add(entry);
         }
 
         alreadySet = true;
