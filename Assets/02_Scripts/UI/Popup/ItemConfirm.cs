@@ -141,6 +141,7 @@ public class ItemConfirm : ItemDragUI
             {
                 _inventorySlot.RemoveItem();
             }
+            _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold += money;
             Logger.LogWarning(money.ToString());
 
 
