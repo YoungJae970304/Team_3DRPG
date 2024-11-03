@@ -42,6 +42,7 @@ public class GameManager
     // 타입에 맞는 캐릭터 생성
     public void PlayerCreate()
     {
+        Logger.LogWarning($"플레이서 생성 시점 확인{Managers.Game._playerType}");
         Managers.Resource.Instantiate("Player/VirtualCameras");
         
         switch (Managers.Game._playerType)
