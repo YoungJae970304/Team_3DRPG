@@ -43,7 +43,7 @@ public class SwordAura : MonoBehaviour
                     //damageAlbe.Damaged(Managers.Game._player._playerStatManager.ATK);
                     damageAlbe.Damaged(Managers.Game._player._skillBase._damage);
                     Managers.Game._player._effectController.HitEffectsOn("MeleeNormalHit", other.transform);
-                    Managers.Game._player.RandSoundsPlay("Melee/melee_atk_hit_1", "Melee/melee_atk_hit_2");
+                    Managers.Sound.RandSoundsPlay("Melee/melee_atk_hit_1", "Melee/melee_atk_hit_2");
                 }
                 // 콜라이더로 담을 때
                 Managers.Game._player._damageAlbes.Add(damageAlbe);

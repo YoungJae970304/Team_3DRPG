@@ -84,6 +84,7 @@ public class PlayerAnimEvent : MonoBehaviour
                 {
                     _player._effectController.HitEffectsOn("MeleePowerHit", Managers.Game._monsters[i].transform);
                     damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    Managers.Sound.RandSoundsPlay("Melee/melee_atk_hit_1", "Melee/melee_atk_hit_2");
                 }
             }
         }

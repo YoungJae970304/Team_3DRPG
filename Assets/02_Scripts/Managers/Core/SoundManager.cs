@@ -123,6 +123,20 @@ public class SoundManager
         }
     }
 
+    public void RandSoundsPlay(string path1, string path2, float volume = 1)
+    {
+        int randVal = Random.Range(1, 3);
+
+        if (randVal == 1)
+        {
+            Managers.Sound.Play(path1, Define.Sound.Effect, volume);
+        }
+        else
+        {
+            Managers.Sound.Play(path2, Define.Sound.Effect, volume);
+        }
+    }
+
     public void Init()
     {
         GameObject root = GameObject.Find("@Sound");

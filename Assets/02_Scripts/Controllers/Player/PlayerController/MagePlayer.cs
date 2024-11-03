@@ -20,7 +20,7 @@ public class MagePlayer : Player
         go.transform.forward = _playerModel.forward;
         go.transform.position = _mageBallPos.position;
 
-        RandSoundsPlay("Mage/mage_atk_voice_1", "Mage/mage_atk_voice_2");
+        Managers.Sound.RandSoundsPlay("Mage/mage_atk_voice_1", "Mage/mage_atk_voice_2");
     }
 
     public override void AreaDamage(float range, int damage)

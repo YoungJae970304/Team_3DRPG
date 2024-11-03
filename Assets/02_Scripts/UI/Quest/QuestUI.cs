@@ -379,6 +379,7 @@ public class QuestUI : BaseUI
             Init(transform);
         }
 
+        Managers.Sound.Play("ETC/ui_quest_clear");
     }
     public void GiveUpQuest()
     {
