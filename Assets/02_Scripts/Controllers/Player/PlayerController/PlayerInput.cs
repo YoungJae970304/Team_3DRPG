@@ -176,7 +176,6 @@ public class PlayerInput : MonoBehaviour
             {
                 OpenPlayerUI<OptionUI>();
             }
-            
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
