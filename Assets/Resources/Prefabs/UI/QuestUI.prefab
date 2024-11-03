@@ -1552,6 +1552,7 @@ GameObject:
   - component: {fileID: 6051551655911755612}
   - component: {fileID: 4012993500838281729}
   - component: {fileID: 3893407903702316192}
+  - component: {fileID: 2804057169315779368}
   - component: {fileID: 3418473296133440524}
   m_Layer: 5
   m_Name: QuestUI
@@ -1659,6 +1660,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &2804057169315779368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556067668574886052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9619e25a991344c9d6eed4c2b61d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3418473296133440524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1694,6 +1707,7 @@ MonoBehaviour:
   _uiButtons: []
   _questButtons: []
   _questView: {fileID: 4874650313147912699}
+  _simpleQuestUI: {fileID: 0}
   _test: 0
 --- !u!1 &5563181223811597379
 GameObject:

@@ -1068,6 +1068,7 @@ GameObject:
   - component: {fileID: 8611439858834720821}
   - component: {fileID: -1232749895674731806}
   - component: {fileID: 1096235017600804770}
+  - component: {fileID: -5801980504471433877}
   m_Layer: 5
   m_Name: SkillTree
   m_TagString: Untagged
@@ -1174,6 +1175,7 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _skillTreeItems: []
 --- !u!111 &1096235017600804770
 Animation:
   m_ObjectHideFlags: 0
@@ -1190,6 +1192,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &-5801980504471433877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4838012207927505345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9619e25a991344c9d6eed4c2b61d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4838711757630701413
 GameObject:
   m_ObjectHideFlags: 0
