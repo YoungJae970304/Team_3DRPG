@@ -223,6 +223,8 @@ public class PlayerInput : MonoBehaviour
         if (playerUI != null)
         {
             Managers.UI.CloseUI(playerUI);
+
+            Managers.Sound.Play("ETC/ui_close");
         }
         else
         {
@@ -238,12 +240,29 @@ public class PlayerInput : MonoBehaviour
         if (playerUI != null)
         {
             Managers.UI.CloseUI(playerUI);
+
+            Managers.Sound.Play("ETC/ui_close");
         }
         else
         {
             if (Managers.Scene.LoadingSceneCheck()) return;
 
             Managers.UI.OpenUI<T>(baseUIData);
+        }
+    }
+
+    public void LargeMapInit()
+    {
+        LargeMapUI largeMapUI = Managers.UI.GetActiveUI<LargeMapUI>() as LargeMapUI;
+        if (largeMapUI != null)
+        {
+            Managers.UI.CloseUI(largeMapUI);
+        }
+        else
+        {
+            if (Managers.Scene.LoadingSceneCheck()) return;
+
+            Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
         }
     }
 
