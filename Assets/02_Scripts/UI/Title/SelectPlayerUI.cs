@@ -51,6 +51,12 @@ public class SelectPlayerUI : BaseUI
         Bind<Button>(typeof(SelectButtons));
     }
 
+    private void OnEnable()
+    {
+        Managers.Input.MouseAction -= PlayerSelectRay;
+        Managers.Input.MouseAction += PlayerSelectRay;
+    }
+
     private void Start()
     {
         InitCams();
@@ -62,9 +68,6 @@ public class SelectPlayerUI : BaseUI
         _mageAnim = GameObject.Find("RadDoll").GetComponent<Animator>();
         _meleeCol = _melee.GetComponent<BoxCollider>();
         _mageCol = _mage.GetComponent<BoxCollider>();
-
-        Managers.Input.MouseAction -= PlayerSelectRay;
-        Managers.Input.MouseAction += PlayerSelectRay;
 
         // Camera Activated Event에 리스너 추가
         _brain.m_CameraActivatedEvent.AddListener(OnCameraActivated);
