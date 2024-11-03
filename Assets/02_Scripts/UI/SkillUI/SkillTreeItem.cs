@@ -43,6 +43,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
             }
 
             UpdateInfo();
+            Managers.Data.SaveData<SkillSaveData>();
         } 
     }
     [SerializeField] bool isActive = false;         //슬롯 활성화 및 비활성화 표시

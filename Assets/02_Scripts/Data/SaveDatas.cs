@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 [Serializable]
@@ -160,7 +161,6 @@ public class PlayerSaveData : IData
 
     public bool LoadData()
     {
-        Managers.Game.PlayerCreate();
         try
         {
             string playerJson = File.ReadAllText(_SavePath);
@@ -205,8 +205,9 @@ public class InventorySaveData : IData
 
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}/InvenSaveData.Json";
-        PubAndSub.Subscrib("InvenSave", SaveData);
+        _SavePath = $"{Application.persistentDataPath}/InvenSaveData.json";
+        
+        //PubAndSub.Subscrib("InvenSave", SaveData);
     }
 
     public void SaveData()
@@ -237,6 +238,7 @@ public class InventorySaveData : IData
                             _index = index,
                             _type = (int)itemType,
                         };
+                        Logger.Log($"{itemData}아이템 리스트에 들어가는지 확인");
                         _InvenItemList.Add(itemData);
                     }
                 }
@@ -281,7 +283,7 @@ public class InventorySaveData : IData
                 // 빈 슬롯인지 확인 후 아이템 설정
                 if (_inventory.GetItem(itemData._index, newSaveItem.Data.Type) == null)
                 {
-                    Logger.LogError("543");
+                    //Logger.LogError("543");
                     _inventory.Setitem(itemData._index, newSaveItem);
                 }
                 else
@@ -315,16 +317,20 @@ public class InventorySaveData : IData
 public class SkillSaveData : IData
 {
     public List<SkillData> _skills = new();
+    public List<SkillData> _quickSlotSkills = new();
+    public List<int> _skillAddID = new();
+    public List<int> _skillRemoveID = new();
     string _SavePath;
-
+    SkillBase _skill;
+    public SkillBase Skill { get => _skill; }
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}/SkillSaveData.Json";
-        _skills.AddRange(Managers.DataTable._SkillData);
+        _SavePath = $"{Application.persistentDataPath}/SkillSaveData.json";
     }
 
     public void SaveData()
     {
+        //SetDefaultData();
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
         {
@@ -332,8 +338,28 @@ public class SkillSaveData : IData
         }
         try
         {
-            string skillJson = JsonUtility.ToJson(this, true);
+            Logger.Log($"{_skillAddID.Count}개 추가할 스킬 ID 확인");
+            foreach (int skillId in _skillAddID)
+            {
+                Logger.Log($"추가할 스킬 ID: {skillId}");
+                AddSkill(skillId);
+                AddQuickSlotSkill(skillId);
+            }
+            Logger.Log($"{_skills.Count}개 현재 스킬 목록 확인");
+            Logger.Log($"{_quickSlotSkills.Count}개 현재 퀵슬롯 스킬 목록 확인");
+            foreach (int skillId in _skillRemoveID)
+            {
+                Logger.Log($"제거할 스킬 ID: {skillId}");
+                PubAndSub.Publish<SkillBase>("QuickSlotRemove", Skill);
+            }
+            var skillSave = new SaveSkillDataContainer
+            {
+                _Skills = _skills,
+                _QuickSlotSkills = _quickSlotSkills
+            };
+            string skillJson = JsonUtility.ToJson(skillSave, true);
             File.WriteAllText(_SavePath, skillJson);
+            Logger.Log($"스킬 세이브{_skills.Count}개, {_quickSlotSkills.Count}개");
         }
         catch (Exception e)
         {
@@ -346,7 +372,9 @@ public class SkillSaveData : IData
         try
         {
             string skillJson = File.ReadAllText(_SavePath);
-            JsonUtility.FromJsonOverwrite(skillJson, this);
+            var saveSkillData = JsonUtility.FromJson<SaveSkillDataContainer>(skillJson);
+            _skills = saveSkillData._Skills;
+            _quickSlotSkills = saveSkillData._QuickSlotSkills;
             Logger.Log("스킬 데이터 로드");
             return true;
         }
@@ -359,7 +387,52 @@ public class SkillSaveData : IData
 
     public void SetDefaultData()
     {
+        _skills.Clear();
+        _skills.AddRange(Managers.DataTable._SkillData);
+        _quickSlotSkills.Clear();
+    }
 
+    [Serializable]
+    private class SaveSkillDataContainer
+    {
+        public List<SkillData> _Skills;
+        public List<SkillData> _QuickSlotSkills;
+    }
+    public void AddSkill(int skillId)
+    {
+        // 이미 존재하는지 확인
+        if (!_skills.Exists(skill => skill.ID == skillId))
+        {
+            SkillData skill = Managers.DataTable.GetSkillData(skillId);
+            if (skill != null)
+            {
+                _skills.Add(skill);
+                Logger.Log($"스킬 추가{skill.ID} - {skill.SkillName}");
+            }
+        }
+    }
+    public void AddQuickSlotSkill(int skillId)
+    {
+        if (!_quickSlotSkills.Exists(skill => skill.ID == skillId))
+        {
+            // SkillData를 데이터 테이블에서 가져오기
+            SkillData skill = Managers.DataTable.GetSkillData(skillId);
+            if (skill != null)
+            {
+                _quickSlotSkills.Add(skill);
+                Logger.Log($"퀵슬롯 등록{skill.ID} - {skill.SkillName}");
+            }
+        }
+    }
+    public void RemoveQuickSlotSkill(int skillId)
+    {
+        // 해당 ID의 스킬이 있는지 확인 후 제거
+        SkillData skillToRemove = _quickSlotSkills.Find(skill => skill.ID == skillId);
+        if (skillToRemove != null)
+        {
+            _quickSlotSkills.Remove(skillToRemove);
+            Logger.Log($"퀵슬롯 해제{skillToRemove.ID} - {skillToRemove.SkillName}");
+        }
     }
 }
 
@@ -374,14 +447,12 @@ public class EquipmentSaveData : IData
 
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}/EquipSaveData.Json";
-        _equipmentItemDatas.AddRange(Managers.DataTable._EquipeedItemData);
-        _potionItemDatas.AddRange(Managers.DataTable._PotionItemData);
-        _goodsItemData.AddRange(Managers.DataTable._GoodsItemData);
+        _SavePath = $"{Application.persistentDataPath}/EquipSaveData.json";
     }
 
     public void SaveData()
     {
+        SetDefaultData();
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
         {
@@ -391,6 +462,7 @@ public class EquipmentSaveData : IData
         {
             string equipJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, equipJson);
+            Logger.Log("아이템 세이브");
         }
         catch (Exception e)
         {
@@ -416,7 +488,9 @@ public class EquipmentSaveData : IData
 
     public void SetDefaultData()
     {
-
+        _equipmentItemDatas.AddRange(Managers.DataTable._EquipeedItemData);
+        _potionItemDatas.AddRange(Managers.DataTable._PotionItemData);
+        _goodsItemData.AddRange(Managers.DataTable._GoodsItemData);
     }
 }
 
@@ -429,12 +503,12 @@ public class QuestSaveData : IData
 
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}/QuestSaveData.Json";
-        _questDatas.AddRange(Managers.DataTable._QuestData);
+        _SavePath = $"{Application.persistentDataPath}/QuestSaveData.json";
     }
 
     public void SaveData()
     {
+        SetDefaultData();
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
         {
@@ -444,6 +518,7 @@ public class QuestSaveData : IData
         {
             string questJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, questJson);
+            Logger.Log("퀘스트 세이브");
         }
         catch (Exception e)
         {
@@ -469,6 +544,6 @@ public class QuestSaveData : IData
 
     public void SetDefaultData()
     {
-
+        _questDatas.AddRange(Managers.DataTable._QuestData);
     }
 }

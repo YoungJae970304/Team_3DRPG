@@ -50,7 +50,6 @@ public class EquipMentUI : ItemDragUI
         
         if (equipmentSlot.Item != null)
         {
-            
             _equipMentsDick[equipmentSlot.name] = equipmentSlot.Item.Data as EquipmentItemData;
         }
         else {
