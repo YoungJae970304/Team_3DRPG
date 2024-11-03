@@ -5,6 +5,7 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static DialogUI;
 
 public class BaseUIData 
 {
@@ -21,6 +22,10 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     private Action _OnShow;
     private Action _OnClose;
     public bool _isSort = true;
+
+    bool alreadySet = false;
+
+    public int _btnCount;
 
     protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
 
@@ -88,6 +93,14 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected Toggle GetToggle(int idx) { return Get<Toggle>(idx); }
     protected RawImage GetRawImage(int idx) { return Get<RawImage>(idx); }
+
+    protected void SoundOnBtnClick()
+    {
+        for (int i = 0; i < _btnCount; i++)
+        {
+            GetButton(i).onClick.AddListener(() => Managers.Sound.Play("ETC/ui_click"));
+        }
+    }
     #endregion
 
     #region 클릭시 최상위로 변경
@@ -144,6 +157,35 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
 
         _OnShow = uiData.OnShow;
         _OnClose = uiData.OnClose;
+
+        // 버튼 사운드 설정
+        SetButtonSounds();
+    }
+
+    protected virtual void SetButtonSounds()
+    {
+        if (alreadySet) return;
+
+        Button[] buttons = GetComponentsInChildren<Button>(true);
+        foreach (Button button in buttons)
+        {
+            button.onClick?.RemoveListener(() => Managers.Sound.Play("ETC/ui_click"));
+            button.onClick.AddListener(() => Managers.Sound.Play("ETC/ui_click"));
+
+            // 마우스 오버 소리 설정
+            EventTrigger trigger = button.gameObject.GetComponent<EventTrigger>();
+            if (trigger == null)
+            {
+                trigger = button.gameObject.AddComponent<EventTrigger>();
+            }
+
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((data) => { Managers.Sound.Play("ETC/ui_button_on_mouse"); });
+            trigger.triggers.Add(entry);
+        }
+
+        alreadySet = true;
     }
 
     public virtual void ShowUI() {
@@ -164,13 +206,12 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
 
         if (!isCloseAll) {
             _OnClose?.Invoke();
-        
         }
         _OnClose = null;
 
         Managers.UI.CloseUI(this);
     }
-    
+
     public void OnClosedButton() {
         CloseUI();
     }

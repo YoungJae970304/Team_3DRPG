@@ -176,7 +176,6 @@ public class PlayerInput : MonoBehaviour
             {
                 OpenPlayerUI<OptionUI>();
             }
-            
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
@@ -200,6 +199,11 @@ public class PlayerInput : MonoBehaviour
         {
             OpenPlayerUI<EquipMentUI>();
         }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Managers.QuestManager._questInput = Define.QuestInput.Q;
+            OpenPlayerUI<QuestUI>();
+        }
         else if (Input.GetKeyDown(KeyCode.Alpha1))//퀵슬롯 사용
         {
             MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
@@ -219,6 +223,8 @@ public class PlayerInput : MonoBehaviour
         if (playerUI != null)
         {
             Managers.UI.CloseUI(playerUI);
+
+            Managers.Sound.Play("ETC/ui_close");
         }
         else
         {
@@ -234,12 +240,29 @@ public class PlayerInput : MonoBehaviour
         if (playerUI != null)
         {
             Managers.UI.CloseUI(playerUI);
+
+            Managers.Sound.Play("ETC/ui_close");
         }
         else
         {
             if (Managers.Scene.LoadingSceneCheck()) return;
 
             Managers.UI.OpenUI<T>(baseUIData);
+        }
+    }
+
+    public void LargeMapInit()
+    {
+        LargeMapUI largeMapUI = Managers.UI.GetActiveUI<LargeMapUI>() as LargeMapUI;
+        if (largeMapUI != null)
+        {
+            Managers.UI.CloseUI(largeMapUI);
+        }
+        else
+        {
+            if (Managers.Scene.LoadingSceneCheck()) return;
+
+            Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
         }
     }
 

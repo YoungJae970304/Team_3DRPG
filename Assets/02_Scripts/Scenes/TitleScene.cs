@@ -8,4 +8,14 @@ public class TitleScene : BaseScene
     {
         
     }
+
+    public void OpenTitle()
+    {
+        TitleCanvasUI titleCanvasUI = Managers.UI.GetActiveUI<TitleCanvasUI>() as TitleCanvasUI;
+
+        if (titleCanvasUI == null )
+        {
+            Managers.UI.OpenUI<TitleCanvasUI>(new BaseUIData());
+        }
+    }
 }

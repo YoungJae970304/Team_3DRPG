@@ -24,8 +24,8 @@ public class SceneManagerEx
 
         if (Managers.Game._player == null) return;
         Managers.Game._player._interectController.Init();
-        Managers.Game._player._playerInput.OpenPlayerUI<LargeMapUI>();
-        Managers.Game._player._playerInput.OpenPlayerUI<LargeMapUI>();
+        Managers.Game._player._playerInput.LargeMapInit();
+        Managers.Game._player._playerInput.LargeMapInit();
         Managers.Game._player.PlayerStatInit();
     }
 
@@ -37,11 +37,11 @@ public class SceneManagerEx
 
     public bool LoadingSceneCheck()
     {
-        return SceneManager.GetActiveScene().buildIndex == 0;
+        return SceneManager.GetActiveScene().buildIndex == (int)Define.Scene.Loading;
     }
     public bool DungeonSceneCheck()
     {
-        return SceneManager.GetActiveScene().buildIndex == 3;
+        return SceneManager.GetActiveScene().buildIndex == (int)Define.Scene.Dungeon;
     }
 
     public void LoadScene(Define.Scene type)

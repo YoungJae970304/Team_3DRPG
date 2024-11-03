@@ -32,29 +32,6 @@ public class PlayerAnimEvent : MonoBehaviour
     }
     #endregion
 
-    #region 사운드 이벤트
-
-    public void PlayEffectSound(string soundPath)
-    {
-        //Managers.Sound.Play(soundPath);
-        string[] parts = soundPath.Split(',');
-        if (parts.Length >= 2 && float.TryParse(parts[1], out float volume))
-        {
-            Managers.Sound.Play(parts[0], Define.Sound.Effect, volume);
-        }
-        else
-        {
-            Managers.Sound.Play(parts[0], Define.Sound.Effect);
-        }
-    }
-
-    public void PlayBGMSound(string soundPath)
-    {
-        Managers.Sound.Play(soundPath, Define.Sound.Bgm);
-    }
-
-    #endregion
-
     #region 평타
     // 평타 애니메이션 시작부
     public void AttackStart()
@@ -107,6 +84,7 @@ public class PlayerAnimEvent : MonoBehaviour
                 {
                     _player._effectController.HitEffectsOn("MeleePowerHit", Managers.Game._monsters[i].transform);
                     damageable.Damaged(Managers.Game._player._playerStatManager.ATK);
+                    Managers.Sound.RandSoundsPlay("Melee/melee_atk_hit_1", "Melee/melee_atk_hit_2");
                 }
             }
         }
