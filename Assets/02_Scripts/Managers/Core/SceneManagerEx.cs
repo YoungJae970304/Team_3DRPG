@@ -37,11 +37,11 @@ public class SceneManagerEx
 
     public bool LoadingSceneCheck()
     {
-        return SceneManager.GetActiveScene().buildIndex == 0;
+        return SceneManager.GetActiveScene().buildIndex == (int)Define.Scene.Loading;
     }
     public bool DungeonSceneCheck()
     {
-        return SceneManager.GetActiveScene().buildIndex == 3;
+        return SceneManager.GetActiveScene().buildIndex == (int)Define.Scene.Dungeon;
     }
 
     public void LoadScene(Define.Scene type)
