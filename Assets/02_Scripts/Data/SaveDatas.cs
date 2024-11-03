@@ -330,7 +330,7 @@ public class SkillSaveData : IData
 
     public void SaveData()
     {
-        //SetDefaultData();
+        SetDefaultData();
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
         {
@@ -398,6 +398,7 @@ public class SkillSaveData : IData
         public List<SkillData> _Skills;
         public List<SkillData> _QuickSlotSkills;
     }
+
     public void AddSkill(int skillId)
     {
         // 이미 존재하는지 확인
@@ -407,7 +408,7 @@ public class SkillSaveData : IData
             if (skill != null)
             {
                 _skills.Add(skill);
-                Logger.Log($"스킬 추가{skill.ID} - {skill.SkillName}");
+                Logger.Log($"스킬 추가{skill.ID}, {skill.SkillName}");
             }
         }
     }
@@ -422,16 +423,6 @@ public class SkillSaveData : IData
                 _quickSlotSkills.Add(skill);
                 Logger.Log($"퀵슬롯 등록{skill.ID} - {skill.SkillName}");
             }
-        }
-    }
-    public void RemoveQuickSlotSkill(int skillId)
-    {
-        // 해당 ID의 스킬이 있는지 확인 후 제거
-        SkillData skillToRemove = _quickSlotSkills.Find(skill => skill.ID == skillId);
-        if (skillToRemove != null)
-        {
-            _quickSlotSkills.Remove(skillToRemove);
-            Logger.Log($"퀵슬롯 해제{skillToRemove.ID} - {skillToRemove.SkillName}");
         }
     }
 }

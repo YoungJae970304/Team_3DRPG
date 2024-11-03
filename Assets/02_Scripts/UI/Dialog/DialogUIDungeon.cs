@@ -7,6 +7,7 @@ public class DialogUIDungeon : DialogUI
     {
         ActiveBtns(Buttons.CheckBtn);
         ActiveBtns(Buttons.RefuseBtn);
+        
         yield return new WaitUntil(() => _dialogSystem[0].UpdateDialog());
         _isOpenUI = false;
         yield return new WaitUntil(() => _isOpenUI);

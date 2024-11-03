@@ -7,6 +7,7 @@ public class QuestNpc : NpcController
     public override void Interection(GameObject gameObject)
     {
         base.Interection(gameObject);
+        Managers.Sound.RandSoundsPlay("NPC/quest_talk_1", "NPC/quest_talk_2");
         NpcDialog<DialogUIQuest>();
     }
 
