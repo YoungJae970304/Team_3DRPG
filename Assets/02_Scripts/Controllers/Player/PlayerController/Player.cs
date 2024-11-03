@@ -497,4 +497,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
     {
         _playerStatManager.EXP += exp;
     }
+    public void PlayerGOLDGain(int gold)
+    {
+        _playerStatManager.Gold += gold;
+    }
 }
