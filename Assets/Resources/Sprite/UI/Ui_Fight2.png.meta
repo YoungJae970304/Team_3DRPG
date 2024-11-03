@@ -1488,27 +1488,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ui_Fight2_67
-      rect:
-        serializedVersion: 2
-        x: 414
-        y: 974
-        width: 62
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd17d0228def29442a5e5c45a7ba2b1b
-      internalID: -1239809676
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Ui_Fight2_68
       rect:
         serializedVersion: 2
@@ -1698,27 +1677,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ui_Fight2_82
-      rect:
-        serializedVersion: 2
-        x: 1033
-        y: 796
-        width: 91
-        height: 95
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05125a7b1c7516143aa17f678004b281
-      internalID: -1619929426
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Ui_Fight2_83
       rect:
         serializedVersion: 2
@@ -1803,48 +1761,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ui_Fight2_90
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 729
-        width: 91
-        height: 89
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 902dd43e4f68b194a9d62b406a3baf40
-      internalID: 656451853
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ui_Fight2_91
-      rect:
-        serializedVersion: 2
-        x: 1096
-        y: 728
-        width: 95
-        height: 92
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc25375746e10e44b8ce0e8e79c4dc36
-      internalID: -328325693
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Ui_Fight2_92
       rect:
         serializedVersion: 2
@@ -1924,27 +1840,6 @@ TextureImporter:
       bones: []
       spriteID: 6ca5a6269d988f340a5fcdb30e2d598e
       internalID: 975090735
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ui_Fight2_96
-      rect:
-        serializedVersion: 2
-        x: 1033
-        y: 656
-        width: 91
-        height: 95
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 49266d04c2382a74b97249c73c28481c
-      internalID: -2013148492
       vertices: []
       indices: 
       edges: []
@@ -2727,27 +2622,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ui_Fight2_145
-      rect:
-        serializedVersion: 2
-        x: 819
-        y: 290
-        width: 123
-        height: 76
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 86ec876cf2de6c249a8f9b637b9e113c
-      internalID: 604821853
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Ui_Fight2_146
       rect:
         serializedVersion: 2
@@ -3142,69 +3016,6 @@ TextureImporter:
       bones: []
       spriteID: 758e548e994d4334f88589ed4c66c260
       internalID: -361882683
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ui_Fight2_167
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 4
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7b8c96535a27f8f4a8d1768e4735895e
-      internalID: 1958530584
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ui_Fight2_168
-      rect:
-        serializedVersion: 2
-        x: 264
-        y: 4
-        width: 256
-        height: 256
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96b3799673304f9489343573c7adc8b3
-      internalID: 140027654
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ui_Fight2_169
-      rect:
-        serializedVersion: 2
-        x: 898
-        y: 182
-        width: 104
-        height: 85
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 289e38966848b5e4cb04cb34e4a6eaa8
-      internalID: 1793864158
       vertices: []
       indices: 
       edges: []
