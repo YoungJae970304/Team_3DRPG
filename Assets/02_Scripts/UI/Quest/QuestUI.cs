@@ -84,7 +84,7 @@ public class QuestUI : BaseUI
         GetButton((int)Buttons.GiveupBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.AllowBtn).onClick.AddListener(() => AllowQuest());
         GetButton((int)Buttons.GiveupBtn).onClick.AddListener(() => GiveUpQuest());
-
+        GetButton((int)Buttons.CompleteBtn).onClick.AddListener(()=> CompleteQuest());
         //여기에 리스트같은데에서 퀘스트 받아와서 버튼 생성되도록 //완
     }
     public override void SetInfo(BaseUIData uiData)
@@ -347,6 +347,30 @@ public class QuestUI : BaseUI
         {
             _questButtons[i].GetComponent<Button>().onClick.AddListener(() => QuestUITest(_progressButtonType[ButtonName()]));
         }
+    }
+    public void CompleteQuest()
+    {
+        GameObject test = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        QuestButton testID = test.GetComponent<QuestButton>();
+        _test = testID._questID;
+        Managers.QuestManager._progressQuest.Remove(_test);
+        if (!Managers.QuestManager._completeQuest.Contains(_test))
+        {
+            Managers.QuestManager._completeQuest.Add(_test);
+        }
+        PubAndSub.UnSubscrib<int>($"{_test}", CheckTest);
+        if (_simpleQuestUI.activeSelf)
+        {
+            Managers.Resource.Destroy(_changeText[_test]);
+            _changeText.Remove(_test);
+            GameObject content = Util.FindChild(_simpleQuestUI, "QuestInfo");
+            if(content.transform.childCount == 1)
+            {
+                _simpleQuestUI.SetActive(false);
+            }
+            Init(transform);
+        }
+
     }
     public void GiveUpQuest()
     {
