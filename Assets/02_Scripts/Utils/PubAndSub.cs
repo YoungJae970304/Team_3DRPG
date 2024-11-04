@@ -31,6 +31,7 @@ public static class PubAndSub
             Action action1 = (Actions[name] as Action);
             action1 += action;
             Actions[name] = action1;
+        
         }
         else {
             Actions.Add(name, action);
@@ -46,10 +47,14 @@ public static class PubAndSub
             action1 -= action;//중복 방지
             action1 += action;
             Actions[name] = action1;
+            Logger.LogError("구독됨");
+
+
         }
         else
         {
             Actions.Add(name, action);
+            Logger.LogError("구독됨");
         }
     }
     #endregion
@@ -62,6 +67,7 @@ public static class PubAndSub
             Action action1 = (Actions[name] as Action);
             action1 -= action;
             Actions[name] = action1;
+            if (Actions[name] == null) { Actions.Remove(name); };
         }
     }
     public static void UnSubscrib<T>(string name, Action<T> action)
@@ -72,6 +78,7 @@ public static class PubAndSub
             Action<T> action1 = (Actions[name] as Action<T>);
             action1 -= action;
             Actions[name] = action1;
+            if (Actions[name] == null) { Actions.Remove(name); };
         }
     }
     #endregion

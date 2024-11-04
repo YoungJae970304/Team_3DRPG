@@ -406,18 +406,26 @@ public class DataTableManager
                 RewardValue1 = Convert.ToInt32(data["QuestRewardValue1"]),
                 RewardType2 = (QuestData.RewardType)Enum.Parse(typeof(QuestData.RewardType), data["QuestRewardType2"].ToString()),
                 RewardValue2 = Convert.ToInt32(data["QuestRewardValue2"]),
+                RewardValue3 = Convert.ToInt32(data["QuestRewardValue3"]),
+                RewardType3 = Convert.ToInt32(data["QuestRewardType3"]),
             };
-            if (data["QuestRewardType3"].ToString() == ItemData.ItemType.Potion.ToString())
-            {
-                questData.RewardType3 = QuestData.RewardType.Potion;
-                int potionID = Convert.ToInt32(data["QuestReawrdValue3"]);
-                var potionItem = _PotionItemData.FirstOrDefault(p => p.ID == potionID);
+            Logger.LogError($"{data["QuestRewardType3"].ToString()}이게 뭔값이냐");
+            Logger.LogError($"{ItemData.ItemType.Potion}타입은뭐냐");
+            //if (data["QuestRewardType3"].ToString() == ItemData.ItemType.Potion.ToString())
+            //{
+                /*questData.RewardType3 = QuestData.RewardType.Potion;
+                Logger.LogError($"{questData.RewardType3}1번확인");
+                int potionID = Convert.ToInt32(data["QuestRewardValue3"]);
+                Logger.LogError($"{potionID}2번확인");
+                var potionItem = _PotionItemData.Find(p => p.ID == potionID);
+                Logger.LogError($"{potionItem}3번확인");
                 questData.RewardValue3 = potionItem?.ID ?? 0;
+                Logger.LogError($"{questData.RewardValue3 }4번확인");
                 if (potionItem == null)
                 {
                     Logger.LogError($"포션ID{potionID}를 찾을 수 없습니다.");
-                }
-            }
+                }*/
+            //}
             _QuestData.Add(questData);
         }
     }
