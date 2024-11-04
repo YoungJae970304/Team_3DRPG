@@ -20,10 +20,13 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
         Bind<ParticleSystem>(typeof(GoblemOrkEffects));
         EffectOff();
     }
-
-    public void EffectOff()
+    private void Update()
     {
-        string ex = GetComponentInParent<CharacterController>().gameObject.name;
+        
+    }
+    public void EffectOff(string ex = null)
+    {
+        ex = GetComponentInParent<CharacterController>().gameObject.name;
         if(ex == "BossBear")
         {
             for (int i = 2; i < (int)GoblemOrkEffects.Count; i++)
@@ -32,7 +35,10 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
                 {
                     Get<ParticleSystem>(i).gameObject.SetActive(false);
                 }
-
+                else
+                {
+                    return;
+                }
                 Logger.LogError("이펙트 꺼짐");
             }
 
@@ -45,7 +51,10 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
                 {
                     Get<ParticleSystem>(i).gameObject.SetActive(false);
                 }
-
+                else
+                {
+                    return;
+                }
                 Logger.LogError("이펙트 꺼짐");
             }
         }
@@ -53,11 +62,14 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
         {
             for (int i = 0; i < (int)GoblemOrkEffects.Count; i++)
             {
-                if (Get<ParticleSystem>(i).gameObject != null)
+                if (Get<ParticleSystem>(i).gameObject.activeSelf)//내일 체크 렉이 너무심해서 도저히 안됨
                 {
                     Get<ParticleSystem>(i).gameObject.SetActive(false);
                 }
-
+                else
+                {
+                    return;
+                }
                 Logger.LogError("이펙트 꺼짐");
             }
         }
@@ -76,6 +88,7 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
         Get<ParticleSystem>((int)name).Play(); //너무 이펙트가 다터짐 수정 필요
         Logger.LogError("이팩트 켜짐");
     }
+ 
     #region Bind구현부
     // 컴퍼넌트에 연결해줄 함수 형태
     protected void Bind<T>(Type type) where T : UnityEngine.Object    // Type 쓰려면 using System;

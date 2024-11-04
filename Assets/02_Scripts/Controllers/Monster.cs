@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using System;
 using System.Collections;
 using Unity.VisualScripting;
+using static EnemyEffect;
 
 
 
@@ -249,6 +250,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
     #region 받는 데미지 함수
     public virtual void Damaged(int amount)
     {
+        
         if (_mStat == null)
         {
             Logger.LogError("MonsterStat이 null입니다");

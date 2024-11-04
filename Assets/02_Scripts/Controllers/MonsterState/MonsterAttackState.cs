@@ -35,6 +35,7 @@ public class MonsterAttackState : BaseState
         
        
         _monster._anim.SetBool("BeforeChase", true);
+        _monster._enemyEffect.EffectOff(_monster.name);
         //_monster._hitPlayer.Clear();
     }
     private IEnumerator AttackDelay(float delay)
