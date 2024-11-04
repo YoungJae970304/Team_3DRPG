@@ -51,6 +51,8 @@ public class Inventory : MonoBehaviour//인벤토리
             if (Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]] == item.Data.ID)
             {
                 PubAndSub.Publish<int>($"{Managers.QuestManager._progressQuest[i]}", Managers.QuestManager._progressQuest[i]);
+                Managers.QuestManager._countCheck[i] = GetItemAmount(Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]]);
+                Logger.LogError($"{Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]]}뭐냐");
             }
         }
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
