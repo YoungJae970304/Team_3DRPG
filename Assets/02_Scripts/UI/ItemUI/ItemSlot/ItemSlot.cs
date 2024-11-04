@@ -75,7 +75,6 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
     public virtual bool MoveItem(ItemSlot moveSlot)
     {
         Item = moveSlot.Item;
-        UpdateSlotInfo();
         return true;
     }
 

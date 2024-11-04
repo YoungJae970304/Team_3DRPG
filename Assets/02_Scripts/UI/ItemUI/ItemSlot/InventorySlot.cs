@@ -54,6 +54,7 @@ public class InventorySlot : ItemSlot
         {
             _itemManager.Remove(_index, _slotType);
             base.Setitem(item);
+            _Image.enabled =false;
         }
         else if (_itemManager.Containtype(_slotType, item.Data.Type))
         {

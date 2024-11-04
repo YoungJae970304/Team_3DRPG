@@ -7,23 +7,27 @@ public class DungeonManager : MonoBehaviour
     //죽을 때 감소하는 변수 (0이되면 클리어가됨) //
     //-- 바로클리어를 막기위해 bool변수 추가해주면좋을듯
     public bool _startCheck = false;
+    public bool _bossCheck = false;
     Player _player;
     [SerializeField] DeongeonType _curLevel;
     public GameObject _bossSpawn;
     public GameObject _dungeonSpawn;
     public GameObject _bossDungeonWall;
     public GameObject _dungeonWall;
+    public GameObject _bossHPBar;
     [SerializeField] Transform _playerSpawnPos;
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
     private void OnEnable()
     {
+        _bossHPBar.SetActive(false);
         _player = Managers.Game._player;
         _game = Managers.Game;
         _curLevel = _game._selecDungeonLevel;
         DungeonCheck();
         SpawnCheck();
         DungeonCheck();
+        BossCheck();
     }
     private void OnDisable()
     {
@@ -52,6 +56,7 @@ public class DungeonManager : MonoBehaviour
         ClearDungeon();
         // Logger.LogError($"{Managers.Game._monsters.Count}");
         FalseDungeon();
+        BossHPBar();
     }
     public void SpawnCheck()
     {
@@ -75,6 +80,28 @@ public class DungeonManager : MonoBehaviour
         else
         {
             _dungeonSpawn.SetActive(true);
+        }
+    }
+    public void BossCheck()
+    {
+       for(int i = 0; i < Managers.Game._monsters.Count; i++)
+        {
+            if(Managers.Game._monsters[i]._monsterID == 99999)
+            {
+                _bossCheck = true;
+            }
+            else
+            {
+                _bossCheck = false;
+            }
+        }
+    }
+    public void BossHPBar()
+    {
+        if (_bossCheck)
+        {
+            _bossHPBar.SetActive(true);
+           
         }
     }
     public void ClearDungeon()
@@ -123,9 +150,5 @@ public class DungeonManager : MonoBehaviour
     {
         _monsterCount -= 1;
         Logger.LogError($"{_monsterCount.ToString()}일단 뺀숫자확인");
-    }
-    public void DecideMonster(int ID)
-    {
-
     }
 }
