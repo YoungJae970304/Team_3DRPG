@@ -46,6 +46,13 @@ public class Inventory : MonoBehaviour//인벤토리
         Logger.Log(item.Data.Type.ToString());
         int result = ItemDick[item.Data.Type].Insert(item);
         GetItemAction?.Invoke();
+        for (int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
+        {
+            if (Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]] == item.Data.ID)
+            {
+                PubAndSub.Publish<int>($"{Managers.QuestManager._progressQuest[i]}", Managers.QuestManager._progressQuest[i]);
+            }
+        }
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }

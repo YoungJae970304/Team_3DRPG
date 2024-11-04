@@ -14,6 +14,7 @@ public class QuestManager
     public Dictionary<int, int> _targetCheck = new Dictionary<int, int>();
     public Dictionary<int, int> _countCheck = new Dictionary<int, int>();
     public Dictionary<int, string> _questName = new Dictionary<int, string>();
+    public Dictionary<int, string> _targetName = new Dictionary<int, string>();
     public List<int> _questID = new List<int>();
     public List<int> _activeQuest = new List<int>();
     public List<int> _progressQuest = new List<int>();
@@ -28,6 +29,7 @@ public class QuestManager
         _dataTableManager = Managers.DataTable;
         // LoadQuestData();
         QuestListInput();
+        AddActiveQuest();
         _curLevelCountPlus += LevelCountPlus;
         
     }
@@ -37,23 +39,26 @@ public class QuestManager
     public void LevelCountPlus()
     {
         _currPlayerLevel++;
-        for (int i = _questID[0]; i <= _questID[_questID.Count-1]; i++)
+        AddActiveQuest();
+    }
+    public void AddActiveQuest()
+    {
+        for (int i = _questID[0]; i <= _questID[_questID.Count - 1]; i++)
         {
             if (_questList[i] <= _currPlayerLevel)
             {
-                if(!_progressQuest.Contains(i) && !_completeQuest.Contains(i) && !_activeQuest.Contains(i))
+                if (!_progressQuest.Contains(i) && !_completeQuest.Contains(i) && !_activeQuest.Contains(i))
                 {
                     _activeQuest.Add(i);
                 }
-                    
-                
-                
+
+
+
                 //Managers.UI.Init();
-   
+
             }
         }
     }
-    
     void QuestListInput()
     {
         foreach(var questdata in _dataTableManager._QuestData)
@@ -62,6 +67,20 @@ public class QuestManager
             _questName.Add(questdata.ID, questdata.Name);
             _questID.Add(questdata.ID);
             _questrequirements.Add(questdata.ID, questdata.TargetCount);
+            foreach (var monsterdata in _dataTableManager._MonsterDropData)
+            {
+                if (questdata.TargetID == monsterdata.ID && !_targetName.ContainsKey(questdata.ID))
+                {
+                    _targetName.Add(questdata.ID, monsterdata.Name);
+                }
+            }
+            foreach (var itemdata in _dataTableManager._GoodsItemData)
+            {
+                if (questdata.TargetID == itemdata.ID && !_targetName.ContainsKey(questdata.ID))
+                {
+                    _targetName.Add(questdata.ID, itemdata.Name);
+                }
+            }
         }
     }
 }
