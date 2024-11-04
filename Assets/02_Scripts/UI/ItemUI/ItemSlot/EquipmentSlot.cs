@@ -11,7 +11,7 @@ public class EquipmentSlot : ItemSlot
         if (moveSlot is ShopItemSlot)//상점창이면 무시함
         { return; }
         Item item = (moveSlot as ItemSlot).Item;
-        if (item.Data.Type != _slotType) { return; }
+        if (item.Data.Type != _slotType) { Managers.Sound.Play("ETC/ui_fail"); return; }
         base.ItemInsert(moveSlot);
     }
 
