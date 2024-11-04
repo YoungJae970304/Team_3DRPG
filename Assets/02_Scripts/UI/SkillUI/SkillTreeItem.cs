@@ -50,7 +50,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
     [SerializeField] Image _image;                  //스킬 이미지
     public Image Icon { get => _image; }            //외부 접근용 프로퍼티
     //스크립트 타입으로 새로운 클래스 생성해서 스킬에 할당하는 함수
-    internal bool SetSkill(MonoScript skillScript)
+    public bool SetSkill(MonoScript skillScript)
     {
         //_skillScript = skillScript;
         //if (_skill != null&& _skillScript.GetClass() == _skill.GetType()) { return false; }//이전과 같으면 무시
