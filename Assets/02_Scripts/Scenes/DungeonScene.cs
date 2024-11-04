@@ -25,6 +25,18 @@ public class DungeonScene : BaseScene
         largeMapUI.InitSceneMapInfo(208f, _largeMapCamPos);
     }
 
+    public void OnStartBGMToDungeonType()
+    {
+        if (Managers.Game._selecDungeonLevel == DeongeonType.Boss)
+        {
+            Managers.Sound.Play("BGM/boss_bgm", Define.Sound.Bgm);
+        }
+        else
+        {
+            Managers.Sound.Play("BGM/dungeon_bgm", Define.Sound.Bgm);
+        }
+    }
+
     public override void Clear()
     {
         throw new System.NotImplementedException();
