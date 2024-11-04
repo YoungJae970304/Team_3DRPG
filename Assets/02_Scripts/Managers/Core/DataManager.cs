@@ -116,7 +116,7 @@ public class DataManager
         }
     }
 
-    T GetData<T>() where T : class, IData
+    public T GetData<T>() where T : class, IData
     {
         Type type = typeof(T);
 
@@ -125,16 +125,6 @@ public class DataManager
             return dataInstance as T;
         }
         Logger.LogError($"{type.Name}의 타입이 등록되지 않았습니다.");
-        return null;
-    }
-
-    public T GetDatas<T>() where T : class
-    {
-        Type type = typeof(T);
-        if (_IDataDict.TryGetValue(type, out IData dataInstance))
-        {
-            return dataInstance as T;
-        }
         return null;
     }
 }

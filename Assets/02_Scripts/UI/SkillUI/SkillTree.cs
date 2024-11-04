@@ -10,6 +10,7 @@ public class SkillTreeData : BaseUIData {
     public SkillTreeData(Define.PlayerType playerType)
     {
         path = playerType == Define.PlayerType.Melee ? "MeleeSkillTree" : "MageSkillTree";
+        Logger.LogError("저장");
     }
 }
 
@@ -115,6 +116,7 @@ public class SkillTree : ItemDragUI
         {
             GetText((int)Texts.SpTxt).text = $"sp소모:{_currentItem.Skill._needSP}";
         }
+        
     }
 
     public override void CloseUI(bool isCloseAll = false)
@@ -135,13 +137,6 @@ public class SkillTree : ItemDragUI
             _currentItem.SkillLevel += 1;
             _currentItem.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
             UpdateInfo();
-
-            SkillSaveData skillSaveData = Managers.Data.GetDatas<SkillSaveData>();
-            if (skillSaveData != null)
-            {
-                skillSaveData._skillAddID.Add(_currentItem.Skill._level);
-                Managers.Data.SaveData<SkillSaveData>();
-            }
         }
     }
     //스킬레벨 감소
@@ -156,12 +151,6 @@ public class SkillTree : ItemDragUI
             _currentItem.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
             //sp 수치 증가 처리 필요
             UpdateInfo();
-            SkillSaveData skillSaveData = Managers.Data.GetDatas<SkillSaveData>();
-            if(skillSaveData != null)
-            {
-                skillSaveData._skillRemoveID.Add(_currentItem.Skill._level);
-                Managers.Data.SaveData<SkillSaveData>();
-            }
         }
     }
     //스킬 레벨 증가시 sp 조건 확인 

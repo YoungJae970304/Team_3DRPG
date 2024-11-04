@@ -28,7 +28,6 @@ public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
             _image.enabled = false;
         }
         Logger.LogWarning("슬롯갱신");
-
     }
     public bool DragEnter(Image icon)
     {
@@ -67,9 +66,7 @@ public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
 
             skillQuickSlot.Skill = skill;
             Logger.LogWarning("14");
-
         }
-        
     }
 
     public void NullTarget()
