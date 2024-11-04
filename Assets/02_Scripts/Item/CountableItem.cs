@@ -37,7 +37,22 @@ public class CountableItem : Item
         SetAmount(nextAmount);
         return overAmount;
     }
-
+    public int RemoveAmount(int amount)
+    {
+        int nextAmount = _amount - amount;
+        int removedAmount = 0;
+        if (nextAmount < 0)
+        {
+            removedAmount = _amount;
+            nextAmount = 0;
+        }
+        else
+        {
+            removedAmount = amount;
+        }
+        SetAmount(nextAmount);
+        return removedAmount;
+    }
     //최대 개수 99개로
     public virtual int SetAmount(int amount)
     {
