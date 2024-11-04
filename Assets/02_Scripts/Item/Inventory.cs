@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour//인벤토리
    Dictionary<ItemData.ItemType, ItemGroup> ItemDick = new Dictionary<ItemData.ItemType, ItemGroup>(new ItemTypeComparer());
 
     public Action GetItemAction;
+    public Dictionary<string, EquipmentItem> EquipMents = new Dictionary<string, EquipmentItem>();
 
     // Start is called before the first frame update
     private void Awake()
