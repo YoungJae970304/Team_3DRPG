@@ -6,15 +6,18 @@ using TMPro;
 public class EquipMentUI : ItemDragUI
 {//장비 슬롯의 아이템 정보를 담고 관리할 딕셔너리
     Dictionary<string, EquipmentItemData> _equipMentsDick = new Dictionary<string, EquipmentItemData>();
+    Dictionary<string, EquipmentItem> _playerEquipsDick;
     [SerializeField] List<EquipmentSlot> _slots = new List<EquipmentSlot>();//미리 지정해둔 슬롯
     [SerializeField] TextMeshProUGUI Atk;
     private void Update()
     {
-        Atk.text = Managers.Game._player._playerStatManager.ATK.ToString();
+        //Atk.text = Managers.Game._player._playerStatManager.ATK.ToString();
+        Atk.text = _playerEquipsDick.Count.ToString();
     }
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
+        _playerEquipsDick = Managers.Game._player.GetComponent<Inventory>().EquipMents;
         foreach (EquipmentSlot slot in _slots)
         {//슬롯 정보 저장
             AddSlot(slot);
@@ -51,9 +54,11 @@ public class EquipMentUI : ItemDragUI
         if (equipmentSlot.Item != null)
         {
             _equipMentsDick[equipmentSlot.name] = equipmentSlot.Item.Data as EquipmentItemData;
+            _playerEquipsDick[equipmentSlot.name] = equipmentSlot.Item as EquipmentItem;
         }
         else {
-            _equipMentsDick[equipmentSlot.name] = null;
+            _equipMentsDick.Remove(equipmentSlot.name);
+            _playerEquipsDick.Remove(equipmentSlot.name);
         }
         StatSum();
         Managers.Sound.Play("ETC/ui_equipped_item");
