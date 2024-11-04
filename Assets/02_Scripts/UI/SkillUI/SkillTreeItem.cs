@@ -191,7 +191,7 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
         {
             string[] path = skillData.IconPath.Split("_");
             Sprite[] icon = Resources.LoadAll<Sprite>(path[0]+"_"+path[1]);
-            Logger.Log("Sprite/SkillIcon_Image/1-3");
+
             if (!gameObject.activeSelf) { gameObject.SetActive(true); }
             _image.sprite = icon[int.Parse(path[2])];
             _maxLevel = skill._maxLevel;

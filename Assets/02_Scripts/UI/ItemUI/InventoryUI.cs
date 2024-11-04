@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
 
 public class InventoryUI : ItemDragUI
 {
@@ -23,12 +24,16 @@ public class InventoryUI : ItemDragUI
         Inventory,
         Slots,
     }
-
+    enum Texts
+    {
+        MoneyText,
+    }
     public List<InventorySlot> _inventorySlots;
     // Start is called before the first frame update
     protected override void Awake()
     {
         base.Awake();
+        Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<GameObject>(typeof(GameObjects));
         _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         _inventory.GetItemAction += UpdateSlot;
@@ -51,6 +56,8 @@ public class InventoryUI : ItemDragUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
+        MoneyUpdate(Managers.Game._player._playerStatManager.Gold);
+        PubAndSub.Subscrib<int>("Gold", MoneyUpdate);
         UpdateSlot();
     }
     void SlotSetting(ItemData.ItemType type) {
@@ -80,4 +87,7 @@ public class InventoryUI : ItemDragUI
         }
     }
 
+    public void MoneyUpdate(int amount) {
+        GetText((int)Texts.MoneyText).text = amount.ToString();;
+    }
 }
