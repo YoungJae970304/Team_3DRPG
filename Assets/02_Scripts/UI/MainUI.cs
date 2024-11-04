@@ -21,7 +21,13 @@ public class MainUI : ItemDragUI
     enum Sliders {
         HpBar,
         MpBar,
+    }
 
+    enum Buttons {
+        Quest,
+        Inventory,
+        Skill,
+        Option,
     }
 
     public SkillQuickSlot SkillSlot_E { get { return Get<SkillQuickSlot>((int)SkillSlots.SkillSlot_E); } }
@@ -35,7 +41,10 @@ public class MainUI : ItemDragUI
         
         PubAndSub.Subscrib<int>("HP", HpChanged);
         PubAndSub.Subscrib<int>("MP", MpChanged);
-
+        GetButton((int)Buttons.Inventory).onClick.AddListener(()=> OpenPlayerUI<InventoryUI>());
+        GetButton((int)Buttons.Quest).onClick.AddListener(() => OpenPlayerUI<QuestUI>());
+        GetButton((int)Buttons.Skill).onClick.AddListener(() => OpenPlayerUI<SkillTree>());
+        GetButton((int)Buttons.Option).onClick.AddListener(() => OpenPlayerUI<OptionUI>());
 
     }
     public override void Init(Transform anchor)
@@ -43,6 +52,7 @@ public class MainUI : ItemDragUI
         Bind<QuickItemSlot>(typeof(QuickItemSlots));
         Bind<SkillQuickSlot>(typeof(SkillSlots));
         Bind<Slider>(typeof(Sliders));
+        Bind<Button>(typeof(Buttons));
         base.Init(anchor);
         _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         Managers.Game._player.StatusEffect._iconTr = _icontr;
@@ -69,5 +79,22 @@ public class MainUI : ItemDragUI
     private void MpChanged(int value)
     {
         Get<Slider>((int)Sliders.MpBar).value = (float)value / (float)Managers.Game._player._playerStatManager.MaxMP;
+    }
+
+    public void OpenPlayerUI<T>() where T : BaseUI
+    {
+        T playerUI = Managers.UI.GetActiveUI<T>() as T;
+        if (playerUI != null)
+        {
+            Managers.UI.CloseUI(playerUI);
+
+            Managers.Sound.Play("ETC/ui_close");
+        }
+        else
+        {
+            if (Managers.Scene.LoadingSceneCheck()) return;
+
+            Managers.UI.OpenUI<T>(new BaseUIData());
+        }
     }
 }
