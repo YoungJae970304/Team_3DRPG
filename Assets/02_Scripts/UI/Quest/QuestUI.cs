@@ -365,6 +365,7 @@ public class QuestUI : BaseUI
     public void CompleteQuest()
     {
         Logger.LogError("몇번들어가는지");
+        Logger.LogError(Managers.QuestManager._targetCheck[_test].ToString() + "아이템 체크");
         GameObject test = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         QuestButton testID = test.GetComponent<QuestButton>();
         _test = testID._questID;
