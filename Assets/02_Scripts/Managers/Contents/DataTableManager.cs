@@ -114,7 +114,9 @@ public class DataTableManager
             {
                 ID = Convert.ToInt32(data["ID"]),
                 SkillName = data["SkillName"].ToString(),
-                SkillType = (SkillData.SkillTypes)Enum.Parse(typeof(SkillData.SkillTypes), data["SkillType"].ToString()),
+                TargetScript = data["TargetScript"].ToString(),//사용할 스크립트
+                IconPath = data["SkillIconPath"].ToString(),//이미지 경로
+                SkillType = (SkillData.SkillTypes)Enum.Parse(typeof(SkillData.SkillTypes), data["Skilltype"].ToString()),
                 StatType = (SkillData.StatTypes)Enum.Parse(typeof(SkillData.StatTypes), data["StatType"].ToString()),
                 //SkillType = Convert.ToInt32(data["SkillType"]), // 타입들 어떻게 사용할지
                 //StatType = Convert.ToInt32(data["StatType"]),   // enum으로?
