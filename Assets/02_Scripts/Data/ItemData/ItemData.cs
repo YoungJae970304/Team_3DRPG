@@ -14,7 +14,6 @@ public class ItemData
         Armor,//2
         Accessories,//3
         Potion,//4
-        BuffPotion,
         Booty,//5
         DropData,
     }
