@@ -175,7 +175,6 @@ public class PlayerSaveData : IData
 
     public void SetDefaultData()
     {
-
     }
 }
 

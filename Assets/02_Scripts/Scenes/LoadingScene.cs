@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingScene : BaseScene
@@ -20,9 +17,14 @@ public class LoadingScene : BaseScene
     {
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
-
         if (Managers.Game._player != null) return;
         Managers.Game.PlayerCreate();
+        //이어하기 일경우를 판단
+        if (!TitleCanvasUI._isNewGame)
+        {
+            ActiveToSaveUI();
+            LoadAllData();
+        }
     }
 
     public void ChangeScene()
@@ -57,6 +59,8 @@ public class LoadingScene : BaseScene
                 _skipTxt.enabled = true;
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
+                    //널래퍼런스 방지용 유아이 ESC키로 전부 삭제하고 씬 로드
+                    Managers.UI.CloseAllOpenUI();
                     //ao.allowSceneActivation = true;
                     _fadeAnim.SetTrigger("doFade");
                 }
@@ -65,9 +69,27 @@ public class LoadingScene : BaseScene
             yield return null;
         }
     }
+    //모든 데이터 로드 방지
+    void LoadAllData()
+    {
+        Managers.Data.LoadData<PlayerSaveData>();
+        Managers.Data.LoadData<SkillSaveData>();
+        Managers.Data.LoadData<InventorySaveData>();
+        Managers.Data.LoadData<EquipmentSaveData>();
+        Managers.Data.LoadData<QuestSaveData>();
+    }
+    //처음 로딩씬에서 UI를 오픈해서 로드할때 널래퍼런스 방지용 함수
+    void ActiveToSaveUI()
+    {
+        Managers.UI.GetActiveUI<EquipMentUI>();
+        Managers.UI.GetActiveUI<SkillTree>();
+        Managers.UI.GetActiveUI<InventoryUI>();
+        Managers.UI.GetActiveUI<QuestUI>();
+        Managers.UI.GetActiveUI<SimpleQuestUI>();
+    }
 
     public override void Clear()
     {
-        
+
     }
 }

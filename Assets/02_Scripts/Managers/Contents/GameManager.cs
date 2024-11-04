@@ -42,18 +42,16 @@ public class GameManager
     // 타입에 맞는 캐릭터 생성
     public void PlayerCreate()
     {
-        Logger.LogWarning($"플레이서 생성 시점 확인{Managers.Game._playerType}");
+        Logger.LogWarning($"플레이어 생성 시점 확인{Managers.Game._playerType}");
         Managers.Resource.Instantiate("Player/VirtualCameras");
         
         switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
                 GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
-                Managers.Data.SaveData<SaveDatas>();
                 break;
             case Define.PlayerType.Mage:
                 GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
-                Managers.Data.SaveData<SaveDatas>();
                 break;
             default:
                 Logger.LogError("생성할 플레이어가 없습니다.");

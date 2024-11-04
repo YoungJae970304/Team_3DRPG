@@ -11,7 +11,7 @@ public class TitleCanvasUI : BaseUI
         ContinueBtn,
         ShutDownBtn,
     }
-
+    public static bool _isNewGame {  get; private set; }
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
@@ -19,6 +19,7 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickBeginBtn()
     {
+        _isNewGame = true;
         Managers.UI.CloseUI(this);
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
         if (selectPlayerUI == null)
@@ -29,11 +30,12 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickContinueBtn(string sceneName)
     {
+        _isNewGame = false;
         //Managers.Scene.SceneChange(sceneName);
         Animator fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         fadeAnim.SetTrigger("doFade");
         //CloseUI(true);
-        Managers.UI.CloseAllOpenUI();
+        //Managers.UI.CloseAllOpenUI();
     }
 
     public void OnClickShutDownBtn()
