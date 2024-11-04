@@ -50,6 +50,8 @@ public class SkillTree : ItemDragUI
         GetButton((int)Buttons.MinusBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.PlusBtn).onClick.AddListener(OnSkillLevelPlusBtn);
         GetButton((int)Buttons.MinusBtn).onClick.AddListener(OnSkillLevelMinusBtn);
+
+        PubAndSub.Subscrib("LevelUpdate", UpdateInfo);
     }
     //데이터에서 스킬트리 프리팹의 경로를 받아 초기화
     public override void SetInfo(BaseUIData uiData)
@@ -108,7 +110,7 @@ public class SkillTree : ItemDragUI
 
             int minLevel = _currentItem.GetMinLevel();
             GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition() && _currentItem.SkillLevel > minLevel;
-            GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition();
+            GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition() && Managers.Game._player._playerStatManager.SP > 0;
         }
         
         if (_currentItem != null)

@@ -2,8 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using static UnityEditor.Progress;
-using static Cinemachine.DocumentationSortingAttribute;
 using System.Linq;
 
 public enum DeongeonType

@@ -19,7 +19,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
     // 값을 받을 수 있는 프로퍼티들 및 각각의 액션
 
 
-    public int Level { get {  return _originStat.Level; } set { _originStat.Level = value; PubAndSub.Publish<int>("Level", value); } }
+    public int Level { get {  return _originStat.Level; } set { _originStat.Level = value; } }
 
     public int HP { get { return _originStat.HP; } set { _originStat.HP = Mathf.Clamp(value, 0, MaxHP); PubAndSub.Publish<int>("HP", HP); } }
     public int MP { get { return _originStat.MP; } set { _originStat.MP = Mathf.Clamp(value, 0, MaxMP); PubAndSub.Publish<int>("MP", MP); } }
@@ -79,7 +79,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
     #endregion
 
     [ContextMenu("체력소모 테스트")]
-    public void Hp() {
+    public void HpTest() {
         HP -= 50;
     }
 }
