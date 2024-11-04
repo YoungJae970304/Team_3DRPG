@@ -177,4 +177,49 @@ public class SkillTreeItem : MonoBehaviour , IItemDragAndDropAble
         _parent.enabled = true;
         icon.enabled = false;
     }
+    public bool SetSkill(int ID)
+    {
+        //Id로 스킬 생성
+        SkillData skillData = Managers.DataTable.GetSkillData(ID);
+        if (skillData == null) { return false; }
+        SkillBase skill = null;
+        Type skillType = Type.GetType(skillData.SkillCode);//스킬데이터에서 스크립트 이름을 받아 타입을 얻고 타입으로 스킬 생성
+        if (typeof(SkillBase).IsAssignableFrom(skillType))
+        {
+            skill = Activator.CreateInstance(skillType, ID) as SkillBase;
+        }
+        _skill = skill;
+        if (_skill != null)
+        {
+            if (!gameObject.activeSelf) { gameObject.SetActive(true); }
+            _maxLevel = skill._maxLevel;
+            return true;
+
+        }
+        else
+        {
+            Logger.LogError("Skill creation failed");
+            gameObject.SetActive(false);
+            return false;
+        }
+    }
+    public SkillBase GetSkill(int ID)//ID로 스킬 생성하는 함수
+    {
+        SkillData skillData = Managers.DataTable.GetSkillData(ID);
+        if (skillData == null) { return null; }
+        SkillBase skill = null;
+        Type skillType = Type.GetType(skillData.SkillName);//스킬데이터에서 스크립트 이름을 받아 타입을 얻고 타입으로 스킬 생성
+        if (typeof(SkillBase).IsAssignableFrom(skillType))
+        {
+            skill = Activator.CreateInstance(skillType, ID) as SkillBase;
+        }
+        if (skill != null)
+        {
+            _maxLevel = skillData.MaxLevel;
+            return skill;
+        }
+        Logger.LogError("Skill creation failed");
+        return null;
+
+    }
 }
