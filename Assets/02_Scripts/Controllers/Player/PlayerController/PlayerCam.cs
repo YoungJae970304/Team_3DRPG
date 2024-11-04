@@ -124,7 +124,15 @@ public class PlayerCam : MonoBehaviour
         {
             Vector3 playerDir = _cameraArm.forward;
             playerDir.y = 0;
-            Managers.Game._player._playerModel.forward = playerDir;
+
+            //Managers.Game._player._playerModel.forward = playerDir;
+
+            // 현재 캐릭터의 forward 방향과 목표 방향(playerDir)을 부드럽게 보간
+            Quaternion targetRotation = Quaternion.LookRotation(playerDir);
+            Managers.Game._player._playerModel.rotation = Quaternion.Slerp(
+                Managers.Game._player._playerModel.rotation,
+                targetRotation,
+                Time.deltaTime * 5f); // 보간 속도 (5f는 예시 값으로, 필요에 따라 조정 가능)
         }
     }
 

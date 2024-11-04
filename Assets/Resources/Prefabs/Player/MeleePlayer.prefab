@@ -766,6 +766,7 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _btnCount: 0
 --- !u!1001 &75447026276848954
 PrefabInstance:
   m_ObjectHideFlags: 0
