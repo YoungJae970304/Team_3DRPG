@@ -160,7 +160,6 @@ public class DragAndDrop : MonoBehaviour
         //슬롯 위에 올라가면
         void OnCurrentEnter()
         {
-            //curSlot
             if (currSlot.Item != null && _currnetSlot == null)
             {
                 toolTip.SetInfo(currSlot);
