@@ -1,15 +1,15 @@
-﻿ID,SkillName,SkillType,StatType,StatValue,BaseDamage,DamageValue,UseingMP,NeedSkillPoint,MaxLevel
-1,귀영섬,1,0,0,150,50,20,1,5
-2,발도,1,0,0,150,50,10,1,5
-3,검기방출,1,0,0,200,100,15,1,3
-4,HP 증가/근거리,2,1,150,0,0,0,1,10
-5,MP 증가/근거리,2,3,50,0,0,0,1,10
-6,HP 재생량 증가,2,2,1,0,0,0,1,3
-7,MP 재생량 증가,2,4,1,0,0,0,1,3
-8,공격력 증가,2,5,10,0,0,0,1,10
-9,방어력 증가,2,6,5,0,0,0,1,10
-10,마력 방출,1,0,0,120,20,15,1,5
-11,대지붕괴,1,0,0,150,50,20,1,5
-12,체인 라이트닝,1,0,0,200,100,30,1,3
-13,HP 증가/원거리,2,1,100,0,0,0,1,10
-14,MP 증가/원거리,2,3,100,0,0,0,1,10
+﻿ID,SkillName,Skilltype,StatType,StatValue,BaseDamage,DamageValue,UseingMP,NeedSkillPoint,MaxLevel,TargetScript,SkillIconPath
+1,귀영섬,1,0,0,150,50,20,1,5,ThunderSlash,Sprite/SkillIcon_Image/1-3_0
+2,발도,1,0,0,150,50,10,1,5,DrawSword,Sprite/SkillIcon_Image/1-3_1
+3,검기방출,1,0,0,200,100,15,1,3,SwordBurst,Sprite/SkillIcon_Image/1-3_2
+4,HP 증가/근거리,2,1,150,0,0,0,1,10,PassiveSkill,Sprite/SkillIcon_Image/4_0
+5,MP 증가/근거리,2,3,50,0,0,0,1,10,PassiveSkill,Sprite/SkillIcon_Image/5_0
+6,HP 재생량 증가,2,2,1,0,0,0,1,3,PassiveSkill,Sprite/SkillIcon_Image/6_0
+7,MP 재생량 증가,2,4,1,0,0,0,1,3,PassiveSkill,Sprite/SkillIcon_Image/7_0
+8,공격력 증가,2,5,10,0,0,0,1,10,PassiveSkill,"Sprite/SkillIcon_Image/8,9_0"
+9,방어력 증가,2,6,5,0,0,0,1,10,PassiveSkill,"Sprite/SkillIcon_Image/8,9_1"
+10,마력 방출,1,0,0,120,20,15,1,5,ManaBurst,"Sprite/SkillIcon_Image/10,11_0"
+11,대지붕괴,1,0,0,150,50,20,1,5,ShatterEarth,"Sprite/SkillIcon_Image/10,11_1"
+12,체인 라이트닝,1,0,0,200,100,30,1,3,ChainLightning,Sprite/SkillIcon_Image/12_0
+13,HP 증가/원거리,2,1,100,0,0,0,1,10,PassiveSkill,Sprite/SkillIcon_Image/4_0
+14,MP 증가/원거리,2,3,100,0,0,0,1,10,PassiveSkill,Sprite/SkillIcon_Image/5_0

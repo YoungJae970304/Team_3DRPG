@@ -23,7 +23,7 @@ public class SkillData
 
     public int ID;
     public string SkillName;
-    public string SkillCode;
+    public string TargetScript;
     public string IconPath;
     public SkillTypes SkillType;
     public StatTypes StatType;

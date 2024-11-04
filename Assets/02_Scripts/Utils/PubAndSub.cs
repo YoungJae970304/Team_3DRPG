@@ -30,7 +30,9 @@ public static class PubAndSub
             if (!(Actions[name] is Action)) { return; }
             Action action1 = (Actions[name] as Action);
             action1 += action;
+
             Actions[name] = action1;
+            if (Actions[name]==null) { Actions.Remove(name); }
         }
         else {
             Actions.Add(name, action);
