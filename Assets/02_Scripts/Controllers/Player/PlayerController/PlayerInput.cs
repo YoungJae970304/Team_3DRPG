@@ -185,7 +185,7 @@ public class PlayerInput : MonoBehaviour
 
             _player._interectController.Interection();
         }
-        else if ( Input.GetKeyDown(KeyCode.M))
+        else if (Input.GetKeyDown(KeyCode.M))
         {
             OpenPlayerUI<LargeMapUI>();
         }
@@ -216,6 +216,12 @@ public class PlayerInput : MonoBehaviour
             MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
             mainUI.ItemSlot_2.Use();
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            Logger.LogError("test1");
+            PubAndSub.Publish<int>("80001",80001);
+            Logger.LogError("test2");
+        }    
     }
 
     // 데이터 입력 없는 디폴트
