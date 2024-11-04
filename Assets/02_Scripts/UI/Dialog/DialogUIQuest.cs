@@ -13,7 +13,7 @@ public class DialogUIQuest : DialogUI
     protected override void OnClickedButton()
     {
         //이 추상클래스에서 퀘스트 수락로직 작성
-        AcceptQuest();
+        
     }
     protected override void OnEnable()
     {
@@ -53,6 +53,7 @@ public class DialogUIQuest : DialogUI
         {
             _dialogSystem[0].gameObject.SetActive(false);
             yield return RunDialog(1);
+            AcceptQuest();
         }
         //거절 버튼을 눌렀을경우 다이얼 로그 인덱스 번호 2 번 실행 후 유아이 닫기
         else if (_isRefuse)
