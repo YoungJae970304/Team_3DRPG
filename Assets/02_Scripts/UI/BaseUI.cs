@@ -169,8 +169,8 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
         Button[] buttons = GetComponentsInChildren<Button>(true);
         foreach (Button button in buttons)
         {
-            button.onClick?.RemoveListener(() => Managers.Sound.Play("ETC/ui_click"));
-            button.onClick.AddListener(() => Managers.Sound.Play("ETC/ui_click"));
+            //button.onClick?.RemoveListener(() => Managers.Sound.Play("ETC/ui_click"));
+            //button.onClick.AddListener(() => Managers.Sound.Play("ETC/ui_click"));
 
             // 마우스 오버 소리 설정
             EventTrigger trigger = button.gameObject.GetComponent<EventTrigger>();
@@ -183,6 +183,22 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
             entry.eventID = EventTriggerType.PointerEnter;
             entry.callback.AddListener((data) => { Managers.Sound.Play("ETC/ui_button_on_mouse"); });
             trigger.triggers.Add(entry);
+
+            // 클릭 시 소리 설정
+            EventTrigger.Entry clickEntry = new EventTrigger.Entry();
+            clickEntry.eventID = EventTriggerType.PointerClick;
+            clickEntry.callback.AddListener((data) =>
+            {
+                if (button.interactable)
+                {
+                    Managers.Sound.Play("ETC/ui_click");
+                }
+                else
+                {
+                    Managers.Sound.Play("ETC/ui_fail");
+                }
+            });
+            trigger.triggers.Add(clickEntry);
         }
 
         alreadySet = true;
