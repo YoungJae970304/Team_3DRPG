@@ -229,6 +229,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7794534387350187933}
   - {fileID: 5598243907553385383}
   m_Father: {fileID: 8213449261092643713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -544,7 +545,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3058126408619726545}
   m_HandleRect: {fileID: 662419430634594730}
   m_Direction: 2
-  m_Value: 1.0000025
+  m_Value: 0.97455746
   m_Size: 0.6931726
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -948,7 +949,6 @@ RectTransform:
   m_Children:
   - {fileID: 1027486956199079791}
   - {fileID: 600680458535143695}
-  - {fileID: 7794534387350187933}
   m_Father: {fileID: 3637284930039345604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1175,6 +1175,7 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _btnCount: 0
   _skillTreeItems: []
 --- !u!111 &1096235017600804770
 Animation:
@@ -1371,7 +1372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -567.5598, y: 377.36044}
+  m_AnchoredPosition: {x: -567.56055, y: 385.86093}
   m_SizeDelta: {x: 956.7581, y: 1088.7947}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &5718538824405378686
@@ -1697,12 +1698,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5598243907553385383}
+  m_Father: {fileID: 3637284930039345604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -51.08391}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -7, y: -40.11609}
+  m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7020471458601900655
 CanvasRenderer:
@@ -1760,15 +1761,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.7
-  m_fontSizeBase: 18.7
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

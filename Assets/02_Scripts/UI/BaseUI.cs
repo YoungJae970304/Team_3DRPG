@@ -22,7 +22,8 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     private Action _OnShow;
     private Action _OnClose;
     public bool _isSort = true;
-
+    [SerializeField] bool _InitPos=false;
+    [SerializeField] Vector3 _position = Vector3.zero;
     bool alreadySet = false;
 
     public int _btnCount;
@@ -146,6 +147,10 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
         if (_exitBtn != null) {
             _exitBtn.onClick.AddListener(()=>CloseUI());
         }
+        if (_InitPos) {
+            _topBarImage.transform.parent.localPosition = _position;
+        }
+        
         rectTransform.localPosition = Vector3.zero;
         rectTransform.localScale = Vector3.one;
         rectTransform.offsetMax = Vector2.zero;

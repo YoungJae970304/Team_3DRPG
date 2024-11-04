@@ -34,4 +34,9 @@ public abstract class BaseScene : MonoBehaviour
 
         Managers.UI.CloseAllOpenUI();
     }
+
+    public void OnStartBGM(string path)
+    {
+        Managers.Sound.Play(path, Define.Sound.Bgm);
+    }
 }
