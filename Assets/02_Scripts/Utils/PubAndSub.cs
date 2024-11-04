@@ -47,14 +47,14 @@ public static class PubAndSub
             action1 -= action;//중복 방지
             action1 += action;
             Actions[name] = action1;
-            Logger.LogError("구독됨");
+            //Logger.LogError("구독됨");
 
 
         }
         else
         {
             Actions.Add(name, action);
-            Logger.LogError("구독됨");
+            //Logger.LogError("구독됨");
         }
     }
     #endregion

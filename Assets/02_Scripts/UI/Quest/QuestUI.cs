@@ -191,7 +191,7 @@ public class QuestUI : BaseUI
     }
     public void AllowQuest()
     {
-        Logger.LogError("진입");
+        //Logger.LogError("진입");
 
         //퀘스트 수락을 어떻게 처리할지
         //일단 예상가는건 수락 시 리스트에서 불러와서 그 리스트에서 수락한 퀘스트 삭제//완
@@ -216,7 +216,7 @@ public class QuestUI : BaseUI
         }
         //_questComplete.Add(_test, false);
         //수락한 버튼 삭제 // 완
-        Logger.LogError($"{_test}이름 확인");
+        //Logger.LogError($"{_test}이름 확인");
         PubAndSub.Subscrib<int>($"{_test}", CheckTest);
         
         //몬스터 죽는쪽에 몬스터아이디랑 타켓이름이랑 비교해서 같다면 실행되도록 하면될듯 // 완
@@ -443,7 +443,7 @@ public class QuestUI : BaseUI
     }
     public void QuestUITest(int ID)
     {
-        Logger.LogError($"{ID}들어가는 아이디 확인");
+        //Logger.LogError($"{ID}들어가는 아이디 확인");
         if (!_activeObject)
         {
             for (int i = 0; i < _questObject.Count; i++)
