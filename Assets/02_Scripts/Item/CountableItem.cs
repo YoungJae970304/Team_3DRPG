@@ -25,33 +25,30 @@ public class CountableItem : Item
     public int AddAmount(int amount)
     {
         int nextAmount = _amount + amount;
+        Logger.LogError($"{_amount}얜 몇임?");
         //현재 수량과 추가된 수량이 _maxAmount를 초과 했는지 확인 할 변수
         int overAmount = 0;
         //추가된 수량이 최대개수(99) 보다 커지면
         if (nextAmount > _maxAmount)
         {
             overAmount = nextAmount - _maxAmount;
+       
             nextAmount = _maxAmount;
-            
+   
         }
         SetAmount(nextAmount);
         return overAmount;
     }
     public int RemoveAmount(int amount)
     {
-        int nextAmount = _amount - amount;
-        int removedAmount = 0;
-        if (nextAmount < 0)
-        {
-            removedAmount = _amount;
-            nextAmount = 0;
-        }
-        else
-        {
-            removedAmount = amount;
-        }
-        SetAmount(nextAmount);
-        return removedAmount;
+        int nextAmount = _amount - amount; ;
+        Logger.LogError($"{_amount}얜 몇임?");
+        //현재 수량과 추가된 수량이 _maxAmount를 초과 했는지 확인 할 변수
+        //int overAmount = 0;
+        //추가된 수량이 최대개수(99) 보다 커지면
+       
+       
+        return nextAmount;
     }
     //최대 개수 99개로
     public virtual int SetAmount(int amount)

@@ -222,9 +222,14 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Logger.LogError("test1");
-            Item questItem = Item.ItemSpawn(51001);
-            Inventory inven = _player.gameObject.GetComponent<Inventory>();
-            inven.InsertItem(questItem);
+            for(int i = 0; i < 10; i++)
+            {
+                Item questItem = Item.ItemSpawn(51001);
+                Inventory inven = _player.gameObject.GetComponent<Inventory>();
+                inven.InsertItem(questItem);
+            }
+            
+            
             Logger.LogError("test2");
         }
     }
