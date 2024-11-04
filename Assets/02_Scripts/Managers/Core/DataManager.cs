@@ -9,7 +9,7 @@ public interface ILoader<Key, Value>
 
 public class DataManager
 {
-    public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
+    //public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
 
     public Dictionary<Type, IData> _IDataDict = new Dictionary<Type, IData>();
 
@@ -76,11 +76,11 @@ public class DataManager
         SaveData<SaveDatas>();
     }
 
-    Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
-    {
-        TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
-        return JsonUtility.FromJson<Loader>(textAsset.text);
-    }
+    //Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
+    //{
+    //    TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
+    //    return JsonUtility.FromJson<Loader>(textAsset.text);
+    //}
 
     public void SaveData<T>() where T : class, IData
     {
