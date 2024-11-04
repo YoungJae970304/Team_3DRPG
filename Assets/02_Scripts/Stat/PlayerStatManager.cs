@@ -79,7 +79,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
     #endregion
 
     [ContextMenu("체력소모 테스트")]
-    public void Hp() {
+    public void HpTest() {
         HP -= 50;
     }
 }

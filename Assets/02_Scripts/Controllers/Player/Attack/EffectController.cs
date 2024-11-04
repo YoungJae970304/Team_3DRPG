@@ -20,6 +20,8 @@ public class EffectController : BaseUI
     public enum MageEffects
     {
         MageSkill1,
+        MageSkill3Charge,
+        MageSkill3Burst,
         Count,
     }
 

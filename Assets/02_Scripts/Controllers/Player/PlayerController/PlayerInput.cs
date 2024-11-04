@@ -148,6 +148,8 @@ public class PlayerInput : MonoBehaviour
         {
             _player._playerStatManager.EXP += 100;
             _player._playerStatManager.Gold += 100000;
+            _player._playerStatManager.HP = _player._playerStatManager.MaxEXP;
+            _player._playerStatManager.MP = _player._playerStatManager.MaxMP;
             //try
             //{
             //    Managers.Data.SaveData<PlayerSaveData>();
