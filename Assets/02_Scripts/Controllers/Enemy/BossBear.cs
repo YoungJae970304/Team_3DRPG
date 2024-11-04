@@ -7,8 +7,6 @@ public class BossBear : Monster
     public int _bossBearID = 99999;
     int skillCount = 0;
     public GameObject _roarRange; // 장판 오브젝트
-
-
     private Vector2 _startScale; // 초기 크기
     float _stageRoarPlus = 10f;
     public float _roarTimer;

@@ -46,6 +46,15 @@ public class Inventory : MonoBehaviour//인벤토리
         Logger.Log(item.Data.Type.ToString());
         int result = ItemDick[item.Data.Type].Insert(item);
         GetItemAction?.Invoke();
+        for (int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
+        {
+            if (Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]] == item.Data.ID)
+            {
+                PubAndSub.Publish<int>($"{Managers.QuestManager._progressQuest[i]}", Managers.QuestManager._progressQuest[i]);
+                Managers.QuestManager._countCheck[i] = GetItemAmount(Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]]);
+                Logger.LogError($"{Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[i]]}뭐냐");
+            }
+        }
         //아이템의 타입에 따라 타입에 맞는 그룹에 삽입한다
         return result;
     }
@@ -65,6 +74,15 @@ public class Inventory : MonoBehaviour//인벤토리
         Item item = ItemDick[type].Remove(index);
         GetItemAction?.Invoke();
         return item;
+    }
+    public bool Remove(Item item)//특정 아이템을 인벤토리에서 제거
+    {
+        if (ItemDick[item.Data.Type].Remove(item)) {
+
+            GetItemAction?.Invoke();
+            return true;
+        }
+        return false;
     }
     public bool SwitchItem(int index1, int index2, ItemData.ItemType type)//두 인덱스간 아이템을 교환.
     {
@@ -215,6 +233,17 @@ public class Inventory : MonoBehaviour//인벤토리
                 return lastItme;
             }
             return null;
+        }
+        public bool Remove(Item item)
+        {
+            int index = Array.IndexOf(_items, item);
+            if (index>=0)
+            {
+                _items[index] = null;
+                isFull = false;
+                return true;
+            }
+            return false;
         }
         public bool SwitchItem(int index1, int index2)
         {//두 인덱스간의 아이템의 위치를 변경한다.

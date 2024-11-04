@@ -376,7 +376,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5a76c91d639a140847ecfd4df9a513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isUsealbe: 1
+  _isLocked: 0
   _Image: {fileID: 4839991604883774550}
   _text: {fileID: 7451958987741734057}
-  slotType: 1
+  _slotType: 1
   _index: 0

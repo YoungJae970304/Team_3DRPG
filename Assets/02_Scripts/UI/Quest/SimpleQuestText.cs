@@ -21,7 +21,7 @@ public class SimpleQuestText : BaseUI
     }
     public void TextChange(int i)
     {
-        GetText((int)QuestText.SimpleQuestText).text = $"{Managers.QuestManager._questName[i]}";
+        GetText((int)QuestText.SimpleQuestText).text = $"{Managers.QuestManager._targetName[i]}";
         GetText((int)QuestText.QuestRequireText).text = $"{Managers.QuestManager._countCheck[i]} / {Managers.QuestManager._questrequirements[i]}";
     }
 }
