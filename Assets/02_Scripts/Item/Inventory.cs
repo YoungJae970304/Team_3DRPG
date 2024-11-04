@@ -75,6 +75,15 @@ public class Inventory : MonoBehaviour//인벤토리
         GetItemAction?.Invoke();
         return item;
     }
+    public bool Remove(Item item)//특정 아이템을 인벤토리에서 제거
+    {
+        if (ItemDick[item.Data.Type].Remove(item)) {
+
+            GetItemAction?.Invoke();
+            return true;
+        }
+        return false;
+    }
     public bool SwitchItem(int index1, int index2, ItemData.ItemType type)//두 인덱스간 아이템을 교환.
     {
         bool result = ItemDick[type].SwitchItem(index1, index2);
@@ -224,6 +233,17 @@ public class Inventory : MonoBehaviour//인벤토리
                 return lastItme;
             }
             return null;
+        }
+        public bool Remove(Item item)
+        {
+            int index = Array.IndexOf(_items, item);
+            if (index>=0)
+            {
+                _items[index] = null;
+                isFull = false;
+                return true;
+            }
+            return false;
         }
         public bool SwitchItem(int index1, int index2)
         {//두 인덱스간의 아이템의 위치를 변경한다.
