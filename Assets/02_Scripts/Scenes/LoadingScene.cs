@@ -19,7 +19,6 @@ public class LoadingScene : BaseScene
     private void Start()
     {
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
-
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
 
         if (Managers.Game._player != null) return;

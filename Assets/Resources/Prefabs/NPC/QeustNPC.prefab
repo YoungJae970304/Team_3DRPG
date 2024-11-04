@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 5192120283780874669}
   - component: {fileID: 7624892395325495080}
   - component: {fileID: 697483932480134145}
-  - component: {fileID: 2287528749801957338}
   - component: {fileID: 9093001715796419568}
   m_Layer: 0
   m_Name: QeustNPC
@@ -183,22 +182,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2287528749801957338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2390683838968090313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e46e827ed8a4ac44eb420a32f6ddbebe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _UIOpenAnimation: {fileID: 0}
-  _topBarImage: {fileID: 0}
-  _exitBtn: {fileID: 0}
-  _isSort: 1
 --- !u!114 &9093001715796419568
 MonoBehaviour:
   m_ObjectHideFlags: 0

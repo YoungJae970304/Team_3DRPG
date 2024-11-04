@@ -31,6 +31,7 @@ public class OptionUI : BaseUI
         if (Managers.Scene.DungeonSceneCheck())
         {
             Get<Button>((int)SelectButtons.GiveUp).interactable = true;
+            Managers.Data.SaveData<PlayerSaveData>();
         }
     }
     public void OnClickOptionBtn()
@@ -81,6 +82,12 @@ public class OptionUI : BaseUI
             //_fadeAnim.SetTrigger("doFade");
             //await Task.Delay(2000);
             CloseUI();
+            Logger.Log("어플리케이션 종료 되었습니다. 모든 데이터가 저장 되었습니다.");
+            Managers.Data.SaveData<InventorySaveData>();
+            Managers.Data.SaveData<PlayerSaveData>();
+            Managers.Data.SaveData<QuestSaveData>();
+            Managers.Data.SaveData<EquipmentSaveData>();
+            Managers.Data.SaveData<SkillSaveData>();
             Application.Quit();
         };
         if (confirmUI == null)

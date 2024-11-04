@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class EquipmentItem : Item
 {
@@ -9,8 +10,8 @@ public class EquipmentItem : Item
 
     }
 
-    public static bool CheckEquipmentType(ItemData.ItemType itemType)
+    public virtual void Equip(EquipMentUI equipMentUI)
     {
-        return itemType >= ItemData.ItemType.Weapon && itemType <= ItemData.ItemType.Accessories;
+        equipMentUI.StatSum();
     }
 }

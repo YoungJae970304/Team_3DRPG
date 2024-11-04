@@ -137,8 +137,14 @@ public class SkillTree : ItemDragUI
             _currentItem.SkillLevel += 1;
             _currentItem.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
             UpdateInfo();
+
+            SkillSaveData skillSaveData = Managers.Data.GetDatas<SkillSaveData>();
+            if (skillSaveData != null)
+            {
+                skillSaveData._skillAddID.Add(_currentItem.Skill._level);
+                Managers.Data.SaveData<SkillSaveData>();
+            }
         }
-        
     }
     //스킬레벨 감소
     public void OnSkillLevelMinusBtn()
@@ -152,8 +158,13 @@ public class SkillTree : ItemDragUI
             _currentItem.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
             //sp 수치 증가 처리 필요
             UpdateInfo();
+            SkillSaveData skillSaveData = Managers.Data.GetDatas<SkillSaveData>();
+            if(skillSaveData != null)
+            {
+                skillSaveData._skillRemoveID.Add(_currentItem.Skill._level);
+                Managers.Data.SaveData<SkillSaveData>();
+            }
         }
-        
     }
     //스킬 레벨 증가시 sp 조건 확인 
     private bool SpCheck() {

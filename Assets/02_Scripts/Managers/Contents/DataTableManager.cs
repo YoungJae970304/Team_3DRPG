@@ -36,7 +36,7 @@ public class DataTableManager
     // 몬스터 스텟 데이터 테이블 CSV 파일
     const string _MONSTERSTAT_DATA_TABLE = "Monster_Stat_Data_Table";//추가 전
     //상점 항목 데이터 테이블 CSV 파일
-    const string _SHOP_DATA_TABLE = "Shop_ItemList_Data_Table";
+    public string _SHOP_DATA_TABLE = "Shop_ItemList_Data_Table";
 
     //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
@@ -213,11 +213,11 @@ public class DataTableManager
                 SellingPrice = Convert.ToInt32(data["SellingPrice"]),
                 //회복 타입
                 ValType = (PotionItemData.ValueType)Enum.Parse(typeof(PotionItemData.ValueType), data["ValueType"].ToString()),
-                //실제 회복 밸류 %(버프는 0)
-                Value = Convert.ToSingle(data["Value"]),
+                //회복
+                Value = Convert.ToInt32(data["Value"]),
                 //쿨타임
                 CoolTime = Convert.ToInt32(data["CoolTime"]),
-                //지속 시간(회복은 0)
+                //지속 시간
                 DurationTime = Convert.ToInt32(data["DurationTime"]),
                 //소지 개수
                 MaxAmount = Convert.ToInt32(data["MaxAmount"]),
@@ -509,8 +509,12 @@ public class DataTableManager
             int itemCount = Convert.ToInt32(data["ItemCount"]);
             shopUIData._itemCode.Add((itemId, itemCount));
         }
-        _ShopUIData.Add(shopUIData);
+        if(shopUIData != null)
+        {
+            _ShopUIData.Add(shopUIData);
+        }
     }
+
     public ShopUIData GetShopData()
     {
         return _ShopUIData.FirstOrDefault();

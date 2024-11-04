@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class AccessoryItem : EquipmentItem
 {
-    EquipMentUI _equippedUI;
-    DataTableManager _dataTable = Managers.DataTable;
-
     public AccessoryItem(ItemData data) : base(data)
     {
-        var type = _dataTable._EquipeedItemData.Find(t => t.Type == data.Type);
-        type.Type = ItemData.ItemType.Accessories;
-        _equippedUI.StatSum();
+   
+    }
+
+    public override void Equip(EquipMentUI equipMentUI)
+    {
+        base.Equip(equipMentUI);
+        Data.Type = ItemData.ItemType.Accessories;
+        Debug.Log($"Equipping Accessory: {Data.Name}");
     }
 }

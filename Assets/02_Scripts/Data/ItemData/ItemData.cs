@@ -4,12 +4,6 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class ItemDataListWrapper
-{
-    public List<ItemData> ItemDataList = new List<ItemData>();
-}
-
-[Serializable]
 public class ItemData
 {
     //아이템이 공용으로 사용할 정보들

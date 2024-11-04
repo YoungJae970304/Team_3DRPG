@@ -19,13 +19,5 @@ public class NpcController : Interectable
             Managers.UI.OpenUI<T>(new BaseUIData());
             Managers.Game._cantInputKey = true;
         }
-
-        //T dialogUI = Managers.UI.GetActiveUI<T>() as T;
-
-        //if (dialogUI == null)
-        //{
-        //    Managers.UI.OpenUI<T>(new BaseUIData());
-        //    Managers.Game._cantInputKey = true;
-        //}
     }
 }
