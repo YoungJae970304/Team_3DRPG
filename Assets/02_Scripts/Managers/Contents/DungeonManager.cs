@@ -20,14 +20,13 @@ public class DungeonManager : MonoBehaviour
     GameManager _game;
     private void OnEnable()
     {
-        _bossHPBar.SetActive(false);
         _player = Managers.Game._player;
         _game = Managers.Game;
         _curLevel = _game._selecDungeonLevel;
         DungeonCheck();
         SpawnCheck();
         DungeonCheck();
-        BossCheck();
+        
     }
     private void OnDisable()
     {
@@ -44,6 +43,7 @@ public class DungeonManager : MonoBehaviour
                 _dungeonSpawn.SetActive(false);
             }
         }
+        _bossHPBar.SetActive(false);
     }
     private void Start()
     {
@@ -56,6 +56,7 @@ public class DungeonManager : MonoBehaviour
         ClearDungeon();
         // Logger.LogError($"{Managers.Game._monsters.Count}");
         FalseDungeon();
+        BossCheck();
         BossHPBar();
     }
     public void SpawnCheck()
@@ -98,10 +99,15 @@ public class DungeonManager : MonoBehaviour
     }
     public void BossHPBar()
     {
-        if (_bossCheck)
+        if (_bossCheck && Managers.Game._monsters[0]._mStat.ChaseRange > 
+            (Managers.Game._monsters[0].transform.position - Managers.Game._player.transform.position).magnitude)
         {
             _bossHPBar.SetActive(true);
            
+        }
+        else
+        {
+            _bossHPBar.SetActive(false);
         }
     }
     public void ClearDungeon()
