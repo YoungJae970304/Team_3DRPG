@@ -374,8 +374,16 @@ public class QuestUI : BaseUI
             Managers.QuestManager._completeQuest.Sort();
         }
         Managers.QuestManager._progressQuest.Remove(_test);
-        
         Managers.QuestManager._progressQuest.Sort();
+        if(Managers.QuestManager._targetCheck[_test]/10000 != 9)
+        {
+            for(int i = 0; i < Managers.QuestManager._countCheck[_test]; i++)
+            {
+                _inventory.Remove(_inventory.GetItemToId(Managers.QuestManager._targetCheck[_test]));
+            }
+            
+        }
+        
         _player.PlayerEXPGain(_questRewardValue2);//추후 지석님께 여쭤보고 변경
         _player.PlayerGOLDGain(_questRewardValue1);//추후 지석님께 여쭤보고 변경
         Logger.LogError($"{_questRewardValue3} 밸류갑 제대로 들어가?");
