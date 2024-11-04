@@ -373,8 +373,11 @@ public class SkillSaveData : IData
 [Serializable]
 public class EquipmentSaveData : IData
 {
-    public List<EquipmentSlot> _equipSlotData = new List<EquipmentSlot>();
-    public List<EquipMentUI> _equipUIData = new List<EquipMentUI>();
+    public List<EquipmentSlot> _equipSlotData;
+    public List<EquipMentUI> _equipUIData;
+     
+    Inventory _inventory;
+
     string _SavePath;
 
     public void Init()
@@ -386,12 +389,18 @@ public class EquipmentSaveData : IData
     {
         SetDefaultData();
         string directory = Path.GetDirectoryName(_SavePath);
+
         if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
         try
         {
+            foreach(var slot in _equipSlotData)
+            {
+
+            }
+
             string equipJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, equipJson);
             Logger.Log("아이템 세이브");
@@ -420,8 +429,8 @@ public class EquipmentSaveData : IData
 
     public void SetDefaultData()
     {
-        _equipSlotData.Clear();
-        _equipUIData.Clear();
+        var player = Managers.Game._player.GetComponent<Inventory>().EquipMents;
+
     }
 }
 
