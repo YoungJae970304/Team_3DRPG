@@ -69,7 +69,7 @@ public class LoadingScene : BaseScene
             yield return null;
         }
     }
-    //모든 데이터 로드 방지
+    //모든 데이터 로드
     void LoadAllData()
     {
         Managers.Data.LoadData<PlayerSaveData>();
@@ -81,11 +81,11 @@ public class LoadingScene : BaseScene
     //처음 로딩씬에서 UI를 오픈해서 로드할때 널래퍼런스 방지용 함수
     void ActiveToSaveUI()
     {
-        Managers.UI.GetActiveUI<EquipMentUI>();
-        Managers.UI.GetActiveUI<SkillTree>();
-        Managers.UI.GetActiveUI<InventoryUI>();
-        Managers.UI.GetActiveUI<QuestUI>();
-        Managers.UI.GetActiveUI<SimpleQuestUI>();
+        Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
+        Managers.UI.OpenUI<SkillTree>(new BaseUIData());
+        Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
+        Managers.UI.OpenUI<QuestUI>(new BaseUIData());
+        Managers.UI.OpenUI<SimpleQuestText>(new BaseUIData());
     }
 
     public override void Clear()

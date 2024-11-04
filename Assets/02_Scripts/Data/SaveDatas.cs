@@ -211,7 +211,6 @@ public class InventorySaveData : IData
     public void SaveData()
     {
         SetDefaultData();
-        _InvenItemList.Clear();
         try
         {
             if (_inventory == null)
@@ -259,7 +258,7 @@ public class InventorySaveData : IData
 
     public bool LoadData()
     {
-        SetDefaultData();
+        //SetDefaultData();
         try
         {
             string invenJson = File.ReadAllText(_SavePath);
@@ -300,6 +299,7 @@ public class InventorySaveData : IData
 
     public void SetDefaultData()
     {
+        _InvenItemList.Clear();
         var player = Managers.Game._player;
         _inventory = player.GetComponent<Inventory>();
 
@@ -421,7 +421,6 @@ public class EquipmentSaveData : IData
     public void SaveData()
     {
         SetDefaultData();
-        _equipments.Clear();
         string directory = Path.GetDirectoryName(_SavePath);
 
         if (!Directory.Exists(directory))
@@ -474,8 +473,9 @@ public class EquipmentSaveData : IData
 
     public void SetDefaultData()
     {
-        _inventory = Managers.Game._player.GetComponent<Inventory>();
-        var playerEquipUI = Managers.Game._player.GetComponent<Inventory>().EquipMents;
+        _equipments.Clear();
+        //_inventory = Managers.Game._player.GetComponent<Inventory>();
+        //var playerEquipUI = Managers.Game._player.GetComponent<Inventory>().EquipMents;
     }
 }
 
