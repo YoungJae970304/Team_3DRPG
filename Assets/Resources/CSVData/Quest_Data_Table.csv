@@ -1,5 +1,5 @@
-﻿ID,QuestType,QuestName,QuestInfo,Requirement,TargetID,TargetCount,QuestRewardType1,QuestRewardValue1,QuestRewardType2,QuestRewardValue2,QuestRewardType3,QuestRewardValue3
-80001,1,포션 재료 모으기,슬라임 점액을 모아와줘 보상으로 포션을 나눠줄께,1,61001,10,1,500,2,20,41001,5
+﻿ID,QuestType,QuestName,QuestInfo,Requriment,TargetID,TargetCount,QuestRewordType1,QuestRewordValue1,QuestRewordType2,QuestRewordValue2,QuestRewordType3,QuestRewordValue3
+80001,1,포션 재료 모으기,슬라임 점액을 모아와줘 보상으로 포션을 나눠줄께,1,51001,10,1,500,2,20,41001,5
 80002,1,고블린(쉬움) 퇴치,"고블린은 파괴성향이 강해서 주변을 상항 쑥대밭으로 만들어, 빠르게 정리해줘",1,91002,15,1,1000,2,40,41001,10
 80003,1,악취의 근원,"오크의 냄세는 역겨운데 한번 배기면 잘 빠지지않아, 마을에 냄세가 배기전에 처리해",1,91003,5,1,1000,2,50,41001,10
 80004,1,강해진 슬라임,"근방에 내려오는 슬라임이 비교적 강해졌어, 슬라임은 빠르게 증식하니 문제가 생기기전에 해결해줘",1,92001,15,1,2000,2,200,42001,5
