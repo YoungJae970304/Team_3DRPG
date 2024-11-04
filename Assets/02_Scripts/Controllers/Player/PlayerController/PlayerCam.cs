@@ -71,8 +71,24 @@ public class PlayerCam : MonoBehaviour
         }
     }
 
+    void CursorChange()
+    {
+        if (Input.GetKey(KeyCode.LeftAlt) || Managers.UI.ExistsOpenUI())
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+
     void Update()
     {
+        CursorChange();
+
         // Managers.UI.Ex뭐시기 UI열려있는 bool이 true면 return
         if (Managers.UI.ExistsOpenUI()) return;
 

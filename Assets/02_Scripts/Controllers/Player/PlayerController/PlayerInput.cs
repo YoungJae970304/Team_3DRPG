@@ -14,6 +14,9 @@ public class PlayerInput : MonoBehaviour
     {
         _player = gameObject.GetOrAddComponent<Player>();
         Managers.Game._player = _player;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Start()
@@ -221,7 +224,7 @@ public class PlayerInput : MonoBehaviour
             Logger.LogError("test1");
             PubAndSub.Publish<int>("80001",80001);
             Logger.LogError("test2");
-        }    
+        }
     }
 
     // 데이터 입력 없는 디폴트
