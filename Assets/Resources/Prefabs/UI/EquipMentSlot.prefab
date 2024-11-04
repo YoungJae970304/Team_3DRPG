@@ -89,9 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bf5de86a8a3302408bda263bfc20892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isUsealbe: 1
+  _isLocked: 0
   _Image: {fileID: 795055557164025297}
   _text: {fileID: 0}
-  slotType: 1
+  _slotType: 1
 --- !u!1 &3302012315008434987
 GameObject:
   m_ObjectHideFlags: 0

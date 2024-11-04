@@ -7,8 +7,6 @@ public class BossBear : Monster
     public int _bossBearID = 99999;
     int skillCount = 0;
     public GameObject _roarRange; // 장판 오브젝트
-
-
     private Vector2 _startScale; // 초기 크기
     float _stageRoarPlus = 10f;
     public float _roarTimer;
@@ -225,9 +223,9 @@ public class BossBear : Monster
         }
 
         //Logger.LogError(_mStat.HP.ToString());
-        _mStat.HP -= (amount - _mStat.DEF);
-        //Logger.LogError(_mStat.HP.ToString());
-
+        _mStat.HP -= (int)(amount * (100f / (_mStat.DEF + 100f)));
+        Logger.LogError(_mStat.HP.ToString());
+        PubAndSub.Publish<int>("BossHP", _mStat.HP);
         float hpPercentage = (float)_mStat.HP / _mStat.MaxHP;
 
 

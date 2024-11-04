@@ -7,12 +7,14 @@ public class DungeonManager : MonoBehaviour
     //죽을 때 감소하는 변수 (0이되면 클리어가됨) //
     //-- 바로클리어를 막기위해 bool변수 추가해주면좋을듯
     public bool _startCheck = false;
+    public bool _bossCheck = false;
     Player _player;
     [SerializeField] DeongeonType _curLevel;
     public GameObject _bossSpawn;
     public GameObject _dungeonSpawn;
     public GameObject _bossDungeonWall;
     public GameObject _dungeonWall;
+    public GameObject _bossHPBar;
     [SerializeField] Transform _playerSpawnPos;
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
@@ -24,6 +26,7 @@ public class DungeonManager : MonoBehaviour
         DungeonCheck();
         SpawnCheck();
         DungeonCheck();
+        
     }
     private void OnDisable()
     {
@@ -40,6 +43,7 @@ public class DungeonManager : MonoBehaviour
                 _dungeonSpawn.SetActive(false);
             }
         }
+        _bossHPBar.SetActive(false);
     }
     private void Start()
     {
@@ -52,6 +56,8 @@ public class DungeonManager : MonoBehaviour
         ClearDungeon();
         // Logger.LogError($"{Managers.Game._monsters.Count}");
         FalseDungeon();
+        BossCheck();
+        BossHPBar();
     }
     public void SpawnCheck()
     {
@@ -75,6 +81,33 @@ public class DungeonManager : MonoBehaviour
         else
         {
             _dungeonSpawn.SetActive(true);
+        }
+    }
+    public void BossCheck()
+    {
+       for(int i = 0; i < Managers.Game._monsters.Count; i++)
+        {
+            if(Managers.Game._monsters[i]._monsterID == 99999)
+            {
+                _bossCheck = true;
+            }
+            else
+            {
+                _bossCheck = false;
+            }
+        }
+    }
+    public void BossHPBar()
+    {
+        if (_bossCheck && Managers.Game._monsters[0]._mStat.ChaseRange > 
+            (Managers.Game._monsters[0].transform.position - Managers.Game._player.transform.position).magnitude)
+        {
+            _bossHPBar.SetActive(true);
+           
+        }
+        else
+        {
+            _bossHPBar.SetActive(false);
         }
     }
     public void ClearDungeon()
@@ -123,9 +156,5 @@ public class DungeonManager : MonoBehaviour
     {
         _monsterCount -= 1;
         Logger.LogError($"{_monsterCount.ToString()}일단 뺀숫자확인");
-    }
-    public void DecideMonster(int ID)
-    {
-
     }
 }
