@@ -109,14 +109,38 @@ public class SkillTree : ItemDragUI
             GetText((int)Texts.LevelTxt).gameObject.SetActive(true);
 
             int minLevel = _currentItem.GetMinLevel();
-            GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition() && _currentItem.SkillLevel > minLevel;
-            GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition() && Managers.Game._player._playerStatManager.SP > 0;
+            //GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition() && _currentItem.SkillLevel > minLevel;
+            //GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition() && Managers.Game._player._playerStatManager.SP > 0;
+            StartCoroutine(UpdateBtnState(minLevel));
         }
         
         if (_currentItem != null)
         {
-            GetText((int)Texts.SpTxt).text = $"sp소모:{_currentItem.Skill._needSP}";
+            GetText((int)Texts.SpTxt).fontSize = 24;
+            if (Managers.Game._player._playerStatManager.SP >= _currentItem.Skill._needSP && _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition())
+            {
+                GetText((int)Texts.SpTxt).text = $"<color=green>SP 소모량 : {_currentItem.Skill._needSP} / 보유 SP : {Managers.Game._player._playerStatManager.SP}</color>";
+            }
+            else
+            {
+                GetText((int)Texts.SpTxt).text = $"<color=red>SP 소모량 : {_currentItem.Skill._needSP} / 보유 SP : {Managers.Game._player._playerStatManager.SP}</color>";
+            }
         }
+        else
+        {
+            GetText((int)Texts.SpTxt).fontSize = 32;
+            GetText((int)Texts.SpTxt).text = $"보유 SP : {Managers.Game._player._playerStatManager.SP}";
+        }
+    }
+
+    private IEnumerator UpdateBtnState(int minLevel)
+    {
+        // 한 프레임 대기
+        yield return null;
+
+        // 버튼 상태 업데이트
+        GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition() && _currentItem.SkillLevel > minLevel;
+        GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition() && Managers.Game._player._playerStatManager.SP > 0;
     }
 
     public override void CloseUI(bool isCloseAll = false)
@@ -150,7 +174,9 @@ public class SkillTree : ItemDragUI
     public void OnSkillLevelMinusBtn()
     {
         if (_currentItem == null) { return; }
-        if (_currentItem.SkillLevel > 0) {
+
+        if (_currentItem.SkillLevel > 0) 
+        {
             Logger.LogError($"마이너스 진입 확인:{_currentItem.Skill._skillName}");
             _currentItem.Skill._prevLevel = _currentItem.SkillLevel;
             Managers.Game._player._playerStatManager.SP += 1;
