@@ -21,6 +21,7 @@ public class DragAndDrop : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Raycaster = GetComponent<GraphicRaycaster>();
         _pointerEvent = new PointerEventData(EventSystem.current);
+        toolTip.gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()
