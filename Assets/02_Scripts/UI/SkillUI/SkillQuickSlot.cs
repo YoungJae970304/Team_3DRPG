@@ -67,13 +67,11 @@ public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
             skillQuickSlot.Skill = skill;
             Logger.LogWarning("14");
         }
-        Managers.Data.SaveData<SkillSaveData>();
     }
 
     public void NullTarget()
     {
         Skill = null;
-        Managers.Data.SaveData<SkillSaveData>();
     }
 
     private void RemoveQuickSlot(SkillBase skill)

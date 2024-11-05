@@ -23,7 +23,7 @@ public class LoadingScene : BaseScene
         if (!TitleCanvasUI._isNewGame)
         {
             ActiveToSaveUI();
-            LoadAllData();
+            Managers.Data.LoadAllData();
         }
     }
 
@@ -69,23 +69,15 @@ public class LoadingScene : BaseScene
             yield return null;
         }
     }
-    //모든 데이터 로드
-    void LoadAllData()
-    {
-        Managers.Data.LoadData<PlayerSaveData>();
-        Managers.Data.LoadData<SkillSaveData>();
-        Managers.Data.LoadData<InventorySaveData>();
-        Managers.Data.LoadData<EquipmentSaveData>();
-        Managers.Data.LoadData<QuestSaveData>();
-    }
+
     //처음 로딩씬에서 UI를 오픈해서 로드할때 널래퍼런스 방지용 함수
     void ActiveToSaveUI()
     {
-        Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
         Managers.UI.OpenUI<SkillTree>(new BaseUIData());
-        Managers.UI.OpenUI<InventoryUI>(new BaseUIData());
-        Managers.UI.OpenUI<QuestUI>(new BaseUIData());
-        Managers.UI.OpenUI<SimpleQuestText>(new BaseUIData());
+        
+        //Managers.UI.OpenUI<QuestUI>(new BaseUIData());
+        //Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
+        //Managers.UI.OpenUI<SimpleQuestText>(new BaseUIData());
     }
 
     public override void Clear()

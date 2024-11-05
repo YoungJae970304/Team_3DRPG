@@ -64,8 +64,8 @@ public class PlayerStat : Stat
                 _exp -= MaxEXP;
                 Level++;
             }
-            Managers.Data.SaveData<PlayerSaveData>();
-            Logger.Log("레벨업 저장");
+            //Managers.Data.SaveData<PlayerSaveData>();
+            //Logger.Log("레벨업 저장");
         }
     }
 

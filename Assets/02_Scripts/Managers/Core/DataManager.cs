@@ -72,7 +72,7 @@ public class DataManager
     {
         DataTypes();
         Logger.Log("타입 체크");
-        if (TitleCanvasUI._isNewGame)
+        if (!TitleCanvasUI._isNewGame)
         {
             SaveData<SaveDatas>();
             Logger.Log("첫 시작 입니다.");
@@ -95,6 +95,25 @@ public class DataManager
     //    TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
     //    return JsonUtility.FromJson<Loader>(textAsset.text);
     //}
+
+    public void SaveAllData()
+    {
+        SaveData<PlayerSaveData>();
+        SaveData<InventorySaveData>();
+        SaveData<EquipmentSaveData>();
+        SaveData<SkillSaveData>();
+        SaveData<QuestSaveData>();
+    }
+
+    public void LoadAllData()
+    {
+        LoadData<PlayerSaveData>();
+        LoadData<InventorySaveData>();
+        LoadData<SkillSaveData>();
+        LoadData<EquipmentSaveData>();
+        //LoadData<QuestSaveData>();
+    }
+
 
     public void SaveData<T>() where T : class, IData
     {
