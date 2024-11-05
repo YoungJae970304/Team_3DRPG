@@ -30,6 +30,8 @@ public class ToolTipUI :MonoBehaviour
             case ItemData.ItemType.Armor:
             case ItemData.ItemType.Accessories://장비 아이템의 경우 존재하는 스탯은 출력하고 0이면 무시
                 EquipmentItemData equipmentData = data.Item.Data as EquipmentItemData;
+                text += equipmentData.Grade != 0 ? $"등급:{equipmentData.Grade}성\n" : "";
+                text += equipmentData.LimitLevel != 0 ? $"레벨 제한:{equipmentData.LimitLevel}\n" : "-";
                 text += equipmentData.AttackPower!=0 ? $"Atk:{equipmentData.AttackPower}\n": "";
                 text += equipmentData.Health != 0 ? $"Health:{equipmentData.Health}\n" : "";
                 text += equipmentData.Mana != 0 ? $"Mana:{equipmentData.Mana}\n" : "";
