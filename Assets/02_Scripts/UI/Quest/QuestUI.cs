@@ -193,7 +193,7 @@ public class QuestUI : BaseUI
     }
     public void ValueCheck(int id)
     {
-        Logger.LogError($"{Managers.QuestManager._targetCheck[id]}인벤토리 아이디값");
+         Logger.LogError($"{Managers.QuestManager._targetCheck[id]}인벤토리 아이디값");
             if (Managers.QuestManager._targetCheck[id] == _inventory.GetItemToId(Managers.QuestManager._targetCheck[id]).Data.ID)
             {
                 Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
@@ -244,6 +244,7 @@ public class QuestUI : BaseUI
             if (content.transform.childCount < 3)
             {
                 Managers.QuestManager.test123 = _test;
+                _simpleText = null;
                 _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", content.transform);
                 _changeText.Add(_test, _simpleText);
                 var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
@@ -284,9 +285,11 @@ public class QuestUI : BaseUI
             if (content.transform.childCount < 3)
             {
                 Managers.QuestManager.test123 = _test;
+                _simpleText = null;
                 _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", content.transform);
                 //퀘스트 생성
                 //이 조건은 완료문에도 해야함
+                
                 _changeText.Add(_test, _simpleText);
                 var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
                 if (!Managers.QuestManager._countCheck.ContainsKey(_test))
@@ -296,6 +299,7 @@ public class QuestUI : BaseUI
                 if ( Managers.QuestManager._targetCheck[_test] / 10000 != 9)
                 {
                     int goodsID = _test;
+                    _inventory.GetItemAction += (() => ValueCheck(goodsID));
                     Logger.LogError($"{_inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test])}여기는 들어가는지");
                     Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
                     if (Managers.QuestManager._countCheck[goodsID] >= _completeCheck[goodsID])
@@ -590,9 +594,22 @@ public class QuestUI : BaseUI
             Get<TextMeshProUGUI>((int)NowQuestText.TargetCount).text = $"{0} / {_targetCount}";
         }
 
-        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType1}");//밑에 추후 경로 입력
-        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType2}");
-        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType3}");
+        GetImage((int)RewardImage.GoldReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/gold");//밑에 추후 경로 입력
+        GetImage((int)RewardImage.ExpReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/exp");
+        if (_questRewardType3 == 0)
+        {
+            GetImage((int)RewardImage.ItemReward).enabled = false;
+        }
+        else
+        {
+            if (!GetImage((int)RewardImage.ItemReward).enabled)
+            {
+                GetImage((int)RewardImage.ItemReward).enabled = true;
+            }
+            GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType3}");
+
+        }
+        
         _activeObject = true;//위치 고민해봐야할듯
     }
     void TransformSort(GameObject go)
