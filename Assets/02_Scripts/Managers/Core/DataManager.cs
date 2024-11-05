@@ -72,7 +72,7 @@ public class DataManager
     {
         DataTypes();
         Logger.Log("타입 체크");
-        if (!TitleCanvasUI._isNewGame)
+        if (TitleCanvasUI._isNewGame)
         {
             SaveData<SaveDatas>();
             Logger.Log("첫 시작 입니다.");

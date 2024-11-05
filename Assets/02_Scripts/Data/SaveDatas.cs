@@ -132,7 +132,7 @@ public class PlayerSaveData : IData
             _level = stats.Level;
             _exp = stats.EXP;
             _maxExp = stats.MaxEXP;
-            _sp = stats.SpAddAmount;
+            _sp = stats.SP;
             _gold = stats.Gold;
             _x = player.transform.position.x;
             _y = player.transform.position.y;
@@ -163,15 +163,6 @@ public class PlayerSaveData : IData
         {
             string playerJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(playerJson, this);
-            var stats = Managers.Game._player._playerStatManager;
-            var player = Managers.Game._player;
-            stats.Level = _level;
-            stats.EXP = _exp;
-            stats.MaxEXP = _maxExp;
-            stats.SpAddAmount = _sp;
-            stats.Gold = _gold;
-            player.transform.position = new Vector3(_x, _y, _z);
-            Managers.Game._playerType = _PlayerTypes;
             Logger.Log("플레이어 데이터 로드 성공");
             return true;
         }
@@ -280,28 +271,6 @@ public class InventorySaveData : IData
             //Logger.LogError(invenJson);
             JsonUtility.FromJsonOverwrite(invenJson, this);
             //Logger.Log(_InvenItemList.Count);
-            foreach (var itemData in _InvenItemList)
-            {
-                //아이템 검증
-                Item newSaveItem = Item.ItemSpawn(itemData._id, itemData._amount);
-                if (newSaveItem == null)
-                {
-                    Logger.LogWarning($"유효하지 않은 아이템 ID: {itemData._id}");
-
-                    continue;
-                }
-
-                // 빈 슬롯인지 확인 후 아이템 설정
-                if (_inventory.GetItem(itemData._index, newSaveItem.Data.Type) == null)
-                {
-                    
-                    _inventory.Setitem(itemData._index, newSaveItem);
-                }
-                else
-                {
-                    Logger.LogWarning($"인벤토리 인덱스 {itemData._index}에 이미 아이템이 존재합니다.");
-                }
-            }
             Logger.Log("인벤토리 데이터 로드");
             return true;
         }
@@ -370,7 +339,7 @@ public class SkillSaveData : IData
                     _id = skill._skillId,
                     _curLevel = skill.SkillLevel,
                 }); 
-                Logger.Log(_skillTreeItemDatas.Count);
+                //Logger.Log(_skillTreeItemDatas.Count);
             }
             string skillJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, skillJson);
@@ -389,11 +358,6 @@ public class SkillSaveData : IData
         {
             string skillJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(skillJson, this);
-            foreach (var data in _skillTreeItemDatas)
-            {
-                Logger.Log(data._curLevel);
-            }
-            
             Logger.Log("스킬 데이터 로드");
             return true;
         }
@@ -494,6 +458,55 @@ public class EquipmentSaveData : IData
         var playerEquipUI = Managers.Game._player.GetComponent<Inventory>().EquipMents;
     }
 }
+
+[Serializable]
+public class MainQuickSlotData
+{
+    public int _id;
+}
+
+[Serializable]
+public class MainSaveData : IData
+{
+    public List<MainQuickSlotData> _mainQuickSlotDatas = new List<MainQuickSlotData>();
+
+    string _SavePath;
+
+    public void Init()
+    {
+        _SavePath = $"{Application.persistentDataPath}/MainUISaveData.json";
+    }
+
+    public void SaveData()
+    {
+        SetDefaultData();
+        string directory = Path.GetDirectoryName(_SavePath);
+
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"MainQuickSlotUI 를 찾을 수 없습니다{e.Message}");
+        }
+    }
+
+    public bool LoadData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetDefaultData()
+    {
+        _mainQuickSlotDatas.Clear();
+    }
+}
+
 
 [Serializable]
 public class QuestItemData
