@@ -1,15 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
-using System.Collections;
-using Unity.VisualScripting;
-using static EnemyEffect;
 
 
 
-public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
+public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 {
 
 
@@ -85,7 +82,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         States.Add(MonsterState.Skill, new MonsterSkillState(_player, this, _mStat));
         #endregion
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
-        if(GetComponentInChildren<EnemyEffect>() != null)
+        if (GetComponentInChildren<EnemyEffect>() != null)
         {
             Logger.LogError("이팩트저장됨");
             _enemyEffect = GetComponentInChildren<EnemyEffect>();
@@ -122,7 +119,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         _dataTableManager = Managers.DataTable;
         _monsterDrop = FindObjectOfType<Drop>();
         _nav = GetComponent<NavMeshAgent>();
-       
+
         _originPos = transform.position;
         _curState = MonsterState.Idle;
         Debug.Log($"초기 상태: {_curState}");
@@ -149,7 +146,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
 
         _mFSM.UpdateState();
 
-       // Logger.LogError($"슬라임위치확인{transform.position}");
+        // Logger.LogError($"슬라임위치확인{transform.position}");
         if (_curState == MonsterState.Damage)
         {
             return;
@@ -190,10 +187,10 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
             case MonsterState.Attack:
                 if (_attackCompleted == true)
                 {
-                  
+
                     if (!CanAttackPlayer())//내가 공격을 끝냈는지에 대한 조건을 상위조건으로 걸기// 불변수 // 급
                     {
-                        
+
                         if (!ReturnOrigin())
                         {
                             MChangeState(MonsterState.Move);
@@ -250,13 +247,13 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
     #region 받는 데미지 함수
     public virtual void Damaged(int amount)
     {
-        
+
         if (_mStat == null)
         {
             Logger.LogError("MonsterStat이 null입니다");
             return;
         }
-      
+
         _mStat.HP -= (int)(amount * (100f / (_mStat.DEF + 100f)));
         if (_mStat.HP > 0)
         {
@@ -268,10 +265,10 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         {
             MChangeState(MonsterState.Die);
         }
-        
+
         Logger.LogError(_mStat.HP.ToString());
-        
-     
+
+
     }
 
     #endregion
@@ -292,7 +289,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         //사정거리 체크 구현
         //여기에 타이머넣어서 변환까지 시간걸리게
         bool rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
-        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position)<45;
+        bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position) < 45;
         return rangeCheck && angleCheck;
     }
     public bool CanSeePlayer()
@@ -312,19 +309,21 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
 
 
     }
-    public void SetDestinationTimer(float targetTIme)
+    public virtual void SetDestinationTimer(float targetTIme)
     {
         _timer += Time.deltaTime;
-        if(_timer>= targetTIme/2)
+        if (_timer >= targetTIme / 2)
         {
             LookPlayer();
         }
-        if(_timer >= targetTIme)
+        if (_timer >= targetTIme)
         {
+
             _nav.destination = _player.transform.position;
             _nav.stoppingDistance = _mStat.AttackRange / 2;
             _nav.SetDestination(_nav.destination);
             _timer = 0;
+
         }
     }
     #endregion
@@ -334,26 +333,29 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
-        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.8f);
+        Collider boxCollder = new BoxCollider();
+        boxCollder.GetComponent<Transform>().localScale = new Vector3(4, 4, 4);
+        boxCollder.GetComponent<Transform>().position = Vector3.forward + new Vector3(0, 0, _mStat.AttackRange).normalized;
+            //transform.position + transform.forward * (_mStat.AttackRange / 1.8f);
 
         // 박스의 크기 설정 (폭, 높이, 깊이)
-        Vector3 boxSize = new Vector3(1.2f, 2f, _mStat.AttackRange); // 너비 1, 높이 1, 깊이 AttackRange
+        //Vector3 boxSize = new Vector3(1.2f, 2f, _mStat.AttackRange); // 너비 1, 높이 1, 깊이 AttackRange
 
         // 박스에 충돌하는 객체를 체크
-        Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
+        Collider[] checkColliders = Physics.OverlapBox(boxCollder.transform.position, boxCollder.transform.position / 2, Quaternion.identity);
         foreach (Collider collider in checkColliders)
         {
             if (collider.CompareTag("Player"))
             {
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    
-                    if (!collider.GetComponent<Player>()._hitting) 
+
+                    if (!collider.GetComponent<Player>()._hitting)
                     {
                         //맞는 이펙트 실행(플레이어 위치에)
-                        _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit,collider.transform);
+                        _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
                         Logger.LogError(_player.transform.position.ToString());
-                        
+
                     }
                     //_player.Damaged(_mStat.ATK);
                     Logger.LogError($"{_player._playerStatManager.HP}");
@@ -364,7 +366,7 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
 
 
     }
-  
+
 
     public void LookBeforeAttack()
     {
@@ -380,16 +382,16 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         // 새로운 회전값 설정
         if (direction != Vector3.zero) // 방향 벡터가 0이 아닐 때만 회전
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime*10);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
         }
     }
-  
-   
+
+
     #endregion
     #region 넉백
     public virtual async void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
-        if(_mStat.HP <= 0)
+        if (_mStat.HP <= 0)
         {
             return;
         }
@@ -412,13 +414,13 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
 
         // _nav.enabled = true;
         // _characterController.enabled = false;
-     
-            if (CanAttackPlayer())
-                MChangeState(MonsterState.Attack);
-            else
-                MChangeState(MonsterState.Move);
-       
-        
+
+        if (CanAttackPlayer())
+            MChangeState(MonsterState.Attack);
+        else
+            MChangeState(MonsterState.Move);
+
+
     }
 
     #endregion
@@ -450,8 +452,8 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
         if (dropData != null)
         {
             _mStat._mStat.EXP = dropData.Value5;
-            Logger.LogError(_mStat._mStat.EXP.ToString()+"안돼냐");
-            Logger.LogError(dropData.Value5.ToString()+"왜");
+            Logger.LogError(_mStat._mStat.EXP.ToString() + "안돼냐");
+            Logger.LogError(dropData.Value5.ToString() + "왜");
             _monsterProduct = dropData.Value6;
             _mStat._mStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
         }
@@ -626,6 +628,6 @@ public class Monster : MonoBehaviour, IDamageAlbe,IStatusEffectAble
 
     }
 
-    
+
     #endregion
 }

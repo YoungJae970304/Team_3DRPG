@@ -265,7 +265,21 @@ public class BossBear : Monster
         }
 
     }
-
+    public override void SetDestinationTimer(float targetTIme)
+    {
+        _timer += Time.deltaTime;
+        if (_timer >= targetTIme / 2)
+        {
+            LookPlayer();
+        }
+        if (_timer >= targetTIme)
+        {
+            _nav.destination = _player.transform.position;
+            _nav.stoppingDistance = _mStat.AttackRange;
+            _nav.SetDestination(_nav.destination);
+            _timer = 0;
+        }
+    }
 
     public void EarthquakeAttack()
     {
