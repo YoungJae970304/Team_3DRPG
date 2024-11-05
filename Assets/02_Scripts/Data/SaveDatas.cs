@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 #region 제이슨 파일 암호화 클래스
 public static class EncryptionUtility
@@ -541,9 +543,17 @@ public class QuickItemSlotData
 }
 
 [Serializable]
+public class QuickSkillSlotData
+{
+    public int _id;
+}
+
+[Serializable]
 public class QuickSlotSaveData : IData
 {
     public List<QuickItemSlotData> _quickItemSlotData = new List<QuickItemSlotData>();
+
+    public List<QuickSkillSlotData> _quickSkillSlotData = new List<QuickSkillSlotData>();
 
     string _SavePath;
 
@@ -580,6 +590,20 @@ public class QuickSlotSaveData : IData
                         _quickItemSlotData.Add(quickSlotItemData);
                     }
                 }
+                List<SkillTreeItem> skillTreeItem;
+                SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(new BaseUIData());
+                skillTreeItem = skillTree._skillTreeItems;
+                skillTree.CloseUI();
+                foreach (var skillTreeItems in mainUI.GetComponentsInChildren<SkillQuickSlot>())
+                {
+                    if(skillTreeItems != null)
+                    {
+                        QuickSkillSlotData quickSkillSlotData = new QuickSkillSlotData
+                        {
+                            //_id = skillQuickSlot
+                        };
+                    }
+                }
                 string quickSlotJson = JsonUtility.ToJson(this, true);
                 File.WriteAllText(_SavePath, quickSlotJson);
                 Logger.Log("퀵슬롯 정보 세이브");
@@ -612,6 +636,7 @@ public class QuickSlotSaveData : IData
     public void SetDefaultData()
     {
         _quickItemSlotData.Clear();
+        _quickSkillSlotData.Clear();
     }
 }
 #endregion
