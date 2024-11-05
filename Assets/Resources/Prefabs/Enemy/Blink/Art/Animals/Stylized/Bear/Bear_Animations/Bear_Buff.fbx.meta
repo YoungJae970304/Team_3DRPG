@@ -108,6 +108,14 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0
+        functionName: Roar
+        data: 
+        objectReferenceParameter: {fileID: 2231100289048953305, guid: 0d75a8766ed77fb47adb550a875dfedf,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
         functionName: SwitchAttackEffect
         data: 
         objectReferenceParameter: {fileID: 2231100289048953305, guid: 0d75a8766ed77fb47adb550a875dfedf,

@@ -6,10 +6,36 @@ public class EnemyAnimEvent : MonoBehaviour
 {
     Monster _monster;
     Player _player;
+    BossBear _bossBear;
     void Start()
     {
         _monster = GetComponentInParent<Monster>();
         _player = Managers.Game._player;
+        _bossBear = _monster as BossBear;
+        //Logger.LogError($"{_bossBear._maxRoarRange.transform.localScale.x * 2}");
+        //Logger.LogError($"{Physics.OverlapSphere(transform.position, _bossBear._maxRoarRange.transform.localScale.x * 2).Length}범위");
+    }
+    public void Roar()
+    {
+        //int damage = 0;
+        
+        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _bossBear._maxRoarRange.transform.position.x * 2);
+        Logger.LogError($"{_bossBear._maxRoarRange.transform.localScale.x}");
+        foreach (Collider collider in checkColliders)
+        {
+            Logger.LogError($"{collider}주위 부딪힌애");
+            if (collider.CompareTag("Player"))
+            {
+                Logger.LogError($"{collider.CompareTag("Player")}플레이어 있는지 확인");
+                if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+                    Logger.LogError($"데미지 들어가나 확인");
+                    damageable.StatusEffect.SpawnEffect<StunEffect>(1);
+                    //_player.Damaged(_mStat.ATK);
+                    Logger.LogError($"{_player._playerStatManager.HP}");
+                }
+            }
+        }
     }
     public void AttackCompleteCheck()
     {

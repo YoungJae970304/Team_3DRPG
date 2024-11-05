@@ -15,6 +15,7 @@ public class GameManager
 
     public bool _isActiveDialog = true;
     public bool _cantInputKey = false;
+    public bool _firstTuto = true;
 
     public DeongeonType _selecDungeonLevel;
 

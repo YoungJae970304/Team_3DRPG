@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TitleCanvasUI : BaseUI
 {
+    public static bool _IsNewGame { get; set; }
+
     enum Buttons
     {
         BeginBtn,
@@ -19,6 +21,9 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickBeginBtn()
     {
+        _IsNewGame = true;
+        Managers.Game._firstTuto = _IsNewGame;
+
         Managers.UI.CloseUI(this);
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
         if (selectPlayerUI == null)
@@ -29,6 +34,9 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickContinueBtn(string sceneName)
     {
+        _IsNewGame = false;
+        Managers.Game._firstTuto = _IsNewGame;
+
         //Managers.Scene.SceneChange(sceneName);
         Animator fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         fadeAnim.SetTrigger("doFade");

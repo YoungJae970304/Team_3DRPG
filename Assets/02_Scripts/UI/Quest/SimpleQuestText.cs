@@ -11,12 +11,16 @@ public class SimpleQuestText : BaseUI
         SimpleQuestText,
         QuestRequireText,
     }
+    private void Awake()
+    {
+        test123 = Managers.QuestManager.test123;
+    }
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
  
         Bind<TextMeshProUGUI>(typeof(QuestText));
-        test123 = Managers.QuestManager.test123;
+        
         TextChange(test123);
     }
     public void TextChange(int i)
