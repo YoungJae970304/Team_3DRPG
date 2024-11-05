@@ -108,7 +108,6 @@ public class Inventory : MonoBehaviour//인벤토리
             return null;
         }
         Item result = ItemDick[itemType].GetItemToId(id);
-        GetItemAction?.Invoke();
         return result;
     }
 

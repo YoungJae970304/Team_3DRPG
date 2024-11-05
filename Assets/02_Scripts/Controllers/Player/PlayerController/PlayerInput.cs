@@ -151,7 +151,7 @@ public class PlayerInput : MonoBehaviour
         {
             _player._playerStatManager.EXP += 100;
             _player._playerStatManager.Gold += 100000;
-            _player._playerStatManager.HP = _player._playerStatManager.MaxEXP;
+            _player._playerStatManager.HP = _player._playerStatManager.MaxHP;
             _player._playerStatManager.MP = _player._playerStatManager.MaxMP;
             //try
             //{
@@ -222,12 +222,11 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             Logger.LogError("test1");
-            for(int i = 0; i < 10; i++)
-            {
-                Item questItem = Item.ItemSpawn(51001);
+            
+                Item questItem = Item.ItemSpawn(51001,10);
                 Inventory inven = _player.gameObject.GetComponent<Inventory>();
                 inven.InsertItem(questItem);
-            }
+            
             
             
             Logger.LogError("test2");
