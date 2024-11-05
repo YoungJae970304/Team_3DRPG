@@ -22,4 +22,10 @@ public class ShowOnlySlot : ItemSlot
         _isLocked = true;
         _isUsealbe = false;
     }
+
+    public override void Setitem(Item item)
+    {
+        Item = item;
+    }
+
 }

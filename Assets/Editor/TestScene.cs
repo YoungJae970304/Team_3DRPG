@@ -57,8 +57,8 @@ public class TestScene : BaseScene
     [MenuItem("Test/ItemInsert")]
     public static void Inserttest() {
         Inventory inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
-        inventory.InsertItem(Item.ItemSpawn(42001,15));
-        inventory.InsertItem(Item.ItemSpawn(11010, 15));
+        inventory.InsertItem(Item.ItemSpawn(51001,99));
+        inventory.InsertItem(Item.ItemSpawn(51001, 15));
     }
     [ContextMenu("Removetest")]
     public void Remove()
