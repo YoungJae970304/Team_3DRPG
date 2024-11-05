@@ -678,6 +678,9 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 0
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
   _dialogSystem:
   - {fileID: 7399043146769649934}
   _isOpenUI: 0
@@ -1249,10 +1252,13 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 0
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
   dialogs:
   - speakerIndex: 0
     name: "\uC0C1\uC810 NPC"
-    dialogue: "\uACE8\uB77C \uACE8\uB77C~ \uC5C6\uC5B4\uB3C4 \uACE8\uB77C~"
+    dialogue: "\uBB34\uC5C7\uC744 \uB3C4\uC640\uB4DC\uB9B4\uAE4C\uC694?"
   _isAutoStart: 1
 --- !u!1 &8140591899966386692
 GameObject:
