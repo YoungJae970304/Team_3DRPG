@@ -9,21 +9,21 @@ public class QuestManager
     public int _currPlayerLevel = 1;
 
     ///////////////////////// 여기 밑부터 새로 작성한 부분
-    public Dictionary<int,int> _questList = new Dictionary<int,int>();
-    public Dictionary<int,int> _questrequirements = new Dictionary<int, int>();
-    public Dictionary<int, int> _targetCheck = new Dictionary<int, int>();
-    public Dictionary<int, int> _countCheck = new Dictionary<int, int>();
-    public Dictionary<int, string> _questName = new Dictionary<int, string>();
-    public Dictionary<int, string> _targetName = new Dictionary<int, string>();
-    public List<int> _questID = new List<int>();
-    public List<int> _activeQuest = new List<int>();
-    public List<int> _progressQuest = new List<int>();
-    public List<int> _completeQuest = new List<int>();
+    public Dictionary<int,int> _questList = new Dictionary<int,int>(); //퀘스트 진행을 위한 플레이어 레벨 제한 정보
+    public Dictionary<int,int> _questrequirements = new Dictionary<int, int>(); // 퀘스트 목표 수치
+    public Dictionary<int, int> _targetCheck = new Dictionary<int, int>(); // 퀘스트 목표
+    public Dictionary<int, int> _countCheck = new Dictionary<int, int>(); // 현재 진행중인 퀘스트의 진행 값 // 필수 저장
+    public Dictionary<int, string> _questName = new Dictionary<int, string>(); // 퀘스트 이름
+    public Dictionary<int, string> _targetName = new Dictionary<int, string>(); // 타켓 이름
+    public List<int> _questID = new List<int>();//모든 퀘스트의 아이디 // 필수 저장
+    public List<int> _activeQuest = new List<int>(); // 현재 받을수있는 퀘스트 목록 // 필수 저장
+    public List<int> _progressQuest = new List<int>(); // 현재 진행중인 퀘스트 목록 // 필수 저장
+    public List<int> _completeQuest = new List<int>(); // 완료한 퀘스트 목록 // 필수 저장
     public Action _curLevelCountPlus;
     public Action _completeCheck;
     DataTableManager _dataTableManager;
-    public Define.QuestInput _questInput;
-    public int test123;
+    public Define.QuestInput _questInput; // 퀘스트창 오픈 시 진행중 or 진행가능한 창을 판단하기 위한 enum
+    public int test123; // 메인화면 작은 퀘스트창에 들어가는 퀘스트텍스트의 ID정보를 전달하기위한 변수
     public void Init()
     {
         _dataTableManager = Managers.DataTable;

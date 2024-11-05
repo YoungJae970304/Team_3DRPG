@@ -53,9 +53,9 @@ public class QuestUI : BaseUI
     public List<GameObject> _questButtons = new List<GameObject>();
     public Dictionary<string, int> _buttonType = new Dictionary<string, int>();
     public Dictionary<string, int> _progressButtonType = new Dictionary<string, int>();
-    public Dictionary<int, int> _completeCheck = new Dictionary<int, int>();
-    public Dictionary<int, bool> _questComplete = new Dictionary<int, bool>();
-    public Dictionary<int, GameObject> _changeText = new Dictionary<int, GameObject>();
+    public Dictionary<int, int> _completeCheck = new Dictionary<int, int>(); //퀘스트 매니저의 require와 같은 용도 추후 변경
+    public Dictionary<int, bool> _questComplete = new Dictionary<int, bool>(); //퀘스트 완료를 판단하는 딕셔너리 //저장필요 없을듯
+    public Dictionary<int, GameObject> _changeText = new Dictionary<int, GameObject>(); //메인화면 퀘스트창의 텍스트들의 목록을 저장하는 딕셔너리 //어차피 재생성할거라 필요 x
     public GameObject _questView;
     public GameObject _simpleQuestUI;
     GameObject _simpleText;
