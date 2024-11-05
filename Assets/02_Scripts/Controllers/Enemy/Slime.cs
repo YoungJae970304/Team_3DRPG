@@ -79,7 +79,40 @@ public class Slime : Monster
 
         }
     }
-    
+    public override void AttackPlayer()
+    {
+        int damage = _mStat.ATK;
+        //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
+        // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
+        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.8f);
+
+        // 박스의 크기 설정 (폭, 높이, 깊이)
+        Vector3 boxSize = new Vector3(1.2f, 2f, _mStat.AttackRange); // 너비 1, 높이 1, 깊이 AttackRange
+
+        // 박스에 충돌하는 객체를 체크
+        Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
+        foreach (Collider collider in checkColliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
+                {
+
+                    if (!collider.GetComponent<Player>()._hitting)
+                    {
+                        //맞는 이펙트 실행(플레이어 위치에)
+                        _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
+                        Logger.LogError(_player.transform.position.ToString());
+                        _enemyAnimEvent.SlimeHitAtk();
+                    }
+                    //_player.Damaged(_mStat.ATK);
+                    Logger.LogError($"{_player._playerStatManager.HP}");
+                    damageable.Damaged(damage);
+                }
+            }
+        }
+
+    }
     public void SlimeIDCheck(DeongeonType curLevel)
     {
         foreach (var sID in _dataTableManager._MonsterDropData)

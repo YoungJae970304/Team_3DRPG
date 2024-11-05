@@ -11,6 +11,7 @@ public class BossBear : Monster
     float _stageRoarPlus = 10f;
     public float _roarTimer;
     public GameObject _maxRoarRange;
+    
     public override void Start()
     {
         base.Start();
@@ -207,7 +208,7 @@ public class BossBear : Monster
                         //맞는 이펙트 실행(플레이어 위치에)
                         _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
                         Logger.LogError(_player.transform.position.ToString());
-
+                        _enemyAnimEvent.BossHitSound();
                     }
                     //_player.Damaged(_mStat.ATK);
                     Logger.LogError($"{_player._playerStatManager.HP}");
@@ -314,7 +315,7 @@ public class BossBear : Monster
     public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
     {
         LookPlayer();
-
+        _enemyAnimEvent.BossDamage();
     }
     public override void MakeItem()
     {

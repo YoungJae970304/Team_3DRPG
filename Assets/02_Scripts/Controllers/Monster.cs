@@ -58,7 +58,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     //public List<GameObject> _hitPlayer;
     public Animator _anim;
     public int _monsterID;
-
+    public EnemyAnimEvent _enemyAnimEvent;
     public StatusEffectManager StatusEffect { get => null; }
 
     public ITotalStat Targetstat => _mStat;
