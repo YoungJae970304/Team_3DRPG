@@ -20,6 +20,8 @@ public class TitleCanvasUI : BaseUI
     public void OnClickBeginBtn()
     {
         _isNewGame = true;
+        Managers.Game._firstTuto = _isNewGame;
+
         Managers.UI.CloseUI(this);
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
         if (selectPlayerUI == null)
@@ -31,6 +33,8 @@ public class TitleCanvasUI : BaseUI
     public void OnClickContinueBtn(string sceneName)
     {
         _isNewGame = false;
+        Managers.Game._firstTuto = _isNewGame;
+
         //Managers.Scene.SceneChange(sceneName);
         Animator fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         fadeAnim.SetTrigger("doFade");
