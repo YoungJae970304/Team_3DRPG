@@ -12,6 +12,8 @@ public class EquipmentSlot : ItemSlot
         { return; }
         Item item = (moveSlot as ItemSlot).Item;
         if (item.Data.Type != _slotType) { Managers.Sound.Play("ETC/ui_fail"); return; }
+        EquipmentItem equipmentItem = item as EquipmentItem;
+        if (equipmentItem.Data.LimitLevel > Managers.Game._player._playerStatManager.Level) { return; }
         base.ItemInsert(moveSlot);
     }
 

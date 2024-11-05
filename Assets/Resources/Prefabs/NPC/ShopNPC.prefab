@@ -255,6 +255,8 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
 --- !u!1 &1300193847610979611
 GameObject:
@@ -708,6 +710,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6771938227999586690, guid: 740597e7089a21d45a1319a929d4a6fd,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6ec7173e2fc583743aae4cd324dc88ad, type: 2}
     m_RemovedComponents:
     - {fileID: 4113130795806258513, guid: 740597e7089a21d45a1319a929d4a6fd, type: 3}
     - {fileID: 4113130795806258512, guid: 740597e7089a21d45a1319a929d4a6fd, type: 3}

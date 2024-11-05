@@ -44,7 +44,9 @@ public class PlayerStat : Stat
                 SP += SpAddAmount;
                 Managers.Sound.Play("ETC/levelup");
                 Managers.QuestManager._curLevelCountPlus?.Invoke();
+                
             }
+            PubAndSub.Publish<int>("Level", Level);
             PubAndSub.Publish("LevelUpdate");
         }
     }

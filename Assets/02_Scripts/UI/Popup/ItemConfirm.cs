@@ -78,13 +78,14 @@ public class ItemConfirm : ItemDragUI
             }
             Get<Slider>((int)Sliders.ItemAmount).onValueChanged.AddListener(OnSliderChanged);
             Get<Slider>((int)Sliders.ItemAmount).value = 1;
-            OnSliderChanged(1);
+            
         }
         else
         {
             Get<Slider>((int)Sliders.ItemAmount).gameObject.SetActive(false);
             GetText((int)Texts.MoneyAmountTxt).text = (isBuy ? data.Item.Data.BuyingPrice: data.Item.Data.SellingPrice).ToString();
         }
+        OnSliderChanged(1);
     }
 
     public void OnSliderChanged(float value)
@@ -141,6 +142,7 @@ public class ItemConfirm : ItemDragUI
             {
                 _inventorySlot.RemoveItem();
             }
+            _inventorySlot.UpdateInfo();
             _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold += money;
             Logger.LogWarning(money.ToString());
 

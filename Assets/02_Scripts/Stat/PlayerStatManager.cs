@@ -19,15 +19,15 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
     // 값을 받을 수 있는 프로퍼티들 및 각각의 액션
 
 
-    public int Level { get {  return _originStat.Level; } set { _originStat.Level = value; } }
+    public int Level { get {  return _originStat.Level; } set { _originStat.Level = value; PubAndSub.Publish<int>("Level", Level); } }
 
     public int HP { get { return _originStat.HP; } set { _originStat.HP = Mathf.Clamp(value, 0, MaxHP); PubAndSub.Publish<int>("HP", HP); } }
     public int MP { get { return _originStat.MP; } set { _originStat.MP = Mathf.Clamp(value, 0, MaxMP); PubAndSub.Publish<int>("MP", MP); } }
-    public int EXP { get { return _originStat.EXP; } set { _originStat.EXP = value; PubAndSub.Publish<int>("EXP", value); } }
-    public int MaxEXP { get { return _originStat.MaxEXP; } set { _originStat.MaxEXP = Mathf.Max(0, value); PubAndSub.Publish<int>("MaxEXP", value); } }
-    public int Gold { get { return _originStat.Gold; } set { _originStat.Gold = Mathf.Max(0, value); PubAndSub.Publish<int>("Gold", value); } }
-    public int SpAddAmount { get { return _originStat.SpAddAmount; } set { _originStat.SpAddAmount = Mathf.Max(0, value); PubAndSub.Publish<int>("SpAddAmount", value); } }
-    public int SP { get { return _originStat.SP; } set { _originStat.SP = Mathf.Max(0, value); PubAndSub.Publish<int>("SP", value); } }
+    public int EXP { get { return _originStat.EXP; } set { _originStat.EXP = value; PubAndSub.Publish<int>("EXP", EXP); } }
+    public int MaxEXP { get { return _originStat.MaxEXP; } set { _originStat.MaxEXP = Mathf.Max(0, value); PubAndSub.Publish<int>("MaxEXP", MaxEXP); } }
+    public int Gold { get { return _originStat.Gold; } set { _originStat.Gold = Mathf.Max(0, value); PubAndSub.Publish<int>("Gold", Gold); } }
+    public int SpAddAmount { get { return _originStat.SpAddAmount; } set { _originStat.SpAddAmount = Mathf.Max(0, value); PubAndSub.Publish<int>("SpAddAmount", SpAddAmount); } }
+    public int SP { get { return _originStat.SP; } set { _originStat.SP = Mathf.Max(0, value); PubAndSub.Publish<int>("SP", SP); } }
     #endregion
 
 

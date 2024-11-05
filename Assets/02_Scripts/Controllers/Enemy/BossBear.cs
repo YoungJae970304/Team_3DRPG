@@ -77,7 +77,7 @@ public class BossBear : Monster
                 _anim.SetBool("AfterStay", true);
                 _roarRange.transform.localScale = _startScale;
                 _roarRange.SetActive(false);//애니메이션이 끝나는 시점에 꺼지도록 따로 함수작성
-                BearRoar();
+                //Roar();
                 _maxRoarRange.SetActive(false);//애니메이션이 끝나는 시점에 꺼지도록 따로 함수작성
                 break;
             }
@@ -181,37 +181,43 @@ public class BossBear : Monster
 
         }
     }
-    //bool RoarOn = false;
-    public void BearRoar()
+  
+    
+    public override void AttackPlayer() // 공격 모션 중간에 호출 // 수정 예정
     {
+        int damage = _mStat.ATK;
+        //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
+        // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
+        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.4f);
 
-        _player._playerHitState = PlayerHitState.StunAttack;
-        //로어 애니메이션
-        Roar();
+        // 박스의 크기 설정 (폭, 높이, 깊이)
+        Vector3 boxSize = new Vector3(2f, 4f, _mStat.AttackRange * 1.2f); // 너비 1, 높이 1, 깊이 AttackRange
 
-
-
-
-    }
-    public void Roar()
-    {
-        //int damage = 0;
-        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _maxRoarRange.transform.localScale.x * 2);
-        Logger.LogError($"{_maxRoarRange.transform.localScale.x}");
+        // 박스에 충돌하는 객체를 체크
+        Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
         foreach (Collider collider in checkColliders)
         {
             if (collider.CompareTag("Player"))
             {
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
-                    damageable.StatusEffect.SpawnEffect<StunEffect>(1);
+
+                    if (!collider.GetComponent<Player>()._hitting)
+                    {
+                        //맞는 이펙트 실행(플레이어 위치에)
+                        _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
+                        Logger.LogError(_player.transform.position.ToString());
+
+                    }
                     //_player.Damaged(_mStat.ATK);
                     Logger.LogError($"{_player._playerStatManager.HP}");
+                    damageable.Damaged(damage);
                 }
             }
         }
-    }
 
+
+    }
     public List<float> _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
     public override void Damaged(int amount)
     {
