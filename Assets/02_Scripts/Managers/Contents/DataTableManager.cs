@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UIElements;
 
 public class DataTableManager
 {
@@ -507,7 +506,7 @@ public class DataTableManager
     }
     #endregion
 
-    #region
+    #region 상점 상품 데이터 테이블 
     void ShopDataTable(string dataPath, string shopDataTable)
     {
         var parsedShopDataTable = CSVReader.Read($"{dataPath}/{shopDataTable}");
@@ -519,7 +518,7 @@ public class DataTableManager
             int itemCount = Convert.ToInt32(data["ItemCount"]);
             shopUIData._itemCode.Add((itemId, itemCount));
         }
-        if(shopUIData != null)
+        if (shopUIData != null)
         {
             _ShopUIData.Add(shopUIData);
         }

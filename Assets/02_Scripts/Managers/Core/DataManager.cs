@@ -9,7 +9,7 @@ public interface ILoader<Key, Value>
 
 public class DataManager
 {
-    public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
+    //public Dictionary<int, Data.Stat> StatDict { get; private set; } = new Dictionary<int, Data.Stat>();
 
     public Dictionary<Type, IData> _IDataDict = new Dictionary<Type, IData>();
 
@@ -76,11 +76,11 @@ public class DataManager
         SaveData<SaveDatas>();
     }
 
-    Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
-    {
-        TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
-        return JsonUtility.FromJson<Loader>(textAsset.text);
-    }
+    //Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
+    //{
+    //    TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
+    //    return JsonUtility.FromJson<Loader>(textAsset.text);
+    //}
 
     public void SaveData<T>() where T : class, IData
     {
@@ -116,7 +116,7 @@ public class DataManager
         }
     }
 
-    T GetData<T>() where T : class, IData
+    public T GetData<T>() where T : class, IData
     {
         Type type = typeof(T);
 
@@ -125,16 +125,6 @@ public class DataManager
             return dataInstance as T;
         }
         Logger.LogError($"{type.Name}의 타입이 등록되지 않았습니다.");
-        return null;
-    }
-
-    public T GetDatas<T>() where T : class
-    {
-        Type type = typeof(T);
-        if (_IDataDict.TryGetValue(type, out IData dataInstance))
-        {
-            return dataInstance as T;
-        }
         return null;
     }
 }

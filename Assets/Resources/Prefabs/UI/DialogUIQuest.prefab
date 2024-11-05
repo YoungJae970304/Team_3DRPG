@@ -634,6 +634,9 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
   _dialogSystem:
   - {fileID: 7399043146769649934}
   - {fileID: 3098581668046360091}
@@ -830,10 +833,13 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
   dialogs:
   - speakerIndex: 0
     name: "\uD018\uC2A4\uD2B8 NPC"
-    dialogue: "\uC640 \uC774\uAC78 \uCAC4\uC558\uB124 \u314B\u314B"
+    dialogue: "\uBC14\uC058\uC2E0\uAC00\uBCF4\uAD70\uC694"
   _isAutoStart: 1
 --- !u!1 &5241457069443978086
 GameObject:
@@ -1446,6 +1452,9 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
   dialogs:
   - speakerIndex: 0
     name: "\uD018\uC2A4\uD2B8 NPC"
@@ -1507,10 +1516,14 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
   dialogs:
   - speakerIndex: 0
     name: "\uD018\uC2A4\uD2B8 NPC"
-    dialogue: "\uD639\uC2DC \uBD80\uD0C1\uD558\uB098\uB9CC \uB4DC\uB824\uB3C4 \uB420\uAE4C\uC694?"
+    dialogue: "\uB9C8\uC744\uC758 \uC548\uC804\uC744 \uC704\uD574 \uB3C4\uC6C0\uC744
+      \uC8FC\uC2E4\uC218\uC788\uC744\uAE4C\uC694?"
   _isAutoStart: 1
 --- !u!1 &7338449621160952101
 GameObject:

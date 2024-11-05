@@ -245,6 +245,8 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
 --- !u!1 &6890997803900239899
 GameObject:
@@ -386,7 +388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "< \uC0C1\uC810 NPC >"
+  m_text: "< \uD018\uC2A4\uD2B8 NPC >"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 77b89916d86e11f449dd430ffdeb1b0b, type: 2}
   m_sharedMaterial: {fileID: -7985449786123482677, guid: 77b89916d86e11f449dd430ffdeb1b0b,
@@ -729,6 +731,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1990496563326184831}
     m_Modifications:
+    - target: {fileID: 5060726685450171261, guid: b499873ce4619e747aa6c896225906b2,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6ec7173e2fc583743aae4cd324dc88ad, type: 2}
     - target: {fileID: 7098345523093942517, guid: b499873ce4619e747aa6c896225906b2,
         type: 3}
       propertyPath: m_LocalPosition.x

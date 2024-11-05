@@ -3381,10 +3381,10 @@ TextureImporter:
       name: Ui_Fight2_187
       rect:
         serializedVersion: 2
-        x: 804
-        y: 46
-        width: 118
-        height: 118
+        x: 808
+        y: 50
+        width: 112
+        height: 109
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

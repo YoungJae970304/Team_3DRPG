@@ -545,7 +545,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3058126408619726545}
   m_HandleRect: {fileID: 662419430634594730}
   m_Direction: 2
-  m_Value: 0.97455746
+  m_Value: 1
   m_Size: 0.6931726
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1175,6 +1175,8 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
   _skillTreeItems: []
 --- !u!111 &1096235017600804770
@@ -1372,7 +1374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -567.56055, y: 385.86093}
+  m_AnchoredPosition: {x: -567.56055, y: 377.3612}
   m_SizeDelta: {x: 956.7581, y: 1088.7947}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &5718538824405378686
@@ -1537,7 +1539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00021362, y: 49.3}
+  m_AnchoredPosition: {x: -0.00021362, y: 117}
   m_SizeDelta: {x: 371.16, y: 1.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6581222561807545813
@@ -2033,8 +2035,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000049591, y: -91}
-  m_SizeDelta: {x: 371.16, y: 269.8818}
+  m_AnchoredPosition: {x: -0.000049591, y: 32}
+  m_SizeDelta: {x: 371.16, y: 163.754}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2052331285949308221
 CanvasRenderer:
@@ -2092,8 +2094,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

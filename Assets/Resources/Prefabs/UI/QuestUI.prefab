@@ -1024,7 +1024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -232, y: 285.00058}
+  m_AnchoredPosition: {x: -232, y: 553}
   m_SizeDelta: {x: 464, y: 553}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8482338086774922469
@@ -1688,6 +1688,7 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 6582660709560786134}
   _isSort: 1
+  _btnCount: 0
   _questID: 0
   _questType: 0
   _questName: 
