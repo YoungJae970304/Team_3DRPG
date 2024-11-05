@@ -15,7 +15,10 @@ public class DataManager
 
     public void Init()
     {
-        InitializeGameState();
+        if (!TitleCanvasUI._isNewGame)
+        {
+            InitializeGameState();
+        }
         //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         // Json을 사용하기 위한 타입은 TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
@@ -97,6 +100,7 @@ public class DataManager
         SaveData<EquipmentSaveData>();
         SaveData<SkillSaveData>();
         SaveData<LargeMapData>();
+        SaveData<QuickSlotSaveData>();
         SaveData<QuestSaveData>();
     }
 
@@ -107,6 +111,7 @@ public class DataManager
         LoadData<SkillSaveData>();
         LoadData<EquipmentSaveData>();
         LoadData<LargeMapData>();
+        LoadData<QuickSlotSaveData>();
         //LoadData<QuestSaveData>();
     }
 

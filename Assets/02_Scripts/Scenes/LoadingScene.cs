@@ -30,7 +30,6 @@ public class LoadingScene : BaseScene
         if (!TitleCanvasUI._isNewGame)
         {
             Managers.Data.LoadAllData();
-
             //데이터 적용 부분
             //장비
             ApplyEquipData();
@@ -40,6 +39,8 @@ public class LoadingScene : BaseScene
             ApplySkillData();
             //맵
             ApplyLargeMapData();
+            //퀵슬롯
+            ApplyQuickSlotData();
         }
     }
 
@@ -171,6 +172,27 @@ public class LoadingScene : BaseScene
                 texture.LoadImage(largeMap.fogTextureData);
                 largeMapUI._sceneFogTextures[largeMap.sceneName] = texture;
             }
+        }
+    }
+
+    void ApplyQuickSlotData()
+    {
+        QuickSlotSaveData quickSlotSaveData = Managers.Data.GetData<QuickSlotSaveData>();
+        MainUI mainUI = Managers.UI.OpenUI<MainUI>(new BaseUIData());
+        Inventory inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
+        if (mainUI != null)
+        {
+            QuickItemSlot[] quickItemSlot = mainUI.GetComponentsInChildren<QuickItemSlot>();
+            for (int i = 0; i < quickSlotSaveData._quickItemSlotData.Count && i < quickItemSlot.Length; i++)
+            {
+                var slotData = quickSlotSaveData._quickItemSlotData[i]; // 현재 슬롯 데이터
+                Item item = inventory.GetItemToId(slotData._id); // 아이템 가져오기
+                if (item != null)
+                {
+                    quickItemSlot[i].Setitem(item); // 해당 슬롯에 아이템 설정
+                }
+            }
+            mainUI.QuickslotUpdate();
         }
     }
 

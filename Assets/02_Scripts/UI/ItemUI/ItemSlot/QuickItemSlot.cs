@@ -6,7 +6,7 @@ public class QuickItemSlot : ItemSlot
 {
     int index = -1;
     public Inventory _inventory;
-    
+
     public override void UpdateSlotInfo()
     {
         if (Item == null)

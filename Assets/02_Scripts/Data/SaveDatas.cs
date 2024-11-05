@@ -3,7 +3,71 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Security.Cryptography;
+using System.Text;
 
+#region 제이슨 파일 암호화 클래스
+public static class EncryptionUtility
+{
+    private static readonly string Key = "Team3DRPG,!@#$"; 
+
+    // AES 암호화
+    public static (string CipherText, string IV) Encrypt(string plainText)
+    {
+        using (Aes aesAlg = Aes.Create())
+        {
+            aesAlg.Key = Encoding.UTF8.GetBytes(Key);
+            // 랜덤한 IV 생성
+            aesAlg.GenerateIV(); 
+
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+            using (MemoryStream msEncrypt = new MemoryStream())
+            {
+                // IV를 암호문 앞에 기록
+                msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length); 
+                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.Write(plainText);
+                    }
+                    return (Convert.ToBase64String(msEncrypt.ToArray()), Convert.ToBase64String(aesAlg.IV));
+                }
+            }
+        }
+    }
+
+    // AES 복호화
+    public static string Decrypt(string cipherText)
+    {
+        byte[] fullCipher = Convert.FromBase64String(cipherText);
+        // IV는 AES의 블록 크기인 16바이트
+        byte[] iv = new byte[16]; 
+        byte[] cipher = new byte[fullCipher.Length - iv.Length];
+
+        Array.Copy(fullCipher, iv, iv.Length);
+        Array.Copy(fullCipher, iv.Length, cipher, 0, cipher.Length);
+
+        using (Aes aesAlg = Aes.Create())
+        {
+            aesAlg.Key = Encoding.UTF8.GetBytes(Key);
+            aesAlg.IV = iv;
+
+            ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+            using (MemoryStream msDecrypt = new MemoryStream(cipher))
+            {
+                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                {
+                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    {
+                        return srDecrypt.ReadToEnd();
+                    }
+                }
+            }
+        }
+    }
+}
+#endregion
 
 #region 기본 데이터 클래스
 [Serializable]
@@ -471,7 +535,7 @@ public class EquipmentSaveData : IData
 
 #region 메인UI퀵슬롯 데이터 클래스
 [Serializable]
-public class MainQuickSlotData
+public class QuickItemSlotData
 {
     public int _id;
 }
@@ -479,20 +543,19 @@ public class MainQuickSlotData
 [Serializable]
 public class QuickSlotSaveData : IData
 {
-    public List<MainQuickSlotData> _mainQuickSlotDatas = new List<MainQuickSlotData>();
-
-    MainUI _mainUI;
+    public List<QuickItemSlotData> _quickItemSlotData = new List<QuickItemSlotData>();
 
     string _SavePath;
 
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}/MainUIQuickSlotSaveData.json";
+        _SavePath = $"{Application.persistentDataPath}/QuickSlotSaveData.json";
     }
 
     public void SaveData()
     {
         SetDefaultData();
+  
         string directory = Path.GetDirectoryName(_SavePath);
 
         if (!Directory.Exists(directory))
@@ -501,9 +564,26 @@ public class QuickSlotSaveData : IData
         }
         try
         {
-            string quickSlotJson = JsonUtility.ToJson(this, true);
-            File.WriteAllText(_SavePath, quickSlotJson);
-            Logger.Log("퀵슬롯 정보 세이브");
+            MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
+            if (mainUI != null)
+            {
+                // QuickItemSlot, SkillQuickSlot에 대한 아이템 정보를 리스트에 추가
+                foreach (QuickItemSlot quickItemSlot in mainUI.GetComponentsInChildren<QuickItemSlot>())
+                {
+                    if (quickItemSlot.Item != null)
+                    {
+                        QuickItemSlotData quickSlotItemData = new QuickItemSlotData
+                        {
+                            //아이디값이 리스트에 들어오는것도 확인
+                            _id = quickItemSlot.Item.Data.ID,
+                        };
+                        _quickItemSlotData.Add(quickSlotItemData);
+                    }
+                }
+                string quickSlotJson = JsonUtility.ToJson(this, true);
+                File.WriteAllText(_SavePath, quickSlotJson);
+                Logger.Log("퀵슬롯 정보 세이브");
+            }
         }
         catch (Exception e)
         {
@@ -518,7 +598,8 @@ public class QuickSlotSaveData : IData
         {
             string quickSlotJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(quickSlotJson, this);
-
+            //확인했음
+            //Logger.Log(_quickSlotItemData.Count);
             Logger.Log("퀵슬롯 로드 성공");
             return true;
         }catch (Exception e)
@@ -530,7 +611,7 @@ public class QuickSlotSaveData : IData
 
     public void SetDefaultData()
     {
-        _mainQuickSlotDatas.Clear();
+        _quickItemSlotData.Clear();
     }
 }
 #endregion
