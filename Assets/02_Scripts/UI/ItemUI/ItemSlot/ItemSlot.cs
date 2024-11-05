@@ -81,6 +81,7 @@ public abstract class ItemSlot : MonoBehaviour, IItemDragAndDropAble
     public virtual void RemoveItem()
     {
         Item = null;
+        UpdateSlotInfo();
     }
     //허공에 버렸을 때 
     public virtual void NullTarget()
