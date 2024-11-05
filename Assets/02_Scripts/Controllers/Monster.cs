@@ -60,7 +60,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public int _monsterID;
     public EnemyAnimEvent _enemyAnimEvent;
     public StatusEffectManager StatusEffect { get => null; }
-
+    MonsterHpBar _monsterHpBar;
     public ITotalStat Targetstat => _mStat;
 
     public Transform TargetTr => transform;
@@ -71,6 +71,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
+        _monsterHpBar = GetComponentInChildren<MonsterHpBar>();
         //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
@@ -255,6 +256,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         }
 
         _mStat.HP -= (int)(amount * (100f / (_mStat.DEF + 100f)));
+        _monsterHpBar.Init(_monsterHpBar.transform);
         if (_mStat.HP > 0)
         {
 

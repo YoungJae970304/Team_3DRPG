@@ -5691,6 +5691,7 @@ MonoBehaviour:
   _enemyEffect: {fileID: 0}
   _anim: {fileID: 0}
   _monsterID: 0
+  _enemyAnimEvent: {fileID: 0}
   _bossBearID: 99999
   _roarRange: {fileID: 4638996236515068095}
   _roarTimer: 0
