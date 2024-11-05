@@ -149,7 +149,7 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.V))
         {
-            _player._playerStatManager.EXP += 100;
+            _player._playerStatManager.EXP += 1000;
             _player._playerStatManager.Gold += 100000;
             _player._playerStatManager.HP = _player._playerStatManager.MaxHP;
             _player._playerStatManager.MP = _player._playerStatManager.MaxMP;

@@ -230,8 +230,9 @@ public class QuestUI : BaseUI
         //수락한 버튼 삭제 // 완
         //Logger.LogError($"{_test}이름 확인");
         PubAndSub.Subscrib<int>($"{_test}", CheckTest);
-
-        _inventory.GetItemAction += (() => ValueCheck(_test));
+      
+        
+        
         //몬스터 죽는쪽에 몬스터아이디랑 타켓이름이랑 비교해서 같다면 실행되도록 하면될듯 // 완
         //중간 관리 액션으로 할지 아니면 추가 액션을 하나 더할지 고민은 해야할듯 // 완
 
@@ -250,19 +251,25 @@ public class QuestUI : BaseUI
                 {
                     Managers.QuestManager._countCheck.Add(_test, 0);
                 }
-                if (Managers.QuestManager._targetCheck[_test] == _inventory.GetItemToId(Managers.QuestManager._targetCheck[_test]).Data.ID && Managers.QuestManager._targetCheck[_test] / 10000 != 9)
+                if ( Managers.QuestManager._targetCheck[_test] / 10000 != 9)
                 {
-                    Logger.LogError($"{_inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test])}여기는 들어가는지");
-                    Managers.QuestManager._countCheck[_test] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test]);
-                    Logger.LogError($"{_completeCheck[_test]}완료값확인");
-                    if (Managers.QuestManager._countCheck[_test] >= _completeCheck[_test])
+                    //Logger.LogError($"{_inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test])}여기는 들어가는지");
+                    int goodsID = _test;
+                    _inventory.GetItemAction += (() => ValueCheck(goodsID));
+                    Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
+                    //Logger.LogError($"{_completeCheck[_test]}완료값확인");
+                    if (Managers.QuestManager._countCheck[goodsID] >= _completeCheck[goodsID])
                     {
                         Logger.LogError($"들어가는지 확인");
-                        _questComplete[_test] = true;
+                        _questComplete[goodsID] = true;
                     }
                     Logger.LogError("여기도 들어가는지");
                 }
-                text.Init(content.transform);
+                /*else
+                {
+                    Managers.QuestManager._countCheck[_test] = 0;
+                }*/
+                _changeText[_test].GetComponent<SimpleQuestText>().Init(content.transform);
                 //퀘스트 생성
                 //이 조건은 완료문에도 해야함
             }
@@ -286,17 +293,18 @@ public class QuestUI : BaseUI
                 {
                     Managers.QuestManager._countCheck.Add(_test, 0);
                 }
-                if (Managers.QuestManager._targetCheck[_test] == _inventory.GetItemToId(Managers.QuestManager._targetCheck[_test]).Data.ID && Managers.QuestManager._targetCheck[_test] / 10000 != 9)
+                if ( Managers.QuestManager._targetCheck[_test] / 10000 != 9)
                 {
+                    int goodsID = _test;
                     Logger.LogError($"{_inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test])}여기는 들어가는지");
-                    Managers.QuestManager._countCheck[_test] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test]);
-                    if (Managers.QuestManager._countCheck[_test] >= _completeCheck[_test])
+                    Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
+                    if (Managers.QuestManager._countCheck[goodsID] >= _completeCheck[goodsID])
                     {
-                        _questComplete[_test] = true;
+                        _questComplete[goodsID] = true;
                     }
                     Logger.LogError("여기도 들어가는지");
                 }
-                text.Init(content.transform);
+                _changeText[_test].GetComponent<SimpleQuestText>().Init(content.transform);
             }
 
         }
@@ -582,9 +590,9 @@ public class QuestUI : BaseUI
             Get<TextMeshProUGUI>((int)NowQuestText.TargetCount).text = $"{0} / {_targetCount}";
         }
 
-        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardValue1}");//밑에 추후 경로 입력
-        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardValue2}");
-        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardValue3}");
+        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType1}");//밑에 추후 경로 입력
+        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType2}");
+        GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType3}");
         _activeObject = true;//위치 고민해봐야할듯
     }
     void TransformSort(GameObject go)
