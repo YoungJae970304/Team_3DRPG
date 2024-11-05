@@ -4,6 +4,8 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+#region 기본 데이터 클래스
 [Serializable]
 public class SaveDatas : IData
 {
@@ -96,7 +98,9 @@ public class SaveDatas : IData
         Logger.Log("기본 데이터 설정 완료");
     }
 }
+#endregion
 
+#region 플레이어 데이터 클래스
 [Serializable]
 public class PlayerSaveData : IData
 {
@@ -177,7 +181,9 @@ public class PlayerSaveData : IData
     {
     }
 }
+#endregion
 
+#region 인벤토리 데이터 클래스
 //딸각 로딩씬에서 켜준다음에 로드를 해주는방법으로 해보자
 [Serializable]
 public class InventoryItemData
@@ -294,7 +300,9 @@ public class InventorySaveData : IData
         }
     }
 }
+#endregion
 
+#region 스킬 데이터 클래스
 //딸각 로딩씬에서 켜준다음에 로드를 해주는방법으로 해보자
 [Serializable]
 public class SkillTreeItemData
@@ -373,8 +381,9 @@ public class SkillSaveData : IData
         _skillTreeItemDatas.Clear();
     }
 }
+#endregion
 
-
+#region 장비 데이터 클래스
 //딸각 로딩씬에서 켜준다음에 로드를 해주는방법으로 해보자
 [Serializable]
 public class EquipnetItemData
@@ -458,7 +467,9 @@ public class EquipmentSaveData : IData
         var playerEquipUI = Managers.Game._player.GetComponent<Inventory>().EquipMents;
     }
 }
+#endregion
 
+#region 메인UI퀵슬롯 데이터 클래스
 [Serializable]
 public class MainQuickSlotData
 {
@@ -466,15 +477,17 @@ public class MainQuickSlotData
 }
 
 [Serializable]
-public class MainSaveData : IData
+public class QuickSlotSaveData : IData
 {
     public List<MainQuickSlotData> _mainQuickSlotDatas = new List<MainQuickSlotData>();
+
+    MainUI _mainUI;
 
     string _SavePath;
 
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}/MainUISaveData.json";
+        _SavePath = $"{Application.persistentDataPath}/MainUIQuickSlotSaveData.json";
     }
 
     public void SaveData()
@@ -488,17 +501,31 @@ public class MainSaveData : IData
         }
         try
         {
-
+            string quickSlotJson = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, quickSlotJson);
+            Logger.Log("퀵슬롯 정보 세이브");
         }
         catch (Exception e)
         {
-            Logger.LogError($"MainQuickSlotUI 를 찾을 수 없습니다{e.Message}");
+            Logger.LogError($"MainQuickSlotUI를 찾을 수 없습니다{e.Message}");
         }
     }
 
     public bool LoadData()
     {
-        throw new NotImplementedException();
+        SetDefaultData();
+        try
+        {
+            string quickSlotJson = File.ReadAllText(_SavePath);
+            JsonUtility.FromJsonOverwrite(quickSlotJson, this);
+
+            Logger.Log("퀵슬롯 로드 성공");
+            return true;
+        }catch (Exception e)
+        {
+            Logger.LogError($"퀵슬롯데이터 로드 실패{e.Message}");
+            return false;
+        }
     }
 
     public void SetDefaultData()
@@ -506,8 +533,9 @@ public class MainSaveData : IData
         _mainQuickSlotDatas.Clear();
     }
 }
+#endregion
 
-
+#region 퀘스트 데이터 클래스
 [Serializable]
 public class QuestItemData
 {
@@ -573,3 +601,85 @@ public class QuestSaveData : IData
         _questItemData.Clear();
     }
 }
+#endregion
+
+#region 라지맵 데이터 클래스
+
+[Serializable]
+public class LargeMapItemData
+{
+    public string sceneName;
+    public byte[] fogTextureData;
+}
+
+[Serializable]
+public class LargeMapData : IData
+{
+    public List<LargeMapItemData> _largeMapItemData = new List<LargeMapItemData>();
+
+    string _SavePath;
+
+    public void Init()
+    {
+        _SavePath = $"{Application.persistentDataPath}/LargeMapData.json";
+    }
+
+    public void SaveData()
+    {
+        SetDefaultData();
+        LargeMapUI largeMapUI = Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
+        largeMapUI.CloseUI();
+        string directory = Path.GetDirectoryName(_SavePath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        foreach (var sceneFog in largeMapUI._sceneFogTextures)
+        {
+            Texture2D texture = sceneFog.Value;
+            //Texture2D를 PNG 형식으로 변환하여 저장하는 법
+            byte[] textureData = texture.EncodeToPNG();
+            _largeMapItemData.Add(new LargeMapItemData
+            {
+                sceneName = sceneFog.Key,
+                fogTextureData = textureData,
+            });
+        }
+        try
+        {
+            string mapJson = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, mapJson);
+            Logger.Log("맵 정보 세이브");
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"저장할 맵이 없습니다.{e.Message}");
+        }
+    }
+    public bool LoadData()
+    {
+        SetDefaultData();
+        string directory = Path.GetDirectoryName(_SavePath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        try
+        {
+            string mapJson = File.ReadAllText(_SavePath);
+            JsonUtility.FromJsonOverwrite(mapJson, this);
+            Logger.Log("맵 로드 성공");
+            return true;
+        }catch (Exception e)
+        {
+            Logger.LogError($"로드 할 맵이 없습니다{e.Message}");
+            return false;
+        }
+    }
+
+    public void SetDefaultData()
+    {
+        _largeMapItemData.Clear();
+    }
+}
+#endregion

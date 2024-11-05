@@ -81,13 +81,7 @@ public class DataManager
         {
             Logger.Log("이어하기 입니다.");
         }
-        GetData<SaveDatas>()?.Init();
-        GetData<InventorySaveData>()?.Init();
-        GetData<EquipmentSaveData>()?.Init();
-        GetData<PlayerSaveData>()?.Init();
-        GetData<SkillSaveData>()?.Init();
-        GetData<QuestSaveData>()?.Init();
-        Logger.Log("각 데이터 Init 실행 확인");
+        AllDataInit();
     }
 
     //Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
@@ -102,6 +96,7 @@ public class DataManager
         SaveData<InventorySaveData>();
         SaveData<EquipmentSaveData>();
         SaveData<SkillSaveData>();
+        SaveData<LargeMapData>();
         SaveData<QuestSaveData>();
     }
 
@@ -111,9 +106,23 @@ public class DataManager
         LoadData<InventorySaveData>();
         LoadData<SkillSaveData>();
         LoadData<EquipmentSaveData>();
+        LoadData<LargeMapData>();
         //LoadData<QuestSaveData>();
     }
 
+    public void AllDataInit()
+    {
+        GetData<SaveDatas>()?.Init();
+        GetData<InventorySaveData>()?.Init();
+        GetData<EquipmentSaveData>()?.Init();
+        GetData<PlayerSaveData>()?.Init();
+        GetData<SkillSaveData>()?.Init();
+        GetData<QuestSaveData>()?.Init();
+
+        GetData<LargeMapData>()?.Init();
+        GetData<QuickSlotSaveData>()?.Init();
+        Logger.Log("각 데이터 Init 실행 확인");
+    }
 
     public void SaveData<T>() where T : class, IData
     {

@@ -19,7 +19,7 @@ public class LoadingScene : BaseScene
     {
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
-        Logger.LogError((Managers.Game._player != null).ToString());
+        //Logger.LogError((Managers.Game._player != null).ToString());
         if (Managers.Game._player != null) return;
         if (!TitleCanvasUI._isNewGame) { ApplyPlayerData(); } else
         {
@@ -29,7 +29,6 @@ public class LoadingScene : BaseScene
         //이어하기 일경우를 판단
         if (!TitleCanvasUI._isNewGame)
         {
-
             Managers.Data.LoadAllData();
 
             //데이터 적용 부분
@@ -39,6 +38,8 @@ public class LoadingScene : BaseScene
             ApplyInvenData();
             //스킬
             ApplySkillData();
+            //맵
+            ApplyLargeMapData();
         }
     }
 
@@ -156,6 +157,22 @@ public class LoadingScene : BaseScene
         
     }
 
+    void ApplyLargeMapData()
+    {
+        LargeMapData largeMapData = Managers.Data.GetData<LargeMapData>();
+        LargeMapUI largeMapUI = Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
+        largeMapUI.CloseUI();
+        foreach(var largeMap in largeMapData._largeMapItemData)
+        {
+            if (largeMapData != null)
+            {
+                Texture2D texture = new Texture2D(largeMapUI._textureSize, largeMapUI._textureSize);
+                // byte 배열을 Texture2D로 변환하는 작업
+                texture.LoadImage(largeMap.fogTextureData);
+                largeMapUI._sceneFogTextures[largeMap.sceneName] = texture;
+            }
+        }
+    }
 
     public override void Clear()
     {
