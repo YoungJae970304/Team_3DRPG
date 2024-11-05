@@ -333,16 +333,13 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
-        Collider boxCollder = new BoxCollider();
-        boxCollder.GetComponent<Transform>().localScale = new Vector3(4, 4, 4);
-        boxCollder.GetComponent<Transform>().position = Vector3.forward + new Vector3(0, 0, _mStat.AttackRange).normalized;
-            //transform.position + transform.forward * (_mStat.AttackRange / 1.8f);
+        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.8f);
 
         // 박스의 크기 설정 (폭, 높이, 깊이)
-        //Vector3 boxSize = new Vector3(1.2f, 2f, _mStat.AttackRange); // 너비 1, 높이 1, 깊이 AttackRange
+        Vector3 boxSize = new Vector3(1.2f, 2f, _mStat.AttackRange); // 너비 1, 높이 1, 깊이 AttackRange
 
         // 박스에 충돌하는 객체를 체크
-        Collider[] checkColliders = Physics.OverlapBox(boxCollder.transform.position, boxCollder.transform.position / 2, Quaternion.identity);
+        Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
         foreach (Collider collider in checkColliders)
         {
             if (collider.CompareTag("Player"))
