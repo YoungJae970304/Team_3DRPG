@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,26 +7,39 @@ public class MainUI : ItemDragUI
 {
     Inventory _inventory;
     [SerializeField] RectTransform _icontr;
-    enum QuickItemSlots {
+    enum QuickItemSlots
+    {
         ItemSlot_1,
         ItemSlot_2
     }
 
-    enum SkillSlots {
+    enum SkillSlots
+    {
         SkillSlot_E,
         SkillSlot_R,
     }
 
-    enum Sliders {
+    enum Sliders
+    {
         HpBar,
         MpBar,
     }
 
-    enum Buttons {
+    enum Buttons
+    {
         Quest,
         Inventory,
         Skill,
         Option,
+    }
+
+    enum Texts
+    {
+        Level,
+    }
+    enum Images
+    {
+        fill
     }
 
     public SkillQuickSlot SkillSlot_E { get { return Get<SkillQuickSlot>((int)SkillSlots.SkillSlot_E); } }
@@ -37,11 +49,13 @@ public class MainUI : ItemDragUI
 
     private void Start()
     {
-        
-        
+
+
         PubAndSub.Subscrib<int>("HP", HpChanged);
         PubAndSub.Subscrib<int>("MP", MpChanged);
-        GetButton((int)Buttons.Inventory).onClick.AddListener(()=> OpenPlayerUI<InventoryUI>());
+        PubAndSub.Subscrib<int>("Level", UpdateLevel);
+        PubAndSub.Subscrib<int>("EXP", UpdateExp);
+        GetButton((int)Buttons.Inventory).onClick.AddListener(() => OpenPlayerUI<InventoryUI>());
         GetButton((int)Buttons.Quest).onClick.AddListener(() => OpenPlayerUI<QuestUI>());
         GetButton((int)Buttons.Skill).onClick.AddListener(() => OpenPlayerUI<SkillTree>());
         GetButton((int)Buttons.Option).onClick.AddListener(() => OpenPlayerUI<OptionUI>());
@@ -53,11 +67,15 @@ public class MainUI : ItemDragUI
         Bind<SkillQuickSlot>(typeof(SkillSlots));
         Bind<Slider>(typeof(Sliders));
         Bind<Button>(typeof(Buttons));
+        Bind<TextMeshProUGUI>(typeof(Texts));
+        Bind<Image>(typeof(Images));
         base.Init(anchor);
         _inventory = Managers.Game._player.gameObject.GetOrAddComponent<Inventory>();
         Managers.Game._player.StatusEffect._iconTr = _icontr;
         HpChanged(Managers.Game._player._playerStatManager.HP);
         MpChanged(Managers.Game._player._playerStatManager.MP);
+        UpdateLevel(Managers.Game._player._playerStatManager.Level);
+        UpdateExp(Managers.Game._player._playerStatManager.EXP);
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
         {
             Get<QuickItemSlot>((int)quickItemSlot)._inventory = _inventory;
@@ -66,14 +84,16 @@ public class MainUI : ItemDragUI
         }
     }
 
-    public void QuickslotUpdate() {
+    public void QuickslotUpdate()
+    {
         foreach (QuickItemSlots quickItemSlot in Enum.GetValues(typeof(QuickItemSlots)))
         {
             Get<QuickItemSlot>((int)quickItemSlot).UpdateSlotInfo();
         }
     }
 
-    private void HpChanged(int value) {
+    private void HpChanged(int value)
+    {
         Get<Slider>((int)Sliders.HpBar).value = (float)value / (float)Managers.Game._player._playerStatManager.MaxHP;
     }
     private void MpChanged(int value)
@@ -96,5 +116,15 @@ public class MainUI : ItemDragUI
 
             Managers.UI.OpenUI<T>(new BaseUIData());
         }
+    }
+
+    public void UpdateLevel(int value)
+    {
+        GetText((int)Texts.Level).text = $"Lv. {value}";
+        UpdateExp(Managers.Game._player._playerStatManager.EXP);
+    }
+    private void UpdateExp(int value)
+    {
+        GetImage((int)Images.fill).fillAmount = (float)value / (float)Managers.Game._player._playerStatManager.MaxEXP;
     }
 }
