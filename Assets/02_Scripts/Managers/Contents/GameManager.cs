@@ -15,6 +15,7 @@ public class GameManager
 
     public bool _isActiveDialog = true;
     public bool _cantInputKey = false;
+    public bool _firstTuto = true;
 
     public DeongeonType _selecDungeonLevel;
 
@@ -42,23 +43,31 @@ public class GameManager
     // 타입에 맞는 캐릭터 생성
     public void PlayerCreate()
     {
-        Logger.LogWarning($"플레이서 생성 시점 확인{Managers.Game._playerType}");
-        Managers.Resource.Instantiate("Player/VirtualCameras");
-        
+        Logger.LogWarning($"플레이어 생성 시점 확인{Managers.Game._playerType}");
+        GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
+        GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
+
+        // 데이터 로드
+        Managers.Data.LoadData<PlayerSaveData>();
+
         switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
-                GameObject meleePlayer = Managers.Resource.Instantiate("Player/MeleePlayer");
-                Managers.Data.SaveData<SaveDatas>();
+                Managers.Game._player = meleePlayer.GetComponent<Player>();
+                meleePlayer.SetActive(true);
+                magePlayer.SetActive(false);
                 break;
             case Define.PlayerType.Mage:
-                GameObject magePlayer = Managers.Resource.Instantiate("Player/MagePlayer");
-                Managers.Data.SaveData<SaveDatas>();
+                Managers.Game._player = magePlayer.GetComponent<Player>();
+                meleePlayer.SetActive(false);
+                magePlayer.SetActive(true);
                 break;
             default:
                 Logger.LogError("생성할 플레이어가 없습니다.");
                 break;
         }
+
+        Managers.Resource.Instantiate("Player/VirtualCameras");
     }
 
     public void PlayerPosSet(Transform spawnPos)

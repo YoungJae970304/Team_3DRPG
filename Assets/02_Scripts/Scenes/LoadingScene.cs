@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class LoadingScene : BaseScene
 {
@@ -20,9 +19,27 @@ public class LoadingScene : BaseScene
     {
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
-
+        Logger.LogError((Managers.Game._player != null).ToString());
         if (Managers.Game._player != null) return;
-        Managers.Game.PlayerCreate();
+        if (!TitleCanvasUI._isNewGame) { ApplyPlayerData(); } else
+        {
+            Managers.Game.PlayerCreate();
+        }
+        
+        //이어하기 일경우를 판단
+        if (!TitleCanvasUI._isNewGame)
+        {
+
+            Managers.Data.LoadAllData();
+
+            //데이터 적용 부분
+            //장비
+            ApplyEquipData();
+            //인벤
+            ApplyInvenData();
+            //스킬
+            ApplySkillData();
+        }
     }
 
     public void ChangeScene()
@@ -57,6 +74,8 @@ public class LoadingScene : BaseScene
                 _skipTxt.enabled = true;
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
+                    //널래퍼런스 방지용 유아이 ESC키로 전부 삭제하고 씬 로드
+                    Managers.UI.CloseAllOpenUI();
                     //ao.allowSceneActivation = true;
                     _fadeAnim.SetTrigger("doFade");
                 }
@@ -66,8 +85,80 @@ public class LoadingScene : BaseScene
         }
     }
 
+
+    void ApplyEquipData()
+    {
+        EquipMentUI equipMentUI = Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());
+        equipMentUI.StatSum();
+        equipMentUI.CloseUI();
+    }
+
+    void ApplyInvenData()
+    {
+        InventorySaveData inventorySaveData = Managers.Data.GetData<InventorySaveData>();
+        Inventory inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
+        foreach (var itemData in inventorySaveData._InvenItemList)
+        {
+            //아이템 검증
+            Item newSaveItem = Item.ItemSpawn(itemData._id, itemData._amount);
+            if (newSaveItem == null)
+            {
+                Logger.LogWarning($"유효하지 않은 아이템 ID: {itemData._id}");
+
+                continue;
+            }
+
+            // 빈 슬롯인지 확인 후 아이템 설정
+            if (inventory.GetItem(itemData._index, newSaveItem.Data.Type) == null)
+            {
+
+                inventory.Setitem(itemData._index, newSaveItem);
+            }
+            else
+            {
+                Logger.LogWarning($"인벤토리 인덱스 {itemData._index}에 이미 아이템이 존재합니다.");
+            }
+        }
+    }
+
+    void ApplySkillData()
+    {
+        SkillSaveData skillSaveData = Managers.Data.GetData<SkillSaveData>();
+        SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
+        SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
+        skillTree.CloseUI();
+        foreach (var skill in skillTree._skillTreeItems) {
+            SkillTreeItemData skillTreeItemData = skillSaveData._skillTreeItemDatas.Where((item) => skill._skillId == item._id).FirstOrDefault();
+            if (skillTreeItemData != null) {
+                skill.SkillLevel = skillTreeItemData._curLevel;
+                skill.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
+                if (skill.SkillLevel > 0) {
+                    skill.Skill._prevLevel = skill.SkillLevel - 1;
+                }
+            }
+        }
+    }
+
+    void ApplyPlayerData()
+    {
+        PlayerSaveData playerSaveData = Managers.Data.GetData<PlayerSaveData>();
+        Managers.Game._playerType = playerSaveData._PlayerTypes;
+        Managers.Game.PlayerCreate();
+        var player = Managers.Game._player;
+        var stats = Managers.Game._player._playerStatManager;
+        
+        stats.Level = playerSaveData._level;
+        stats.EXP = playerSaveData._exp;
+        stats.MaxEXP = playerSaveData._maxExp;
+        stats.SP = playerSaveData._sp;
+        stats.Gold = playerSaveData._gold;
+        //player.transform.position = new Vector3(_x, _y, _z);
+        
+    }
+
+
     public override void Clear()
     {
-        
+
     }
 }

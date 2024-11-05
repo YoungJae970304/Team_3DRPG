@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class QuestUI : BaseUI
 {
-
+    // UI부분 ,퀘스트 정보 부분 분리
     enum NowQuestText
     {
         QuestName,
@@ -637,8 +637,5 @@ public class QuestUI : BaseUI
             children[i].SetSiblingIndex(i);
         }
     }
-    public override void CloseUI(bool isCloseAll = false)
-    {
-        base.CloseUI(isCloseAll);
-    }
+
 }

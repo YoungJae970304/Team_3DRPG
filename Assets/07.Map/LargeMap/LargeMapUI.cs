@@ -35,7 +35,7 @@ public class LargeMapUI : BaseUI
     private Vector2 _lastMousePosition;
 
     // 씬별 안개 관리 변수
-    private Dictionary<string, Texture2D> _sceneFogTextures = new Dictionary<string, Texture2D>();
+    private Dictionary<string, Texture2D> _sceneFogTextures = new Dictionary<string, Texture2D>();  // 이 데이터를 저장, 로드 후 데이터 대입도 여기에
     private string _currentSceneName;
 
     private void Awake()

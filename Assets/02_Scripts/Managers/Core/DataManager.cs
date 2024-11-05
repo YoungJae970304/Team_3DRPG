@@ -31,7 +31,7 @@ public class DataManager
         */
     }
 
-    void DataTpyes()
+    void DataTypes()
     {
         //IData를 상속받고있는 타입 설정
         var dataType = typeof(IData);
@@ -53,8 +53,15 @@ public class DataManager
                     //딕셔너리에 해당 타입의 인스턴스가 없을 경우
                     if (!_IDataDict.ContainsKey(type))
                     {
-                        //해당 타입의 인스턴스를 생성하고 딕셔너리에 추가
-                        _IDataDict[type] = (IData)Activator.CreateInstance(type);
+                        try
+                        {
+                            _IDataDict[type] = (IData)Activator.CreateInstance(type);
+                            Logger.Log($"타입 인스턴스 생성 및 추가 성공: {type.Name}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.LogError($"{type.Name} 인스턴스 생성 실패: {ex.Message}");
+                        }
                     }
                 }
             }
@@ -63,17 +70,24 @@ public class DataManager
 
     void InitializeGameState()
     {
-        DataTpyes();
+        DataTypes();
         Logger.Log("타입 체크");
-        Logger.Log("각 데이터 Init 실행 확인");
+        if (TitleCanvasUI._isNewGame)
+        {
+            SaveData<SaveDatas>();
+            Logger.Log("첫 시작 입니다.");
+        }
+        else
+        {
+            Logger.Log("이어하기 입니다.");
+        }
         GetData<SaveDatas>()?.Init();
         GetData<InventorySaveData>()?.Init();
         GetData<EquipmentSaveData>()?.Init();
         GetData<PlayerSaveData>()?.Init();
         GetData<SkillSaveData>()?.Init();
         GetData<QuestSaveData>()?.Init();
-        Logger.Log($"처음 시작 데이터 저장 확인");
-        SaveData<SaveDatas>();
+        Logger.Log("각 데이터 Init 실행 확인");
     }
 
     //Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
@@ -81,6 +95,25 @@ public class DataManager
     //    TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}");
     //    return JsonUtility.FromJson<Loader>(textAsset.text);
     //}
+
+    public void SaveAllData()
+    {
+        SaveData<PlayerSaveData>();
+        SaveData<InventorySaveData>();
+        SaveData<EquipmentSaveData>();
+        SaveData<SkillSaveData>();
+        SaveData<QuestSaveData>();
+    }
+
+    public void LoadAllData()
+    {
+        LoadData<PlayerSaveData>();
+        LoadData<InventorySaveData>();
+        LoadData<SkillSaveData>();
+        LoadData<EquipmentSaveData>();
+        //LoadData<QuestSaveData>();
+    }
+
 
     public void SaveData<T>() where T : class, IData
     {
