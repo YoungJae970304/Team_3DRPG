@@ -11,13 +11,13 @@ public class MonsterHpBar : BaseUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-        Bind<Slider>(typeof(Sliders));
-        _monster = GetComponentInParent<Monster>();
-        HpChanged();
+        
     }
     private void OnEnable()
     {
-        Init(transform);
+        Bind<Slider>(typeof(Sliders));
+        _monster = GetComponentInParent<Monster>();
+        HpChanged();
     }
     private void HpChanged()
     {

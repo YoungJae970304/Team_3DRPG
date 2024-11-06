@@ -213,7 +213,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 
                 break;
             case MonsterState.Return:
-                _monsterHpBar.Init(_monsterHpBar.transform);
+                
                 if ((_originPos - transform.position).magnitude <= 3f)
                     MChangeState(MonsterState.Idle);
                 break;

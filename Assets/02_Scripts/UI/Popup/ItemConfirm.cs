@@ -145,7 +145,7 @@ public class ItemConfirm : ItemDragUI
             _inventorySlot.UpdateInfo();
             _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold += money;
             Logger.LogWarning(money.ToString());
-
+            PubAndSub.Publish<int>("ItemSell", _inventorySlot.Item.Data.ID);
 
         }
         CloseUI();
