@@ -1,9 +1,75 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
+#region 제이슨 파일 암호화 클래스
+public static class EncryptionUtility
+{
+    private static readonly string Key = "Team3DRPG,!@#$";
+
+    // AES 암호화
+    public static (string CipherText, string IV) Encrypt(string plainText)
+    {
+        using (Aes aesAlg = Aes.Create())
+        {
+            aesAlg.Key = Encoding.UTF8.GetBytes(Key);
+            // 랜덤한 IV 생성
+            aesAlg.GenerateIV();
+
+            ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+            using (MemoryStream msEncrypt = new MemoryStream())
+            {
+                // IV를 암호문 앞에 기록
+                msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length);
+                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                {
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.Write(plainText);
+                    }
+                    return (Convert.ToBase64String(msEncrypt.ToArray()), Convert.ToBase64String(aesAlg.IV));
+                }
+            }
+        }
+    }
+
+    // AES 복호화
+    public static string Decrypt(string cipherText)
+    {
+        byte[] fullCipher = Convert.FromBase64String(cipherText);
+        // IV는 AES의 블록 크기인 16바이트
+        byte[] iv = new byte[16];
+        byte[] cipher = new byte[fullCipher.Length - iv.Length];
+
+        Array.Copy(fullCipher, iv, iv.Length);
+        Array.Copy(fullCipher, iv.Length, cipher, 0, cipher.Length);
+
+        using (Aes aesAlg = Aes.Create())
+        {
+            aesAlg.Key = Encoding.UTF8.GetBytes(Key);
+            aesAlg.IV = iv;
+
+            ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+            using (MemoryStream msDecrypt = new MemoryStream(cipher))
+            {
+                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                {
+                    using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                    {
+                        return srDecrypt.ReadToEnd();
+                    }
+                }
+            }
+        }
+    }
+}
+#endregion
+
+#region 기본 데이터 클래스
 [Serializable]
 public class SaveDatas : IData
 {
@@ -96,7 +162,9 @@ public class SaveDatas : IData
         Logger.Log("기본 데이터 설정 완료");
     }
 }
+#endregion
 
+#region 플레이어 데이터 클래스
 [Serializable]
 public class PlayerSaveData : IData
 {
@@ -177,7 +245,9 @@ public class PlayerSaveData : IData
     {
     }
 }
+#endregion
 
+#region 인벤토리 데이터 클래스
 //딸각 로딩씬에서 켜준다음에 로드를 해주는방법으로 해보자
 [Serializable]
 public class InventoryItemData
@@ -217,10 +287,10 @@ public class InventorySaveData : IData
             {
                 Logger.LogWarning("인벤토리 널 값");
             }
-            List<Inventory.ItemGroup> ItemGroup =new List<Inventory.ItemGroup>();
+            List<Inventory.ItemGroup> ItemGroup = new List<Inventory.ItemGroup>();
             foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
-               
+
                 var itemType = (ItemData.ItemType)itemSaveType;
                 if (itemType == ItemData.ItemType.DropData) continue;
                 Inventory.ItemGroup itemGroup = _inventory.GetGroup((ItemData.ItemType)itemSaveType);
@@ -241,7 +311,7 @@ public class InventorySaveData : IData
                             _index = index,
                             _type = (int)itemType,
                         };
-                        Logger.Log($"{itemData}아이템 리스트에 들어가는지 확인");
+                        //Logger.Log($"{itemData}아이템 리스트에 들어가는지 확인");
                         _InvenItemList.Add(itemData);
                     }
                 }
@@ -294,7 +364,9 @@ public class InventorySaveData : IData
         }
     }
 }
+#endregion
 
+#region 스킬 데이터 클래스
 //딸각 로딩씬에서 켜준다음에 로드를 해주는방법으로 해보자
 [Serializable]
 public class SkillTreeItemData
@@ -329,7 +401,7 @@ public class SkillSaveData : IData
             List<SkillTreeItem> _skillTreeItem;
             SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(new BaseUIData());
             _skillTreeItem = skillTree._skillTreeItems;
-            
+
             skillTree.CloseUI();
             //Logger.Log(skillTree._skillTreeItems.Count);
             foreach (var skill in _skillTreeItem)
@@ -338,7 +410,7 @@ public class SkillSaveData : IData
                 {
                     _id = skill._skillId,
                     _curLevel = skill.SkillLevel,
-                }); 
+                });
                 //Logger.Log(_skillTreeItemDatas.Count);
             }
             string skillJson = JsonUtility.ToJson(this, true);
@@ -373,8 +445,9 @@ public class SkillSaveData : IData
         _skillTreeItemDatas.Clear();
     }
 }
+#endregion
 
-
+#region 장비 데이터 클래스
 //딸각 로딩씬에서 켜준다음에 로드를 해주는방법으로 해보자
 [Serializable]
 public class EquipnetItemData
@@ -458,28 +531,41 @@ public class EquipmentSaveData : IData
         var playerEquipUI = Managers.Game._player.GetComponent<Inventory>().EquipMents;
     }
 }
+#endregion
 
+#region 메인UI퀵슬롯 데이터 클래스
 [Serializable]
-public class MainQuickSlotData
+public class QuickItemSlotData
 {
     public int _id;
+    public int _slotIndex;
 }
 
 [Serializable]
-public class MainSaveData : IData
+public class QuickSkillSlotData
 {
-    public List<MainQuickSlotData> _mainQuickSlotDatas = new List<MainQuickSlotData>();
+    public int _id;
+    public int _slotIndex;
+}
+
+[Serializable]
+public class QuickSlotSaveData : IData
+{
+    public List<QuickItemSlotData> _quickItemSlotData = new List<QuickItemSlotData>();
+
+    public List<QuickSkillSlotData> _quickSkillSlotData = new List<QuickSkillSlotData>();
 
     string _SavePath;
 
     public void Init()
     {
-        _SavePath = $"{Application.persistentDataPath}/MainUISaveData.json";
+        _SavePath = $"{Application.persistentDataPath}/QuickSlotSaveData.json";
     }
 
     public void SaveData()
     {
         SetDefaultData();
+
         string directory = Path.GetDirectoryName(_SavePath);
 
         if (!Directory.Exists(directory))
@@ -488,26 +574,93 @@ public class MainSaveData : IData
         }
         try
         {
+            MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
+            //메인UI가 널이 아니라면 
+            if (mainUI != null)
+            {
+                QuickItemSlot[] quickItemSlots = mainUI.GetComponentsInChildren<QuickItemSlot>();
 
+                for (int i = 0; i < quickItemSlots.Length; i++)
+                {
+                    QuickItemSlot quickItemSlot = quickItemSlots[i];
+                    if (quickItemSlot.Item != null)
+                    {
+                        QuickItemSlotData quickSlotItemData = new QuickItemSlotData
+                        {
+                            _id = quickItemSlot.Item.Data.ID,
+                            _slotIndex = i,
+                        };
+                        _quickItemSlotData.Add(quickSlotItemData);
+                    }
+                }
+
+                //스킬트리아이템을 퀵슬롯에 등록을 했을테니까 그 정보를 리스트에 저장
+                SkillQuickSlot[] skillQuickSlots = mainUI.GetComponentsInChildren<SkillQuickSlot>();
+                List<SkillTreeItem> skillTreeItem;
+                SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(new BaseUIData());
+                skillTreeItem = skillTree._skillTreeItems;
+                skillTree.CloseUI();
+
+                for (int i = 0; i < skillQuickSlots.Length; i++)
+                {
+                    SkillQuickSlot skillQuickSlot = skillQuickSlots[i];
+                    if (skillQuickSlot.Skill != null)
+                    {
+                        //등록한 스킬하고 스킬트리에 있는 스킬이 같을경우 저장 그 스킬의 아이디를
+                        //리스트에 저장
+                        var matchingItem = skillTreeItem.Find(item => item.Skill == skillQuickSlot.Skill);
+
+                        if (matchingItem != null)
+                        {
+                            QuickSkillSlotData quickSkillSlotData = new QuickSkillSlotData
+                            {
+                                _id = matchingItem._skillId,
+                                _slotIndex = i
+                            };
+                            _quickSkillSlotData.Add(quickSkillSlotData);
+                        }
+                    }
+                }
+            }
+
+            string quickSlotJson = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, quickSlotJson);
+            Logger.Log("퀵슬롯 정보 세이브");
         }
         catch (Exception e)
         {
-            Logger.LogError($"MainQuickSlotUI 를 찾을 수 없습니다{e.Message}");
+            Logger.LogError($"MainQuickSlotUI를 찾을 수 없습니다{e.Message}");
         }
     }
 
     public bool LoadData()
     {
-        throw new NotImplementedException();
+        SetDefaultData();
+        try
+        {
+            string quickSlotJson = File.ReadAllText(_SavePath);
+            JsonUtility.FromJsonOverwrite(quickSlotJson, this);
+            //확인했음
+            //Logger.Log(_quickSkillSlotData.Count);
+            Logger.Log("퀵슬롯 로드 성공");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"퀵슬롯데이터 로드 실패{e.Message}");
+            return false;
+        }
     }
 
     public void SetDefaultData()
     {
-        _mainQuickSlotDatas.Clear();
+        _quickItemSlotData.Clear();
+        _quickSkillSlotData.Clear();
     }
 }
+#endregion
 
-
+#region 퀘스트 데이터 클래스
 [Serializable]
 public class QuestItemData
 {
@@ -573,3 +726,86 @@ public class QuestSaveData : IData
         _questItemData.Clear();
     }
 }
+#endregion
+
+#region 라지맵 데이터 클래스
+
+[Serializable]
+public class LargeMapItemData
+{
+    public string sceneName;
+    public byte[] fogTextureData;
+}
+
+[Serializable]
+public class LargeMapData : IData
+{
+    public List<LargeMapItemData> _largeMapItemData = new List<LargeMapItemData>();
+
+    string _SavePath;
+
+    public void Init()
+    {
+        _SavePath = $"{Application.persistentDataPath}/LargeMapData.json";
+    }
+
+    public void SaveData()
+    {
+        SetDefaultData();
+        LargeMapUI largeMapUI = Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
+        largeMapUI.CloseUI();
+        string directory = Path.GetDirectoryName(_SavePath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        foreach (var sceneFog in largeMapUI._sceneFogTextures)
+        {
+            Texture2D texture = sceneFog.Value;
+            //Texture2D를 PNG 형식으로 변환하여 저장하는 법
+            byte[] textureData = texture.EncodeToPNG();
+            _largeMapItemData.Add(new LargeMapItemData
+            {
+                sceneName = sceneFog.Key,
+                fogTextureData = textureData,
+            });
+        }
+        try
+        {
+            string mapJson = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, mapJson);
+            Logger.Log("맵 정보 세이브");
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"저장할 맵이 없습니다.{e.Message}");
+        }
+    }
+    public bool LoadData()
+    {
+        SetDefaultData();
+        string directory = Path.GetDirectoryName(_SavePath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        try
+        {
+            string mapJson = File.ReadAllText(_SavePath);
+            JsonUtility.FromJsonOverwrite(mapJson, this);
+            Logger.Log("맵 로드 성공");
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"로드 할 맵이 없습니다{e.Message}");
+            return false;
+        }
+    }
+
+    public void SetDefaultData()
+    {
+        _largeMapItemData.Clear();
+    }
+}
+#endregion
