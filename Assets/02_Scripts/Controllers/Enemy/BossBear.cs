@@ -33,7 +33,7 @@ public class BossBear : Monster
         skillCount = 0;
         _maxRoarRange.SetActive(false);
         _roarRange.SetActive(false);
-        _mStat._mStat.AttackRange = 4;
+        _mStat._mStat.AttackRange = 8;
         _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
         
     }
@@ -319,9 +319,10 @@ public class BossBear : Monster
     }
     public override void MakeItem()
     {
+        int dropvalue = 70;
         base.MakeItem();
         int randomDice = UnityEngine.Random.Range(1, 101);
-        if (randomDice <= 100)
+        if (randomDice <= dropvalue)
         {
             GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();

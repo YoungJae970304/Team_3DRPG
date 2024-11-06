@@ -62,9 +62,11 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
         {
             for (int i = 0; i < (int)GoblemOrkEffects.Count; i++)
             {
-                if (Get<ParticleSystem>(i).gameObject.activeSelf)//내일 체크 렉이 너무심해서 도저히 안됨
+                if (Get<ParticleSystem>(i) != null && Get<ParticleSystem>(i).gameObject.activeSelf)//내일 체크 렉이 너무심해서 도저히 안됨
                 {
+                    //Get<ParticleSystem>(i).Stop();
                     Get<ParticleSystem>(i).gameObject.SetActive(false);
+                    
                 }
                 else
                 {
@@ -78,6 +80,7 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
     }
     public void MonsterAttack(GoblemOrkEffects name, Transform playerTransform = null)
     {
+        if (Get<ParticleSystem>((int)name).gameObject.activeSelf) return;
         Get<ParticleSystem>((int)name).gameObject.SetActive(true);
         Logger.LogError($"{Get<ParticleSystem>((int)name).gameObject.name}켜진 이펙트 이름임");
         if (playerTransform != null)

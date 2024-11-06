@@ -59,7 +59,13 @@ public class MainUI : ItemDragUI
         GetButton((int)Buttons.Quest).onClick.AddListener(() => OpenPlayerUI<QuestUI>());
         GetButton((int)Buttons.Skill).onClick.AddListener(() => OpenPlayerUI<SkillTree>());
         GetButton((int)Buttons.Option).onClick.AddListener(() => OpenPlayerUI<OptionUI>());
+        if(Managers.QuestManager._progressQuest.Count > 0)
+        {
+            for(int i = 0; i < 3; i++)
+            {
 
+            }
+        }
     }
     public override void Init(Transform anchor)
     {

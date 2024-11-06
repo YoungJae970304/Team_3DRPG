@@ -12,9 +12,9 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateEnter()
     {
-
-        //_monster._nav.isStopped = true;
-        _monster._nav.enabled = false;
+        _monster._nav.destination = _monster.transform.position;
+        _monster._nav.isStopped = true;
+        //_monster._nav.enabled = false;
         //_monster._nav.ResetPath();
         //초기화
         _monster._attackCompleted = false;
@@ -37,22 +37,12 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateExit()
     {
-        _monster._nav.enabled = true;
-        //_monster._nav.isStopped = false;
+        //_monster._nav.enabled = true;
+        _monster._nav.isStopped = false;
         _monster._timer = _monster._mStat.AtkDelay;
-        if(_monster._monsterID != 99999)
-        {
-            _monster._nav.stoppingDistance = _monster._mStat.AttackRange / 2;
-        }
-        else
-        {
-            _monster._nav.stoppingDistance = _monster._mStat.AttackRange*1.5f;
-        }
-        
-        
        
         _monster._anim.SetBool("BeforeChase", true);
-        _monster._enemyEffect.EffectOff(_monster.name);
+        //_monster._enemyEffect.EffectOff(_monster.name);
         //_monster._hitPlayer.Clear();
     }
     private IEnumerator AttackDelay(float delay)
@@ -83,7 +73,7 @@ public class MonsterAttackState : BaseState
         if (_monster._timer > _monster._mStat.AtkDelay)
         {
             //_monster._attackCompleted = false;
-            _monster.LookPlayer();
+            //_monster.LookPlayer();
             _monster._anim.SetBool("AfterAttackMotion", false);
             _monster.AttackStateSwitch();
             _monster.StartCoroutine(AttackDelay(0.8f));
