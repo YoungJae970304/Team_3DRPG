@@ -8,7 +8,9 @@ public class MonsterMoveState : BaseState
     public override void OnStateEnter()
     {
         _monster.StopAllCoroutines();
-        if(_monster._monsterID != 99999)
+        if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
+            return;
+            if (_monster._monsterID != 99999)
         {
             if (_monster._nav.enabled)
             {
@@ -29,7 +31,7 @@ public class MonsterMoveState : BaseState
                 //플레이어 찾기(슬라임에서 찾아둠)
                 _monster._anim.SetBool("BeforeChase", true);
 
-                _monster._nav.stoppingDistance = _monster._mStat.AttackRange + 3f;
+                _monster._nav.stoppingDistance = _monster._mStat.AttackRange;
                 _monster._nav.destination = _monster._player.transform.position + new UnityEngine.Vector3(4,0,4).normalized;
                 _monster._nav.SetDestination(_monster._nav.destination);
             }
@@ -40,7 +42,14 @@ public class MonsterMoveState : BaseState
 
     public override void OnStateExit()
     {
-        _monster._nav.stoppingDistance = _monster._mStat.AttackRange/2;
+        if(_monster._monsterID != 99999)
+        {
+            _monster._nav.stoppingDistance = _monster._mStat.AttackRange / 2;
+        }
+        else
+        {
+            _monster._nav.stoppingDistance = _monster._mStat.AttackRange - 1;
+        }
     }
 
     public override void OnStateUpdate()
@@ -50,6 +59,8 @@ public class MonsterMoveState : BaseState
 
         //플레이어 추격
         //_timer += _monster
+        if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
+            return;
         if (_monster._nav.enabled)
         {
             _monster.SetDestinationTimer(1);
