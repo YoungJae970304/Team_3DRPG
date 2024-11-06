@@ -33,7 +33,7 @@ public class BossBear : Monster
         skillCount = 0;
         _maxRoarRange.SetActive(false);
         _roarRange.SetActive(false);
-        _mStat._mStat.AttackRange = 4;
+        _mStat._mStat.AttackRange = 8;
         _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
         
     }

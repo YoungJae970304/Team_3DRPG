@@ -103,7 +103,12 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     }
     public virtual void Init()
     {
-        _hpBar.SetActive(false);
+        if(_hpBar != null)
+        {
+            _hpBar.SetActive(false);
+        }
+        
+        
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
@@ -233,10 +238,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public void MChangeState(MonsterState nextState)
     {
 
-        if (_monsterID != 99999)
-        {
-            _enemyEffect.EffectOff();
-        }
+        
 
         if (_mFSM == null)
         {
@@ -262,7 +264,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         {
             _hpBar.SetActive(true);
         }
-        
         if (_monsterID != 99999)
         {
             _enemyEffect.EffectOff();
@@ -403,6 +404,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
         }
+        _nav.SetDestination(_player.transform.position);
     }
 
 
