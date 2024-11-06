@@ -34,6 +34,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClipThreshold: 0.5
     - _Fllipbook_Columns: 3
     - _Fllipbook_Emissive: 4
     - _Fllipbook_Opacity: 1
@@ -62,5 +63,5 @@ Material:
     - __ZWrite__: 0
     m_Colors:
     - _Gradetion_NoisexyTilingyzOffset: {r: 1, g: 1, b: 0, a: 0}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 0.5}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_BuildTextureStacks: []

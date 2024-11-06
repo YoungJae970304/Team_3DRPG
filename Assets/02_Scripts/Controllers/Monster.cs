@@ -473,8 +473,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         if (dropData != null)
         {
             _mStat._mStat.EXP = dropData.Value5;
-            Logger.LogError(_mStat._mStat.EXP.ToString() + "안돼냐");
-            Logger.LogError(dropData.Value5.ToString() + "왜");
             _monsterProduct = dropData.Value6;
             _mStat._mStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
         }
