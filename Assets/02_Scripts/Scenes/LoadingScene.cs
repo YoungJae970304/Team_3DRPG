@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class LoadingScene : BaseScene
 {
@@ -19,7 +20,7 @@ public class LoadingScene : BaseScene
     {
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
-        Logger.LogError((Managers.Game._player != null).ToString());
+        //Logger.LogError((Managers.Game._player != null).ToString());
         if (Managers.Game._player != null) return;
         if (!TitleCanvasUI._isNewGame) { ApplyPlayerData(); } else
         {
@@ -29,9 +30,7 @@ public class LoadingScene : BaseScene
         //이어하기 일경우를 판단
         if (!TitleCanvasUI._isNewGame)
         {
-
             Managers.Data.LoadAllData();
-
             //데이터 적용 부분
             //장비
             ApplyEquipData();
@@ -39,6 +38,10 @@ public class LoadingScene : BaseScene
             ApplyInvenData();
             //스킬
             ApplySkillData();
+            //맵
+            ApplyLargeMapData();
+            //퀵슬롯
+            ApplyQuickSlotData();
         }
     }
 
@@ -147,16 +150,72 @@ public class LoadingScene : BaseScene
         Managers.Game.PlayerCreate();
         var player = Managers.Game._player;
         var stats = Managers.Game._player._playerStatManager;
-        
         stats.Level = playerSaveData._level;
         stats.EXP = playerSaveData._exp;
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
+        Logger.LogError($"불러온 SP 확인{Managers.Game._player._playerStatManager.SP.ToString()}");
         stats.Gold = playerSaveData._gold;
         //player.transform.position = new Vector3(_x, _y, _z);
-        
     }
 
+    void ApplyLargeMapData()
+    {
+        LargeMapData largeMapData = Managers.Data.GetData<LargeMapData>();
+        LargeMapUI largeMapUI = Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
+        largeMapUI.CloseUI();
+        foreach(var largeMap in largeMapData._largeMapItemData)
+        {
+            if (largeMapData != null)
+            {
+                Texture2D texture = new Texture2D(largeMapUI._textureSize, largeMapUI._textureSize);
+                // byte 배열을 Texture2D로 변환하는 작업
+                texture.LoadImage(largeMap.fogTextureData);
+                largeMapUI._sceneFogTextures[largeMap.sceneName] = texture;
+            }
+        }
+    }
+
+    void ApplyQuickSlotData()
+    {
+        QuickSlotSaveData quickSlotSaveData = Managers.Data.GetData<QuickSlotSaveData>();
+        MainUI mainUI = Managers.UI.OpenUI<MainUI>(new BaseUIData());
+        Inventory inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
+        if (mainUI != null)
+        {
+            QuickItemSlot[] quickItemSlots = mainUI.GetComponentsInChildren<QuickItemSlot>();
+            foreach(var slotData in quickSlotSaveData._quickItemSlotData)
+            {
+                int slotIndex = slotData._slotIndex;
+                if (slotIndex < quickItemSlots.Length)
+                {
+                    Item slotItem = inventory.GetItemToId(slotData._id);
+                    if(slotItem != null)
+                    {
+                        quickItemSlots[slotIndex].Setitem(slotItem);
+                    }
+                }
+            }
+            SkillQuickSlot[] skillQuickSlots = mainUI.GetComponentsInChildren<SkillQuickSlot>();
+            SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
+            SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
+            skillTree.CloseUI();
+            foreach (var skillSlot in quickSlotSaveData._quickSkillSlotData)
+            {
+                // 저장된 Skill ID와 일치하는 SkillTreeItem을 찾아 설정
+                var matchingSkill = skillTree._skillTreeItems.FirstOrDefault(skillItem => skillItem._skillId == skillSlot._id);
+
+                // 매칭되는 스킬이 있을 경우에만 설정
+                if (matchingSkill != null && skillSlot._slotIndex < skillQuickSlots.Length)
+                {
+                    skillQuickSlots[skillSlot._slotIndex].Skill = matchingSkill.Skill;  // SkillQuickSlot에 스킬을 설정
+                    skillQuickSlots[skillSlot._slotIndex]._image.sprite = matchingSkill.Icon.sprite; // 아이콘 업데이트
+                    skillQuickSlots[skillSlot._slotIndex]._image.enabled = true;  // 아이콘 활성화
+                }
+            }
+        }
+        mainUI.QuickslotUpdate();
+    }
 
     public override void Clear()
     {

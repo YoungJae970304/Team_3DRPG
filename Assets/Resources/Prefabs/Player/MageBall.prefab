@@ -4841,10 +4841,10 @@ GameObject:
   - component: {fileID: 8554429624787256334}
   - component: {fileID: 5952542875244388690}
   - component: {fileID: 5206299393223451908}
-  - component: {fileID: 5228558057997486696}
   - component: {fileID: -911083052252565661}
   - component: {fileID: -2650978837668348308}
   - component: {fileID: -4021602900504176553}
+  - component: {fileID: 1039610848650938539}
   m_Layer: 0
   m_Name: MageBall
   m_TagString: Untagged
@@ -4919,27 +4919,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5228558057997486696
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6770549716455325844}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-911083052252565661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4994,6 +4973,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &1039610848650938539
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770549716455325844}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Height: 7
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -1}
 --- !u!1001 &6817129319305923486
 PrefabInstance:
   m_ObjectHideFlags: 0
