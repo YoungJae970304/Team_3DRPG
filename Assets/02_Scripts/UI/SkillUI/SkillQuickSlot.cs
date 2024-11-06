@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SkillQuickSlot : MonoBehaviour,IItemDragAndDropAble
 {
-    [SerializeField] Image _image;
+    public Image _image;
     public SkillBase _skill;
     public SkillBase Skill { get => _skill; set {
             _skill = value;

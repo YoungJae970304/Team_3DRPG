@@ -209,7 +209,8 @@ public class LoadingScene : BaseScene
                 if (matchingSkill != null && skillSlot._slotIndex < skillQuickSlots.Length)
                 {
                     skillQuickSlots[skillSlot._slotIndex].Skill = matchingSkill.Skill;  // SkillQuickSlot에 스킬을 설정
-                    matchingSkill.UpdateInfo();
+                    skillQuickSlots[skillSlot._slotIndex]._image.sprite = matchingSkill.Icon.sprite; // 아이콘 업데이트
+                    skillQuickSlots[skillSlot._slotIndex]._image.enabled = true;  // 아이콘 활성화
                 }
             }
         }
