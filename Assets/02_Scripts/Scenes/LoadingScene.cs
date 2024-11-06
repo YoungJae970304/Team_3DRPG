@@ -157,7 +157,16 @@ public class LoadingScene : BaseScene
         
     }
 
-
+    void ApplyQuestData()
+    { 
+        QuestSaveData questSaveData = Managers.Data.GetData<QuestSaveData>();
+        foreach(var quest in questSaveData._questItemData)
+        {
+            Managers.QuestManager._questID = quest._questID;
+            Managers.QuestManager._progressQuest = quest._progressQuest;
+            Managers.QuestManager._completeQuest = quest._completeQuest;
+        }
+    }
     public override void Clear()
     {
 
