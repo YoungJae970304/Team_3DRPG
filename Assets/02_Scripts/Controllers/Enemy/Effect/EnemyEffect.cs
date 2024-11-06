@@ -26,7 +26,7 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
     }
     public void EffectOff(string ex = null)
     {
-        ex = GetComponentInParent<CharacterController>().gameObject.name;
+        ex = GetComponentInParent<SphereCollider>().gameObject.name;
         if(ex == "BossBear")
         {
             for (int i = 2; i < (int)GoblemOrkEffects.Count; i++)

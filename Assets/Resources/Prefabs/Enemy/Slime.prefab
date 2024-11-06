@@ -5372,9 +5372,10 @@ GameObject:
   - component: {fileID: 1732436524799069286}
   - component: {fileID: 8462582138110685711}
   - component: {fileID: 5779006308628524354}
-  - component: {fileID: 843867408368323215}
   - component: {fileID: 1158561914686179281}
   - component: {fileID: -6236615532881258291}
+  - component: {fileID: 5975052522049793816}
+  - component: {fileID: 8147496102755887837}
   m_Layer: 10
   m_Name: Slime
   m_TagString: Monster
@@ -5431,8 +5432,8 @@ MonoBehaviour:
   _mStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
-  _characterController: {fileID: 0}
   sample: []
+  _collider: {fileID: 0}
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
   _dropData:
@@ -5480,32 +5481,6 @@ MonoBehaviour:
   _enemyAnimEvent: {fileID: 0}
   _hpBar: {fileID: 6733488398831303268}
   _slimeID: 0
---- !u!143 &843867408368323215
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4453554344933648541}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &1158561914686179281
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5541,6 +5516,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
+--- !u!135 &5975052522049793816
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4453554344933648541}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.8
+  m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!54 &8147496102755887837
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4453554344933648541}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5039487184385146643
 GameObject:
   m_ObjectHideFlags: 0

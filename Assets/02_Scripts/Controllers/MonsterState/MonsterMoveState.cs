@@ -65,7 +65,13 @@ public class MonsterMoveState : BaseState
         if(_monster._monsterID == 99999)
         {
             if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
-                return;
+            {
+                _monster.LookBeforeAttack();
+            }
+            else
+            {
+                _monster.SetDestinationTimer(1);
+            }
         }
         
         if (_monster._nav.enabled)

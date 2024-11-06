@@ -6,14 +6,31 @@ public class MageBall : MonoBehaviour
 {
     public float _ballRange = 10;
     public float _ballSpeed = 5;
+    public float _rayDistance;
+
     Transform _originPlayerPos;
     Vector3 _cameraForward;
     Vector3 _ballDir;
+    Vector3 _mageBallPos;
+
+    Camera _cam;
+
+    public LayerMask _notPlayerLayer;
+
+    private void Awake()
+    {
+        _rayDistance = 50f;
+    }
 
     private void OnEnable()
     {
         _originPlayerPos = Managers.Game._player._playerModel.transform;
-        _cameraForward = Camera.main.transform.forward;
+        _cam = Camera.main;
+        _cameraForward = _cam.transform.forward;
+        MagePlayer mage = (MagePlayer)Managers.Game._player;
+        _mageBallPos = mage._mageBallPos.position;
+
+        Logger.LogError($"인에이블 확인");
 
         if (Managers.Game._player._playerCam._cameraMode == Define.CameraMode.QuarterView)
         {
@@ -21,8 +38,19 @@ public class MageBall : MonoBehaviour
         }
         else
         {
-            // 클릭한 곳을 향해 날아가도록 구현
-            _ballDir = _cameraForward;
+            // 줌모드일 경우
+            RaycastHit hit;
+            Debug.DrawRay(_cam.transform.position, _cameraForward * _rayDistance, Color.red, 1f);
+
+            if (Physics.Raycast(_cam.transform.position, _cameraForward, out hit, _rayDistance, _notPlayerLayer))
+            {
+                _ballDir = (hit.point - _mageBallPos).normalized;
+            }
+            else
+            {
+                Vector3 rayEndPos = _cam.transform.position + _cameraForward * _rayDistance;
+                _ballDir = (rayEndPos - _mageBallPos).normalized;
+            }
         }
 
         Managers.Game._player._damageAlbes.Clear();

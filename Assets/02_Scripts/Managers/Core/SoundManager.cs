@@ -9,6 +9,10 @@ public class SoundManager
     AudioSource[] _audioSources = new AudioSource[(int)Define.Sound.MaxCount];
 
     Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+    
+    // 볼륨 변수
+    private float _bgmVolume = 1.0f; // BGM 볼륨
+    private float _effectVolume = 1.0f; // 효과음 볼륨
 
     AudioClip GetOrAddAudioClip(string path, Define.Sound type = Define.Sound.Effect)
     {
@@ -46,6 +50,15 @@ public class SoundManager
     // 경로를 통해 찾는 경우
     public void Play(string path, Define.Sound type = Define.Sound.Effect, float pitch = 1.0f)
     {
+        switch (type)
+        {
+            case Define.Sound.Effect:
+                pitch = _effectVolume;
+                break;
+            case Define.Sound.Bgm:
+                pitch = _bgmVolume;
+                break;
+        }
         /*  ////////////////// 빌드업 ////////////////
         // 사운드는 사운즈폴더에 있어야 하는데 혹시 경로를 까먹거나 생략했다면 자동으로 추가
         if (!path.Contains("Sounds/"))
@@ -101,7 +114,15 @@ public class SoundManager
         {
             return;
         }
-
+        switch (type)
+        {
+            case Define.Sound.Effect:
+                pitch = _effectVolume;
+                break;
+            case Define.Sound.Bgm:
+                pitch = _bgmVolume;
+                break;
+        }
         if (type == Define.Sound.Bgm)
         {
             AudioSource audioSource = _audioSources[(int)Define.Sound.Bgm];
@@ -127,7 +148,7 @@ public class SoundManager
     public void RandSoundsPlay(string path1, string path2, float volume = 1)
     {
         int randVal = Random.Range(1, 3);
-
+        volume = _effectVolume;
         if (randVal == 1)
         {
             Managers.Sound.Play(path1, Define.Sound.Effect, volume);
@@ -167,5 +188,36 @@ public class SoundManager
         }
 
         _audioClips.Clear();
+    }
+
+    // BGM 볼륨 설정
+    public void SetBgmVolume(float volume)
+    {
+        _bgmVolume = Mathf.Clamp01(volume); // 0.0과 1.0 사이로 클램프
+        _audioSources[(int)Define.Sound.Bgm].volume = _bgmVolume; // BGM AudioSource 볼륨 설정
+    }
+
+    // 효과음 볼륨 설정
+    public void SetEffectVolume(float volume)
+    {
+        _effectVolume = Mathf.Clamp01(volume); // 0.0과 1.0 사이로 클램프
+        foreach (AudioSource audioSource in _audioSources)
+        {
+            if (audioSource != _audioSources[(int)Define.Sound.Bgm]) // BGM을 제외한 모든 AudioSource에 대해
+            {
+                audioSource.volume = _effectVolume; // 효과음 AudioSource 볼륨 설정
+            }
+        }
+    }
+
+    // BGM과 효과음의 현재 볼륨을 반환하는 메서드 추가
+    public float GetBgmVolume()
+    {
+        return _bgmVolume;
+    }
+
+    public float GetEffectVolume()
+    {
+        return _effectVolume;
     }
 }

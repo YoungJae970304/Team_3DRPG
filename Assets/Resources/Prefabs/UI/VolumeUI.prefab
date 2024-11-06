@@ -375,6 +375,9 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
 --- !u!1 &1818834380745545072
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +541,7 @@ GameObject:
   - component: {fileID: 9041484548524453580}
   - component: {fileID: 8405038136729984563}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: EffectSoundSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -613,7 +616,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1346,7 +1349,7 @@ GameObject:
   - component: {fileID: 1080309286188712957}
   - component: {fileID: 7065101259418974080}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: BackgroundSoundSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1421,7 +1424,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
