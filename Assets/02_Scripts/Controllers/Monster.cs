@@ -32,10 +32,10 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
-    public CharacterController _characterController;
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
+    public SphereCollider _collider;
     public Drop _monsterDrop;
     public DeongeonType _deongeonLevel;
     public DropData _dropData;
@@ -71,8 +71,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
-        _characterController = GetComponent<CharacterController>();
-        
         _enemyAnimEvent = GetComponentInChildren<EnemyAnimEvent>();
         //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
@@ -106,13 +104,14 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         if(_hpBar != null)
         {
             _hpBar.SetActive(false);
+            _monsterHpBar = _hpBar.GetComponent<MonsterHpBar>();
         }
 
-        _monsterHpBar = _hpBar.GetComponent<MonsterHpBar>();
+        
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
-        _characterController = GetComponent<CharacterController>();
+        _collider = GetComponent<SphereCollider>();    
         //_characterController.enabled = false;
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
         if (GetComponentInChildren<EnemyEffect>() != null)
@@ -416,7 +415,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
         }
-        _nav.SetDestination(_player.transform.position);
+       
     }
 
 

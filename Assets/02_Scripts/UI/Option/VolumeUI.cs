@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VolumeUIData : BaseUIData
 {
@@ -10,15 +11,14 @@ public class VolumeUIData : BaseUIData
 }
 public class VolumeUI : BaseUI
 {
-    // Start is called before the first frame update
-    void Start()
+    enum Sliders
     {
-        
+        BackgroundSoundSlider,
+        EffectSoundSlider,
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void Init(Transform anchor)
     {
-        
+        base.Init(anchor);
+        Bind<Slider>(typeof(Sliders));
     }
 }
