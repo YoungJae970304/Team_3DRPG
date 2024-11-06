@@ -61140,9 +61140,10 @@ GameObject:
   - component: {fileID: 6500717925918048567}
   - component: {fileID: 9177716478163846171}
   - component: {fileID: 8780025053460433393}
-  - component: {fileID: 8392780419757323449}
   - component: {fileID: 1389766860850997121}
   - component: {fileID: 7286546890927947046}
+  - component: {fileID: 6324245623276584954}
+  - component: {fileID: 2248201037987603461}
   m_Layer: 10
   m_Name: Goblem
   m_TagString: Monster
@@ -61199,8 +61200,8 @@ MonoBehaviour:
   _mStat: {fileID: 0}
   _timer: 0
   _randomAttack: 0
-  _characterController: {fileID: 0}
   sample: []
+  _collider: {fileID: 0}
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
   _dropData:
@@ -61248,32 +61249,6 @@ MonoBehaviour:
   _enemyAnimEvent: {fileID: 0}
   _hpBar: {fileID: 5690686506952144813}
   _goblemID: 0
---- !u!143 &8392780419757323449
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8784990582049915282}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &1389766860850997121
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -61309,6 +61284,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsUsing: 0
+--- !u!135 &6324245623276584954
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8784990582049915282}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &2248201037987603461
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8784990582049915282}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8810193127277330247
 GameObject:
   m_ObjectHideFlags: 0
@@ -62877,6 +62900,11 @@ PrefabInstance:
     - target: {fileID: 5130122763705391249, guid: 25379b871c9159d4994deb19cf7e561b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6897699878910481456, guid: 25379b871c9159d4994deb19cf7e561b,
+        type: 3}
+      propertyPath: m_Direction
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

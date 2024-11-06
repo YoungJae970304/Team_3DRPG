@@ -6,11 +6,14 @@ public class PlayerDodgeState : BaseState
 {
     public PlayerDodgeState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat) { }
 
-    float _curTime;
+    AnimatorStateInfo stateInfo;
 
     public override void OnStateEnter()
     {
-        _player._playerAnim.SetBool("isDodge", true);
+        Logger.Log("회피 진입");
+        //_player._playerAnim.SetBool("isDodge", true);
+        //_player._playerAnim.SetTrigger("doDodge");
+        _player._playerAnim.Play("Dodge");
         _player._playerAnim.SetBool("isAttacking", false);
         _player._playerAnim.SetBool("Run", false);
         _player._playerAnim.SetBool("ZoomMode", false);
@@ -21,18 +24,22 @@ public class PlayerDodgeState : BaseState
     public override void OnStateUpdate()
     {
         //if (_player._invincible)
-        if (_player._dodgeing)  // 더 자연스럽게 원한다면 이 부분을 제거
-        Dodge();
+        stateInfo = _player._playerAnim.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Dodge"))
+        {
+            if (stateInfo.normalizedTime <= 0.3f)
+            {
+                Dodge();
+            }
+        }
     }
 
     public override void OnStateExit()
     {
         Logger.Log("회피 Exit");
-        _player._playerAnim.SetBool("isDodge", false);
-        //_player._rotDir = Vector3.zero;
         _player._canAtkInput = true;
         _player._attacking = false;
-        _player._dodgeing = false;
     }
 
     void Dodge()

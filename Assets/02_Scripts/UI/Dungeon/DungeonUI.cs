@@ -68,7 +68,7 @@ public class DungeonUI : BaseUI
         }
         else
         {
-            DungeonUITest(SwitchDungeonID((int)_deongeonLevel));
+            DungeonUIChange(SwitchDungeonID((int)_deongeonLevel));
         }
 
 
@@ -84,7 +84,7 @@ public class DungeonUI : BaseUI
 
         GetButton((int)DungeonUIButton.EntryBtn).onClick.AddListener(() => ExitDungeonUI());//여기에 입장 관련 함수가 들어감
         AllMonsterImageFalse();
-        DungeonUITest(SwitchDungeonID((int)_deongeonLevel));
+        DungeonUIChange(SwitchDungeonID((int)_deongeonLevel));
 
     }
     public void ExitDungeonUI()
@@ -97,10 +97,10 @@ public class DungeonUI : BaseUI
     }
     public void DungeonButtonBind()
     {
-        GetButton((int)DungeonUIButton.Dungeon70001).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
-        GetButton((int)DungeonUIButton.Dungeon70002).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
-        GetButton((int)DungeonUIButton.Dungeon70003).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
-        GetButton((int)DungeonUIButton.Dungeon70004).onClick.AddListener(() => DungeonUITest(SwitchDungeonID(_buttonType[ButtonName()])));
+        GetButton((int)DungeonUIButton.Dungeon70001).onClick.AddListener(() => DungeonUIChange(SwitchDungeonID(_buttonType[ButtonName()])));
+        GetButton((int)DungeonUIButton.Dungeon70002).onClick.AddListener(() => DungeonUIChange(SwitchDungeonID(_buttonType[ButtonName()])));
+        GetButton((int)DungeonUIButton.Dungeon70003).onClick.AddListener(() => DungeonUIChange(SwitchDungeonID(_buttonType[ButtonName()])));
+        GetButton((int)DungeonUIButton.Dungeon70004).onClick.AddListener(() => DungeonUIChange(SwitchDungeonID(_buttonType[ButtonName()])));
     }
     public string ButtonName()
     {
@@ -119,7 +119,7 @@ public class DungeonUI : BaseUI
         //Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
         foreach (var dungeon in _dataTableManager._DungeonData) //데이터 테이블 가져오기
         {
-            if (transform.childCount > 4) break;
+            if (_dungeonTypeview.transform.childCount > 4) break;
             dungeonType = Managers.Resource.Instantiate("UI/DeongeonType", _dungeonTypeview.transform);
 
             // resource에 있는 instantiate호출. inspector창에 넣어놓은 부모 하위로 생성
@@ -169,7 +169,7 @@ public class DungeonUI : BaseUI
         }
         return _dungeonID;
     }
-    public void DungeonUITest(int ID)
+    public void DungeonUIChange(int ID)
     {
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
         foreach (var dungeonType in _dataTableManager._DungeonData)

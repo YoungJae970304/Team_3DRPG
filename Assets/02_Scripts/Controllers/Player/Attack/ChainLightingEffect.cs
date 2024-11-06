@@ -74,7 +74,7 @@ public class ChainLightingEffect : MonoBehaviour
                 _lineRenderer.positionCount = i + 2;
 
                 //Vector3 targetPos = monstersCopy[i].transform.position + (Vector3.up * monstersCopy[i]._characterController.height * 0.5f);
-                Vector3 targetPos = monstersCopy[i].transform.position + monstersCopy[i]._characterController.center;
+                Vector3 targetPos = monstersCopy[i].transform.position + monstersCopy[i]._collider.center;
                 _lineRenderer.SetPosition(i + 1, targetPos);
 
                 if (monstersCopy[i].TryGetComponent<IDamageAlbe>(out var damageable))

@@ -32,10 +32,10 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public float _timer = 0;
     public int _randomAttack;
     public Dictionary<MonsterState, BaseState> States = new Dictionary<MonsterState, BaseState>();
-    public CharacterController _characterController;
     [Header("Drop관련 변수")]
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
+    public SphereCollider _collider;
     public Drop _monsterDrop;
     public DeongeonType _deongeonLevel;
     public DropData _dropData;
@@ -71,8 +71,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
-        _characterController = GetComponent<CharacterController>();
-        _monsterHpBar = GetComponentInChildren<MonsterHpBar>();
         _enemyAnimEvent = GetComponentInChildren<EnemyAnimEvent>();
         //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
@@ -106,13 +104,14 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         if(_hpBar != null)
         {
             _hpBar.SetActive(false);
+            _monsterHpBar = _hpBar.GetComponent<MonsterHpBar>();
         }
-        
+
         
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
-        _characterController = GetComponent<CharacterController>();
+        _collider = GetComponent<SphereCollider>();    
         //_characterController.enabled = false;
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
         if (GetComponentInChildren<EnemyEffect>() != null)
@@ -213,7 +212,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 
                 break;
             case MonsterState.Return:
-                _monsterHpBar.Init(_monsterHpBar.transform);
                 if ((_originPos - transform.position).magnitude <= 3f)
                     MChangeState(MonsterState.Idle);
                 break;
@@ -237,8 +235,11 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 상태 변환 FSM 사용
     public void MChangeState(MonsterState nextState)
     {
+        if (_monsterHpBar != null)
+        {
+            _monsterHpBar.HpChanged();
+        }
 
-        
 
         if (_mFSM == null)
         {
@@ -275,7 +276,11 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         }
 
         _mStat.HP -= (int)(amount * (100f / (_mStat.DEF + 100f)));
-        _monsterHpBar.Init(_monsterHpBar.transform);
+       
+        _monsterHpBar.HpChanged();
+        
+        
+        
         if (_mStat.HP > 0)
         {
 
@@ -408,7 +413,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
         }
-        _nav.SetDestination(_player.transform.position);
+       
     }
 
 
@@ -460,7 +465,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #endregion
 
     #region 아이템 드랍
-    public virtual void itemtest(DeongeonType curGrade, int monsterid)
+    public virtual void ItemDrop(DeongeonType curGrade, int monsterid)
     {
         DropData dropData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
@@ -645,13 +650,9 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         int randomDice = UnityEngine.Random.Range(1, 100);
         if (randomDice <= dropvalue)
         {
-            GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
+            GameObject item = Managers.Resource.Instantiate("DropItem/DropItem");
             item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
         }
-        
-
     }
-
-
     #endregion
 }
