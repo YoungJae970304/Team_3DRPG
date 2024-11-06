@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class QuestUI : BaseUI
 {
-
+    // UI부분 ,퀘스트 정보 부분 분리
     enum NowQuestText
     {
         QuestName,
@@ -29,7 +29,7 @@ public class QuestUI : BaseUI
         //ExitBtn,
 
     }
-   
+
     #region 데이터받아올변수
     public int _questID;
     public Define.QuestType _questType;
@@ -53,9 +53,9 @@ public class QuestUI : BaseUI
     public List<GameObject> _questButtons = new List<GameObject>();
     public Dictionary<string, int> _buttonType = new Dictionary<string, int>();
     public Dictionary<string, int> _progressButtonType = new Dictionary<string, int>();
-    public Dictionary<int, int> _completeCheck = new Dictionary<int, int>();
-    public Dictionary<int, bool> _questComplete = new Dictionary<int, bool>();
-    public Dictionary<int, GameObject> _changeText = new Dictionary<int, GameObject>();
+    public Dictionary<int, int> _completeCheck = new Dictionary<int, int>(); //퀘스트 매니저의 require와 같은 용도 추후 변경
+    public Dictionary<int, bool> _questComplete = new Dictionary<int, bool>(); //퀘스트 완료를 판단하는 딕셔너리 //저장필요 없을듯
+    public Dictionary<int, GameObject> _changeText = new Dictionary<int, GameObject>(); //메인화면 퀘스트창의 텍스트들의 목록을 저장하는 딕셔너리 //어차피 재생성할거라 필요 x
     public GameObject _questView;
     public GameObject _simpleQuestUI;
     GameObject _simpleText;
@@ -193,13 +193,17 @@ public class QuestUI : BaseUI
     }
     public void ValueCheck(int id)
     {
-         Logger.LogError($"{Managers.QuestManager._targetCheck[id]}인벤토리 아이디값");
-            if (Managers.QuestManager._targetCheck[id] == _inventory.GetItemToId(Managers.QuestManager._targetCheck[id]).Data.ID)
-            {
-                Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
-                _changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
-            }
-        
+        Logger.LogError($"{Managers.QuestManager._targetCheck[id]}인벤토리 아이디값");
+
+
+        Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
+        if (_changeText[id] != null)
+        {
+            _changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
+        }
+
+
+
     }
     public void AllowQuest()
     {
@@ -230,9 +234,9 @@ public class QuestUI : BaseUI
         //수락한 버튼 삭제 // 완
         //Logger.LogError($"{_test}이름 확인");
         PubAndSub.Subscrib<int>($"{_test}", CheckTest);
-      
-        
-        
+
+
+
         //몬스터 죽는쪽에 몬스터아이디랑 타켓이름이랑 비교해서 같다면 실행되도록 하면될듯 // 완
         //중간 관리 액션으로 할지 아니면 추가 액션을 하나 더할지 고민은 해야할듯 // 완
 
@@ -252,11 +256,11 @@ public class QuestUI : BaseUI
                 {
                     Managers.QuestManager._countCheck.Add(_test, 0);
                 }
-                if ( Managers.QuestManager._targetCheck[_test] / 10000 != 9)
+                if (Managers.QuestManager._targetCheck[_test] / 10000 != 9)
                 {
                     //Logger.LogError($"{_inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test])}여기는 들어가는지");
                     int goodsID = _test;
-                    _inventory.GetItemAction += (() => ValueCheck(goodsID));
+                    _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
                     Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
                     //Logger.LogError($"{_completeCheck[_test]}완료값확인");
                     if (Managers.QuestManager._countCheck[goodsID] >= _completeCheck[goodsID])
@@ -289,14 +293,14 @@ public class QuestUI : BaseUI
                 _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", content.transform);
                 //퀘스트 생성
                 //이 조건은 완료문에도 해야함
-                
+
                 _changeText.Add(_test, _simpleText);
                 var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
                 if (!Managers.QuestManager._countCheck.ContainsKey(_test))
                 {
                     Managers.QuestManager._countCheck.Add(_test, 0);
                 }
-                if ( Managers.QuestManager._targetCheck[_test] / 10000 != 9)
+                if (Managers.QuestManager._targetCheck[_test] / 10000 != 9)
                 {
                     int goodsID = _test;
                     _inventory.GetItemAction += (() => ValueCheck(goodsID));
@@ -380,8 +384,8 @@ public class QuestUI : BaseUI
                 continue;
             }
             _progressButtonType.Add(progressQuest.name, Managers.QuestManager._progressQuest[i]);
-       
-           
+
+
         }
 
         TransformSort(_questView);
@@ -422,7 +426,7 @@ public class QuestUI : BaseUI
             }
             else
             {
-                
+
             }
             return;
         }
@@ -609,7 +613,7 @@ public class QuestUI : BaseUI
             GetImage((int)RewardImage.ItemReward).sprite = Managers.Resource.Load<Sprite>($"ItemIcon/EtcIcon/{_questRewardType3}");
 
         }
-        
+
         _activeObject = true;//위치 고민해봐야할듯
     }
     void TransformSort(GameObject go)
@@ -637,8 +641,5 @@ public class QuestUI : BaseUI
             children[i].SetSiblingIndex(i);
         }
     }
-    public override void CloseUI(bool isCloseAll = false)
-    {
-        base.CloseUI(isCloseAll);
-    }
+
 }

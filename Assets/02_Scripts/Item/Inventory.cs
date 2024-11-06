@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public struct ItemTypeComparer : IEqualityComparer<ItemData.ItemType>
@@ -111,7 +112,9 @@ public class Inventory : MonoBehaviour//인벤토리
         Item result = ItemDick[itemType].GetItemToId(id);
         return result;
     }
-
+    public ItemGroup GetGroup(ItemData.ItemType type) {
+        return ItemDick[type];
+    }
     //슬롯 사이즈 반환
     public int GetGroupSize(ItemData.ItemType type)
     {

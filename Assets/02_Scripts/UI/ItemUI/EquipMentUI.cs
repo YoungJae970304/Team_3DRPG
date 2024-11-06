@@ -23,8 +23,12 @@ public class EquipMentUI : ItemDragUI
         base.Init(anchor);
         Bind<TextMeshProUGUI>(typeof(Texts));
         _playerEquipsDick = Managers.Game._player.GetComponent<Inventory>().EquipMents;
+
         foreach (EquipmentSlot slot in _slots)
         {//슬롯 정보 저장
+            if (_playerEquipsDick.ContainsKey(slot.name)) {
+                slot.Setitem(_playerEquipsDick[slot.name]);
+            }
             AddSlot(slot);
         }
         StatSum();

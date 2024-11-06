@@ -12,26 +12,35 @@ public class MonsterAttackState : BaseState
 
     public override void OnStateEnter()
     {
-        
-        _monster._nav.isStopped = true;
+
+        //_monster._nav.isStopped = true;
+        _monster._nav.enabled = false;
         //_monster._nav.ResetPath();
         //초기화
         _monster._attackCompleted = false;
         //_monster.LookBeforeAttack();
+        _monster._timer = 3f;
+        _monster._anim.SetTrigger("BeforeAttack");
         _monster._anim.SetBool("BeforeChase", false);
         //_monster._hitPlayer.Clear();
-        _monster._timer = 3f;
-        
+        if (_monster.GetComponent<CharacterController>() != null)
+        {
+            //_monster.GetComponent<CharacterController>().enabled = true; // 콜라이더 활성화
+        }
+        if(_monster._nav != null)
+        {
+            //_monster._nav.enabled = true;
+        }
         //_monster._nav.stoppingDistance = _monster._mStat.AttackRange-0.5f;
-        _monster._anim.SetTrigger("BeforeAttack");
+
     }
 
     public override void OnStateExit()
     {
-        //_monster._nav.enabled = true;
-        _monster._nav.isStopped = false;
+        _monster._nav.enabled = true;
+        //_monster._nav.isStopped = false;
         _monster._timer = _monster._mStat.AtkDelay;
-        if(_monster.name != "BossBear")
+        if(_monster._monsterID != 99999)
         {
             _monster._nav.stoppingDistance = _monster._mStat.AttackRange / 2;
         }
@@ -57,7 +66,14 @@ public class MonsterAttackState : BaseState
     }
     public override void OnStateUpdate()
     {
-        
+        if (_monster.GetComponent<CharacterController>() != null)
+        {
+           // _monster.GetComponent<CharacterController>().enabled = true; // 콜라이더 활성화
+        }
+        if(_monster._nav != null)
+        {
+           // _monster._nav.enabled = true;
+        }
         _monster.AttackTimer();
         //_monster.LookPlayer();
         

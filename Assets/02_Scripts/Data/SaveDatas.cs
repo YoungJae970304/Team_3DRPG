@@ -18,7 +18,7 @@ public class SaveDatas : IData
     //퀘스트 초기 값 저장 데이터
     public List<QuestSaveData> _QuestSaveData;
     //선택한 플레이어타입
-    public Define.PlayerType _PlayerTypes;
+    //public Define.PlayerType _PlayerTypes;
 
     string _SavePath;
 
@@ -39,7 +39,7 @@ public class SaveDatas : IData
         _InventorySaveDatas = new List<InventorySaveData>();
         _SkillSaveDatas = new List<SkillSaveData>();
         _EquipmentSaveDatas = new List<EquipmentSaveData>();
-        _PlayerSaveDatas = new List<PlayerSaveData>();
+        //_PlayerSaveDatas = new List<PlayerSaveData>();
         _QuestSaveData = new List<QuestSaveData>();
         SetDefaultData();
         Logger.Log($"저장 경로 확인 {_SavePath}");
@@ -49,7 +49,7 @@ public class SaveDatas : IData
     {
         try
         {
-            _PlayerSaveDatas ??= new List<PlayerSaveData>();
+            //_PlayerSaveDatas ??= new List<PlayerSaveData>();
             _InventorySaveDatas ??= new List<InventorySaveData>();
             _SkillSaveDatas ??= new List<SkillSaveData>();
             _QuestSaveData ??= new List<QuestSaveData>();
@@ -88,11 +88,11 @@ public class SaveDatas : IData
     {
         // 초기 데이터 세팅
         _InventorySaveDatas = new List<InventorySaveData> { new InventorySaveData() };
-        _PlayerSaveDatas = new List<PlayerSaveData> { new PlayerSaveData() };
+        //_PlayerSaveDatas = new List<PlayerSaveData> { new PlayerSaveData() };
         _QuestSaveData = new List<QuestSaveData> { new QuestSaveData() };
         _EquipmentSaveDatas = new List<EquipmentSaveData> { new EquipmentSaveData() };
-        _PlayerTypes = Managers.Game._playerType;
-        Logger.Log($"현재 플레이어 타입: {_PlayerTypes}");
+        //_PlayerTypes = Managers.Game._playerType;
+        //Logger.Log($"현재 플레이어 타입: {_PlayerTypes}");
         Logger.Log("기본 데이터 설정 완료");
     }
 }
@@ -132,7 +132,7 @@ public class PlayerSaveData : IData
             _level = stats.Level;
             _exp = stats.EXP;
             _maxExp = stats.MaxEXP;
-            _sp = stats.SpAddAmount;
+            _sp = stats.SP;
             _gold = stats.Gold;
             _x = player.transform.position.x;
             _y = player.transform.position.y;
@@ -175,7 +175,6 @@ public class PlayerSaveData : IData
 
     public void SetDefaultData()
     {
-
     }
 }
 
@@ -212,17 +211,22 @@ public class InventorySaveData : IData
     public void SaveData()
     {
         SetDefaultData();
-        _InvenItemList.Clear();
         try
         {
             if (_inventory == null)
             {
                 Logger.LogWarning("인벤토리 널 값");
             }
+            List<Inventory.ItemGroup> ItemGroup =new List<Inventory.ItemGroup>();
             foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
+               
                 var itemType = (ItemData.ItemType)itemSaveType;
                 if (itemType == ItemData.ItemType.DropData) continue;
+                Inventory.ItemGroup itemGroup = _inventory.GetGroup((ItemData.ItemType)itemSaveType);
+                if (ItemGroup.Contains(itemGroup)) { continue; }
+                else { ItemGroup.Add(itemGroup); }
+                //Logger.Log(ItemGroup.Count);
                 int maxGroupSize = _inventory.GetGroupSize(itemType);
 
                 for (int index = 0; index < maxGroupSize; index++)
@@ -264,32 +268,10 @@ public class InventorySaveData : IData
         try
         {
             string invenJson = File.ReadAllText(_SavePath);
-            Logger.LogError(invenJson);
+            //Logger.LogError(invenJson);
             JsonUtility.FromJsonOverwrite(invenJson, this);
-            foreach (var itemData in _InvenItemList)
-            {
-
-                //아이템 검증
-                Item newSaveItem = Item.ItemSpawn(itemData._id, itemData._amount);
-
-                if (newSaveItem == null)
-                {
-                    Logger.LogWarning($"유효하지 않은 아이템 ID: {itemData._id}");
-
-                    continue;
-                }
-
-                // 빈 슬롯인지 확인 후 아이템 설정
-                if (_inventory.GetItem(itemData._index, newSaveItem.Data.Type) == null)
-                {
-                    //Logger.LogError("543");
-                    _inventory.Setitem(itemData._index, newSaveItem);
-                }
-                else
-                {
-                    Logger.LogWarning($"인벤토리 인덱스 {itemData._index}에 이미 아이템이 존재합니다.");
-                }
-            }
+            //Logger.Log(_InvenItemList.Count);
+            Logger.Log("인벤토리 데이터 로드");
             return true;
         }
         catch (Exception e)
@@ -301,8 +283,9 @@ public class InventorySaveData : IData
 
     public void SetDefaultData()
     {
+        _InvenItemList.Clear();
         var player = Managers.Game._player;
-        _inventory = player.GetComponent<Inventory>();
+        _inventory = player.GetOrAddComponent<Inventory>();
 
         if (_inventory == null)
         {
@@ -313,12 +296,11 @@ public class InventorySaveData : IData
 }
 
 //딸각 로딩씬에서 켜준다음에 로드를 해주는방법으로 해보자
+[Serializable]
 public class SkillTreeItemData
 {
     public int _id;
     public int _curLevel;
-    public int _maxLevel;
-    public string _slotName;
 }
 
 [Serializable]
@@ -344,19 +326,24 @@ public class SkillSaveData : IData
         }
         try
         {
-            _skillTreeItemDatas.Clear();
-            foreach (var skill in Managers.DataTable._SkillData)
+            List<SkillTreeItem> _skillTreeItem;
+            SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(new BaseUIData());
+            _skillTreeItem = skillTree._skillTreeItems;
+            
+            skillTree.CloseUI();
+            //Logger.Log(skillTree._skillTreeItems.Count);
+            foreach (var skill in _skillTreeItem)
             {
                 _skillTreeItemDatas.Add(new SkillTreeItemData
                 {
-                    _id = skill.ID,
-                    _curLevel = skill.MaxLevel,
-                    _maxLevel = skill.MaxLevel,
-                    _slotName = skill.SkillName,
-                });
+                    _id = skill._skillId,
+                    _curLevel = skill.SkillLevel,
+                }); 
+                //Logger.Log(_skillTreeItemDatas.Count);
             }
             string skillJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, skillJson);
+            Logger.Log("스킬 세이브");
         }
         catch (Exception e)
         {
@@ -366,20 +353,11 @@ public class SkillSaveData : IData
 
     public bool LoadData()
     {
+        SetDefaultData();
         try
         {
             string skillJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(skillJson, this);
-            foreach(var data  in _skillTreeItemDatas)
-            {
-                var skill = Managers.DataTable.GetSkillData(data._id);
-                if(skill != null)
-                {
-                    skill.MaxLevel = data._curLevel;
-                    skill.MaxLevel = data._maxLevel;
-                    skill.SkillName = data._slotName;
-                }
-            }
             Logger.Log("스킬 데이터 로드");
             return true;
         }
@@ -422,16 +400,15 @@ public class EquipmentSaveData : IData
     public void SaveData()
     {
         SetDefaultData();
-        _equipments.Clear();
         string directory = Path.GetDirectoryName(_SavePath);
 
         if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
-        foreach(var slot in _inventory.EquipMents)
+        foreach (var slot in _inventory.EquipMents)
         {
-            if(slot.Value != null)
+            if (slot.Value != null)
             {
                 _equipments.Add(new EquipnetItemData
                 {
@@ -454,6 +431,7 @@ public class EquipmentSaveData : IData
 
     public bool LoadData()
     {
+        SetDefaultData();
         try
         {
             string equipJson = File.ReadAllText(_SavePath);
@@ -463,7 +441,7 @@ public class EquipmentSaveData : IData
                 var item = Item.ItemSpawn(equipment._id) as EquipmentItem;
                 _inventory.EquipMents[equipment._slotName] = item;
             }
-            Logger.Log("아이템 데이터 로드");
+            Logger.Log("장비 데이터 로드");
             return true;
         }
         catch (Exception e)
@@ -475,8 +453,57 @@ public class EquipmentSaveData : IData
 
     public void SetDefaultData()
     {
+        _equipments.Clear();
         _inventory = Managers.Game._player.GetComponent<Inventory>();
         var playerEquipUI = Managers.Game._player.GetComponent<Inventory>().EquipMents;
+    }
+}
+
+[Serializable]
+public class MainQuickSlotData
+{
+    public int _id;
+}
+
+[Serializable]
+public class MainSaveData : IData
+{
+    public List<MainQuickSlotData> _mainQuickSlotDatas = new List<MainQuickSlotData>();
+
+    string _SavePath;
+
+    public void Init()
+    {
+        _SavePath = $"{Application.persistentDataPath}/MainUISaveData.json";
+    }
+
+    public void SaveData()
+    {
+        SetDefaultData();
+        string directory = Path.GetDirectoryName(_SavePath);
+
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            Logger.LogError($"MainQuickSlotUI 를 찾을 수 없습니다{e.Message}");
+        }
+    }
+
+    public bool LoadData()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetDefaultData()
+    {
+        _mainQuickSlotDatas.Clear();
     }
 }
 
@@ -484,12 +511,12 @@ public class EquipmentSaveData : IData
 [Serializable]
 public class QuestItemData
 {
-    //퀘스트 데이터의 ID
-    public int _id;
-    //현재 진행중인 퀘스트의 이름
-    public string _questName;
-    //현재 진행중인 퀘스트의 카운트값
-    public int _currCount;
+    //퀘스트 데이터의 ID 리스트
+    public List<int> _questID;
+    //퀘스트 진행중인 리스트
+    public List<int> _progressQuest;
+    //퀘스트 완료 리스트
+    public List<int> _completeQuest;
 }
 
 [Serializable]
@@ -506,6 +533,7 @@ public class QuestSaveData : IData
 
     public void SaveData()
     {
+        SetDefaultData();
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
         {
@@ -525,6 +553,7 @@ public class QuestSaveData : IData
 
     public bool LoadData()
     {
+        SetDefaultData();
         try
         {
             string questJson = File.ReadAllText(_SavePath);
@@ -541,6 +570,6 @@ public class QuestSaveData : IData
 
     public void SetDefaultData()
     {
-
+        _questItemData.Clear();
     }
 }

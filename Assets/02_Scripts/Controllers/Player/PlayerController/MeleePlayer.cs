@@ -8,13 +8,6 @@ public class MeleePlayer : Player
     [Header("검기 생성 위치")]
     public Transform _swordAuraPos;
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        Managers.Game._playerType = Define.PlayerType.Melee;
-    }
-
     public override void ApplyDamage(int damage)
     {
         if (_hitMobs.Count == 0) return;

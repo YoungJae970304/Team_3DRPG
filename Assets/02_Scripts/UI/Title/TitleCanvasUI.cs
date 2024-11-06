@@ -5,15 +5,13 @@ using UnityEngine.UI;
 
 public class TitleCanvasUI : BaseUI
 {
-    public static bool _IsNewGame { get; set; }
-
     enum Buttons
     {
         BeginBtn,
         ContinueBtn,
         ShutDownBtn,
     }
-
+    public static bool _isNewGame {  get; private set; }
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
@@ -21,8 +19,8 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickBeginBtn()
     {
-        _IsNewGame = true;
-        Managers.Game._firstTuto = _IsNewGame;
+        _isNewGame = true;
+        Managers.Game._firstTuto = _isNewGame;
 
         Managers.UI.CloseUI(this);
         SelectPlayerUI selectPlayerUI = Managers.UI.GetActiveUI<SelectPlayerUI>() as SelectPlayerUI;
@@ -34,14 +32,14 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickContinueBtn(string sceneName)
     {
-        _IsNewGame = false;
-        Managers.Game._firstTuto = _IsNewGame;
+        _isNewGame = false;
+        Managers.Game._firstTuto = _isNewGame;
 
         //Managers.Scene.SceneChange(sceneName);
         Animator fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         fadeAnim.SetTrigger("doFade");
         //CloseUI(true);
-        Managers.UI.CloseAllOpenUI();
+        //Managers.UI.CloseAllOpenUI();
     }
 
     public void OnClickShutDownBtn()

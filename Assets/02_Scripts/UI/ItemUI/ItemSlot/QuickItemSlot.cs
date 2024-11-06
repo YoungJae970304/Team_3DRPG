@@ -36,11 +36,7 @@ public class QuickItemSlot : ItemSlot
         { return; }
         Item item = (moveSlot as InventorySlot).Item;
         if (item ==null|| item.Data.Type != _slotType) { return; }
-        Item = item;
-        if (Item is ConsumableItem)
-        {
-            _isUsealbe = true;
-        }
+        Setitem(item);
     }
     public override bool MoveItem(ItemSlot moveSlot)
     {
@@ -68,14 +64,16 @@ public class QuickItemSlot : ItemSlot
             Item = _inventory.GetItemToId(Item.Data.ID);
         }
     }
-    /*
-public void Use()
-{
-    (Item as IUsableItem).Use();
-    if ((Item as CountableItem).GetCurrentAmount() == 0) {
-        Item = _inventory.GetItemToId(Item.Data.ID);
+
+    public override void Setitem(Item item)
+    {
+        Item = item;
+        if (Item is ConsumableItem)
+        {
+            _isUsealbe = true;
+        }
     }
-}*/
+
     [ContextMenu("사용 테스트")]
     public void UseText()
     {

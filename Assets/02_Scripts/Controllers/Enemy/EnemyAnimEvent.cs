@@ -15,6 +15,86 @@ public class EnemyAnimEvent : MonoBehaviour
         //Logger.LogError($"{_bossBear._maxRoarRange.transform.localScale.x * 2}");
         //Logger.LogError($"{Physics.OverlapSphere(transform.position, _bossBear._maxRoarRange.transform.localScale.x * 2).Length}범위");
     }
+    #region 보스 사운드
+    public void BossAtkSound() 
+    {
+        Managers.Sound.Play("Enemy/boss_atk");
+    }
+    public void BossHitSound() 
+    {
+        Managers.Sound.Play("Enemy/boss_atk_hit");
+    }
+    public void BossDie()
+    {
+        Managers.Sound.Play("Enemy/boss_die");
+    }
+    public void BossDamage()
+    {
+        Managers.Sound.Play("Enemy/boss_dmg");
+    }
+    public void BossRoar()
+    {
+        Managers.Sound.Play("Enemy/boss_roar");
+    }
+    public void BossRoarHit()
+    {
+        Managers.Sound.Play("Enemy/boss_roar_hit");
+    }
+    #endregion
+    #region 고블린 사운드
+    public void GoblinAtk()
+    {
+        Managers.Sound.Play("Enemy/goblin_atk");
+    }
+    public void GoblinHitAtk()
+    {
+        Managers.Sound.Play("Enemy/goblin_atk_hit");
+    }
+    public void GoblinDie()
+    {
+        Managers.Sound.Play("Enemy/goblin_die"); 
+    }
+    public void GoblinDmg()
+    {
+        Managers.Sound.RandSoundsPlay("Enemy/goblin_dmg_1", "Enemy/goblin_dmg_2");
+    }
+    #endregion
+    #region 오크 사운드
+    public void OrkAtk()
+    {
+        Managers.Sound.Play("Enemy/ork_atk");
+    }
+    public void OrkHitAttack()
+    {
+        Managers.Sound.Play("Enemy/goblin_atk_hit");
+    }
+    public void OrkDie()
+    {
+        Managers.Sound.Play("Enemy/ork_die"); 
+    }
+    public void OrkDmg()
+    {
+        Managers.Sound.RandSoundsPlay("Enemy/ork_dmg_1", "Enemy/ork_dmg_2");
+    }
+    #endregion
+    #region 슬라임 사운드
+    public void SlimeAtk()
+    {
+        Managers.Sound.Play("Enemy/slime_atk");
+    }
+    public void SlimeHitAtk()
+    {
+        Managers.Sound.Play("Enemy/slime_atk_hit");
+    }
+    public void SlimeDie()
+    {
+        Managers.Sound.Play("Enemy/slime_die");
+    }
+    public void SlimeDmg()
+    {
+        Managers.Sound.Play("Enemy/slime_dmg_1");
+    }
+    #endregion
     public void Roar()
     {
         //int damage = 0;
@@ -31,6 +111,7 @@ public class EnemyAnimEvent : MonoBehaviour
                 {
                     Logger.LogError($"데미지 들어가나 확인");
                     damageable.StatusEffect.SpawnEffect<StunEffect>(1);
+                    BossRoarHit();
                     //_player.Damaged(_mStat.ATK);
                     Logger.LogError($"{_player._playerStatManager.HP}");
                 }
