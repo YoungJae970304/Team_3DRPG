@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SimpleQuestText : BaseUI
 {
-    public int test123;
+    public int _questTextID;
     enum QuestText
     {
         SimpleQuestText,
@@ -13,7 +13,7 @@ public class SimpleQuestText : BaseUI
     }
     private void Awake()
     {
-        test123 = Managers.QuestManager.test123;
+        _questTextID = Managers.QuestManager._questTextID;
     }
     public override void Init(Transform anchor)
     {
@@ -21,7 +21,7 @@ public class SimpleQuestText : BaseUI
  
         Bind<TextMeshProUGUI>(typeof(QuestText));
         
-        TextChange(test123);
+        TextChange(_questTextID);
     }
     public void TextChange(int i)
     {

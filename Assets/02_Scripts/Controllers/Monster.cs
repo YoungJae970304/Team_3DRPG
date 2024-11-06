@@ -460,7 +460,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #endregion
 
     #region 아이템 드랍
-    public virtual void itemtest(DeongeonType curGrade, int monsterid)
+    public virtual void ItemDrop(DeongeonType curGrade, int monsterid)
     {
         DropData dropData = null;
         //아이템 데이터 테이블에서 ID에 맞는 아이템 찾기
@@ -645,13 +645,9 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         int randomDice = UnityEngine.Random.Range(1, 100);
         if (randomDice <= dropvalue)
         {
-            GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
+            GameObject item = Managers.Resource.Instantiate("DropItem/DropItem");
             item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
         }
-        
-
     }
-
-
     #endregion
 }

@@ -106,7 +106,7 @@ public class MainUI : ItemDragUI
            
             for (int i = 0; i < simpleQuestCount; i++)
             {
-                Managers.QuestManager.test123 = Managers.QuestManager._progressQuest[i];
+                Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
                 if (content.transform.childCount < 3)
                 {
                     int id = Managers.QuestManager._progressQuest[i];
@@ -116,11 +116,9 @@ public class MainUI : ItemDragUI
                     var text = _simpleText.GetComponent<SimpleQuestText>();
                     if (Managers.QuestManager._targetCheck[id] / 10000 != 9)
                     {
-                        //Logger.LogError($"{_inventory.GetItemAmount(Managers.QuestManager._targetCheck[_test])}여기는 들어가는지");
                         int goodsID = id;
                         _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
                         Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
-                        //Logger.LogError($"{_completeCheck[_test]}완료값확인");
                         if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
                         {
                             Managers.QuestManager._questComplete[goodsID] = true;
