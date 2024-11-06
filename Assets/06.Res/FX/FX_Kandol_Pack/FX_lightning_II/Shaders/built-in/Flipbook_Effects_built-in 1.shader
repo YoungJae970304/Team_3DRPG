@@ -29,7 +29,7 @@ Shader "FX_Kandol_Pack/Flipbook_Effects"
 		[Header(Twister)][IntRange]_Sphere_Twister_Size("Sphere_Twister_Size", Range( 0 , 10)) = 1.457462
 		_Sphere_Twister_Speed("Sphere_Twister_Speed", Range( 0 , 0.3)) = 0
 		_Sphere_Twister_Opacity("Sphere_Twister_Opacity", Range( 0 , 0.2)) = 0
-
+		_AlphaClipThreshold ("Alpha Clip Threshold", Range (0,1)) = .3
 	}
 
 
@@ -126,6 +126,8 @@ Shader "FX_Kandol_Pack/Flipbook_Effects"
 				uniform float _Fllipbook_Emissive;
 				uniform float _Opacity_RGB;
 				uniform float _Opacity_Alpha;
+				uniform float _AlphaClipThreshold;
+
 				float3 mod2D289( float3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 				float2 mod2D289( float2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 				float3 permute( float3 x ) { return mod2D289( ( ( x * 34.0 ) + 1.0 ) * x ); }
@@ -264,7 +266,12 @@ Shader "FX_Kandol_Pack/Flipbook_Effects"
 					half2 fbuv34 = ( ( i.texcoord.xy + staticSwitch544 ) * appendResult444 ) * fbtiling34 + fboffset34;
 					// *** END Flipbook UV Animation vars ***
 					fbuv34 = rotateUV(fbuv34, _Rotate);
-					float4 tex2DNode35 = tex2D( _MainTex, fbuv34 );
+					float4 tex2DNode35 = tex2D( _MainTex, fbuv34 ) * i.color * _TintColor;
+
+					if (tex2DNode35.a < _AlphaClipThreshold){
+						discard;
+						}
+
 					float smoothstepResult528 = smoothstep( 0.0 , _Mask_Gradetion_PawerB , pow( ( 1.0 - (i.texcoord.xy).y ) , _Mask_Gradetion_PawerA ));
 					float Mask_Gradetion484 = smoothstepResult528;
 					#if defined(_MASK_SELECTS_GRADETION)
