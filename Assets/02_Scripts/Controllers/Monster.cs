@@ -296,7 +296,11 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 죽었을 때
     public virtual void Die(GameObject mob)
     {
+        _player.PlayerEXPGain(_mStat._mStat.EXP);
+        _player.PlayerGOLDGain(_mStat._mStat.Gold);
         Managers.Resource.Destroy(mob);//mob은 풀링오브젝트에 들어가는거
+        _monsterDrop.DropItemSelect(_deongeonLevel, sample);//임시 설정 추후 던전에서 받아오도록 변경
+        MakeItem();
     }
 
     #endregion
