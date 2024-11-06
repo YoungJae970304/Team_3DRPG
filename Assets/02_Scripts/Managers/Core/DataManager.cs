@@ -38,7 +38,7 @@ public class DataManager
     {
         //IData를 상속받고있는 타입 설정
         var dataType = typeof(IData);
-        Logger.Log($"{dataType.Name}타입 입니다.");
+        Logger.Log($"{dataType.Name.ToString()}타입 입니다.");
         //실행중인 어셈블리 가져오고
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         //어셈블리 내의 모든 타입을 탐색
@@ -52,14 +52,14 @@ public class DataManager
                 //IData 를 상속받는 클래스또는 추상클래스인지 확인
                 if (dataType.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract)
                 {
-                    Logger.Log($"타입 찾기{type.Name}");
+                    Logger.Log($"타입 찾기{type.Name.ToString()}");
                     //딕셔너리에 해당 타입의 인스턴스가 없을 경우
                     if (!_IDataDict.ContainsKey(type))
                     {
                         try
                         {
                             _IDataDict[type] = (IData)Activator.CreateInstance(type);
-                            Logger.Log($"타입 인스턴스 생성 및 추가 성공: {type.Name}");
+                            Logger.Log($"타입 인스턴스 생성 및 추가 성공: {type.Name.ToString()}");
                         }
                         catch (Exception ex)
                         {

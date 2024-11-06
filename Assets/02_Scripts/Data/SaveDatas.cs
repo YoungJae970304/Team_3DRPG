@@ -743,10 +743,19 @@ public class QuestSaveData : IData
                 // 진행 중인 퀘스트들만 저장
                 foreach (int questId in questManager._progressQuest)
                 {
+                    int progressInfo = 0;
+
+                    // _countCheck에 해당 퀘스트 ID가 있는지 확인
+                    if (!questManager._countCheck.TryGetValue(questId, out progressInfo))
+                    {
+                        // 키가 없으면 기본값 0으로 처리
+                        progressInfo = 0;
+                    }
+
                     var questData = new QuestItemData
                     {
                         _id = questId,
-                        _progressInfo = questManager._countCheck.ContainsKey(questId) ? questManager._countCheck[questId] : 0,
+                        _progressInfo = progressInfo,
                         _isProgress = 1,
                         _isFinished = questManager._completeQuest.Contains(questId) ? 1 : 0,
                     };
@@ -771,39 +780,6 @@ public class QuestSaveData : IData
         {
             string questJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(questJson, this);
-
-            var questManager = Managers.QuestManager;
-
-            foreach (var questData in _questItemData)
-            {
-                // 퀘스트 아이디가 존재하는지 확인하고, 상태를 설정
-                if (questManager._questID.Contains(questData._id))
-                {
-                    // 퀘스트 진행 중
-                    if (questData._isProgress == 1)
-                    {
-                        if (!questManager._progressQuest.Contains(questData._id))
-                            questManager._progressQuest.Add(questData._id);
-                    }
-
-                    // 퀘스트 완료
-                    if (questData._isFinished == 1)
-                    {
-                        if (!questManager._completeQuest.Contains(questData._id))
-                            questManager._completeQuest.Add(questData._id);
-                    }
-
-                    // 퀘스트 진행 값 업데이트
-                    if (questManager._countCheck.ContainsKey(questData._id))
-                    {
-                        questManager._countCheck[questData._id] = questData._progressInfo;
-                    }
-                    else
-                    {
-                        questManager._countCheck.Add(questData._id, questData._progressInfo);
-                    }
-                }
-            }
             Logger.Log($"수락한 퀘스트 리스트{_questItemData.Count.ToString()}");
             Logger.Log("퀘스트 데이터 로드");
             return true;

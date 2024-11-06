@@ -219,7 +219,55 @@ public class LoadingScene : BaseScene
 
     void ApplyQusetData()
     {
+        // QuestSaveData에서 저장된 퀘스트 데이터 로드
+        QuestSaveData questSaveData = Managers.Data.GetData<QuestSaveData>();
+        QuestManager questManager = Managers.QuestManager;
+        QuestUI acceptedQuestUI = Managers.UI.OpenUI<QuestUI>(new BaseUIData());
+        acceptedQuestUI._questInput = Define.QuestInput.Q;
+        //bool hasFinishedQuest = false;
 
+        if (acceptedQuestUI)
+        {
+
+            foreach (var questItemData in questSaveData._questItemData)
+            {
+                // 진행 중인 퀘스트라면
+                if (questItemData._isProgress == 1)
+                {
+                    // 퀘스트 ID에 해당하는 퀘스트가 _progressQuest에 없으면 추가
+                    if (!questManager._progressQuest.Contains(questItemData._id))
+                    {
+                        questManager._progressQuest.Add(questItemData._id);
+                    }
+                    
+
+                    if (!questManager._countCheck.ContainsKey(questItemData._id))
+                    {
+                        // 키가 없으면 기본값 추가
+                        questManager._countCheck.Add(questItemData._id, 0);
+                    }
+
+                    questManager._countCheck[questItemData._id] = questItemData._progressInfo;
+
+                    // 퀘스트 완료된 퀘스트들을 컴플레이트퀘스트 리스트에 넣어줌
+                    if (questItemData._isFinished == 1)
+                    {
+                        //hasFinishedQuest = true;
+                        if (!questManager._completeQuest.Contains(questItemData._id))
+                        {
+                            questManager._completeQuest.Add(questItemData._id);
+                        }
+                    }
+                }
+            }
+        }
+        //if (!hasFinishedQuest)
+        //{
+        //    Logger.LogWarning("완료된 퀘스트가 없습니다.");
+        //}
+        acceptedQuestUI.CloseUI();
+        // 현재 진행 중인 퀘스트들을 문자열로 나열해주기
+        Logger.Log($"현재 진행 중인 퀘스트: {string.Join(", ", questManager._progressQuest)}");
     }
 
     public override void Clear()
