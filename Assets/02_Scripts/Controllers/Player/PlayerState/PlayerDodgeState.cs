@@ -10,10 +10,10 @@ public class PlayerDodgeState : BaseState
 
     public override void OnStateEnter()
     {
+        _player._playerAnim.SetBool("isDodge", true);
         _player._playerAnim.SetBool("isAttacking", false);
         _player._playerAnim.SetBool("Run", false);
         _player._playerAnim.SetBool("ZoomMode", false);
-        _player._playerAnim.SetBool("isDodge", true);
         _player.AtkCount = 0;
         _player._dodgeing = true;
     }
