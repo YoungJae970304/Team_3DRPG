@@ -148,7 +148,7 @@ public class PlayerCam : MonoBehaviour
             Managers.Game._player._playerModel.rotation = Quaternion.Slerp(
                 Managers.Game._player._playerModel.rotation,
                 targetRotation,
-                Time.deltaTime * 5f); // 보간 속도 (5f는 예시 값으로, 필요에 따라 조정 가능)
+                Time.deltaTime * 20f); // 보간 속도 (5f는 예시 값으로, 필요에 따라 조정 가능)
         }
     }
 
