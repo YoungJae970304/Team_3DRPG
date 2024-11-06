@@ -736,7 +736,6 @@ public class QuestSaveData : IData
         {
             QuestUI acceptedQuestUI = Managers.UI.OpenUI<QuestUI>(new BaseUIData());
             acceptedQuestUI._questInput = Define.QuestInput.Q;
-            acceptedQuestUI.CloseUI();
 
             if (acceptedQuestUI)
             {
@@ -761,8 +760,8 @@ public class QuestSaveData : IData
                     };
                     _questItemData.Add(questData);
                 }
+                acceptedQuestUI.CloseUI();
             }
-            Logger.Log($"수락한 퀘스트 리스트 확인{_questItemData.Count.ToString()}");
             string questJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, questJson);
             Logger.Log("퀘스트 세이브");
@@ -780,7 +779,6 @@ public class QuestSaveData : IData
         {
             string questJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(questJson, this);
-            Logger.Log($"수락한 퀘스트 리스트{_questItemData.Count.ToString()}");
             Logger.Log("퀘스트 데이터 로드");
             return true;
         }
