@@ -80,6 +80,21 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0
+        functionName: OrkAtk
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0
+        functionName: SwitchAttackEffect
+        data: 
+        objectReferenceParameter: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
+          type: 3}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
       - time: 0.55378485
         functionName: NomalAttack
         data: 
@@ -96,19 +111,12 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0
-        functionName: SwitchAttackEffect
+        functionName: EffectOff
         data: 
         objectReferenceParameter: {fileID: 7606122396081344728, guid: a2e3dc51d57abdb4ebc799c2e370599a,
           type: 3}
         floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0
-        functionName: OrkAtk
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
+        intParameter: 0
         messageOptions: 0
       transformMask: []
       maskType: 3

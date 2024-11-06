@@ -5478,6 +5478,7 @@ MonoBehaviour:
   _anim: {fileID: 0}
   _monsterID: 0
   _enemyAnimEvent: {fileID: 0}
+  _hpBar: {fileID: 6733488398831303268}
   _slimeID: 0
 --- !u!143 &843867408368323215
 CharacterController:
@@ -10560,6 +10561,7 @@ GameObject:
   - component: {fileID: 1544068180207352214}
   - component: {fileID: 4787838490351926160}
   - component: {fileID: 5777616069951338760}
+  - component: {fileID: 5233082138405073720}
   m_Layer: 5
   m_Name: MonsterHpUI
   m_TagString: Untagged
@@ -10669,6 +10671,18 @@ MonoBehaviour:
   _InitPos: 0
   _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
+--- !u!114 &5233082138405073720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6733488398831303268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f074b6f35af623f48902c3fe36139290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7237251714200811102
 GameObject:
   m_ObjectHideFlags: 0
