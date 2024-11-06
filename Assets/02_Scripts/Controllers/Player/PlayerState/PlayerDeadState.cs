@@ -22,6 +22,7 @@ public class PlayerDeadState : BaseState
 
     public override void OnStateExit()
     {
+        Logger.Log("플레이어 사망 Exit");
         _player._cc.enabled = true;
         _player.enabled = true;
         _player._playerStatManager.enabled = true;
