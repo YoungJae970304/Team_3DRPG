@@ -69,9 +69,10 @@ public class Slime : Monster
     }
     public override void MakeItem()
     {
+        int dropvalue = 70;
         base.MakeItem();
         int randomDice = UnityEngine.Random.Range(1, 101);
-        if (randomDice <= 100)
+        if (randomDice <= dropvalue)
         {
             GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();

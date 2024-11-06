@@ -13,17 +13,13 @@ public class BossHPBar : BaseUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-        
+        Bind<Slider>(typeof(Sliders));
+        BossHpChanged(Managers.Game._monsters[0]._mStat.HP);
+        PubAndSub.Subscrib<int>("BossHP", BossHpChanged);
     }
     private void OnEnable()
     {
-        Logger.LogError("여기 들어감?");
-        Bind<Slider>(typeof(Sliders));
-        Logger.LogError("여기는 들어감?");
-        BossHpChanged(Managers.Game._monsters[0]._mStat.HP);
-        Logger.LogError("여기도 들어감?");
-        PubAndSub.Subscrib<int>("BossHP", BossHpChanged);
-        Logger.LogError("구독은 됨?");
+        Init(transform);
     }
     private void BossHpChanged(int value)
     {

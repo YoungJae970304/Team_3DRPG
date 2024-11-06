@@ -141,6 +141,7 @@ public class LoadingScene : BaseScene
 
     void ApplyPlayerData()
     {
+        Managers.Data.LoadData<PlayerSaveData>();
         PlayerSaveData playerSaveData = Managers.Data.GetData<PlayerSaveData>();
         Managers.Game._playerType = playerSaveData._PlayerTypes;
         Managers.Game.PlayerCreate();
