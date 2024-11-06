@@ -6,9 +6,12 @@ public class MageBall : MonoBehaviour
 {
     public float _ballRange = 10;
     public float _ballSpeed = 5;
+    public float _rayDistance;
+
     Transform _originPlayerPos;
     Vector3 _cameraForward;
     Vector3 _ballDir;
+    Vector3 _mageBallPos;
 
     Camera _cam;
 
@@ -16,13 +19,18 @@ public class MageBall : MonoBehaviour
 
     private void Awake()
     {
-        _cam = Camera.main;
+        _rayDistance = 50f;
     }
 
     private void OnEnable()
     {
         _originPlayerPos = Managers.Game._player._playerModel.transform;
+        _cam = Camera.main;
         _cameraForward = _cam.transform.forward;
+        MagePlayer mage = (MagePlayer)Managers.Game._player;
+        _mageBallPos = mage._mageBallPos.position;
+
+        Logger.LogError($"인에이블 확인");
 
         if (Managers.Game._player._playerCam._cameraMode == Define.CameraMode.QuarterView)
         {
@@ -31,20 +39,18 @@ public class MageBall : MonoBehaviour
         else
         {
             // 줌모드일 경우
-            // 지역변수 하나 더 추가 후 hit.point나 50끝점 값 담기
             RaycastHit hit;
-            if (Physics.Raycast(_cam.transform.position, _cameraForward, out hit, 50f, _notPlayerLayer))
+            Debug.DrawRay(_cam.transform.position, _cameraForward * _rayDistance, Color.red, 1f);
+
+            if (Physics.Raycast(_cam.transform.position, _cameraForward, out hit, _rayDistance, _notPlayerLayer))
             {
-                // 지역변수에 값 담기로 변경
-                _ballDir = (hit.point - transform.position).normalized;
+                _ballDir = (hit.point - _mageBallPos).normalized;
             }
             else
             {
-                // 지역변수에 값 담기로 변경
-                // ray 50
-                _ballDir = _cameraForward;
+                Vector3 rayEndPos = _cam.transform.position + _cameraForward * _rayDistance;
+                _ballDir = (rayEndPos - _mageBallPos).normalized;
             }
-            //_ballDir = 지역변수;
         }
 
         Managers.Game._player._damageAlbes.Clear();

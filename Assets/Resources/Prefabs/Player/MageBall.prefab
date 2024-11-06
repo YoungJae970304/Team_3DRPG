@@ -4946,6 +4946,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballRange: 15
   _ballSpeed: 25
+  _rayDistance: 15
   _notPlayerLayer:
     serializedVersion: 2
     m_Bits: 33792
