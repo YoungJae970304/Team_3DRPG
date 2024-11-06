@@ -699,26 +699,20 @@ public class QuickSlotSaveData : IData
 [Serializable]
 public class QuestItemData
 {
-    //퀘스트 아이디
+    // 퀘스트 아이디
     public int _id;
-    //퀘스트 진행 값
+    // 퀘스트 진행 값
     public int _progressInfo;
-    //진행 중 여부
-    public bool _isProgress; 
-    //완료 여부
-    public bool _isFinished;
+    // 퀘스트 진행 중 여부 (int로 저장, 0: 미진행, 1: 진행 중)
+    public int _isProgress;
+    // 퀘스트 완료 여부 (int로 저장, 0: 미완료, 1: 완료)
+    public int _isFinished;
 }
 
 [Serializable]
 public class QuestSaveData : IData
 {
     public List<QuestItemData> _questItemData = new List<QuestItemData>();
-    // 현재 진행 중인 퀘스트 목록
-    public List<int> _progressQuest = new List<int>();
-    // 완료한 퀘스트 목록
-    public List<int> _completeQuest = new List<int>();
-    //현재 진행중인 퀘스트의 진행 값
-    public Dictionary<int, int> _countCheck = new Dictionary<int, int>();
 
     string _SavePath;
 
@@ -740,32 +734,26 @@ public class QuestSaveData : IData
         }
         try
         {
-            // 퀘스트 진행 중인 퀘스트 및 진행 값 딕셔너리 반영
-            foreach (int questId in questManager._questID)
-            {
-                var questData = new QuestItemData
-                {
-                    _id = questId,
-                    // 진행 중인 퀘스트일 경우, 진행 값 저장
-                    _progressInfo = questManager._countCheck.ContainsKey(questId) ? questManager._countCheck[questId] : 0,
-                    // 진행 중인 퀘스트 목록에 있는 경우 true
-                    _isProgress = questManager._progressQuest.Contains(questId),
-                    // 완료된 퀘스트 목록에 있는 경우 true
-                    _isFinished = questManager._completeQuest.Contains(questId)
-                };
-                _questItemData.Add(questData);
+            QuestUI acceptedQuestUI = Managers.UI.OpenUI<QuestUI>(new BaseUIData());
+            acceptedQuestUI._questInput = Define.QuestInput.Q;
+            acceptedQuestUI.CloseUI();
 
-                // 진행 중인 퀘스트 목록에 추가하고 진행 값도 딕셔너리에 추가
-                if (questManager._progressQuest.Contains(questId))
+            if (acceptedQuestUI)
+            {
+                // 진행 중인 퀘스트들만 저장
+                foreach (int questId in questManager._progressQuest)
                 {
-                    if (!questManager._countCheck.ContainsKey(questId))
+                    var questData = new QuestItemData
                     {
-                        questManager._countCheck[questId] = 0; // 기본값 설정 (진행 값)
-                    }
+                        _id = questId,
+                        _progressInfo = questManager._countCheck.ContainsKey(questId) ? questManager._countCheck[questId] : 0,
+                        _isProgress = 1,
+                        _isFinished = questManager._completeQuest.Contains(questId) ? 1 : 0,
+                    };
+                    _questItemData.Add(questData);
                 }
             }
-
-
+            Logger.Log($"수락한 퀘스트 리스트 확인{_questItemData.Count.ToString()}");
             string questJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, questJson);
             Logger.Log("퀘스트 세이브");
@@ -783,7 +771,40 @@ public class QuestSaveData : IData
         {
             string questJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(questJson, this);
-            Logger.Log($"{_questItemData.Count.ToString()}");
+
+            var questManager = Managers.QuestManager;
+
+            foreach (var questData in _questItemData)
+            {
+                // 퀘스트 아이디가 존재하는지 확인하고, 상태를 설정
+                if (questManager._questID.Contains(questData._id))
+                {
+                    // 퀘스트 진행 중
+                    if (questData._isProgress == 1)
+                    {
+                        if (!questManager._progressQuest.Contains(questData._id))
+                            questManager._progressQuest.Add(questData._id);
+                    }
+
+                    // 퀘스트 완료
+                    if (questData._isFinished == 1)
+                    {
+                        if (!questManager._completeQuest.Contains(questData._id))
+                            questManager._completeQuest.Add(questData._id);
+                    }
+
+                    // 퀘스트 진행 값 업데이트
+                    if (questManager._countCheck.ContainsKey(questData._id))
+                    {
+                        questManager._countCheck[questData._id] = questData._progressInfo;
+                    }
+                    else
+                    {
+                        questManager._countCheck.Add(questData._id, questData._progressInfo);
+                    }
+                }
+            }
+            Logger.Log($"수락한 퀘스트 리스트{_questItemData.Count.ToString()}");
             Logger.Log("퀘스트 데이터 로드");
             return true;
         }
@@ -797,9 +818,6 @@ public class QuestSaveData : IData
     public void SetDefaultData()
     {
         _questItemData.Clear();
-        _progressQuest.Clear();
-        _completeQuest.Clear();
-        _countCheck.Clear();
     }
 }
 #endregion
