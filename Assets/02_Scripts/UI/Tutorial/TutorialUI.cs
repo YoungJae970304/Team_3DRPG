@@ -54,6 +54,8 @@ public class TutorialUI : BaseUI
             UpdateButtons();
         }
 
+        GetButton((int)Buttons.PrevBtn).onClick.RemoveAllListeners();
+        GetButton((int)Buttons.NextBtn).onClick.RemoveAllListeners();
         GetButton((int)Buttons.PrevBtn).onClick.AddListener(OnPrevButtonClick);
         GetButton((int)Buttons.NextBtn).onClick.AddListener(OnNextButtonClick);
 

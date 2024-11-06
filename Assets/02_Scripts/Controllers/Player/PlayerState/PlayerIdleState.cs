@@ -8,6 +8,9 @@ public class PlayerIdleState : BaseState
 
     public override void OnStateEnter()
     {
+        _player._canAtkInput = true;
+        _player._attacking = false;
+        _player._dodgeing = false;
         _player.AtkCount = 0;
         _player._rotDir = _player._playerModel.forward;
     }
