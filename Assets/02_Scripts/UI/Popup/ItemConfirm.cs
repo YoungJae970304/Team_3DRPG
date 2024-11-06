@@ -129,6 +129,7 @@ public class ItemConfirm : ItemDragUI
 
             int amount = (int)Get<Slider>((int)Sliders.ItemAmount).value;
             int money = _inventorySlot.Item.Data.SellingPrice * amount;
+            int itemID = _inventorySlot.Item.Data.ID;
             if (_inventorySlot.Item is CountableItem)//슬라이더의 value값 만큼 수량을 감소시키고 판매값*value로 금액획득
             {
                 CountableItem countable = (_inventorySlot.Item as CountableItem);
@@ -146,7 +147,7 @@ public class ItemConfirm : ItemDragUI
             _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold += money;
             Logger.LogWarning(money.ToString());
             
-            PubAndSub.Publish<int>("ItemSell", _inventorySlot.Item.Data.ID);
+            PubAndSub.Publish<int>("ItemSell", itemID);
 
         }
         CloseUI();
