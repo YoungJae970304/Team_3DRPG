@@ -1,6 +1,7 @@
 using SkillModule;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ThunderSlash : SkillBase
@@ -18,8 +19,22 @@ public class ThunderSlash : SkillBase
 
 public class ThunderSlashEnter : SkillEnter
 {
+    // "Skill1"이라는 이름의 BoxCollider를 찾음
+    BoxCollider _thunderSlashCol = Managers.Game._player._atkColliders.OfType<BoxCollider>().FirstOrDefault(col => col.gameObject.name == "Skill1");
+
+    // 시작과 끝 중심 및 크기 정의 (초기값)
+    Vector3 _startCenter = new Vector3(0, 0, 2);
+    Vector3 _startSize = new Vector3(3, 1, 5);
+
     public void Enter(ITotalStat stat, SkillData skillData, int level = 0)
     {
+        // 콜라이더를 초기 크기와 위치로 복원
+        if (_thunderSlashCol != null)
+        {
+            _thunderSlashCol.center = _startCenter;
+            _thunderSlashCol.size = _startSize;
+        }
+
         Managers.Game._player.SetColActive("Skill1");
 
         Managers.Game._player._playerAnim.Play("Skill1");
@@ -32,6 +47,13 @@ public class ThunderSlashStay : SkillStay
 {
     Animator _anim = Managers.Game._player._playerAnim;
     bool _damageApply = false;
+    BoxCollider _thunderSlashCol = Managers.Game._player._atkColliders.OfType<BoxCollider>().FirstOrDefault(col => col.gameObject.name == "Skill1");
+
+    // 시작과 끝 중심 및 크기 정의
+    Vector3 _startCenter = new Vector3(0, 0, 2);
+    Vector3 _endCenter = new Vector3(0, 0, 0);
+    Vector3 _startSize = new Vector3(3, 1, 5);
+    Vector3 _endSize = new Vector3(3, 1, 0);
 
     public void Stay(ITotalStat stat, SkillData skillData, int level = 0)
     {
@@ -40,6 +62,13 @@ public class ThunderSlashStay : SkillStay
         {
             float normalizedTime = _anim.GetCurrentAnimatorStateInfo(0).normalizedTime % 1;
 
+            // 애니메이션 진행도에 따라 콜라이더 크기와 중심 조정 (0.4까지 줄어듦)
+            if (normalizedTime <= 0.4f && _thunderSlashCol != null)
+            {
+                // 진행도에 따라 콜라이더 크기와 위치를 선형 보간 (Lerp)
+                _thunderSlashCol.center = Vector3.Lerp(_startCenter, _endCenter, normalizedTime / 0.4f);
+                _thunderSlashCol.size = Vector3.Lerp(_startSize, _endSize, normalizedTime / 0.4f);
+            }
             // 8% 진행 지점에서 이벤트 트리거
             if (normalizedTime >= 0.08f && normalizedTime <= 0.3f)
             {
