@@ -26,7 +26,7 @@ public class BossBear : Monster
     public override void Init()
     {
         base.Init();
-        itemtest(_deongeonLevel, _bossBearID);
+        ItemDrop(_deongeonLevel, _bossBearID);
         StatCheck(_deongeonLevel, _bossBearID);
         _monsterProduct = 61004;
         _startScale = _roarRange.transform.localScale;
@@ -324,7 +324,7 @@ public class BossBear : Monster
         int randomDice = UnityEngine.Random.Range(1, 101);
         if (randomDice <= dropvalue)
         {
-            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            GameObject productItem = Managers.Resource.Instantiate("DropItem/DropItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
             productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
 

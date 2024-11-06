@@ -11,15 +11,15 @@ public class MonsterHpBar : BaseUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
+        
+    }
+    private void OnEnable()
+    {
         Bind<Slider>(typeof(Sliders));
         _monster = GetComponentInParent<Monster>();
         HpChanged();
     }
-    private void OnEnable()
-    {
-        Init(transform);
-    }
-    private void HpChanged()
+    public void HpChanged()
     {
         Get<Slider>((int)Sliders.HpBar).value = (float)_monster._mStat.HP / (float)_monster._mStat.MaxHP;
     }
