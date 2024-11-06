@@ -188,6 +188,14 @@ public class QuestUI : BaseUI
         {
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
         }
+        if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]) >= Managers.QuestManager._completeChecks[id])
+        {
+            Managers.QuestManager._questComplete[id] = true;
+        }
+        else
+        {
+            Managers.QuestManager._questComplete[id] = false;
+        }
     }
     public void AllowQuest()
     {
@@ -232,7 +240,7 @@ public class QuestUI : BaseUI
                     _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
                     PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
                     Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
-                    if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
+                    if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]) >= Managers.QuestManager._completeChecks[goodsID])
                     {
                         Managers.QuestManager._questComplete[goodsID] = true;
                     }
@@ -261,7 +269,7 @@ public class QuestUI : BaseUI
                     _inventory.GetItemAction += (() => ValueCheck(goodsID));
                     PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
                     Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
-                    if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
+                    if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]) >= Managers.QuestManager._completeChecks[goodsID])
                     {
                         Managers.QuestManager._questComplete[goodsID] = true;
                     }
