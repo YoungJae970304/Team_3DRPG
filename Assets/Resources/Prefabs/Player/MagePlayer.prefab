@@ -411,6 +411,8 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
 --- !u!1 &8312498464758197025
 GameObject:
@@ -606,6 +608,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8796244127300489124}
     m_Modifications:
+    - target: {fileID: 1260003716848593090, guid: 9ff4859bd0f216b40b1dc15fc287c1fc,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1899704490, guid: a8a94878e234b7a4fb5b27d77d7c554c,
+        type: 3}
+    - target: {fileID: 2125869734110851432, guid: 9ff4859bd0f216b40b1dc15fc287c1fc,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2125869734110851432, guid: 9ff4859bd0f216b40b1dc15fc287c1fc,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 3463575337395849223, guid: 9ff4859bd0f216b40b1dc15fc287c1fc,
         type: 3}
       propertyPath: m_Pivot.x
