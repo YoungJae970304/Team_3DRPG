@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -145,7 +144,7 @@ public class PlayerInput : MonoBehaviour
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.SpAddAmount}");
             Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.MaxEXP}");
             Logger.LogError($"돈 확인 {Managers.Game._player._playerStatManager.Gold}");
-            
+
         }
         else if (Input.GetKeyDown(KeyCode.V))
         {
@@ -161,10 +160,10 @@ public class PlayerInput : MonoBehaviour
             //{
             //    Logger.LogError($"플레이어 데이터 저장 실패{e.Message}");
             //}
-             
+
         }
     }
-         
+
     void UIInput()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -221,15 +220,9 @@ public class PlayerInput : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Logger.LogError("test1");
-            
-                Item questItem = Item.ItemSpawn(51001,10);
-                Inventory inven = _player.gameObject.GetComponent<Inventory>();
-                inven.InsertItem(questItem);
-            
-            
-            
-            Logger.LogError("test2");
+            Item questItem = Item.ItemSpawn(51001, 10);
+            Inventory inven = _player.gameObject.GetComponent<Inventory>();
+            inven.InsertItem(questItem);
         }
     }
 

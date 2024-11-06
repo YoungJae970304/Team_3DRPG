@@ -19,15 +19,16 @@ public class QuestManager
     public Dictionary<int, GameObject> _changeText = new Dictionary<int, GameObject>();
     public Dictionary<int, int> _completeChecks = new Dictionary<int, int>();
     public Dictionary<int, bool> _questComplete = new Dictionary<int, bool>();
+    public Dictionary<int, int> _targetToQuestID = new Dictionary<int, int>();
     public List<int> _questID = new List<int>();//모든 퀘스트의 아이디 // 필수 저장
-    public List<int> _activeQuest = new List<int>(); // 현재 받을수있는 퀘스트 목록 // 필수 저장
+    public List<int> _activeQuest = new List<int>(); // 현재 받을수있는 퀘스트 목록 
     public List<int> _progressQuest = new List<int>(); // 현재 진행중인 퀘스트 목록 // 필수 저장
     public List<int> _completeQuest = new List<int>(); // 완료한 퀘스트 목록 // 필수 저장
     public Action _curLevelCountPlus;
     public Action _completeCheck;
     DataTableManager _dataTableManager;
     public Define.QuestInput _questInput; // 퀘스트창 오픈 시 진행중 or 진행가능한 창을 판단하기 위한 enum
-    public int test123; // 메인화면 작은 퀘스트창에 들어가는 퀘스트텍스트의 ID정보를 전달하기위한 변수
+    public int _questTextID; // 메인화면 작은 퀘스트창에 들어가는 퀘스트텍스트의 ID정보를 전달하기위한 변수
     public void Init()
     {
         _dataTableManager = Managers.DataTable;
@@ -71,6 +72,7 @@ public class QuestManager
             _questName.Add(questdata.ID, questdata.Name);
             _questID.Add(questdata.ID);
             _questrequirements.Add(questdata.ID, questdata.TargetCount);
+            _targetToQuestID.Add(questdata.TargetID, questdata.ID);
             foreach (var monsterdata in _dataTableManager._MonsterDropData)
             {
                 if (questdata.TargetID == monsterdata.ID && !_targetName.ContainsKey(questdata.ID))

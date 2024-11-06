@@ -23,7 +23,7 @@ public class Ork : Monster
     {
         base.Init();
         OrkIDCheck(_deongeonLevel);
-        itemtest(_deongeonLevel, _OrkID);
+        ItemDrop(_deongeonLevel, _OrkID);
         StatCheck(_deongeonLevel, _OrkID);
         _monsterID = _OrkID;
     }
@@ -125,7 +125,7 @@ public class Ork : Monster
         int randomDice = UnityEngine.Random.Range(1, 101);
         if (randomDice <= dropvalue)
         {
-            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            GameObject productItem = Managers.Resource.Instantiate("DropItem/DropItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
             productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
             

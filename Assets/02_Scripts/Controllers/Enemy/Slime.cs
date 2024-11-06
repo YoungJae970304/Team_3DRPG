@@ -14,7 +14,7 @@ public class Slime : Monster
     {
         base.Init();
         SlimeIDCheck(_deongeonLevel);
-        itemtest(_deongeonLevel, _slimeID);
+        ItemDrop(_deongeonLevel, _slimeID);
         StatCheck(_deongeonLevel, _slimeID);
         _monsterID = _slimeID;
     }
@@ -74,7 +74,7 @@ public class Slime : Monster
         int randomDice = UnityEngine.Random.Range(1, 101);
         if (randomDice <= dropvalue)
         {
-            GameObject productItem = Managers.Resource.Instantiate("ItemTest/TestItem");
+            GameObject productItem = Managers.Resource.Instantiate("DropItem/DropItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
             productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
 

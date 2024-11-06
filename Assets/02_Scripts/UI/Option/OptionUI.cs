@@ -23,7 +23,8 @@ public class OptionUI : BaseUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
-        Get<Button>((int)SelectButtons.GiveUp).interactable = false; ;
+        Get<Button>((int)SelectButtons.GiveUp).interactable = false;
+        Get<Button>((int)SelectButtons.ShutDownGame).interactable = true;
         CheckInDungeon();
     }
     public void CheckInDungeon()
@@ -31,6 +32,7 @@ public class OptionUI : BaseUI
         if (Managers.Scene.DungeonSceneCheck())
         {
             Get<Button>((int)SelectButtons.GiveUp).interactable = true;
+            Get<Button>((int)SelectButtons.ShutDownGame).interactable = false;
             Managers.Data.SaveData<PlayerSaveData>();
         }
     }
