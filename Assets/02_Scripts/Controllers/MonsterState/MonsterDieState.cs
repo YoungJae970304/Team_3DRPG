@@ -14,14 +14,12 @@ public class MonsterDieState : BaseState
     public override void OnStateEnter()
     {
         _monster._nav.enabled = false;
-        _monster._player.PlayerEXPGain(_monster._mStat._mStat.EXP);
-        _monster._player.PlayerGOLDGain(_monster._mStat._mStat.Gold);
+        
         _monster._anim.SetTrigger("Die");
         Managers.Game._monsters.Remove(_monster);
         Logger.Log("몬스터 사망");
         //_monster.GetComponent<BoxCollider>().enabled = false;
-        _monster._monsterDrop.DropItemSelect(_monster._deongeonLevel, _monster.sample);//임시 설정 추후 던전에서 받아오도록 변경
-        _monster.MakeItem();
+        
         _monster._dieMonster?.Invoke();
         QuestCheck();
         //_monster.StartCoroutine(IvokeDie());
