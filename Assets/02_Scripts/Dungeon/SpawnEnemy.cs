@@ -101,7 +101,7 @@ public class SpawnEnemy : MonoBehaviour
                 return; // null인 경우 메서드 종료
             }
             Monster monster = mon.GetComponent<Monster>();
-            monster._characterController.enabled = false;
+            
             monster._nav.enabled = false;
             mon.transform.position = new Vector3 (transform.position.x+i,0, transform.position.z);
             
@@ -109,7 +109,7 @@ public class SpawnEnemy : MonoBehaviour
             monster._makeMonster += _dungeonManager.CountPlus;
             monster._makeMonster?.Invoke();
             monster._dieMonster += _dungeonManager.CountMinus;
-            monster._characterController.enabled = true;
+           
             monster._nav.enabled = true;
             monster.Init();
             
