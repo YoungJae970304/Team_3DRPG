@@ -61246,6 +61246,7 @@ MonoBehaviour:
   _anim: {fileID: 0}
   _monsterID: 0
   _enemyAnimEvent: {fileID: 0}
+  _hpBar: {fileID: 5690686506952144813}
   _goblemID: 0
 --- !u!143 &8392780419757323449
 CharacterController:
@@ -62883,6 +62884,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25379b871c9159d4994deb19cf7e561b, type: 3}
+--- !u!1 &5690686506952144813 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5071374186199710255, guid: 25379b871c9159d4994deb19cf7e561b,
+    type: 3}
+  m_PrefabInstance: {fileID: 619318383132364162}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5740288184973481235 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5130122763705391249, guid: 25379b871c9159d4994deb19cf7e561b,

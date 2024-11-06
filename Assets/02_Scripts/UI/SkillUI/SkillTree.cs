@@ -103,20 +103,14 @@ public class SkillTree : ItemDragUI
         if (_currentItem == null)
         {
             GetText((int)Texts.LevelTxt).gameObject.SetActive(false);
+            GetText((int)Texts.SpTxt).fontSize = 32;
+            GetText((int)Texts.SpTxt).text = $"보유 SP : {Managers.Game._player._playerStatManager.SP}";
         }
         else {
             GetText((int)Texts.LevelTxt).text = _currentItem.SkillLevel.ToString();
             GetText((int)Texts.LevelTxt).gameObject.SetActive(true);
-
-            int minLevel = _currentItem.GetMinLevel();
-            //GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition() && _currentItem.SkillLevel > minLevel;
-            //GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition() && Managers.Game._player._playerStatManager.SP > 0;
-            StartCoroutine(UpdateBtnState(minLevel));
-        }
-        
-        if (_currentItem != null)
-        {
             GetText((int)Texts.SpTxt).fontSize = 24;
+
             if (Managers.Game._player._playerStatManager.SP >= _currentItem.Skill._needSP && _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition())
             {
                 GetText((int)Texts.SpTxt).text = $"<color=green>SP 소모량 : {_currentItem.Skill._needSP} / 보유 SP : {Managers.Game._player._playerStatManager.SP}</color>";
@@ -125,20 +119,18 @@ public class SkillTree : ItemDragUI
             {
                 GetText((int)Texts.SpTxt).text = $"<color=red>SP 소모량 : {_currentItem.Skill._needSP} / 보유 SP : {Managers.Game._player._playerStatManager.SP}</color>";
             }
-        }
-        else
-        {
-            GetText((int)Texts.SpTxt).fontSize = 32;
-            
-            GetText((int)Texts.SpTxt).text = $"보유 SP : {Managers.Game._player._playerStatManager.SP}";
+
+
+            StartCoroutine(UpdateBtnState());
         }
     }
 
-    private IEnumerator UpdateBtnState(int minLevel)
+    private IEnumerator UpdateBtnState()
     {
         // 한 프레임 대기
         yield return null;
 
+        int minLevel = _currentItem.GetMinLevel();
         // 버튼 상태 업데이트
         GetButton((int)Buttons.MinusBtn).interactable = _currentItem.SkillLevel > 0 && _currentItem.CheckCondition() && _currentItem.SkillLevel > minLevel;
         GetButton((int)Buttons.PlusBtn).interactable = _currentItem.SkillLevel < _currentItem._maxLevel && _currentItem.CheckCondition() && Managers.Game._player._playerStatManager.SP > 0;

@@ -39465,6 +39465,7 @@ GameObject:
   - component: {fileID: 1820217029137857746}
   - component: {fileID: 5647168510758010580}
   - component: {fileID: 6629619013634194508}
+  - component: {fileID: 8686253554912400490}
   m_Layer: 5
   m_Name: MonsterHpUI
   m_TagString: Untagged
@@ -39574,6 +39575,18 @@ MonoBehaviour:
   _InitPos: 0
   _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
+--- !u!114 &8686253554912400490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5862908740202888992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f074b6f35af623f48902c3fe36139290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5879390912339884026
 GameObject:
   m_ObjectHideFlags: 0
@@ -40852,7 +40865,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6213592838403633244}
   serializedVersion: 8
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 0.5
   stopAction: 0
   cullingMode: 0
@@ -40927,7 +40940,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 0.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -54646,6 +54659,7 @@ MonoBehaviour:
   _anim: {fileID: 0}
   _monsterID: 0
   _enemyAnimEvent: {fileID: 0}
+  _hpBar: {fileID: 5862908740202888992}
   _OrkID: 0
 --- !u!143 &8490924055836090306
 CharacterController:

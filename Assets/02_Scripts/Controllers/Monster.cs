@@ -61,6 +61,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public EnemyAnimEvent _enemyAnimEvent;
     public StatusEffectManager StatusEffect { get => null; }
     MonsterHpBar _monsterHpBar;
+    public GameObject _hpBar;
     public ITotalStat Targetstat => _mStat;
 
     public Transform TargetTr => transform;
@@ -72,6 +73,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         _anim = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
         _monsterHpBar = GetComponentInChildren<MonsterHpBar>();
+        _enemyAnimEvent = GetComponentInChildren<EnemyAnimEvent>();
         //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));
@@ -101,6 +103,12 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     }
     public virtual void Init()
     {
+        if(_hpBar != null)
+        {
+            _hpBar.SetActive(false);
+        }
+        
+        
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
@@ -205,6 +213,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 
                 break;
             case MonsterState.Return:
+                _monsterHpBar.Init(_monsterHpBar.transform);
                 if ((_originPos - transform.position).magnitude <= 3f)
                     MChangeState(MonsterState.Idle);
                 break;
@@ -228,6 +237,9 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 상태 변환 FSM 사용
     public void MChangeState(MonsterState nextState)
     {
+
+        
+
         if (_mFSM == null)
         {
             Logger.LogError("FSM이 null");
@@ -248,7 +260,14 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 받는 데미지 함수
     public virtual void Damaged(int amount)
     {
-
+        if (!_hpBar.activeSelf)
+        {
+            _hpBar.SetActive(true);
+        }
+        if (_monsterID != 99999)
+        {
+            _enemyEffect.EffectOff();
+        }
         if (_mStat == null)
         {
             Logger.LogError("MonsterStat이 null입니다");
@@ -332,6 +351,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 플레이어 공격관련 함수
     public virtual void AttackPlayer() // 공격 모션 중간에 호출 // 수정 예정
     {
+        
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
@@ -361,6 +381,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
                     damageable.Damaged(damage);
                 }
             }
+        
         }
 
 
@@ -383,6 +404,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
         }
+        _nav.SetDestination(_player.transform.position);
     }
 
 
@@ -451,8 +473,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         if (dropData != null)
         {
             _mStat._mStat.EXP = dropData.Value5;
-            Logger.LogError(_mStat._mStat.EXP.ToString() + "안돼냐");
-            Logger.LogError(dropData.Value5.ToString() + "왜");
             _monsterProduct = dropData.Value6;
             _mStat._mStat.Gold = UnityEngine.Random.Range(dropData.StartValue4, dropData.EndValue4);
         }
@@ -617,13 +637,14 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     }
     public virtual void MakeItem()
     {
+        int dropvalue = 30;
         int randomDice = UnityEngine.Random.Range(1, 100);
-        if (randomDice <= 100)
+        if (randomDice <= dropvalue)
         {
             GameObject item = Managers.Resource.Instantiate("ItemTest/TestItem");
             item.GetComponent<ItemPickup>()._itemId = _monsterDrop.DropItemSelect(_deongeonLevel, sample);
         }
-
+        
 
     }
 
