@@ -179,14 +179,15 @@ public class QuestUI : BaseUI
     }
     public void ValueCheck(int id)
     {
+        if (id / 10000 != 8)
+        {
+            id = Managers.QuestManager._targetToQuestID[id];
+        }
         Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
         if (Managers.QuestManager._changeText[id] != null)
         {
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
         }
-
-
-
     }
     public void AllowQuest()
     {
@@ -229,6 +230,7 @@ public class QuestUI : BaseUI
                 {
                     int goodsID = _questId;
                     _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
+                    PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
                     Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
                     if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
                     {
@@ -257,6 +259,7 @@ public class QuestUI : BaseUI
                 {
                     int goodsID = _questId;
                     _inventory.GetItemAction += (() => ValueCheck(goodsID));
+                    PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
                     Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
                     if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
                     {
@@ -366,6 +369,7 @@ public class QuestUI : BaseUI
         QuestButton buttonID = button.GetComponent<QuestButton>();
         _questId = buttonID._questID;
         _inventory.GetItemAction -= (() => ValueCheck(_questId));
+        PubAndSub.UnSubscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
         if (!Managers.QuestManager._completeQuest.Contains(_questId))
         {
             Managers.QuestManager._completeQuest.Add(_questId);
@@ -407,6 +411,7 @@ public class QuestUI : BaseUI
         QuestButton buttonID = button.GetComponent<QuestButton>();
         _questId = buttonID._questID;
         _inventory.GetItemAction -= (() => ValueCheck(_questId));
+        PubAndSub.UnSubscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
         Managers.QuestManager._progressQuest.Remove(_questId);
         Managers.QuestManager._progressQuest.Sort();
         if (!Managers.QuestManager._activeQuest.Contains(_questId))

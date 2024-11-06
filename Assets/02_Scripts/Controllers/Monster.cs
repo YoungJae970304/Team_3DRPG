@@ -72,7 +72,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
         _characterController = GetComponent<CharacterController>();
-        _monsterHpBar = GetComponentInChildren<MonsterHpBar>();
+        
         _enemyAnimEvent = GetComponentInChildren<EnemyAnimEvent>();
         //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
@@ -107,8 +107,8 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         {
             _hpBar.SetActive(false);
         }
-        
-        
+
+        _monsterHpBar = _hpBar.GetComponent<MonsterHpBar>();
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
@@ -213,6 +213,10 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 
                 break;
             case MonsterState.Return:
+                if(_monsterHpBar != null)
+                {
+                    _monsterHpBar.HpChanged();
+                }
                 
                 if ((_originPos - transform.position).magnitude <= 3f)
                     MChangeState(MonsterState.Idle);
@@ -275,7 +279,11 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         }
 
         _mStat.HP -= (int)(amount * (100f / (_mStat.DEF + 100f)));
-        _monsterHpBar.Init(_monsterHpBar.transform);
+       
+        _monsterHpBar.HpChanged();
+        
+        
+        
         if (_mStat.HP > 0)
         {
 

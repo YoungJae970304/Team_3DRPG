@@ -19,7 +19,7 @@ public class MonsterHpBar : BaseUI
         _monster = GetComponentInParent<Monster>();
         HpChanged();
     }
-    private void HpChanged()
+    public void HpChanged()
     {
         Get<Slider>((int)Sliders.HpBar).value = (float)_monster._mStat.HP / (float)_monster._mStat.MaxHP;
     }

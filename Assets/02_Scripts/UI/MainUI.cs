@@ -118,7 +118,7 @@ public class MainUI : ItemDragUI
                     {
                         int goodsID = id;
                         _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
-                        PubAndSub.Subscrib<int>("ItemSell", ValueCheck); // 집가서 체크
+                        PubAndSub.Subscrib<int>($"{goodsID}", ValueCheck);
                         Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
                         if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
                         {
