@@ -88,6 +88,9 @@ public class OptionUI : BaseUI
         {
             Managers.UI.OpenUI<ConfirmUI>(confirmUIData);
             Managers.Data.SaveAllData();
+
+            PlayerPosSet.PlayerPosSave(Managers.Game._player.transform.position);
+            Logger.Log($"플레이어 위치 따로 저장{Managers.Game._player.transform.position.ToString()}");
             Logger.Log("어플리케이션 종료 되었습니다. 모든 데이터가 저장 되었습니다.");
         }
     }

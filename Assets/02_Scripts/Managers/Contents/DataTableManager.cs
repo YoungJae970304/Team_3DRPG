@@ -37,7 +37,7 @@ public class DataTableManager
     //상점 항목 데이터 테이블 CSV 파일
     public string _SHOP_DATA_TABLE = "Shop_ItemList_Data_Table";
 
-    //각각의 아이템 데이터 리스트-드랍할때 알맞게 사용-
+    //각각의 데이터 리스트
     public List<ItemData> _EquipeedItemData = new List<ItemData>();
     public List<ItemData> _PotionItemData = new List<ItemData>();
     public List<ItemData> _GoodsItemData = new List<ItemData>();
@@ -325,7 +325,6 @@ public class DataTableManager
     #region 던전 데이터테이블 함수
     void DungeonDataTable(string dataPath, string dungeonDataTable)
     {
-
         var parsedDungeonDataTable = CSVReader.Read($"{dataPath}/{dungeonDataTable}");
         foreach (var data in parsedDungeonDataTable)
         {
@@ -410,23 +409,6 @@ public class DataTableManager
                 RewardType3 = Convert.ToInt32(data["QuestRewardType3"]),
                 RewardValue3 = Convert.ToInt32(data["QuestRewardValue3"]),
             };
-            //Logger.LogError($"{data["QuestRewardType3"].ToString()}이게 뭔값이냐");
-            //Logger.LogError($"{ItemData.ItemType.Potion}타입은뭐냐");
-            //if (data["QuestRewardType3"].ToString() == ItemData.ItemType.Potion.ToString())
-            //{
-                /*questData.RewardType3 = QuestData.RewardType.Potion;
-                Logger.LogError($"{questData.RewardType3}1번확인");
-                int potionID = Convert.ToInt32(data["QuestRewardValue3"]);
-                Logger.LogError($"{potionID}2번확인");
-                var potionItem = _PotionItemData.Find(p => p.ID == potionID);
-                Logger.LogError($"{potionItem}3번확인");
-                questData.RewardValue3 = potionItem?.ID ?? 0;
-                Logger.LogError($"{questData.RewardValue3 }4번확인");
-                if (potionItem == null)
-                {
-                    Logger.LogError($"포션ID{potionID}를 찾을 수 없습니다.");
-                }*/
-            //}
             _QuestData.Add(questData);
         }
     }

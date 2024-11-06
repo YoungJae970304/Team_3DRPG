@@ -24,10 +24,11 @@ public class QuestData
     public int RewardValue1;
     public int RewardValue2;
     public int RewardValue3;
-    //리워드 밸류타입(1 = 골드)
+    //골드 보상
     public RewardType RewardType1;
+    //경험치 보상
     public RewardType RewardType2;
-    // public RewardType RewardType3;
+    //포션 보상
     public int RewardType3;
     //퀘스트의 리워드 타입
     [Serializable]
@@ -37,7 +38,5 @@ public class QuestData
         Gold = 1,
         //경험치
         Exp,
-        //포션
-        //Potion = 4,
     }
 }

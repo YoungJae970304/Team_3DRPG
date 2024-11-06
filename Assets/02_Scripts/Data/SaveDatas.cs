@@ -6,7 +6,7 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
-#region 제이슨 파일 암호화 클래스
+#region 제이슨 파일 암호화 클래스 (필요시 사용)
 public static class EncryptionUtility
 {
     private static readonly string Key = "Team3DRPG,!@#$";
@@ -115,7 +115,6 @@ public class SaveDatas : IData
     {
         try
         {
-            //_PlayerSaveDatas ??= new List<PlayerSaveData>();
             _InventorySaveDatas ??= new List<InventorySaveData>();
             _SkillSaveDatas ??= new List<SkillSaveData>();
             _QuestSaveData ??= new List<QuestSaveData>();
@@ -166,6 +165,45 @@ public class SaveDatas : IData
 
 #region 플레이어 데이터 클래스
 [Serializable]
+public class PlayerPosSet 
+{
+    public float _x;
+    public float _y;
+    public float _z;
+
+    public static void PlayerPosSave(Vector3 pos)
+    {
+        PlayerPosSet playerPosSet = new PlayerPosSet();
+
+        playerPosSet._x = pos.x;
+        playerPosSet._y = pos.y;
+        playerPosSet._z = pos.z;
+ 
+        string playerPosJson = JsonUtility.ToJson(playerPosSet);
+
+        File.WriteAllText($"{Application.persistentDataPath}/playerPosData.json", playerPosJson);
+        //Logger.Log($"플레이어 위치 저장{pos.x}, {pos.y}, {pos.z}");
+    }
+
+    public static Vector3 PlayerPosSetLoad()
+    {
+        string path = $"{Application.persistentDataPath}/playerPosData.json";
+
+        if (File.Exists(path))
+        {
+            string playerPosJson = File.ReadAllText(path);
+            PlayerPosSet savePos = JsonUtility.FromJson<PlayerPosSet>(playerPosJson);
+            return new Vector3(savePos._x, savePos._y, savePos._z);
+        }
+        else
+        {
+            Logger.LogWarning($"저장된 위치가 없습니다 초기 위치로 보내드립니다");
+            return Vector3.zero;
+        }
+    }
+}
+
+[Serializable]
 public class PlayerSaveData : IData
 {
     //플레이어 레벨
@@ -178,9 +216,7 @@ public class PlayerSaveData : IData
     public int _sp;
     //현재 골드
     public int _gold;
-    float _x;
-    float _y;
-    float _z;
+
     //선택한 플레이어타입
     public Define.PlayerType _PlayerTypes;
 
@@ -190,6 +226,7 @@ public class PlayerSaveData : IData
     {
         _SavePath = $"{Application.persistentDataPath}/SavePlayerData.json";
     }
+
 
     public void SaveData()
     {
@@ -202,12 +239,9 @@ public class PlayerSaveData : IData
             _maxExp = stats.MaxEXP;
             _sp = stats.SP;
             _gold = stats.Gold;
-            _x = player.transform.position.x;
-            _y = player.transform.position.y;
-            _z = player.transform.position.z;
             _PlayerTypes = Managers.Game._playerType;
             Logger.Log($"현재 플레이 중인데 타입 {_PlayerTypes}");
-            Logger.Log($"현재 플레이어 저장 위치 확인{_x}{_y}{_z}");
+            //Logger.Log($"현재 플레이어 저장 위치 확인{_x}{_y}{_z}");
 
             string directory = Path.GetDirectoryName(_SavePath);
             if (!Directory.Exists(directory))
@@ -231,6 +265,7 @@ public class PlayerSaveData : IData
         {
             string playerJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(playerJson, this);
+            var player = Managers.Game._player;
             Logger.Log("플레이어 데이터 로드 성공");
             return true;
         }
@@ -664,12 +699,10 @@ public class QuickSlotSaveData : IData
 [Serializable]
 public class QuestItemData
 {
-    //퀘스트 데이터의 ID 리스트
-    public List<int> _questID;
-    //퀘스트 진행중인 리스트
-    public List<int> _progressQuest;
-    //퀘스트 완료 리스트
-    public List<int> _completeQuest;
+    public int _id;
+    public int _progressInfo;
+    public int _isProgress;
+    public int _isFunisihed;
 }
 
 [Serializable]

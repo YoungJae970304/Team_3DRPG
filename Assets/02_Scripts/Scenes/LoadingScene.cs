@@ -154,9 +154,7 @@ public class LoadingScene : BaseScene
         stats.EXP = playerSaveData._exp;
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
-        Logger.LogError($"불러온 SP 확인{Managers.Game._player._playerStatManager.SP.ToString()}");
         stats.Gold = playerSaveData._gold;
-        //player.transform.position = new Vector3(_x, _y, _z);
     }
 
     void ApplyLargeMapData()
@@ -215,6 +213,11 @@ public class LoadingScene : BaseScene
             }
         }
         mainUI.QuickslotUpdate();
+    }
+
+    void ApplyQusetData()
+    {
+
     }
 
     public override void Clear()

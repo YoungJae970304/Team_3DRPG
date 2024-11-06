@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScene : BaseScene
@@ -8,7 +6,6 @@ public class MainScene : BaseScene
     [SerializeField] Transform _largeMapCamPos;
 
     Camera _largeMapCam;
-
     protected override void Init()
     {
         base.Init();
@@ -23,10 +20,18 @@ public class MainScene : BaseScene
         LargeMapUI largeMapUI = Managers.UI.IsClosedUI<LargeMapUI>() as LargeMapUI;
         if (largeMapUI == null) return;
         largeMapUI.InitSceneMapInfo(90f, _largeMapCamPos);
+
+        Vector3 loadPlayerPos = PlayerPosSet.PlayerPosSetLoad();
+        if(!TitleCanvasUI._isNewGame)
+        {
+            var player = Managers.Game._player.GetComponent<Player>();
+            player.transform.position = loadPlayerPos;
+            Logger.Log($"저장된 위치로 이동{loadPlayerPos}");
+        }
     }
 
     public override void Clear()
     {
-        
+
     }
 }
