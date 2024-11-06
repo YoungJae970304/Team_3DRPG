@@ -8,9 +8,12 @@ public class MonsterMoveState : BaseState
     public override void OnStateEnter()
     {
         _monster.StopAllCoroutines();
-        if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
-            return;
-            if (_monster._monsterID != 99999)
+        if (_monster._monsterID == 99999)
+        {
+            if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
+                return;
+        }
+        if (_monster._monsterID != 99999)
         {
             if (_monster._nav.enabled)
             {
@@ -59,8 +62,12 @@ public class MonsterMoveState : BaseState
 
         //플레이어 추격
         //_timer += _monster
-        if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
-            return;
+        if(_monster._monsterID == 99999)
+        {
+            if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
+                return;
+        }
+        
         if (_monster._nav.enabled)
         {
             _monster.SetDestinationTimer(1);
