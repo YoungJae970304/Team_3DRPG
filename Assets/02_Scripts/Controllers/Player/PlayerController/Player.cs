@@ -188,7 +188,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _playerStatManager._originStat.DodgeSpeed = 10f;
         _playerStatManager._originStat.ATK = 30;
         _playerStatManager._originStat.DEF = 10;
-        _playerStatManager.SP = 0;
+        //_playerStatManager.SP = 0;
         _playerStatManager._originStat.RecoveryHP = 2;
         _playerStatManager._originStat.RecoveryMP = 2;
 

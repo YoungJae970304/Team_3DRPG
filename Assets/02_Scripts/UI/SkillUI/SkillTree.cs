@@ -129,6 +129,7 @@ public class SkillTree : ItemDragUI
         else
         {
             GetText((int)Texts.SpTxt).fontSize = 32;
+            
             GetText((int)Texts.SpTxt).text = $"보유 SP : {Managers.Game._player._playerStatManager.SP}";
         }
     }

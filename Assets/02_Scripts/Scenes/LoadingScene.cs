@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class LoadingScene : BaseScene
 {
@@ -143,19 +144,19 @@ public class LoadingScene : BaseScene
 
     void ApplyPlayerData()
     {
+        Managers.Data.LoadData<PlayerSaveData>();
         PlayerSaveData playerSaveData = Managers.Data.GetData<PlayerSaveData>();
         Managers.Game._playerType = playerSaveData._PlayerTypes;
         Managers.Game.PlayerCreate();
         var player = Managers.Game._player;
         var stats = Managers.Game._player._playerStatManager;
-        
         stats.Level = playerSaveData._level;
         stats.EXP = playerSaveData._exp;
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
+        Logger.LogError($"불러온 SP 확인{Managers.Game._player._playerStatManager.SP.ToString()}");
         stats.Gold = playerSaveData._gold;
         //player.transform.position = new Vector3(_x, _y, _z);
-        
     }
 
     void ApplyLargeMapData()
@@ -182,18 +183,37 @@ public class LoadingScene : BaseScene
         Inventory inventory = Managers.Game._player.GetOrAddComponent<Inventory>();
         if (mainUI != null)
         {
-            QuickItemSlot[] quickItemSlot = mainUI.GetComponentsInChildren<QuickItemSlot>();
-            for (int i = 0; i < quickSlotSaveData._quickItemSlotData.Count && i < quickItemSlot.Length; i++)
+            QuickItemSlot[] quickItemSlots = mainUI.GetComponentsInChildren<QuickItemSlot>();
+            foreach(var slotData in quickSlotSaveData._quickItemSlotData)
             {
-                var slotData = quickSlotSaveData._quickItemSlotData[i]; // 현재 슬롯 데이터
-                Item item = inventory.GetItemToId(slotData._id); // 아이템 가져오기
-                if (item != null)
+                int slotIndex = slotData._slotIndex;
+                if (slotIndex < quickItemSlots.Length)
                 {
-                    quickItemSlot[i].Setitem(item); // 해당 슬롯에 아이템 설정
+                    Item slotItem = inventory.GetItemToId(slotData._id);
+                    if(slotItem != null)
+                    {
+                        quickItemSlots[slotIndex].Setitem(slotItem);
+                    }
                 }
             }
-            mainUI.QuickslotUpdate();
+            SkillQuickSlot[] skillQuickSlots = mainUI.GetComponentsInChildren<SkillQuickSlot>();
+            SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
+            SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
+            skillTree.CloseUI();
+            foreach (var skillSlot in quickSlotSaveData._quickSkillSlotData)
+            {
+                // 저장된 Skill ID와 일치하는 SkillTreeItem을 찾아 설정
+                var matchingSkill = skillTree._skillTreeItems.FirstOrDefault(skillItem => skillItem._skillId == skillSlot._id);
+
+                // 매칭되는 스킬이 있을 경우에만 설정
+                if (matchingSkill != null && skillSlot._slotIndex < skillQuickSlots.Length)
+                {
+                    skillQuickSlots[skillSlot._slotIndex].Skill = matchingSkill.Skill;  // SkillQuickSlot에 스킬을 설정
+                    matchingSkill.UpdateInfo();
+                }
+            }
         }
+        mainUI.QuickslotUpdate();
     }
 
     public override void Clear()

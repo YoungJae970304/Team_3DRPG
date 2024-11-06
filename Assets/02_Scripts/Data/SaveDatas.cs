@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
-using UnityEngine;
 using System.Security.Cryptography;
 using System.Text;
-using System.Linq;
-using UnityEditor.Experimental.GraphView;
+using Unity.VisualScripting;
+using UnityEngine;
 
 #region 제이슨 파일 암호화 클래스
 public static class EncryptionUtility
 {
-    private static readonly string Key = "Team3DRPG,!@#$"; 
+    private static readonly string Key = "Team3DRPG,!@#$";
 
     // AES 암호화
     public static (string CipherText, string IV) Encrypt(string plainText)
@@ -20,13 +18,13 @@ public static class EncryptionUtility
         {
             aesAlg.Key = Encoding.UTF8.GetBytes(Key);
             // 랜덤한 IV 생성
-            aesAlg.GenerateIV(); 
+            aesAlg.GenerateIV();
 
             ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
             using (MemoryStream msEncrypt = new MemoryStream())
             {
                 // IV를 암호문 앞에 기록
-                msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length); 
+                msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length);
                 using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                 {
                     using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
@@ -44,7 +42,7 @@ public static class EncryptionUtility
     {
         byte[] fullCipher = Convert.FromBase64String(cipherText);
         // IV는 AES의 블록 크기인 16바이트
-        byte[] iv = new byte[16]; 
+        byte[] iv = new byte[16];
         byte[] cipher = new byte[fullCipher.Length - iv.Length];
 
         Array.Copy(fullCipher, iv, iv.Length);
@@ -289,10 +287,10 @@ public class InventorySaveData : IData
             {
                 Logger.LogWarning("인벤토리 널 값");
             }
-            List<Inventory.ItemGroup> ItemGroup =new List<Inventory.ItemGroup>();
+            List<Inventory.ItemGroup> ItemGroup = new List<Inventory.ItemGroup>();
             foreach (var itemSaveType in Enum.GetValues(typeof(ItemData.ItemType)))
             {
-               
+
                 var itemType = (ItemData.ItemType)itemSaveType;
                 if (itemType == ItemData.ItemType.DropData) continue;
                 Inventory.ItemGroup itemGroup = _inventory.GetGroup((ItemData.ItemType)itemSaveType);
@@ -313,7 +311,7 @@ public class InventorySaveData : IData
                             _index = index,
                             _type = (int)itemType,
                         };
-                        Logger.Log($"{itemData}아이템 리스트에 들어가는지 확인");
+                        //Logger.Log($"{itemData}아이템 리스트에 들어가는지 확인");
                         _InvenItemList.Add(itemData);
                     }
                 }
@@ -403,7 +401,7 @@ public class SkillSaveData : IData
             List<SkillTreeItem> _skillTreeItem;
             SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(new BaseUIData());
             _skillTreeItem = skillTree._skillTreeItems;
-            
+
             skillTree.CloseUI();
             //Logger.Log(skillTree._skillTreeItems.Count);
             foreach (var skill in _skillTreeItem)
@@ -412,7 +410,7 @@ public class SkillSaveData : IData
                 {
                     _id = skill._skillId,
                     _curLevel = skill.SkillLevel,
-                }); 
+                });
                 //Logger.Log(_skillTreeItemDatas.Count);
             }
             string skillJson = JsonUtility.ToJson(this, true);
@@ -540,12 +538,14 @@ public class EquipmentSaveData : IData
 public class QuickItemSlotData
 {
     public int _id;
+    public int _slotIndex;
 }
 
 [Serializable]
 public class QuickSkillSlotData
 {
     public int _id;
+    public int _slotIndex;
 }
 
 [Serializable]
@@ -565,7 +565,7 @@ public class QuickSlotSaveData : IData
     public void SaveData()
     {
         SetDefaultData();
-  
+
         string directory = Path.GetDirectoryName(_SavePath);
 
         if (!Directory.Exists(directory))
@@ -575,39 +575,57 @@ public class QuickSlotSaveData : IData
         try
         {
             MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
+            //메인UI가 널이 아니라면 
             if (mainUI != null)
             {
-                // QuickItemSlot, SkillQuickSlot에 대한 아이템 정보를 리스트에 추가
-                foreach (QuickItemSlot quickItemSlot in mainUI.GetComponentsInChildren<QuickItemSlot>())
+                QuickItemSlot[] quickItemSlots = mainUI.GetComponentsInChildren<QuickItemSlot>();
+
+                for (int i = 0; i < quickItemSlots.Length; i++)
                 {
+                    QuickItemSlot quickItemSlot = quickItemSlots[i];
                     if (quickItemSlot.Item != null)
                     {
                         QuickItemSlotData quickSlotItemData = new QuickItemSlotData
                         {
-                            //아이디값이 리스트에 들어오는것도 확인
                             _id = quickItemSlot.Item.Data.ID,
+                            _slotIndex = i,
                         };
                         _quickItemSlotData.Add(quickSlotItemData);
                     }
                 }
+
+                //스킬트리아이템을 퀵슬롯에 등록을 했을테니까 그 정보를 리스트에 저장
+                SkillQuickSlot[] skillQuickSlots = mainUI.GetComponentsInChildren<SkillQuickSlot>();
                 List<SkillTreeItem> skillTreeItem;
                 SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(new BaseUIData());
                 skillTreeItem = skillTree._skillTreeItems;
                 skillTree.CloseUI();
-                foreach (var skillTreeItems in mainUI.GetComponentsInChildren<SkillQuickSlot>())
+
+                for (int i = 0; i < skillQuickSlots.Length; i++)
                 {
-                    if(skillTreeItems != null)
+                    SkillQuickSlot skillQuickSlot = skillQuickSlots[i];
+                    if (skillQuickSlot.Skill != null)
                     {
-                        QuickSkillSlotData quickSkillSlotData = new QuickSkillSlotData
+                        //등록한 스킬하고 스킬트리에 있는 스킬이 같을경우 저장 그 스킬의 아이디를
+                        //리스트에 저장
+                        var matchingItem = skillTreeItem.Find(item => item.Skill == skillQuickSlot.Skill);
+
+                        if (matchingItem != null)
                         {
-                            //_id = skillQuickSlot
-                        };
+                            QuickSkillSlotData quickSkillSlotData = new QuickSkillSlotData
+                            {
+                                _id = matchingItem._skillId,
+                                _slotIndex = i
+                            };
+                            _quickSkillSlotData.Add(quickSkillSlotData);
+                        }
                     }
                 }
-                string quickSlotJson = JsonUtility.ToJson(this, true);
-                File.WriteAllText(_SavePath, quickSlotJson);
-                Logger.Log("퀵슬롯 정보 세이브");
             }
+
+            string quickSlotJson = JsonUtility.ToJson(this, true);
+            File.WriteAllText(_SavePath, quickSlotJson);
+            Logger.Log("퀵슬롯 정보 세이브");
         }
         catch (Exception e)
         {
@@ -623,10 +641,11 @@ public class QuickSlotSaveData : IData
             string quickSlotJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(quickSlotJson, this);
             //확인했음
-            //Logger.Log(_quickSlotItemData.Count);
+            //Logger.Log(_quickSkillSlotData.Count);
             Logger.Log("퀵슬롯 로드 성공");
             return true;
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             Logger.LogError($"퀵슬롯데이터 로드 실패{e.Message}");
             return false;
@@ -776,7 +795,8 @@ public class LargeMapData : IData
             JsonUtility.FromJsonOverwrite(mapJson, this);
             Logger.Log("맵 로드 성공");
             return true;
-        }catch (Exception e)
+        }
+        catch (Exception e)
         {
             Logger.LogError($"로드 할 맵이 없습니다{e.Message}");
             return false;
