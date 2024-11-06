@@ -10,10 +10,19 @@ public class MageBall : MonoBehaviour
     Vector3 _cameraForward;
     Vector3 _ballDir;
 
+    Camera _cam;
+
+    public LayerMask _notPlayerLayer;
+
+    private void Awake()
+    {
+        _cam = Camera.main;
+    }
+
     private void OnEnable()
     {
         _originPlayerPos = Managers.Game._player._playerModel.transform;
-        _cameraForward = Camera.main.transform.forward;
+        _cameraForward = _cam.transform.forward;
 
         if (Managers.Game._player._playerCam._cameraMode == Define.CameraMode.QuarterView)
         {
@@ -21,8 +30,21 @@ public class MageBall : MonoBehaviour
         }
         else
         {
-            // 클릭한 곳을 향해 날아가도록 구현
-            _ballDir = _cameraForward;
+            // 줌모드일 경우
+            // 지역변수 하나 더 추가 후 hit.point나 50끝점 값 담기
+            RaycastHit hit;
+            if (Physics.Raycast(_cam.transform.position, _cameraForward, out hit, 50f, _notPlayerLayer))
+            {
+                // 지역변수에 값 담기로 변경
+                _ballDir = (hit.point - transform.position).normalized;
+            }
+            else
+            {
+                // 지역변수에 값 담기로 변경
+                // ray 50
+                _ballDir = _cameraForward;
+            }
+            //_ballDir = 지역변수;
         }
 
         Managers.Game._player._damageAlbes.Clear();
