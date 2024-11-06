@@ -49,7 +49,7 @@ public class GameManager
 
         // 데이터 로드
         Managers.Data.LoadData<PlayerSaveData>();
-
+ 
         switch (Managers.Game._playerType)
         {
             case Define.PlayerType.Melee:
@@ -67,6 +67,20 @@ public class GameManager
                 break;
         }
 
+        if (!TitleCanvasUI._isNewGame)
+        {
+            Vector3 loadPlayerPos = PlayerPosSetData.PlayerPosSetLoad();
+            var playerTransfrom = Managers.Game._player?.transform;
+            if (playerTransfrom != null)
+            {
+                playerTransfrom.position = loadPlayerPos;
+                Logger.Log($"저장된 위치로 이동{loadPlayerPos}");
+            }
+            else
+            {
+                Logger.LogError("플레이어를 못찾았습니다.");
+            }
+        }
         Managers.Resource.Instantiate("Player/VirtualCameras");
     }
 

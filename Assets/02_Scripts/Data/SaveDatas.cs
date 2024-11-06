@@ -165,7 +165,7 @@ public class SaveDatas : IData
 
 #region 플레이어 데이터 클래스
 [Serializable]
-public class PlayerPosSet 
+public class PlayerPosSetData 
 {
     public float _x;
     public float _y;
@@ -173,7 +173,7 @@ public class PlayerPosSet
 
     public static void PlayerPosSave(Vector3 pos)
     {
-        PlayerPosSet playerPosSet = new PlayerPosSet();
+        PlayerPosSetData playerPosSet = new PlayerPosSetData();
 
         playerPosSet._x = pos.x;
         playerPosSet._y = pos.y;
@@ -192,7 +192,7 @@ public class PlayerPosSet
         if (File.Exists(path))
         {
             string playerPosJson = File.ReadAllText(path);
-            PlayerPosSet savePos = JsonUtility.FromJson<PlayerPosSet>(playerPosJson);
+            PlayerPosSetData savePos = JsonUtility.FromJson<PlayerPosSetData>(playerPosJson);
             return new Vector3(savePos._x, savePos._y, savePos._z);
         }
         else
@@ -699,16 +699,26 @@ public class QuickSlotSaveData : IData
 [Serializable]
 public class QuestItemData
 {
+    //퀘스트 아이디
     public int _id;
+    //퀘스트 진행 값
     public int _progressInfo;
-    public int _isProgress;
-    public int _isFunisihed;
+    //진행 중 여부
+    public bool _isProgress; 
+    //완료 여부
+    public bool _isFinished;
 }
 
 [Serializable]
 public class QuestSaveData : IData
 {
     public List<QuestItemData> _questItemData = new List<QuestItemData>();
+    // 현재 진행 중인 퀘스트 목록
+    public List<int> _progressQuest = new List<int>();
+    // 완료한 퀘스트 목록
+    public List<int> _completeQuest = new List<int>();
+    //현재 진행중인 퀘스트의 진행 값
+    public Dictionary<int, int> _countCheck = new Dictionary<int, int>();
 
     string _SavePath;
 
@@ -720,6 +730,9 @@ public class QuestSaveData : IData
     public void SaveData()
     {
         SetDefaultData();
+
+        var questManager = Managers.QuestManager;
+
         string directory = Path.GetDirectoryName(_SavePath);
         if (!Directory.Exists(directory))
         {
@@ -727,6 +740,32 @@ public class QuestSaveData : IData
         }
         try
         {
+            // 퀘스트 진행 중인 퀘스트 및 진행 값 딕셔너리 반영
+            foreach (int questId in questManager._questID)
+            {
+                var questData = new QuestItemData
+                {
+                    _id = questId,
+                    // 진행 중인 퀘스트일 경우, 진행 값 저장
+                    _progressInfo = questManager._countCheck.ContainsKey(questId) ? questManager._countCheck[questId] : 0,
+                    // 진행 중인 퀘스트 목록에 있는 경우 true
+                    _isProgress = questManager._progressQuest.Contains(questId),
+                    // 완료된 퀘스트 목록에 있는 경우 true
+                    _isFinished = questManager._completeQuest.Contains(questId)
+                };
+                _questItemData.Add(questData);
+
+                // 진행 중인 퀘스트 목록에 추가하고 진행 값도 딕셔너리에 추가
+                if (questManager._progressQuest.Contains(questId))
+                {
+                    if (!questManager._countCheck.ContainsKey(questId))
+                    {
+                        questManager._countCheck[questId] = 0; // 기본값 설정 (진행 값)
+                    }
+                }
+            }
+
+
             string questJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, questJson);
             Logger.Log("퀘스트 세이브");
@@ -744,6 +783,7 @@ public class QuestSaveData : IData
         {
             string questJson = File.ReadAllText(_SavePath);
             JsonUtility.FromJsonOverwrite(questJson, this);
+            Logger.Log($"{_questItemData.Count.ToString()}");
             Logger.Log("퀘스트 데이터 로드");
             return true;
         }
@@ -757,6 +797,9 @@ public class QuestSaveData : IData
     public void SetDefaultData()
     {
         _questItemData.Clear();
+        _progressQuest.Clear();
+        _completeQuest.Clear();
+        _countCheck.Clear();
     }
 }
 #endregion

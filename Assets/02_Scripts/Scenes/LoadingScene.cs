@@ -42,6 +42,8 @@ public class LoadingScene : BaseScene
             ApplyLargeMapData();
             //퀵슬롯
             ApplyQuickSlotData();
+            //퀘스트
+            ApplyQusetData();
         }
     }
 
@@ -217,7 +219,26 @@ public class LoadingScene : BaseScene
 
     void ApplyQusetData()
     {
-
+        QuestSaveData questSaveDatas = Managers.Data.GetData<QuestSaveData>();
+        var questManager = Managers.QuestManager;
+        QuestUI questUI = Managers.UI.OpenUI<QuestUI>(new BaseUIData());
+        MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
+        SimpleQuestText simpleQuestText = mainUI.GetComponentInChildren<SimpleQuestText>();
+        questManager._questInput = Define.QuestInput.Q;
+        questUI.CloseUI();
+        // 로드된 퀘스트 데이터를 적용 (진행 중인 퀘스트와 진행 값 반영)
+        foreach (var questSaveData in questSaveDatas._questItemData)
+        {
+            if (questSaveData._isProgress)
+            {
+                questManager._progressQuest.Add(questSaveData._id);
+                questManager._countCheck[questSaveData._id] = questSaveData._progressInfo; // 진행 값 적용
+            }
+            if (questSaveData._isFinished)
+            {
+                questManager._completeQuest.Add(questSaveData._id);
+            }
+        }
     }
 
     public override void Clear()

@@ -112,7 +112,7 @@ public class DataManager
         LoadData<EquipmentSaveData>();
         LoadData<LargeMapData>();
         LoadData<QuickSlotSaveData>();
-        //LoadData<QuestSaveData>();
+        LoadData<QuestSaveData>();
     }
 
     public void AllDataInit()
