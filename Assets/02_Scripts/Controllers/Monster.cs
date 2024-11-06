@@ -212,11 +212,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 
                 break;
             case MonsterState.Return:
-                if(_monsterHpBar != null)
-                {
-                    _monsterHpBar.HpChanged();
-                }
-                
                 if ((_originPos - transform.position).magnitude <= 3f)
                     MChangeState(MonsterState.Idle);
                 break;
@@ -240,8 +235,11 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 상태 변환 FSM 사용
     public void MChangeState(MonsterState nextState)
     {
+        if (_monsterHpBar != null)
+        {
+            _monsterHpBar.HpChanged();
+        }
 
-        
 
         if (_mFSM == null)
         {
