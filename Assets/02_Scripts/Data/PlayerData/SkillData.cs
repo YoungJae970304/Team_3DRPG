@@ -24,6 +24,7 @@ public class SkillData
         MPRecovery,
         ATK,
         DEF,
+        MoveSpeed,
     }
 
     public int ID;
