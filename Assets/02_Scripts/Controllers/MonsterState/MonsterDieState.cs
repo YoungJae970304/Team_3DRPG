@@ -15,7 +15,7 @@ public class MonsterDieState : BaseState
     {
         _monster._nav.enabled = false;
         _monster._collider.enabled = false;
-        _monster._rig.isKinematic = true;
+     
         _monster._anim.SetTrigger("Die");
         Managers.Game._monsters.Remove(_monster);
         Logger.Log("몬스터 사망");
@@ -34,7 +34,7 @@ public class MonsterDieState : BaseState
                 _monster._nav.enabled = true;
                 _monster._anim.enabled = true;
                 _monster._collider.enabled = true;
-                _monster._rig.isKinematic = false;
+        
                 _monster.Die(mob);
             }
             
