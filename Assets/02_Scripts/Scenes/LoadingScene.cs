@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using static Cinemachine.DocumentationSortingAttribute;
+using System;
 
 public class LoadingScene : BaseScene
 {
@@ -42,7 +44,7 @@ public class LoadingScene : BaseScene
             //퀵슬롯
             ApplyQuickSlotData();
             //퀘스트
-            //ApplyQusetData();
+            ApplyQusetData();
         }
     }
 
@@ -152,11 +154,7 @@ public class LoadingScene : BaseScene
         var player = Managers.Game._player;
         var stats = Managers.Game._player._playerStatManager;
 
-        int loadedLevel = playerSaveData._level;
-        if(stats.Level != loadedLevel)
-        {
-            stats.Level = loadedLevel;
-        }
+        stats.Level = playerSaveData._level;
         stats.EXP = playerSaveData._exp;
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;

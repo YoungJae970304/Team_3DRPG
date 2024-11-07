@@ -582,7 +582,7 @@ public class QuestSaveData : IData
         {
             QuestUI acceptedQuestUI = Managers.UI.OpenUI<QuestUI>(new BaseUIData());
             acceptedQuestUI._questInput = Define.QuestInput.Q;
-
+            acceptedQuestUI.CloseUI();
             if (acceptedQuestUI)
             {
                 // 진행 중인 퀘스트들만 저장
@@ -606,7 +606,6 @@ public class QuestSaveData : IData
                     };
                     _questItemData.Add(questData);
                 }
-                acceptedQuestUI.CloseUI();
             }
             string questJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, questJson);

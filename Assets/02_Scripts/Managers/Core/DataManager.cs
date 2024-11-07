@@ -97,7 +97,7 @@ public class DataManager
         LoadData<SkillSaveData>();
         LoadData<EquipmentSaveData>();
         LoadData<QuickSlotSaveData>();
-        //LoadData<QuestSaveData>();
+        LoadData<QuestSaveData>();
         LoadData<LargeMapData>();
     }
 
