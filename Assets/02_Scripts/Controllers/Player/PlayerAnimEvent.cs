@@ -160,6 +160,13 @@ public class PlayerAnimEvent : MonoBehaviour
     public void DodgeEnd()
     {
         _player._dodgeing = false;
+        _player.ChangeState(PlayerState.Idle);
+    }
+
+    public void DodgeForceEnd()
+    {
+        _player._dodgeing = false;
+        _player._playerAnim.Rebind();
     }
 
     // 피격 애니메이션 피격 상태 해제부분
