@@ -195,7 +195,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _playerStatManager.PlayerStatUpdate();
 
         // 공격 콜라이더 off
-        SetColActive("Katana");
+        SetColActive("");
         #endregion  
     }
 
