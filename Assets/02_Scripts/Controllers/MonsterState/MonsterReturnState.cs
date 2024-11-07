@@ -8,20 +8,28 @@ public class MonsterReturnState : BaseState
     public MonsterReturnState(Player player, Monster monster, ITotalStat stat) : base(player, monster, stat)
     {
     }
-
+    float returnSpeed;
     public override void OnStateEnter()
     {
         //origin포스 찾아서 이동하기
+
+        ReturnSpeedChange();
         ReturnHeal();
         _monster._nav.destination = _monster._originPos;
         if (_monster._hpBar != null)
         {
             _monster._monsterHpBar.HpChanged();
         }
-    }
 
+    }
+    public void ReturnSpeedChange()
+    {
+        returnSpeed = _monster._nav.speed;
+        _monster._nav.speed = 6f;
+    }
     public override void OnStateExit()
     {
+        _monster._nav.speed = returnSpeed;
         //originPos라면 Idle로 상태 변환
         //아니라면 플레이어 추격(Move로 상태 변환) // 이조건은 필요없는듯 Idle로만 변하면됨
         //얘도 조건확인하기

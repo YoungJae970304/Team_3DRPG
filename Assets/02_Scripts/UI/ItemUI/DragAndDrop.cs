@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DragAndDrop : MonoBehaviour
+public class DragAndDrop : BaseUI
 {
     public Image Icon;
     public static GraphicRaycaster Raycaster { get; set; }  //레이캐스트를 위한 레이캐스터
     PointerEventData _pointerEvent;                         //포인트 이벤트
     List<RaycastResult> _result = new List<RaycastResult>();//레이캐스트 결과물을 담을 리스트
     IItemDragAndDropAble _currnetSlot;                                  //클릭을 시작한 슬롯
+    public IItemDragAndDropAble CurrnetSlot {get=>_currnetSlot;}
     private Vector3 _beginDragIconPoint;                    // 드래그 시작 시 슬롯의 위치
     private Vector3 _beginDragCursorPoint;                  // 드래그 시작 시 커서의 위치
     public ToolTipUI toolTip;           //아이템 정보를 표시할 UI
