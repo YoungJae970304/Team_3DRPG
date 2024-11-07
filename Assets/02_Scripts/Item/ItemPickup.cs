@@ -11,9 +11,6 @@ public class ItemPickup : MonoBehaviour
     bool _isPickup = false;
     Sequence _seq;
     Tweener _tweener;
-    private void Awake()
-    {
-    }
 
     private void Start()
     {
@@ -75,20 +72,18 @@ public class ItemPickup : MonoBehaviour
                 {
                     // id를 전달
                     _newItem = Item.ItemSpawn(itemID);
-                    if (_newItem != null) // null 체크
+                    if (_newItem != null)
                     {
-                        Logger.Log("아이템 생성");
                         if (_inventory != null)
                         {
                             _isPickup = true;
                             _inventory.InsertItem(_newItem);
                             Managers.Data.SaveData<InventorySaveData>();
-                            Logger.Log("인벤토리 저장 확인");
                             Logger.Log($"{_newItem.Data.Name} 인벤토리에 추가");
                         }
                         else
                         {
-                            Logger.Log("인벤토리에 못넣음");
+                            Logger.LogError("인벤토리에 넣지 못합니다.");
                         }
                     }
                 }

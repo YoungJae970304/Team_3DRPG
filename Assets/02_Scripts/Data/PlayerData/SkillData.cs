@@ -1,15 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class SkillData
 {
+
+    [Serializable]
     public enum SkillTypes
     {
         Active = 1,
         Passive
     }
 
+    [Serializable]
     public enum StatTypes
     {
         None,

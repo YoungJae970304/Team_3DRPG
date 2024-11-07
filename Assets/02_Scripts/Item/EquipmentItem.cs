@@ -9,9 +9,4 @@ public class EquipmentItem : Item
     {
 
     }
-
-    public virtual void Equip(EquipMentUI equipMentUI)
-    {
-        equipMentUI.StatSum();
-    }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public interface ILoader<Key, Value>
 {
@@ -15,10 +14,7 @@ public class DataManager
 
     public void Init()
     {
-        if (!TitleCanvasUI._isNewGame)
-        {
-            InitializeGameState();
-        }
+
         //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         // Json을 사용하기 위한 타입은 TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
@@ -34,11 +30,18 @@ public class DataManager
         */
     }
 
+    public void DataInit()
+    {
+        DataTypes();
+        Logger.Log("타입 체크");
+        AllDataInit();
+    }
+
     void DataTypes()
     {
         //IData를 상속받고있는 타입 설정
         var dataType = typeof(IData);
-        Logger.Log($"{dataType.Name}타입 입니다.");
+        //Logger.Log($"{dataType.Name.ToString()}타입 입니다.");
         //실행중인 어셈블리 가져오고
         var assemblies = AppDomain.CurrentDomain.GetAssemblies();
         //어셈블리 내의 모든 타입을 탐색
@@ -52,14 +55,14 @@ public class DataManager
                 //IData 를 상속받는 클래스또는 추상클래스인지 확인
                 if (dataType.IsAssignableFrom(type) && type.IsClass && !type.IsAbstract)
                 {
-                    Logger.Log($"타입 찾기{type.Name}");
+                    Logger.Log($"타입 찾기{type.Name.ToString()}");
                     //딕셔너리에 해당 타입의 인스턴스가 없을 경우
                     if (!_IDataDict.ContainsKey(type))
                     {
                         try
                         {
                             _IDataDict[type] = (IData)Activator.CreateInstance(type);
-                            Logger.Log($"타입 인스턴스 생성 및 추가 성공: {type.Name}");
+                            Logger.Log($"타입 인스턴스 생성 및 추가 성공: {type.Name.ToString()}");
                         }
                         catch (Exception ex)
                         {
@@ -69,22 +72,6 @@ public class DataManager
                 }
             }
         }
-    }
-
-    void InitializeGameState()
-    {
-        DataTypes();
-        Logger.Log("타입 체크");
-        if (TitleCanvasUI._isNewGame)
-        {
-            SaveData<SaveDatas>();
-            Logger.Log("첫 시작 입니다.");
-        }
-        else
-        {
-            Logger.Log("이어하기 입니다.");
-        }
-        AllDataInit();
     }
 
     //Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
@@ -97,11 +84,11 @@ public class DataManager
     {
         SaveData<PlayerSaveData>();
         SaveData<InventorySaveData>();
-        SaveData<EquipmentSaveData>();
         SaveData<SkillSaveData>();
-        SaveData<LargeMapData>();
-        SaveData<QuickSlotSaveData>();
+        SaveData<EquipmentSaveData>();
         SaveData<QuestSaveData>();
+        SaveData<QuickSlotSaveData>();
+        SaveData<LargeMapData>();
     }
 
     public void LoadAllData()
@@ -110,22 +97,21 @@ public class DataManager
         LoadData<InventorySaveData>();
         LoadData<SkillSaveData>();
         LoadData<EquipmentSaveData>();
-        LoadData<LargeMapData>();
         LoadData<QuickSlotSaveData>();
         //LoadData<QuestSaveData>();
+        LoadData<LargeMapData>();
     }
 
     public void AllDataInit()
     {
-        GetData<SaveDatas>()?.Init();
-        GetData<InventorySaveData>()?.Init();
-        GetData<EquipmentSaveData>()?.Init();
+        //GetData<SaveDatas>()?.Init();
         GetData<PlayerSaveData>()?.Init();
+        GetData<InventorySaveData>()?.Init();
         GetData<SkillSaveData>()?.Init();
-        GetData<QuestSaveData>()?.Init();
-
-        GetData<LargeMapData>()?.Init();
+        GetData<EquipmentSaveData>()?.Init();
         GetData<QuickSlotSaveData>()?.Init();
+        GetData<QuestSaveData>()?.Init();
+        GetData<LargeMapData>()?.Init();
         Logger.Log("각 데이터 Init 실행 확인");
     }
 

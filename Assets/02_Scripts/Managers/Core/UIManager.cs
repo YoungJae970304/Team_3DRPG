@@ -239,7 +239,6 @@ public class UIManager
         else    //우선순위로 관리되지 않는 UI
         {
             ui._isSort = sort;
-            canvas.sortingOrder = 0;
         }
     }
     //씬을 넘어갈 때 처리해줘야 하는 부분 작성
