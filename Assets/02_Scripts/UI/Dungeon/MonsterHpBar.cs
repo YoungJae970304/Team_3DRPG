@@ -5,11 +5,14 @@ public class MonsterHpBar : MonoBehaviour
 {
     Monster _monster;
     Slider _hpBar;
- 
-    private void OnEnable()
+    private void Awake()
     {
         _monster = GetComponentInParent<Monster>();
         _hpBar = GetComponentInChildren<Slider>();
+    }
+    private void OnEnable()
+    {
+        
         if (_monster == null)
         {
             Logger.LogError("Monster component not found in parent.");
