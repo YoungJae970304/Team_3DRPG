@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using Data;
 
 public class LoadingScene : BaseScene
 {
@@ -42,7 +43,7 @@ public class LoadingScene : BaseScene
             //퀵슬롯
             ApplyQuickSlotData();
             //퀘스트
-            ApplyQusetData();
+            //ApplyQusetData();
         }
     }
 
@@ -130,7 +131,6 @@ public class LoadingScene : BaseScene
         SkillSaveData skillSaveData = Managers.Data.GetData<SkillSaveData>();
         SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
         SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
-        skillTree.CloseUI();
         foreach (var skill in skillTree._skillTreeItems) {
             SkillTreeItemData skillTreeItemData = skillSaveData._skillTreeItemDatas.Where((item) => skill._skillId == item._id).FirstOrDefault();
             if (skillTreeItemData != null) {
@@ -141,6 +141,7 @@ public class LoadingScene : BaseScene
                 }
             }
         }
+        skillTree.CloseUI();
     }
 
     void ApplyPlayerData()
@@ -156,13 +157,13 @@ public class LoadingScene : BaseScene
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
         stats.Gold = playerSaveData._gold;
+        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ", stats.MaxHP, stats.MaxMP, stats.HP, stats.MP)}");
     }
 
     void ApplyLargeMapData()
     {
         LargeMapData largeMapData = Managers.Data.GetData<LargeMapData>();
         LargeMapUI largeMapUI = Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
-        largeMapUI.CloseUI();
         foreach(var largeMap in largeMapData._largeMapItemData)
         {
             if (largeMapData != null)
@@ -173,6 +174,7 @@ public class LoadingScene : BaseScene
                 largeMapUI._sceneFogTextures[largeMap.sceneName] = texture;
             }
         }
+        largeMapUI.CloseUI();
     }
 
     void ApplyQuickSlotData()
@@ -198,7 +200,6 @@ public class LoadingScene : BaseScene
             SkillQuickSlot[] skillQuickSlots = mainUI.GetComponentsInChildren<SkillQuickSlot>();
             SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
             SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
-            skillTree.CloseUI();
             foreach (var skillSlot in quickSlotSaveData._quickSkillSlotData)
             {
                 // 저장된 Skill ID와 일치하는 SkillTreeItem을 찾아 설정
@@ -212,6 +213,7 @@ public class LoadingScene : BaseScene
                     skillQuickSlots[skillSlot._slotIndex]._image.enabled = true;  // 아이콘 활성화
                 }
             }
+            skillTree.CloseUI();
         }
         mainUI.QuickslotUpdate();
     }
@@ -260,9 +262,7 @@ public class LoadingScene : BaseScene
         {
             Logger.LogWarning("완료된 퀘스트가 없습니다.");
         }
-
-        //acceptedQuestUI.CloseUI();
-
+        acceptedQuestUI.CloseUI();
         // 현재 진행 중인 퀘스트들을 문자열로 나열해주기
         Logger.Log($"현재 진행 중인 퀘스트: {string.Join(", ", questManager._progressQuest)}");
     }

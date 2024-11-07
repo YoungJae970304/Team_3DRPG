@@ -74,7 +74,7 @@ public class GameManager
             if (playerTransfrom != null)
             {
                 playerTransfrom.position = loadPlayerPos;
-                Logger.Log($"저장된 위치로 이동{loadPlayerPos}");
+                //Logger.Log($"저장된 위치로 이동{loadPlayerPos}");
             }
             else
             {

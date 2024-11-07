@@ -74,7 +74,7 @@ public class OptionUI : BaseUI
     public void OnClickShutDownBtn()
     {
         ConfirmUI confirmUI = Managers.UI.GetActiveUI<ConfirmUI>() as ConfirmUI;
-       
+        
         descTxt = "게임을 종료 \n 하시겠습니까?";
         
         confirmUIData.DescTxt = descTxt;
@@ -84,16 +84,16 @@ public class OptionUI : BaseUI
             //_fadeAnim.SetTrigger("doFade");
             //await Task.Delay(2000);
             CloseUI();
+            Managers.Data.SaveAllData();
+            Logger.Log("어플리케이션 종료 되었습니다. 모든 데이터가 저장 되었습니다.");
             Application.Quit();
         };
         if (confirmUI == null)
         {
             Managers.UI.OpenUI<ConfirmUI>(confirmUIData);
-            Managers.Data.SaveAllData();
 
-            PlayerPosSetData.PlayerPosSave(Managers.Game._player.transform.position);
-            Logger.Log($"플레이어 위치 따로 저장{Managers.Game._player.transform.position.ToString()}");
-            Logger.Log("어플리케이션 종료 되었습니다. 모든 데이터가 저장 되었습니다.");
+            //PlayerPosSetData.PlayerPosSave(Managers.Game._player.transform.position);
+            //Logger.Log($"플레이어 위치 따로 저장{Managers.Game._player.transform.position.ToString()}");
         }
     }
 
