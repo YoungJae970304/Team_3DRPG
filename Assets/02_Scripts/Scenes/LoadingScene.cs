@@ -17,6 +17,7 @@ public class LoadingScene : BaseScene
 
     private void Start()
     {
+        Managers.Data.DataInit();
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
         //Logger.LogError((Managers.Game._player != null).ToString());
@@ -41,6 +42,8 @@ public class LoadingScene : BaseScene
             ApplyLargeMapData();
             //퀵슬롯
             ApplyQuickSlotData();
+            //퀘스트
+            //ApplyQusetData();
         }
     }
 
@@ -128,7 +131,6 @@ public class LoadingScene : BaseScene
         SkillSaveData skillSaveData = Managers.Data.GetData<SkillSaveData>();
         SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
         SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
-        skillTree.CloseUI();
         foreach (var skill in skillTree._skillTreeItems) {
             SkillTreeItemData skillTreeItemData = skillSaveData._skillTreeItemDatas.Where((item) => skill._skillId == item._id).FirstOrDefault();
             if (skillTreeItemData != null) {
@@ -139,6 +141,7 @@ public class LoadingScene : BaseScene
                 }
             }
         }
+        skillTree.CloseUI();
     }
 
     void ApplyPlayerData()
@@ -153,16 +156,25 @@ public class LoadingScene : BaseScene
         stats.EXP = playerSaveData._exp;
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
-        Logger.LogError($"불러온 SP 확인{Managers.Game._player._playerStatManager.SP.ToString()}");
         stats.Gold = playerSaveData._gold;
-        //player.transform.position = new Vector3(_x, _y, _z);
+
+        stats.MaxHP = stats.MaxHP > 0 ? stats.MaxHP : 150;
+        stats.HP = stats.HP > 0 ? stats.HP : stats.MaxHP;
+        stats.MaxMP = stats.MaxMP > 0 ? stats.MaxMP : 100;
+        stats.MP = stats.MP > 0 ? stats.MP : stats.MaxMP;
+        stats.MoveSpeed = stats.MoveSpeed > 0 ? stats.MoveSpeed : 5f;
+        stats.DodgeSpeed = stats.DodgeSpeed > 0 ? stats.DodgeSpeed : 10f;
+        stats.ATK = stats.ATK > 0 ? stats.ATK : 30;
+        stats.DEF = stats.DEF > 0 ? stats.DEF : 10;
+        stats.RecoveryHP = stats.RecoveryHP > 0 ? stats.RecoveryHP : 2;
+        stats.RecoveryMP = stats.RecoveryMP > 0 ? stats.RecoveryMP : 2;
+        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ", stats.MaxHP, stats.MaxMP, stats.HP, stats.MP)}");
     }
 
     void ApplyLargeMapData()
     {
         LargeMapData largeMapData = Managers.Data.GetData<LargeMapData>();
         LargeMapUI largeMapUI = Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
-        largeMapUI.CloseUI();
         foreach(var largeMap in largeMapData._largeMapItemData)
         {
             if (largeMapData != null)
@@ -173,6 +185,7 @@ public class LoadingScene : BaseScene
                 largeMapUI._sceneFogTextures[largeMap.sceneName] = texture;
             }
         }
+        largeMapUI.CloseUI();
     }
 
     void ApplyQuickSlotData()
@@ -198,7 +211,6 @@ public class LoadingScene : BaseScene
             SkillQuickSlot[] skillQuickSlots = mainUI.GetComponentsInChildren<SkillQuickSlot>();
             SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
             SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
-            skillTree.CloseUI();
             foreach (var skillSlot in quickSlotSaveData._quickSkillSlotData)
             {
                 // 저장된 Skill ID와 일치하는 SkillTreeItem을 찾아 설정
@@ -212,8 +224,58 @@ public class LoadingScene : BaseScene
                     skillQuickSlots[skillSlot._slotIndex]._image.enabled = true;  // 아이콘 활성화
                 }
             }
+            skillTree.CloseUI();
         }
         mainUI.QuickslotUpdate();
+    }
+
+    void ApplyQusetData()
+    {
+        QuestSaveData questSaveData = Managers.Data.GetData<QuestSaveData>();
+        QuestManager questManager = Managers.QuestManager;
+        QuestUI acceptedQuestUI = Managers.UI.OpenUI<QuestUI>(new BaseUIData());
+        acceptedQuestUI._questInput = Define.QuestInput.Q;
+        bool hasFinishedQuest = false;
+        if (acceptedQuestUI)
+        {
+            foreach (var questItemData in questSaveData._questItemData)
+            {
+                // 진행 중인 퀘스트라면
+                if (questItemData._isProgress == 1)
+                {
+                    // 퀘스트 ID에 해당하는 퀘스트가 _progressQuest에 없으면 추가
+                    if (!questManager._progressQuest.Contains(questItemData._id))
+                    {
+                        questManager._progressQuest.Add(questItemData._id);
+                    }
+
+                    if (!questManager._countCheck.ContainsKey(questItemData._id))
+                    {
+                        questManager._countCheck.Add(questItemData._id, 0); 
+                    }
+
+                    questManager._countCheck[questItemData._id] = questItemData._progressInfo;
+
+                    // 퀘스트 완료된 퀘스트들을 _completeQuest 리스트에 넣어줌
+                    if (questItemData._isFinished == 1)
+                    {
+                        hasFinishedQuest = true;
+                        if (!questManager._completeQuest.Contains(questItemData._id))
+                        {
+                            questManager._completeQuest.Add(questItemData._id);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!hasFinishedQuest)
+        {
+            Logger.LogWarning("완료된 퀘스트가 없습니다.");
+        }
+        acceptedQuestUI.CloseUI();
+        // 현재 진행 중인 퀘스트들을 문자열로 나열해주기
+        Logger.Log($"현재 진행 중인 퀘스트: {string.Join(", ", questManager._progressQuest)}");
     }
 
     public override void Clear()

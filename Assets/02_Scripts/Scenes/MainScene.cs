@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainScene : BaseScene
@@ -8,7 +6,6 @@ public class MainScene : BaseScene
     [SerializeField] Transform _largeMapCamPos;
 
     Camera _largeMapCam;
-
     protected override void Init()
     {
         base.Init();
@@ -16,6 +13,7 @@ public class MainScene : BaseScene
         Managers.Game.PlayerPosSet(_playerSpawnPos);
         Managers.UI.OpenUI<MainUI>(new BaseUIData(), false);
         Managers.UI.OpenUI<DragAndDrop>(new BaseUIData(), false);
+        Managers.Game._player._hitMobs.Clear();
     }
 
     private void Start()
@@ -28,6 +26,6 @@ public class MainScene : BaseScene
 
     public override void Clear()
     {
-        
+
     }
 }

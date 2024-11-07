@@ -19,6 +19,7 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickBeginBtn()
     {
+        Logger.Log($"현재 첫 시작인지 확인{_isNewGame.ToString()}");
         _isNewGame = true;
         Managers.Game._firstTuto = _isNewGame;
 
@@ -32,6 +33,7 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickContinueBtn(string sceneName)
     {
+        Logger.Log($"현재 이어하기 인지 확인{_isNewGame.ToString()}");
         _isNewGame = false;
         Managers.Game._firstTuto = _isNewGame;
 
