@@ -147,7 +147,6 @@ public class SkillTree : ItemDragUI
         if (_currentItem == null) { return; }
         if (SpCheck())
         {
-            Logger.LogError($"플러스 진입 확인 : {_currentItem.Skill._skillName}");
             //sp 수치 감소 처리 필요
             _currentItem.Skill._prevLevel = _currentItem.SkillLevel;
             Managers.Game._player._playerStatManager.SP -= 1;
@@ -163,7 +162,6 @@ public class SkillTree : ItemDragUI
 
         if (_currentItem.SkillLevel > 0) 
         {
-            Logger.LogError($"마이너스 진입 확인:{_currentItem.Skill._skillName}");
             _currentItem.Skill._prevLevel = _currentItem.SkillLevel;
             Managers.Game._player._playerStatManager.SP += 1;
             _currentItem.SkillLevel -= 1;

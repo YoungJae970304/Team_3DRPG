@@ -107,11 +107,9 @@ public class Ork : Monster
                     {
                         //맞는 이펙트 실행(플레이어 위치에)
                         _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
-                        Logger.LogError(_player.transform.position.ToString());
                         _enemyAnimEvent.OrkHitAttack();
                     }
                     //_player.Damaged(_mStat.ATK);
-                    Logger.LogError($"{_player._playerStatManager.HP}");
                     damageable.Damaged(damage);
                 }
             }

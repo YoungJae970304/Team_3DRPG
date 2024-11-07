@@ -30,8 +30,6 @@ public class MageBall : MonoBehaviour
         MagePlayer mage = (MagePlayer)Managers.Game._player;
         _mageBallPos = mage._mageBallPos.position;
 
-        Logger.LogError($"인에이블 확인");
-
         if (Managers.Game._player._playerCam._cameraMode == Define.CameraMode.QuarterView)
         {
             _ballDir = _originPlayerPos.forward;

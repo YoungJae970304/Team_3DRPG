@@ -58,14 +58,11 @@ public class BossBear : Monster
     }
     IEnumerator PlusRoarRange()
     {
-        Logger.LogError("여긴 들어옴?");
         _roarTimer = 0;
         _roarRange.transform.localScale = _startScale;
         _maxRoarRange.SetActive(true);
-        Logger.LogError("여긴 들어옴?2");
         while (_roarRange.transform.localScale.x < _mStat.AtkDelay)
         {
-            Logger.LogError("여긴 들어옴?3");
             _roarRange.SetActive(true);
             //Logger.LogError(_roarRange.activeSelf.ToString());
             _roarRange.transform.localScale = _startScale * (0.1f + _roarTimer * _stageRoarPlus);
@@ -73,7 +70,6 @@ public class BossBear : Monster
             _roarTimer += Time.deltaTime;
             if (_roarRange.transform.localScale.x >= _mStat.AtkDelay)
             {
-                Logger.LogError("여긴 들어옴?4");
                 _roarTimer = 0;
                 _anim.SetBool("AfterStay", true);
                 _roarRange.transform.localScale = _startScale;
@@ -83,7 +79,6 @@ public class BossBear : Monster
                 break;
             }
             _anim.SetBool("AfterStay", false);
-            Logger.LogError("여긴 들어옴?5");
             yield return null;
         }
 
@@ -207,11 +202,9 @@ public class BossBear : Monster
                     {
                         //맞는 이펙트 실행(플레이어 위치에)
                         _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
-                        Logger.LogError(_player.transform.position.ToString());
                         _enemyAnimEvent.BossHitSound();
                     }
                     //_player.Damaged(_mStat.ATK);
-                    Logger.LogError($"{_player._playerStatManager.HP}");
                     damageable.Damaged(damage);
                 }
             }
@@ -231,7 +224,7 @@ public class BossBear : Monster
 
         //Logger.LogError(_mStat.HP.ToString());
         _mStat.HP -= (int)(amount * (100f / (_mStat.DEF + 100f)));
-        Logger.LogError(_mStat.HP.ToString());
+        Logger.LogWarning($"{gameObject.name} 남은 HP : {_mStat.HP}");
         PubAndSub.Publish<int>("BossHP", _mStat.HP);
         float hpPercentage = (float)_mStat.HP / _mStat.MaxHP;
 

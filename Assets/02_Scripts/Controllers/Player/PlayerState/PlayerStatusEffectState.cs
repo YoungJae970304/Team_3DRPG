@@ -20,6 +20,6 @@ public class PlayerStatusEffectState : BaseState
 
     public override void OnStateExit()
     {
-        
+        _player._hitting = false;
     }
 }

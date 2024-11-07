@@ -86,7 +86,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
         if (GetComponentInChildren<EnemyEffect>() != null)
         {
-            Logger.LogError("이팩트저장됨");
             _enemyEffect = GetComponentInChildren<EnemyEffect>();
         }
         _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
@@ -96,7 +95,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         _collider = GetComponent<SphereCollider>();
         if (GetComponentInChildren<EnemyEffect>() != null)
         {
-            Logger.LogError("이팩트저장됨");
             _enemyEffect = GetComponentInChildren<EnemyEffect>();
         }
         _monsterDrop = FindObjectOfType<Drop>();
@@ -300,10 +298,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         {
             MChangeState(MonsterState.Die);
         }
-
-        Logger.LogError(_mStat.HP.ToString());
-
-
     }
 
     #endregion
@@ -430,11 +424,8 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
                     {
                         //맞는 이펙트 실행(플레이어 위치에)
                         _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
-                        Logger.LogError(_player.transform.position.ToString());
-
                     }
                     //_player.Damaged(_mStat.ATK);
-                    Logger.LogError($"{_player._playerStatManager.HP}");
                     damageable.Damaged(damage);
                 }
             }
@@ -616,7 +607,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
                         _mStat._mStat.AttackRange = stat.AttackRange;
                         _mStat._mStat.AwayRange = stat.AwayRange;
                         _nav.speed = _mStat._mStat.MoveSpeed;
-                        Logger.LogError($"{_mStat._mStat.MaxHP}");
                     }
                     break;
                 case DeongeonType.Normal:
@@ -637,7 +627,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
                         _mStat._mStat.AttackRange = stat.AttackRange;
                         _mStat._mStat.AwayRange = stat.AwayRange;
                         _nav.speed = _mStat._mStat.MoveSpeed;
-                        Logger.LogError($"{_mStat._mStat.MaxHP}");
                     }
                     break;
                 case DeongeonType.Hard:
@@ -658,7 +647,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
                         _mStat._mStat.AttackRange = stat.AttackRange;
                         _mStat._mStat.AwayRange = stat.AwayRange;
                         _nav.speed = _mStat._mStat.MoveSpeed;
-                        Logger.LogError($"{_mStat._mStat.MaxHP}");
                     }
                     break;
                 case DeongeonType.Boss:
@@ -679,7 +667,6 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
                         _mStat._mStat.AttackRange = stat.AttackRange;
                         _mStat._mStat.AwayRange = stat.AwayRange;
                         _nav.speed = _mStat._mStat.MoveSpeed;
-                        Logger.LogError($"{_mStat._mStat.MaxHP}");
                     }
                     break;
             }

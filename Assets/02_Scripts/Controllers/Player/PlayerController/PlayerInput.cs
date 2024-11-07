@@ -134,33 +134,12 @@ public class PlayerInput : MonoBehaviour
         {
             _player.SkillSetR();
         }
-
-        else if (Input.GetKeyDown(KeyCode.B))
-        {
-            //_player._playerStatManager.EXP += 1000;
-            //Logger.LogError($"초기화 확인 {Managers.DataTable._PlayerStat[0]}");
-            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.HP}");
-            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.Level}");
-            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.SpAddAmount}");
-            Logger.LogError($"초기화 확인 {Managers.Game._player._playerStatManager.MaxEXP}");
-            Logger.LogError($"돈 확인 {Managers.Game._player._playerStatManager.Gold}");
-
-        }
         else if (Input.GetKeyDown(KeyCode.V))
         {
             _player._playerStatManager.EXP += 1000;
             _player._playerStatManager.Gold += 100000;
             _player._playerStatManager.HP = _player._playerStatManager.MaxHP;
             _player._playerStatManager.MP = _player._playerStatManager.MaxMP;
-            //try
-            //{
-            //    Managers.Data.SaveData<PlayerSaveData>();
-            //    Logger.Log($"플레이어 데이터 저장{_player._playerStatManager.EXP}\n{_player._playerStatManager.Gold}");
-            //}catch(System.Exception e)
-            //{
-            //    Logger.LogError($"플레이어 데이터 저장 실패{e.Message}");
-            //}
-
         }
     }
 

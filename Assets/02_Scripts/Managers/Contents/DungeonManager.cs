@@ -98,7 +98,6 @@ public class DungeonManager : MonoBehaviour
         {
             _bossSpawn.SetActive(true);
             _bossDungeonWall.SetActive(true);
-            Logger.LogError("벽체크");
         }
         else if(_curLevel == DeongeonType.Easy)
         {
@@ -184,12 +183,10 @@ public class DungeonManager : MonoBehaviour
     {
         _monsterCount += 1;
         _remainMonsterValue.text = $"남은 몬스터 수 : {_monsterCount}";
-        Logger.LogError($"{_monsterCount.ToString()}일단 더한숫자확인");
     }
     public void CountMinus()
     {
         _monsterCount -= 1;
         _remainMonsterValue.text = $"남은 몬스터 수 : {_monsterCount}";
-        Logger.LogError($"{_monsterCount.ToString()}일단 뺀숫자확인");
     }
 }

@@ -40,7 +40,7 @@ public class ManaBurstStay : SkillStay
             {
                 //플레이어 공격력 * ( (baseValue + (SkillLevel * DamageValue)) * 0.01 )
                 //int damage = (int)(stat.ATK * ((skillData.BaseDamage + (level * skillData.DamageValue)) * 0.01f));
-                Logger.LogError($"플레이어 공격력 : {stat.ATK} / 스킬 BaseDamage : {skillData.BaseDamage} / 현재 스킬 레벨 : {level} / 스킬데미지값 : {skillData.DamageValue}");
+                Logger.Log($"플레이어 공격력 : {stat.ATK} / 스킬 BaseDamage : {skillData.BaseDamage} / 현재 스킬 레벨 : {level} / 스킬데미지값 : {skillData.DamageValue}");
                 //Logger.LogError($"데미지 총합 : {damage}");
                 Managers.Game._player.AreaDamage(15f, Managers.Game._player._skillBase._damage);
 

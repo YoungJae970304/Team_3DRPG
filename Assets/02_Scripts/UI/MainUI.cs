@@ -133,17 +133,11 @@ public class MainUI : ItemDragUI
     }
     public void ValueCheck(int id)
     {
-        Logger.LogError($"{Managers.QuestManager._targetCheck[id]}인벤토리 아이디값");
-
-
         Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
         if (Managers.QuestManager._changeText[id] != null)
         {
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
         }
-
-
-
     }
     public void QuickslotUpdate()
     {

@@ -13,22 +13,7 @@ public class MainScene : BaseScene
         Managers.Game.PlayerPosSet(_playerSpawnPos);
         Managers.UI.OpenUI<MainUI>(new BaseUIData(), false);
         Managers.UI.OpenUI<DragAndDrop>(new BaseUIData(), false);
-        Managers.Game._player._hitMobs.Clear();
-
-        if (!TitleCanvasUI._isNewGame)
-        {
-            Vector3 loadPlayerPos = PlayerPosSetData.PlayerPosSetLoad();
-            var playerTransfrom = Managers.Game._player?.transform;
-            if (playerTransfrom != null)
-            {
-                playerTransfrom.position = loadPlayerPos;
-                //Logger.Log($"저장된 위치로 이동{loadPlayerPos}");
-            }
-            else
-            {
-                Logger.LogError("플레이어를 못찾았습니다.");
-            }
-        }
+        //Managers.Game._player._hitMobs.Clear();
     }
 
     private void Start()

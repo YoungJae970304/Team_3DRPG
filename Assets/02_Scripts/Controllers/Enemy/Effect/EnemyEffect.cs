@@ -39,7 +39,6 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
                 {
                     return;
                 }
-                Logger.LogError("이펙트 꺼짐");
             }
 
         }
@@ -55,7 +54,6 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
                 {
                     return;
                 }
-                Logger.LogError("이펙트 꺼짐");
             }
         }
         else
@@ -72,7 +70,6 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
                 {
                     return;
                 }
-                Logger.LogError("이펙트 꺼짐");
             }
         }
         
@@ -82,14 +79,11 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
     {
         if (Get<ParticleSystem>((int)name).gameObject.activeSelf) return;
         Get<ParticleSystem>((int)name).gameObject.SetActive(true);
-        Logger.LogError($"{Get<ParticleSystem>((int)name).gameObject.name}켜진 이펙트 이름임");
         if (playerTransform != null)
         {
             Get<ParticleSystem>((int)name).gameObject.transform.position = playerTransform.position;
-            Logger.LogError($"{Get<ParticleSystem>((int)name).gameObject.transform.position}바뀐위치임");
         }
         Get<ParticleSystem>((int)name).Play(); //너무 이펙트가 다터짐 수정 필요
-        Logger.LogError("이팩트 켜짐");
     }
  
     #region Bind구현부

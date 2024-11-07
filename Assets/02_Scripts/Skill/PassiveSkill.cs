@@ -54,7 +54,7 @@ public class PassiveSkillEffect : SkillPassive
                 Logger.LogWarning($"DEF 증가량 {diff}, 현재 DEF {stat.DEF}");
                 return;
             case SkillData.StatTypes.MoveSpeed:
-                stat.DEF = diff;
+                stat.MoveSpeed = diff;
                 Logger.LogWarning($"MoveSpeed 증가량 {diff}, 현재 MoveSpeed {stat.DEF}");
                 return;
             default:

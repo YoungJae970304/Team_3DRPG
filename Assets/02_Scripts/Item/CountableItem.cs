@@ -25,7 +25,6 @@ public class CountableItem : Item
     public int AddAmount(int amount)
     {
         int nextAmount = _amount + amount;
-        Logger.LogError($"{_amount}얜 몇임?");
         //현재 수량과 추가된 수량이 _maxAmount를 초과 했는지 확인 할 변수
         int overAmount = 0;
         //추가된 수량이 최대개수(99) 보다 커지면
@@ -42,7 +41,6 @@ public class CountableItem : Item
     public int RemoveAmount(int amount)
     {
         int nextAmount = _amount - amount; ;
-        Logger.LogError($"{_amount}얜 몇임?");
         //현재 수량과 추가된 수량이 _maxAmount를 초과 했는지 확인 할 변수
         //int overAmount = 0;
         //추가된 수량이 최대개수(99) 보다 커지면
