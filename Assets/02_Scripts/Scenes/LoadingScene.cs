@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
-using Data;
 
 public class LoadingScene : BaseScene
 {
@@ -18,6 +17,7 @@ public class LoadingScene : BaseScene
 
     private void Start()
     {
+        Managers.Data.DataInit();
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
         //Logger.LogError((Managers.Game._player != null).ToString());
@@ -157,6 +157,17 @@ public class LoadingScene : BaseScene
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
         stats.Gold = playerSaveData._gold;
+
+        stats.MaxHP = stats.MaxHP > 0 ? stats.MaxHP : 150;
+        stats.HP = stats.HP > 0 ? stats.HP : stats.MaxHP;
+        stats.MaxMP = stats.MaxMP > 0 ? stats.MaxMP : 100;
+        stats.MP = stats.MP > 0 ? stats.MP : stats.MaxMP;
+        stats.MoveSpeed = stats.MoveSpeed > 0 ? stats.MoveSpeed : 5f;
+        stats.DodgeSpeed = stats.DodgeSpeed > 0 ? stats.DodgeSpeed : 10f;
+        stats.ATK = stats.ATK > 0 ? stats.ATK : 30;
+        stats.DEF = stats.DEF > 0 ? stats.DEF : 10;
+        stats.RecoveryHP = stats.RecoveryHP > 0 ? stats.RecoveryHP : 2;
+        stats.RecoveryMP = stats.RecoveryMP > 0 ? stats.RecoveryMP : 2;
         Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ", stats.MaxHP, stats.MaxMP, stats.HP, stats.MP)}");
     }
 

@@ -14,9 +14,7 @@ public class DataManager
 
     public void Init()
     {
-        DataTypes();
-        Logger.Log("타입 체크");
-        AllDataInit();
+
         //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         // Json을 사용하기 위한 타입은 TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
@@ -30,6 +28,13 @@ public class DataManager
             StatDict.Add(stat.level, stat);
         }
         */
+    }
+
+    public void DataInit()
+    {
+        DataTypes();
+        Logger.Log("타입 체크");
+        AllDataInit();
     }
 
     void DataTypes()
@@ -79,34 +84,34 @@ public class DataManager
     {
         SaveData<PlayerSaveData>();
         SaveData<InventorySaveData>();
-        SaveData<EquipmentSaveData>();
         SaveData<SkillSaveData>();
-        SaveData<LargeMapData>();
+        SaveData<EquipmentSaveData>();
+        SaveData<QuestSaveData>();
         SaveData<QuickSlotSaveData>();
-        //SaveData<QuestSaveData>();
+        SaveData<LargeMapData>();
     }
 
     public void LoadAllData()
     {
         LoadData<PlayerSaveData>();
         LoadData<InventorySaveData>();
-        LoadData<EquipmentSaveData>();
         LoadData<SkillSaveData>();
-        LoadData<LargeMapData>();
+        LoadData<EquipmentSaveData>();
         LoadData<QuickSlotSaveData>();
         //LoadData<QuestSaveData>();
+        LoadData<LargeMapData>();
     }
 
     public void AllDataInit()
     {
         //GetData<SaveDatas>()?.Init();
-        GetData<InventorySaveData>()?.Init();
-        GetData<EquipmentSaveData>()?.Init();
         GetData<PlayerSaveData>()?.Init();
+        GetData<InventorySaveData>()?.Init();
         GetData<SkillSaveData>()?.Init();
+        GetData<EquipmentSaveData>()?.Init();
+        GetData<QuickSlotSaveData>()?.Init();
         GetData<QuestSaveData>()?.Init();
         GetData<LargeMapData>()?.Init();
-        GetData<QuickSlotSaveData>()?.Init();
         Logger.Log("각 데이터 Init 실행 확인");
     }
 
