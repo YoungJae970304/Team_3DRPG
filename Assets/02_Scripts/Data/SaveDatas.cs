@@ -43,7 +43,7 @@ public class PlayerSaveData : IData
             var stats = Managers.Game._player._playerStatManager;
             var player = Managers.Game._player;
             var stat = player.GetOrAddComponent<PlayerStatManager>();
-            Logger.Log($"각 스텟 저장 전 확인 : {string.Join(", ", stat.MaxHP, stat.MaxMP, stat.HP, stat.MP)}");
+            //Logger.Log($"각 스텟 저장 전 확인 : {string.Join(", ", stat.MaxHP, stat.MaxMP, stat.HP, stat.MP)}");
             _level = stats.Level;
             _exp = stats.EXP;
             _maxExp = stats.MaxEXP;
@@ -58,7 +58,7 @@ public class PlayerSaveData : IData
             }
             string playerJson = JsonUtility.ToJson(this, true);
             File.WriteAllText(_SavePath, playerJson);
-            Logger.Log($"각 스텟 저장 후 확인 : {string.Join(", ", stat.MaxHP, stat.MaxMP, stat.HP, stat.MP)}");
+            //Logger.Log($"각 스텟 저장 후 확인 : {string.Join(", ", stat.MaxHP, stat.MaxMP, stat.HP, stat.MP)}");
         }
         catch (Exception e)
         {
