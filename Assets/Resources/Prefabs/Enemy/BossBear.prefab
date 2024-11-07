@@ -5648,6 +5648,7 @@ MonoBehaviour:
   _randomAttack: 0
   sample: []
   _collider: {fileID: 0}
+  _rig: {fileID: 0}
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
   _dropData:
@@ -5693,6 +5694,7 @@ MonoBehaviour:
   _anim: {fileID: 0}
   _monsterID: 0
   _enemyAnimEvent: {fileID: 0}
+  _monsterHpBar: {fileID: 0}
   _hpBar: {fileID: 0}
   _bossBearID: 99999
   _roarRange: {fileID: 4638996236515068095}
@@ -5792,8 +5794,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
+  m_UseGravity: 1
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

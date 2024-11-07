@@ -32,21 +32,7 @@ public class MonsterIdleState : BaseState
     public override void OnStateUpdate()
     {
         if (_monster._mStat == null) return;
-        //일정 거리 배회
-        //선공몹들은 플레이어가 일정 거리 안에 들어온다면 Exit로 상태 변환
-        awayRangeX = Random.Range(-_monster._mStat.AwayRange, _monster._mStat.AwayRange);
-        //float awayRangeY = Random.Range(0, _sStat.AwayRange);
-        awayRangeZ = Random.Range(-_monster._mStat.AwayRange, _monster._mStat.AwayRange);
-
-        if ((_monster._nav.destination - _monster.transform.position).magnitude > 1f)
-        {
-            _monster._nav.SetDestination(_monster._nav.destination);
-        }
-
-        else
-        {
-            _monster._nav.destination = _monster._originPos + new Vector3(awayRangeX, 0, awayRangeZ);
-        }
+        _monster.SetDestinationOnTimeToIdle(1);
 
     }
 }
