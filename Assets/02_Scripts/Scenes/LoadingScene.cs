@@ -152,23 +152,28 @@ public class LoadingScene : BaseScene
         Managers.Game.PlayerCreate();
         var player = Managers.Game._player;
         var stats = Managers.Game._player._playerStatManager;
-        stats.Level = playerSaveData._level;
+
+        int loadedLevel = playerSaveData._level;
+        if(stats.Level != loadedLevel)
+        {
+            stats.Level = loadedLevel;
+        }
         stats.EXP = playerSaveData._exp;
         stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
         stats.Gold = playerSaveData._gold;
 
-        stats.MaxHP = stats.MaxHP > 0 ? stats.MaxHP : 150;
-        stats.HP = stats.HP > 0 ? stats.HP : stats.MaxHP;
-        stats.MaxMP = stats.MaxMP > 0 ? stats.MaxMP : 100;
-        stats.MP = stats.MP > 0 ? stats.MP : stats.MaxMP;
-        stats.MoveSpeed = stats.MoveSpeed > 0 ? stats.MoveSpeed : 5f;
-        stats.DodgeSpeed = stats.DodgeSpeed > 0 ? stats.DodgeSpeed : 10f;
-        stats.ATK = stats.ATK > 0 ? stats.ATK : 30;
-        stats.DEF = stats.DEF > 0 ? stats.DEF : 10;
-        stats.RecoveryHP = stats.RecoveryHP > 0 ? stats.RecoveryHP : 2;
-        stats.RecoveryMP = stats.RecoveryMP > 0 ? stats.RecoveryMP : 2;
-        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ", stats.MaxHP, stats.MaxMP, stats.HP, stats.MP)}");
+        stats._originStat.MaxHP = stats.MaxHP > 0 ? stats.MaxHP : 150;
+        stats._originStat.HP = stats.HP > 0 ? stats.HP : stats.MaxHP;
+        stats._originStat.MaxMP = stats.MaxMP > 0 ? stats.MaxMP : 100;
+        stats._originStat.MP = stats.MP > 0 ? stats.MP : stats.MaxMP;
+        stats._originStat.MoveSpeed = stats.MoveSpeed > 0 ? stats.MoveSpeed : 5f;
+        stats._originStat.DodgeSpeed = stats.DodgeSpeed > 0 ? stats.DodgeSpeed : 10f;
+        stats._originStat.ATK = stats.ATK > 0 ? stats.ATK : 30;
+        stats._originStat.DEF = stats.DEF > 0 ? stats.DEF : 10;
+        stats._originStat.RecoveryHP = stats.RecoveryHP > 0 ? stats.RecoveryHP : 2;
+        stats._originStat.RecoveryMP = stats.RecoveryMP > 0 ? stats.RecoveryMP : 2;
+        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ",stats.Level, stats.MaxHP, stats.MaxMP, stats.HP, stats.MP, stats.ATK, stats.DEF, stats.RecoveryHP, stats.RecoveryMP)}");
     }
 
     void ApplyLargeMapData()

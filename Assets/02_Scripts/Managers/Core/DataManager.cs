@@ -14,7 +14,6 @@ public class DataManager
 
     public void Init()
     {
-
         //StatDict = LoadJson<Data.StatData, int, Data.Stat>("StatData").MakeDict();
         // Json을 사용하기 위한 타입은 TextAsset
         //TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/StatData");
