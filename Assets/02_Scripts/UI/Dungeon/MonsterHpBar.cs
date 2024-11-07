@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,10 +6,12 @@ public class MonsterHpBar : MonoBehaviour
 {
     Monster _monster;
     Slider _hpBar;
+    TextMeshProUGUI _hpText;
     private void Awake()
     {
         _monster = GetComponentInParent<Monster>();
         _hpBar = GetComponentInChildren<Slider>();
+        _hpText = GetComponentInChildren<TextMeshProUGUI>();
     }
     private void OnEnable()
     {
@@ -31,5 +34,6 @@ public class MonsterHpBar : MonoBehaviour
             Logger.LogError("싯팔 이게 왜없어");
         }
         _hpBar.value = (float)_monster._mStat.HP / (float)_monster._mStat.MaxHP;
+        _hpText.text = $"{(((float)_monster._mStat.HP / (float)_monster._mStat.MaxHP) * 100).ToString("F1")}%";
     }
 }
