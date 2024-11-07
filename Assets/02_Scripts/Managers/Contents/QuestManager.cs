@@ -11,7 +11,6 @@ public class QuestManager
 
     ///////////////////////// 여기 밑부터 새로 작성한 부분
     public Dictionary<int,int> _questList = new Dictionary<int,int>(); //퀘스트 진행을 위한 플레이어 레벨 제한 정보
-    public Dictionary<int,int> _questrequirements = new Dictionary<int, int>(); // 퀘스트 목표 수치
     public Dictionary<int, int> _targetCheck = new Dictionary<int, int>(); // 퀘스트 목표
     public Dictionary<int, int> _countCheck = new Dictionary<int, int>(); // 현재 진행중인 퀘스트의 진행 값 // 필수 저장
     public Dictionary<int, string> _questName = new Dictionary<int, string>(); // 퀘스트 이름
@@ -71,8 +70,9 @@ public class QuestManager
             _questList.Add(questdata.ID, questdata.PlayerLevelRequirement);
             _questName.Add(questdata.ID, questdata.Name);
             _questID.Add(questdata.ID);
-            _questrequirements.Add(questdata.ID, questdata.TargetCount);
             _targetToQuestID.Add(questdata.TargetID, questdata.ID);
+            _targetCheck.Add(questdata.ID, questdata.TargetID);
+            _completeChecks.Add(questdata.ID, questdata.TargetCount);
             foreach (var monsterdata in _dataTableManager._MonsterDropData)
             {
                 if (questdata.TargetID == monsterdata.ID && !_targetName.ContainsKey(questdata.ID))
