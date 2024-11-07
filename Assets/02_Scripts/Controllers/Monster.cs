@@ -89,7 +89,24 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
             Logger.LogError("이팩트저장됨");
             _enemyEffect = GetComponentInChildren<EnemyEffect>();
         }
+        _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
+        
+        _rig = GetComponent<Rigidbody>();
+        _anim = GetComponentInChildren<Animator>();
+        _collider = GetComponent<SphereCollider>();
+        if (GetComponentInChildren<EnemyEffect>() != null)
+        {
+            Logger.LogError("이팩트저장됨");
+            _enemyEffect = GetComponentInChildren<EnemyEffect>();
+        }
+        _monsterDrop = FindObjectOfType<Drop>();
+        _nav = GetComponent<NavMeshAgent>();
+        if (_hpBar != null)
+        {
+            _monsterHpBar = _hpBar.GetComponent<MonsterHpBar>();
+            _hpBar.SetActive(false);
 
+        }
     }
     // Start is called before the first frame update
     public virtual void Start()
@@ -102,33 +119,24 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     }
     public virtual void Init()
     {
-        if(_hpBar != null)
+        if (_hpBar != null)
         {
-            _monsterHpBar = _hpBar.GetComponent<MonsterHpBar>();
             _hpBar.SetActive(false);
-            
         }
-
-        _rig = GetComponent<Rigidbody>();
-        _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
-        //_anim = GetComponent<Animator>();
-        _anim = GetComponentInChildren<Animator>();
-        _collider = GetComponent<SphereCollider>();    
-        //_characterController.enabled = false;
-        _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
-        if (GetComponentInChildren<EnemyEffect>() != null)
-        {
-            Logger.LogError("이팩트저장됨");
-            _enemyEffect = GetComponentInChildren<EnemyEffect>();
-        }
-        _deongeonLevel = Managers.Game._selecDungeonLevel;
-        _mStat = gameObject.GetOrAddComponent<MonsterStatManager>();
         _mStat._mStat = new MonsterStat();
         _mStat._buffStat = new MonsterStat();
+
+        _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
+        //_anim = GetComponent<Animator>();
+         
+        //_characterController.enabled = false;
+        _mFSM = new FSM(States[MonsterState.Idle]); // 옮겨본거
+        
+        _deongeonLevel = Managers.Game._selecDungeonLevel;
+        
         _player = Managers.Game._player;
         _dataTableManager = Managers.DataTable;
-        _monsterDrop = FindObjectOfType<Drop>();
-        _nav = GetComponent<NavMeshAgent>();
+        
 
         _originPos = transform.position;
         _curState = MonsterState.Idle;
