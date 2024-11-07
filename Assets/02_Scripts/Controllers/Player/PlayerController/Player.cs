@@ -104,7 +104,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
     public SkillBase _skillBase;
 
     // 상태전환 관련 변수
-    PlayerState _curState;  // 현재 상태
+    public PlayerState _curState;  // 현재 상태
     FSM _pFsm;
     Dictionary<PlayerState, BaseState> States = new Dictionary<PlayerState, BaseState>();
     [HideInInspector]
