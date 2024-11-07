@@ -14,9 +14,6 @@ public class PlayerDodgeState : BaseState
         //_player._playerAnim.SetBool("isDodge", true);
         //_player._playerAnim.SetTrigger("doDodge");
         _player._playerAnim.Play("Dodge");
-        _player._playerAnim.SetBool("isAttacking", false);
-        _player._playerAnim.SetBool("Run", false);
-        _player._playerAnim.SetBool("ZoomMode", false);
         _player.AtkCount = 0;
         _player._dodgeing = true;
     }
@@ -32,6 +29,10 @@ public class PlayerDodgeState : BaseState
             {
                 Dodge();
             }
+            else
+            {
+                _player._dodgeing = false;
+            }
         }
     }
 
@@ -40,6 +41,7 @@ public class PlayerDodgeState : BaseState
         Logger.Log("회피 Exit");
         _player._canAtkInput = true;
         _player._attacking = false;
+        _player._dodgeing = false;
     }
 
     void Dodge()
