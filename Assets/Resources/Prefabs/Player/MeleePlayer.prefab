@@ -347,7 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7641930244645297460}
   - component: {fileID: 3376701908256248960}
-  - component: {fileID: 5780082270789410355}
+  - component: {fileID: 4394135517827106718}
   m_Layer: 9
   m_Name: Skill1
   m_TagString: Untagged
@@ -391,7 +391,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 1, z: 5}
   m_Center: {x: 0, y: 0, z: 2}
---- !u!114 &5780082270789410355
+--- !u!114 &4394135517827106718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -400,7 +400,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2509168502048895412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70eaea91ec531484181cb9c14bcdba87, type: 3}
+  m_Script: {fileID: 11500000, guid: 01f67d03d83903a419349abb7734dcec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2803127699751921313
@@ -3119,9 +3119,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.005
-  m_Height: 0.015
+  m_Height: 0.02
   m_Direction: 0
-  m_Center: {x: 0.001, y: 0, z: 0}
+  m_Center: {x: 0.004, y: 0, z: 0}
 --- !u!114 &1057454805632952210
 MonoBehaviour:
   m_ObjectHideFlags: 0

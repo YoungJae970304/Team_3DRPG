@@ -119092,8 +119092,8 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: DodgeStart
-    data: 
+    functionName: PlayEffectSound
+    data: Mage/mage_evasion_voice
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
@@ -119106,8 +119106,8 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: PlayEffectSound
-    data: Mage/mage_evasion_voice
+    functionName: DodgeStart
+    data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
