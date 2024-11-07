@@ -36,6 +36,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public List<string> sample = new List<string>();
     public DataTableManager _dataTableManager;
     public SphereCollider _collider;
+    public Rigidbody _rig;
     public Drop _monsterDrop;
     public DeongeonType _deongeonLevel;
     public DropData _dropData;
@@ -60,7 +61,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public int _monsterID;
     public EnemyAnimEvent _enemyAnimEvent;
     public StatusEffectManager StatusEffect { get => null; }
-    MonsterHpBar _monsterHpBar;
+    public MonsterHpBar _monsterHpBar;
     public GameObject _hpBar;
     public ITotalStat Targetstat => _mStat;
 
@@ -93,7 +94,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     // Start is called before the first frame update
     public virtual void Start()
     {
-        Init();
+        //Init();
     }
     public virtual void OnEnable()
     {
@@ -103,11 +104,12 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     {
         if(_hpBar != null)
         {
-            _hpBar.SetActive(false);
             _monsterHpBar = _hpBar.GetComponent<MonsterHpBar>();
+            _hpBar.SetActive(false);
+            
         }
 
-        
+        _rig = GetComponent<Rigidbody>();
         _deongeonLevel = Managers.Game._selecDungeonLevel; // 추후 던젼에서 받아오도록 설정
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
@@ -235,10 +237,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 상태 변환 FSM 사용
     public void MChangeState(MonsterState nextState)
     {
-        if (_monsterHpBar != null)
-        {
-            _monsterHpBar.HpChanged();
-        }
+    
 
 
         if (_mFSM == null)
@@ -261,6 +260,8 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 받는 데미지 함수
     public virtual void Damaged(int amount)
     {
+        if (_curState == MonsterState.Die)
+            return;
         if (!_hpBar.activeSelf)
         {
             _hpBar.SetActive(true);
@@ -356,6 +357,45 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 
         }
     }
+    public void SetDestinationOnTimeToIdle(float targetTime)
+    {
+        _timer += Time.deltaTime;
+       
+        if (_timer >= targetTime)
+        {
+            //일정 거리 배회
+            //선공몹들은 플레이어가 일정 거리 안에 들어온다면 Exit로 상태 변환
+            float awayRangeX = UnityEngine.Random.Range(-_mStat.AwayRange, _mStat.AwayRange);
+            //float awayRangeY = Random.Range(0, _sStat.AwayRange);
+            float awayRangeZ = UnityEngine.Random.Range(-_mStat.AwayRange, _mStat.AwayRange);
+            if (IsOnNavMesh(_originPos + new Vector3(awayRangeX, 0, awayRangeZ)))
+            {
+                if ((_nav.destination - transform.position).magnitude > 1f)
+                {
+                    _nav.SetDestination(_nav.destination);
+                    _timer = 0;
+                }
+
+                else
+                {
+                    _nav.destination = _originPos + new Vector3(awayRangeX, 0, awayRangeZ);
+                    _timer = 0;
+                }
+            }
+            else
+            {
+                _nav.destination = _originPos;
+            }
+           
+            
+
+        }
+    }
+    bool IsOnNavMesh(Vector3 position)
+    {
+        NavMeshHit hit;
+        return NavMesh.SamplePosition(position, out hit, _mStat.AwayRange, NavMesh.AllAreas);
+    }
     #endregion
     #region 플레이어 공격관련 함수
     public virtual void AttackPlayer() // 공격 모션 중간에 호출 // 수정 예정
@@ -430,7 +470,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         //_characterController.enabled = true; // CharacterController 비활성화
 
         // 넉백 방향 계산
-        Vector3 diff = (transform.position - playerPosition).normalized; // 플레이어 반대 방향
+        Vector3 diff = transform.position - playerPosition; // 플레이어 반대 방향
         Vector3 force = diff * pushBack; // 넉백 힘
 
         // 넉백 처리

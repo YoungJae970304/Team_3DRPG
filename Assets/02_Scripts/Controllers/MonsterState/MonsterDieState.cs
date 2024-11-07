@@ -14,7 +14,8 @@ public class MonsterDieState : BaseState
     public override void OnStateEnter()
     {
         _monster._nav.enabled = false;
-        
+        _monster._collider.enabled = false;
+     
         _monster._anim.SetTrigger("Die");
         Managers.Game._monsters.Remove(_monster);
         Logger.Log("몬스터 사망");
@@ -32,6 +33,8 @@ public class MonsterDieState : BaseState
                 GameObject mob = _monster.gameObject;
                 _monster._nav.enabled = true;
                 _monster._anim.enabled = true;
+                _monster._collider.enabled = true;
+        
                 _monster.Die(mob);
             }
             

@@ -1,26 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MonsterHpBar : BaseUI
+public class MonsterHpBar : MonoBehaviour
 {
-    enum Sliders
-    {
-        HpBar,
-    }
     Monster _monster;
-    public override void Init(Transform anchor)
-    {
-        base.Init(anchor);
-        
-    }
+    Slider _hpBar;
+ 
     private void OnEnable()
     {
-        Bind<Slider>(typeof(Sliders));
         _monster = GetComponentInParent<Monster>();
+        _hpBar = GetComponentInChildren<Slider>();
+        if (_monster == null)
+        {
+            Logger.LogError("Monster component not found in parent.");
+        }
         HpChanged();
     }
     public void HpChanged()
     {
-        Get<Slider>((int)Sliders.HpBar).value = (float)_monster._mStat.HP / (float)_monster._mStat.MaxHP;
+        if (_monster._mStat == null)
+        {
+            Logger.LogError("Monster stats (_mStat) is null.");
+        }
+        if (_hpBar == null)
+        {
+            Logger.LogError("싯팔 이게 왜없어");
+        }
+        _hpBar.value = (float)_monster._mStat.HP / (float)_monster._mStat.MaxHP;
     }
 }
