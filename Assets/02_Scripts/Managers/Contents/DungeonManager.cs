@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour
@@ -11,13 +12,22 @@ public class DungeonManager : MonoBehaviour
     Player _player;
     [SerializeField] DeongeonType _curLevel;
     public GameObject _bossSpawn;
-    public GameObject _dungeonSpawn;
+    public GameObject _easyDungeonSpawn;
+    public GameObject _normalDungeonSpawn;
+    public GameObject _hardDungeonSpawn;
     public GameObject _bossDungeonWall;
-    public GameObject _dungeonWall;
+    public GameObject _easyDungeonWall;
+    public GameObject _normalDungeonWall;
+    public GameObject _hardDungeonWall;
     public GameObject _bossHPBar;
     [SerializeField] Transform _playerSpawnPos;
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
+    TextMeshProUGUI _remainMonsterValue;
+    private void Awake()
+    {
+        _remainMonsterValue = GetComponentInChildren<TextMeshProUGUI>();
+    }
     private void OnEnable()
     {
         _player = Managers.Game._player;
@@ -31,19 +41,31 @@ public class DungeonManager : MonoBehaviour
     private void OnDisable()
     {
         _monsterCount = 0;
-        if (_bossSpawn != null || _dungeonSpawn != null)
+        if (_bossSpawn != null || _easyDungeonSpawn != null || _normalDungeonSpawn != null || _hardDungeonSpawn != null)
         {
             if (_bossSpawn.activeSelf)
             {
                 _bossSpawn.SetActive(false);
                 _bossDungeonWall.SetActive(false);
+                _bossHPBar.SetActive(false);
             }
-            else if (_dungeonSpawn.activeSelf)
+            else if (_easyDungeonSpawn.activeSelf)
             {
-                _dungeonSpawn.SetActive(false);
+                _easyDungeonSpawn.SetActive(false);
+                _easyDungeonWall.SetActive(false);
+            }
+            else if (_normalDungeonSpawn.activeSelf)
+            {
+                _normalDungeonSpawn.SetActive(false);
+                _normalDungeonWall.SetActive(false);
+            }
+            else
+            {
+                _hardDungeonSpawn.SetActive(false);
+                _hardDungeonWall.SetActive(false);
             }
         }
-        _bossHPBar.SetActive(false);
+        
     }
     private void Start()
     {
@@ -78,9 +100,20 @@ public class DungeonManager : MonoBehaviour
             _bossDungeonWall.SetActive(true);
             Logger.LogError("벽체크");
         }
+        else if(_curLevel == DeongeonType.Easy)
+        {
+            _easyDungeonSpawn.SetActive(true);
+            _easyDungeonWall.SetActive(true);
+        }
+        else if (_curLevel == DeongeonType.Normal)
+        {
+            _normalDungeonSpawn.SetActive(true);
+            _normalDungeonWall.SetActive(true);
+        }
         else
         {
-            _dungeonSpawn.SetActive(true);
+            _hardDungeonSpawn.SetActive(true);
+            _hardDungeonWall.SetActive(true);
         }
     }
     public void BossCheck()
@@ -150,11 +183,13 @@ public class DungeonManager : MonoBehaviour
     public void CountPlus()
     {
         _monsterCount += 1;
+        _remainMonsterValue.text = $"남은 몬스터 수 : {_monsterCount}";
         Logger.LogError($"{_monsterCount.ToString()}일단 더한숫자확인");
     }
     public void CountMinus()
     {
         _monsterCount -= 1;
+        _remainMonsterValue.text = $"남은 몬스터 수 : {_monsterCount}";
         Logger.LogError($"{_monsterCount.ToString()}일단 뺀숫자확인");
     }
 }
