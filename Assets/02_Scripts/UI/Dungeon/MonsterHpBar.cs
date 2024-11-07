@@ -17,6 +17,7 @@ public class MonsterHpBar : MonoBehaviour
         {
             Logger.LogError("Monster component not found in parent.");
         }
+
         HpChanged();
     }
     public void HpChanged()
