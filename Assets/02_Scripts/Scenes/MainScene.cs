@@ -15,6 +15,7 @@ public class MainScene : BaseScene
 
         Managers.Game.PlayerPosSet(_playerSpawnPos);
         Managers.UI.OpenUI<MainUI>(new BaseUIData(), false);
+        Managers.UI.OpenUI<DragAndDrop>(new BaseUIData(), false);
     }
 
     private void Start()

@@ -90,4 +90,19 @@ public class InventoryUI : ItemDragUI
     public void MoneyUpdate(int amount) {
         GetText((int)Texts.MoneyText).text = amount.ToString();;
     }
+
+    public override void OnPointerEnter(PointerEventData eventData)
+    {
+        base.OnPointerEnter(eventData);
+        IItemDragAndDropAble slot= (Managers.UI.GetActiveUI<DragAndDrop>() as DragAndDrop).CurrnetSlot;
+        if (slot != null&& slot is ItemSlot) {
+            ItemSlot itemSlot = slot as ItemSlot;
+            if (itemSlot.Item != null) {
+                _currentType = itemSlot.Item.Data.Type;
+                UpdateSlot();
+
+            }
+        
+        }
+    }
 }
