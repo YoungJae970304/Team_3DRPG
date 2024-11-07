@@ -12,11 +12,12 @@ public class MonsterReturnState : BaseState
     public override void OnStateEnter()
     {
         //origin포스 찾아서 이동하기
+        ReturnHeal();
+        _monster._nav.destination = _monster._originPos;
         if (_monster._hpBar != null)
         {
             _monster._monsterHpBar.HpChanged();
         }
-        _monster._nav.destination = _monster._originPos;
     }
 
     public override void OnStateExit()
