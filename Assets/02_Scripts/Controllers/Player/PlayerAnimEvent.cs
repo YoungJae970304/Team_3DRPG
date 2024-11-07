@@ -41,6 +41,11 @@ public class PlayerAnimEvent : MonoBehaviour
         _player._attacking = true;
     }
 
+    public void NormalAtkColOn()
+    {
+        _player.SetColActive("Katana");
+    }
+
     // 평타 애니메이션 중반부
     public void CanAttackInput()
     {
@@ -160,6 +165,13 @@ public class PlayerAnimEvent : MonoBehaviour
     public void DodgeEnd()
     {
         _player._dodgeing = false;
+        _player.ChangeState(PlayerState.Idle);
+    }
+
+    public void DodgeForceEnd()
+    {
+        _player._dodgeing = false;
+        _player._playerAnim.Rebind();
     }
 
     // 피격 애니메이션 피격 상태 해제부분
