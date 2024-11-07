@@ -13,3 +13,4 @@
 12,체인 라이트닝,1,0,0,200,100,30,1,3,ChainLightning,Sprite/SkillIcon_Image/12_0
 13,HP 증가/원거리,2,1,100,0,0,0,1,10,PassiveSkill,Sprite/SkillIcon_Image/4_0
 14,MP 증가/원거리,2,3,100,0,0,0,1,10,PassiveSkill,Sprite/SkillIcon_Image/5_0
+15,이동속도증가,2,7,1,0,0,0,1,3,PassiveSkill,Sprite/SkillIcon_Image/5_1
