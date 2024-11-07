@@ -13,6 +13,8 @@ public class PlayerIdleState : BaseState
         _player._dodgeing = false;
         _player.AtkCount = 0;
         _player._rotDir = _player._playerModel.forward;
+
+        _player._playerAnim.Rebind();
     }
 
     public override void OnStateUpdate()
