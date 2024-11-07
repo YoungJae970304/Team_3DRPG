@@ -24,7 +24,7 @@ public class ThunderSlashEnter : SkillEnter
 
     // 시작과 끝 중심 및 크기 정의 (초기값)
     Vector3 _startCenter = new Vector3(0, 0, 2);
-    Vector3 _startSize = new Vector3(3, 1, 5);
+    Vector3 _startSize = new Vector3(3, 2, 8);
 
     public void Enter(ITotalStat stat, SkillData skillData, int level = 0)
     {
@@ -52,8 +52,8 @@ public class ThunderSlashStay : SkillStay
     // 시작과 끝 중심 및 크기 정의
     Vector3 _startCenter = new Vector3(0, 0, 2);
     Vector3 _endCenter = new Vector3(0, 0, 0);
-    Vector3 _startSize = new Vector3(3, 1, 5);
-    Vector3 _endSize = new Vector3(3, 1, 0);
+    Vector3 _startSize = new Vector3(3, 2, 8);
+    Vector3 _endSize = new Vector3(3, 2, 2);
 
     public void Stay(ITotalStat stat, SkillData skillData, int level = 0)
     {
@@ -93,7 +93,7 @@ public class ThunderSlashExit : SkillExit
     public void Exit(ITotalStat stat, SkillData skillData, int level = 0)
     {
         Managers.Game._player.SetColActive("Katana");
-
+        Managers.Game._player._hitMobs.Clear();
         // 증가된 속도 복구
         stat.MoveSpeed = -10;
     }
