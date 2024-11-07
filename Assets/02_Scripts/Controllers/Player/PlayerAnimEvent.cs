@@ -41,6 +41,11 @@ public class PlayerAnimEvent : MonoBehaviour
         _player._attacking = true;
     }
 
+    public void NormalAtkColOn()
+    {
+        _player.SetColActive("Katana");
+    }
+
     // 평타 애니메이션 중반부
     public void CanAttackInput()
     {

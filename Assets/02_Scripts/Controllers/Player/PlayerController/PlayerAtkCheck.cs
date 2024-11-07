@@ -12,11 +12,8 @@ public class PlayerAtkCheck : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnDisable()
     {
-        if (other.gameObject.CompareTag("Monster"))
-        {
-            Managers.Game._player._hitMobs.Remove(other);
-        }
+        Managers.Game._player._hitMobs.Clear();
     }
 }

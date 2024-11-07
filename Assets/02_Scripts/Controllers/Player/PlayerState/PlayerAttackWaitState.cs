@@ -58,6 +58,7 @@ public class PlayerAttackWaitState : BaseState
         {
             _player._attacking = false;
             _player._playerAnim.SetBool("isAttacking", false);
+            _player.SetColActive("");
         }
     }
 

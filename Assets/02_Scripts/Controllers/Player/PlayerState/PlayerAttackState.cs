@@ -9,6 +9,7 @@ public class PlayerAttackState : BaseState
     public override void OnStateEnter()
     {
         _player._playerAnim.SetBool("isAttacking", true);
+        _player.SetColActive("Katana");
 
         _player._curAtkCount = _player._playerInput._atkInput.Dequeue();
 
