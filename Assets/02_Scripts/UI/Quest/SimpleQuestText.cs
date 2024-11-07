@@ -26,7 +26,7 @@ public class SimpleQuestText : MonoBehaviour
     public void TextChange(int i)
     {
         GetText((int)QuestText.SimpleQuestText).text = $"{Managers.QuestManager._targetName[i]}";
-        GetText((int)QuestText.QuestRequireText).text = $"{Managers.QuestManager._countCheck[i]} / {Managers.QuestManager._questrequirements[i]}";
+        GetText((int)QuestText.QuestRequireText).text = $"{Managers.QuestManager._countCheck[i]} / {Managers.QuestManager._completeChecks[i]}";
     }
     void Bind<T>(Type type) where T : UnityEngine.Object    // Type 쓰려면 using System;
     {

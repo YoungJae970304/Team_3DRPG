@@ -513,13 +513,6 @@ public class QuestUI : BaseUI
                 _questRewardValue2 = questdata.RewardValue2;
                 _questRewardType3 = questdata.RewardType3;
                 _questRewardValue3 = questdata.RewardValue3;
-                if (!Managers.QuestManager._completeChecks.ContainsKey(_questID) && !Managers.QuestManager._targetCheck.ContainsKey(_questID))
-                {
-                    Managers.QuestManager._completeChecks.Add(_questID, _targetCount);
-                    Managers.QuestManager._targetCheck.Add(_questID, _targetID);
-                }
-
-
                 break;
             }
         }//여기까지 뺄 파트
