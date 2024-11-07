@@ -34,6 +34,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClipThreshold: 0.3
     - _Fllipbook_Columns: 4
     - _Fllipbook_Emissive: 4
     - _Fllipbook_Opacity: 1
@@ -49,7 +50,7 @@ Material:
     - _Mask_SphereSize: 0
     - _Opacity_Alpha: 1
     - _Opacity_RGB: 1
-    - _Rotate: 90
+    - _Rotate: 0
     - _Sphere_NoiseRotate_Speed: 0.1
     - _Sphere_Noise_Opacity: 0
     - _Sphere_Twister_Opacity: 0
