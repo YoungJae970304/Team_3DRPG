@@ -119,7 +119,7 @@ public class DungeonUI : BaseUI
         //Logger.LogError(_dataTableManager._DungeonData.Count.ToString());
         foreach (var dungeon in _dataTableManager._DungeonData) //데이터 테이블 가져오기
         {
-            if (_dungeonTypeview.transform.childCount > 4) break;
+            if (_dungeonTypeview.transform.childCount >= 4) break;
             dungeonType = Managers.Resource.Instantiate("UI/DeongeonType", _dungeonTypeview.transform);
 
             // resource에 있는 instantiate호출. inspector창에 넣어놓은 부모 하위로 생성
