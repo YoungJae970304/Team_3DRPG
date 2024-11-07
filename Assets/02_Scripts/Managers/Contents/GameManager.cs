@@ -66,21 +66,6 @@ public class GameManager
                 Logger.LogError("생성할 플레이어가 없습니다.");
                 break;
         }
-
-        if (!TitleCanvasUI._isNewGame)
-        {
-            Vector3 loadPlayerPos = PlayerPosSetData.PlayerPosSetLoad();
-            var playerTransfrom = Managers.Game._player?.transform;
-            if (playerTransfrom != null)
-            {
-                playerTransfrom.position = loadPlayerPos;
-                //Logger.Log($"저장된 위치로 이동{loadPlayerPos}");
-            }
-            else
-            {
-                Logger.LogError("플레이어를 못찾았습니다.");
-            }
-        }
         Managers.Resource.Instantiate("Player/VirtualCameras");
     }
 
