@@ -8,6 +8,7 @@ public class PlayerAtkCheck : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Monster"))
         {
+            if (Managers.Game._player._hitMobs.Contains(other)) return;
             Managers.Game._player._hitMobs.Add(other);
         }
     }
