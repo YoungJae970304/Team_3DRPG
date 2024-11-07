@@ -361,7 +361,8 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
     {
         foreach (var col in _atkColliders)
         {
-            col.enabled = (col.name == colName);
+            //col.enabled = (col.name == colName);
+            col.gameObject.SetActive(col.name == colName);
         }
     }
 
@@ -380,7 +381,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
             if (mob.TryGetComponent<IDamageAlbe>(out var damageable))
             {
                 damageable.Damaged(damage);
-                Logger.LogError(" 데미지 확인 ");
+                Logger.LogWarning(" ApplyDamage 데미지 적용 확인 ");
             }
         }
 

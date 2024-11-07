@@ -56,8 +56,7 @@ public class SkillBase//전략 패턴 사용
 
         _damage = tempDamage / SCALE_FACTOR;
 
-        Logger.LogError($"데미지 확인 : {_damage}");
-        Logger.LogError($"스킬 초기화 확인 : {_skillName}, {_skillType}, {_statType}, {_usingMP}, {_needSP}, {_maxLevel}");
+        Logger.Log($"스킬 초기화 확인 : {_skillName}, {_skillType}, {_statType}, {_usingMP}, {_needSP}, {_maxLevel}");
     }
 
     public virtual void SkillEnter(ITotalStat stat) {

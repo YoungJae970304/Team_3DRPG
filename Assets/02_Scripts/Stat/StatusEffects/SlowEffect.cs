@@ -18,14 +18,12 @@ public class SlowEffect : StatusEffect
         duration += duration;
         _slowAmount += value[0];
         _target.Targetstat.MoveSpeed = -value[0];
-        Logger.LogError(_slowAmount.ToString());
     }
 
     public override void Effect()
     {
 
         _target.Targetstat.MoveSpeed = -_slowAmount;
-        Logger.LogError(_slowAmount.ToString());
     }
 
     public override void UnEffect()

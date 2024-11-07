@@ -152,7 +152,6 @@ public class DungeonUI : BaseUI
     }
     public int SwitchDungeonID(int index) //던전 ID받는 함수
     {
-        Logger.LogError("실행확인");
         foreach (var dungeonType in _dataTableManager._DungeonData)
         {
 
@@ -213,14 +212,11 @@ public class DungeonUI : BaseUI
                 _indungeonMonsterImage[i].gameObject.SetActive(true);
             }
         }
-
-        Logger.LogError((_monsterType3 % 10 - 1).ToString() + "곰값얼마냐");
         GetImage((int)DungeonUIImage.Monster1).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType1}");
         GetImage((int)DungeonUIImage.Monster2).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType2}");
         GetImage((int)DungeonUIImage.Monster3).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{_monsterType3}");
         //GetImage((int)InDungeonMonster.Monster4).sprite = Managers.Resource.Load<Sprite>($"Prefabs/Enemy/Patern/{i}");
         Managers.Game._selecDungeonLevel = SwitchDungeonType(_dungeonIndex);
-        Logger.LogError($"{Managers.Game._selecDungeonLevel}왜안들어감?");
     }
     public DeongeonType SwitchDungeonType(int index)
     {

@@ -64,14 +64,12 @@ public class SpawnEnemy : MonoBehaviour
             {
                 case 1:
                     monstername = "Slime";
-                    Logger.LogError($"{monstername}이름은들어가?");
                     MakeMonster(monstername,randomSpawn);
                     
                     break;
                 case 2:
                     monstername = "Goblem";
                     MakeMonster(monstername, randomSpawn);
-                    Logger.LogError($"{monstername}이름은들어가?2");
                     break;
                 case 3:
                     monstername = "Ork";
@@ -81,7 +79,6 @@ public class SpawnEnemy : MonoBehaviour
                 case 4:
                     monstername = "BossBear";
                     MakeMonster(monstername, randomSpawn);
-                    Logger.LogError($"{monstername}이름은들어가?3");
                 break;
         }
         
@@ -112,9 +109,6 @@ public class SpawnEnemy : MonoBehaviour
            
             monster._nav.enabled = true;
             monster.Init();
-            
-            
-            Logger.LogError($"{mon.transform.position}");
         }
     }
 }

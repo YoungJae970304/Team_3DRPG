@@ -103,11 +103,9 @@ public class Slime : Monster
                     {
                         //맞는 이펙트 실행(플레이어 위치에)
                         _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
-                        Logger.LogError(_player.transform.position.ToString());
                         _enemyAnimEvent.SlimeHitAtk();//이거는 내일수정
                     }
                     //_player.Damaged(_mStat.ATK);
-                    Logger.LogError($"{_player._playerStatManager.HP}");
                     damageable.Damaged(damage);
                 }
             }

@@ -108,11 +108,9 @@ public class Goblem : Monster
                     {
                         //맞는 이펙트 실행(플레이어 위치에)
                         _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
-                        Logger.LogError(_player.transform.position.ToString());
                         _enemyAnimEvent.GoblinHitAtk();
                     }
                     //_player.Damaged(_mStat.ATK);
-                    Logger.LogError($"{_player._playerStatManager.HP}");
                     damageable.Damaged(damage);
                 }
             }
@@ -128,7 +126,6 @@ public class Goblem : Monster
         {
             GameObject productItem = Managers.Resource.Instantiate("DropItem/DropItem");
             productItem.GetComponent<ItemPickup>()._itemId = _monsterProduct.ToString();
-            Logger.LogError($"{productItem.GetComponent<ItemPickup>()._itemId}");
             productItem.transform.position = new Vector3(productItem.transform.position.x + 1, productItem.transform.position.y, productItem.transform.position.z + 1);
            
         }

@@ -20,7 +20,6 @@ public class LoadingScene : BaseScene
         Managers.Data.DataInit();
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
-        //Logger.LogError((Managers.Game._player != null).ToString());
         if (Managers.Game._player != null) return;
         if (!TitleCanvasUI._isNewGame) { ApplyPlayerData(); } else
         {
