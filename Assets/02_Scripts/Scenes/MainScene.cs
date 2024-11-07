@@ -12,6 +12,7 @@ public class MainScene : BaseScene
 
         Managers.Game.PlayerPosSet(_playerSpawnPos);
         Managers.UI.OpenUI<MainUI>(new BaseUIData(), false);
+        Managers.Game._player._hitMobs.Clear();
     }
 
     private void Start()
