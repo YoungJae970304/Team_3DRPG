@@ -63,6 +63,11 @@ public class QuestUI : BaseUI
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
+        ReVoid();
+        //여기에 리스트같은데에서 퀘스트 받아와서 버튼 생성되도록 //완
+    }
+    public void ReVoid()
+    {
         mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
         _simpleQuestUI = Util.FindChild(mainUI.gameObject, "SimpleQuestUI");
         _player = Managers.Game._player;
@@ -87,7 +92,6 @@ public class QuestUI : BaseUI
         GetButton((int)Buttons.AllowBtn).onClick.AddListener(() => AllowQuest());
         GetButton((int)Buttons.GiveupBtn).onClick.AddListener(() => GiveUpQuest());
         GetButton((int)Buttons.CompleteBtn).onClick.AddListener(() => CompleteQuest());
-        //여기에 리스트같은데에서 퀘스트 받아와서 버튼 생성되도록 //완
     }
     public override void SetInfo(BaseUIData uiData)
     {
@@ -184,7 +188,11 @@ public class QuestUI : BaseUI
             id = Managers.QuestManager._targetToQuestID[id];
         }
         Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
-        if (Managers.QuestManager._changeText[id] != null)
+        if (!Managers.QuestManager._changeText.ContainsKey(id))
+        {
+            return;
+        }
+        else
         {
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
         }
@@ -278,7 +286,7 @@ public class QuestUI : BaseUI
             }
 
         }
-        Init(transform);
+        ReVoid();
     }
     public void OpenQuestUI<T>() where T : BaseUI
     {
@@ -376,8 +384,13 @@ public class QuestUI : BaseUI
         GameObject button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         QuestButton buttonID = button.GetComponent<QuestButton>();
         _questId = buttonID._questID;
-        _inventory.GetItemAction -= (() => ValueCheck(_questId));
-        PubAndSub.UnSubscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
+        if(Managers.QuestManager._targetCheck[_questId]/10000 != 9)
+        {
+            _inventory.GetItemAction -= (() => ValueCheck(_questId));
+            PubAndSub.UnSubscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
+        }
+        
+        
         if (!Managers.QuestManager._completeQuest.Contains(_questId))
         {
             Managers.QuestManager._completeQuest.Add(_questId);
@@ -408,9 +421,9 @@ public class QuestUI : BaseUI
             {
                 _simpleQuestUI.SetActive(false);
             }
-            Init(transform);
+            
         }
-
+        ReVoid();
         Managers.Sound.Play("ETC/ui_quest_clear");
     }
     public void GiveUpQuest()
