@@ -1623,6 +1623,9 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0}
+  _btnCount: 0
   _shopSlot: {fileID: 0}
   _inventorySlot: {fileID: 0}
 --- !u!1 &6322164101290501616
@@ -1917,7 +1920,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: adda1b6815caf0244ab4f34d973efd4e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2106,7 +2109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76126c299cfc1514fb88cae87a37a856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLocked: 0
+  _isUsealbe: 1
+  _isLocked: 0
   _Image: {fileID: 4981080784337475429}
   _text: {fileID: 0}
   _slotType: 1
