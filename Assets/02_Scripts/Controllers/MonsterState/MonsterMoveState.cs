@@ -13,7 +13,7 @@ public class MonsterMoveState : BaseState
         {
             if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
             {
-                _monster.LookBeforeAttack();
+                _monster.LookPlayer();
             }
             else
             {
@@ -61,7 +61,7 @@ public class MonsterMoveState : BaseState
         {
             if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
             {
-                _monster.LookBeforeAttack();
+                _monster.LookPlayer();
             }
             else
             {

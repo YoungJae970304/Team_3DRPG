@@ -32,9 +32,7 @@ public class QuestManager
     {
         _dataTableManager = Managers.DataTable;
         // LoadQuestData();
-        QuestListInput();
-        AddActiveQuest();
-        _curLevelCountPlus += LevelCountPlus;
+    
         
     }
 
@@ -63,7 +61,35 @@ public class QuestManager
             }
         }
     }
-    void QuestListInput()
+    public void CheckProgress(int progressValue)
+    {
+
+        int currentint;
+
+        if (Managers.QuestManager._countCheck.ContainsKey(progressValue))
+        {
+            currentint = Managers.QuestManager._countCheck[progressValue];
+        }
+        else
+        {
+            currentint = 0; // 초기화
+            Managers.QuestManager._countCheck.Add(progressValue, currentint);
+        }
+
+        if (currentint < Managers.QuestManager._completeChecks[progressValue])//컴플리트 체크 변수 수정 필요 // 완
+        {
+            currentint++;
+            Managers.QuestManager._countCheck[progressValue] = currentint;
+            Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);
+            if (currentint == Managers.QuestManager._completeChecks[progressValue])
+            {
+                Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);
+                PubAndSub.UnSubscrib<int>($"{progressValue}", CheckProgress);
+                Managers.QuestManager._questComplete[progressValue] = true;
+            }
+        }
+    }
+    public void QuestListInput()
     {
         foreach(var questdata in _dataTableManager._QuestData)
         {
@@ -73,6 +99,7 @@ public class QuestManager
             _targetToQuestID.Add(questdata.TargetID, questdata.ID);
             _targetCheck.Add(questdata.ID, questdata.TargetID);
             _completeChecks.Add(questdata.ID, questdata.TargetCount);
+            _questComplete.Add(questdata.ID, false);
             foreach (var monsterdata in _dataTableManager._MonsterDropData)
             {
                 if (questdata.TargetID == monsterdata.ID && !_targetName.ContainsKey(questdata.ID))

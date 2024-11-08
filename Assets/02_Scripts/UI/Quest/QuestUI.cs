@@ -221,11 +221,7 @@ public class QuestUI : BaseUI
             Managers.QuestManager._activeQuest.Sort();
         }
 
-        if (!Managers.QuestManager._questComplete.ContainsKey(_questId))
-        {
-            Managers.QuestManager._questComplete.Add(_questId, false);
-        }
-        PubAndSub.Subscrib<int>($"{_questId}", CheckProgress);
+        PubAndSub.Subscrib<int>($"{_questId}", Managers.QuestManager.CheckProgress);
         if (!_simpleQuestUI.activeSelf)
         {
             _simpleQuestUI.SetActive(true);
@@ -298,34 +294,7 @@ public class QuestUI : BaseUI
         }
     }
 
-    public void CheckProgress(int progressValue)
-    {
-
-        int currentint;
-
-        if (Managers.QuestManager._countCheck.ContainsKey(progressValue))
-        {
-            currentint = Managers.QuestManager._countCheck[progressValue];
-        }
-        else
-        {
-            currentint = 0; // 초기화
-            Managers.QuestManager._countCheck.Add(progressValue, currentint);
-        }
-
-        if (currentint < Managers.QuestManager._completeChecks[progressValue])//컴플리트 체크 변수 수정 필요 // 완
-        {
-            currentint++;
-            Managers.QuestManager._countCheck[progressValue] = currentint;
-            Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);
-            if (currentint == Managers.QuestManager._completeChecks[progressValue])
-            {
-                Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);
-                PubAndSub.UnSubscrib<int>($"{progressValue}", CheckProgress);
-                Managers.QuestManager._questComplete[progressValue] = true;
-            }
-        }
-    }
+    
     public IEnumerator OpenProgressQuest()
     {
         GameObject progressQuest;
@@ -411,7 +380,7 @@ public class QuestUI : BaseUI
             _inventory.InsertItem(questItem);
         }
 
-        PubAndSub.UnSubscrib<int>($"{_questId}", CheckProgress);
+        PubAndSub.UnSubscrib<int>($"{_questId}", Managers.QuestManager.CheckProgress);
         if (_simpleQuestUI.activeSelf)
         {
             Managers.Resource.Destroy(Managers.QuestManager._changeText[_questId]);
@@ -440,7 +409,7 @@ public class QuestUI : BaseUI
             Managers.QuestManager._activeQuest.Add(_questId);
             Managers.QuestManager._activeQuest.Sort();
         }
-        PubAndSub.UnSubscrib<int>($"{_questId}", CheckProgress);
+        PubAndSub.UnSubscrib<int>($"{_questId}", Managers.QuestManager.CheckProgress);
         Managers.QuestManager._countCheck[_questId] = 0;
         if (_simpleQuestUI.activeSelf)
         {
