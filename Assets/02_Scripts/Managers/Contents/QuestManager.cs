@@ -70,7 +70,14 @@ public class QuestManager
         {
             currentint++;
             Managers.QuestManager._countCheck[progressValue] = currentint;
-            Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);
+            if (Managers.QuestManager._changeText.ContainsKey(progressValue))
+            {
+                Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);
+            }
+            else
+            {
+
+            }
             if (currentint == Managers.QuestManager._completeChecks[progressValue])
             {
                 Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);

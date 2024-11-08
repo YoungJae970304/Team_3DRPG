@@ -30,6 +30,6 @@ public class BossHPBar : BaseUI
     {
         //Logger.LogError($"{(float)value / (float)Managers.Game._monsters[0]._mStat.MaxHP}값 확인");
         Get<Slider>((int)Sliders.HPbar).value = (float)value / (float)Managers.Game._monsters[0]._mStat.MaxHP;
-        Get<TextMeshProUGUI>((int)Texts.HpPer).text = $"{(float)value / (float)Managers.Game._monsters[0]._mStat.MaxHP}%";
+        Get<TextMeshProUGUI>((int)Texts.HpPer).text = $"{((float)value / (float)Managers.Game._monsters[0]._mStat.MaxHP)*100}%";
     }
 }
