@@ -1,11 +1,9 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using static Cinemachine.DocumentationSortingAttribute;
-using System;
 
 public class LoadingScene : BaseScene
 {
@@ -23,11 +21,12 @@ public class LoadingScene : BaseScene
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
         if (Managers.Game._player != null) return;
-        if (!TitleCanvasUI._isNewGame) { ApplyPlayerData(); } else
+        if (!TitleCanvasUI._isNewGame) { ApplyPlayerData(); }
+        else
         {
             Managers.Game.PlayerCreate();
         }
-        
+
         //이어하기 일경우를 판단
         if (!TitleCanvasUI._isNewGame)
         {
@@ -134,12 +133,15 @@ public class LoadingScene : BaseScene
         SkillSaveData skillSaveData = Managers.Data.GetData<SkillSaveData>();
         SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
         SkillTree skillTree = Managers.UI.OpenUI<SkillTree>(skillTreeData);
-        foreach (var skill in skillTree._skillTreeItems) {
+        foreach (var skill in skillTree._skillTreeItems)
+        {
             SkillTreeItemData skillTreeItemData = skillSaveData._skillTreeItemDatas.Where((item) => skill._skillId == item._id).FirstOrDefault();
-            if (skillTreeItemData != null) {
+            if (skillTreeItemData != null)
+            {
                 skill.SkillLevel = skillTreeItemData._curLevel;
                 skill.Skill.PassiveEffect(Managers.Game._player._playerStatManager);
-                if (skill.SkillLevel > 0) {
+                if (skill.SkillLevel > 0)
+                {
                     skill.Skill._prevLevel = skill.SkillLevel - 1;
                 }
             }
@@ -172,14 +174,14 @@ public class LoadingScene : BaseScene
         stats._originStat.DEF = stats.DEF > 0 ? stats.DEF : 10;
         stats._originStat.RecoveryHP = stats.RecoveryHP > 0 ? stats.RecoveryHP : 2;
         stats._originStat.RecoveryMP = stats.RecoveryMP > 0 ? stats.RecoveryMP : 2;
-        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ",stats.Level, stats.MaxHP, stats.MaxMP, stats.HP, stats.MP, stats.ATK, stats.DEF, stats.RecoveryHP, stats.RecoveryMP)}");
+        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ", stats.Level, stats.MaxHP, stats.MaxMP, stats.HP, stats.MP, stats.ATK, stats.DEF, stats.RecoveryHP, stats.RecoveryMP, stats.SP)}");
     }
 
     void ApplyLargeMapData()
     {
         LargeMapData largeMapData = Managers.Data.GetData<LargeMapData>();
         LargeMapUI largeMapUI = Managers.UI.OpenUI<LargeMapUI>(new BaseUIData());
-        foreach(var largeMap in largeMapData._largeMapItemData)
+        foreach (var largeMap in largeMapData._largeMapItemData)
         {
             if (largeMapData != null)
             {
@@ -200,13 +202,13 @@ public class LoadingScene : BaseScene
         if (mainUI != null)
         {
             QuickItemSlot[] quickItemSlots = mainUI.GetComponentsInChildren<QuickItemSlot>();
-            foreach(var slotData in quickSlotSaveData._quickItemSlotData)
+            foreach (var slotData in quickSlotSaveData._quickItemSlotData)
             {
                 int slotIndex = slotData._slotIndex;
                 if (slotIndex < quickItemSlots.Length)
                 {
                     Item slotItem = inventory.GetItemToId(slotData._id);
-                    if(slotItem != null)
+                    if (slotItem != null)
                     {
                         quickItemSlots[slotIndex].Setitem(slotItem);
                     }
@@ -255,24 +257,29 @@ public class LoadingScene : BaseScene
 
                     if (!questManager._countCheck.ContainsKey(questItemData._id))
                     {
-                        questManager._countCheck.Add(questItemData._id, 0); 
+                        questManager._countCheck.Add(questItemData._id, 0);
                     }
 
                     questManager._countCheck[questItemData._id] = questItemData._progressInfo;
 
                     // 퀘스트 완료된 퀘스트들을 _completeQuest 리스트에 넣어줌
-                    if (questItemData._isFinished == 1)
+                    if (questItemData._isFinished == 1 && !questManager._completeQuest.Contains(questItemData._id))
                     {
+                        questManager._completeQuest.Add(questItemData._id);
                         hasFinishedQuest = true;
-                        if (!questManager._completeQuest.Contains(questItemData._id))
-                        {
-                            questManager._completeQuest.Add(questItemData._id);
-                        }
                     }
                 }
             }
+            foreach (var completedQuest in questSaveData._complateQuest)
+            {
+                if (!questManager._completeQuest.Contains(completedQuest._id))
+                {
+                    questManager._completeQuest.Add(completedQuest._id);
+                    hasFinishedQuest = true;
+                    Logger.Log($"완료 한 퀘스트 {completedQuest._id}");
+                }
+            }
         }
-
         if (!hasFinishedQuest)
         {
             Logger.LogWarning("완료된 퀘스트가 없습니다.");
