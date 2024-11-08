@@ -10,7 +10,13 @@ public class MainScene : BaseScene
     {
         base.Init();
 
-        Managers.Game.PlayerPosSet(_playerSpawnPos);
+        Managers.Game.PlayerPosSet(_playerSpawnPos.position);
+
+        if (!TitleCanvasUI._isNewGame)
+        {
+            Managers.Game.PlayerPosSet(PlayerPosSetData.PlayerPosSetLoad());
+        }
+
         Managers.UI.OpenUI<MainUI>(new BaseUIData(), false);
         Managers.UI.OpenUI<DragAndDrop>(new BaseUIData(), false);
         //Managers.Game._player._hitMobs.Clear();

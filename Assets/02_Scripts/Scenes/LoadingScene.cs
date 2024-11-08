@@ -91,7 +91,6 @@ public class LoadingScene : BaseScene
         }
     }
 
-
     void ApplyEquipData()
     {
         EquipMentUI equipMentUI = Managers.UI.OpenUI<EquipMentUI>(new BaseUIData());

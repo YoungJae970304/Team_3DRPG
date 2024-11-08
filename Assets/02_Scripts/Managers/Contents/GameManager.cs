@@ -69,11 +69,11 @@ public class GameManager
         Managers.Resource.Instantiate("Player/VirtualCameras");
     }
 
-    public void PlayerPosSet(Transform spawnPos)
+    public void PlayerPosSet(Vector3 spawnPos)
     {
         _player._cc.enabled = false;
 
-        _player.transform.position = spawnPos.position;
+        _player.transform.position = spawnPos;
 
         _player._cc.enabled = true;
     }

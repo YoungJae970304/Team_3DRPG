@@ -115,7 +115,7 @@ public class PlayerPosSetData
         else
         {
             //Logger.LogWarning($"저장된 위치가 없습니다 초기 위치로 보내드립니다");
-            return Vector3.zero;
+            return new Vector3(65.33f, 0, 139.17f);
         }
     }
 }
