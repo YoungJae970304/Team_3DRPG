@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-
+[RequireComponent(typeof(StatusEffectManager))]
 public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
 {
 
@@ -60,7 +59,8 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public Animator _anim;
     public int _monsterID;
     public EnemyAnimEvent _enemyAnimEvent;
-    public StatusEffectManager StatusEffect { get => null; }
+    StatusEffectManager _statusEffect;
+    public StatusEffectManager StatusEffect { get => _statusEffect; }
     public MonsterHpBar _monsterHpBar;
     public GameObject _hpBar;
     public ITotalStat Targetstat => _mStat;
@@ -73,6 +73,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         //_anim = GetComponent<Animator>();
         _anim = GetComponentInChildren<Animator>();
         _enemyAnimEvent = GetComponentInChildren<EnemyAnimEvent>();
+        _statusEffect = gameObject.GetOrAddComponent<StatusEffectManager>();
         //_characterController.enabled = false;
         #region 상태딕셔너리 초기화
         States.Add(MonsterState.Idle, new MonsterIdleState(_player, this, _mStat));

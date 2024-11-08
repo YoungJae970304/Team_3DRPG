@@ -6,6 +6,11 @@ public class StunEffect : StatusEffect
 {
     protected override string IconPath { get; set ; }
 
+    public override void Init(IStatusEffectAble target, float duration, params int[] value)
+    {
+        base.Init(target, duration, value);
+        type = Define.StatusEffectType.DeBuff;
+    }
     public override void AddEffect(float duration, params int[] value)
     {
         _duration += duration;

@@ -11,6 +11,7 @@ public class SlowEffect : StatusEffect
     {
         base.Init(target, duration, value);
         _slowAmount =  value[0];
+        type = Define.StatusEffectType.DeBuff;
     }
 
     public override void AddEffect(float duration, params int[] value)
