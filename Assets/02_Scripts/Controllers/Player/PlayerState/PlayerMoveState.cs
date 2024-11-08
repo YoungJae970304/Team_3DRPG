@@ -68,7 +68,6 @@ public class PlayerMoveState : BaseState
         }
 
         // 실제 최종 이동
-        if (_player._dodgeing) return;
         _player._cc.Move(new Vector3(_player._moveDir.x, 0, _player._moveDir.z));
     }
 

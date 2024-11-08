@@ -161,19 +161,6 @@ public class PlayerAnimEvent : MonoBehaviour
         _player._invincible = false;
     }
 
-    // 회피 애니메이션 회피 상태 해제부분
-    public void DodgeEnd()
-    {
-        _player._dodgeing = false;
-        //_player.ChangeState(PlayerState.Idle);
-    }
-
-    public void DodgeForceEnd()
-    {
-        _player._dodgeing = false;
-        _player._playerAnim.Rebind();
-    }
-
     // 피격 애니메이션 피격 상태 해제부분
     public void HittingEnd()
     {
