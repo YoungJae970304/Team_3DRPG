@@ -106,10 +106,11 @@ public class MainUI : ItemDragUI
            
             for (int i = 0; i < simpleQuestCount; i++)
             {
+                int id = Managers.QuestManager._progressQuest[i];
                 Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
+                PubAndSub.Subscrib<int>($"{id}", Managers.QuestManager.CheckProgress);
                 if (content.transform.childCount < 3)
                 {
-                    int id = Managers.QuestManager._progressQuest[i];
                     GameObject _simpleText = null;
                     _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", content.transform);
                     Managers.QuestManager._changeText.Add(id, _simpleText);
@@ -133,10 +134,26 @@ public class MainUI : ItemDragUI
     }
     public void ValueCheck(int id)
     {
+        if (id / 10000 != 8)
+        {
+            id = Managers.QuestManager._targetToQuestID[id];
+        }
         Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
-        if (Managers.QuestManager._changeText[id] != null)
+        if (!Managers.QuestManager._changeText.ContainsKey(id))
+        {
+            return;
+        }
+        else
         {
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
+        }
+        if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]) >= Managers.QuestManager._completeChecks[id])
+        {
+            Managers.QuestManager._questComplete[id] = true;
+        }
+        else
+        {
+            Managers.QuestManager._questComplete[id] = false;
         }
     }
     public void QuickslotUpdate()

@@ -1,16 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-
-
 #region 플레이어 데이터 클래스
-
 [Serializable]
 public class PlayerSaveData : IData
 {
@@ -103,8 +97,8 @@ public class PlayerPosSetData
         playerPosSet._y = pos.y;
         playerPosSet._z = pos.z;
 
+        Logger.Log($"{playerPosSet} 위치 저장");
         string playerPosJson = JsonUtility.ToJson(playerPosSet);
-
         File.WriteAllText($"{Application.persistentDataPath}/playerPosData.json", playerPosJson);
     }
 
@@ -121,11 +115,10 @@ public class PlayerPosSetData
         else
         {
             //Logger.LogWarning($"저장된 위치가 없습니다 초기 위치로 보내드립니다");
-            return Vector3.zero;
+            return new Vector3(65.33f, 0, 139.17f);
         }
     }
 }
-
 #endregion
 
 #region 인벤토리 데이터 클래스
@@ -721,95 +714,4 @@ public class LargeMapData : IData
         _largeMapItemData.Clear();
     }
 }
-#endregion
-
-
-
-
-
-#region 기본 데이터 클래스
-//[Serializable]
-//public class SaveDatas : IData
-//{
-//    //인벤토리 저장 데이터
-//    public List<InventorySaveData> _InventorySaveDatas;
-//    //스킬 저장 데이터
-//    public List<SkillSaveData> _SkillSaveDatas;
-//    //장비 저장 데이터
-//    public List<EquipmentSaveData> _EquipmentSaveDatas;
-//    //플레이어 초기 값 저장 데이터
-//    public List<PlayerSaveData> _PlayerSaveDatas;
-//    //퀘스트 초기 값 저장 데이터
-//    public List<QuestSaveData> _QuestSaveData;
-
-//    string _SavePath;
-
-//    public void Init()
-//    {
-//        _SavePath = $"{Application.persistentDataPath}/SaveDatas.json";
-
-//        if (string.IsNullOrEmpty(_SavePath))
-//        {
-//            return;
-//        }
-//        string directory = Path.GetDirectoryName(_SavePath);
-//        if (!Directory.Exists(directory))
-//        {
-//            Directory.CreateDirectory(directory);
-//        }
-//        _InventorySaveDatas = new List<InventorySaveData>();
-//        _SkillSaveDatas = new List<SkillSaveData>();
-//        _EquipmentSaveDatas = new List<EquipmentSaveData>();
-//        _QuestSaveData = new List<QuestSaveData>();
-//        SetDefaultData();
-//        Logger.Log($"저장 경로 확인 {_SavePath}");
-//    }
-
-//    public void SaveData()
-//    {
-//        try
-//        {
-//            _InventorySaveDatas ??= new List<InventorySaveData>();
-//            _SkillSaveDatas ??= new List<SkillSaveData>();
-//            _QuestSaveData ??= new List<QuestSaveData>();
-//            _EquipmentSaveDatas ??= new List<EquipmentSaveData>();
-//            string directory = Path.GetDirectoryName(_SavePath);
-//            if (!Directory.Exists(directory))
-//            {
-//                Directory.CreateDirectory(directory);
-//            }
-//            string json = JsonUtility.ToJson(this, true);
-//            File.WriteAllText(_SavePath, json);
-//        }
-//        catch (Exception e)
-//        {
-//            Logger.LogError($"데이터 저장 실패: {e.Message}");
-//        }
-//    }
-
-//    public bool LoadData()
-//    {
-//        try
-//        {
-//            string json = File.ReadAllText(_SavePath);
-//            JsonUtility.FromJsonOverwrite(json, this);
-//            Logger.Log("게임 데이터 로드 성공");
-//            return true;
-//        }
-//        catch (Exception e)
-//        {
-//            Logger.LogError($"데이터 로드 실패: {e.Message}");
-//            return false;
-//        }
-//    }
-
-//    public void SetDefaultData()
-//    {
-//        // 초기 데이터 세팅
-//        _InventorySaveDatas = new List<InventorySaveData> { new InventorySaveData() };
-//        _QuestSaveData = new List<QuestSaveData> { new QuestSaveData() };
-//        _EquipmentSaveDatas = new List<EquipmentSaveData> { new EquipmentSaveData() };
-//        Logger.Log("기본 데이터 설정 완료");
-//    }
-//}
 #endregion

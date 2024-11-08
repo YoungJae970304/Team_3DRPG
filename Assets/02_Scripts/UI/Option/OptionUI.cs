@@ -92,7 +92,7 @@ public class OptionUI : BaseUI
         {
             Managers.UI.OpenUI<ConfirmUI>(confirmUIData);
 
-            //PlayerPosSetData.PlayerPosSave(Managers.Game._player.transform.position);
+            PlayerPosSetData.PlayerPosSave(Managers.Game._player.transform.position);
             //Logger.Log($"플레이어 위치 따로 저장{Managers.Game._player.transform.position.ToString()}");
         }
     }

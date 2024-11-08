@@ -85,11 +85,11 @@ public class DungeonManager : MonoBehaviour
     {
         if (_curLevel == DeongeonType.Boss)
         {
-            Managers.Game.PlayerPosSet(_playerBossDungeonSpawnPos);
+            Managers.Game.PlayerPosSet(_playerBossDungeonSpawnPos.position);
         }
         else
         {
-            Managers.Game.PlayerPosSet(_playerSpawnPos);
+            Managers.Game.PlayerPosSet(_playerSpawnPos.position);
         }
     }
     public void DungeonCheck()

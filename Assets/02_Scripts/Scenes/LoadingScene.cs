@@ -46,6 +46,9 @@ public class LoadingScene : BaseScene
             //퀘스트
             ApplyQusetData();
         }
+        Managers.QuestManager.QuestListInput();
+        Managers.QuestManager.AddActiveQuest();
+        Managers.QuestManager._curLevelCountPlus += Managers.QuestManager.LevelCountPlus;
     }
 
     public void ChangeScene()
@@ -90,7 +93,6 @@ public class LoadingScene : BaseScene
             yield return null;
         }
     }
-
 
     void ApplyEquipData()
     {
