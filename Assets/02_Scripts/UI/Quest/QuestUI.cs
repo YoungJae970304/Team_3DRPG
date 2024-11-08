@@ -365,6 +365,7 @@ public class QuestUI : BaseUI
             Managers.QuestManager._completeQuest.Add(_questId);
             Managers.QuestManager._completeQuest.Sort();
         }
+
         Managers.QuestManager._progressQuest.Remove(_questId);
         Managers.QuestManager._progressQuest.Sort();
         if (Managers.QuestManager._targetCheck[_questId] / 10000 != 9)
