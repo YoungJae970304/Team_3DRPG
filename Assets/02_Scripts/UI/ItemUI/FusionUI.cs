@@ -5,6 +5,8 @@ using TMPro;
 public class FusionUI : ItemDragUI
 {//아이템 합성 UI
     Inventory _inventory;
+    int _aItemAmount;
+    int _bItemAmount;
     #region bind
     enum ItemSlots
     {
@@ -79,11 +81,14 @@ public class FusionUI : ItemDragUI
             {
                 //item2 기준 요구 수량 확인
                 Get<TextMeshProUGUI>((int)Texts.RequiredAmount1).text = fusionData.FusionItemAmount2.ToString();
+                
                 Get<TextMeshProUGUI>((int)Texts.RequiredAmount1).color =
                     !(item1 is CountableItem)  || (item1 as CountableItem).GetCurrentAmount() >= fusionData.FusionItemAmount2 ? Color.black : Color.red; 
                 Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).text = fusionData.FusionItemAmount1.ToString();
                 Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).color =
                     !(item2 is CountableItem) || (item2 as CountableItem).GetCurrentAmount() >= fusionData.FusionItemAmount1 ? Color.black : Color.red;
+                _aItemAmount = fusionData.FusionItemAmount2;
+                _bItemAmount = fusionData.FusionItemAmount1;
             }
             else
             {
@@ -94,6 +99,8 @@ public class FusionUI : ItemDragUI
                 Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).text = fusionData.FusionItemAmount2.ToString();
                 Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).color =
                     !(item2 is CountableItem) || (item2 as CountableItem).GetCurrentAmount() >= fusionData.FusionItemAmount2 ? Color.black : Color.red;
+                _aItemAmount = fusionData.FusionItemAmount1;
+                _bItemAmount = fusionData.FusionItemAmount2;
             }
             Get<Button>((int)Buttons.Confirm).interactable = true;
         }
@@ -123,6 +130,8 @@ public class FusionUI : ItemDragUI
         if (!CheckFusionable()) { return; }
         _inventory.InsertItem(Get<ItemSlot>((int)ItemSlots.Result).Item);
         ResetData();
+        // 개수 감소시키고 개수 0이면 아이템 삭제
+        
         Get<ItemSlot>((int)ItemSlots.ItemSlot_1).Setitem(null);
         Get<ItemSlot>((int)ItemSlots.ItemSlot_2).Setitem(null);
         Managers.Sound.Play("ETC/ui_equip_upgrade_success");
