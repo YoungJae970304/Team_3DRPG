@@ -40,6 +40,15 @@ public class BossHPBar : BaseUI
 
         }
     }
+
+    private void OnDisable()
+    {
+        foreach (Transform child in _transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     private void BossHpChanged(int value)
     {
         //Logger.LogError($"{(float)value / (float)Managers.Game._monsters[0]._mStat.MaxHP}값 확인");

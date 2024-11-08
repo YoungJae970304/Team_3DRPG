@@ -47,6 +47,7 @@ public class DungeonManager : MonoBehaviour
             {
                 _bossSpawn.SetActive(false);
                 _bossDungeonWall.SetActive(false);
+                _bossHPBar?.CloseUI();
             }
             else if (_easyDungeonSpawn.activeSelf)
             {
@@ -135,7 +136,7 @@ public class DungeonManager : MonoBehaviour
         {
             BossHPBarData data = new BossHPBarData();
             data.Monster = Managers.Game._monsters[0];
-            _bossHPBar = Managers.UI.OpenUI<BossHPBar>(data);
+            _bossHPBar = Managers.UI.OpenUI<BossHPBar>(data,false);
            
         }
         else
