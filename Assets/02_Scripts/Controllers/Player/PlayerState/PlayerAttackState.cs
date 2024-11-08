@@ -10,7 +10,7 @@ public class PlayerAttackState : BaseState
     {
         _player._attacking = true;
         _player._playerAnim.SetBool("isAttacking", true);
-        _player.SetColActive("Katana");
+        _player.SetColActive("KatanaCol");
 
         _player._curAtkCount = _player._playerInput._atkInput.Dequeue();
 
