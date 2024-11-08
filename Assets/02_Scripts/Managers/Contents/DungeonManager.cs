@@ -19,7 +19,7 @@ public class DungeonManager : MonoBehaviour
     public GameObject _easyDungeonWall;
     public GameObject _normalDungeonWall;
     public GameObject _hardDungeonWall;
-    public GameObject _bossHPBar;
+    public BossHPBar _bossHPBar;
     [SerializeField] Transform _playerSpawnPos;
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
@@ -47,7 +47,7 @@ public class DungeonManager : MonoBehaviour
             {
                 _bossSpawn.SetActive(false);
                 _bossDungeonWall.SetActive(false);
-                _bossHPBar.SetActive(false);
+                _bossHPBar?.CloseUI();
             }
             else if (_easyDungeonSpawn.activeSelf)
             {
@@ -134,12 +134,14 @@ public class DungeonManager : MonoBehaviour
         if (_bossCheck && Managers.Game._monsters[0]._mStat.ChaseRange > 
             (Managers.Game._monsters[0].transform.position - Managers.Game._player.transform.position).magnitude)
         {
-            _bossHPBar.SetActive(true);
+            BossHPBarData data = new BossHPBarData();
+            data.Monster = Managers.Game._monsters[0];
+            _bossHPBar = Managers.UI.OpenUI<BossHPBar>(data,false);
            
         }
         else
         {
-            _bossHPBar.SetActive(false);
+            _bossHPBar?.CloseUI();
         }
     }
     public void ClearDungeon()

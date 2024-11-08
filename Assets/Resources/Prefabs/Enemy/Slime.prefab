@@ -5212,6 +5212,7 @@ GameObject:
   - component: {fileID: -6236615532881258291}
   - component: {fileID: 5975052522049793816}
   - component: {fileID: 8147496102755887837}
+  - component: {fileID: 6062182439335892611}
   m_Layer: 10
   m_Name: Slime
   m_TagString: Monster
@@ -5274,24 +5275,6 @@ MonoBehaviour:
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
   _dropData:
-    _id: 0
-    _name: 
-    _dropType1: 0
-    _startValue1: 0
-    _endValue1: 0
-    _dropType2: 0
-    _startValue2: 0
-    _endValue2: 0
-    _dropType3: 0
-    _startValue3: 0
-    _endValue3: 0
-    _dropType4: 0
-    _startValue4: 0
-    _endValue4: 0
-    _itemType5: 0
-    _value5: 0
-    _itemType6: 0
-    _value6: 0
     ID: 0
     Name: 
     DropType1: 0
@@ -5402,6 +5385,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6062182439335892611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4453554344933648541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0608956b0949fb349ae2a124ac547a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buff: []
+  _deBuff: []
+  _iconTr: {fileID: 6723252803606440705}
 --- !u!1 &5039487184385146643
 GameObject:
   m_ObjectHideFlags: 0
@@ -20507,6 +20505,12 @@ RectTransform:
 --- !u!1 &5424278536113902086 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8756647313519839980, guid: 90221daa9b6517645abefc338b702d25,
+    type: 3}
+  m_PrefabInstance: {fileID: 3657825324451944682}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6723252803606440705 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8038641717169009643, guid: 90221daa9b6517645abefc338b702d25,
     type: 3}
   m_PrefabInstance: {fileID: 3657825324451944682}
   m_PrefabAsset: {fileID: 0}

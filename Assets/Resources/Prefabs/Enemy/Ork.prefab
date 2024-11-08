@@ -54147,6 +54147,7 @@ GameObject:
   - component: {fileID: 3145486752209126848}
   - component: {fileID: 1685845417957182691}
   - component: {fileID: 8641120922041563735}
+  - component: {fileID: 8017058893676714871}
   m_Layer: 10
   m_Name: Ork
   m_TagString: Monster
@@ -54209,24 +54210,6 @@ MonoBehaviour:
   _monsterDrop: {fileID: 0}
   _deongeonLevel: 0
   _dropData:
-    _id: 0
-    _name: 
-    _dropType1: 0
-    _startValue1: 0
-    _endValue1: 0
-    _dropType2: 0
-    _startValue2: 0
-    _endValue2: 0
-    _dropType3: 0
-    _startValue3: 0
-    _endValue3: 0
-    _dropType4: 0
-    _startValue4: 0
-    _endValue4: 0
-    _itemType5: 0
-    _value5: 0
-    _itemType6: 0
-    _value6: 0
     ID: 0
     Name: 
     DropType1: 0
@@ -54337,6 +54320,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &8017058893676714871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7606122396081344728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0608956b0949fb349ae2a124ac547a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buff: []
+  _deBuff: []
+  _iconTr: {fileID: 6761538855372042680}
 --- !u!1 &7608129542519631279
 GameObject:
   m_ObjectHideFlags: 0
@@ -60091,6 +60089,12 @@ RectTransform:
 --- !u!1 &5467068237260228799 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8756647313519839980, guid: 90221daa9b6517645abefc338b702d25,
+    type: 3}
+  m_PrefabInstance: {fileID: 3628548689184490067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6761538855372042680 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8038641717169009643, guid: 90221daa9b6517645abefc338b702d25,
     type: 3}
   m_PrefabInstance: {fileID: 3628548689184490067}
   m_PrefabAsset: {fileID: 0}
