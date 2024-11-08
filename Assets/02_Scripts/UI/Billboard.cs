@@ -8,7 +8,7 @@ public class Billboard : MonoBehaviour
 {
     Transform target;
 
-    private void Start()
+    private void OnEnable()
     {
         target = Camera.main.transform;
     }
