@@ -39,7 +39,6 @@ public class PlayerDodgeState : BaseState
         Logger.Log("회피 Exit");
         _player._canAtkInput = true;
         _player._attacking = false;
-        _player._dodgeing = false;
     }
 
     void Dodge()
