@@ -43,7 +43,7 @@ public class PlayerAnimEvent : MonoBehaviour
 
     public void NormalAtkColOn()
     {
-        _player.SetColActive("Katana");
+        _player.SetColActive("KatanaCol");
     }
 
     // 평타 애니메이션 중반부

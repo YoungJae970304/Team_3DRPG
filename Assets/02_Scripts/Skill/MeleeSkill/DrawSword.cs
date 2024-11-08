@@ -55,6 +55,6 @@ public class DrawSwordExit : SkillExit
 {
     public void Exit(ITotalStat stat, SkillData skillData, int level = 0)
     {
-        Managers.Game._player.SetColActive("Katana");
+        
     }
 }

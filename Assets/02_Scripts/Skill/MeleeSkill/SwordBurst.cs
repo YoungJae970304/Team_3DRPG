@@ -43,6 +43,6 @@ public class SwordBurstExit : SkillExit
 {
     public void Exit(ITotalStat stat, SkillData skillData, int level = 0)
     {
-        Managers.Game._player.SetColActive("Katana");
+        Managers.Game._player.SetColActive("KatanaCol");
     }
 }
