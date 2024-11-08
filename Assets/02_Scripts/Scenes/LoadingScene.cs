@@ -15,8 +15,12 @@ public class LoadingScene : BaseScene
     Animator _fadeAnim;
     AsyncOperation ao;
 
+    float originEffectVolume;
+
     private void Start()
     {
+        originEffectVolume = Managers.Sound.GetEffectVolume();
+        Managers.Sound.SetEffectVolume(0);
         Managers.Data.DataInit();
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
@@ -84,6 +88,7 @@ public class LoadingScene : BaseScene
                 {
                     //널래퍼런스 방지용 유아이 ESC키로 전부 삭제하고 씬 로드
                     Managers.UI.CloseAllOpenUI();
+                    Managers.Sound.SetEffectVolume(originEffectVolume);
                     //ao.allowSceneActivation = true;
                     _fadeAnim.SetTrigger("doFade");
                 }
