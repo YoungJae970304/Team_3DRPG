@@ -572,7 +572,7 @@ MonoBehaviour:
   _exitBtn: {fileID: 0}
   _isSort: 1
   _InitPos: 1
-  _position: {x: 0, y: 0}
+  _position: {x: -200, y: 0, z: 0}
   _btnCount: 0
   _currentType: 1
   _inventory: {fileID: 0}

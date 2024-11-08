@@ -33,7 +33,7 @@ public class PlayerStat : Stat
         }
         set
         {
-            if (value < _level) return;
+            if (value <= _level) return;
 
             int oldLevel = _level;
 
@@ -45,7 +45,6 @@ public class PlayerStat : Stat
                 SP += SpAddAmount;
                 Managers.Sound.Play("ETC/levelup");
                 Managers.QuestManager._curLevelCountPlus?.Invoke();
-                
             }
             PubAndSub.Publish<int>("Level", Level);
             PubAndSub.Publish("LevelUpdate");

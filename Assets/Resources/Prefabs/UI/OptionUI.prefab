@@ -1364,6 +1364,9 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0, z: 0}
+  _btnCount: 0
   descTxt: 
 --- !u!114 &-7391393862945668235
 MonoBehaviour:

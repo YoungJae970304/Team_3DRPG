@@ -30,6 +30,7 @@ public class MainUI : ItemDragUI
     {
         Quest,
         Inventory,
+        Equiped,
         Skill,
         Option,
     }
@@ -59,6 +60,7 @@ public class MainUI : ItemDragUI
         GetButton((int)Buttons.Quest).onClick.AddListener(() => OpenPlayerUI<QuestUI>());
         GetButton((int)Buttons.Skill).onClick.AddListener(() => OpenPlayerUI<SkillTree>());
         GetButton((int)Buttons.Option).onClick.AddListener(() => OpenPlayerUI<OptionUI>());
+        GetButton((int)Buttons.Equiped).onClick.AddListener(() => OpenPlayerUI<EquipMentUI>());
         
     }
     public override void Init(Transform anchor)
