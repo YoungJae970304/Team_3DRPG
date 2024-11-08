@@ -15,7 +15,7 @@ public class TestScene : BaseScene
     {
         base.Init();
         //Managers.Game.PlayerCreate();
-        Managers.Game.PlayerPosSet(SpawnPos);
+        Managers.Game.PlayerPosSet(SpawnPos.position);
         
         //Managers.Game._player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         //Logger.Log(Managers.Game._player.name);
@@ -31,7 +31,7 @@ public class TestScene : BaseScene
 
     private void OnEnable()
     {
-        Managers.Game.PlayerPosSet(SpawnPos);
+        Managers.Game.PlayerPosSet(SpawnPos.position);
        
     }
 

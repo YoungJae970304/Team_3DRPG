@@ -13,7 +13,7 @@ public class DungeonScene : BaseScene
     {
         base.Init();
 
-        Managers.Game.PlayerPosSet(_playerSpawnPos);
+        Managers.Game.PlayerPosSet(_playerSpawnPos.position);
         Managers.UI.OpenUI<MainUI>(new BaseUIData(), false);
     }
 

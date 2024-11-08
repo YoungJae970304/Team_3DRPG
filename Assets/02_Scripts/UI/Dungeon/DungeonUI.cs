@@ -91,6 +91,8 @@ public class DungeonUI : BaseUI
     {
         //Managers.Scene.SceneChange("dungeon");
         //Managers.Game._selecDungeonLevel = _deongeonLevel;
+        var player = Managers.Game._player;
+        PlayerPosSetData.PlayerPosSave(player.transform.position);
         Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         _fadeAnim.SetTrigger("doFadeDungeon");
         CloseUI();
