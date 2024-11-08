@@ -564,6 +564,7 @@ public class QuestSaveData : IData
 {
     public List<QuestItemData> _questItemData = new List<QuestItemData>();
     public List<QuestComplateData> _complateQuest = new List<QuestComplateData>();
+
     string _SavePath;
 
     public void Init()
@@ -617,19 +618,7 @@ public class QuestSaveData : IData
                         _id = questID,
                     };
                     _complateQuest.Add(completedQuestData);
-                    Logger.Log(_complateQuest.Count);
                 }
-
-                //for (int i = 0; i < Managers.QuestManager._completeQuest.Count; i++)
-                //{
-                //    var completedQuestData = new QuestComplateData
-                //    {
-                //        _id = Managers.QuestManager._completeQuest[i],
-                //    };
-                //    _complateQuest.Add(completedQuestData);
-                //    Logger.LogError(_complateQuest.Count.ToString());
-                //}
-
                 string questJson = JsonUtility.ToJson(this, true);
                 File.WriteAllText(_SavePath, questJson);
                 Logger.Log("퀘스트 세이브");
