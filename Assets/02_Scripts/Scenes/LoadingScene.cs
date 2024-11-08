@@ -159,10 +159,11 @@ public class LoadingScene : BaseScene
         var stats = Managers.Game._player._playerStatManager;
 
         stats.Level = playerSaveData._level;
-        stats.EXP = playerSaveData._exp;
-        stats.MaxEXP = playerSaveData._maxExp;
         stats.SP = playerSaveData._sp;
+        stats.MaxEXP = playerSaveData._maxExp;
+        stats.EXP = playerSaveData._exp;
         stats.Gold = playerSaveData._gold;
+        
 
         stats._originStat.MaxHP = stats.MaxHP > 0 ? stats.MaxHP : 150;
         stats._originStat.HP = stats.HP > 0 ? stats.HP : stats.MaxHP;
@@ -174,7 +175,7 @@ public class LoadingScene : BaseScene
         stats._originStat.DEF = stats.DEF > 0 ? stats.DEF : 10;
         stats._originStat.RecoveryHP = stats.RecoveryHP > 0 ? stats.RecoveryHP : 2;
         stats._originStat.RecoveryMP = stats.RecoveryMP > 0 ? stats.RecoveryMP : 2;
-        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ", stats.Level, stats.MaxHP, stats.MaxMP, stats.HP, stats.MP, stats.ATK, stats.DEF, stats.RecoveryHP, stats.RecoveryMP, stats.SP)}");
+        Logger.Log($"스텟 적용후 스텟 확인 : {string.Join(", ", stats.SP)}");
     }
 
     void ApplyLargeMapData()

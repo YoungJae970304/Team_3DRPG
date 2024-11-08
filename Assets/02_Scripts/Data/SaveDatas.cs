@@ -46,8 +46,8 @@ public class PlayerSaveData : IData
             _level = stats.Level;
             _exp = stats.EXP;
             _maxExp = stats.MaxEXP;
-            _sp = stats.SP;
             _gold = stats.Gold;
+            _sp = stats.SP;
             _PlayerTypes = Managers.Game._playerType;
             Logger.Log($"현재 플레이 중인 타입 {_PlayerTypes}");
             string directory = Path.GetDirectoryName(_SavePath);

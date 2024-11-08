@@ -256,12 +256,13 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
+  _InitPos: 1
+  _position: {x: 500, y: 0, z: 0}
   _btnCount: 0
   _slots:
   - {fileID: 7411668492195702471}
   - {fileID: 3605173694153656218}
   - {fileID: 5746970857068991016}
-  Atk: {fileID: 9214368515681745111}
 --- !u!111 &9083649720846141769
 Animation:
   m_ObjectHideFlags: 0

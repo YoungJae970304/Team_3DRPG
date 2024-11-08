@@ -103,7 +103,6 @@ public class DataManager
 
     public void AllDataInit()
     {
-        //GetData<SaveDatas>()?.Init();
         GetData<PlayerSaveData>()?.Init();
         GetData<InventorySaveData>()?.Init();
         GetData<SkillSaveData>()?.Init();

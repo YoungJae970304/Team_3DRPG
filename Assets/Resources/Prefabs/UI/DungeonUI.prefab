@@ -682,7 +682,7 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 3599089477673465059}
   _isSort: 1
-  _InitPos: 0
+  _InitPos: 1
   _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
   _deongeonLevel: 0

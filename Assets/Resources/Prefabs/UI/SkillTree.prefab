@@ -121,7 +121,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3040503447744232162}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.97301966
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -545,8 +545,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3058126408619726545}
   m_HandleRect: {fileID: 662419430634594730}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.6931726
+  m_Value: 1.0000066
+  m_Size: 0.67447066
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1175,7 +1175,7 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
-  _InitPos: 0
+  _InitPos: 1
   _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
   _skillTreeItems: []
@@ -1374,7 +1374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -567.56055, y: 377.3612}
+  m_AnchoredPosition: {x: -567.5574, y: 377.3591}
   m_SizeDelta: {x: 956.7581, y: 1088.7947}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &5718538824405378686
