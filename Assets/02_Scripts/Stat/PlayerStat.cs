@@ -36,6 +36,7 @@ public class PlayerStat : Stat
             if (value < _level) return;
 
             int oldLevel = _level;
+
             _level = value;
 
             for (int i = oldLevel + 1; i <= _level; i++)
@@ -66,8 +67,6 @@ public class PlayerStat : Stat
                 _exp -= MaxEXP;
                 Level++;
             }
-            //Managers.Data.SaveData<PlayerSaveData>();
-            //Logger.Log("레벨업 저장");
         }
     }
 

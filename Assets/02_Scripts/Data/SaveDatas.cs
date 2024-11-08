@@ -4,6 +4,11 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public class SaveDatas
+{
+
+}
+
 #region 플레이어 데이터 클래스
 [Serializable]
 public class PlayerSaveData : IData
@@ -549,10 +554,16 @@ public class QuestItemData
 }
 
 [Serializable]
+public class QuestComplateData
+{
+    public int _id;
+}
+
+[Serializable]
 public class QuestSaveData : IData
 {
     public List<QuestItemData> _questItemData = new List<QuestItemData>();
-
+    public List<QuestComplateData> _complateQuest = new List<QuestComplateData>();
     string _SavePath;
 
     public void Init()
@@ -599,10 +610,30 @@ public class QuestSaveData : IData
                     };
                     _questItemData.Add(questData);
                 }
+                foreach (int questID in questManager._completeQuest)
+                {
+                    var completedQuestData = new QuestComplateData
+                    {
+                        _id = questID,
+                    };
+                    _complateQuest.Add(completedQuestData);
+                    Logger.Log(_complateQuest.Count);
+                }
+
+                //for (int i = 0; i < Managers.QuestManager._completeQuest.Count; i++)
+                //{
+                //    var completedQuestData = new QuestComplateData
+                //    {
+                //        _id = Managers.QuestManager._completeQuest[i],
+                //    };
+                //    _complateQuest.Add(completedQuestData);
+                //    Logger.LogError(_complateQuest.Count.ToString());
+                //}
+
+                string questJson = JsonUtility.ToJson(this, true);
+                File.WriteAllText(_SavePath, questJson);
+                Logger.Log("퀘스트 세이브");
             }
-            string questJson = JsonUtility.ToJson(this, true);
-            File.WriteAllText(_SavePath, questJson);
-            Logger.Log("퀘스트 세이브");
         }
         catch (Exception e)
         {
@@ -630,6 +661,7 @@ public class QuestSaveData : IData
     public void SetDefaultData()
     {
         _questItemData.Clear();
+        _complateQuest.Clear();
     }
 }
 #endregion
