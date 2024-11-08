@@ -14,11 +14,16 @@ public class BossHPBar : BaseUI
     {
         HpPer,
     }
+    enum Transforms {
+        StatusEffects
+    }
+    [SerializeField]Transform _transform;
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
         Bind<Slider>(typeof(Sliders));
         Bind<TextMeshProUGUI>(typeof(Texts));
+        Bind<Transform>(typeof(Transforms));
         BossHpChanged(Managers.Game._monsters[0]._mStat.HP);
         PubAndSub.Subscrib<int>("BossHP", BossHpChanged);
     }
