@@ -17,6 +17,7 @@ public class Ork : Monster
     }
     public override void OnEnable()
     {
+        base.OnEnable();
         Init();
     }
     public override void Init()
