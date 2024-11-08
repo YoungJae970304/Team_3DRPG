@@ -27,6 +27,7 @@ public class DungeonManager : MonoBehaviour
     private void Awake()
     {
         _remainMonsterValue = GetComponentInChildren<TextMeshProUGUI>();
+        PubAndSub.Subscrib("DungeonFail", FalseDungeon);
     }
     private void OnEnable()
     {
@@ -77,7 +78,7 @@ public class DungeonManager : MonoBehaviour
     {
         ClearDungeon();
         // Logger.LogError($"{Managers.Game._monsters.Count}");
-        FalseDungeon();
+        //FalseDungeon();
         BossCheck();
         BossHPBar();
     }
@@ -165,7 +166,7 @@ public class DungeonManager : MonoBehaviour
     }
     public void FalseDungeon()
     {
-        if (_monsterCount > 0 && _player._playerStatManager._originStat.HP <= 0 && _startCheck == true)
+        if (_monsterCount > 0 && _player._curState == PlayerState.Dead && _startCheck == true)
         {
             //던전 UI활성화
             InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;

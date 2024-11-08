@@ -172,6 +172,11 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         _player._hitting = false;
     }
+
+    public void DungeonFail()
+    {
+        PubAndSub.Publish("DungeonFail");
+    }
     #endregion
 
 }
