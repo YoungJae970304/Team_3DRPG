@@ -16,7 +16,7 @@ public class MonsterReturnState : BaseState
         ReturnSpeedChange();
         ReturnHeal();
         _monster._nav.destination = _monster._originPos;
-        if (_monster._hpBar != null)
+        if (_monster._hpBar.activeSelf && _monster._mStat.HP > 0)
         {
             _monster._monsterHpBar.HpChanged();
         }

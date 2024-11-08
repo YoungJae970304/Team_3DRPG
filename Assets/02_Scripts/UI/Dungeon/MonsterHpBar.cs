@@ -25,10 +25,7 @@ public class MonsterHpBar : MonoBehaviour
     }
     public void HpChanged()
     {
-        if (_monster._mStat == null)
-        {
-            Logger.LogError("Monster stats (_mStat) is null.");
-        }
+        
         if (_hpBar == null)
         {
             Logger.LogError("싯팔 이게 왜없어");
