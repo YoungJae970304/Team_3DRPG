@@ -571,8 +571,8 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 0}
   _isSort: 1
-  _InitPos: 0
-  _position: {x: 0, y: 0, z: 0}
+  _InitPos: 1
+  _position: {x: 0, y: 0}
   _btnCount: 0
   _currentType: 1
   _inventory: {fileID: 0}
@@ -639,7 +639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000009536743, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10.000004, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4896399057227130148
