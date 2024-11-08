@@ -8,6 +8,7 @@ public class PlayerAttackState : BaseState
 
     public override void OnStateEnter()
     {
+        _player._attacking = true;
         _player._playerAnim.SetBool("isAttacking", true);
         _player.SetColActive("Katana");
 

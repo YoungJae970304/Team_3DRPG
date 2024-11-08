@@ -165,7 +165,7 @@ public class PlayerAnimEvent : MonoBehaviour
     public void DodgeEnd()
     {
         _player._dodgeing = false;
-        _player.ChangeState(PlayerState.Idle);
+        //_player.ChangeState(PlayerState.Idle);
     }
 
     public void DodgeForceEnd()

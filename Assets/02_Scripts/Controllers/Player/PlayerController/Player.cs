@@ -267,13 +267,13 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
                 {
                     ChangeState(PlayerState.Attack);
                 }
-                else if (!_isMoving)
+                else if (_isMoving)
                 {
-                    ChangeState(PlayerState.Idle);
+                    ChangeState(PlayerState.Move);
                 }
                 else
                 {
-                    ChangeState(PlayerState.Move);
+                    ChangeState(PlayerState.Idle);
                 }
                 break;
             case PlayerState.Attack:
