@@ -20,8 +20,6 @@ public class MonsterDieState : BaseState
         Managers.Game._monsters.Remove(_monster);
         Logger.Log("몬스터 사망");
         //_monster.GetComponent<BoxCollider>().enabled = false;
-        
-        _monster._dieMonster?.Invoke();
         QuestCheck();
         //_monster.StartCoroutine(IvokeDie());
         Action invokeDie = async () =>
@@ -30,6 +28,7 @@ public class MonsterDieState : BaseState
             
             if(_monster.gameObject != null)
             {
+                _monster._dieCheck = true;
                 GameObject mob = _monster.gameObject;
                 _monster._nav.enabled = true;
                 _monster._anim.enabled = true;

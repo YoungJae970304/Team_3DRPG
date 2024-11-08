@@ -64,7 +64,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     public MonsterHpBar _monsterHpBar;
     public GameObject _hpBar;
     public ITotalStat Targetstat => _mStat;
-
+    public bool _dieCheck = false;
     public Transform TargetTr => transform;
 
     public virtual void Awake()
@@ -137,7 +137,7 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
         
         _player = Managers.Game._player;
         _dataTableManager = Managers.DataTable;
-        
+        _dieCheck = false;
 
         _originPos = transform.position;
         _curState = MonsterState.Idle;
@@ -307,13 +307,18 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     #region 죽었을 때
     public virtual void Die(GameObject mob)
     {
+        
         _player.PlayerEXPGain(_mStat._mStat.EXP);
         _player.PlayerGOLDGain(_mStat._mStat.Gold);
         Managers.Resource.Destroy(mob);//mob은 풀링오브젝트에 들어가는거
         _monsterDrop.DropItemSelect(_deongeonLevel, sample);//임시 설정 추후 던전에서 받아오도록 변경
         MakeItem();
+        _dieMonster?.Invoke();
     }
-
+    public void Pooling(GameObject mob) 
+    {
+        Managers.Resource.Destroy(mob);
+    }
     #endregion
     #region 상태 변환 조건
     public bool DamageToPlayer()

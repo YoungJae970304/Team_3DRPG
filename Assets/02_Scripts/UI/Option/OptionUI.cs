@@ -53,12 +53,14 @@ public class OptionUI : BaseUI
        
         confirmUIData.DescTxt = descTxt;
 
-        ConfirmUIData.confirmAction = () =>
+        ConfirmUIData.confirmAction = async () =>
         {
-           for(int i = 0; i < Managers.Game._monsters.Count; i++)
+           
+            for(int i = 0; i < Managers.Game._monsters.Count; i++)
             {
                 Managers.Resource.Destroy(Managers.Game._monsters[i].gameObject);
             }
+            await Task.Delay(1000);
             Managers.Game.PlayerPosSet(PlayerPosSetData.PlayerPosSetLoad());
             Managers.Game._monsters.Clear();
             //Managers.Scene.SceneChange("main");

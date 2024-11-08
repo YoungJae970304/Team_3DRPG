@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +25,6 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
     TextMeshProUGUI _remainMonsterValue;
-    float _timer = 0;
     private void Awake()
     {
         _remainMonsterValue = GetComponentInChildren<TextMeshProUGUI>();
@@ -35,40 +35,39 @@ public class DungeonManager : MonoBehaviour
         _player = Managers.Game._player;
         _game = Managers.Game;
         _curLevel = _game._selecDungeonLevel;
-        int timer = 0;
-        DungeonCheck();
+        //DungeonCheck();
         SpawnCheck();
         DungeonCheck();
-        
+
     }
     private void OnDisable()
     {
         _monsterCount = 0;
-        if (_bossSpawn != null || _easyDungeonSpawn != null || _normalDungeonSpawn != null || _hardDungeonSpawn != null)
+
+        if (_bossSpawn != null && _bossSpawn.activeSelf)
         {
-            if (_bossSpawn.activeSelf)
-            {
-                _bossSpawn.SetActive(false);
-                _bossDungeonWall.SetActive(false);
-                _bossHPBar?.CloseUI();
-            }
-            else if (_easyDungeonSpawn.activeSelf)
-            {
-                _easyDungeonSpawn.SetActive(false);
-                _easyDungeonWall.SetActive(false);
-            }
-            else if (_normalDungeonSpawn.activeSelf)
-            {
-                _normalDungeonSpawn.SetActive(false);
-                _normalDungeonWall.SetActive(false);
-            }
-            else
-            {
-                _hardDungeonSpawn.SetActive(false);
-                _hardDungeonWall.SetActive(false);
-            }
+            _bossSpawn.SetActive(false);
+            _bossDungeonWall.SetActive(false);
+            _bossHPBar?.CloseUI();
         }
-        
+        else if (_easyDungeonSpawn != null && _easyDungeonSpawn.activeSelf)
+        {
+            _easyDungeonSpawn.SetActive(false);
+            _easyDungeonWall.SetActive(false);
+        }
+        else if (_normalDungeonSpawn != null && _normalDungeonSpawn.activeSelf)
+        {
+            _normalDungeonSpawn.SetActive(false);
+            _normalDungeonWall.SetActive(false);
+        }
+        else if(_hardDungeonSpawn != null && _hardDungeonSpawn.activeSelf)
+        {
+            
+            _hardDungeonSpawn.SetActive(false);
+            _hardDungeonWall.SetActive(false);
+        }
+
+
     }
     private void Start()
     {
@@ -102,7 +101,7 @@ public class DungeonManager : MonoBehaviour
             _bossSpawn.SetActive(true);
             _bossDungeonWall.SetActive(true);
         }
-        else if(_curLevel == DeongeonType.Easy)
+        else if (_curLevel == DeongeonType.Easy)
         {
             _easyDungeonSpawn.SetActive(true);
             _easyDungeonWall.SetActive(true);
@@ -120,9 +119,9 @@ public class DungeonManager : MonoBehaviour
     }
     public void BossCheck()
     {
-       for(int i = 0; i < Managers.Game._monsters.Count; i++)
+        for (int i = 0; i < Managers.Game._monsters.Count; i++)
         {
-            if(Managers.Game._monsters[i]._monsterID == 99999)
+            if (Managers.Game._monsters[i]._monsterID == 99999)
             {
                 _bossCheck = true;
             }
@@ -134,13 +133,13 @@ public class DungeonManager : MonoBehaviour
     }
     public void BossHPBar()
     {
-        if (_bossCheck && Managers.Game._monsters[0]._mStat.ChaseRange > 
+        if (_bossCheck && Managers.Game._monsters[0]._mStat.ChaseRange >
             (Managers.Game._monsters[0].transform.position - Managers.Game._player.transform.position).magnitude)
         {
             BossHPBarData data = new BossHPBarData();
             data.Monster = Managers.Game._monsters[0];
-            _bossHPBar = Managers.UI.OpenUI<BossHPBar>(data,false);
-           
+            _bossHPBar = Managers.UI.OpenUI<BossHPBar>(data, false);
+
         }
         else
         {
@@ -151,32 +150,42 @@ public class DungeonManager : MonoBehaviour
     {
         if (_monsterCount <= 0 && _startCheck == true)
         {
-            _timer += Time.deltaTime;
-            if(_timer >= 2)
+            //던전 UI활성화
+            //for (int i = 0; i < Managers.Game._monsters.Count; i++)
+            //{
+            //    if (Managers.Game._monsters[i].gameObject.activeSelf && !Managers.Game._monsters[i]._dieCheck)
+            //    {
+            //        Managers.Game._monsters[i].Die(Managers.Game._monsters[i].gameObject);
+            //    }
+            //}
+            InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
+            if (inDungeonUI != null)
             {
-                //던전 UI활성화
-
-                InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
-                if (inDungeonUI != null)
-                {
-                    Managers.UI.CloseUI(inDungeonUI);
-                }
-                else
-                {
-                    inDungeonUI = Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
-                    inDungeonUI._loadText.text = "Clear";
-                }
-                _startCheck = false;
-                Managers.Sound.Play("ETC/ui_dungeon_clear");
+                Managers.UI.CloseUI(inDungeonUI);
             }
-            
+            else
+            {
+                inDungeonUI = Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
+                inDungeonUI._loadText.text = "Clear";
+            }
+            _startCheck = false;
+            Managers.Sound.Play("ETC/ui_dungeon_clear");
         }
     }
-    public void FalseDungeon()
+    public async void FalseDungeon()
     {
         if (_monsterCount > 0 && _player._curState == PlayerState.Dead && _startCheck == true)
         {
             //던전 UI활성화
+            for (int i = 0; i < Managers.Game._monsters.Count; i++)
+            {
+                if (Managers.Game._monsters[i].gameObject.activeSelf)
+                {
+                    Managers.Game._monsters[i].Pooling(Managers.Game._monsters[i].gameObject);
+                }
+            }
+            Managers.Game._monsters.Clear();
+            await Task.Delay(1000);
             InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
             if (inDungeonUI != null)
             {
