@@ -24,6 +24,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
     TextMeshProUGUI _remainMonsterValue;
+    float _timer = 0;
     private void Awake()
     {
         _remainMonsterValue = GetComponentInChildren<TextMeshProUGUI>();
@@ -33,6 +34,7 @@ public class DungeonManager : MonoBehaviour
         _player = Managers.Game._player;
         _game = Managers.Game;
         _curLevel = _game._selecDungeonLevel;
+        int timer = 0;
         DungeonCheck();
         SpawnCheck();
         DungeonCheck();
@@ -146,19 +148,25 @@ public class DungeonManager : MonoBehaviour
     {
         if (_monsterCount <= 0 && _startCheck == true)
         {
-            //던전 UI활성화
-            InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
-            if (inDungeonUI != null)
+            _timer += Time.deltaTime;
+            if(_timer >= 2)
             {
-                Managers.UI.CloseUI(inDungeonUI);
+                //던전 UI활성화
+
+                InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;
+                if (inDungeonUI != null)
+                {
+                    Managers.UI.CloseUI(inDungeonUI);
+                }
+                else
+                {
+                    inDungeonUI = Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
+                    inDungeonUI._loadText.text = "Clear";
+                }
+                _startCheck = false;
+                Managers.Sound.Play("ETC/ui_dungeon_clear");
             }
-            else
-            {
-                inDungeonUI = Managers.UI.OpenUI<InDungeonUI>(new BaseUIData());
-                inDungeonUI._loadText.text = "Clear";
-            }
-            _startCheck = false;
-            Managers.Sound.Play("ETC/ui_dungeon_clear");
+            
         }
     }
     public void FalseDungeon()
