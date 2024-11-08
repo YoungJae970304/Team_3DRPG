@@ -6,11 +6,12 @@ using System.Linq;
 using System;
 public class StatusEffectManager : MonoBehaviour
 {
-    List<StatusEffect> _buff=new List<StatusEffect>();
-    List<StatusEffect> _deBuff = new List<StatusEffect>();
+    [SerializeField] List<StatusEffect> _buff=new List<StatusEffect>();
+    [SerializeField] List<StatusEffect> _deBuff = new List<StatusEffect>();
     List<Type> _immunitys = new List<Type>();
     public IStatusEffectAble _target;
     public RectTransform _iconTr;
+    public IEnumerable<StatusEffect> Effects { get => _buff.Union(_deBuff); }
     private void Awake()
     {
         _target = GetComponent<IStatusEffectAble>();

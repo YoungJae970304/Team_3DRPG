@@ -58,7 +58,7 @@ public class PlayerStatManager : MonoBehaviour, ITotalStat
 
     private void Update()
     {
-        if (Time.time - _lastTime >= _recoveryInterval && Time.timeScale > 0)
+        if (Time.time - _lastTime >= _recoveryInterval && Time.timeScale > 0 && HP > 0)
         {
             Logger.Log($"HP 재생 : {RecoveryHP} / MP 재생 : {RecoveryMP}");
             HP += RecoveryHP;

@@ -23,7 +23,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
     private Action _OnClose;
     public bool _isSort = true;
     [SerializeField] bool _InitPos=false;
-    [SerializeField] Vector3 _position = Vector3.zero;
+    [SerializeField] Vector2 _position = Vector2.zero;
     bool alreadySet = false;
 
     public int _btnCount;
@@ -148,7 +148,7 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
             _exitBtn.onClick.AddListener(()=>CloseUI());
         }
         if (_InitPos) {
-            _topBarImage.transform.parent.localPosition = _position;
+            SetPos(_position);
         }
         
         rectTransform.localPosition = Vector3.zero;
@@ -235,5 +235,9 @@ public class BaseUI : MonoBehaviour, IPointerDownHandler
 
     public void OnClosedButton() {
         CloseUI();
+    }
+
+    public void SetPos(Vector2 pos) {
+        _topBarImage.transform.parent.localPosition = pos;
     }
 }

@@ -20,16 +20,40 @@ public abstract class StatusEffect : MonoBehaviour
         _duration = duration;
         _target = target; 
         _effectIcon = GetComponent<Image>();
-        
-        _effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
-        _effectTimerTxt=GetComponentInChildren<TextMeshProUGUI>();
-        _effectTimerTxt.text = _duration.ToString(); ;
-        if (duration <= 0) {
+        _effectTimerTxt = GetComponentInChildren<TextMeshProUGUI>();
+        if (transform.parent == null)
+        {
             _effectIcon.enabled = false;
-            _effectTimerTxt.text = "";
+            _effectTimerTxt.enabled = false;
+        }
+        else {
+            _effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
+
+            _effectTimerTxt.text = _duration.ToString("F1"); ;
+            if (duration <= 0)
+            {
+                _effectIcon.enabled = false;
+                _effectTimerTxt.text = "";
+            }
         }
         Effect();
     }
+    public void ChangeParent(Transform transform) {
+        if (transform == null)
+        {
+            _effectIcon.enabled = false;
+            _effectTimerTxt.enabled = false;
+        }
+        else
+        {
+            transform.SetParent(transform);
+            _effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
+
+            _effectTimerTxt.text = _duration.ToString(); ;
+        }
+        
+    }
+
     private void Update()
     {
         Timer();
@@ -43,7 +67,7 @@ public abstract class StatusEffect : MonoBehaviour
     public abstract void AddEffect(float duration, params int[] value);
     protected void Timer() {
         _duration -= Time.deltaTime;
-        _effectTimerTxt.text = _duration.ToString();
+        _effectTimerTxt.text = _duration.ToString("F1");
         if (_duration <= 0) {
             _removeEffectAction?.Invoke(this);
             Managers.Resource.Destroy(this.gameObject);

@@ -1024,7 +1024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234.00053, y: 285}
+  m_AnchoredPosition: {x: -234.00053, y: 285.0011}
   m_SizeDelta: {x: 464, y: 553}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8482338086774922469
@@ -1688,7 +1688,7 @@ MonoBehaviour:
   _topBarImage: {fileID: 0}
   _exitBtn: {fileID: 6582660709560786134}
   _isSort: 1
-  _InitPos: 0
+  _InitPos: 1
   _position: {x: 0, y: 0, z: 0}
   _btnCount: 0
   _questID: 0
@@ -1711,7 +1711,7 @@ MonoBehaviour:
   _questButtons: []
   _questView: {fileID: 4874650313147912699}
   _simpleQuestUI: {fileID: 0}
-  _test: 0
+  _questId: 0
 --- !u!1 &5563181223811597379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,7 +2941,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 50844078609850982}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999437
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

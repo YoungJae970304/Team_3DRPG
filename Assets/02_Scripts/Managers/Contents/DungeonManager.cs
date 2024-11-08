@@ -19,7 +19,7 @@ public class DungeonManager : MonoBehaviour
     public GameObject _easyDungeonWall;
     public GameObject _normalDungeonWall;
     public GameObject _hardDungeonWall;
-    public GameObject _bossHPBar;
+    public BossHPBar _bossHPBar;
     [SerializeField] Transform _playerSpawnPos;
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
@@ -28,6 +28,7 @@ public class DungeonManager : MonoBehaviour
     private void Awake()
     {
         _remainMonsterValue = GetComponentInChildren<TextMeshProUGUI>();
+        PubAndSub.Subscrib("DungeonFail", FalseDungeon);
     }
     private void OnEnable()
     {
@@ -49,7 +50,7 @@ public class DungeonManager : MonoBehaviour
             {
                 _bossSpawn.SetActive(false);
                 _bossDungeonWall.SetActive(false);
-                _bossHPBar.SetActive(false);
+                _bossHPBar?.CloseUI();
             }
             else if (_easyDungeonSpawn.activeSelf)
             {
@@ -79,7 +80,7 @@ public class DungeonManager : MonoBehaviour
     {
         ClearDungeon();
         // Logger.LogError($"{Managers.Game._monsters.Count}");
-        FalseDungeon();
+        //FalseDungeon();
         BossCheck();
         BossHPBar();
     }
@@ -136,12 +137,14 @@ public class DungeonManager : MonoBehaviour
         if (_bossCheck && Managers.Game._monsters[0]._mStat.ChaseRange > 
             (Managers.Game._monsters[0].transform.position - Managers.Game._player.transform.position).magnitude)
         {
-            _bossHPBar.SetActive(true);
+            BossHPBarData data = new BossHPBarData();
+            data.Monster = Managers.Game._monsters[0];
+            _bossHPBar = Managers.UI.OpenUI<BossHPBar>(data,false);
            
         }
         else
         {
-            _bossHPBar.SetActive(false);
+            _bossHPBar?.CloseUI();
         }
     }
     public void ClearDungeon()
@@ -171,7 +174,7 @@ public class DungeonManager : MonoBehaviour
     }
     public void FalseDungeon()
     {
-        if (_monsterCount > 0 && _player._playerStatManager._originStat.HP <= 0 && _startCheck == true)
+        if (_monsterCount > 0 && _player._curState == PlayerState.Dead && _startCheck == true)
         {
             //던전 UI활성화
             InDungeonUI inDungeonUI = Managers.UI.GetActiveUI<InDungeonUI>() as InDungeonUI;

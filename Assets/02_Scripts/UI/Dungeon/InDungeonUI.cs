@@ -21,6 +21,6 @@ public class InDungeonUI : BaseUI
     {
         Managers.Scene.SceneChange(sceneName);
         Managers.UI.CloseAllOpenUI();
+        Managers.Game.PlayerPosSet(PlayerPosSetData.PlayerPosSetLoad());
     }
- 
 }

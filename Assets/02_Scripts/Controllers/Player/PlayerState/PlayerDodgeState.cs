@@ -11,8 +11,6 @@ public class PlayerDodgeState : BaseState
     public override void OnStateEnter()
     {
         Logger.Log("회피 진입");
-        //_player._playerAnim.SetBool("isDodge", true);
-        //_player._playerAnim.SetTrigger("doDodge");
         _player._playerAnim.Play("Dodge");
         _player.AtkCount = 0;
         _player._dodgeing = true;
@@ -41,7 +39,6 @@ public class PlayerDodgeState : BaseState
         Logger.Log("회피 Exit");
         _player._canAtkInput = true;
         _player._attacking = false;
-        _player._dodgeing = false;
     }
 
     void Dodge()
