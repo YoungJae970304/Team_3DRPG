@@ -31,20 +31,17 @@ public class QuestManager
     public void Init()
     {
         _dataTableManager = Managers.DataTable;
-        // LoadQuestData();
-    
-        
     }
 
     /////////////////////////////////////
     ///여기 밑부터 내가 작성한 부분
     public void LevelCountPlus()
     {
-        _currPlayerLevel++;
         AddActiveQuest();
     }
     public void AddActiveQuest()
     {
+        _currPlayerLevel = Managers.Game._player._playerStatManager.Level;
         for (int i = _questID[0]; i <= _questID[_questID.Count - 1]; i++)
         {
             if (_questList[i] <= _currPlayerLevel)
@@ -53,19 +50,12 @@ public class QuestManager
                 {
                     _activeQuest.Add(i);
                 }
-
-
-
-                //Managers.UI.Init();
-
             }
         }
     }
     public void CheckProgress(int progressValue)
     {
-
         int currentint;
-
         if (Managers.QuestManager._countCheck.ContainsKey(progressValue))
         {
             currentint = Managers.QuestManager._countCheck[progressValue];
@@ -91,7 +81,8 @@ public class QuestManager
     }
     public void QuestListInput()
     {
-        foreach(var questdata in _dataTableManager._QuestData)
+        
+        foreach (var questdata in _dataTableManager._QuestData)
         {
             _questList.Add(questdata.ID, questdata.PlayerLevelRequirement);
             _questName.Add(questdata.ID, questdata.Name);
