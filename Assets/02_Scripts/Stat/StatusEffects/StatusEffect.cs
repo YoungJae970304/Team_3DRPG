@@ -29,7 +29,7 @@ public abstract class StatusEffect : MonoBehaviour
         else {
             _effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
 
-            _effectTimerTxt.text = _duration.ToString(); ;
+            _effectTimerTxt.text = _duration.ToString("F1"); ;
             if (duration <= 0)
             {
                 _effectIcon.enabled = false;
@@ -67,7 +67,7 @@ public abstract class StatusEffect : MonoBehaviour
     public abstract void AddEffect(float duration, params int[] value);
     protected void Timer() {
         _duration -= Time.deltaTime;
-        _effectTimerTxt.text = _duration.ToString();
+        _effectTimerTxt.text = _duration.ToString("F1");
         if (_duration <= 0) {
             _removeEffectAction?.Invoke(this);
             Managers.Resource.Destroy(this.gameObject);
