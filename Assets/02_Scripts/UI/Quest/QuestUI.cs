@@ -55,8 +55,8 @@ public class QuestUI : BaseUI
     public Dictionary<string, int> _progressButtonType = new Dictionary<string, int>();
     public GameObject _questView;
     public GameObject _simpleQuestUI;
-    GameObject _simpleText;
-    GameObject _content;
+    public GameObject _simpleText;
+    public GameObject _content;
     public int _questId;
     MainUI mainUI;
     Player _player;
@@ -190,14 +190,7 @@ public class QuestUI : BaseUI
             id = Managers.QuestManager._targetToQuestID[id];
         }
         Managers.QuestManager._countCheck[id] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]);
-        if (!Managers.QuestManager._changeText.ContainsKey(id))
-        {
-            return;
-        }
-        else
-        {
-            Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
-        }
+        
         if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[id]) >= Managers.QuestManager._completeChecks[id])
         {
             Managers.QuestManager._questComplete[id] = true;
@@ -205,6 +198,22 @@ public class QuestUI : BaseUI
         else
         {
             Managers.QuestManager._questComplete[id] = false;
+        }
+        if (!Managers.QuestManager._changeText.ContainsKey(id))
+        {
+            
+            Managers.QuestManager._changeText.Add(id, _content.transform.GetChild(2).gameObject);
+            Managers.QuestManager._changeID.Add(_content.transform.GetChild(2).gameObject, id);
+            int lastID = Managers.QuestManager._changeID[_content.transform.GetChild(2).gameObject];
+            Managers.QuestManager._changeID.Remove(Managers.QuestManager._changeText[lastID]);
+            Managers.QuestManager._changeText.Remove(lastID);
+            Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>()._questTextID = id;
+            Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().transform.SetAsFirstSibling();
+            Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
+        }
+        else
+        {
+            Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
         }
     }
     public void AllowQuest()
@@ -234,6 +243,7 @@ public class QuestUI : BaseUI
                 _simpleText = null;
                 _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", _content.transform);
                 Managers.QuestManager._changeText.Add(_questId, _simpleText);
+                Managers.QuestManager._changeID.Add(_simpleText,_questId);
                 var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
                 if (!Managers.QuestManager._countCheck.ContainsKey(_questId))
                 {
@@ -262,6 +272,7 @@ public class QuestUI : BaseUI
                 _simpleText = null;
                 _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", _content.transform);
                 Managers.QuestManager._changeText.Add(_questId, _simpleText);
+                Managers.QuestManager._changeID.Add(_simpleText, _questId);
                 var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
                 if (!Managers.QuestManager._countCheck.ContainsKey(_questId))
                 {
@@ -384,6 +395,7 @@ public class QuestUI : BaseUI
         PubAndSub.UnSubscrib<int>($"{_questId}", Managers.QuestManager.CheckProgress);
         if (_simpleQuestUI.activeSelf)
         {
+            Managers.QuestManager._changeID.Remove(Managers.QuestManager._changeText[_questId]);
             Managers.Resource.Destroy(Managers.QuestManager._changeText[_questId]);
             Managers.QuestManager._changeText.Remove(_questId);
             if (_content.transform.childCount == 1)
@@ -392,20 +404,29 @@ public class QuestUI : BaseUI
             }
             
         }
-        if(Managers.QuestManager._progressQuest.Count >= 3)
+        if (Managers.QuestManager._progressQuest.Count >= 3)
         {
-            Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[2];
+            for (int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
+            {
+                if (!Managers.QuestManager._changeText.ContainsKey(Managers.QuestManager._progressQuest[i]))
+                {
+                    Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
+                    break;
+                }
+            }
+
             _simpleText = null;
             _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", _content.transform);
-            Managers.QuestManager._changeText.Add(Managers.QuestManager._progressQuest[2], _simpleText);
+            Managers.QuestManager._changeText.Add(Managers.QuestManager._questTextID, _simpleText);
+            Managers.QuestManager._changeID.Add(_simpleText, Managers.QuestManager._questTextID);
             var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
-            if (!Managers.QuestManager._countCheck.ContainsKey(Managers.QuestManager._progressQuest[2]))
+            if (!Managers.QuestManager._countCheck.ContainsKey(Managers.QuestManager._questTextID))
             {
-                Managers.QuestManager._countCheck.Add(Managers.QuestManager._progressQuest[2], 0);
+                Managers.QuestManager._countCheck.Add(Managers.QuestManager._questTextID, 0);
             }
-            if (Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[2]] / 10000 != 9)
+            if (Managers.QuestManager._targetCheck[Managers.QuestManager._questTextID] / 10000 != 9)
             {
-                int goodsID = Managers.QuestManager._progressQuest[2];
+                int goodsID = Managers.QuestManager._questTextID;
                 _inventory.GetItemAction += (() => ValueCheck(goodsID));
                 PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
                 Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
@@ -414,7 +435,7 @@ public class QuestUI : BaseUI
                     Managers.QuestManager._questComplete[goodsID] = true;
                 }
             }
-            Managers.QuestManager._changeText[Managers.QuestManager._progressQuest[2]].GetComponent<SimpleQuestText>().Init(_content.transform);
+            Managers.QuestManager._changeText[Managers.QuestManager._questTextID].GetComponent<SimpleQuestText>().Init(_content.transform);
         }
         ReVoid();
         Managers.Sound.Play("ETC/ui_quest_clear");
@@ -437,6 +458,7 @@ public class QuestUI : BaseUI
         Managers.QuestManager._countCheck[_questId] = 0;
         if (_simpleQuestUI.activeSelf)
         {
+            Managers.QuestManager._changeID.Remove(Managers.QuestManager._changeText[_questId]);
             Managers.Resource.Destroy(Managers.QuestManager._changeText[_questId]);
             Managers.QuestManager._changeText.Remove(_questId);
             if (_content.transform.childCount == 1)
@@ -446,18 +468,27 @@ public class QuestUI : BaseUI
         }
         if (Managers.QuestManager._progressQuest.Count >= 3)
         {
-            Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[2];
+            for(int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
+            {
+                if (!Managers.QuestManager._changeText.ContainsKey(Managers.QuestManager._progressQuest[i]))
+                {
+                    Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
+                    break;
+                }
+            }
+            
             _simpleText = null;
             _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", _content.transform);
-            Managers.QuestManager._changeText.Add(Managers.QuestManager._progressQuest[2], _simpleText);
+            Managers.QuestManager._changeText.Add(Managers.QuestManager._questTextID, _simpleText);
+            Managers.QuestManager._changeID.Add(_simpleText, Managers.QuestManager._questTextID);
             var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
-            if (!Managers.QuestManager._countCheck.ContainsKey(Managers.QuestManager._progressQuest[2]))
+            if (!Managers.QuestManager._countCheck.ContainsKey(Managers.QuestManager._questTextID))
             {
-                Managers.QuestManager._countCheck.Add(Managers.QuestManager._progressQuest[2], 0);
+                Managers.QuestManager._countCheck.Add(Managers.QuestManager._questTextID, 0);
             }
-            if (Managers.QuestManager._targetCheck[Managers.QuestManager._progressQuest[2]] / 10000 != 9)
+            if (Managers.QuestManager._targetCheck[Managers.QuestManager._questTextID] / 10000 != 9)
             {
-                int goodsID = Managers.QuestManager._progressQuest[2];
+                int goodsID = Managers.QuestManager._questTextID;
                 _inventory.GetItemAction += (() => ValueCheck(goodsID));
                 PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
                 Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
@@ -466,9 +497,9 @@ public class QuestUI : BaseUI
                     Managers.QuestManager._questComplete[goodsID] = true;
                 }
             }
-            Managers.QuestManager._changeText[Managers.QuestManager._progressQuest[2]].GetComponent<SimpleQuestText>().Init(_content.transform);
+            Managers.QuestManager._changeText[Managers.QuestManager._questTextID].GetComponent<SimpleQuestText>().Init(_content.transform);
         }
-        Init(transform);
+        ReVoid();
     }
     public string ButtonName()
     {

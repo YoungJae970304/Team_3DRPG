@@ -116,6 +116,7 @@ public class MainUI : ItemDragUI
                     GameObject _simpleText = null;
                     _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", content.transform);
                     Managers.QuestManager._changeText.Add(id, _simpleText);
+                    Managers.QuestManager._changeID.Add(_simpleText, id);
                     var text = _simpleText.GetComponent<SimpleQuestText>();
                     if (Managers.QuestManager._targetCheck[id] / 10000 != 9)
                     {
@@ -131,6 +132,12 @@ public class MainUI : ItemDragUI
                     }
                     Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(content.transform);
                 }
+            }
+            for(int i = simpleQuestCount; i < Managers.QuestManager._progressQuest.Count; i++)
+            {
+                int id = Managers.QuestManager._progressQuest[i];
+                Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
+                PubAndSub.Subscrib<int>($"{id}", Managers.QuestManager.CheckProgress);
             }
         }
     }

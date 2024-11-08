@@ -16,6 +16,7 @@ public class QuestManager
     public Dictionary<int, string> _questName = new Dictionary<int, string>(); // 퀘스트 이름
     public Dictionary<int, string> _targetName = new Dictionary<int, string>(); // 타켓 이름
     public Dictionary<int, GameObject> _changeText = new Dictionary<int, GameObject>();
+    public Dictionary<GameObject, int> _changeID = new Dictionary<GameObject, int>(); //딕셔너리 변경용 딕셔너리
     public Dictionary<int, int> _completeChecks = new Dictionary<int, int>();
     public Dictionary<int, bool> _questComplete = new Dictionary<int, bool>();
     public Dictionary<int, int> _targetToQuestID = new Dictionary<int, int>();
@@ -26,6 +27,9 @@ public class QuestManager
     public Action _curLevelCountPlus;
     public Action _completeCheck;
     DataTableManager _dataTableManager;
+    public GameObject _simpleQuestUI;
+    public GameObject _content;
+    MainUI mainUI;
     public Define.QuestInput _questInput; // 퀘스트창 오픈 시 진행중 or 진행가능한 창을 판단하기 위한 enum
     public int _questTextID; // 메인화면 작은 퀘스트창에 들어가는 퀘스트텍스트의 ID정보를 전달하기위한 변수
     public void Init()
@@ -56,6 +60,9 @@ public class QuestManager
     public void CheckProgress(int progressValue)
     {
         int currentint;
+        mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
+        _simpleQuestUI = Util.FindChild(mainUI.gameObject, "SimpleQuestUI");
+        _content = Util.FindChild(_simpleQuestUI, "QuestInfo");
         if (Managers.QuestManager._countCheck.ContainsKey(progressValue))
         {
             currentint = Managers.QuestManager._countCheck[progressValue];
@@ -70,13 +77,20 @@ public class QuestManager
         {
             currentint++;
             Managers.QuestManager._countCheck[progressValue] = currentint;
-            if (Managers.QuestManager._changeText.ContainsKey(progressValue))
+            if (!Managers.QuestManager._changeText.ContainsKey(progressValue))
             {
-                Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Managers.QuestManager._changeText[progressValue].transform);
+                Managers.QuestManager._changeText.Add(progressValue, _content.transform.GetChild(2).gameObject);
+                int lastID = Managers.QuestManager._changeID[_content.transform.GetChild(2).gameObject];
+                Managers.QuestManager._changeID.Remove(Managers.QuestManager._changeText[lastID]);
+                Managers.QuestManager._changeText.Remove(lastID);
+                Managers.QuestManager._changeID.Add(_content.transform.GetChild(2).gameObject, progressValue);
+                Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>()._questTextID = progressValue;
+                Managers.QuestManager._changeText[progressValue].transform.SetAsFirstSibling();
+                Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
             }
             else
             {
-
+                Managers.QuestManager._changeText[progressValue].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
             }
             if (currentint == Managers.QuestManager._completeChecks[progressValue])
             {
