@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static UnityEditor.Progress;
 public class FusionUI : ItemDragUI
 {//아이템 합성 UI
     Inventory _inventory;
@@ -64,6 +65,7 @@ public class FusionUI : ItemDragUI
         //ID가 낮은 아이템을 기준으로 data.FusionItemID1와 비교한다.
         if (item1.Data.ID > item2.Data.ID)
         {
+            
             //item2 기준 탐색
             fusionData = Managers.DataTable._FusionData.Where((data) => data.FusionItemID1 == item2.Data.ID && data.FusionItemID2 == item1.Data.ID).FirstOrDefault();
         }
@@ -119,6 +121,10 @@ public class FusionUI : ItemDragUI
         Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).text = "";
     }
 
+    FusionData SearchData(int id1, int id2) {
+        FusionData fusionData = Managers.DataTable._FusionData.Where((data) => data.FusionItemID1 == id1 && data.FusionItemID2 == id2).FirstOrDefault();
+    }
+
     bool CheckFusionable() {
         if(Get<ItemSlot>((int)ItemSlots.Result).Item == null){ return false; }
         if (Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).color !=
@@ -131,9 +137,8 @@ public class FusionUI : ItemDragUI
         _inventory.InsertItem(Get<ItemSlot>((int)ItemSlots.Result).Item);
         ResetData();
         // 개수 감소시키고 개수 0이면 아이템 삭제
-        
-        Get<ItemSlot>((int)ItemSlots.ItemSlot_1).Setitem(null);
-        Get<ItemSlot>((int)ItemSlots.ItemSlot_2).Setitem(null);
+        ItemAmoutDecrease(ItemSlots.ItemSlot_1, _aItemAmount);
+        ItemAmoutDecrease(ItemSlots.ItemSlot_2, _bItemAmount);
         Managers.Sound.Play("ETC/ui_equip_upgrade_success");
     }
     void OnCancelBtn() {
@@ -154,5 +159,17 @@ public class FusionUI : ItemDragUI
     {
         Cancel();
         base.CloseUI(isCloseAll);
+    }
+
+    void ItemAmoutDecrease(ItemSlots itemSlots ,int amount) {
+        Item item= Get<ItemSlot>((int)itemSlots).Item;
+        if (item is CountableItem) {
+            CountableItem countableItem= item as CountableItem;
+            countableItem.AddAmount(-amount);
+            if (countableItem._amount > 0) {
+                return;
+            }
+        }
+        Get<ItemSlot>((int)itemSlots).Setitem(null);
     }
 }
