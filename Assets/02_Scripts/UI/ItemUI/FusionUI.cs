@@ -121,8 +121,9 @@ public class FusionUI : ItemDragUI
         Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).text = "";
     }
 
-    FusionData SearchData(int id1, int id2) {
-        FusionData fusionData = Managers.DataTable._FusionData.Where((data) => data.FusionItemID1 == id1 && data.FusionItemID2 == id2).FirstOrDefault();
+    FusionData SearchData(Item item1, Item item2) {
+        FusionData[] fusionDatas = Managers.DataTable._FusionData.Where((data) => data.FusionItemID1 == item1.Data.ID && data.FusionItemID2 == item2.Data.ID).ToArray();
+        return fusionDatas[0];
     }
 
     bool CheckFusionable() {
