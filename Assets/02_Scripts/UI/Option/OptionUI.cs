@@ -62,7 +62,7 @@ public class OptionUI : BaseUI
             }
             await Task.Delay(1000);
             Managers.Game.PlayerPosSet(PlayerPosSetData.PlayerPosSetLoad());
-            Managers.Game._monsters.Clear();
+            
             //Managers.Scene.SceneChange("main");
             Animator _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
             _fadeAnim.SetTrigger("doFade");

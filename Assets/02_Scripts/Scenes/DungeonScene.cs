@@ -39,6 +39,6 @@ public class DungeonScene : BaseScene
 
     public override void Clear()
     {
-        throw new System.NotImplementedException();
+        GetComponent<DungeonManager>().Clear();
     }
 }

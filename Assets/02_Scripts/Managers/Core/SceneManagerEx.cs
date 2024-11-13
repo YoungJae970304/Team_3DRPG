@@ -47,14 +47,14 @@ public class SceneManagerEx
     public void LoadScene(Define.Scene type)
     {
         Time.timeScale = 1f;
-        //Managers.Clear();
+        Clear();
         SceneManager.LoadScene((int)type);
     }
 
     public void ReloadScene()
     {
         Time.timeScale = 1f;
-        Managers.Clear();
+        Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

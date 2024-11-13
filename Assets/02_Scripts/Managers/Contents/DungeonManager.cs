@@ -20,7 +20,7 @@ public class DungeonManager : MonoBehaviour
     public GameObject _easyDungeonWall;
     public GameObject _normalDungeonWall;
     public GameObject _hardDungeonWall;
-    public BossHPBar _bossHPBar;
+    BossHPBar _bossHPBar;
     [SerializeField] Transform _playerSpawnPos;
     [SerializeField] Transform _playerBossDungeonSpawnPos;
     GameManager _game;
@@ -40,7 +40,7 @@ public class DungeonManager : MonoBehaviour
         DungeonCheck();
 
     }
-    private void OnDisable()
+    public void Clear()
     {
         _monsterCount = 0;
 
@@ -49,6 +49,7 @@ public class DungeonManager : MonoBehaviour
             _bossSpawn.SetActive(false);
             _bossDungeonWall.SetActive(false);
             _bossHPBar?.CloseUI();
+            
         }
         else if (_easyDungeonSpawn != null && _easyDungeonSpawn.activeSelf)
         {
@@ -62,11 +63,10 @@ public class DungeonManager : MonoBehaviour
         }
         else if(_hardDungeonSpawn != null && _hardDungeonSpawn.activeSelf)
         {
-            
             _hardDungeonSpawn.SetActive(false);
             _hardDungeonWall.SetActive(false);
         }
-
+        Managers.Game._monsters.Clear();
 
     }
     private void Start()
@@ -136,14 +136,19 @@ public class DungeonManager : MonoBehaviour
         if (_bossCheck && Managers.Game._monsters[0]._mStat.ChaseRange >
             (Managers.Game._monsters[0].transform.position - Managers.Game._player.transform.position).magnitude)
         {
+            if (_bossHPBar != null)
+            {
+                return;
+            }
             BossHPBarData data = new BossHPBarData();
             data.Monster = Managers.Game._monsters[0];
             _bossHPBar = Managers.UI.OpenUI<BossHPBar>(data, false);
-
         }
         else
         {
+            Logger.LogWarning("2312321");
             _bossHPBar?.CloseUI();
+            _bossHPBar = null;
         }
     }
     public void ClearDungeon()
