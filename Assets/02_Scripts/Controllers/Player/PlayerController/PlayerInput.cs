@@ -99,7 +99,12 @@ public class PlayerInput : MonoBehaviour
     // 공격 입력
     void AttackInput()
     {
-        if (_player._hitting || _player._skillUsing || !_player._canAtkInput) return;
+        if (_player._hitting || _player._skillUsing || !_player._canAtkInput)
+        {
+            _atkInput.Clear(); //임시 수정
+            return;
+        } 
+           
 
         if (Input.GetMouseButtonDown(0))
         {

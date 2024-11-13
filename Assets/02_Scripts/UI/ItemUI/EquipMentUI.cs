@@ -92,7 +92,7 @@ public class EquipMentUI : ItemDragUI
         UpdateStatText(Managers.Game._player._playerStatManager.MoveSpeed, Texts.MoveSpeedValue);
     }
     void UpdateStatText(int value, Texts texts) {
-        GetText((int)texts).text = value.ToString();
+        GetText((int)texts).text = value.ToString("N0");
     }
     void UpdateStatText(float value, Texts texts)
     {

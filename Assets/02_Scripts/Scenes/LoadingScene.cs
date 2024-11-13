@@ -267,13 +267,6 @@ public class LoadingScene : BaseScene
                     }
 
                     questManager._countCheck[questItemData._id] = questItemData._progressInfo;
-
-                    // 퀘스트 완료된 퀘스트들을 _completeQuest 리스트에 넣어줌
-                    if (questItemData._isFinished == 1 && !questManager._completeQuest.Contains(questItemData._id))
-                    {
-                        questManager._completeQuest.Add(questItemData._id);
-                        hasFinishedQuest = true;
-                    }
                 }
             }
             foreach (var completedQuest in questSaveData._complateQuest)
