@@ -61,14 +61,14 @@ public class ToolTipUI :MonoBehaviour
                 break;
             case ItemData.ItemType.Booty://기타 아이템은 플레이버 텍스트를 출력한다.
                 GoodsItemData goodsData = data.Item.Data as GoodsItemData;
-                text += $"{goodsData.FlavorText}%\n";
+                text += $"{goodsData.FlavorText}\n";
                 break;
 
 
         }
 
         _toolTiptext.text = text;
-        _Goldtext.text = data is InventorySlot ? $"판매가격:{data.Item.Data.SellingPrice}" : $"구매가격:{data.Item.Data.BuyingPrice}"; ;
+        _Goldtext.text = data is InventorySlot ? $"판매가격:{data.Item.Data.SellingPrice.ToString("N0")}" : $"구매가격:{data.Item.Data.BuyingPrice.ToString("N0")}"; ;
 
     }
 

@@ -88,7 +88,7 @@ public class InventoryUI : ItemDragUI
     }
 
     public void MoneyUpdate(int amount) {
-        GetText((int)Texts.MoneyText).text = amount.ToString();;
+        GetText((int)Texts.MoneyText).text = amount.ToString("N0");;
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
