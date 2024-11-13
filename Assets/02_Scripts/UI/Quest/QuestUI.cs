@@ -386,7 +386,9 @@ public class QuestUI : BaseUI
         Managers.QuestManager._progressQuest.Sort();
         if (Managers.QuestManager._targetCheck[_questId] / 10000 != 9)
         {
+            Logger.LogError($"{Managers.QuestManager._targetCheck[_questId]}고블린은들어가?");
             Minusitem(_inventory.GetItemToId(Managers.QuestManager._targetCheck[_questId]), Managers.QuestManager._completeChecks[_questId]);
+            Logger.LogError($"{_inventory.GetItemToId(Managers.QuestManager._targetCheck[_questId])}{Managers.QuestManager._completeChecks[_questId]}고블린 템 가져와짐?");
         }
 
         _player.PlayerEXPGain(_questRewardValue2);//추후 지석님께 여쭤보고 변경

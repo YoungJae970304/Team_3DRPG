@@ -100,11 +100,14 @@ public class MainUI : ItemDragUI
                 int id = Managers.QuestManager._progressQuest[i];
                 if (Managers.QuestManager._countCheck[id] >= Managers.QuestManager._completeChecks[id])
                 {
-                    Logger.LogError($"{Managers.QuestManager._countCheck[id]},{i}번째 진행중인 수");
-                    Logger.LogError($"{Managers.QuestManager._completeChecks[id]},{i}번째 완료 수");
-                   
                     Managers.QuestManager._questComplete[id] = true;
-                    Logger.LogError($"{Managers.QuestManager._questComplete[id]},{i}번째 true, false확인");
+                }
+                if (Managers.QuestManager._targetCheck[id] / 10000 != 9)
+                {
+                    int goodsID = id;
+                    _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
+                    PubAndSub.Subscrib<int>($"{goodsID}", ValueCheck);
+                    Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
                 }
             }
             int simpleQuestCount;
@@ -131,15 +134,7 @@ public class MainUI : ItemDragUI
                     Managers.QuestManager._changeText.Add(id, _simpleText);
                     Managers.QuestManager._changeID.Add(_simpleText, id);
                     var text = _simpleText.GetComponent<SimpleQuestText>();
-                    if (Managers.QuestManager._targetCheck[id] / 10000 != 9)
-                    {
-                        int goodsID = id;
-                        _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
-                        PubAndSub.Subscrib<int>($"{goodsID}", ValueCheck);
-                        Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
-                        
                     
-                    }
                     
                     Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(content.transform);
                 }
