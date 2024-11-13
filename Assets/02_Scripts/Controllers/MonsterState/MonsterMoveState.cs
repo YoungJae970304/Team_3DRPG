@@ -7,7 +7,11 @@ public class MonsterMoveState : BaseState
     //float _timer = 0;
     public override void OnStateEnter()
     {
-        _monster._nav.ResetPath();
+        if (_monster._nav.enabled)
+        {
+            _monster._nav.ResetPath();
+        }
+        
         _monster.StopAllCoroutines();
         if (_monster._monsterID == 99999)
         {
