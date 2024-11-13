@@ -39,7 +39,7 @@ public class BossBear : Monster
     }
     public void OnDisable()
     {
-
+        
     }
     public override void Update()
     {
