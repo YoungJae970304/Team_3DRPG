@@ -83,7 +83,7 @@ public class ItemConfirm : ItemDragUI
         else
         {
             Get<Slider>((int)Sliders.ItemAmount).gameObject.SetActive(false);
-            GetText((int)Texts.MoneyAmountTxt).text = (isBuy ? data.Item.Data.BuyingPrice: data.Item.Data.SellingPrice).ToString();
+            GetText((int)Texts.MoneyAmountTxt).text = (isBuy ? data.Item.Data.BuyingPrice: data.Item.Data.SellingPrice).ToString("N0");
         }
         OnSliderChanged(1);
     }
@@ -102,7 +102,7 @@ public class ItemConfirm : ItemDragUI
         else {
             money = Get<ShowOnlySlot>((int)itemSlots.ItemSlot).Item.Data.SellingPrice * (int)value;
         }
-        GetText((int)Texts.MoneyAmountTxt).text = money.ToString();
+        GetText((int)Texts.MoneyAmountTxt).text = money.ToString("N0");
         GetText((int)Texts.MoneyAmountTxt).color = GetButton((int)Buttons.ConfirmButton).interactable ? Color.black : Color.red;
     }
     public void OnConfirmBtn()
@@ -146,13 +146,9 @@ public class ItemConfirm : ItemDragUI
             _inventorySlot.UpdateInfo();
             _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold += money;
             Logger.LogWarning(money.ToString());
-            
             PubAndSub.Publish<int>("ItemSell", itemID);
-
         }
         CloseUI();
-
-
     }
 
     public override void CloseUI(bool isCloseAll = false)
