@@ -146,13 +146,9 @@ public class ItemConfirm : ItemDragUI
             _inventorySlot.UpdateInfo();
             _inventorySlot.GetInventory().GetComponent<Player>()._playerStatManager.Gold += money;
             Logger.LogWarning(money.ToString());
-            
             PubAndSub.Publish<int>("ItemSell", itemID);
-
         }
         CloseUI();
-
-
     }
 
     public override void CloseUI(bool isCloseAll = false)

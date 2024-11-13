@@ -121,11 +121,6 @@ public class FusionUI : ItemDragUI
         Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).text = "";
     }
 
-    FusionData SearchData(Item item1, Item item2) {
-        FusionData[] fusionDatas = Managers.DataTable._FusionData.Where((data) => data.FusionItemID1 == item1.Data.ID && data.FusionItemID2 == item2.Data.ID).ToArray();
-        return fusionDatas[0];
-    }
-
     bool CheckFusionable() {
         if(Get<ItemSlot>((int)ItemSlots.Result).Item == null){ return false; }
         if (Get<TextMeshProUGUI>((int)Texts.RequiredAmount2).color !=
@@ -135,6 +130,7 @@ public class FusionUI : ItemDragUI
     }
     void OnConfirmBtn() {
         if (!CheckFusionable()) { return; }
+        Logger.Log(Get<ItemSlot>((int)ItemSlots.Result).Item.GetType().ToString());
         _inventory.InsertItem(Get<ItemSlot>((int)ItemSlots.Result).Item);
         ResetData();
         // 개수 감소시키고 개수 0이면 아이템 삭제
