@@ -95,6 +95,18 @@ public class MainUI : ItemDragUI
             {
                 _simpleQuestUI.SetActive(true);
             }
+            for(int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
+            {
+                int id = Managers.QuestManager._progressQuest[i];
+                if (Managers.QuestManager._countCheck[id] >= Managers.QuestManager._completeChecks[id])
+                {
+                    Logger.LogError($"{Managers.QuestManager._countCheck[id]},{i}번째 진행중인 수");
+                    Logger.LogError($"{Managers.QuestManager._completeChecks[id]},{i}번째 완료 수");
+                   
+                    Managers.QuestManager._questComplete[id] = true;
+                    Logger.LogError($"{Managers.QuestManager._questComplete[id]},{i}번째 true, false확인");
+                }
+            }
             int simpleQuestCount;
             if(Managers.QuestManager._progressQuest.Count > 3)
             {
@@ -111,6 +123,7 @@ public class MainUI : ItemDragUI
                 int id = Managers.QuestManager._progressQuest[i];
                 Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
                 PubAndSub.Subscrib<int>($"{id}", Managers.QuestManager.CheckProgress);
+                
                 if (content.transform.childCount < 3)
                 {
                     GameObject _simpleText = null;
@@ -124,12 +137,10 @@ public class MainUI : ItemDragUI
                         _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
                         PubAndSub.Subscrib<int>($"{goodsID}", ValueCheck);
                         Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
-                        if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
-                        {
-                            Managers.QuestManager._questComplete[goodsID] = true;
-                        }
+                        
                     
                     }
+                    
                     Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(content.transform);
                 }
             }
