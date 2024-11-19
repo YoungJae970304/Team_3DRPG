@@ -203,10 +203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _conditions: []
-  _skillScript: {fileID: 0}
   _skillLevel: 0
   _maxLevel: 5
-  _skillId: 0
+  _skillId: 1
+  _skillInfo: 
   isActive: 1
   _image: {fileID: 4675607562349057577}
 --- !u!222 &7162461612123033401
