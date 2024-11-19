@@ -82,6 +82,7 @@ public class LargeMapUI : BaseUI
         }
     }
 
+    // 마우스 드래그로 지도를 이동 가능하게 하는 메서드
     private void HandleMapDrag()
     {
         if (Input.GetMouseButtonDown(0))
@@ -107,6 +108,7 @@ public class LargeMapUI : BaseUI
         }
     }
 
+    // 마우스 휠 업/다운으로 지도를 확대/축소하는 메서드
     private void HandleMapZoom()
     {
         float scrollDelta = Input.mouseScrollDelta.y;
@@ -115,7 +117,6 @@ public class LargeMapUI : BaseUI
             ZoomMap(scrollDelta);
         }
     }
-
     private void ZoomMap(float zoomDelta)
     {
         float previousZoom = _currentZoom;
@@ -135,6 +136,7 @@ public class LargeMapUI : BaseUI
         _mapDisplay.rectTransform.anchoredPosition = newPosition;
     }
 
+    // 지도가 마스크 영역 밖으로 빠져나오지 못하게 하기 위한 메서드
     private Vector2 ClampPositionToMask(Vector2 position)
     {
         if (_maskRectTransform == null) return position;
@@ -151,6 +153,7 @@ public class LargeMapUI : BaseUI
         return position;
     }
 
+    // 마테리얼 설정 메서드
     private void SetupMaterial()
     {
         _fogMaterial = new Material(Shader.Find("Custom/FogOfWar"));
@@ -174,6 +177,7 @@ public class LargeMapUI : BaseUI
         }
     }
 
+    // 현재 씬의 맵 정보를 지정하고 그에 따른 설정을 하는 메서드
     public void InitSceneMapInfo(float worldSize, Transform camPos)
     {
         // 맵 크기 설정
@@ -210,10 +214,9 @@ public class LargeMapUI : BaseUI
         }
     }
 
+    // 뷰포트 좌표를 텍스처 좌표로 변환해 안개를 밝히는 메서드 ( 이벤트에 등록 )
     public void UpdateMap()
     {
-        //if (!gameObject.activeSelf || largeMapCamera == null) return;
-
         Transform playerTransform = Managers.Game._player._playerModel.transform;
 
         // 플레이어 월드 위치를 카메라의 뷰포트 좌표로 변환
@@ -233,6 +236,7 @@ public class LargeMapUI : BaseUI
         }
     }
 
+    // 실제 안개를 밝히는 메서드
     private void RevealArea(Vector2 texturePoint, float radius)
     {
         int texRadius = Mathf.RoundToInt(radius);
@@ -257,6 +261,7 @@ public class LargeMapUI : BaseUI
         _fogTexture.Apply();
     }
 
+    // 지도를 열었을 때 플레이어가 중앙에 올 수 있도록 하는 메서드
     private void CenterMapOnPlayer()
     {
         if (_largeMapCamera == null || _mapDisplay == null) return;
