@@ -44,11 +44,9 @@ public class PlayerCam : MonoBehaviour
         _originFov = _curCam.m_Lens.FieldOfView;
     }
 
+    // Virtual 카메라 초기화
     void VirtualCamInit()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-
         _cmQuarterCam = GameObject.Find("CM_QuarterView").GetComponent<CinemachineVirtualCamera>();
         _cmZoomCam = GameObject.Find("CM_ZoomView").GetComponent<CinemachineVirtualCamera>();
 
@@ -71,6 +69,7 @@ public class PlayerCam : MonoBehaviour
         }
     }
 
+    // 마우스 커서? 상태를 바꾸기 위한 메서드
     void CursorChange()
     {
         if (Input.GetKey(KeyCode.LeftAlt) || Managers.UI.ExistsOpenUI())
@@ -160,6 +159,7 @@ public class PlayerCam : MonoBehaviour
         _curCam.m_Lens.FieldOfView = nowFOv;
     }
 
+    // 카메라 모드 변경용 메서드
     public void CamModeChange()
     {
         if (Managers.UI.ExistsOpenUI()) return;

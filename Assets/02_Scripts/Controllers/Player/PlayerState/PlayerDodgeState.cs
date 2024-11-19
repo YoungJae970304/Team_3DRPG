@@ -18,7 +18,6 @@ public class PlayerDodgeState : BaseState
 
     public override void OnStateUpdate()
     {
-        //if (_player._invincible)
         stateInfo = _player._playerAnim.GetCurrentAnimatorStateInfo(0);
 
         if (stateInfo.IsName("Dodge"))

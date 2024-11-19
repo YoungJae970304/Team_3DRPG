@@ -20,6 +20,7 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
+        // 이벤트에 등록
         Managers.Input.KeyAction -= MoveInput;
         Managers.Input.KeyAction += MoveInput;
 
@@ -34,10 +35,6 @@ public class PlayerInput : MonoBehaviour
 
         Managers.Input.MouseAction -= AttackInput;
         Managers.Input.MouseAction += AttackInput;
-
-        //// 한번 실행시켰다 꺼줌으로써 맵 업데이트가 가능하도록
-        //OpenLargeMap();
-        //OpenLargeMap();
     }
 
     // 이동 관련 입력 받고 상태전환을 위한 bool변수인 _isMoving에 접근 
@@ -45,6 +42,7 @@ public class PlayerInput : MonoBehaviour
     {
         _player._isMoving = false;
 
+        // 예외처리
         if (_player._hitting || _player._dodgeing || Managers.Game._cantInputKey || !_player._canAtkInput) return;
 
         if (Input.GetKey(KeyCode.W))
@@ -88,6 +86,7 @@ public class PlayerInput : MonoBehaviour
     // 회피 입력
     void DodgeInput()
     {
+        // 예외처리
         if (_player._hitting || _player._skillUsing || _player._dodgeing || Managers.Game._cantInputKey || _player._curState == PlayerState.Dead ) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -99,6 +98,7 @@ public class PlayerInput : MonoBehaviour
     // 공격 입력
     void AttackInput()
     {
+        // 예외처리
         if (_player._hitting || _player._skillUsing || !_player._canAtkInput) return;
            
 
@@ -135,15 +135,9 @@ public class PlayerInput : MonoBehaviour
         {
             _player.SkillSetR();
         }
-        else if (Input.GetKeyDown(KeyCode.V))
-        {
-            _player._playerStatManager.EXP += 1000;
-            _player._playerStatManager.Gold += 100000;
-            _player._playerStatManager.HP = _player._playerStatManager.MaxHP;
-            _player._playerStatManager.MP = _player._playerStatManager.MaxMP;
-        }
     }
 
+    // UI 관련 키입력
     void UIInput()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -175,9 +169,6 @@ public class PlayerInput : MonoBehaviour
         {
             SkillTreeData skillTreeData = new SkillTreeData(Managers.Game._playerType);
             OpenPlayerUI<SkillTree>(skillTreeData);
-
-            //skillTreeData.path = "test";
-            //Managers.UI.OpenUI<SkillTree>(skillTreeData);
         }
         else if (Input.GetKeyDown(KeyCode.U))
         {
@@ -198,15 +189,9 @@ public class PlayerInput : MonoBehaviour
             MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
             mainUI.ItemSlot_2.Use();
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Item questItem = Item.ItemSpawn(51001, 10);
-            Inventory inven = _player.gameObject.GetComponent<Inventory>();
-            inven.InsertItem(questItem);
-        }
     }
 
-    // 데이터 입력 없는 디폴트
+    // UI를 열고 닫는 메서드. 데이터 입력 없는 디폴트
     public void OpenPlayerUI<T>() where T : BaseUI
     {
         T playerUI = Managers.UI.GetActiveUI<T>() as T;
@@ -241,6 +226,7 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // 라지맵 초기화용
     public void LargeMapInit()
     {
         LargeMapUI largeMapUI = Managers.UI.GetActiveUI<LargeMapUI>() as LargeMapUI;
@@ -260,17 +246,5 @@ public class PlayerInput : MonoBehaviour
     {
         //ESC
         Managers.UI.CloseCurrFrontUI();
-    }
-
-    // 사용할일이 있을까?
-    public void OpenNewtest()
-    {
-        // 완전 새로운 오브젝트를 생성 후 여는 것 ( 풀링은 되는데 무조건 생성 )
-        Managers.UI.OpenUI<InventoryUI>(new BaseUIData(), true, true);
-    }
-    public void Remove()
-    {
-        // 오브젝트 자체를 삭제 ( 1번만 쓰는 UI 같은거 )
-        Managers.UI.CloseCurrFrontUI(true);
     }
 }
