@@ -12,6 +12,7 @@ public class PlayerSkillState : BaseState
         _player._canAtkInput = true;
         _player._attacking = false;
 
+        // 스킬 퀵슬롯에 들어있는 스킬의 Enter를 실행
         _player._skillBase.SkillEnter(_stat);
     }
 

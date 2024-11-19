@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class LoadingScene : BaseScene
 {
+    // 로딩 진행도를 판단할 수 있는 슬라이더
     public Slider _loadingBar;
 
     public TextMeshProUGUI _loadingTxt;
@@ -19,11 +20,16 @@ public class LoadingScene : BaseScene
 
     private void Start()
     {
+        // 효과음 0으로 설정
         originEffectVolume = Managers.Sound.GetEffectVolume();
         Managers.Sound.SetEffectVolume(0);
+
         Managers.Data.DataInit();
+
+        // 이전 씬에서 입력받은 _targetScene으로 전환
         _fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         StartCoroutine(GoNextScene(Managers.Scene._targetScene));
+
         if (Managers.Game._player != null) return;
         if (!TitleCanvasUI._isNewGame) { ApplyPlayerData(); }
         else
@@ -54,12 +60,13 @@ public class LoadingScene : BaseScene
         Managers.QuestManager._curLevelCountPlus += Managers.QuestManager.LevelCountPlus;
     }
 
+    // 애니메이션 이벤트로 사용될 메서드
     public void ChangeScene()
     {
         ao.allowSceneActivation = true;
     }
 
-    // 비동기 신
+    // 비동기 씬
     IEnumerator GoNextScene(Define.Scene sceneType)
     {
         yield return null;
@@ -67,9 +74,7 @@ public class LoadingScene : BaseScene
         // 지정된 씬을 비동기 형식으로 로드한다
         ao = Managers.Scene.LoadSceneAsync(sceneType);
 
-        // 준비가 완료되어도 다음 씬으로 넘어가지 않게
-        // 단, 이걸 사용하면 progree는 0.9까지밖에 안됨 -> 유니티 내부 구조의 문제
-
+        // 준비가 완료되어도 다음 씬으로 넘어가지 않게하기 위한 처리
         ao.allowSceneActivation = false;
 
         // 로딩이 완료될 때까지 반복해서 요소들을 로드하고 진행 과정을 하면에 표시한다
@@ -86,10 +91,12 @@ public class LoadingScene : BaseScene
                 _skipTxt.enabled = true;
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    //널래퍼런스 방지용 유아이 ESC키로 전부 삭제하고 씬 로드
+                    //null 방지용 UI ESC키로 전부 삭제하고 씬 로드
                     Managers.UI.CloseAllOpenUI();
+
+                    // 원래 사운드로 복구
                     Managers.Sound.SetEffectVolume(originEffectVolume);
-                    //ao.allowSceneActivation = true;
+
                     _fadeAnim.SetTrigger("doFade");
                 }
             }

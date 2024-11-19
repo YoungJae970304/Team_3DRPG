@@ -366,12 +366,13 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         }
     }
 
-    // 자식(Melee, Ranged Player)의 공격 부분 구현
+    // 다형성, 자식(Melee, Ranged Player)의 공격 부분 구현
     public virtual void Attack()
     {
 
     }
 
+    // 콜라이더를 통한 데미지 적용 기본 구조
     public virtual void ApplyDamage(int damage)
     {
         if (_hitMobs.Count == 0) return;
@@ -388,6 +389,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _hitMobs.Clear();
     }
 
+    // 광역 데미지 기본 구조
     public virtual void AreaDamage(float range, int damage)
     {
         Vector3 playerPos = Managers.Game._player.transform.position;
@@ -404,6 +406,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         }
     }
 
+    // 슬롯에 등록되어 있는 스킬을 판단해 해당 스킬을 사용하기 위한 메서드
     public void SkillSetE()
     {
         MainUI mainUI = Managers.UI.GetActiveUI<MainUI>() as MainUI;
@@ -424,6 +427,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
     // 우클릭 시 발생하는 행동
     public abstract void Special();
 
+    // 피격 시 데미지 처리를 하는 메서드
     public virtual void Damaged(int atk)
     {
         // 회피 = 모션이랑 다르게 회피 후 잠깐 무적
@@ -432,6 +436,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
 
         // 체력- 공격력*(100f/(방어력+100f))
         _playerStatManager.HP -= (int)(atk * (100f/(_playerStatManager.DEF+100f)));
+
         if (_playerStatManager.HP > 0)
         {
             _invincible = true;
@@ -449,12 +454,11 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         }
     }
 
+    // 무적 해제 딜레이
     public void InvincibleDelay()
     {
         StartCoroutine(HitDelayCo());
     }
-
-    // 1회성인 데미지에서만 실행되니까 이건 코루틴으로 바꾸던가 해야할듯, 움찔하지 않는 피격의 경우에도 사용해야 하니까 Damage상태에서는 못쓸것같음
     IEnumerator HitDelayCo()
     {
         yield return new WaitForSeconds(_hitDelay);
@@ -462,6 +466,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _invincible = false;
     }
 
+    // String에 따라 직접 플레이어의 상태 변경
     public bool ChangeStateToString(string state)
     {
         PlayerState changeState;
@@ -472,6 +477,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         return false;
     }
 
+    // 플레이어의 상태를 리셋하는 메서드
     public void PlayerStatInit()
     {
         _playerStatManager.HP = _playerStatManager.MaxHP;
@@ -480,6 +486,7 @@ public abstract class Player : MonoBehaviour, IDamageAlbe ,IStatusEffectAble
         _playerAnim.Play("Idle");
     }
 
+    // 경험치 및 골드 획득 메서드
     public void PlayerEXPGain(int exp)
     {
         _playerStatManager.EXP += exp;

@@ -31,11 +31,6 @@ public class PlayerMoveState : BaseState
         Move();
     }
 
-    public override void OnStateFixedUpdate()
-    {
-        //Move();
-    }
-
     public override void OnStateExit()
     {
         MoveStop();
