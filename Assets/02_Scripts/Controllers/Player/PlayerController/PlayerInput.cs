@@ -88,7 +88,7 @@ public class PlayerInput : MonoBehaviour
     // 회피 입력
     void DodgeInput()
     {
-        if (_player._hitting || _player._skillUsing || _player._dodgeing || Managers.Game._cantInputKey) return;
+        if (_player._hitting || _player._skillUsing || _player._dodgeing || Managers.Game._cantInputKey || _player._curState == PlayerState.Dead ) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
