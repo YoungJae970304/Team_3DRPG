@@ -9,7 +9,6 @@ public abstract class StatusEffect : MonoBehaviour
     public Define.StatusEffectType type;
     protected IStatusEffectAble _target;
     protected float _duration;
-    public bool isNovation = true;
     protected abstract string IconPath { get; set; }
     protected Image _effectIcon;
     protected Image _effectTimerImg;
