@@ -6,7 +6,7 @@ public class BurnEffect : StatusEffect
 {
     int damage = 0;
     float dot = 1f;
-    protected override string IconPath { get; set; } = "Sprite/SkillIcon_Image/5_1";
+    protected override string IconPath { get; set; } = "Sprite/SkillIcon_Image/5_2";
     public override void Init(IStatusEffectAble target, float duration, params int[] value)
     {
         base.Init(target, duration, value);

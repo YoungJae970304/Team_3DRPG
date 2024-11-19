@@ -139,7 +139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Burn_0
+      name: 5_2
       rect:
         serializedVersion: 2
         x: 262
@@ -172,7 +172,7 @@ TextureImporter:
     nameFileIdTable:
       5_0: -184223106
       5_1: -1708324523
-      Burn_0: 1762994668
+      5_2: 1762994668
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
