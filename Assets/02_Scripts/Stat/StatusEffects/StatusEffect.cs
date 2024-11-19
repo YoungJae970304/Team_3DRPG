@@ -27,7 +27,14 @@ public abstract class StatusEffect : MonoBehaviour
             _effectTimerTxt.enabled = false;
         }
         else {
-            _effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
+            if (!string.IsNullOrEmpty(IconPath)) {
+                string[] path = IconPath.Split("_");
+                Sprite[] icon = Resources.LoadAll<Sprite>(path[0] + "_" + path[1]);
+
+                _effectIcon.sprite = icon[int.Parse(path[2])];
+            }
+            
+            //_effectIcon.sprite = Managers.Resource.Load<Sprite>(IconPath);
 
             _effectTimerTxt.text = _duration.ToString("F1"); ;
             if (duration <= 0)
