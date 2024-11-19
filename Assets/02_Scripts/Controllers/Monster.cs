@@ -329,7 +329,16 @@ public class Monster : MonoBehaviour, IDamageAlbe, IStatusEffectAble
     {
         //사정거리 체크 구현
         //여기에 타이머넣어서 변환까지 시간걸리게
-        bool rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        bool rangeCheck;
+        if (_monsterID == 99999)
+        {
+            rangeCheck = _mStat.AttackRange - 1 > (_player.transform.position - transform.position).magnitude;
+        }
+        else
+        {
+            rangeCheck = _mStat.AttackRange > (_player.transform.position - transform.position).magnitude;
+        }
+        
         bool angleCheck = Vector3.Angle(transform.forward, _player.transform.position - transform.position) < 45;
         return rangeCheck && angleCheck;
     }

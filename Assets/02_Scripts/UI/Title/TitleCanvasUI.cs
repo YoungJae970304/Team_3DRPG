@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class TitleCanvasUI : BaseUI
         ShutDownBtn,
     }
     public static bool _isNewGame {  get; private set; }
+    string _SavePath;
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
@@ -33,10 +35,19 @@ public class TitleCanvasUI : BaseUI
 
     public void OnClickContinueBtn(string sceneName)
     {
+        _SavePath = $"{Application.persistentDataPath}/SavePlayerData.json";
+        if(!File.Exists(_SavePath))
+        {
+            GetButton((int)Buttons.ContinueBtn).interactable = false;
+            return;
+        }
+        else
+        {
+            GetButton((int)Buttons.ContinueBtn).interactable = true;
+        }
         Logger.Log($"현재 이어하기 인지 확인{_isNewGame.ToString()}");
         _isNewGame = false;
         Managers.Game._firstTuto = _isNewGame;
-
         //Managers.Scene.SceneChange(sceneName);
         Animator fadeAnim = GameObject.FindWithTag("SceneManager").GetComponent<Animator>();
         fadeAnim.SetTrigger("doFade");

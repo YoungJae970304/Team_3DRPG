@@ -11,7 +11,7 @@ public class BossBear : Monster
     float _stageRoarPlus = 10f;
     public float _roarTimer;
     public GameObject _maxRoarRange;
-    
+    public int test;
     public override void Start()
     {
         base.Start();
@@ -35,7 +35,7 @@ public class BossBear : Monster
         _roarRange.SetActive(false);
         _mStat._mStat.AttackRange = 8;
         _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
-        
+        test = (int)_mStat._mStat.AttackRange;
     }
     public void OnDisable()
     {
@@ -187,7 +187,7 @@ public class BossBear : Monster
         Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.4f);
 
         // 박스의 크기 설정 (폭, 높이, 깊이)
-        Vector3 boxSize = new Vector3(2f, 4f, _mStat.AttackRange * 1.2f); // 너비 1, 높이 1, 깊이 AttackRange
+        Vector3 boxSize = new Vector3(2f, 4f, _mStat.AttackRange * 1.4f); // 너비 1, 높이 1, 깊이 AttackRange
 
         // 박스에 충돌하는 객체를 체크
         Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
@@ -239,12 +239,17 @@ public class BossBear : Monster
             //시간 ++, 장판 활성화
             //시간이 늘어남에 따라 장판크기가 그에 맞춰서 커지고
             //다 커졌을 때 로어와 함께 장판 삭제
-            StartCoroutine(PlusRoarRange());
+            if(_roarTimer <= 0)
+            {
+                StartCoroutine(PlusRoarRange());
+            }
+            
+            
             skillCount++;
 
 
         }
-        else
+        else if(_roarTimer == 0)
         {
             // HP 상태에 따른 상태 전환
             if (_mStat.HP <= 0)
@@ -256,6 +261,12 @@ public class BossBear : Monster
             {
                 MChangeState(MonsterState.Move);
             }
+        }
+        else if(_mStat.HP <= 0)
+        {
+           
+                MChangeState(MonsterState.Die);
+            
         }
 
     }

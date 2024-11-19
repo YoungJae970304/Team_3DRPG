@@ -61,6 +61,7 @@ public class QuestUI : BaseUI
     MainUI mainUI;
     Player _player;
     Inventory _inventory;
+    public int test;
     public override void Init(Transform anchor)
     {
         base.Init(anchor);
@@ -203,7 +204,11 @@ public class QuestUI : BaseUI
         {
             
             Managers.QuestManager._changeText.Add(id, _content.transform.GetChild(2).gameObject);
-            Managers.QuestManager._changeID.Add(_content.transform.GetChild(2).gameObject, id);
+            if (!Managers.QuestManager._changeID.ContainsKey(Managers.QuestManager._changeText[id]))
+            {
+                Managers.QuestManager._changeID.Add(_content.transform.GetChild(2).gameObject, id);
+            }
+            
             int lastID = Managers.QuestManager._changeID[_content.transform.GetChild(2).gameObject];
             Managers.QuestManager._changeID.Remove(Managers.QuestManager._changeText[lastID]);
             Managers.QuestManager._changeText.Remove(lastID);
@@ -369,8 +374,8 @@ public class QuestUI : BaseUI
             _inventory.GetItemAction -= (() => ValueCheck(_questId));
             PubAndSub.UnSubscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
         }
-        
-        
+        Logger.LogError($"{_content.transform.childCount}카운트 몇임?");
+        test = _content.transform.childCount;
         if (!Managers.QuestManager._completeQuest.Contains(_questId))
         {
             Managers.QuestManager._completeQuest.Add(_questId);
@@ -381,7 +386,9 @@ public class QuestUI : BaseUI
         Managers.QuestManager._progressQuest.Sort();
         if (Managers.QuestManager._targetCheck[_questId] / 10000 != 9)
         {
+            Logger.LogError($"{Managers.QuestManager._targetCheck[_questId]}고블린은들어가?");
             Minusitem(_inventory.GetItemToId(Managers.QuestManager._targetCheck[_questId]), Managers.QuestManager._completeChecks[_questId]);
+            Logger.LogError($"{_inventory.GetItemToId(Managers.QuestManager._targetCheck[_questId])}{Managers.QuestManager._completeChecks[_questId]}고블린 템 가져와짐?");
         }
 
         _player.PlayerEXPGain(_questRewardValue2);//추후 지석님께 여쭤보고 변경
@@ -391,53 +398,69 @@ public class QuestUI : BaseUI
             Item questItem = Item.ItemSpawn((int)_questRewardType3);
             _inventory.InsertItem(questItem);
         }
-
+        bool destroy = false;
         PubAndSub.UnSubscrib<int>($"{_questId}", Managers.QuestManager.CheckProgress);
-        if (_simpleQuestUI.activeSelf)
+        if (_simpleQuestUI.activeSelf && Managers.QuestManager._changeText.ContainsKey(_questId))
         {
-            Managers.QuestManager._changeID.Remove(Managers.QuestManager._changeText[_questId]);
+            if (Managers.QuestManager._changeID.ContainsKey(Managers.QuestManager._changeText[_questId]))
+            {
+                Managers.QuestManager._changeID.Remove(Managers.QuestManager._changeText[_questId]);
+            }
+            
             Managers.Resource.Destroy(Managers.QuestManager._changeText[_questId]);
             Managers.QuestManager._changeText.Remove(_questId);
             if (_content.transform.childCount == 1)
             {
                 _simpleQuestUI.SetActive(false);
             }
-            
+            destroy = true;
         }
-        if (Managers.QuestManager._progressQuest.Count >= 3)
+        //ReVoid();
+        test = _content.transform.childCount;
+        Logger.LogError($"{_content.transform.childCount}카운트 몇임?");
+        if (_content.transform.childCount <= 3 && destroy)
         {
-            for (int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
+            Logger.LogError("1");
+            if (Managers.QuestManager._progressQuest.Count >= 3)
             {
-                if (!Managers.QuestManager._changeText.ContainsKey(Managers.QuestManager._progressQuest[i]))
+                Logger.LogError("2");
+                for (int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
                 {
-                    Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
-                    break;
+                    Logger.LogError("3");
+                    if (!Managers.QuestManager._changeText.ContainsKey(Managers.QuestManager._progressQuest[i]))
+                    {
+                        Logger.LogError("4");
+                        Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
+                        break;
+                    }
                 }
-            }
-
-            _simpleText = null;
-            _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", _content.transform);
-            Managers.QuestManager._changeText.Add(Managers.QuestManager._questTextID, _simpleText);
-            Managers.QuestManager._changeID.Add(_simpleText, Managers.QuestManager._questTextID);
-            var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
-            if (!Managers.QuestManager._countCheck.ContainsKey(Managers.QuestManager._questTextID))
-            {
-                Managers.QuestManager._countCheck.Add(Managers.QuestManager._questTextID, 0);
-            }
-            if (Managers.QuestManager._targetCheck[Managers.QuestManager._questTextID] / 10000 != 9)
-            {
-                int goodsID = Managers.QuestManager._questTextID;
-                _inventory.GetItemAction += (() => ValueCheck(goodsID));
-                PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
-                Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
-                if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]) >= Managers.QuestManager._completeChecks[goodsID])
+                Logger.LogError("5");
+                _simpleText = null;
+                _simpleText = Managers.Resource.Instantiate("UI/SimpleQuestText", _content.transform);
+                Managers.QuestManager._changeText.Add(Managers.QuestManager._questTextID, _simpleText);
+                Managers.QuestManager._changeID.Add(_simpleText, Managers.QuestManager._questTextID);
+                var text = _simpleText.GetOrAddComponent<SimpleQuestText>();
+                Logger.LogError("6");
+                if (!Managers.QuestManager._countCheck.ContainsKey(Managers.QuestManager._questTextID))
                 {
-                    Managers.QuestManager._questComplete[goodsID] = true;
+                    Managers.QuestManager._countCheck.Add(Managers.QuestManager._questTextID, 0);
                 }
+                if (Managers.QuestManager._targetCheck[Managers.QuestManager._questTextID] / 10000 != 9)
+                {
+                    int goodsID = Managers.QuestManager._questTextID;
+                    _inventory.GetItemAction += (() => ValueCheck(goodsID));
+                    PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
+                    Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
+                    if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]) >= Managers.QuestManager._completeChecks[goodsID])
+                    {
+                        Managers.QuestManager._questComplete[goodsID] = true;
+                    }
+                }
+                Managers.QuestManager._changeText[Managers.QuestManager._questTextID].GetComponent<SimpleQuestText>().Init(_content.transform);
             }
-            Managers.QuestManager._changeText[Managers.QuestManager._questTextID].GetComponent<SimpleQuestText>().Init(_content.transform);
         }
         ReVoid();
+
         Managers.Sound.Play("ETC/ui_quest_clear");
     }
     public void GiveUpQuest()
@@ -519,10 +542,11 @@ public class QuestUI : BaseUI
             if (!Managers.QuestManager._questComplete[ID])
             {
                 _uiButtons[1].SetActive(true);
-
+                _uiButtons[2].SetActive(false);
             }
             else
             {
+                _uiButtons[1].SetActive(false);
                 _uiButtons[2].SetActive(true);
             }
         }

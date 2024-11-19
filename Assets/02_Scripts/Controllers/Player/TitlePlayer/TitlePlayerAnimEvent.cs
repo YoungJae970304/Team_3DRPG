@@ -28,7 +28,6 @@ public class TitlePlayerAnimEvent : MonoBehaviour
 
     public void PlayEffectSound(string soundPath)
     {
-        //Managers.Sound.Play(soundPath);
         string[] parts = soundPath.Split(',');
         if (parts.Length >= 2 && float.TryParse(parts[1], out float volume))
         {

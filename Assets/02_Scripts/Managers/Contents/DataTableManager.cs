@@ -33,7 +33,7 @@ public class DataTableManager
     // 스킬 데이터 테이블 CSV 파일
     const string _SKILL_DATA_TABLE = "Skill_Data_Table";
     // 몬스터 스텟 데이터 테이블 CSV 파일
-    const string _MONSTERSTAT_DATA_TABLE = "Monster_Stat_Data_Table";//추가 전
+    const string _MONSTERSTAT_DATA_TABLE = "Monster_Stat_Data_Table";
     //상점 항목 데이터 테이블 CSV 파일
     public string _SHOP_DATA_TABLE = "Shop_ItemList_Data_Table";
 

@@ -54,6 +54,7 @@ public class PlayerAttackWaitState : BaseState
     public override void OnStateExit()
     {
         Logger.Log("공격 대기 상태 Exit");
+        // 선입력이 없다면 공격 종료
         if (_player._playerInput._atkInput.Count < 1)
         {
             _player._attacking = false;

@@ -12,7 +12,6 @@ public class PlayerIdleState : BaseState
         _player._attacking = false;
         _player._dodgeing = false;
         _player.AtkCount = 0;
-        //_player._hitMobs.Clear();
         _player._rotDir = _player._playerModel.forward;
 
         _player._playerAnim.Rebind();

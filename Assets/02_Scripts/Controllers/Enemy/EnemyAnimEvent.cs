@@ -99,16 +99,19 @@ public class EnemyAnimEvent : MonoBehaviour
     {
         //int damage = 0;
         
-        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _bossBear._maxRoarRange.transform.position.x * 2);
+        Collider[] checkColliders = Physics.OverlapSphere(transform.position, _bossBear._maxRoarRange.transform.position.x);
         foreach (Collider collider in checkColliders)
         {
             if (collider.CompareTag("Player"))
             {
-                if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
+                if((collider.bounds.center - _monster._collider.bounds.center).magnitude + 4.5f < _bossBear._maxRoarRange.GetComponent<SpriteRenderer>().size.x* _bossBear._maxRoarRange.transform.localScale.x)
                 {
-                    damageable.StatusEffect.SpawnEffect<StunEffect>(1);
-                    BossRoarHit();
-                    //_player.Damaged(_mStat.ATK);
+                    if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
+                    {
+                        damageable.StatusEffect.SpawnEffect<StunEffect>(1);
+                        BossRoarHit();
+                        //_player.Damaged(_mStat.ATK);
+                    }
                 }
             }
         }

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class InDungeonUI : BaseUI
@@ -14,7 +11,7 @@ public class InDungeonUI : BaseUI
     private void Awake()
     {
         Bind<Button>(typeof(Buttons));
-      
+
     }
 
     public void OnClickMainButton(string sceneName)

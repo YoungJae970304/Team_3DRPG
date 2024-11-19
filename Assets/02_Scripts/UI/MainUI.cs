@@ -95,6 +95,21 @@ public class MainUI : ItemDragUI
             {
                 _simpleQuestUI.SetActive(true);
             }
+            for(int i = 0; i < Managers.QuestManager._progressQuest.Count; i++)
+            {
+                int id = Managers.QuestManager._progressQuest[i];
+                if (Managers.QuestManager._countCheck[id] >= Managers.QuestManager._completeChecks[id])
+                {
+                    Managers.QuestManager._questComplete[id] = true;
+                }
+                if (Managers.QuestManager._targetCheck[id] / 10000 != 9)
+                {
+                    int goodsID = id;
+                    _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
+                    PubAndSub.Subscrib<int>($"{goodsID}", ValueCheck);
+                    Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
+                }
+            }
             int simpleQuestCount;
             if(Managers.QuestManager._progressQuest.Count > 3)
             {
@@ -111,6 +126,7 @@ public class MainUI : ItemDragUI
                 int id = Managers.QuestManager._progressQuest[i];
                 Managers.QuestManager._questTextID = Managers.QuestManager._progressQuest[i];
                 PubAndSub.Subscrib<int>($"{id}", Managers.QuestManager.CheckProgress);
+                
                 if (content.transform.childCount < 3)
                 {
                     GameObject _simpleText = null;
@@ -118,18 +134,8 @@ public class MainUI : ItemDragUI
                     Managers.QuestManager._changeText.Add(id, _simpleText);
                     Managers.QuestManager._changeID.Add(_simpleText, id);
                     var text = _simpleText.GetComponent<SimpleQuestText>();
-                    if (Managers.QuestManager._targetCheck[id] / 10000 != 9)
-                    {
-                        int goodsID = id;
-                        _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
-                        PubAndSub.Subscrib<int>($"{goodsID}", ValueCheck);
-                        Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
-                        if (Managers.QuestManager._countCheck[goodsID] >= Managers.QuestManager._completeChecks[goodsID])
-                        {
-                            Managers.QuestManager._questComplete[goodsID] = true;
-                        }
                     
-                    }
+                    
                     Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(content.transform);
                 }
             }
