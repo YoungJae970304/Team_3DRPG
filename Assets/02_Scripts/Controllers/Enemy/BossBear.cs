@@ -184,10 +184,10 @@ public class BossBear : Monster
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
         // 몬스터의 위치와 방향을 기반으로 박스의 중심을 계산
-        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.4f);
+        Vector3 boxCenter = transform.position + transform.forward * (_mStat.AttackRange / 1.2f);
 
         // 박스의 크기 설정 (폭, 높이, 깊이)
-        Vector3 boxSize = new Vector3(2f, 4f, _mStat.AttackRange * 1.4f); // 너비 1, 높이 1, 깊이 AttackRange
+        Vector3 boxSize = new Vector3(2.3f, 6f, _mStat.AttackRange * 1.6f); // 너비 1, 높이 1, 깊이 AttackRange
 
         // 박스에 충돌하는 객체를 체크
         Collider[] checkColliders = Physics.OverlapBox(boxCenter, boxSize / 2, Quaternion.identity);
@@ -198,12 +198,12 @@ public class BossBear : Monster
                 if (collider.TryGetComponent<IDamageAlbe>(out var damageable))
                 {
 
-                    if (!collider.GetComponent<Player>()._hitting)
-                    {
+                    //if (!collider.GetComponent<Player>()._hitting)
+                    //{
                         //맞는 이펙트 실행(플레이어 위치에)
                         _enemyEffect.MonsterAttack(EnemyEffect.GoblemOrkEffects.MonsterHit, collider.transform);
                         _enemyAnimEvent.BossHitSound();
-                    }
+                    //}
                     //_player.Damaged(_mStat.ATK);
                     damageable.Damaged(damage);
                 }
