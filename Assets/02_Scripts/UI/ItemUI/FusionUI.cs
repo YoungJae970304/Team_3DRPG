@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEditor.Progress;
+
 public class FusionUI : ItemDragUI
 {//아이템 합성 UI
     Inventory _inventory;
