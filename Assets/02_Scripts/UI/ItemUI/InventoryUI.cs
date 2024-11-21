@@ -100,7 +100,9 @@ public class InventoryUI : ItemDragUI
             if (itemSlot.Item != null) {
                 _currentType = itemSlot.Item.Data.Type;
                 UpdateSlot();
-
+                if (itemSlot is InventorySlot) {
+                    itemSlot._Image.enabled = false;
+                }
             }
         
         }
