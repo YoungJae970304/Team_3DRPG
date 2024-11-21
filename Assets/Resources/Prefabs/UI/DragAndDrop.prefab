@@ -116,6 +116,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7826a86dc22183143816a85bb1f1f558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _UIOpenAnimation: {fileID: 0}
+  _topBarImage: {fileID: 0}
+  _exitBtn: {fileID: 0}
+  _isSort: 1
+  _InitPos: 0
+  _position: {x: 0, y: 0}
+  _btnCount: 0
   Icon: {fileID: 341930658624727145}
   toolTip: {fileID: 4048000477655948103}
 --- !u!1 &3411328754666219579
@@ -524,7 +531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -603,7 +610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

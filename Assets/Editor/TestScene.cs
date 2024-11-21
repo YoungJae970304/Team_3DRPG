@@ -60,6 +60,11 @@ public class TestScene : BaseScene
         inventory.InsertItem(Item.ItemSpawn(51001,99));
         inventory.InsertItem(Item.ItemSpawn(51002, 99));
     }
+    [MenuItem("Test/Cheet")]
+    public static void Cheet()
+    {
+        Managers.Game._player._playerStatManager.EXP += 1000;
+    }
     [ContextMenu("Removetest")]
     public void Remove()
     {

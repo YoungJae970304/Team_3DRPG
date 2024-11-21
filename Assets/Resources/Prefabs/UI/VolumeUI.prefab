@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1334717373599520238}
   - component: {fileID: 4026768612256997774}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -373,10 +373,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _UIOpenAnimation: {fileID: 0}
   _topBarImage: {fileID: 0}
-  _exitBtn: {fileID: 0}
+  _exitBtn: {fileID: 4026768612256997774}
   _isSort: 1
   _InitPos: 0
-  _position: {x: 0, y: 0, z: 0}
+  _position: {x: 0, y: 0}
   _btnCount: 0
 --- !u!1 &1818834380745545072
 GameObject:

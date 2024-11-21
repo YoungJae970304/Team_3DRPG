@@ -200,7 +200,7 @@ public class QuestUI : BaseUI
         {
             Managers.QuestManager._questComplete[id] = false;
         }
-        if (!Managers.QuestManager._changeText.ContainsKey(id))
+        if (!Managers.QuestManager._changeText.ContainsKey(id) && Managers.QuestManager._progressQuest.Count >= 3)
         {
             
             Managers.QuestManager._changeText.Add(id, _content.transform.GetChild(2).gameObject);
