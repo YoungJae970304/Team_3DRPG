@@ -64,6 +64,7 @@ public class TestScene : BaseScene
     public static void Cheet()
     {
         Managers.Game._player._playerStatManager.EXP += 1000;
+        Managers.Game._player._playerStatManager.Gold += 100000;
     }
     [ContextMenu("Removetest")]
     public void Remove()
