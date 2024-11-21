@@ -77,8 +77,11 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
     }
     public void MonsterAttack(GoblemOrkEffects name, Transform playerTransform = null)
     {
-        if (Get<ParticleSystem>((int)name).gameObject.activeSelf) return;
-        Get<ParticleSystem>((int)name).gameObject.SetActive(true);
+        if (!Get<ParticleSystem>((int)name).gameObject.activeSelf)
+        {
+            Get<ParticleSystem>((int)name).gameObject.SetActive(true);
+        }
+        
         if (playerTransform != null)
         {
             Get<ParticleSystem>((int)name).gameObject.transform.position = playerTransform.position;

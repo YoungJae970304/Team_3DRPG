@@ -15,7 +15,7 @@ public class MonsterMoveState : BaseState
         _monster.StopAllCoroutines();
         if (_monster._monsterID == 99999)
         {
-            if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
+            if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange-0.5f)
             {
                 _monster.LookPlayer();
             }
@@ -63,7 +63,7 @@ public class MonsterMoveState : BaseState
         //_timer += _monster
         if(_monster._monsterID == 99999)
         {
-            if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange)
+            if ((_monster.transform.position - Managers.Game._player.transform.position).magnitude < _monster._mStat.AttackRange-0.5f)
             {
                 _monster.LookPlayer();
             }
