@@ -32,6 +32,7 @@ public class DungeonManager : MonoBehaviour
     }
     private void OnEnable()
     {
+        _monsterCount = 0;
         _player = Managers.Game._player;
         _game = Managers.Game;
         _curLevel = _game._selecDungeonLevel;
