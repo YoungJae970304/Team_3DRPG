@@ -9,8 +9,9 @@ public class ATKBuffEffect : StatusEffect
 
     public override void Init(IStatusEffectAble target, float duration, params int[] value)
     {
-        base.Init(target, duration, value);
         _buffAmount = value[0];
+        base.Init(target, duration, value);
+        
     }
 
     public override void AddEffect(float duration, params int[] value)
@@ -25,6 +26,7 @@ public class ATKBuffEffect : StatusEffect
 
     public override void Effect()
     {
+        
         _target.Targetstat.ATK = _buffAmount;
     }
 
