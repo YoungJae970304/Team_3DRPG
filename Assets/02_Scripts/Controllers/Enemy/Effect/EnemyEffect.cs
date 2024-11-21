@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class EnemyEffect : MonoBehaviour //monobihavior로 변경
 {
-    protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
-    public enum GoblemOrkEffects
+    protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>(); // 바인드하기위한 Dictionary
+    public enum GoblemOrkEffects //바인드를 위한 enum
     {
         LeftAttack,
         RightAttack,
@@ -17,16 +17,16 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
     }
     private void OnEnable()
     {
-        Bind<ParticleSystem>(typeof(GoblemOrkEffects));
-        EffectOff();
+        Bind<ParticleSystem>(typeof(GoblemOrkEffects)); //오브젝트 풀링을 사용하기 때문에 매번 바인드
+        EffectOff(); 
     }
     private void Update()
     {
         
     }
-    public void EffectOff(string ex = null)
+    public void EffectOff(string ex = null)// 시작할때 이펙트가 실행되면 안되므로 시작할때는 꺼두기위해 만든 함수
     {
-        ex = GetComponentInParent<SphereCollider>().gameObject.name;
+        ex = GetComponentInParent<SphereCollider>().gameObject.name; //몬스터의 이름으로 판단하여 이팩트 종료
         if(ex == "BossBear")
         {
             for (int i = 2; i < (int)GoblemOrkEffects.Count; i++)
@@ -60,7 +60,7 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
         {
             for (int i = 0; i < (int)GoblemOrkEffects.Count; i++)
             {
-                if (Get<ParticleSystem>(i) != null && Get<ParticleSystem>(i).gameObject.activeSelf)//내일 체크 렉이 너무심해서 도저히 안됨
+                if (Get<ParticleSystem>(i) != null && Get<ParticleSystem>(i).gameObject.activeSelf)
                 {
                     //Get<ParticleSystem>(i).Stop();
                     Get<ParticleSystem>(i).gameObject.SetActive(false);
@@ -75,7 +75,7 @@ public class EnemyEffect : MonoBehaviour //monobihavior로 변경
         
 
     }
-    public void MonsterAttack(GoblemOrkEffects name, Transform playerTransform = null)
+    public void MonsterAttack(GoblemOrkEffects name, Transform playerTransform = null)//공격시 이펙트가 실행되기위한 함수
     {
         if (!Get<ParticleSystem>((int)name).gameObject.activeSelf)
         {

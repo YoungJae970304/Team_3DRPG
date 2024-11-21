@@ -9,26 +9,22 @@ using UnityEngine.AI;
 
 public class Ork : Monster
 {
-    public int _OrkID;
-    public override void Start()
-    {
-        base.Start();
-        
-    }
+    public int _OrkID; // 난이도 별로 오크의 아이디를 담기위한 변수입니다.
+
     public override void OnEnable()
     {
         base.OnEnable();
         Init();
     }
-    public override void Init()
+    public override void Init() // 던전에 진입하여 오크가 생성될 때(풀링될 때) 실행되는 함수입니다.
     {
         base.Init();
-        OrkIDCheck(_deongeonLevel);
-        ItemDrop(_deongeonLevel, _OrkID);
-        StatCheck(_deongeonLevel, _OrkID);
-        _monsterID = _OrkID;
+        OrkIDCheck(_deongeonLevel); // 던전 레벨에 따라 오크의 아이디를 확인합니다.
+        ItemDrop(_deongeonLevel, _OrkID); // 던전 레벨과 오크의 아이디로 드랍템 목록을 불러옵니다.
+        StatCheck(_deongeonLevel, _OrkID);// 던전 레벨과 오크의 아이디로 스텟을 불러옵니다.
+        _monsterID = _OrkID; // 몬스터 아이디 변수에 오크의 아이디 값을 넣어줍니다.
     }
-    public override void AttackStateSwitch()
+    public override void AttackStateSwitch() // 좌측공격과 우측 공격을 랜덤으로 발생시키기 위하여 작성하였습니다.
     {
         if (_randomAttack <= 50)
         {
@@ -43,7 +39,7 @@ public class Ork : Monster
     }
 
 
-    public void OrkIDCheck(DeongeonType curLevel)
+    public void OrkIDCheck(DeongeonType curLevel) // 오크의 아이디를 체크하기위한 함수입니다. 현재 던전레벨에 따라 다른 아이디가 대입됩니다.
     {
         foreach (var oID in _dataTableManager._MonsterDropData)
         {
@@ -85,7 +81,7 @@ public class Ork : Monster
         }
         
     }
-    public override void AttackPlayer()
+    public override void AttackPlayer() // 오크의 공격에 사용되는 함수입니다
     {
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
@@ -117,7 +113,7 @@ public class Ork : Monster
         }
 
     }
-    public override void MakeItem()
+    public override void MakeItem() //아이템 드랍을 위해 사용되는 함수입니다.
     {
         int dropvalue = 70;
         base.MakeItem();

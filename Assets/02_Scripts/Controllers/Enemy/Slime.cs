@@ -3,14 +3,14 @@ using UnityEngine;
 public class Slime : Monster
 {
 
-    public int _slimeID;
+    public int _slimeID; // 슬라임의 아이디 변수입니다. 던전 레벨에 따라 다른 값이 대입됩니다.
  
     public override void OnEnable()
     {
         base.OnEnable();
         Init();
     }
-    public override void Init()
+    public override void Init() // 던전에 진입하여 슬라임이 생성될 때(풀링될 때) 실행되는 함수입니다.
     {
         base.Init();
         SlimeIDCheck(_deongeonLevel);
@@ -18,13 +18,13 @@ public class Slime : Monster
         StatCheck(_deongeonLevel, _slimeID);
         _monsterID = _slimeID;
     }
-    public override void AttackStateSwitch()
+    public override void AttackStateSwitch() // 슬라임은 공격이 하나밖에없지만 다른 몬스터와 같은 방식으로 공격이 이용되기때문에 override하기 위하여 작성되었습니다.
     {
         _anim.SetTrigger("Attack");
     }
 
 
-    protected override void BaseState()
+    protected override void BaseState() // 슬라임의 상태 변화를 위한 함수, 조건에 따라 상태 변환됩니다.
     {
         switch (_curState)
         {
@@ -67,7 +67,7 @@ public class Slime : Monster
 
         }
     }
-    public override void MakeItem()
+    public override void MakeItem() // 아이템을 드랍하기위하여 사용되는 함수입니다.
     {
         int dropvalue = 70;
         base.MakeItem();
@@ -80,7 +80,7 @@ public class Slime : Monster
 
         }
     }
-    public override void AttackPlayer()
+    public override void AttackPlayer() //플레이어를 공격하기 위하여 사용되는 함수입니다.
     {
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
@@ -112,7 +112,7 @@ public class Slime : Monster
         }
 
     }
-    public void SlimeIDCheck(DeongeonType curLevel)
+    public void SlimeIDCheck(DeongeonType curLevel) // 슬라임의 아이디를 던전 레벨에 따라서 판단하기위한 함수입니다.
     {
         foreach (var sID in _dataTableManager._MonsterDropData)
         {

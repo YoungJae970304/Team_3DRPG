@@ -6,27 +6,22 @@ using UnityEngine.AI;
 
 public class Goblem : Monster
 {
-    public int _goblemID;
+    public int _goblemID; // 고블린의 아이디를 담기위한 변수입니다. 난이도 별로 다르게 값이 들어갑니다.
  
-    public override void Start()
-    {
-        base.Start();
-        
-    }
     public override void OnEnable()
     {
         base.OnEnable();
         Init();
     }
-    public override void Init()
+    public override void Init() // 던전 진입 후 고블린이 풀링되어 생성될 때 실행됩니다.
     {
         base.Init();
-        GoblemIDCheck(_deongeonLevel);
-        ItemDrop(_deongeonLevel, _goblemID);
-        StatCheck(_deongeonLevel, _goblemID);
-        _monsterID = _goblemID;
+        GoblemIDCheck(_deongeonLevel); // 던전 레벨로 고블린의 아이디를 불러옵니다.
+        ItemDrop(_deongeonLevel, _goblemID); // 던전 레벨과 고블린의 아이디로 드랍템 목록을 불러옵니다.
+        StatCheck(_deongeonLevel, _goblemID); // 던전 레벨과 고블린의 아이디로 스텟을 불러옵니다.
+        _monsterID = _goblemID; // 몬스터(베이스)의 아이디를 고블린의 아이디값으로 넣어줍니다.
     }
-    public override void AttackStateSwitch()
+    public override void AttackStateSwitch() // 좌측공격과 우측 공격을 랜덤으로 발생시키기 위하여 작성하였습니다.
     {
         
         if (_randomAttack <= 50)
@@ -44,7 +39,7 @@ public class Goblem : Monster
         }
     }
 
-    public void GoblemIDCheck(DeongeonType curLevel)
+    public void GoblemIDCheck(DeongeonType curLevel) // 고블린의 아이디를 체크하기위한 함수입니다. 현재 던전레벨에 따라 다른 아이디가 대입됩니다.
     {
         foreach (var gID in _dataTableManager._MonsterDropData)
         {
@@ -86,7 +81,7 @@ public class Goblem : Monster
             
         }
     }
-    public override void AttackPlayer()
+    public override void AttackPlayer() //고블린의 공격에 사용되는 함수입니다.
     {
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
@@ -118,7 +113,7 @@ public class Goblem : Monster
         }
         
     }
-    public override void MakeItem()
+    public override void MakeItem() // 아이템을 드랍하기위한 함수입니다.
     {
         int dropvalue = 70;
         base.MakeItem();

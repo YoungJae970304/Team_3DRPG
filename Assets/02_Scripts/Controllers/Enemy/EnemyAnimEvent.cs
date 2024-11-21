@@ -11,7 +11,7 @@ public class EnemyAnimEvent : MonoBehaviour
     {
         _monster = GetComponentInParent<Monster>();
         _player = Managers.Game._player;
-        _bossBear = _monster as BossBear;
+        _bossBear = _monster as BossBear; // 다운캐스팅을하여 보스몬스터를 불러와서 담았습니다.
         //Logger.LogError($"{_bossBear._maxRoarRange.transform.localScale.x * 2}");
         //Logger.LogError($"{Physics.OverlapSphere(transform.position, _bossBear._maxRoarRange.transform.localScale.x * 2).Length}범위");
     }
@@ -95,7 +95,7 @@ public class EnemyAnimEvent : MonoBehaviour
         Managers.Sound.Play("Enemy/slime_dmg_1");
     }
     #endregion
-    public void Roar()
+    public void Roar() // 보스몬스터의 포효와 관련된 함수입니다. 해당 함수로 플레이어와의 거리를 판단하여 포효 시 플레이어가 스턴되도록 처리하였습니다.
     {
         //int damage = 0;
         
@@ -116,11 +116,11 @@ public class EnemyAnimEvent : MonoBehaviour
             }
         }
     }
-    public void AttackCompleteCheck()
+    public void AttackCompleteCheck() // 공격의 시작 여부를 판단하기 위하여 만든 함수입니다. 공격의 시작에 사용됩니다.
     {
         _monster._attackCompleted = false;
     }
-    public void NomalAttack() //이벤트 2번
+    public void NomalAttack() //몬스터의 일반 공격에 사용되는 이벤트입니다. 평범하게 데미지를 입히기 위하여 사용됩니다.
     {
 
         Logger.Log("NomalAttack");
@@ -129,7 +129,7 @@ public class EnemyAnimEvent : MonoBehaviour
         _monster.AttackPlayer();
 
     }
-    public void SwitchAttackEffect(int attack)
+    public void SwitchAttackEffect(int attack) // 몬스터의 이팩트를 실행하기 위하여 사용되는 함수입니다. 이팩트에 int값에 들어간 숫자인 0,1,2에 따라 이팩트가 다르게 실행됩니다.
     {
         switch (attack)
         {
@@ -144,7 +144,7 @@ public class EnemyAnimEvent : MonoBehaviour
                 break;
         }
     }
-    public void SkillAttack() // 이벤트 2번
+    public void SkillAttack() // 몬스터의 스킬 공격에 사용되는 이벤트입니다. 해당 공격에 플레이어가 적중 시 일정시간 경직에 걸리게 됩니다.
     {
 
         Logger.Log("SkillAttack");
@@ -153,11 +153,11 @@ public class EnemyAnimEvent : MonoBehaviour
         _monster.AttackPlayer();
 
     }
-    public void MonsterAnimFalse() // 애니메이션 이벤트용
+    public void MonsterAnimFalse() // 몬스터의 애니메이션을 사용종료하기위한 함수입니다. 몬스터가 죽었을 때 호출됩니다.
     {
         _monster._anim.enabled = false;
     }
-    public void AfterDamagedState()
+    public void AfterDamagedState() // 데미지판정후 사용되는 함수입니다. 판정 시 hp상태에 따라 현재 상태가 변경됩니다.
     {
         // HP 상태에 따른 상태 전환
         if (_monster._mStat.HP <= 0)
@@ -170,7 +170,7 @@ public class EnemyAnimEvent : MonoBehaviour
             _monster.MChangeState(Monster.MonsterState.Move);
         }
     }
-    public void MonsterAttackCheck()
+    public void MonsterAttackCheck() // 공격완료 시 실행되는 함수입니다. 공격완료 체크 후 다음상태로 넘어가기 위해 사용되었습니다.
     {
         //Logger.LogError("실행중bool124");
         _monster._attackCompleted = true;

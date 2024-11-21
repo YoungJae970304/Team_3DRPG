@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class BossBear : Monster
 {
-    public int _bossBearID = 99999;
-    int skillCount = 0;
+    public int _bossBearID = 99999; // 보스 아이디
+    int skillCount = 0; // 로어횟수를 체크하기위한 변수
     public GameObject _roarRange; // 장판 오브젝트
     private Vector2 _startScale; // 초기 크기
-    float _stageRoarPlus = 10f;
-    public float _roarTimer;
-    public GameObject _maxRoarRange;
-    public int test;
-    public override void Start()
-    {
-        base.Start();
-
-    }
+    float _stageRoarPlus = 10f; // 로어 크기를 커지게하기 위한 변수
+    public float _roarTimer; // 로어가 시간별로 커지게 하기 위한 변수
+    public GameObject _maxRoarRange; // 로어의 최대 크기
+    public List<float> _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
     public override void OnEnable()
     {
         Init();
@@ -26,16 +21,15 @@ public class BossBear : Monster
     public override void Init()
     {
         base.Init();
-        ItemDrop(_deongeonLevel, _bossBearID);
-        StatCheck(_deongeonLevel, _bossBearID);
-        _monsterProduct = 61004;
-        _startScale = _roarRange.transform.localScale;
-        skillCount = 0;
-        _maxRoarRange.SetActive(false);
-        _roarRange.SetActive(false);
-        _mStat._mStat.AttackRange = 8;
-        _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
-        test = (int)_mStat._mStat.AttackRange;
+        ItemDrop(_deongeonLevel, _bossBearID); // 보스 아이디로 던전 단계로 드랍템 목록 불러오기
+        StatCheck(_deongeonLevel, _bossBearID); // 보스 아이디와 던전 단계로 스텟 불러오기
+        _monsterProduct = 61004; // 보스의 기타템 부산물
+        _startScale = _roarRange.transform.localScale; // 로어의 시작 크기(로어가 끝난 후 다시 로어장판 크기를 작게 하기위하여 저장)
+        skillCount = 0; // 로어를 사용한 횟수(보스 처치 OR 던전 실패 시 로어 횟수를 다시 0으로 초기화)
+        _maxRoarRange.SetActive(false);// 로어 장판 범위 끄기
+        _roarRange.SetActive(false); // 커지는 로어 장판 끄기
+        _mStat._mStat.AttackRange = 8; // 보스의 공격 범위
+        _roarList = new List<float> { 0.7f, 0.4f, 0.1f }; // 로어의 발동 시점을 정한 리스트(HP 70%, 40%, 10%일때 로어 발동)
     }
     public void OnDisable()
     {
@@ -56,7 +50,7 @@ public class BossBear : Monster
             BaseState();
         }
     }
-    IEnumerator PlusRoarRange()
+    IEnumerator PlusRoarRange() // 시간별로 로어를 커지게 하기위한 함수, 최종적으로 로어가 MaxRoarRange에 도달했다면 로어 실행
     {
         _roarTimer = 0;
         _roarRange.transform.localScale = _startScale;
@@ -85,7 +79,7 @@ public class BossBear : Monster
 
     }
 
-    protected override void BaseState()
+    protected override void BaseState() // 곰의 상태 변화를 위한 함수, 조건에 따라 상태 변환
     {
         switch (_curState)
         {
@@ -145,7 +139,7 @@ public class BossBear : Monster
                 break;
         }
     }
-    public override void AttackStateSwitch()
+    public override void AttackStateSwitch() // 공격이 랜덤하게 나오도록 하는 함수
     {
 
         if (_randomAttack <= 30)
@@ -179,7 +173,7 @@ public class BossBear : Monster
     }
   
     
-    public override void AttackPlayer() // 공격 모션 중간에 호출 // 수정 예정
+    public override void AttackPlayer() // 공격 모션 중간에 호출되는 플레이어 공격용 함수
     {
         int damage = _mStat.ATK;
         //Collider[] checkColliders = Physics.OverlapSphere(transform.position, _mStat.AttackRange);
@@ -212,8 +206,8 @@ public class BossBear : Monster
 
 
     }
-    public List<float> _roarList = new List<float> { 0.7f, 0.4f, 0.1f };
-    public override void Damaged(int amount)
+    
+    public override void Damaged(int amount) //추상클래스로 구현된 인터페이스를 상속받아 구현된 함수입니다. 데미지 처리를 위해 사용됩니다.
     {
 
         if (_mStat == null)
@@ -270,7 +264,7 @@ public class BossBear : Monster
         }
 
     }
-    public override void SetDestinationTimer(float targetTIme)
+    public override void SetDestinationTimer(float targetTIme) // 이동을 위한 타이머입니다. 일정 시간마다 몬스터의 이동 경로를 탐색합니다.
     {
         _timer += Time.deltaTime;
         if (_timer >= targetTIme / 2)
@@ -316,12 +310,12 @@ public class BossBear : Monster
         _player._playerHitState = PlayerHitState.SkillAttack;
     }
 
-    public override void StartDamege(Vector3 playerPosition, float delay, float pushBack)
+    public override void StartDamege(Vector3 playerPosition, float delay, float pushBack) //데미지 받을 시 처리되는 함수입니다. 애니메이션 이벤트의 보스 데미지를 불러와서 처리합니다.
     {
         LookPlayer();
         _enemyAnimEvent.BossDamage();
     }
-    public override void MakeItem()
+    public override void MakeItem() // 아이템을 만드는 함수입니다. 일정 확률로 아이템이 드랍되도록 설정되었습니다.
     {
         int dropvalue = 70;
         base.MakeItem();
