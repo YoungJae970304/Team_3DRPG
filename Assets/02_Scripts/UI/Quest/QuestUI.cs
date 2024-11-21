@@ -216,7 +216,7 @@ public class QuestUI : BaseUI
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().transform.SetAsFirstSibling();
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
         }
-        else
+        else if(Managers.QuestManager._progressQuest.Count >= 3)
         {
             Managers.QuestManager._changeText[id].GetComponent<SimpleQuestText>().Init(Util.FindChild(_simpleQuestUI, "QuestInfo").transform);
         }
