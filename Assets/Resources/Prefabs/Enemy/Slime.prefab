@@ -5301,6 +5301,7 @@ MonoBehaviour:
   _enemyAnimEvent: {fileID: 0}
   _monsterHpBar: {fileID: 0}
   _hpBar: {fileID: 5424278536113902086}
+  _dieCheck: 0
   _slimeID: 0
 --- !u!195 &1158561914686179281
 NavMeshAgent:
@@ -20365,26 +20366,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3016100102329989304, guid: 90221daa9b6517645abefc338b702d25,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3016100102329989304, guid: 90221daa9b6517645abefc338b702d25,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3016100102329989304, guid: 90221daa9b6517645abefc338b702d25,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3574263294997367070, guid: 90221daa9b6517645abefc338b702d25,
-        type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8706905984635791442, guid: 90221daa9b6517645abefc338b702d25,
         type: 3}
