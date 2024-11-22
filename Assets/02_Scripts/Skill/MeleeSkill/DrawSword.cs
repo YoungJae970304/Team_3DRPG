@@ -39,7 +39,7 @@ public class DrawSwordStay : SkillStay
             // 8% 진행 지점에서 이벤트 트리거
             if (normalizedTime >= 0.25f && normalizedTime <= 0.27f && !_damageApply)
             {
-                Managers.Game._player.AreaDamage(15f, stat.ATK);
+                Managers.Game._player.AreaDamage(7.5f, Managers.Game._player._skillBase._damage);
                 _damageApply = true;
             }
         }
