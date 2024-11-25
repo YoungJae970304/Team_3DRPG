@@ -76,7 +76,7 @@ public class ThunderSlashStay : SkillStay
             }
             if (normalizedTime >= 0.4f && normalizedTime <= 0.42f && !_damageApply)
             {
-                Managers.Game._player.ApplyDamage(stat.ATK);
+                Managers.Game._player.ApplyDamage(Managers.Game._player._skillBase._damage);
                 _damageApply = true;
             }
         }

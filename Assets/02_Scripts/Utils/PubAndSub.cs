@@ -4,8 +4,9 @@ using UnityEngine;
 using System;
 public static class PubAndSub 
 {
-    static Hashtable Actions= new Hashtable();
+    static Hashtable Actions= new Hashtable();  //발행-구독관계를 저장할 해시테이블
     #region 발행
+    //매개변수 없는 함수 발행
     public static void Publish(string name) {
         if (Actions.ContainsKey(name))
         {
@@ -13,6 +14,7 @@ public static class PubAndSub
             (Actions[name] as Action)?.Invoke();
         }
     }
+    //매개변수 있는 함수 발행
     public static void Publish<T>(string name,T parameter)
     {
         if (Actions.ContainsKey(name))
@@ -23,6 +25,7 @@ public static class PubAndSub
     }
     #endregion
     #region 구독
+    //매개변수 없는 함수 구독
     public static void Subscrib(string name, Action action)
     {
         if (Actions.ContainsKey(name))
@@ -37,7 +40,7 @@ public static class PubAndSub
             Actions.Add(name, action);
         }
     }
-
+    //매개변수 있는 함수 구독
     public static void Subscrib<T>(string name, Action<T> action)
     {
         if (Actions.ContainsKey(name))
@@ -59,6 +62,7 @@ public static class PubAndSub
     }
     #endregion
     #region 구독해제
+    //매개변수 없는 함수 구독해제
     public static void UnSubscrib(string name, Action action)
     {
         if (Actions.ContainsKey(name))
@@ -70,6 +74,7 @@ public static class PubAndSub
             if (Actions[name] == null) { Actions.Remove(name); };
         }
     }
+    //매개변수 있는 함수 구독해제
     public static void UnSubscrib<T>(string name, Action<T> action)
     {
         if (Actions.ContainsKey(name))

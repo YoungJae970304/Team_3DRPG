@@ -50,12 +50,12 @@ public class ToolTipUI :MonoBehaviour
                         text += $"회복량:{potionData.Value}%\n";
                         break;
                     case PotionItemData.ValueType.Atk:
-                        text += $"공격력 증가:{potionData.Value}%\n";
-                        text += $"지속시간:{potionData.DurationTime}%\n";
+                        text += $"공격력 증가:{potionData.Value}\n";
+                        text += $"지속시간:{potionData.DurationTime}초\n";
                         break;
                     case PotionItemData.ValueType.Def:
-                        text += $"방어력 증가:{potionData.Value}%\n";
-                        text += $"지속시간:{potionData.DurationTime}%\n";
+                        text += $"방어력 증가:{potionData.Value}\n";
+                        text += $"지속시간:{potionData.DurationTime}초\n";
                         break;
                 }
                 break;
