@@ -236,7 +236,17 @@ public class QuestUI : BaseUI
             Managers.QuestManager._activeQuest.Remove(_questId);
             Managers.QuestManager._activeQuest.Sort();
         }
-
+        if (Managers.QuestManager._targetCheck[_questId] / 10000 != 9)
+        {
+            int goodsID = _questId;
+            _inventory.GetItemAction += (() => { ValueCheck(goodsID); });
+            PubAndSub.Subscrib<int>("ItemSell", ((goodsID) => { ValueCheck(goodsID); }));
+            Managers.QuestManager._countCheck[goodsID] = _inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]);
+            if (_inventory.GetItemAmount(Managers.QuestManager._targetCheck[goodsID]) >= Managers.QuestManager._completeChecks[goodsID])
+            {
+                Managers.QuestManager._questComplete[goodsID] = true;
+            }
+        }
         PubAndSub.Subscrib<int>($"{_questId}", Managers.QuestManager.CheckProgress);
         if (!_simpleQuestUI.activeSelf)
         {
